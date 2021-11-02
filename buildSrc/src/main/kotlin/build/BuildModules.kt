@@ -17,11 +17,10 @@ object BuildModules {
 
     object Module {
         const val home = ":module:home"
-        const val recommend = ":module:recommend"
-        const val girl = ":module:girl"
+        const val official = ":module:official" //Official Accounts
+        const val system = ":module:system"
+        const val project = ":module:project"
         const val me = ":module:me"
-        const val search = ":module:search"
-        const val details = ":module:details"
     }
 
 }
