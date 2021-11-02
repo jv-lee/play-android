@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--  module name  -->
+    <string name="module_home">home</string>
+    <string name="module_recommend">recommend</string>
+    <string name="module_girl">girl</string>
+    <string name="module_me">me</string>
+    <string name="module_details">details</string>
+    <string name="module_search">search</string>
+</resources>

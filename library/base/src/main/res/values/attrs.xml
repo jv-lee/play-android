@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <attr name="indicatorGravity">
+        <flag name="top" value="0x30" />
+        <flag name="bottom" value="0x50" />
+        <flag name="left" value="0x03" />
+        <flag name="right" value="0x05" />
+        <flag name="center_vertical" value="0x10" />
+        <flag name="fill_vertical" value="0x70" />
+        <flag name="center_horizontal" value="0x01" />
+        <flag name="fill_horizontal" value="0x07" />
+        <flag name="center" value="0x11" />
+        <flag name="fill" value="0x77" />
+        <flag name="clip_vertical" value="0x80" />
+        <flag name="clip_horizontal" value="0x08" />
+        <flag name="start" value="0x00800003" />
+        <flag name="end" value="0x00800005" />
+    </attr>
+
+    <declare-styleable name="BannerView">
+        <attr name="autoPlay" format="boolean" />
+        <attr name="delayTime" format="integer" />
+        <attr name="moveDuration" format="integer" />
+        <attr name="indicatorPadding" format="dimension" />
+        <attr name="indicatorChildPadding" format="dimension" />
+        <attr name="indicatorNormalDrawable" format="reference"/>
+        <attr name="indicatorSelectedDrawable" format="reference"/>
+        <attr name="indicatorGravity" />
+        <attr name="bannerMode">
+            <enum name="defaultMode" value="0x0"/>
+            <enum name="clipMode" value="0x1"/>
+        </attr>
+    </declare-styleable>
+
+    <!--自定义跑马灯-->
+    <declare-styleable name="MarqueeView">
+        <attr name="left_drawable" format="reference" />
+        <attr name="font_color" format="color" />
+        <attr name="font_size" format="dimension" />
+    </declare-styleable>
+
+    <!--自定义条目更新提示控件-->
+    <declare-styleable name="ItemNotificationView">
+        <attr name="notification_text" format="string" />
+        <attr name="notification_color" format="color" />
+        <attr name="notification_text_color" format="color" />
+        <attr name="notification_text_size" format="dimension" />
+    </declare-styleable>
+
+    <declare-styleable name="StatusLayout">
+        <attr name="layout_loading" format="reference" />
+        <attr name="layout_empty" format="reference" />
+        <attr name="layout_error" format="reference" />
+        <attr name="layout_network" format="reference" />
+    </declare-styleable>
+
+    <declare-styleable name="RoundImageView">
+        <attr name="layout_mode">
+            <enum name="circle" value="0" />
+            <enum name="round" value="1" />
+            <enum name="oval" value="2" />
+        </attr>
+        <attr name="lineColor" format="color" />
+        <attr name="lineWidth" format="dimension" />
+        <attr name="radius" format="dimension" />
+        <attr name="topLeftRadius" format="dimension" />
+        <attr name="topRightRadius" format="dimension" />
+        <attr name="bottomLeftRadius" format="dimension" />
+        <attr name="bottomRightRadius" format="dimension" />
+    </declare-styleable>
+
+    <declare-styleable name="TitleToolbar">
+        <attr name="titleText" format="string" />
+        <attr name="titleColor" format="color" />
+        <attr name="backIcon" format="reference" />
+        <attr name="menuIcon" format="reference" />
+        <attr name="menuRes" format="reference" />
+        <attr name="backIconTint" format="color" />
+        <attr name="menuIconTint" format="color" />
+
+        <attr name="titleEnable" format="enum">
+            <enum name="visible" value="0x00000000" />
+            <enum name="invisible" value="0x00000004" />
+            <enum name="gone" value="0x00000008" />
+        </attr>
+
+        <attr name="backEnable" format="enum">
+            <enum name="visible" value="0x00000000" />
+            <enum name="invisible" value="0x00000004" />
+            <enum name="gone" value="0x00000008" />
+        </attr>
+
+        <attr name="menuEnable" format="enum">
+            <enum name="visible" value="0x00000000" />
+            <enum name="invisible" value="0x00000004" />
+            <enum name="gone" value="0x00000008" />
+        </attr>
+
+    </declare-styleable>
+
+
+    <declare-styleable name="CustomMenuItem">
+        <attr name="android:id" format="reference" />
+        <attr name="android:icon" format="reference" />
+        <attr name="android:title" format="string" />
+        <attr name="android:iconTint" format="color" />
+    </declare-styleable>
+
+    <declare-styleable name="SelectorTextView">
+        <attr name="pressedBackgroundColor" format="color" />
+        <attr name="normalBackgroundColor" format="color" />
+        <attr name="pressedTextColor" format="color" />
+        <attr name="normalTextColor" format="color" />
+        <attr name="pressedStrokeColor" format="color" />
+        <attr name="normalStrokeColor" format="color" />
+        <attr name="disableStrokeColor" format="color" />
+        <attr name="strokeWidth" format="dimension" />
+        <attr name="disableBackgroundColor" format="color" />
+        <attr name="disableTextColor" format="color" />
+        <attr name="buttonRadius" format="dimension" />
+        <attr name="buttonDisable" format="boolean" />
+        <attr name="rippleMode">
+            <enum name="noneMode" value="0" />
+            <enum name="stateMode" value="1" />
+            <enum name="defaultMode" value="2" />
+        </attr>
+    </declare-styleable>
+
+    <declare-styleable name="BackgroundConstraintLayout">
+        <attr name="layoutBackgroundColor" format="color" />
+        <attr name="layoutStrokeColor" format="color" />
+        <attr name="layoutStrokeWidth" format="dimension" />
+        <attr name="layoutRadius" format="dimension" />
+    </declare-styleable>
+
+    <attr name="outLineWidth" format="dimension" />
+    <attr name="outLineColor" format="color" />
+    <attr name="shadowRound" format="dimension" />
+    <attr name="shadowBlur" format="dimension" />
+    <attr name="shadowColor" format="color" />
+    <attr name="shadowFillColor" format="color" />
+    <attr name="shadowOffsetX" format="dimension" />
+    <attr name="shadowOffsetY" format="dimension" />
+
+    <declare-styleable name="ShadowConstraintLayout">
+        <attr name="outLineWidth" />
+        <attr name="outLineColor" />
+        <attr name="shadowRound" />
+        <attr name="shadowBlur" />
+        <attr name="shadowColor" />
+        <attr name="shadowFillColor" />
+        <attr name="shadowOffsetX" />
+        <attr name="shadowOffsetY" />
+    </declare-styleable>
+
+    <declare-styleable name="VerticalViewPager">
+        <attr name="isVertical" format="boolean" />
+    </declare-styleable>
+
+    <attr name="dotBackground" format="color" />
+
+    <declare-styleable name="BottomNavView">
+        <attr name="dotNumberTextSize" format="dimension" />
+        <attr name="dotBackground" />
+        <attr name="dotNumberTextColor" format="color" />
+        <attr name="dotLineColor" format="color" />
+        <attr name="dotSize" format="dimension" />
+    </declare-styleable>
+
+    <declare-styleable name="DotView">
+        <attr name="dotBackground" />
+    </declare-styleable>
+
+    <declare-styleable name="NumberDotView">
+        <attr name="dotBackground" />
+    </declare-styleable>
+
+    <declare-styleable name="ShimmerLayout">
+        <attr name="shimmer_color" format="color|reference"/>
+        <attr name="shimmer_animation_duration" format="integer|reference"/>
+        <attr name="shimmer_auto_start" format="boolean|reference"/>
+        <attr name="shimmer_angle" format="integer|reference"/>
+        <attr name="shimmer_mask_width" format="float|reference"/>
+        <attr name="shimmer_gradient_center_color_width" format="float|reference"/>
+        <attr name="shimmer_reverse_animation" format="boolean|reference"/>
+    </declare-styleable>
+
+</resources>

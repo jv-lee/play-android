@@ -1,0 +1,51 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.DayNight.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:statusBarColor" tools:targetApi="lollipop">@android:color/transparent</item>
+        <item name="android:windowAnimationStyle">@style/AppTheme.Animation</item>
+        <item name="android:windowBackground">@drawable/splash_bg</item>
+    </style>
+
+    <!--    搜索text样式    -->
+    <style name="SearchStyle" parent="Widget.AppCompat.TextView">
+        <item name="android:layout_width">@dimen/search_text_width</item>
+        <item name="android:layout_height">@dimen/search_text_height</item>
+        <item name="android:background">@drawable/shape_theme_search</item>
+        <item name="android:drawableStart">@drawable/vector_search</item>
+        <item name="android:drawablePadding">@dimen/padding_small</item>
+        <item name="android:gravity">start|center_vertical</item>
+        <item name="android:paddingStart">@dimen/padding_small</item>
+        <item name="android:paddingEnd">@dimen/padding_small</item>
+        <item name="android:textSize">@dimen/font_size_medium</item>
+        <item name="android:textColor">@color/colorThemePrimary</item>
+        <item name="android:text">@string/search_hint</item>
+        <item name="android:layout_marginEnd">@dimen/margin_large</item>
+    </style>
+
+    <!--    搜索edit样式    -->
+    <style name="SearchEditStyle" parent="SearchStyle">
+        <item name="android:textColor">@color/colorAccent</item>
+        <item name="android:text" />
+        <item name="android:hint">@string/search_hint</item>
+        <item name="android:textColorHint">@color/colorThemePrimary</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:imeOptions">actionSearch</item>
+    </style>
+
+    <style name="Switch" parent="AppTheme">
+        <!-- Active thumb color & Active track color(30% transparency) switch 打开时的拇指按钮的颜色 轨迹颜色默认为30%这个颜色 -->
+        <item name="colorControlActivated">@android:color/holo_blue_dark</item>
+        <item name="colorControlNormal">@android:color/darker_gray</item>
+        <!-- Inactive thumb color switch关闭时的拇指按钮的颜色 -->
+<!--        <item name="colorSwitchThumbNormal">#ff0000</item>-->
+
+        <!-- Inactive track color(30% transparency) switch关闭时的轨迹的颜色 30%这个颜色 -->
+<!--        <item name="android:colorForeground">#ff0000</item>-->
+    </style>
+
+</resources>

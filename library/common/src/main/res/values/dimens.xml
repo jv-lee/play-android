@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--    全局通用样式 （统一全局padding margin值）-->
+    <dimen name="margin_item">8dp</dimen>
+    <dimen name="padding_item">16dp</dimen>
+    <dimen name="padding_small">4dp</dimen>
+    <dimen name="padding_medium">6dp</dimen>
+    <dimen name="padding_large">8dp</dimen>
+    <dimen name="margin_small">4dp</dimen>
+    <dimen name="margin_medium">6dp</dimen>
+    <dimen name="margin_large">8dp</dimen>
+
+    <!--    其他所有值修改为dp适配 -->
+
+    <!--    控件样式宽高  -->
+    <dimen name="tab_height">36dp</dimen>
+    <dimen name="margin_tab_height">37dp</dimen>
+    <dimen name="search_text_width_home">260dp</dimen>
+    <dimen name="search_text_width_search">300dp</dimen>
+    <dimen name="search_text_height">36dp</dimen>
+    <dimen name="search_text_width">0dp</dimen>
+    <dimen name="search_icon_size">18dp</dimen>
+    <dimen name="search_logo_size">36dp</dimen>
+    <dimen name="common_radius">6dp</dimen>
+    <dimen name="web_loading_progress_height">6dp</dimen>
+    <dimen name="banner_height">160dp</dimen>
+
+    <!--    全局item内部控件样式  -->
+    <!--  item_content  -->
+    <dimen name="item_content_picture_radius">4dp</dimen>
+    <dimen name="item_content_picture_width">106dp</dimen>
+    <dimen name="item_content_picture_height">78dp</dimen>
+    <!--  item_girl  -->
+    <dimen name="item_girl_picture_width">300dp</dimen>
+    <dimen name="item_girl_picture_height">220dp</dimen>
+    <dimen name="item_girl_des_height">80dp</dimen>
+    <dimen name="item_girl_margin_horizontal">22dp</dimen>
+    <dimen name="item_girl_margin_portrait">15dp</dimen>
+    <dimen name="item_girl_elevation">10dp</dimen>
+
+    <!--   自定义VIEW  -->
+    <dimen name="view_line_icon_size">24dp</dimen>
+    <dimen name="view_line_text_margin">36dp</dimen>
+    <dimen name="view_line_text_size">@dimen/font_size_small</dimen>
+    <dimen name="view_line_item_padding">12dp</dimen>
+
+</resources>
