@@ -21,7 +21,7 @@ interface BuildTypes {
 object BuildDebug : BuildTypes {
     override val isMinifyEnabled = false
     override val zipAlignEnabled = false
-    override val paramsMap = mapOf(Pair("BASE_URI", "https://gank.io/api/v2/"))
+    override val paramsMap = mapOf(Pair("BASE_URI", "https://www.wanandroid.com"))
 
     object SigningConfig {
         const val storeFile = "pioneer.jks"
@@ -34,7 +34,7 @@ object BuildDebug : BuildTypes {
 object BuildRelease : BuildTypes {
     override val isMinifyEnabled = true
     override val zipAlignEnabled = true
-    override val paramsMap = mapOf(Pair("BASE_URI", "https://gank.io/api/v2/"))
+    override val paramsMap = mapOf(Pair("BASE_URI", "https://www.wanandroid.com"))
 
     object SigningConfig {
         const val storeFile = "pioneer.jks"
