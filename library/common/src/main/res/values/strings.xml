@@ -1,32 +1,12 @@
 <resources>
-    <string name="app_name">Pioneer\nAndroid</string>
-
-    <!--    tools字符-->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="code">这是一个占位符内容，这是一个占位符内容，这是一个占位符内容，这是一个占位符内容，这是一个占位符内容，这是一个占位符内容，这是一个占位符内容，这是一个占位符内容，</string>
-
     <!--    首页导航-->
     <string name="nav_home">首页</string>
-    <string name="nav_recommend">推荐</string>
-    <string name="nav_girl">妹子</string>
+    <string name="nav_official">公众号</string>
+    <string name="nav_system">体系</string>
+    <string name="nav_project">项目</string>
     <string name="nav_me">我的</string>
 
     <!--    通用字符-->
     <string name="search_hint">点击搜索内容</string>
-    <string name="details_title_text">内容详情</string>
-    <string name="cancel">取消</string>
-    <string name="today">Today</string>
-
-    <!--    列表item字符-->
-    <string name="item_like_text">点赞</string>
-    <string name="item_view_text">浏览</string>
-    <string name="item_like_text_count">%1$s 点赞</string>
-    <string name="item_view_text_count">%1$s 浏览</string>
-
-    <!--    details Menu字符-->
-    <string name="menu_collect">收藏</string>
-    <string name="menu_shared">分享</string>
-    <string name="menu_collect_completed">已收藏该内容</string>
-    <string name="menu_collect_complete">内容收藏成功</string>
 
 </resources>

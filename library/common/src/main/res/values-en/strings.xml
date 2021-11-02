@@ -1,29 +1,12 @@
 <resources>
-    <!-- tools character-->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="code">This is a placeholder content, this is a placeholder content, this is a placeholder content, this is a placeholder content, this is a placeholder content, this is A placeholder content, this is a placeholder content, this is a placeholder content, </string>
-
-    <!-- Home Navigation-->
-    <string name="nav_home">Home </string>
-    <string name="nav_recommend">Recommended</string>
-    <string name="nav_girl">sister</string>
-    <string name="nav_me">My</string>
+    <!--    首页导航-->
+    <string name="nav_home">Home</string>
+    <string name="nav_official">Official accounts</string>
+    <string name="nav_system">System</string>
+    <string name="nav_project">Project</string>
+    <string name="nav_me">Me</string>
 
     <!-- Universal characters -->
     <string name="search_hint">click to search for content</string>
-    <string name="details_title_text">content details</string>
-    <string name="cancel">Cancel</string>
-    <string name="today">Today</string>
 
-    <!-- List item character -->
-    <string name="item_like_text">Like it</string>
-    <string name="item_view_text">browse </string>
-    <string name="item_like_text_count">%1$s like it</string>
-    <string name="item_view_text_count">%1$s browse </string>
-
-    <!-- details Menu characters-->
-    <string name="menu_collect">Collection</string>
-    <string name="menu_shared">share</string>
-    <string name="menu_collect_completed">has collected the content</string>
-    <string name="menu_collect_complete">The content collection is successful</string>
 </resources>

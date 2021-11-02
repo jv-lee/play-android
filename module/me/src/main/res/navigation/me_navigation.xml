@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/me_graph"
+    app:startDestination="@id/me_fragment">
+
+    <fragment
+        android:id="@+id/me_fragment"
+        android:name="com.lee.playandroid.me.MeFragment"
+        android:label="@string/nav_me"
+        tools:layout="@layout/fragment_me" />
+
+</navigation>

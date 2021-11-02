@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/home_graph"
+        android:icon="@drawable/vector_home"
+        android:title="@string/nav_home" />
+
+    <item
+        android:id="@+id/official_graph"
+        android:icon="@drawable/vector_official"
+        android:title="@string/nav_official" />
+
+    <item
+        android:id="@+id/system_graph"
+        android:icon="@drawable/vector_system"
+        android:title="@string/nav_system" />
+
+    <item
+        android:id="@+id/project_graph"
+        android:icon="@drawable/vector_project"
+        android:title="@string/nav_project" />
+
+    <item
+        android:id="@+id/me_graph"
+        android:icon="@drawable/vector_me"
+        android:title="@string/nav_me" />
+</menu>
