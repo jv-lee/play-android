@@ -57,19 +57,19 @@ data class ContentHistory(
     @ColumnInfo(name = "history_source") @ContentSource val source: Int,
     @ColumnInfo(name = "read_time") val readTime: Long,
     @ColumnInfo(name = "is_collect") var isCollect: Int,
-    @Embedded val content: Content
+//    @Embedded val content: Content
 ) {
-    companion object {
-        fun parse(
-            @ContentType type: Int, @ContentSource source: Int, isCollect: Int, content: Content
-        ) =
-            ContentHistory(
-                content._id,
-                type,
-                source,
-                System.currentTimeMillis(),
-                isCollect,
-                content
-            )
-    }
+//    companion object {
+//        fun parse(
+//            @ContentType type: Int, @ContentSource source: Int, isCollect: Int, content: Content
+//        ) =
+//            ContentHistory(
+//                content._id,
+//                type,
+//                source,
+//                System.currentTimeMillis(),
+//                isCollect,
+//                content
+//            )
+//    }
 }

@@ -1,6 +1,7 @@
 package com.lee.pioneer.library.common.entity
 
 import androidx.annotation.Keep
+import com.google.gson.annotations.SerializedName
 import com.lee.library.adapter.page.PagingData
 
 /**
@@ -11,28 +12,32 @@ import com.lee.library.adapter.page.PagingData
 @Keep
 data class Data<T>(
     val data: T,
-    val status: Int
+    val errorCode: Int,
+    val errorMsg: String
 )
 
 @Keep
 data class PageData<T>(
+    @SerializedName("datas")
     val data: MutableList<T>,
-    val status: Int = 0,
-    val page: Int,
-    val page_count: Int
+    val curPage: Int,
+    val offset: Int,
+    val over: Boolean,
+    val pageCount: Int,
+    val size: Int,
+    val total: Int,
 ) : PagingData<T> {
     override fun getPageNumber(): Int {
-        return page
+        return curPage
     }
 
     override fun getPageTotalNumber(): Int {
-        return page_count
+        return pageCount
     }
 
     override fun getDataSource(): List<T> {
         return data
     }
-
 }
 
 /**
@@ -40,21 +45,14 @@ data class PageData<T>(
  */
 @Keep
 data class Banner(
-    val image: String,
+    val id: String,
     val title: String,
-    val url: String
-)
-
-/**
- *  分类数据 data<T>
- */
-@Keep
-data class Category(
-    val _id: String,
-    val coverImageUrl: String,
     val desc: String,
-    val title: String,
-    val type: String
+    val imagePath: String,
+    val url: String,
+    val isVisible: Int,
+    val order: Int,
+    val type: Int,
 )
 
 /**
@@ -64,18 +62,39 @@ data class Category(
  */
 @Keep
 data class Content(
-    val _id: String,
+    val apkLink: String,
+    val audit: Int,
     val author: String,
-    val category: String,
-    val createdAt: String,
+    val chapterId: Int,
+    val chapterName: String,
+    val collect: Boolean,
+    val courseId: Int,
     val desc: String,
-    val images: List<String>,
-    val likeCounts: Int,
-    val publishedAt: String,
-    val stars: Int,
+    val envelopePic: String,
+    val fresh: Boolean,
+    val id: Long,
+    val link: String,
+    val niceDate: String,
+    val niceShareDate: String,
+    val origin: String,
+    val prefix: String,
+    val projectLink: String,
+    val publishTime: Long,
+    val shareDate: Long,
+    val shareUser: String,
+    val superChapterId: Long,
+    val superChapterName: String,
+    val tags: List<Tag>,
     val title: String,
-    val type: String,
-    val url: String,
-    val views: Int,
-    var viewType: Int = 0
+    val type: Int,
+    val userId: Long,
+    val visible: Int,
+    val zan: Long,
+    val top: String
+)
+
+@Keep
+data class Tag(
+    val name: String,
+    val url: String
 )
