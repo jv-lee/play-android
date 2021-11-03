@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!--    全局通用样式 （统一全局padding margin值）-->
+    <dimen name="radius_item">16dp</dimen>
     <dimen name="margin_item">8dp</dimen>
     <dimen name="padding_item">16dp</dimen>
     <dimen name="padding_small">4dp</dimen>
@@ -23,7 +24,7 @@
     <dimen name="search_logo_size">36dp</dimen>
     <dimen name="common_radius">6dp</dimen>
     <dimen name="web_loading_progress_height">6dp</dimen>
-    <dimen name="banner_height">160dp</dimen>
+    <dimen name="banner_height">200dp</dimen>
 
     <!--    全局item内部控件样式  -->
     <!--  item_content  -->

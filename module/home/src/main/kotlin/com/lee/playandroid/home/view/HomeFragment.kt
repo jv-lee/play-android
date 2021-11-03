@@ -13,6 +13,7 @@ import com.lee.library.extensions.toast
 import com.lee.library.mvvm.livedata.LoadStatus
 import com.lee.library.mvvm.ui.observeState
 import com.lee.library.widget.StatusLayout
+import com.lee.library.widget.banner.holder.CardImageCreateHolder
 import com.lee.library.widget.banner.holder.ImageCreateHolder
 import com.lee.pioneer.library.common.entity.Banner
 import com.lee.pioneer.library.common.entity.Content
@@ -73,7 +74,7 @@ class HomeFragment : BaseNavigationFragment(R.layout.fragment_home) {
     override fun bindData() {
         viewModel.bannerLive.observeState<List<Banner>>(this,success = {
             headerBinding.bannerStatusLayout.setStatus(StatusLayout.STATUS_DATA)
-            headerBinding.banner.bindDataCreate(it, object : ImageCreateHolder<Banner>() {
+            headerBinding.banner.bindDataCreate(it, object : CardImageCreateHolder<Banner>() {
                 override fun bindItem(imageView: ImageView, data: Banner) {
                     GlideTools.get().loadImage(data.imagePath, imageView)
                 }
