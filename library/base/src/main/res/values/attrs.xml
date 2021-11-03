@@ -143,6 +143,7 @@
     <attr name="shadowFillColor" format="color" />
     <attr name="shadowOffsetX" format="dimension" />
     <attr name="shadowOffsetY" format="dimension" />
+    <attr name="rippleEnable" format="boolean" />
 
     <declare-styleable name="ShadowConstraintLayout">
         <attr name="outLineWidth" />
@@ -153,6 +154,7 @@
         <attr name="shadowFillColor" />
         <attr name="shadowOffsetX" />
         <attr name="shadowOffsetY" />
+        <attr name="rippleEnable" />
     </declare-styleable>
 
     <declare-styleable name="VerticalViewPager">
