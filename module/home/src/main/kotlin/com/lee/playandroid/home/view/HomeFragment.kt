@@ -59,11 +59,11 @@ class HomeFragment : BaseNavigationFragment(R.layout.fragment_home) {
             }
             setLoadErrorListener(object : LoadErrorListener {
                 override fun pageReload() {
-                    viewModel.loadListData(LoadStatus.RELOAD)
+                    viewModel.loadListData(LoadStatus.REFRESH)
                 }
 
                 override fun itemReload() {
-                    viewModel.loadListData(LoadStatus.REFRESH)
+                    viewModel.loadListData(LoadStatus.RELOAD)
                 }
             })
             setOnItemClickListener { view, entity, position ->  }
