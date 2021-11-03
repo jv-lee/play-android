@@ -44,11 +44,11 @@ class App :BaseApplication() {
 
             activity.bindFragmentLifecycle(fragmentLifecycleCallbacks)
 
-            StatusTools.setNavigationBarColor(activity, Color.BLACK)
-
             if (DarkModeTools.get().isDarkTheme()) {
+                StatusTools.setNavigationBarColor(activity, Color.BLACK)
                 StatusTools.setLightStatusIcon(activity)
             } else {
+                StatusTools.setNavigationBarColor(activity, Color.WHITE)
                 StatusTools.setDarkStatusIcon(activity)
             }
             super.onActivityPreCreated(activity, savedInstanceState)
