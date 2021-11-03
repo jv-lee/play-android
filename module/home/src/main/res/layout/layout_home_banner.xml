@@ -6,19 +6,12 @@
     android:layout_height="wrap_content"
     tools:background="@color/colorThemeBackground">
 
-    <com.lee.library.widget.StatusLayout
-        android:id="@+id/banner_status_layout"
+    <com.lee.library.widget.banner.BannerView
+        android:id="@+id/banner"
         android:layout_width="match_parent"
         android:layout_height="@dimen/banner_height"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <com.lee.library.widget.banner.BannerView
-            android:id="@+id/banner"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:bannerMode="clipMode"
-            app:indicatorPadding="@dimen/padding_item" />
-
-    </com.lee.library.widget.StatusLayout>
+        app:bannerMode="clipMode"
+        app:indicatorPadding="@dimen/padding_item"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

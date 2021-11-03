@@ -24,7 +24,7 @@
     <dimen name="search_logo_size">36dp</dimen>
     <dimen name="common_radius">6dp</dimen>
     <dimen name="web_loading_progress_height">6dp</dimen>
-    <dimen name="banner_height">200dp</dimen>
+    <dimen name="banner_height">180dp</dimen>
 
     <!--    全局item内部控件样式  -->
     <!--  item_content  -->

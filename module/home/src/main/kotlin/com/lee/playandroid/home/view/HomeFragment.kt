@@ -12,9 +12,7 @@ import com.lee.library.extensions.inflate
 import com.lee.library.extensions.toast
 import com.lee.library.mvvm.livedata.LoadStatus
 import com.lee.library.mvvm.ui.observeState
-import com.lee.library.widget.StatusLayout
 import com.lee.library.widget.banner.holder.CardImageCreateHolder
-import com.lee.library.widget.banner.holder.ImageCreateHolder
 import com.lee.pioneer.library.common.entity.Banner
 import com.lee.pioneer.library.common.entity.Content
 import com.lee.pioneer.library.common.entity.PageData
@@ -53,7 +51,7 @@ class HomeFragment : BaseNavigationFragment(R.layout.fragment_home) {
         }
 
         mAdapter.apply {
-            addHeader(headerBinding.root)
+            mAdapter.addHeader(headerBinding.root)
             initStatusView()
             pageLoading()
             setAutoLoadMoreListener {
@@ -68,12 +66,12 @@ class HomeFragment : BaseNavigationFragment(R.layout.fragment_home) {
                     viewModel.loadListData(LoadStatus.REFRESH)
                 }
             })
+            setOnItemClickListener { view, entity, position ->  }
         }
     }
 
     override fun bindData() {
-        viewModel.bannerLive.observeState<List<Banner>>(this,success = {
-            headerBinding.bannerStatusLayout.setStatus(StatusLayout.STATUS_DATA)
+        viewModel.bannerLive.observeState<List<Banner>>(this, success = {
             headerBinding.banner.bindDataCreate(it, object : CardImageCreateHolder<Banner>() {
                 override fun bindItem(imageView: ImageView, data: Banner) {
                     GlideTools.get().loadImage(data.imagePath, imageView)
@@ -84,13 +82,8 @@ class HomeFragment : BaseNavigationFragment(R.layout.fragment_home) {
                 }
 
             })
-        },error = {
+        }, error = {
             toast(it.message)
-            if (!headerBinding.banner.isStart()) {
-                headerBinding.bannerStatusLayout.setStatus(StatusLayout.STATUS_DATA_ERROR)
-            }
-        },loading = {
-            headerBinding.bannerStatusLayout.setStatus(StatusLayout.STATUS_LOADING)
         })
 
         viewModel.contentListLive.observeState<PageData<Content>>(this, success = {
