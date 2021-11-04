@@ -66,16 +66,19 @@ class HomeViewModel : CoroutineViewModel() {
             contentListLive.pageLaunch(status, { page: Int ->
                 val dataList = mutableListOf<HomeContent>()
 
-                //首页添加分类数据
+                //首页添加header数据
                 if (page == 0) {
+                    val banner = repository.api.getBannerDataAsync().data
+                    dataList.add(HomeContent(bannerList = banner))
+
                     val category = CategoryHelper.getHomeCategory()
                     dataList.add(HomeContent(categoryList = category))
                 }
 
                 //获取网络item数据
                 val textItemData = repository.api.getContentDataAsync(page).data.apply {
-                    data.forEach { content ->
-                        dataList.add(HomeContent(content))
+                    data.forEach {
+                        dataList.add(HomeContent(content = it))
                     }
                 }
 
