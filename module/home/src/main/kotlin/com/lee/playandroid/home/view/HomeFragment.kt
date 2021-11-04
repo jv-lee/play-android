@@ -15,12 +15,13 @@ import com.lee.library.mvvm.ui.observeState
 import com.lee.library.widget.banner.holder.CardImageCreateHolder
 import com.lee.pioneer.library.common.entity.Banner
 import com.lee.pioneer.library.common.entity.Content
-import com.lee.pioneer.library.common.entity.PageData
 import com.lee.pioneer.library.common.tools.GlideTools
 import com.lee.playandroid.home.R
 import com.lee.playandroid.home.databinding.FragmentHomeBinding
 import com.lee.playandroid.home.databinding.LayoutHomeBannerBinding
 import com.lee.playandroid.home.view.adapter.ContentAdapter
+import com.lee.playandroid.home.view.adapter.HomeContent
+import com.lee.playandroid.home.view.adapter.PageData
 import com.lee.playandroid.home.viewmodel.HomeViewModel
 
 /**
@@ -86,7 +87,7 @@ class HomeFragment : BaseNavigationFragment(R.layout.fragment_home) {
             toast(it.message)
         })
 
-        viewModel.contentListLive.observeState<PageData<Content>>(this, success = {
+        viewModel.contentListLive.observeState<PageData<HomeContent>>(this, success = {
             binding.refreshView.isRefreshing = false
             mAdapter.submitData(it, diff = true)
         }, error = {

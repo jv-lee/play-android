@@ -12,11 +12,12 @@ import com.lee.library.mvvm.ui.UiStatePageLiveData
 import com.lee.library.mvvm.ui.stateCacheFlow
 import com.lee.library.mvvm.viewmodel.CoroutineViewModel
 import com.lee.pioneer.library.common.entity.Banner
-import com.lee.pioneer.library.common.entity.Content
-import com.lee.pioneer.library.common.entity.PageData
 import com.lee.playandroid.home.constants.Constants.HOME_BANNER_CACHE_KEY
 import com.lee.playandroid.home.constants.Constants.HOME_CONTENT_CACHE_KEY
+import com.lee.playandroid.home.helper.CategoryHelper
 import com.lee.playandroid.home.model.repository.ApiRepository
+import com.lee.playandroid.home.view.adapter.HomeContent
+import com.lee.playandroid.home.view.adapter.PageData
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.flowOn
@@ -63,20 +64,36 @@ class HomeViewModel : CoroutineViewModel() {
     fun loadListData(@LoadStatus status: Int) {
         launchMain {
             contentListLive.pageLaunch(status, { page: Int ->
-                //网络数据
-                repository.api.getContentDataAsync(page).data.also { response ->
-                    //填充历史数据 让activity在重建时可以从liveData中获取到完整数据 首页无需填充原始数据(会造成数据重复)
+                val dataList = mutableListOf<HomeContent>()
+
+                val data = repository.api.getContentDataAsync(page).data
+
+                //首页添加分类数据
+                if (page == 0) {
+                    val category = CategoryHelper.getHomeCategory()
+                    dataList.add(HomeContent.CategoryItem(category))
+                }
+
+                //转换数据类型
+                data.data.map {
+                    dataList.add(HomeContent.TextItem(it))
+                }
+
+                PageData(data.curPage, data.total, dataList).also { newData ->
                     contentListLive.applyData(
-                        contentListLive.getValueData<PageData<Content>>()?.data,
-                        response.data
+                        contentListLive.getValueData<PageData<HomeContent>>()?.data,
+                        newData.data
                     )
                 }
-            }, {
-                //缓存数据
-                cacheManager.getCache<PageData<Content>>(HOME_CONTENT_CACHE_KEY)
-            }, {
-                //存储缓存数据
-                cacheManager.putCache(HOME_CONTENT_CACHE_KEY, it)
+
+//                //网络数据
+//                repository.api.getContentDataAsync(page).data.also { response ->
+//                    //填充历史数据 让activity在重建时可以从liveData中获取到完整数据 首页无需填充原始数据(会造成数据重复)
+//                    contentListLive.applyData(
+//                        contentListLive.getValueData<PageData<Content>>()?.data,
+//                        response.data
+//                    )
+//                }
             })
         }
     }
