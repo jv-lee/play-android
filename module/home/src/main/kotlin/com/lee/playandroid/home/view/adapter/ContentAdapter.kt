@@ -8,12 +8,10 @@ import androidx.viewbinding.ViewBinding
 import com.lee.library.adapter.binding.ViewBindingAdapter
 import com.lee.library.adapter.binding.ViewBindingHolder
 import com.lee.library.adapter.item.ViewBindingItem
-import com.lee.library.adapter.page.PagingData
 import com.lee.library.utils.TimeUtil
-import com.lee.pioneer.library.common.entity.Content
+import com.lee.playandroid.home.bean.HomeContent
 import com.lee.playandroid.home.databinding.ItemContentCategoryBinding
 import com.lee.playandroid.home.databinding.ItemContentTextBinding
-import com.lee.playandroid.home.helper.HomeCategory
 
 /**
  * @author jv.lee
@@ -35,7 +33,7 @@ class ContentCategoryItem : ViewBindingItem<HomeContent>() {
     }
 
     override fun isItemView(entity: HomeContent, position: Int): Boolean {
-        return entity is HomeContent.CategoryItem
+        return entity.categoryList != null
     }
 
     override fun convert(holder: ViewBindingHolder, entity: HomeContent, position: Int) {
@@ -51,13 +49,13 @@ class ContentTextItem : ViewBindingItem<HomeContent>() {
     }
 
     override fun isItemView(entity: HomeContent, position: Int): Boolean {
-        return entity is HomeContent.TextItem
+        return entity.content != null
     }
 
     override fun convert(holder: ViewBindingHolder, entity: HomeContent, position: Int) {
         holder.getViewBinding<ItemContentTextBinding>().apply {
 
-            (entity as HomeContent.TextItem).content.apply {
+            entity.content?.apply {
                 tvTitle.text = HtmlCompat.fromHtml(title, HtmlCompat.FROM_HTML_MODE_LEGACY)
                 tvAuthor.text = if (author.isEmpty()) shareUser else author
                 tvTime.text = TimeUtil.getChineseTimeMill(publishTime)
@@ -73,24 +71,4 @@ class ContentTextItem : ViewBindingItem<HomeContent>() {
         }
     }
 
-}
-
-data class PageData<T>(val page: Int, val pageTotal: Int,val data: MutableList<T>) : PagingData<T> {
-    override fun getPageNumber(): Int {
-        return page
-    }
-
-    override fun getPageTotalNumber(): Int {
-        return pageTotal
-    }
-
-    override fun getDataSource(): List<T> {
-        return data
-    }
-
-}
-
-sealed class HomeContent {
-    class TextItem(val content: Content) : HomeContent()
-    class CategoryItem(val data: List<HomeCategory>) : HomeContent()
 }

@@ -59,7 +59,7 @@ class UiStatePageLiveData(internal val initPage: Int = 0) : LiveData<UiState>() 
             }
 
             //网络数据设置
-            response = requestBlock(page).also {
+            response = requestBlock(page)?.also {
                 if (response != it) {
                     postValue(UiState.Success(it))
                 }
