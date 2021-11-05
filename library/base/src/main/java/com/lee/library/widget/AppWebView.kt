@@ -119,22 +119,20 @@ class AppWebView : WebView, ObservableLifecycle {
              * @return
              */
             override fun shouldOverrideUrlLoading(view: WebView, url: String): Boolean {
-                if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+                return if (url.startsWith("https://") || url.startsWith("https://")) {
+                    view.loadUrl(url)
+                    false
+                } else {
                     try {
-                        val uri = Uri.parse(url)
-                        val scheme = uri.scheme
-                        if (!TextUtils.isEmpty(scheme) && scheme != "http" && scheme != "https") {
-                            val intent = Intent(Intent.ACTION_VIEW, uri)
-                            intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
-                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                            view.context.applicationContext.startActivity(intent)
-                            return true
-                        }
+                        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+                        intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                        view.context.applicationContext.startActivity(intent)
                     } catch (e: Exception) {
-                        return super.shouldOverrideUrlLoading(view, url)
+                        e.printStackTrace()
                     }
+                    true
                 }
-                return super.shouldOverrideUrlLoading(view, url)
             }
 
             override fun shouldInterceptRequest(
