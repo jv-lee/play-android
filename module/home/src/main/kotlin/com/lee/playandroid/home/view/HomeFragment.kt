@@ -38,7 +38,6 @@ class HomeFragment : BaseNavigationFragment(R.layout.fragment_home) {
 
         binding.refreshView.setOnRefreshListener {
             mAdapter.openLoadMore()
-            viewModel.requestBanner()
             viewModel.loadListData(LoadStatus.REFRESH)
         }
 

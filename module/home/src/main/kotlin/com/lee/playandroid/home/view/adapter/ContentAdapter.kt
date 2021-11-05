@@ -45,7 +45,6 @@ class ContentBannerItem : ViewBindingItem<HomeContent>() {
     override fun convert(holder: ViewBindingHolder, entity: HomeContent, position: Int) {
         holder.getViewBinding<ItemContentBannerBinding>().apply {
             entity.bannerList?.apply {
-                if (banner.isStart()) return
                 banner.bindDataCreate(this, object : CardImageCreateHolder<Banner>() {
                     override fun bindItem(imageView: ImageView, data: Banner) {
                         GlideTools.get().loadImage(data.imagePath, imageView)
