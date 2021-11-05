@@ -1,6 +1,7 @@
 package com.lee.playandroid.home.view
 
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.lee.library.adapter.listener.LoadErrorListener
 import com.lee.library.adapter.page.submitData
@@ -11,6 +12,7 @@ import com.lee.library.extensions.toast
 import com.lee.library.mvvm.livedata.LoadStatus
 import com.lee.library.mvvm.ui.observeState
 import com.lee.pioneer.library.common.entity.PageUiData
+import com.lee.pioneer.router.navigateDetails
 import com.lee.playandroid.home.R
 import com.lee.playandroid.home.bean.HomeContent
 import com.lee.playandroid.home.databinding.FragmentHomeBinding
@@ -56,7 +58,11 @@ class HomeFragment : BaseNavigationFragment(R.layout.fragment_home) {
                     viewModel.loadListData(LoadStatus.RELOAD)
                 }
             })
-            setOnItemClickListener { view, entity, position ->  }
+            setOnItemClickListener { _, entity, _ ->
+                entity?.content?.apply {
+                    findNavController().navigateDetails(link)
+                }
+            }
         }
     }
 

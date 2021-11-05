@@ -9,6 +9,7 @@
         android:id="@+id/project_fragment"
         android:name="com.lee.playandroid.project.ProjectFragment"
         android:label="@string/nav_project"
-        tools:layout="@layout/fragment_project" />
-
+        tools:layout="@layout/fragment_project" >
+        <deepLink app:uri="play-android://com.lee.playandroid/project_fragment" />
+    </fragment>
 </navigation>

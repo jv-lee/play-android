@@ -21,6 +21,7 @@ object BuildModules {
         const val system = ":module:system"
         const val project = ":module:project"
         const val me = ":module:me"
+        const val details = ":module:details"
     }
 
 }

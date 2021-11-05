@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.core.text.HtmlCompat
+import androidx.navigation.Navigation
 import androidx.viewbinding.ViewBinding
 import com.lee.library.adapter.binding.ViewBindingAdapter
 import com.lee.library.adapter.binding.ViewBindingHolder
@@ -13,6 +14,8 @@ import com.lee.library.utils.TimeUtil
 import com.lee.library.widget.banner.holder.CardImageCreateHolder
 import com.lee.pioneer.library.common.entity.Banner
 import com.lee.pioneer.library.common.tools.GlideTools
+import com.lee.pioneer.router.navigateDetails
+import com.lee.pioneer.router.navigateOfficial
 import com.lee.playandroid.home.bean.HomeContent
 import com.lee.playandroid.home.databinding.ItemContentBannerBinding
 import com.lee.playandroid.home.databinding.ItemContentCategoryBinding
@@ -51,7 +54,7 @@ class ContentBannerItem : ViewBindingItem<HomeContent>() {
                     }
 
                     override fun onItemClick(position: Int, item: Banner) {
-//                        Navigation.findNavController(banner).navigate("***")
+                        Navigation.findNavController(banner).navigateDetails(item.url)
                     }
                 })
             }
@@ -70,7 +73,11 @@ class ContentCategoryItem : ViewBindingItem<HomeContent>() {
     }
 
     override fun convert(holder: ViewBindingHolder, entity: HomeContent, position: Int) {
-
+        holder.getViewBinding<ItemContentCategoryBinding>().apply {
+            root.setOnClickListener {
+                Navigation.findNavController(holder.itemView).navigateOfficial()
+            }
+        }
     }
 
 }

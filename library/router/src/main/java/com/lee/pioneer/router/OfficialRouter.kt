@@ -7,12 +7,12 @@ import com.lee.pioneer.router.extensions.navigateDeepLink
 
 /**
  * @author jv.lee
- * @data 2021/9/17
+ * @data 2021/11/5
  * @description
  */
-fun NavController.navigateSearch() {
+fun NavController.navigateOfficial() {
     navigateDeepLink(
-        "pioneer-app://com.lee.pioneer/search_fragment".toUri(),
-        NavigationAnim.Bottom
+        "play-android://com.lee.playandroid/official_fragment".toUri(),
+        NavigationAnim.SlideInOut
     )
 }
