@@ -28,10 +28,10 @@
         android:id="@+id/iv_search"
         android:layout_width="36dp"
         android:layout_height="36dp"
+        android:layout_marginEnd="@dimen/padding_item"
         android:background="@drawable/shape_search_bg"
         android:padding="10dp"
         android:src="@drawable/vector_search"
-        app:layout_constraintStart_toEndOf="@id/tv_title"
         app:layout_constraintBottom_toBottomOf="@id/tv_title"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@id/tv_title" />
@@ -48,9 +48,9 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_container"
-            android:descendantFocusability="blocksDescendants"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:descendantFocusability="blocksDescendants" />
 
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
