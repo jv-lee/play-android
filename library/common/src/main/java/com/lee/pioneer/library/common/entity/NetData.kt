@@ -98,3 +98,14 @@ data class Tag(
     val name: String,
     val url: String
 )
+
+@Keep
+data class OfficialTab(
+    val id: Long,
+    val courseId: Long,
+    val name: String,
+    val order: Long,
+    val parentChapterId: Long,
+    val userControlSetTop: Boolean,
+    val visible: Int
+)

@@ -16,6 +16,9 @@ interface ApiService {
     @GET("banner/json")
     suspend fun getBannerDataAsync(): Data<List<Banner>>
 
+    /**
+     * @param page 分页页面 取值[0-40]
+     */
     @GET("article/list/{page}/json")
     suspend fun getContentDataAsync(@Path("page") page: Int): Data<PageData<Content>>
 }

@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/official_fragment"
-        android:name="com.lee.playandroid.official.OfficialFragment"
+        android:name="com.lee.playandroid.official.ui.OfficialFragment"
         android:label="official"
         tools:layout="@layout/fragment_official">
         <deepLink app:uri="play-android://com.lee.playandroid/official_fragment" />

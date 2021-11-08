@@ -5,13 +5,42 @@
     android:layout_height="match_parent"
     android:background="@color/colorThemeBackground">
 
-    <TextView
-        android:layout_width="wrap_content"
+    <com.lee.library.widget.toolbar.TitleToolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="official"
+        app:layout_constraintTop_toTopOf="parent"
+        app:menuEnable="gone"
+        app:titleText="公众号" />
+
+    <com.lee.library.widget.StatusLayout
+        android:id="@+id/status_layout"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/toolbar">
+
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tab_layout"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/tab_height"
+            android:background="@color/colorThemeItem"
+            app:tabBackground="@android:color/transparent"
+            app:tabIndicatorColor="@color/colorAccent"
+            app:tabIndicatorFullWidth="false"
+            app:tabMode="scrollable"
+            app:tabRippleColor="@android:color/transparent"
+            app:tabSelectedTextColor="@color/colorAccent"
+            app:tabTextColor="@color/colorThemePrimary" />
+
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/vp_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/margin_tab_height" />
+
+    </com.lee.library.widget.StatusLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
