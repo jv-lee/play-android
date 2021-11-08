@@ -29,46 +29,44 @@ class HomeViewModel : CoroutineViewModel() {
      * 获取contentList列表
      */
     fun loadListData(@LoadStatus status: Int) {
-        launchMain {
-            launchIO {
-                contentListLive.apply {
+        launchIO {
+            contentListLive.apply {
 
-                    pageLaunch(status, { page: Int ->
-                        val dataList = mutableListOf<HomeContent>()
+                pageLaunch(status, { page: Int ->
+                    val dataList = mutableListOf<HomeContent>()
 
-                        //首页添加header数据
-                        if (page == getInitPage()) {
-                            val banner = repository.api.getBannerDataAsync().data
-                            dataList.add(HomeContent(bannerList = banner))
+                    //首页添加header数据
+                    if (page == getInitPage()) {
+                        val banner = repository.api.getBannerDataAsync().data
+                        dataList.add(HomeContent(bannerList = banner))
 
-                            val category = CategoryHelper.getHomeCategory()
-                            dataList.add(HomeContent(categoryList = category))
+                        val category = CategoryHelper.getHomeCategory()
+                        dataList.add(HomeContent(categoryList = category))
+                    }
+
+                    //获取网络item数据
+                    val textItemData = repository.api.getContentDataAsync(page).data.apply {
+                        data.forEach {
+                            dataList.add(HomeContent(content = it))
                         }
+                    }
 
-                        //获取网络item数据
-                        val textItemData = repository.api.getContentDataAsync(page).data.apply {
-                            data.forEach {
-                                dataList.add(HomeContent(content = it))
-                            }
-                        }
+                    //构建分页ui数据
+                    PageUiData(
+                        textItemData.curPage,
+                        textItemData.total,
+                        dataList
+                    ).also { newData ->
+                        applyData(getValueData<PageUiData<HomeContent>>()?.data, newData.data)
+                    }
+                }, {
+                    //缓存数据
+                    cacheManager.getCache(Constants.HOME_CONTENT_CACHE_KEY)
+                }, {
+                    //存储缓存数据
+                    cacheManager.putCache(Constants.HOME_CONTENT_CACHE_KEY, it)
+                })
 
-                        //构建分页ui数据
-                        PageUiData(
-                            textItemData.curPage,
-                            textItemData.total,
-                            dataList
-                        ).also { newData ->
-                            applyData(getValueData<PageUiData<HomeContent>>()?.data, newData.data)
-                        }
-                    }, {
-                        //缓存数据
-                        cacheManager.getCache(Constants.HOME_CONTENT_CACHE_KEY)
-                    }, {
-                        //存储缓存数据
-                        cacheManager.putCache(Constants.HOME_CONTENT_CACHE_KEY, it)
-                    })
-
-                }
             }
         }
     }

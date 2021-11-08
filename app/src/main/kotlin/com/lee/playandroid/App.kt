@@ -65,7 +65,6 @@ class App :BaseApplication() {
 
         //初始化工具类
         CoroutineScope(Dispatchers.IO).launch {
-            HttpManager.getInstance().setUnSafeClient(true)
             PreferencesTools.getInstance(this@App)
             CacheManager.init(this@App, BuildConfig.VERSION_CODE)
             ApplicationModuleService.init(this@App)

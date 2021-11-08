@@ -80,7 +80,7 @@ class OfficialListFragment : BaseNavigationFragment(R.layout.fragment_official_l
             binding.refreshLayout.isRefreshing = false
             mAdapter.submitData(it, diff = true)
         }, error = {
-            toast(HttpManager.getInstance().getServerMessage(it))
+            toast(it.message)
             binding.refreshLayout.isRefreshing = false
             mAdapter.submitFailed()
         })

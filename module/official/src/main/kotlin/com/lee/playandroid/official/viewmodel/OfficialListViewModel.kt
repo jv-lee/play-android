@@ -23,15 +23,13 @@ class OfficialListViewModel(handle: SavedStateHandle) : CoroutineViewModel() {
     val contentListLive = UiStatePageLiveData(initPage = 1)
 
     fun requestContentList(@LoadStatus status: Int) {
-        launchMain {
-            launchIO {
-                contentListLive.apply {
-                    pageLaunch(status, { page ->
-                        repository.api.getOfficialDataAsync(id, page).data.also { newData ->
-                            applyData(getValueData<PageData<Content>>()?.data, newData.data)
-                        }
-                    })
-                }
+        launchIO {
+            contentListLive.apply {
+                pageLaunch(status, { page ->
+                    repository.api.getOfficialDataAsync(id, page).data.also { newData ->
+                        applyData(getValueData<PageData<Content>>()?.data, newData.data)
+                    }
+                })
             }
         }
     }
