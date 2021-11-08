@@ -27,7 +27,7 @@ import com.lee.playandroid.home.databinding.ItemContentTextBinding
 /**
  * @author jv.lee
  * @data 2021/11/2
- * @description
+ * @description 首页Home数据列表适配器
  */
 class ContentAdapter(context: Context, data: List<HomeContent>) :
     ViewBindingAdapter<HomeContent>(context, data) {
@@ -37,103 +37,113 @@ class ContentAdapter(context: Context, data: List<HomeContent>) :
         addItemStyles(ContentCategoryItem())
         addItemStyles(ContentTextItem())
     }
-}
 
-class ContentBannerItem : ViewBindingItem<HomeContent>() {
-    override fun getItemViewBinding(context: Context, parent: ViewGroup): ViewBinding {
-        return ItemContentBannerBinding.inflate(LayoutInflater.from(context), parent, false)
-    }
-
-    override fun isItemView(entity: HomeContent, position: Int): Boolean {
-        return entity.bannerList != null
-    }
-
-    override fun convert(holder: ViewBindingHolder, entity: HomeContent, position: Int) {
-        holder.getViewBinding<ItemContentBannerBinding>().apply {
-            entity.bannerList?.apply {
-                banner.bindDataCreate(this, object : CardImageCreateHolder<Banner>() {
-                    override fun bindItem(imageView: ImageView, data: Banner) {
-                        GlideTools.get().loadImage(data.imagePath, imageView)
-                    }
-
-                    override fun onItemClick(position: Int, item: Banner) {
-                        Navigation.findNavController(banner).navigateDetails(item.url)
-                    }
-                })
-            }
+    /**
+     * 首页BANNER样式
+     */
+    inner  class ContentBannerItem : ViewBindingItem<HomeContent>() {
+        override fun getItemViewBinding(context: Context, parent: ViewGroup): ViewBinding {
+            return ItemContentBannerBinding.inflate(LayoutInflater.from(context), parent, false)
         }
-    }
 
-}
+        override fun isItemView(entity: HomeContent, position: Int): Boolean {
+            return entity.bannerList != null
+        }
 
-class ContentCategoryItem : ViewBindingItem<HomeContent>() {
+        override fun convert(holder: ViewBindingHolder, entity: HomeContent, position: Int) {
+            holder.getViewBinding<ItemContentBannerBinding>().apply {
+                entity.bannerList?.apply {
+                    banner.bindDataCreate(this, object : CardImageCreateHolder<Banner>() {
+                        override fun bindItem(imageView: ImageView, data: Banner) {
+                            GlideTools.get().loadImage(data.imagePath, imageView)
+                        }
 
-    private var mAdapter: ContentCategoryAdapter? = null
-
-    override fun getItemViewBinding(context: Context, parent: ViewGroup): ViewBinding {
-        return ItemContentCategoryBinding.inflate(LayoutInflater.from(context), parent, false)
-    }
-
-    override fun isItemView(entity: HomeContent, position: Int): Boolean {
-        return entity.categoryList != null
-    }
-
-    override fun convert(holder: ViewBindingHolder, entity: HomeContent, position: Int) {
-        holder.getViewBinding<ItemContentCategoryBinding>().apply {
-            val context = holder.itemView.context
-            val data = entity.categoryList
-            data ?: return
-
-            //构建适配器
-            mAdapter ?: kotlin.run {
-                mAdapter = ContentCategoryAdapter(context, data).apply {
-                    setOnItemClickListener { view, entity, _ ->
-                        Navigation.findNavController(view)
-                            .navigateDeepLink(Uri.parse(entity.link), NavigationAnim.SlideInOut)
-                    }
+                        override fun onItemClick(position: Int, item: Banner) {
+                            Navigation.findNavController(banner).navigateDetails(item.url)
+                        }
+                    })
                 }
             }
-
-            //设置列表基础参数
-            rvContainer.layoutManager ?: kotlin.run {
-                rvContainer.layoutManager =
-                    LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-            }
-            rvContainer.adapter ?: kotlin.run {
-                rvContainer.adapter = mAdapter
-            }
         }
+
     }
 
-}
+    /**
+     * 首页分类样式
+     */
+    inner class ContentCategoryItem : ViewBindingItem<HomeContent>() {
 
-class ContentTextItem : ViewBindingItem<HomeContent>() {
+        private var mAdapter: ContentCategoryAdapter? = null
 
-    override fun getItemViewBinding(context: Context, parent: ViewGroup): ViewBinding {
-        return ItemContentTextBinding.inflate(LayoutInflater.from(context), parent, false)
-    }
+        override fun getItemViewBinding(context: Context, parent: ViewGroup): ViewBinding {
+            return ItemContentCategoryBinding.inflate(LayoutInflater.from(context), parent, false)
+        }
 
-    override fun isItemView(entity: HomeContent, position: Int): Boolean {
-        return entity.content != null
-    }
+        override fun isItemView(entity: HomeContent, position: Int): Boolean {
+            return entity.categoryList != null
+        }
 
-    override fun convert(holder: ViewBindingHolder, entity: HomeContent, position: Int) {
-        holder.getViewBinding<ItemContentTextBinding>().apply {
+        override fun convert(holder: ViewBindingHolder, entity: HomeContent, position: Int) {
+            holder.getViewBinding<ItemContentCategoryBinding>().apply {
+                val context = holder.itemView.context
+                val data = entity.categoryList
+                data ?: return
 
-            entity.content?.apply {
-                tvTitle.text = HtmlCompat.fromHtml(title, HtmlCompat.FROM_HTML_MODE_LEGACY)
-                tvAuthor.text = if (author.isEmpty()) shareUser else author
-                tvTime.text = TimeUtil.getChineseTimeMill(publishTime)
+                //构建适配器
+                mAdapter ?: kotlin.run {
+                    mAdapter = ContentCategoryAdapter(context, data).apply {
+                        setOnItemClickListener { view, entity, _ ->
+                            Navigation.findNavController(view)
+                                .navigateDeepLink(Uri.parse(entity.link), NavigationAnim.SlideInOut)
+                        }
+                    }
+                }
 
-                tvCategory.text = when {
-                    superChapterName.isNotEmpty() and chapterName.isNotEmpty() -> "$superChapterName / $chapterName"
-                    superChapterName.isNotEmpty() -> superChapterName
-                    chapterName.isNotEmpty() -> chapterName
-                    else -> ""
+                //设置列表基础参数
+                rvContainer.layoutManager ?: kotlin.run {
+                    rvContainer.layoutManager =
+                        LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+                }
+                rvContainer.adapter ?: kotlin.run {
+                    rvContainer.adapter = mAdapter
                 }
             }
-
         }
+
+    }
+
+    /**
+     * 首页普通信息条目
+     */
+    inner  class ContentTextItem : ViewBindingItem<HomeContent>() {
+
+        override fun getItemViewBinding(context: Context, parent: ViewGroup): ViewBinding {
+            return ItemContentTextBinding.inflate(LayoutInflater.from(context), parent, false)
+        }
+
+        override fun isItemView(entity: HomeContent, position: Int): Boolean {
+            return entity.content != null
+        }
+
+        override fun convert(holder: ViewBindingHolder, entity: HomeContent, position: Int) {
+            holder.getViewBinding<ItemContentTextBinding>().apply {
+
+                entity.content?.apply {
+                    tvTitle.text = HtmlCompat.fromHtml(title, HtmlCompat.FROM_HTML_MODE_LEGACY)
+                    tvAuthor.text = if (author.isEmpty()) shareUser else author
+                    tvTime.text = TimeUtil.getChineseTimeMill(publishTime)
+
+                    tvCategory.text = when {
+                        superChapterName.isNotEmpty() and chapterName.isNotEmpty() -> "$superChapterName / $chapterName"
+                        superChapterName.isNotEmpty() -> superChapterName
+                        chapterName.isNotEmpty() -> chapterName
+                        else -> ""
+                    }
+                }
+
+            }
+        }
+
     }
 
 }

@@ -13,7 +13,8 @@ import com.lee.playandroid.home.helper.HomeCategory
 /**
  * @author jv.lee
  * @data 2021/11/8
- * @description
+ * @description 首页分类列表适配器 基于
+ * @see ContentAdapter.ContentCategoryItem
  */
 class ContentCategoryAdapter(context: Context, data: List<HomeCategory>) :
     ViewBindingAdapter<HomeCategory>(context, data) {
@@ -21,19 +22,22 @@ class ContentCategoryAdapter(context: Context, data: List<HomeCategory>) :
     init {
         addItemStyles(ContentCategoryChildItem())
     }
-}
 
-class ContentCategoryChildItem() : ViewBindingItem<HomeCategory>() {
+    /**
+     * 每条分类item样式
+     */
+    inner class ContentCategoryChildItem : ViewBindingItem<HomeCategory>() {
 
-    override fun getItemViewBinding(context: Context, parent: ViewGroup): ViewBinding {
-        return ItemContentCategoryChildBinding.inflate(LayoutInflater.from(context), parent, false)
-    }
-
-    override fun convert(holder: ViewBindingHolder, entity: HomeCategory, position: Int) {
-        holder.getViewBinding<ItemContentCategoryChildBinding>().apply {
-            ivCategoryIcon.setImageResource(entity.iconResId)
-            tvCategoryName.text = entity.name
+        override fun getItemViewBinding(context: Context, parent: ViewGroup): ViewBinding {
+            return ItemContentCategoryChildBinding.inflate(LayoutInflater.from(context), parent, false)
         }
-    }
 
+        override fun convert(holder: ViewBindingHolder, entity: HomeCategory, position: Int) {
+            holder.getViewBinding<ItemContentCategoryChildBinding>().apply {
+                ivCategoryIcon.setImageResource(entity.iconResId)
+                tvCategoryName.text = entity.name
+            }
+        }
+
+    }
 }

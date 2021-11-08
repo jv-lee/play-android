@@ -7,7 +7,8 @@ import com.lee.playandroid.home.helper.HomeCategory
 /**
  * @author jv.lee
  * @date 2021/11/4
- * @description
+ * @description 首页多类型Ui数据实体
+ * @see com.lee.playandroid.home.view.adapter.ContentAdapter
  */
 data class HomeContent(
     val bannerList: List<Banner>? = null,

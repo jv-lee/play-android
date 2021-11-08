@@ -5,9 +5,13 @@ import com.lee.playandroid.home.R
 /**
  * @author jv.lee
  * @data 2021/11/4
- * @description
+ * @description 首页分类本地数据帮助类
  */
 object CategoryHelper {
+
+    /**
+     * 提供本地首页分类数据
+     */
     fun getHomeCategory() = arrayListOf(
         HomeCategory(
             R.drawable.vector_icon_official,

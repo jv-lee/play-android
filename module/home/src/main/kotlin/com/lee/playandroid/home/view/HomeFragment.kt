@@ -22,7 +22,7 @@ import com.lee.playandroid.home.viewmodel.HomeViewModel
 /**
  * @author jv.lee
  * @data 2021/11/2
- * @description
+ * @description 首页fragment
  */
 class HomeFragment : BaseNavigationFragment(R.layout.fragment_home) {
 
