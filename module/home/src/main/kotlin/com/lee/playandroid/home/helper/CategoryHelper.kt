@@ -9,9 +9,17 @@ import com.lee.playandroid.home.R
  */
 object CategoryHelper {
     fun getHomeCategory() = arrayListOf(
-        HomeCategory(R.mipmap.ic_splash_info, "公众号", ""),
-        HomeCategory(R.mipmap.ic_splash_info, "项目", "")
+        HomeCategory(
+            R.drawable.vector_icon_official,
+            "公众号",
+            "play-android://com.lee.playandroid/official_fragment"
+        ),
+        HomeCategory(
+            R.drawable.vector_icon_project,
+            "项目",
+            "play-android://com.lee.playandroid/project_fragment"
+        )
     )
 }
 
-data class HomeCategory(val icon: Int, val name: String, val link: String)
+data class HomeCategory(val iconResId: Int, val name: String, val link: String)

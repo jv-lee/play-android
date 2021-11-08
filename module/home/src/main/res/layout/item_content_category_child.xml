@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.lee.library.widget.ShadowConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="164dp"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/margin_item"
+    android:padding="@dimen/padding_item"
+    app:rippleEnable="true"
+    app:shadowColor="#ebebeb"
+    app:shadowFillColor="@color/colorThemeItem"
+    app:shadowRound="@dimen/radius_item">
+
+    <ImageView
+        android:id="@+id/iv_category_icon"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:src="@drawable/vector_icon_official" />
+
+    <TextView
+        android:id="@+id/tv_category_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_item"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/iv_category_icon"
+        tools:text="公众哈" />
+
+</com.lee.library.widget.ShadowConstraintLayout>

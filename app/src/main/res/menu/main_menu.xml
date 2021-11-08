@@ -6,19 +6,9 @@
         android:title="@string/nav_home" />
 
     <item
-        android:id="@+id/official_graph"
-        android:icon="@drawable/vector_official"
-        android:title="@string/nav_official" />
-
-    <item
         android:id="@+id/system_graph"
         android:icon="@drawable/vector_system"
         android:title="@string/nav_system" />
-
-    <item
-        android:id="@+id/project_graph"
-        android:icon="@drawable/vector_project"
-        android:title="@string/nav_project" />
 
     <item
         android:id="@+id/me_graph"

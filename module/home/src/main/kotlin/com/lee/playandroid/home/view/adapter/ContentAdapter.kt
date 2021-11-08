@@ -1,11 +1,13 @@
 package com.lee.playandroid.home.view.adapter
 
 import android.content.Context
+import android.net.Uri
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.core.text.HtmlCompat
 import androidx.navigation.Navigation
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewbinding.ViewBinding
 import com.lee.library.adapter.binding.ViewBindingAdapter
 import com.lee.library.adapter.binding.ViewBindingHolder
@@ -14,8 +16,9 @@ import com.lee.library.utils.TimeUtil
 import com.lee.library.widget.banner.holder.CardImageCreateHolder
 import com.lee.pioneer.library.common.entity.Banner
 import com.lee.pioneer.library.common.tools.GlideTools
+import com.lee.pioneer.router.extensions.NavigationAnim
+import com.lee.pioneer.router.extensions.navigateDeepLink
 import com.lee.pioneer.router.navigateDetails
-import com.lee.pioneer.router.navigateOfficial
 import com.lee.playandroid.home.bean.HomeContent
 import com.lee.playandroid.home.databinding.ItemContentBannerBinding
 import com.lee.playandroid.home.databinding.ItemContentCategoryBinding
@@ -64,6 +67,9 @@ class ContentBannerItem : ViewBindingItem<HomeContent>() {
 }
 
 class ContentCategoryItem : ViewBindingItem<HomeContent>() {
+
+    private var mAdapter: ContentCategoryAdapter? = null
+
     override fun getItemViewBinding(context: Context, parent: ViewGroup): ViewBinding {
         return ItemContentCategoryBinding.inflate(LayoutInflater.from(context), parent, false)
     }
@@ -74,8 +80,27 @@ class ContentCategoryItem : ViewBindingItem<HomeContent>() {
 
     override fun convert(holder: ViewBindingHolder, entity: HomeContent, position: Int) {
         holder.getViewBinding<ItemContentCategoryBinding>().apply {
-            root.setOnClickListener {
-                Navigation.findNavController(holder.itemView).navigateOfficial()
+            val context = holder.itemView.context
+            val data = entity.categoryList
+            data ?: return
+
+            //构建适配器
+            mAdapter ?: kotlin.run {
+                mAdapter = ContentCategoryAdapter(context, data).apply {
+                    setOnItemClickListener { view, entity, _ ->
+                        Navigation.findNavController(view)
+                            .navigateDeepLink(Uri.parse(entity.link), NavigationAnim.SlideInOut)
+                    }
+                }
+            }
+
+            //设置列表基础参数
+            rvContainer.layoutManager ?: kotlin.run {
+                rvContainer.layoutManager =
+                    LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+            }
+            rvContainer.adapter ?: kotlin.run {
+                rvContainer.adapter = mAdapter
             }
         }
     }
