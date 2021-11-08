@@ -26,7 +26,7 @@
         android:background="@color/colorThemeItem"
         app:itemIconTint="@drawable/main_selector"
         app:itemTextColor="@drawable/main_selector"
-        app:labelVisibilityMode="labeled"
+        app:labelVisibilityMode="unlabeled"
         app:layout_constraintBottom_toBottomOf="parent"
         app:menu="@menu/main_menu" />
 
