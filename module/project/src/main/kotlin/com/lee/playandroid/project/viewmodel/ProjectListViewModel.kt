@@ -8,6 +8,7 @@ import com.lee.pioneer.library.common.entity.Content
 import com.lee.pioneer.library.common.entity.PageData
 import com.lee.playandroid.project.model.repository.ApiRepository
 import com.lee.playandroid.project.ui.ProjectListFragment
+import kotlinx.coroutines.delay
 
 /**
  * @author jv.lee
@@ -24,6 +25,7 @@ class ProjectListViewModel(handle: SavedStateHandle) : CoroutineViewModel() {
 
     fun requestContentList(@LoadStatus status: Int) {
         launchIO {
+            delay(100)
             contentListLive.apply {
                 pageLaunch(status, { page ->
                     repository.api.getProjectDataAsync(page, id).data.also { newData ->
