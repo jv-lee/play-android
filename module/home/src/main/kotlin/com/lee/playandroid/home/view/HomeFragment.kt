@@ -33,10 +33,8 @@ class HomeFragment : BaseNavigationFragment(R.layout.fragment_home) {
     private val mAdapter by lazy { ContentAdapter(requireContext(), arrayListOf()) }
 
     override fun bindView() {
-        binding.rvContainer.apply {
-            layoutManager = LinearLayoutManager(requireContext())
-            adapter = mAdapter.proxy
-        }
+        binding.rvContainer.layoutManager = LinearLayoutManager(requireContext())
+        binding.rvContainer.adapter = mAdapter.proxy
 
         binding.refreshView.setOnRefreshListener {
             mAdapter.openLoadMore()
