@@ -40,4 +40,8 @@ class OfficialViewModel : CoroutineViewModel() {
         }
     }
 
+    init {
+        requestTabs()
+    }
+
 }

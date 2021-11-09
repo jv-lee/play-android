@@ -87,6 +87,10 @@ class OfficialListFragment : BaseFragment(R.layout.fragment_official_list) {
             })
     }
 
+    override fun lazyLoad() {
+        viewModel.requestContentList(LoadStatus.INIT)
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
         binding.rvContainer.removeAllViews()

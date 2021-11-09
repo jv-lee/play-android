@@ -79,8 +79,8 @@ class OfficialFragment : BaseFragment(R.layout.fragment_official) {
         }.attach()
     }
 
-    override fun lazyLoad() {
-        viewModel.requestTabs()
-    }
+//    override fun lazyLoad() {
+//        viewModel.requestTabs()
+//    }
 
 }

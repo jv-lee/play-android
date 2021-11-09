@@ -4,10 +4,12 @@ import androidx.lifecycle.SavedStateHandle
 import com.lee.library.mvvm.livedata.LoadStatus
 import com.lee.library.mvvm.ui.UiStatePageLiveData
 import com.lee.library.mvvm.viewmodel.CoroutineViewModel
+import com.lee.library.utils.LogUtil
 import com.lee.pioneer.library.common.entity.Content
 import com.lee.pioneer.library.common.entity.PageData
 import com.lee.playandroid.official.model.repository.ApiRepository
 import com.lee.playandroid.official.ui.OfficialListFragment
+import kotlinx.coroutines.delay
 
 /**
  * @author jv.lee
@@ -32,10 +34,6 @@ class OfficialListViewModel(handle: SavedStateHandle) : CoroutineViewModel() {
                 })
             }
         }
-    }
-
-    init {
-        requestContentList(LoadStatus.INIT)
     }
 
 }
