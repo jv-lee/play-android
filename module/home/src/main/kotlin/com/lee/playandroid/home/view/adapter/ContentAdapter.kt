@@ -94,7 +94,7 @@ class ContentAdapter(context: Context, data: List<HomeContent>) :
                     mAdapter = ContentCategoryAdapter(context, data).apply {
                         setOnItemClickListener { view, entity, _ ->
                             Navigation.findNavController(view)
-                                .navigateDeepLink(Uri.parse(entity.link), NavigationAnim.SlideInOut)
+                                .navigateDeepLink(Uri.parse(entity.link), NavigationAnim.ZoomIn)
                         }
                     }
                 }

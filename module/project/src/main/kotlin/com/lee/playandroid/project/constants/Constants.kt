@@ -7,4 +7,5 @@ package com.lee.playandroid.project.constants
  */
 object Constants {
     const val PROJECT_TAB_CACHE_KEY = "project-tab-cache-key"
+    const val PROJECT_DATA_CACHE_KEY = "project-data-cache-key"
 }
