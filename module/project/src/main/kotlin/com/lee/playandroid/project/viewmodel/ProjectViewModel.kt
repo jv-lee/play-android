@@ -2,14 +2,12 @@ package com.lee.playandroid.project.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.SavedStateHandle
 import com.lee.library.cache.CacheManager
 import com.lee.library.extensions.getCache
 import com.lee.library.extensions.putCache
 import com.lee.library.mvvm.ui.UiState
 import com.lee.library.mvvm.ui.stateCacheFlow
 import com.lee.library.mvvm.viewmodel.CoroutineViewModel
-import com.lee.library.utils.LogUtil
 import com.lee.playandroid.project.constants.Constants
 import com.lee.playandroid.project.model.repository.ApiRepository
 import kotlinx.coroutines.flow.collect
@@ -37,7 +35,6 @@ class ProjectViewModel : CoroutineViewModel() {
             }, {
                 cacheManager.putCache(Constants.PROJECT_TAB_CACHE_KEY, it)
             }).collect {
-                LogUtil.i("$it")
                 _tabsLive.postValue(it)
             }
         }

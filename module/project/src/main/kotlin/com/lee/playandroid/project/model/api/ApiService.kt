@@ -6,6 +6,7 @@ import com.lee.pioneer.library.common.entity.PageData
 import com.lee.pioneer.library.common.entity.Tab
 import retrofit2.http.GET
 import retrofit2.http.Path
+import retrofit2.http.Query
 
 /**
  * @author jv.lee
@@ -19,11 +20,11 @@ interface ApiService {
 
     /**
      * @param id 项目id 由tab接口获取
-     * @param page 分页页面 取值[0-40]
+     * @param page 分页页面 取值[1-40]
      */
-    @GET("project/list/{page}/json?cid={id}")
+    @GET("project/list/{page}/json")
     suspend fun getProjectDataAsync(
-        @Path("id") id: Long,
-        @Path("page") page: Int
+        @Path("page") page: Int,
+        @Query("cid") id: Long
     ): Data<PageData<Content>>
 }
