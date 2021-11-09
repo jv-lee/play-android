@@ -100,7 +100,7 @@ data class Tag(
 )
 
 @Keep
-data class OfficialTab(
+data class Tab(
     val id: Long,
     val courseId: Long,
     val name: String,

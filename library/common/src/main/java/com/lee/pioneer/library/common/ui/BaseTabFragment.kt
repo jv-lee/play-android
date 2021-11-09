@@ -1,30 +1,28 @@
-package com.lee.playandroid.official.ui
+package com.lee.pioneer.library.common.ui
 
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
+import androidx.lifecycle.LiveData
 import com.google.android.material.tabs.TabLayoutMediator
 import com.lee.library.adapter.core.UiPager2Adapter
 import com.lee.library.base.BaseFragment
 import com.lee.library.extensions.binding
 import com.lee.library.extensions.increaseOffscreenPageLimit
 import com.lee.library.extensions.toast
+import com.lee.library.mvvm.ui.UiState
 import com.lee.library.mvvm.ui.observeState
 import com.lee.library.widget.StatusLayout
+import com.lee.pioneer.library.common.R
+import com.lee.pioneer.library.common.databinding.FragmentBaseTabBinding
 import com.lee.pioneer.library.common.entity.Tab
-import com.lee.playandroid.official.R
-import com.lee.playandroid.official.databinding.FragmentOfficialBinding
-import com.lee.playandroid.official.viewmodel.OfficialViewModel
 
 /**
  * @author jv.lee
- * @data 2021/11/2
- * @description
+ * @data 2021/11/9
+ * @description 基础tabFragment类
  */
-class OfficialFragment : BaseFragment(R.layout.fragment_official) {
+abstract class BaseTabFragment : BaseFragment(R.layout.fragment_base_tab) {
 
-    private val viewModel by viewModels<OfficialViewModel>()
-
-    private val binding by binding(FragmentOfficialBinding::bind)
+    private val binding by binding(FragmentBaseTabBinding::bind)
 
     private var adapter: UiPager2Adapter? = null
     private var mediator: TabLayoutMediator? = null
@@ -32,12 +30,12 @@ class OfficialFragment : BaseFragment(R.layout.fragment_official) {
     override fun bindView() {
         binding.statusLayout.setStatus(StatusLayout.STATUS_LOADING)
         binding.statusLayout.setOnReloadListener {
-            viewModel.requestTabs()
+            requestTabs()
         }
     }
 
     override fun bindData() {
-        viewModel.tabsLive.observeState<List<Tab>>(viewLifecycleOwner, success = {
+        dataObserveState().observeState<List<Tab>>(viewLifecycleOwner, success = {
             binding.statusLayout.setStatus(StatusLayout.STATUS_DATA)
             bindAdapter(it)
         }, error = {
@@ -63,7 +61,7 @@ class OfficialFragment : BaseFragment(R.layout.fragment_official) {
 
         tabsData.map {
             titles.add(it.name)
-            fragments.add(OfficialListFragment.newInstance(it.id))
+            fragments.add(createChildFragment(it.id))
         }
 
         binding.vpContainer.increaseOffscreenPageLimit()
@@ -78,5 +76,13 @@ class OfficialFragment : BaseFragment(R.layout.fragment_official) {
             mediator = it
         }.attach()
     }
+
+    abstract fun requestTabs()
+
+    abstract fun createChildFragment(id: Long): Fragment
+
+    abstract fun dataObserveState(): LiveData<UiState>
+
+    open fun findToolbar() = binding.toolbar
 
 }
