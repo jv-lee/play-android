@@ -5,6 +5,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.LiveData
 import com.lee.library.mvvm.ui.UiState
 import com.lee.pioneer.library.common.ui.BaseTabFragment
+import com.lee.playandroid.project.R
 import com.lee.playandroid.project.viewmodel.ProjectViewModel
 
 /**
@@ -18,7 +19,7 @@ class ProjectFragment : BaseTabFragment() {
 
     override fun bindView() {
         super.bindView()
-        findBinding().toolbar.setTitleText("项目")
+        findBinding().toolbar.setTitleText(getString(R.string.project_title))
     }
 
     override fun requestTabs() {

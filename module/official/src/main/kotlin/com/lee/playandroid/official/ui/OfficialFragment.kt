@@ -5,6 +5,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.LiveData
 import com.lee.library.mvvm.ui.UiState
 import com.lee.pioneer.library.common.ui.BaseTabFragment
+import com.lee.playandroid.official.R
 import com.lee.playandroid.official.viewmodel.OfficialViewModel
 
 /**
@@ -18,7 +19,7 @@ class OfficialFragment : BaseTabFragment() {
 
     override fun bindView() {
         super.bindView()
-        findBinding().toolbar.setTitleText("公众号")
+        findBinding().toolbar.setTitleText(getString(R.string.official_title))
     }
 
     override fun requestTabs() {
