@@ -2,17 +2,9 @@ package com.lee.playandroid.official.ui
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import com.google.android.material.tabs.TabLayoutMediator
-import com.lee.library.adapter.core.UiPager2Adapter
-import com.lee.library.base.BaseFragment
-import com.lee.library.extensions.binding
-import com.lee.library.extensions.increaseOffscreenPageLimit
-import com.lee.library.extensions.toast
-import com.lee.library.mvvm.ui.observeState
-import com.lee.library.widget.StatusLayout
-import com.lee.pioneer.library.common.entity.Tab
-import com.lee.playandroid.official.R
-import com.lee.playandroid.official.databinding.FragmentOfficialBinding
+import androidx.lifecycle.LiveData
+import com.lee.library.mvvm.ui.UiState
+import com.lee.pioneer.library.common.ui.BaseTabFragment
 import com.lee.playandroid.official.viewmodel.OfficialViewModel
 
 /**
@@ -20,63 +12,25 @@ import com.lee.playandroid.official.viewmodel.OfficialViewModel
  * @data 2021/11/2
  * @description
  */
-class OfficialFragment : BaseFragment(R.layout.fragment_official) {
+class OfficialFragment : BaseTabFragment() {
 
     private val viewModel by viewModels<OfficialViewModel>()
 
-    private val binding by binding(FragmentOfficialBinding::bind)
-
-    private var adapter: UiPager2Adapter? = null
-    private var mediator: TabLayoutMediator? = null
-
     override fun bindView() {
-        binding.statusLayout.setStatus(StatusLayout.STATUS_LOADING)
-        binding.statusLayout.setOnReloadListener {
-            viewModel.requestTabs()
-        }
+        super.bindView()
+        findToolbar().setTitleText("公众号")
     }
 
-    override fun bindData() {
-        viewModel.tabsLive.observeState<List<Tab>>(viewLifecycleOwner, success = {
-            binding.statusLayout.setStatus(StatusLayout.STATUS_DATA)
-            bindAdapter(it)
-        }, error = {
-            toast(it.message)
-            binding.statusLayout.setStatus(StatusLayout.STATUS_DATA_ERROR)
-        }, loading = {
-            binding.statusLayout.setStatus(StatusLayout.STATUS_LOADING)
-        })
+    override fun requestTabs() {
+        viewModel.requestTabs()
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        mediator?.detach()
+    override fun createChildFragment(id: Long): Fragment {
+        return OfficialListFragment.newInstance(id)
     }
 
-    /**
-     * 根据分类数据构建分页tab及page
-     * @param tabsData 分类page数据
-     */
-    private fun bindAdapter(tabsData: List<Tab>) {
-        val fragments = arrayListOf<Fragment>()
-        val titles = arrayListOf<String>()
-
-        tabsData.map {
-            titles.add(it.name)
-            fragments.add(OfficialListFragment.newInstance(it.id))
-        }
-
-        binding.vpContainer.increaseOffscreenPageLimit()
-        binding.vpContainer.isSaveEnabled = true
-        binding.vpContainer.adapter = UiPager2Adapter(this, fragments).also {
-            adapter = it
-        }
-
-        TabLayoutMediator(binding.tabLayout, binding.vpContainer) { tab, position ->
-            tab.text = titles[position]
-        }.also {
-            mediator = it
-        }.attach()
+    override fun dataObserveState(): LiveData<UiState> {
+        return viewModel.tabsLive
     }
 
 }
