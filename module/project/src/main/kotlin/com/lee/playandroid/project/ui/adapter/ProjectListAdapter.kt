@@ -10,6 +10,7 @@ import com.lee.library.adapter.binding.ViewBindingHolder
 import com.lee.library.adapter.item.ViewBindingItem
 import com.lee.library.utils.TimeUtil
 import com.lee.pioneer.library.common.entity.Content
+import com.lee.pioneer.library.common.tools.GlideTools
 import com.lee.playandroid.project.databinding.ItemProjectBinding
 
 /**
@@ -32,16 +33,12 @@ class ProjectListAdapter(context: Context, data: List<Content>) :
         override fun convert(holder: ViewBindingHolder, entity: Content, position: Int) {
             holder.getViewBinding<ItemProjectBinding>().apply {
                 entity.apply {
+                    GlideTools.get().loadImage(envelopePic, ivImage)
+
                     tvTitle.text = HtmlCompat.fromHtml(title, HtmlCompat.FROM_HTML_MODE_LEGACY)
+                    tvDescription.text = desc
                     tvAuthor.text = if (author.isEmpty()) shareUser else author
                     tvTime.text = TimeUtil.getChineseTimeMill(publishTime)
-
-                    tvCategory.text = when {
-                        superChapterName.isNotEmpty() and chapterName.isNotEmpty() -> "$superChapterName / $chapterName"
-                        superChapterName.isNotEmpty() -> superChapterName
-                        chapterName.isNotEmpty() -> chapterName
-                        else -> ""
-                    }
                 }
             }
         }
