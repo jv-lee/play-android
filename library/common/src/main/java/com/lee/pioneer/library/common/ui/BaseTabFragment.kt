@@ -28,7 +28,6 @@ abstract class BaseTabFragment : BaseFragment(R.layout.fragment_base_tab) {
     private var mediator: TabLayoutMediator? = null
 
     override fun bindView() {
-        binding.statusLayout.setStatus(StatusLayout.STATUS_LOADING)
         binding.statusLayout.setOnReloadListener {
             requestTabs()
         }
