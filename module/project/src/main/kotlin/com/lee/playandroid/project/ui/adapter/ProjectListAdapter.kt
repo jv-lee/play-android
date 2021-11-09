@@ -12,6 +12,7 @@ import com.lee.library.utils.TimeUtil
 import com.lee.pioneer.library.common.entity.Content
 import com.lee.pioneer.library.common.tools.GlideTools
 import com.lee.playandroid.project.databinding.ItemProjectBinding
+import com.lee.playandroid.project.databinding.ItemProjectSimpleBinding
 
 /**
  * @author jv.lee
@@ -22,10 +23,11 @@ class ProjectListAdapter(context: Context, data: List<Content>) :
     ViewBindingAdapter<Content>(context, data) {
 
     init {
-        addItemStyles(OfficialItem())
+        addItemStyles(ProjectItem())
+//        addItemStyles(ProjectSimpleItem())
     }
 
-    inner class OfficialItem : ViewBindingItem<Content>() {
+    inner class ProjectItem : ViewBindingItem<Content>() {
         override fun getItemViewBinding(context: Context, parent: ViewGroup): ViewBinding {
             return ItemProjectBinding.inflate(LayoutInflater.from(context), parent, false)
         }
@@ -43,5 +45,24 @@ class ProjectListAdapter(context: Context, data: List<Content>) :
             }
         }
 
+    }
+
+    inner class ProjectSimpleItem : ViewBindingItem<Content>() {
+        override fun getItemViewBinding(context: Context, parent: ViewGroup): ViewBinding {
+            return ItemProjectSimpleBinding.inflate(LayoutInflater.from(context), parent, false)
+        }
+
+        override fun convert(holder: ViewBindingHolder, entity: Content, position: Int) {
+            holder.getViewBinding<ItemProjectSimpleBinding>().apply {
+                entity.apply {
+                    GlideTools.get().loadImage(envelopePic, ivImage)
+
+                    tvTitle.text = HtmlCompat.fromHtml(title, HtmlCompat.FROM_HTML_MODE_LEGACY)
+                    tvDescription.text = desc
+                    tvAuthor.text = if (author.isEmpty()) shareUser else author
+                    tvTime.text = TimeUtil.getChineseTimeMill(publishTime)
+                }
+            }
+        }
     }
 }
