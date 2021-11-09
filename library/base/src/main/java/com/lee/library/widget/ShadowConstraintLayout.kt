@@ -18,6 +18,10 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.graphics.toRect
 import com.lee.library.R
 import com.lee.library.extensions.dp2px
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import kotlin.math.abs
 
 
@@ -91,7 +95,10 @@ class ShadowConstraintLayout(context: Context, attributeSet: AttributeSet) :
 
         //设置前景
         if (rippleEnable && Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            super.setForeground(createRippleDrawable())
+            CoroutineScope(Dispatchers.Main).launch {
+                val drawable = withContext(Dispatchers.IO) { createRippleDrawable() }
+                super.setForeground(drawable)
+            }
         }
     }
 
@@ -230,7 +237,8 @@ class ShadowConstraintLayout(context: Context, attributeSet: AttributeSet) :
             intArrayOf()
         )
 
-        val attr = context.theme.obtainStyledAttributes(intArrayOf(android.R.attr.colorControlHighlight))
+        val attr =
+            context.theme.obtainStyledAttributes(intArrayOf(android.R.attr.colorControlHighlight))
         val color = attr.getColor(0, Color.TRANSPARENT)
         attr.recycle()
 
