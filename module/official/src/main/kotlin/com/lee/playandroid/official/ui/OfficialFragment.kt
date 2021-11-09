@@ -18,7 +18,7 @@ class OfficialFragment : BaseTabFragment() {
 
     override fun bindView() {
         super.bindView()
-        findToolbar().setTitleText("公众号")
+        findBinding().toolbar.setTitleText("公众号")
     }
 
     override fun requestTabs() {

@@ -83,6 +83,6 @@ abstract class BaseTabFragment : BaseFragment(R.layout.fragment_base_tab) {
 
     abstract fun dataObserveState(): LiveData<UiState>
 
-    open fun findToolbar() = binding.toolbar
+    open fun findBinding() = binding
 
 }
