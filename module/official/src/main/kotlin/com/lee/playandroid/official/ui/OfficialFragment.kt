@@ -4,8 +4,9 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.google.android.material.tabs.TabLayoutMediator
 import com.lee.library.adapter.core.UiPager2Adapter
-import com.lee.library.base.BaseNavigationFragment
+import com.lee.library.base.BaseFragment
 import com.lee.library.extensions.binding
+import com.lee.library.extensions.increaseOffscreenPageLimit
 import com.lee.library.extensions.toast
 import com.lee.library.mvvm.ui.observeState
 import com.lee.library.widget.StatusLayout
@@ -19,7 +20,7 @@ import com.lee.playandroid.official.viewmodel.OfficialViewModel
  * @data 2021/11/2
  * @description
  */
-class OfficialFragment : BaseNavigationFragment(R.layout.fragment_official) {
+class OfficialFragment : BaseFragment(R.layout.fragment_official) {
 
     private val viewModel by viewModels<OfficialViewModel>()
 
@@ -65,8 +66,8 @@ class OfficialFragment : BaseNavigationFragment(R.layout.fragment_official) {
             fragments.add(OfficialListFragment.newInstance(it.id))
         }
 
-        binding.vpContainer.offscreenPageLimit = titles.size
-        binding.vpContainer.isSaveEnabled = false
+        binding.vpContainer.increaseOffscreenPageLimit()
+        binding.vpContainer.isSaveEnabled = true
         binding.vpContainer.adapter = UiPager2Adapter(this, fragments).also {
             adapter = it
         }

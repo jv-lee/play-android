@@ -6,13 +6,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.lee.library.adapter.listener.LoadErrorListener
 import com.lee.library.adapter.page.submitData
 import com.lee.library.adapter.page.submitFailed
-import com.lee.library.base.BaseNavigationFragment
+import com.lee.library.base.BaseFragment
 import com.lee.library.extensions.binding
 import com.lee.library.extensions.toast
 import com.lee.library.extensions.viewModelByFactory
 import com.lee.library.mvvm.livedata.LoadStatus
 import com.lee.library.mvvm.ui.observeState
-import com.lee.library.net.HttpManager
 import com.lee.pioneer.library.common.entity.Content
 import com.lee.pioneer.library.common.entity.PageData
 import com.lee.pioneer.router.navigateDetails
@@ -26,7 +25,7 @@ import com.lee.playandroid.official.viewmodel.OfficialListViewModel
  * @data 2021/11/8
  * @description
  */
-class OfficialListFragment : BaseNavigationFragment(R.layout.fragment_official_list) {
+class OfficialListFragment : BaseFragment(R.layout.fragment_official_list) {
 
     companion object {
         const val ARG_PARAMS_ID = "arg_params_id"
@@ -76,18 +75,21 @@ class OfficialListFragment : BaseNavigationFragment(R.layout.fragment_official_l
 
     override fun bindData() {
         //列表数据更新
-        viewModel.contentListLive.observeState<PageData<Content>>(this, success = {
-            binding.refreshLayout.isRefreshing = false
-            mAdapter.submitData(it, diff = true)
-        }, error = {
-            toast(it.message)
-            binding.refreshLayout.isRefreshing = false
-            mAdapter.submitFailed()
-        })
+        viewModel.contentListLive.observeState<PageData<Content>>(requireParentFragment(),
+            success = {
+                binding.refreshLayout.isRefreshing = false
+                mAdapter.submitData(it, diff = true)
+            },
+            error = {
+                toast(it.message)
+                binding.refreshLayout.isRefreshing = false
+                mAdapter.submitFailed()
+            })
     }
 
-    override fun lazyLoad() {
-        viewModel.requestContentList(LoadStatus.INIT)
+    override fun onDestroyView() {
+        super.onDestroyView()
+        binding.rvContainer.removeAllViews()
     }
 
 }

@@ -10,11 +10,7 @@ import com.lee.library.mvvm.ui.stateCacheFlow
 import com.lee.library.mvvm.viewmodel.CoroutineViewModel
 import com.lee.playandroid.official.constants.Constants
 import com.lee.playandroid.official.model.repository.ApiRepository
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.withContext
 
 /**
  * @author jv.lee
@@ -32,7 +28,6 @@ class OfficialViewModel : CoroutineViewModel() {
 
     fun requestTabs() {
         launchIO {
-            delay(300)
             stateCacheFlow({
                 repository.api.getOfficialTabsAsync().data
             }, {
