@@ -15,6 +15,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.widget.NestedScrollView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
 import com.lee.library.R
 import com.lee.library.tools.StatusTools
@@ -486,5 +487,25 @@ fun WebView.setWebBackEvent() {
  */
 fun RadioGroup.checkUnNotification(@IdRes id: Int) {
     findViewById<RadioButton>(id).isChecked = true
+}
+
+/**
+ * 更具滑动page，慢慢递增page缓存
+ * 解决一次性缓存所有page页面初始化卡顿问题
+ */
+fun ViewPager2.increaseOffscreenPageLimit() {
+    registerOnPageChangeCallback(object :
+        ViewPager2.OnPageChangeCallback() {
+        override fun onPageScrolled(
+            position: Int,
+            positionOffset: Float,
+            positionOffsetPixels: Int
+        ) {
+            if (position == 0) return
+            if (offscreenPageLimit <= position) {
+                offscreenPageLimit = position
+            }
+        }
+    })
 }
 
