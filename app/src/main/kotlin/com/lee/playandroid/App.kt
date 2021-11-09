@@ -16,6 +16,7 @@ import com.lee.library.tools.DarkModeTools
 import com.lee.library.tools.PreferencesTools
 import com.lee.library.tools.ScreenDensityUtil
 import com.lee.library.tools.StatusTools
+import com.lee.library.utils.LogUtil
 import com.lee.pioneer.library.service.hepler.ApplicationModuleService
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -39,7 +40,7 @@ class App :BaseApplication() {
 
     private val activityLifecycleCallbacks = object : SimpleActivityLifecycleCallbacks() {
 
-        override fun onActivityPreCreated(activity: Activity, savedInstanceState: Bundle?) {
+        override fun onActivityCreated(activity: Activity, bundle: Bundle?) {
             ScreenDensityUtil.init(activity)
 
             activity.bindFragmentLifecycle(fragmentLifecycleCallbacks)
@@ -51,7 +52,7 @@ class App :BaseApplication() {
                 StatusTools.setNavigationBarColor(activity, Color.WHITE)
                 StatusTools.setDarkStatusIcon(activity)
             }
-            super.onActivityPreCreated(activity, savedInstanceState)
+            super.onActivityCreated(activity, bundle)
         }
 
     }
