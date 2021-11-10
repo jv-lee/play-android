@@ -29,7 +29,9 @@ class SystemContentViewModel : CoroutineViewModel() {
     fun requestParentTab() {
         launchIO {
             stateCacheFlow({
-                repository.api.getParentTabAsync().data
+                repository.api.getParentTabAsync().data.filter {
+                    it.children.isNotEmpty()
+                }
             }, {
                 cacheManager.getCache(Constants.SYSTEM_CONTENT_CACHE_KEY)
             }, {
