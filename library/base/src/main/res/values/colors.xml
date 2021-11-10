@@ -8,6 +8,8 @@
     <color name="colorFocus">#4100AB</color>
     <color name="colorDivide">#EADEFF</color>
 
+    <color name="colorShadow">#ebebeb</color>
+
     <!--  主题颜色  -->
     <color name="colorThemePrimary">#9B9B9B</color>
     <color name="colorThemePrimaryDark">#414141</color>

@@ -11,6 +11,7 @@ import org.gradle.kotlin.dsl.withType
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import kapt
 import commonProcessors
+import commonTest
 import baseService
 import configures.core.freeCompilerArgs
 
@@ -61,6 +62,7 @@ fun Project.moduleConfigure(
     }
 
     dependencies {
+        commonTest()
         commonProcessors()
         baseService()
     }

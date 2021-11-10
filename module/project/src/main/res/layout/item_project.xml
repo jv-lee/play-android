@@ -6,7 +6,7 @@
     android:layout_height="156dp"
     android:layout_margin="@dimen/margin_item"
     app:rippleEnable="true"
-    app:shadowColor="#ebebeb"
+    app:shadowColor="@color/colorShadow"
     app:shadowFillColor="@color/colorThemeItem"
     app:shadowRound="@dimen/radius_item">
 

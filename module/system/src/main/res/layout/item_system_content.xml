@@ -5,9 +5,9 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="@dimen/margin_item"
-    android:padding="@dimen/padding_item"
+    android:minHeight="108dp"
     app:rippleEnable="true"
-    app:shadowColor="#ebebeb"
+    app:shadowColor="@color/colorShadow"
     app:shadowFillColor="@color/colorThemeItem"
     app:shadowRound="@dimen/radius_item">
 
@@ -15,13 +15,52 @@
         android:id="@+id/tv_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin_item"
         android:textColor="@color/colorAccent"
+        android:textSize="@dimen/font_size_large"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="title" />
+
+    <View
+        android:id="@+id/view_line_1"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="@dimen/margin_item"
+        android:background="@color/colorThemeBackground"
+        app:layout_constraintTop_toBottomOf="@id/tv_title" />
+
+    <TextView
+        android:id="@+id/tv_child_label"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin_item"
+        android:textColor="@color/colorPrimary"
+        android:textSize="@dimen/font_size_small"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/view_line_1"
+        tools:text="label \ label \ label \ " />
+
+    <View
+        android:id="@+id/view_line_2"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="@dimen/margin_item"
+        android:background="@color/colorThemeBackground"
+        app:layout_constraintTop_toBottomOf="@id/tv_child_label" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin_item"
+        android:text="More >"
+        android:textColor="@color/colorFocus"
         android:textSize="@dimen/font_size_medium"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="title" />
+        app:layout_constraintTop_toBottomOf="@id/view_line_2" />
 
 </com.lee.library.widget.ShadowConstraintLayout>
