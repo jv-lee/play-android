@@ -31,9 +31,9 @@ class ProjectViewModel : CoroutineViewModel() {
             stateCacheFlow({
                 repository.api.getProjectTabsAsync().data
             }, {
-                cacheManager.getCache(Constants.PROJECT_TAB_CACHE_KEY)
+                cacheManager.getCache(Constants.CACHE_KEY_PROJECT_TAB)
             }, {
-                cacheManager.putCache(Constants.PROJECT_TAB_CACHE_KEY, it)
+                cacheManager.putCache(Constants.CACHE_KEY_PROJECT_TAB, it)
             }).collect {
                 _tabsLive.postValue(it)
             }

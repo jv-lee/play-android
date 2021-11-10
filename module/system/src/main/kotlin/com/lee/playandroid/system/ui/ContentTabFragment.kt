@@ -16,8 +16,8 @@ import com.lee.playandroid.system.constants.Constants
  */
 class ContentTabFragment : BaseTabFragment() {
 
-    private val title by arguments<String>(Constants.CONTENT_TAB_TITLE_KEY)
-    private val tabData by arguments<ArrayList<Tab>>(Constants.CONTENT_TAB_DATA_KEY)
+    private val title by arguments<String>(Constants.ARG_PARAMS_CONTENT_TAB_TITLE)
+    private val tabData by arguments<ArrayList<Tab>>(Constants.ARG_PARAMS_CONTENT_TAB_DATA)
 
     override fun bindView() {
         super.bindView()

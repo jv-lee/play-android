@@ -31,9 +31,9 @@ class OfficialViewModel : CoroutineViewModel() {
             stateCacheFlow({
                 repository.api.getOfficialTabsAsync().data
             }, {
-                cacheManager.getCache(Constants.OFFICIAL_TAB_CACHE_KEY)
+                cacheManager.getCache(Constants.CACHE_KEY_OFFICIAL_TAB)
             }, {
-                cacheManager.putCache(Constants.OFFICIAL_TAB_CACHE_KEY, it)
+                cacheManager.putCache(Constants.CACHE_KEY_OFFICIAL_TAB, it)
             }).collect {
                 _tabsLive.postValue(it)
             }

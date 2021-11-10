@@ -55,8 +55,8 @@ class SystemContentFragment : BaseFragment(R.layout.fragment_system_content) {
             setOnItemClickListener { _, entity, _ ->
                 findNavController()
                     .navigate(R.id.action_systemContent_to_contentTab, Bundle().apply {
-                        putString(Constants.CONTENT_TAB_TITLE_KEY, entity.name)
-                        putParcelableArrayList(Constants.CONTENT_TAB_DATA_KEY,
+                        putString(Constants.ARG_PARAMS_CONTENT_TAB_TITLE, entity.name)
+                        putParcelableArrayList(Constants.ARG_PARAMS_CONTENT_TAB_DATA,
                             arrayListOf<Tab>().apply {
                                 addAll(entity.children)
                             })

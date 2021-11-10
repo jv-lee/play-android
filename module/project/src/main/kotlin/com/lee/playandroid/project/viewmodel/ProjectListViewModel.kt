@@ -36,9 +36,9 @@ class ProjectListViewModel(handle: SavedStateHandle) : CoroutineViewModel() {
                         applyData(getValueData<PageData<Content>>()?.data, newData.data)
                     }
                 }, {
-                    cacheManager.getCache(Constants.PROJECT_DATA_CACHE_KEY + id)
+                    cacheManager.getCache(Constants.CACHE_KEY_PROJECT_DATA + id)
                 }, {
-                    cacheManager.putCache(Constants.PROJECT_DATA_CACHE_KEY + id, it)
+                    cacheManager.putCache(Constants.CACHE_KEY_PROJECT_DATA + id, it)
                 })
             }
         }

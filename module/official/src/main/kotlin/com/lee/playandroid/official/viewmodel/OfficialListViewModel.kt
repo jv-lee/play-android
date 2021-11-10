@@ -36,9 +36,9 @@ class OfficialListViewModel(handle: SavedStateHandle) : CoroutineViewModel() {
                         applyData(getValueData<PageData<Content>>()?.data, newData.data)
                     }
                 }, {
-                    cacheManager.getCache(Constants.OFFICIAL_DATA_CACHE_KEY + id)
+                    cacheManager.getCache(Constants.CACHE_KEY_OFFICIAL_DATA + id)
                 }, {
-                    cacheManager.putCache(Constants.OFFICIAL_DATA_CACHE_KEY + id, it)
+                    cacheManager.putCache(Constants.CACHE_KEY_OFFICIAL_DATA + id, it)
                 })
             }
         }

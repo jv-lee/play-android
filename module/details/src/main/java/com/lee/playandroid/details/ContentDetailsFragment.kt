@@ -20,7 +20,7 @@ import com.lee.playandroid.details.databinding.FragmentContentDetailsBinding
 class ContentDetailsFragment :
     BaseVMNavigationFragment<FragmentContentDetailsBinding, BaseViewModel>(R.layout.fragment_content_details) {
 
-    private val detailsUrl by arguments<String>(KeyConstants.KEY_URL)
+    private val detailsUrl by arguments<String>(KeyConstants.ARG_PARAMS_URL)
     private val web by lazy { WebViewTools.getWeb(requireActivity().applicationContext) }
 
     override fun bindView() {

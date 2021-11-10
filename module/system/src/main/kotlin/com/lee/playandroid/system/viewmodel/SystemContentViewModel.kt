@@ -33,9 +33,9 @@ class SystemContentViewModel : CoroutineViewModel() {
                     it.children.isNotEmpty()
                 }
             }, {
-                cacheManager.getCache(Constants.SYSTEM_CONTENT_CACHE_KEY)
+                cacheManager.getCache(Constants.CACHE_KEY_SYSTEM_CONTENT)
             }, {
-                cacheManager.putCache(Constants.SYSTEM_CONTENT_CACHE_KEY, it)
+                cacheManager.putCache(Constants.CACHE_KEY_SYSTEM_CONTENT, it)
             }).collect {
                 _parentTabLive.postValue(it)
             }

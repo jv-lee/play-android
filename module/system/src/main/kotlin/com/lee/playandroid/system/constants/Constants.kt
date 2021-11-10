@@ -6,8 +6,8 @@ package com.lee.playandroid.system.constants
  * @description
  */
 object Constants {
-    const val SYSTEM_CONTENT_CACHE_KEY = "system-content-cache-key"
+    const val CACHE_KEY_SYSTEM_CONTENT = "cache-key-system-content"
 
-    const val CONTENT_TAB_TITLE_KEY = "content-tab-title-key"
-    const val CONTENT_TAB_DATA_KEY = "content-tab-data-key"
+    const val ARG_PARAMS_CONTENT_TAB_TITLE = "arg-params-content-tab-title"
+    const val ARG_PARAMS_CONTENT_TAB_DATA = "arg-params-content-tab-data"
 }

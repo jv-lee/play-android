@@ -61,10 +61,10 @@ class HomeViewModel : CoroutineViewModel() {
                     }
                 }, {
                     //缓存数据
-                    cacheManager.getCache(Constants.HOME_CONTENT_CACHE_KEY)
+                    cacheManager.getCache(Constants.CACHE_KEY_HOME_CONTENT)
                 }, {
                     //存储缓存数据
-                    cacheManager.putCache(Constants.HOME_CONTENT_CACHE_KEY, it)
+                    cacheManager.putCache(Constants.CACHE_KEY_HOME_CONTENT, it)
                 })
 
             }

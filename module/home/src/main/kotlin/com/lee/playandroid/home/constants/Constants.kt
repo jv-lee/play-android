@@ -6,5 +6,5 @@ package com.lee.playandroid.home.constants
  * @description
  */
 object Constants {
-    const val HOME_CONTENT_CACHE_KEY = "home-content-cache-key"//首页 contentList数据列表第一页缓存
+    const val CACHE_KEY_HOME_CONTENT = "cache-key-home-content"//首页 contentList数据列表第一页缓存
 }
