@@ -24,6 +24,7 @@ fun Project.libraryConfigure(
     plugins.apply(BuildPlugin.library)
     plugins.apply(BuildPlugin.kotlin)
     plugins.apply(BuildPlugin.kapt)
+    plugins.apply(BuildPlugin.parcelize)
 
     projectConfigure()
 

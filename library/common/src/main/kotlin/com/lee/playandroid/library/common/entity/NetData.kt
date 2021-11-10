@@ -1,8 +1,10 @@
 package com.lee.playandroid.library.common.entity
 
+import android.os.Parcelable
 import androidx.annotation.Keep
 import com.google.gson.annotations.SerializedName
 import com.lee.library.adapter.page.PagingData
+import kotlinx.parcelize.Parcelize
 
 /**
  * @author jv.lee
@@ -99,6 +101,7 @@ data class Tag(
     val url: String
 )
 
+@Parcelize
 @Keep
 data class Tab(
     val id: Long,
@@ -108,7 +111,7 @@ data class Tab(
     val parentChapterId: Long,
     val userControlSetTop: Boolean,
     val visible: Int
-)
+) : Parcelable
 
 @Keep
 data class ParentTab(

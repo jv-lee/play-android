@@ -9,6 +9,22 @@
         android:id="@+id/system_fragment"
         android:name="com.lee.playandroid.system.ui.SystemFragment"
         android:label="@string/nav_system"
-        tools:layout="@layout/fragment_system" />
+        tools:layout="@layout/fragment_system">
+
+        <action
+            android:id="@+id/action_systemContent_to_contentTab"
+            app:destination="@id/content_tab_fragment"
+            app:enterAnim="@anim/zoom_in"
+            app:exitAnim="@anim/zoom_exit"
+            app:popEnterAnim="@anim/zoom_out"
+            app:popExitAnim="@anim/alpha_default_hide" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/content_tab_fragment"
+        android:name="com.lee.playandroid.system.ui.ContentTabFragment"
+        android:label="contentTabFragment"
+        tools:layout="@layout/fragment_base_tab" />
 
 </navigation>

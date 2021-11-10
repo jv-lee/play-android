@@ -1,6 +1,8 @@
 package com.lee.playandroid.system.ui
 
+import android.os.Bundle
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.lee.library.adapter.listener.LoadErrorListener
 import com.lee.library.adapter.page.submitFailed
@@ -10,7 +12,9 @@ import com.lee.library.extensions.binding
 import com.lee.library.extensions.toast
 import com.lee.library.mvvm.ui.observeState
 import com.lee.playandroid.library.common.entity.ParentTab
+import com.lee.playandroid.library.common.entity.Tab
 import com.lee.playandroid.system.R
+import com.lee.playandroid.system.constants.Constants
 import com.lee.playandroid.system.databinding.FragmentSystemContentBinding
 import com.lee.playandroid.system.ui.adapter.SystemContentAdapter
 import com.lee.playandroid.system.viewmodel.SystemContentViewModel
@@ -46,6 +50,16 @@ class SystemContentFragment : BaseFragment(R.layout.fragment_system_content) {
 
                 override fun itemReload() {}
             })
+            setOnItemClickListener { _, entity, _ ->
+                findNavController()
+                    .navigate(R.id.action_systemContent_to_contentTab, Bundle().apply {
+//                        putString(Constants.CONTENT_TAB_TITLE_KEY, entity.name)
+                        putParcelableArrayList(Constants.CONTENT_TAB_DATA_KEY,
+                            arrayListOf<Tab>().apply {
+                                addAll(entity.children)
+                            })
+                    })
+            }
         }
     }
 
