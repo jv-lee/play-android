@@ -109,3 +109,15 @@ data class Tab(
     val userControlSetTop: Boolean,
     val visible: Int
 )
+
+@Keep
+data class ParentTab(
+    val id: Long,
+    val courseId: Long,
+    val name: String,
+    val order: Long,
+    val parentChapterId: Long,
+    val userControlSetTop: Boolean,
+    val visible: Int,
+    val children: List<Tab>
+)

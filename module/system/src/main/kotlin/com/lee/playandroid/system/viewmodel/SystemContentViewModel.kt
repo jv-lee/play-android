@@ -1,0 +1,43 @@
+package com.lee.playandroid.system.viewmodel
+
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import com.lee.library.cache.CacheManager
+import com.lee.library.extensions.getCache
+import com.lee.library.extensions.putCache
+import com.lee.library.mvvm.ui.UiState
+import com.lee.library.mvvm.ui.stateCacheFlow
+import com.lee.library.mvvm.viewmodel.CoroutineViewModel
+import com.lee.playandroid.system.constants.Constants
+import com.lee.playandroid.system.model.repository.ApiRepository
+import kotlinx.coroutines.flow.collect
+
+/**
+ * @author jv.lee
+ * @data 2021/11/10
+ * @description
+ */
+class SystemContentViewModel : CoroutineViewModel() {
+
+    private val cacheManager = CacheManager.getDefault()
+
+    private val repository = ApiRepository()
+
+    private val _parentTabLive = MutableLiveData<UiState>()
+    val parentTabLive: LiveData<UiState> = _parentTabLive
+
+    fun requestParentTab() {
+        launchIO {
+            stateCacheFlow({
+                repository.api.getParentTabAsync().data
+            }, {
+                cacheManager.getCache(Constants.SYSTEM_CONTENT_CACHE_KEY)
+            }, {
+                cacheManager.putCache(Constants.SYSTEM_CONTENT_CACHE_KEY, it)
+            }).collect {
+                _parentTabLive.postValue(it)
+            }
+        }
+    }
+
+}
