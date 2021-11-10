@@ -36,7 +36,7 @@ class HomeFragment : BaseNavigationFragment(R.layout.fragment_home) {
     override fun bindView() {
         binding.rvContainer.layoutManager = LinearLayoutManager(requireContext())
         binding.rvContainer.adapter = mAdapter.proxy
-        binding.rvContainer.addItemDecoration(LabelDecoration(requireContext()))
+//        binding.rvContainer.addItemDecoration(LabelDecoration(requireContext()))
 
         binding.refreshView.setOnRefreshListener {
             mAdapter.openLoadMore()
