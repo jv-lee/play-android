@@ -29,10 +29,8 @@ class OfficialListFragment : BaseListFragment() {
 
     private val viewModel by viewModelByFactory<OfficialListViewModel>()
 
-    private val mAdapter by lazy { OfficialListAdapter(requireContext(), arrayListOf()) }
-
-    override fun findAdapter(): BaseViewAdapter<Content> {
-        return mAdapter
+    override fun createAdapter(): BaseViewAdapter<Content> {
+        return OfficialListAdapter(requireContext(), arrayListOf())
     }
 
     override fun requestContentList(status: Int) {

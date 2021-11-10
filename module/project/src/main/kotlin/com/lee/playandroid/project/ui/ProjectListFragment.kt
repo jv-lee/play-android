@@ -29,10 +29,8 @@ class ProjectListFragment : BaseListFragment() {
 
     private val viewModel by viewModelByFactory<ProjectListViewModel>()
 
-    private val mAdapter by lazy { ProjectListAdapter(requireContext(), arrayListOf()) }
-
-    override fun findAdapter(): BaseViewAdapter<Content> {
-        return mAdapter
+    override fun createAdapter(): BaseViewAdapter<Content> {
+        return ProjectListAdapter(requireContext(), arrayListOf())
     }
 
     override fun requestContentList(status: Int) {

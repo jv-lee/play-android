@@ -29,10 +29,8 @@ class ContentListFragment : BaseListFragment() {
 
     private val viewModel by viewModelByFactory<ContentListViewModel>()
 
-    private val mAdapter by lazy { ContentListAdapter(requireContext(), arrayListOf()) }
-
-    override fun findAdapter(): BaseViewAdapter<Content> {
-        return mAdapter
+    override fun createAdapter(): BaseViewAdapter<Content> {
+        return ContentListAdapter(requireContext(), arrayListOf())
     }
 
     override fun requestContentList(status: Int) {
