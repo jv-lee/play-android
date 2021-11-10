@@ -32,16 +32,21 @@ import com.lee.playandroid.home.databinding.ItemContentTextBinding
 class ContentAdapter(context: Context, data: List<HomeContent>) :
     ViewBindingAdapter<HomeContent>(context, data) {
 
+    companion object {
+        const val CONTENT_TEXT_ITEM_TYPE = 2
+    }
+
     init {
         addItemStyles(ContentBannerItem())
         addItemStyles(ContentCategoryItem())
+        //当前类型需要做itemDecoration 处理 ，根据当前添加下标作为类型 ，修改顺序需同步修改 @see CONTENT_TEXT_ITEM_TYPE = 2
         addItemStyles(ContentTextItem())
     }
 
     /**
      * 首页BANNER样式
      */
-    inner  class ContentBannerItem : ViewBindingItem<HomeContent>() {
+    inner class ContentBannerItem : ViewBindingItem<HomeContent>() {
         override fun getItemViewBinding(context: Context, parent: ViewGroup): ViewBinding {
             return ItemContentBannerBinding.inflate(LayoutInflater.from(context), parent, false)
         }
@@ -115,7 +120,7 @@ class ContentAdapter(context: Context, data: List<HomeContent>) :
     /**
      * 首页普通信息条目
      */
-    inner  class ContentTextItem : ViewBindingItem<HomeContent>() {
+    inner class ContentTextItem : ViewBindingItem<HomeContent>() {
 
         override fun getItemViewBinding(context: Context, parent: ViewGroup): ViewBinding {
             return ItemContentTextBinding.inflate(LayoutInflater.from(context), parent, false)
