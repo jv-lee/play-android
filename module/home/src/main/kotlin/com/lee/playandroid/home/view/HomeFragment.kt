@@ -31,9 +31,11 @@ class HomeFragment : BaseNavigationFragment(R.layout.fragment_home) {
 
     private val binding by binding(FragmentHomeBinding::bind)
 
-    private val mAdapter by lazy { ContentAdapter(requireContext(), arrayListOf()) }
+    private lateinit var mAdapter: ContentAdapter
 
     override fun bindView() {
+        mAdapter = ContentAdapter(requireContext(), arrayListOf())
+
         binding.rvContainer.layoutManager = LinearLayoutManager(requireContext())
         binding.rvContainer.adapter = mAdapter.proxy
 //        binding.rvContainer.addItemDecoration(LabelDecoration(requireContext()))

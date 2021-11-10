@@ -30,15 +30,15 @@ class SystemContentFragment : BaseFragment(R.layout.fragment_system_content) {
 
     private val binding by binding(FragmentSystemContentBinding::bind)
 
-    private var mAdapter: SystemContentAdapter? = null
+    private lateinit var mAdapter: SystemContentAdapter
 
     override fun bindView() {
         mAdapter = SystemContentAdapter(requireContext(), arrayListOf())
 
         binding.rvContainer.layoutManager = LinearLayoutManager(requireContext())
-        binding.rvContainer.adapter = mAdapter?.proxy
+        binding.rvContainer.adapter = mAdapter.proxy
 
-        mAdapter?.apply {
+        mAdapter.apply {
             initStatusView()
             pageLoading()
             setAutoLoadMoreListener {
@@ -67,10 +67,10 @@ class SystemContentFragment : BaseFragment(R.layout.fragment_system_content) {
 
     override fun bindData() {
         viewModel.parentTabLive.observeState<List<ParentTab>>(this, success = { data ->
-            mAdapter?.submitSinglePage(data)
+            mAdapter.submitSinglePage(data)
         }, error = {
             toast(it.message)
-            mAdapter?.submitFailed()
+            mAdapter.submitFailed()
         })
     }
 

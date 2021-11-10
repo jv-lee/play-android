@@ -26,7 +26,7 @@ abstract class BaseListFragment : BaseFragment(R.layout.fragment_base_list) {
 
     private val binding by binding(FragmentBaseListBinding::bind)
 
-    private var mAdapter: BaseViewAdapter<Content>? = null
+    private lateinit var mAdapter: BaseViewAdapter<Content>
 
     abstract fun createAdapter(): BaseViewAdapter<Content>
 
@@ -41,14 +41,14 @@ abstract class BaseListFragment : BaseFragment(R.layout.fragment_base_list) {
     override fun bindView() {
         mAdapter = createAdapter()
         binding.rvContainer.layoutManager = LinearLayoutManager(requireContext())
-        binding.rvContainer.adapter = mAdapter?.proxy
+        binding.rvContainer.adapter = mAdapter.proxy
 
         binding.refreshLayout.setOnRefreshListener {
-            mAdapter?.openLoadMore()
+            mAdapter.openLoadMore()
             requestContentList(LoadStatus.REFRESH)
         }
 
-        mAdapter?.apply {
+        mAdapter.apply {
             initStatusView()
             pageLoading()
             setAutoLoadMoreListener {
@@ -76,12 +76,12 @@ abstract class BaseListFragment : BaseFragment(R.layout.fragment_base_list) {
         dataObserveState().observeState<PageData<Content>>(requireParentFragment(),
             success = {
                 binding.refreshLayout.isRefreshing = false
-                mAdapter?.submitData(it, diff = true)
+                mAdapter.submitData(it, diff = true)
             },
             error = {
                 toast(it.message)
                 binding.refreshLayout.isRefreshing = false
-                mAdapter?.submitFailed()
+                mAdapter.submitFailed()
             })
     }
 
