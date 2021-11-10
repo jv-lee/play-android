@@ -4,7 +4,9 @@
     <color name="colorPrimary">#9B9B9B</color>
     <color name="colorPrimaryDark">#414141</color>
     <color name="colorAccent">#191919</color>
-    <color name="colorFocus">#762CFE</color>
+
+    <color name="colorFocus">#4100AB</color>
+    <color name="colorDivide">#EADEFF</color>
 
     <!--  主题颜色  -->
     <color name="colorThemePrimary">#9B9B9B</color>
