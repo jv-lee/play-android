@@ -4,7 +4,7 @@ import com.lee.library.mvvm.base.BaseRepository
 import com.lee.library.net.HttpManager
 import com.lee.library.net.request.IRequest
 import com.lee.library.net.request.Request
-import com.lee.pioneer.library.common.BuildConfig
+import com.lee.playandroid.library.common.BuildConfig
 import com.lee.playandroid.home.model.api.ApiService
 
 /**

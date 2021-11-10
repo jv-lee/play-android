@@ -9,7 +9,7 @@ import com.lee.library.extensions.setWebBackEvent
 import com.lee.library.mvvm.base.BaseViewModel
 import com.lee.library.tools.WebViewTools
 import com.lee.library.widget.AppWebView
-import com.lee.pioneer.library.common.constant.KeyConstants
+import com.lee.playandroid.library.common.constant.KeyConstants
 import com.lee.playandroid.details.databinding.FragmentContentDetailsBinding
 
 /**

@@ -14,7 +14,7 @@ import com.lee.library.extensions.delayBackEvent
 import com.lee.library.extensions.endListener
 import com.lee.library.extensions.setBackgroundColorCompat
 import com.lee.library.tools.DarkViewUpdateTools
-import com.lee.pioneer.library.common.tools.setupWithNavController2
+import com.lee.playandroid.library.common.tools.setupWithNavController2
 import com.lee.playandroid.databinding.FragmentMainBinding
 import java.lang.ref.WeakReference
 

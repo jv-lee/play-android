@@ -11,13 +11,11 @@ import com.lee.library.cache.CacheManager
 import com.lee.library.extensions.bindFragmentLifecycle
 import com.lee.library.lifecycle.SimpleActivityLifecycleCallbacks
 import com.lee.library.lifecycle.SimpleFragmentLifecycleCallbacks
-import com.lee.library.net.HttpManager
 import com.lee.library.tools.DarkModeTools
 import com.lee.library.tools.PreferencesTools
 import com.lee.library.tools.ScreenDensityUtil
 import com.lee.library.tools.StatusTools
-import com.lee.library.utils.LogUtil
-import com.lee.pioneer.library.service.hepler.ApplicationModuleService
+import com.lee.playandroid.library.service.hepler.ApplicationModuleService
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

@@ -1,7 +1,7 @@
 package com.lee.playandroid.home.bean
 
-import com.lee.pioneer.library.common.entity.Banner
-import com.lee.pioneer.library.common.entity.Content
+import com.lee.playandroid.library.common.entity.Banner
+import com.lee.playandroid.library.common.entity.Content
 import com.lee.playandroid.home.helper.HomeCategory
 
 /**

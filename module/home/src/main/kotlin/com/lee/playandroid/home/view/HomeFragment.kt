@@ -11,8 +11,8 @@ import com.lee.library.extensions.binding
 import com.lee.library.extensions.toast
 import com.lee.library.mvvm.livedata.LoadStatus
 import com.lee.library.mvvm.ui.observeState
-import com.lee.pioneer.library.common.entity.PageUiData
-import com.lee.pioneer.router.navigateDetails
+import com.lee.playandroid.library.common.entity.PageUiData
+import com.lee.playandroid.router.navigateDetails
 import com.lee.playandroid.home.R
 import com.lee.playandroid.home.bean.HomeContent
 import com.lee.playandroid.home.databinding.FragmentHomeBinding

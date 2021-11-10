@@ -4,7 +4,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.LiveData
 import com.lee.library.mvvm.ui.UiState
-import com.lee.pioneer.library.common.ui.BaseTabFragment
+import com.lee.playandroid.library.common.ui.BaseTabFragment
 import com.lee.playandroid.official.R
 import com.lee.playandroid.official.viewmodel.OfficialViewModel
 

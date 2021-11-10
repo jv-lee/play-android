@@ -9,8 +9,8 @@ import com.lee.library.adapter.binding.ViewBindingAdapter
 import com.lee.library.adapter.binding.ViewBindingHolder
 import com.lee.library.adapter.item.ViewBindingItem
 import com.lee.library.utils.TimeUtil
-import com.lee.pioneer.library.common.entity.Content
-import com.lee.pioneer.library.common.tools.GlideTools
+import com.lee.playandroid.library.common.entity.Content
+import com.lee.playandroid.library.common.tools.GlideTools
 import com.lee.playandroid.project.databinding.ItemProjectBinding
 
 /**

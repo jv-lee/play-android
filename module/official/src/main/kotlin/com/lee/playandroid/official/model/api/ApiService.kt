@@ -1,9 +1,9 @@
 package com.lee.playandroid.official.model.api
 
-import com.lee.pioneer.library.common.entity.Content
-import com.lee.pioneer.library.common.entity.Data
-import com.lee.pioneer.library.common.entity.Tab
-import com.lee.pioneer.library.common.entity.PageData
+import com.lee.playandroid.library.common.entity.Content
+import com.lee.playandroid.library.common.entity.Data
+import com.lee.playandroid.library.common.entity.Tab
+import com.lee.playandroid.library.common.entity.PageData
 import retrofit2.http.GET
 import retrofit2.http.Path
 
