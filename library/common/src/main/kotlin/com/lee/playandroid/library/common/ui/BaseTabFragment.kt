@@ -27,6 +27,14 @@ abstract class BaseTabFragment : BaseFragment(R.layout.fragment_base_tab) {
     private var adapter: UiPager2Adapter? = null
     private var mediator: TabLayoutMediator? = null
 
+    abstract fun requestTabs()
+
+    abstract fun createChildFragment(id: Long): Fragment
+
+    abstract fun dataObserveState(): LiveData<UiState>
+
+    open fun findBinding() = binding
+
     override fun bindView() {
         binding.statusLayout.setOnReloadListener {
             requestTabs()
@@ -75,13 +83,5 @@ abstract class BaseTabFragment : BaseFragment(R.layout.fragment_base_tab) {
             mediator = it
         }.attach()
     }
-
-    abstract fun requestTabs()
-
-    abstract fun createChildFragment(id: Long): Fragment
-
-    abstract fun dataObserveState(): LiveData<UiState>
-
-    open fun findBinding() = binding
 
 }

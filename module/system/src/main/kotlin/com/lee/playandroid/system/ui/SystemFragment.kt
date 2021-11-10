@@ -25,7 +25,5 @@ class SystemFragment : BaseFragment(R.layout.fragment_system) {
         binding.vpContainer.bindRadioGroup(binding.radioTabLayout)
     }
 
-    override fun bindData() {
-
-    }
+    override fun bindData() {}
 }
