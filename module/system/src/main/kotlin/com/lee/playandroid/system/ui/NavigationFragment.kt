@@ -8,7 +8,8 @@ import com.lee.playandroid.system.databinding.FragmentNavigationBinding
 /**
  * @author jv.lee
  * @data 2021/11/10
- * @description
+ * @description  导航Fragment
+ * @see SystemFragment 体系Fragment下第二个Tab
  */
 class NavigationFragment : BaseFragment(R.layout.fragment_navigation) {
 

@@ -15,7 +15,8 @@ import com.lee.playandroid.system.viewmodel.ContentListViewModel
 /**
  * @author jv.lee
  * @data 2021/11/10
- * @description
+ * @description 数据列表类
+ * @see ContentTabFragment 子列表Fragment
  */
 class ContentListFragment : BaseListFragment() {
 

@@ -22,7 +22,8 @@ import com.lee.playandroid.system.viewmodel.SystemContentViewModel
 /**
  * @author jv.lee
  * @data 2021/11/10
- * @description
+ * @description  体系列表Fragment
+ * @see SystemFragment 体系Fragment下第一个Tab
  */
 class SystemContentFragment : BaseFragment(R.layout.fragment_system_content) {
 

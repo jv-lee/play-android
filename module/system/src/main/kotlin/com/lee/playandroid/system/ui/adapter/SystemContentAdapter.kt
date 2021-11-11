@@ -1,7 +1,6 @@
 package com.lee.playandroid.system.ui.adapter
 
 import android.content.Context
-import android.text.Html
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.text.HtmlCompat
@@ -16,7 +15,7 @@ import com.lee.playandroid.system.databinding.ItemSystemContentBinding
 /**
  * @author jv.lee
  * @data 2021/11/10
- * @description
+ * @description 体系列表适配器
  */
 class SystemContentAdapter(context: Context, data: List<ParentTab>) :
     ViewBindingAdapter<ParentTab>(context, data) {

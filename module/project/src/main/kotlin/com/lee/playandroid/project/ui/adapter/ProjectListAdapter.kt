@@ -16,7 +16,7 @@ import com.lee.playandroid.project.databinding.ItemProjectBinding
 /**
  * @author jv.lee
  * @data 2021/11/8
- * @description
+ * @description 项目列表适配器
  */
 class ProjectListAdapter(context: Context, data: List<Content>) :
     ViewBindingAdapter<Content>(context, data) {

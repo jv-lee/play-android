@@ -11,7 +11,7 @@ import com.lee.playandroid.system.databinding.FragmentSystemBinding
 /**
  * @author jv.lee
  * @data 2021/11/2
- * @description
+ * @description 首页第二个Tab 体系Fragment
  */
 class SystemFragment : BaseFragment(R.layout.fragment_system) {
 

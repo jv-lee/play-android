@@ -16,7 +16,7 @@ import com.lee.playandroid.project.ui.ProjectListFragment
 /**
  * @author jv.lee
  * @data 2021/11/9
- * @description
+ * @description 项目列表ViewModel
  */
 class ProjectListViewModel(handle: SavedStateHandle) : CoroutineViewModel() {
 

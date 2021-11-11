@@ -15,7 +15,7 @@ import kotlinx.coroutines.flow.collect
 /**
  * @author jv.lee
  * @data 2021/11/9
- * @description
+ * @description 项目Tab ViewModel
  */
 class ProjectViewModel : CoroutineViewModel() {
 

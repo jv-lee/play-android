@@ -11,7 +11,7 @@ import com.lee.playandroid.official.viewmodel.OfficialViewModel
 /**
  * @author jv.lee
  * @data 2021/11/2
- * @description
+ * @description 公众号Tab页
  */
 class OfficialFragment : BaseTabFragment() {
 
