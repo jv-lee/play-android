@@ -17,6 +17,7 @@ import com.lee.playandroid.home.bean.HomeContent
 import com.lee.playandroid.home.databinding.FragmentHomeBinding
 import com.lee.playandroid.home.view.adapter.ContentAdapter
 import com.lee.playandroid.home.view.widget.LabelDecoration
+import com.lee.playandroid.home.view.widget.OffsetTopDecoration
 import com.lee.playandroid.home.viewmodel.HomeViewModel
 import com.lee.playandroid.library.common.entity.PageUiData
 import com.lee.playandroid.router.navigateDetails
@@ -37,9 +38,10 @@ class HomeFragment : BaseFragment(R.layout.fragment_home) {
     override fun bindView() {
         mAdapter = ContentAdapter(requireContext(), arrayListOf())
 
+        //        binding.rvContainer.addItemDecoration(LabelDecoration(requireContext()))
+        binding.rvContainer.addItemDecoration(OffsetTopDecoration(binding.toolbar.getToolbarLayoutHeight()))
         binding.rvContainer.layoutManager = LinearLayoutManager(requireContext())
         binding.rvContainer.adapter = mAdapter.proxy
-//        binding.rvContainer.addItemDecoration(LabelDecoration(requireContext()))
 
         binding.refreshView.setOnRefreshListener {
             mAdapter.openLoadMore()
