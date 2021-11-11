@@ -53,6 +53,11 @@ class App :BaseApplication() {
             super.onActivityCreated(activity, bundle)
         }
 
+        override fun onActivityDestroyed(activity: Activity) {
+            super.onActivityDestroyed(activity)
+            ScreenDensityUtil.resetDensity(activity)
+        }
+
     }
 
     override fun init() {
