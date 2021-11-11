@@ -56,14 +56,7 @@ class SystemContentFragment : BaseFragment(R.layout.fragment_system_content) {
                 override fun itemReload() {}
             })
             setOnItemClickListener { _, entity, _ ->
-                findNavController()
-                    .navigate(R.id.action_systemContent_to_contentTab, Bundle().apply {
-                        putString(Constants.ARG_PARAMS_CONTENT_TAB_TITLE, entity.name)
-                        putParcelableArrayList(Constants.ARG_PARAMS_CONTENT_TAB_DATA,
-                            arrayListOf<Tab>().apply {
-                                addAll(entity.children)
-                            })
-                    })
+                navigationToContentTab(entity)
             }
         }
     }
@@ -79,6 +72,21 @@ class SystemContentFragment : BaseFragment(R.layout.fragment_system_content) {
 
     override fun lazyLoad() {
         viewModel.requestParentTab()
+    }
+
+    /**
+     * 导航至目标页面
+     * @param item 数据item title:item.name ,data:item.children
+     * @see ContentTabFragment
+     */
+    private fun navigationToContentTab(item: ParentTab) {
+        val data = arrayListOf<Tab>().apply { addAll(item.children) }
+
+        val bundle = Bundle()
+        bundle.putString(Constants.ARG_PARAMS_CONTENT_TAB_TITLE, item.name)
+        bundle.putParcelableArrayList(Constants.ARG_PARAMS_CONTENT_TAB_DATA, data)
+
+        findNavController().navigate(R.id.action_systemContent_to_contentTab, bundle)
     }
 
 }
