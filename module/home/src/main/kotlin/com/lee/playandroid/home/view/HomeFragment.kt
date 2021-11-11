@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.lee.library.adapter.listener.LoadErrorListener
 import com.lee.library.adapter.page.submitData
 import com.lee.library.adapter.page.submitFailed
+import com.lee.library.base.BaseFragment
 import com.lee.library.base.BaseNavigationFragment
 import com.lee.library.extensions.binding
 import com.lee.library.extensions.toast
@@ -25,7 +26,7 @@ import com.lee.playandroid.router.navigateDetails
  * @data 2021/11/2
  * @description 首页第一个Tab HomeFragment
  */
-class HomeFragment : BaseNavigationFragment(R.layout.fragment_home) {
+class HomeFragment : BaseFragment(R.layout.fragment_home) {
 
     private val viewModel by viewModels<HomeViewModel>()
 
@@ -77,6 +78,11 @@ class HomeFragment : BaseNavigationFragment(R.layout.fragment_home) {
             binding.refreshView.isRefreshing = false
             mAdapter.submitFailed()
         })
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        binding.rvContainer.removeAllViews()
     }
 
 }
