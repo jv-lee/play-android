@@ -1,4 +1,4 @@
-package com.lee.playandroid.home.view.widget
+package com.lee.playandroid.library.common.ui.widget
 
 import android.graphics.Rect
 import android.view.View

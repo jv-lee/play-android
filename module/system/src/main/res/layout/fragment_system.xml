@@ -5,61 +5,60 @@
     android:layout_height="match_parent"
     android:background="@color/colorThemeBackground">
 
-    <com.lee.library.widget.toolbar.TitleToolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@android:color/transparent"
-        app:backEnable="gone"
-        app:layout_constraintTop_toTopOf="parent"
-        app:menuEnable="gone"
-        app:titleText="@string/nav_system" />
-
-    <RadioGroup
-        android:id="@+id/radio_tab_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:orientation="horizontal"
-        app:layout_constraintTop_toBottomOf="@id/toolbar">
-
-        <RadioButton
-            android:id="@+id/radio_system"
-            android:layout_width="wrap_content"
-            android:layout_height="32dp"
-            android:layout_marginEnd="@dimen/margin_item"
-            android:background="@drawable/selector_system_tab"
-            android:button="@null"
-            android:checked="true"
-            android:gravity="center"
-            android:minWidth="100dp"
-            android:paddingStart="@dimen/padding_small"
-            android:paddingEnd="@dimen/padding_small"
-            android:text="体系"
-            android:textColor="@drawable/selector_system_tab_text" />
-
-        <RadioButton
-            android:id="@+id/radio_navigation"
-            android:layout_width="wrap_content"
-            android:layout_height="32dp"
-            android:layout_marginStart="@dimen/margin_item"
-            android:background="@drawable/selector_system_tab"
-            android:button="@null"
-            android:gravity="center"
-            android:minWidth="100dp"
-            android:paddingStart="@dimen/padding_small"
-            android:paddingEnd="@dimen/padding_small"
-            android:text="导航"
-            android:textColor="@drawable/selector_system_tab_text" />
-
-    </RadioGroup>
-
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/vp_container"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="@dimen/margin_item"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/radio_tab_layout" />
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.lee.library.widget.toolbar.CustomToolbarLayout
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/shape_gradient_toolbar_bg"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <RadioGroup
+            android:id="@+id/radio_tab_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <RadioButton
+                android:id="@+id/radio_system"
+                android:layout_width="wrap_content"
+                android:layout_height="32dp"
+                android:layout_marginEnd="@dimen/margin_item"
+                android:background="@drawable/selector_system_tab"
+                android:button="@null"
+                android:checked="true"
+                android:gravity="center"
+                android:minWidth="100dp"
+                android:paddingStart="@dimen/padding_small"
+                android:paddingEnd="@dimen/padding_small"
+                android:text="@string/tab_system"
+                android:textColor="@drawable/selector_system_tab_text" />
+
+            <RadioButton
+                android:id="@+id/radio_navigation"
+                android:layout_width="wrap_content"
+                android:layout_height="32dp"
+                android:layout_marginStart="@dimen/margin_item"
+                android:background="@drawable/selector_system_tab"
+                android:button="@null"
+                android:gravity="center"
+                android:minWidth="100dp"
+                android:paddingStart="@dimen/padding_small"
+                android:paddingEnd="@dimen/padding_small"
+                android:text="@string/tab_navigation"
+                android:textColor="@drawable/selector_system_tab_text" />
+
+        </RadioGroup>
+
+    </com.lee.library.widget.toolbar.CustomToolbarLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

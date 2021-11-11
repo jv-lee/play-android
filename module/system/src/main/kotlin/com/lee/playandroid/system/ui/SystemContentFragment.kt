@@ -9,6 +9,7 @@ import com.lee.library.adapter.page.submitFailed
 import com.lee.library.adapter.page.submitSinglePage
 import com.lee.library.base.BaseFragment
 import com.lee.library.extensions.binding
+import com.lee.library.extensions.findParentFragment
 import com.lee.library.extensions.toast
 import com.lee.library.mvvm.ui.observeState
 import com.lee.playandroid.library.common.entity.ParentTab
@@ -36,6 +37,7 @@ class SystemContentFragment : BaseFragment(R.layout.fragment_system_content) {
     override fun bindView() {
         mAdapter = SystemContentAdapter(requireContext(), arrayListOf())
 
+        findParentFragment<SystemFragment>()?.bindOffsetDecoration(binding.rvContainer)
         binding.rvContainer.layoutManager = LinearLayoutManager(requireContext())
         binding.rvContainer.adapter = mAdapter.proxy
 
