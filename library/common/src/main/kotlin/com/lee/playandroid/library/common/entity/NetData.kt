@@ -124,3 +124,10 @@ data class ParentTab(
     val visible: Int,
     val children: List<Tab>
 )
+
+@Keep
+data class NavigationItem(
+    val cid: Long,
+    val name: String,
+    val articles:List<Content>
+)

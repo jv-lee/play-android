@@ -1,9 +1,6 @@
 package com.lee.playandroid.system.model.api
 
-import com.lee.playandroid.library.common.entity.Content
-import com.lee.playandroid.library.common.entity.Data
-import com.lee.playandroid.library.common.entity.PageData
-import com.lee.playandroid.library.common.entity.ParentTab
+import com.lee.playandroid.library.common.entity.*
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
@@ -26,4 +23,7 @@ interface ApiService {
         @Path("page") page: Int,
         @Query("cid") id: Long
     ): Data<PageData<Content>>
+
+    @GET("navi/json")
+    suspend fun getNavigationDataAsync(): Data<List<NavigationItem>>
 }
