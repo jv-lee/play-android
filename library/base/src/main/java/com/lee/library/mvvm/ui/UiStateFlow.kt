@@ -14,7 +14,12 @@ suspend inline fun <reified T> Flow<UiState>.collectState(
     crossinline default: () -> Unit = {},
 ) {
     collect {
-        it.call(success, error, loading, default)
+        try {
+            it.call(success, error, loading, default)
+        } catch (e: Exception) {
+            e.printStackTrace()
+            error(e)
+        }
     }
 }
 
