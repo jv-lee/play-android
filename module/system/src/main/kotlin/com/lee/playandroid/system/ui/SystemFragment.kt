@@ -1,12 +1,10 @@
 package com.lee.playandroid.system.ui
 
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.RecyclerView
 import com.lee.library.adapter.core.UiPager2Adapter
 import com.lee.library.base.BaseFragment
 import com.lee.library.extensions.bindRadioGroup
 import com.lee.library.extensions.binding
-import com.lee.playandroid.library.common.ui.widget.OffsetTopDecoration
 import com.lee.playandroid.system.R
 import com.lee.playandroid.system.databinding.FragmentSystemBinding
 
@@ -29,8 +27,12 @@ class SystemFragment : BaseFragment(R.layout.fragment_system) {
 
     override fun bindData() {}
 
-    fun bindOffsetDecoration(recyclerView: RecyclerView) {
-        recyclerView.addItemDecoration(OffsetTopDecoration(binding.toolbar.getToolbarLayoutHeight()))
+    /**
+     * 提供给子类操作父Fragment bindingUi控制
+     * @param action 父Fragment binding作用域
+     */
+    fun parentBindingAction(action: (FragmentSystemBinding) -> Unit) {
+        action(binding)
     }
 
 }
