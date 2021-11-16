@@ -40,7 +40,6 @@ abstract class BaseListFragment : BaseFragment(R.layout.fragment_base_list) {
 
     override fun bindView() {
         mAdapter = createAdapter()
-        binding.rvContainer.layoutManager = LinearLayoutManager(requireContext())
         binding.rvContainer.adapter = mAdapter.proxy
 
         binding.refreshLayout.setOnRefreshListener {

@@ -39,7 +39,7 @@ class ContentAdapter(context: Context, data: List<HomeContent>) :
     init {
         addItemStyles(ContentBannerItem())
         addItemStyles(ContentCategoryItem())
-        //当前类型需要做itemDecoration 处理 ，根据当前添加下标作为类型 ，修改顺序需同步修改 @see CONTENT_TEXT_ITEM_TYPE = 2
+        //当前类型需要做itemDecoration(LabelDecoration) 处理 ，根据当前添加下标作为类型 ，修改顺序需同步修改 @see CONTENT_TEXT_ITEM_TYPE = 2
         addItemStyles(ContentTextItem())
     }
 

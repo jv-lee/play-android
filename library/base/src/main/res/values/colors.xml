@@ -6,7 +6,7 @@
     <color name="colorAccent">#191919</color>
 
     <color name="colorFocus">#4100AB</color>
-    <color name="colorDivide">#EADEFF</color>
+    <color name="colorFocusDark">#EADEFF</color>
 
     <color name="colorShadow">#ebebeb</color>
 

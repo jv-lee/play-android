@@ -2,7 +2,6 @@ package com.lee.playandroid.home.view
 
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.lee.library.adapter.listener.LoadErrorListener
 import com.lee.library.adapter.page.submitData
 import com.lee.library.adapter.page.submitFailed
@@ -17,7 +16,7 @@ import com.lee.playandroid.home.databinding.FragmentHomeBinding
 import com.lee.playandroid.home.view.adapter.ContentAdapter
 import com.lee.playandroid.home.viewmodel.HomeViewModel
 import com.lee.playandroid.library.common.entity.PageUiData
-import com.lee.playandroid.library.common.ui.widget.OffsetTopDecoration
+import com.lee.playandroid.library.common.ui.widget.OffsetItemDecoration
 import com.lee.playandroid.router.navigateDetails
 
 /**
@@ -36,9 +35,7 @@ class HomeFragment : BaseFragment(R.layout.fragment_home) {
     override fun bindView() {
         mAdapter = ContentAdapter(requireContext(), arrayListOf())
 
-        //        binding.rvContainer.addItemDecoration(LabelDecoration(requireContext()))
-        binding.rvContainer.addItemDecoration(OffsetTopDecoration(binding.toolbar.getToolbarLayoutHeight()))
-        binding.rvContainer.layoutManager = LinearLayoutManager(requireContext())
+        binding.rvContainer.addItemDecoration(OffsetItemDecoration(binding.toolbar.getToolbarLayoutHeight()))
         binding.rvContainer.adapter = mAdapter.proxy
 
         binding.refreshView.setOnRefreshListener {
