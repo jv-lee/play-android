@@ -1,16 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content">
 
-    <TextView
+    <com.lee.library.widget.SelectorTextView
         android:id="@+id/tv_tag"
+        android:padding="@dimen/padding_small"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        app:disableBackgroundColor="@color/colorThemeItem"
+        app:normalBackgroundColor="@color/colorThemeItem"
+        app:pressedBackgroundColor="@color/colorThemeItem"
+        app:normalTextColor="@color/colorThemePrimary"
+        app:pressedTextColor="@color/colorThemePrimaryDark"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:rippleMode="defaultMode"
+        tools:text="Google开发者" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

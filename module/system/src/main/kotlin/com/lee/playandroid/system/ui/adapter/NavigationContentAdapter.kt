@@ -8,9 +8,9 @@ import androidx.viewbinding.ViewBinding
 import com.lee.library.adapter.binding.ViewBindingAdapter
 import com.lee.library.adapter.binding.ViewBindingHolder
 import com.lee.library.adapter.item.ViewBindingItem
-import com.lee.library.utils.LogUtil
 import com.lee.playandroid.library.common.entity.NavigationItem
 import com.lee.playandroid.router.navigateDetails
+import com.lee.playandroid.system.R
 import com.lee.playandroid.system.databinding.ItemNavigationContentBinding
 
 /**
@@ -38,10 +38,9 @@ class NavigationContentAdapter(context: Context, data: List<NavigationItem>) :
 
                 //构建适配器
                 rvContainer.adapter = NavigationContentTagAdapter(context, entity.articles).apply {
-                    setOnItemClickListener { view, entity, _ ->
-                        LogUtil.i(entity.link)
+                    setOnItemChildClickListener({ view, entity, _ ->
                         Navigation.findNavController(view).navigateDetails(entity.link)
-                    }
+                    }, R.id.tv_tag)
                 }
             }
         }

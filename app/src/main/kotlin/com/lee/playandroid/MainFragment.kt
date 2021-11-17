@@ -47,9 +47,6 @@ class MainFragment : BaseFragment(R.layout.fragment_main),
     }
 
     override fun bindView() {
-        //设置回退策略
-        delayBackEvent()
-
         //设置深色主题控制器监听
         DarkViewUpdateTools.bindViewCallback(this, this)
 

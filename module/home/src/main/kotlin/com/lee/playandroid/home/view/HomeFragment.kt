@@ -7,6 +7,7 @@ import com.lee.library.adapter.page.submitData
 import com.lee.library.adapter.page.submitFailed
 import com.lee.library.base.BaseFragment
 import com.lee.library.extensions.binding
+import com.lee.library.extensions.delayBackEvent
 import com.lee.library.extensions.toast
 import com.lee.library.mvvm.livedata.LoadStatus
 import com.lee.library.mvvm.ui.observeState
@@ -33,6 +34,8 @@ class HomeFragment : BaseFragment(R.layout.fragment_home) {
     private lateinit var mAdapter: ContentAdapter
 
     override fun bindView() {
+        delayBackEvent()
+
         mAdapter = ContentAdapter(requireContext(), arrayListOf())
 
         binding.rvContainer.addItemDecoration(OffsetItemDecoration(binding.toolbar.getToolbarLayoutHeight()))
