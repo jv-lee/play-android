@@ -11,6 +11,7 @@ import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavOptions
 import com.google.android.material.navigation.NavigationBarView
+import com.lee.library.widget.nav.BottomNavView
 import java.lang.ref.WeakReference
 
 /**
@@ -18,13 +19,19 @@ import java.lang.ref.WeakReference
  * @data 2021/9/10
  * @description 取消navigation 切换动画效果
  */
-fun NavigationBarView.setupWithNavController2(navController: NavController) {
-    setOnItemSelectedListener { item ->
-        onNavDestinationSelected(
-            item,
-            navController
-        )
-    }
+fun BottomNavView.setupWithNavController2(
+    navController: NavController,
+    itemPositionListener: (MenuItem, Int) -> Unit
+) {
+    setItemPositionListener(object : BottomNavView.ItemPositionListener {
+        override fun onPosition(menuItem: MenuItem, position: Int) {
+            itemPositionListener(menuItem, position)
+            onNavDestinationSelected(
+                menuItem,
+                navController
+            )
+        }
+    })
     val weakReference = WeakReference(this)
     navController.addOnDestinationChangedListener(
         object : NavController.OnDestinationChangedListener {

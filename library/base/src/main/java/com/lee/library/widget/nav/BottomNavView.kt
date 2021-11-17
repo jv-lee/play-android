@@ -174,7 +174,7 @@ class BottomNavView @JvmOverloads constructor(
     }
 
     interface ItemPositionListener {
-        fun onPosition(menuItem: MenuItem?, position: Int)
+        fun onPosition(menuItem: MenuItem, position: Int)
     }
 
     fun setItemPositionListener(itemPositionListener: ItemPositionListener?) {

@@ -8,7 +8,10 @@ import com.lee.library.adapter.page.submitFailed
 import com.lee.library.base.BaseFragment
 import com.lee.library.extensions.binding
 import com.lee.library.extensions.delayBackEvent
+import com.lee.library.extensions.smoothScrollToTop
 import com.lee.library.extensions.toast
+import com.lee.library.livedatabus.InjectBus
+import com.lee.library.livedatabus.LiveDataBus
 import com.lee.library.mvvm.livedata.LoadStatus
 import com.lee.library.mvvm.ui.observeState
 import com.lee.playandroid.home.R
@@ -16,6 +19,7 @@ import com.lee.playandroid.home.bean.HomeContent
 import com.lee.playandroid.home.databinding.FragmentHomeBinding
 import com.lee.playandroid.home.view.adapter.ContentAdapter
 import com.lee.playandroid.home.viewmodel.HomeViewModel
+import com.lee.playandroid.library.common.entity.NavigationSelectEvent
 import com.lee.playandroid.library.common.entity.PageUiData
 import com.lee.playandroid.library.common.ui.widget.OffsetItemDecoration
 import com.lee.playandroid.router.navigateDetails
@@ -80,9 +84,20 @@ class HomeFragment : BaseFragment(R.layout.fragment_home) {
         })
     }
 
+    override fun bindEvent() {
+        LiveDataBus.getInstance().injectBus(this)
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
         binding.rvContainer.removeAllViews()
+    }
+
+    @InjectBus(NavigationSelectEvent.key, isActive = true)
+    fun navigationEvent(event: NavigationSelectEvent) {
+        if (event.title == getString(R.string.nav_home) && isResumed) {
+            binding.rvContainer.smoothScrollToTop()
+        }
     }
 
 }

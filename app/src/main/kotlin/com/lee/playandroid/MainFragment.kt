@@ -10,12 +10,13 @@ import androidx.navigation.NavDestination
 import androidx.navigation.findNavController
 import com.lee.library.base.BaseFragment
 import com.lee.library.extensions.binding
-import com.lee.library.extensions.delayBackEvent
 import com.lee.library.extensions.endListener
 import com.lee.library.extensions.setBackgroundColorCompat
+import com.lee.library.livedatabus.LiveDataBus
 import com.lee.library.tools.DarkViewUpdateTools
-import com.lee.playandroid.library.common.tools.setupWithNavController2
 import com.lee.playandroid.databinding.FragmentMainBinding
+import com.lee.playandroid.library.common.entity.NavigationSelectEvent
+import com.lee.playandroid.library.common.tools.setupWithNavController2
 import java.lang.ref.WeakReference
 
 /**
@@ -70,7 +71,10 @@ class MainFragment : BaseFragment(R.layout.fragment_main),
     private fun bindNavigationAction() {
         binding.navigationBar.post {
             val controller = binding.container.findNavController()
-            binding.navigationBar.setupWithNavController2(controller)
+            binding.navigationBar.setupWithNavController2(controller) { menuItem, _ ->
+                LiveDataBus.getInstance().getChannel(NavigationSelectEvent.key)
+                    .postValue(NavigationSelectEvent(menuItem.title.toString()))
+            }
 
             val weakReference = WeakReference(binding.navigationBar)
             controller.addOnDestinationChangedListener(object :
