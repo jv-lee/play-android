@@ -2,6 +2,9 @@ package com.lee.playandroid.system.ui
 
 import android.annotation.SuppressLint
 import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.lee.library.adapter.core.VerticalTabAdapter
 import com.lee.library.adapter.page.submitSinglePage
 import com.lee.library.base.BaseFragment
 import com.lee.library.extensions.binding
@@ -49,8 +52,28 @@ class NavigationFragment : BaseFragment(R.layout.fragment_navigation) {
         mNavigationTabAdapter = NavigationTabAdapter(arrayListOf())
         binding.rvTab.adapter = mNavigationTabAdapter
 
+
         mNavigationContentAdapter = NavigationContentAdapter(requireContext(), arrayListOf())
         binding.rvContainer.adapter = mNavigationContentAdapter.proxy
+
+        mNavigationTabAdapter.setItemClickCall(object : VerticalTabAdapter.ItemClickCall {
+            override fun itemClick(position: Int) {
+                val selectItem = mNavigationTabAdapter.data[position]
+                val selectPosition = mNavigationContentAdapter.data.indexOf(selectItem)
+                binding.rvContainer.smoothScrollToPosition(selectPosition)
+            }
+        })
+        binding.rvContainer.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                super.onScrollStateChanged(recyclerView, newState)
+                if (newState == RecyclerView.SCROLL_STATE_IDLE) {
+                    val layoutManager = recyclerView.layoutManager as LinearLayoutManager
+                    val position = layoutManager.findFirstCompletelyVisibleItemPosition()
+                    mNavigationTabAdapter.selectItem(position)
+                    binding.rvTab.smoothScrollToPosition(position)
+                }
+            }
+        })
     }
 
     @SuppressLint("NotifyDataSetChanged")
@@ -77,6 +100,7 @@ class NavigationFragment : BaseFragment(R.layout.fragment_navigation) {
         if (event.title == getString(R.string.nav_system) && isResumed) {
             mNavigationTabAdapter.selectItem(0)
             binding.rvTab.smoothScrollToTop()
+            binding.rvContainer.smoothScrollToTop()
         }
     }
 
