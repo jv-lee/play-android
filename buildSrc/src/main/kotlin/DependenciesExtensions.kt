@@ -88,5 +88,6 @@ fun DependencyHandlerScope.commonDependencies() {
     api(Dependencies.autoService)
 
     api(Dependencies.imageTools)
+    api(Dependencies.agentWeb)
 } 
 

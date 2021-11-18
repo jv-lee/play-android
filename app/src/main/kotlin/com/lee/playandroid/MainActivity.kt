@@ -14,7 +14,6 @@ import com.lee.library.extensions.binding
 import com.lee.library.tools.DarkModeTools
 import com.lee.library.tools.ScreenDensityUtil
 import com.lee.library.tools.StatusTools
-import com.lee.library.tools.WebViewTools
 import com.lee.playandroid.databinding.ActivityMainBinding
 import kotlinx.coroutines.*
 
@@ -61,8 +60,6 @@ class MainActivity : BaseActivity(),
     }
 
     override fun bindView() {
-        //初始化全局webView
-        WebViewTools.get(applicationContext)
     }
 
     override fun bindData() {
@@ -70,7 +67,6 @@ class MainActivity : BaseActivity(),
 
     override fun onDestroy() {
         cancel()
-        WebViewTools.get(applicationContext).onDestroy()
         super.onDestroy()
     }
 

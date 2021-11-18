@@ -60,4 +60,7 @@ object Dependencies {
 
     //图片选择器
     const val imageTools = "com.github.jv-lee.imagetools:library:1.4.4"
+
+    //AgentWebView
+    const val agentWeb = "com.github.Justson.AgentWeb:agentweb-core:v4.1.9-androidx"
 }

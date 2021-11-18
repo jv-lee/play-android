@@ -1,16 +1,15 @@
 package com.lee.playandroid.details
 
-import android.view.View
-import android.view.ViewGroup
-import androidx.lifecycle.LifecycleOwner
-import com.lee.library.base.BaseVMNavigationFragment
+import android.widget.FrameLayout
+import androidx.navigation.fragment.findNavController
+import com.just.agentweb.AgentWeb
+import com.lee.library.base.BaseFragment
 import com.lee.library.extensions.arguments
-import com.lee.library.extensions.setWebBackEvent
-import com.lee.library.mvvm.base.BaseViewModel
-import com.lee.library.tools.WebViewTools
-import com.lee.library.widget.AppWebView
-import com.lee.playandroid.library.common.constant.KeyConstants
+import com.lee.library.extensions.binding
 import com.lee.playandroid.details.databinding.FragmentContentDetailsBinding
+import com.lee.playandroid.library.common.constant.KeyConstants
+import com.lee.playandroid.library.common.extensions.bindBack
+import com.lee.playandroid.library.common.extensions.bindLifecycle
 
 /**
  * @author jv.lee
@@ -18,45 +17,28 @@ import com.lee.playandroid.details.databinding.FragmentContentDetailsBinding
  * @description 内容详情页
  */
 class ContentDetailsFragment :
-    BaseVMNavigationFragment<FragmentContentDetailsBinding, BaseViewModel>(R.layout.fragment_content_details) {
+    BaseFragment(R.layout.fragment_content_details) {
 
     private val detailsUrl by arguments<String>(KeyConstants.ARG_PARAMS_URL)
-    private val web by lazy { WebViewTools.getWeb(requireActivity().applicationContext) }
+
+    private val binding by binding(FragmentContentDetailsBinding::bind)
+
+    private lateinit var web: AgentWeb
 
     override fun bindView() {
-        web?.run {
-            bindLifecycle(requireActivity() as LifecycleOwner)
-            parent?.let { (it as ViewGroup).removeAllViews() }
-            binding.frameContainer.addView(this)
-            setWebBackEvent()
-            settings.useWideViewPort = true
-            settings.loadWithOverviewMode = true
-
-            addWebStatusListenerAdapter(object : AppWebView.WebStatusListenerAdapter() {
-
-                override fun callProgress(progress: Int) {
-                    binding.progress.visibility = View.VISIBLE
-                    binding.progress.progress = progress
-                }
-
-                override fun callSuccess() {
-                    binding.progress.visibility = View.GONE
-                }
-
-                override fun callFailed() {
-                    binding.progress.visibility = View.GONE
-                }
-            })
-        }
+        web = AgentWeb.with(this)
+            .setAgentWebParent(binding.frameContainer, FrameLayout.LayoutParams(-1, -1))
+            .useDefaultIndicator(R.color.colorThemeAccent)
+            .createAgentWeb()
+            .ready()
+            .go(detailsUrl)
+            .bindLifecycle(lifecycle)
+            .bindBack(requireActivity().onBackPressedDispatcher) {
+                findNavController().popBackStack()
+            }
     }
 
     override fun bindData() {
-        web?.initUrl(detailsUrl)
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        web?.destroyView()
     }
 
 }
