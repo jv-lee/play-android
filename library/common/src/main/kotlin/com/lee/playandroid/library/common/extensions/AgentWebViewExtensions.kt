@@ -1,7 +1,5 @@
 package com.lee.playandroid.library.common.extensions
 
-import androidx.activity.OnBackPressedDispatcher
-import androidx.activity.addCallback
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.OnLifecycleEvent
@@ -30,14 +28,5 @@ fun AgentWeb.bindLifecycle(lifecycle: Lifecycle): AgentWeb {
             lifecycle.removeObserver(this)
         }
     })
-    return this
-}
-
-fun AgentWeb.bindBack(dispatcher: OnBackPressedDispatcher, backCall: () -> Unit): AgentWeb {
-    dispatcher.addCallback {
-        if (!back()) {
-            backCall()
-        }
-    }
     return this
 }

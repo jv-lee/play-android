@@ -1,14 +1,13 @@
 package com.lee.playandroid.details
 
 import android.widget.FrameLayout
-import androidx.navigation.fragment.findNavController
 import com.just.agentweb.AgentWeb
 import com.lee.library.base.BaseFragment
 import com.lee.library.extensions.arguments
 import com.lee.library.extensions.binding
+import com.lee.library.extensions.setWebBackEvent
 import com.lee.playandroid.details.databinding.FragmentContentDetailsBinding
 import com.lee.playandroid.library.common.constant.KeyConstants
-import com.lee.playandroid.library.common.extensions.bindBack
 import com.lee.playandroid.library.common.extensions.bindLifecycle
 
 /**
@@ -33,9 +32,7 @@ class ContentDetailsFragment :
             .ready()
             .go(detailsUrl)
             .bindLifecycle(lifecycle)
-            .bindBack(requireActivity().onBackPressedDispatcher) {
-                findNavController().popBackStack()
-            }
+            .apply { webCreator.webView.setWebBackEvent() }
     }
 
     override fun bindData() {
