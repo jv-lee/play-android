@@ -8,6 +8,7 @@ import com.lee.library.extensions.putCache
 import com.lee.library.mvvm.ui.UiState
 import com.lee.library.mvvm.ui.stateCacheFlow
 import com.lee.library.mvvm.viewmodel.CoroutineViewModel
+import com.lee.library.utils.LogUtil
 import com.lee.playandroid.system.constants.Constants
 import com.lee.playandroid.system.model.repository.ApiRepository
 import kotlinx.coroutines.flow.collect
@@ -26,6 +27,9 @@ class NavigationViewModel : CoroutineViewModel() {
     private val _navigationLive = MutableLiveData<UiState>()
     val navigationLive: LiveData<UiState> = _navigationLive
 
+    private val _selectTabLive = MutableLiveData(0)
+    val selectTabLive = _selectTabLive
+
     fun requestNavigationData() {
         launchIO {
             stateCacheFlow({
@@ -42,6 +46,11 @@ class NavigationViewModel : CoroutineViewModel() {
                 _navigationLive.postValue(it)
             }
         }
+    }
+
+    fun selectTabIndex(index: Int) {
+        LogUtil.i("select index:$index")
+        _selectTabLive.postValue(index)
     }
 
 }

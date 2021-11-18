@@ -7,16 +7,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.lee.library.adapter.core.VerticalTabAdapter
 import com.lee.library.adapter.page.submitSinglePage
 import com.lee.library.base.BaseFragment
-import com.lee.library.extensions.binding
-import com.lee.library.extensions.findParentFragment
-import com.lee.library.extensions.smoothScrollToTop
-import com.lee.library.extensions.toast
+import com.lee.library.extensions.*
 import com.lee.library.livedatabus.InjectBus
 import com.lee.library.livedatabus.LiveDataBus
 import com.lee.library.mvvm.ui.observeState
+import com.lee.library.widget.layoutmanager.LinearTopSmoothScroller
 import com.lee.playandroid.library.common.entity.NavigationItem
 import com.lee.playandroid.library.common.entity.NavigationSelectEvent
-import com.lee.playandroid.library.common.ui.widget.OffsetItemDecoration
 import com.lee.playandroid.system.R
 import com.lee.playandroid.system.databinding.FragmentNavigationBinding
 import com.lee.playandroid.system.ui.adapter.NavigationContentAdapter
@@ -40,40 +37,24 @@ class NavigationFragment : BaseFragment(R.layout.fragment_navigation) {
 
     override fun bindView() {
         findParentFragment<SystemFragment>()?.parentBindingAction {
-            val decoration =
-                OffsetItemDecoration(
-                    offsetTop = it.toolbar.getToolbarLayoutHeight(),
-                    offsetBottom = resources.getDimension(R.dimen.navigation_bar_height).toInt()
-                )
-            binding.rvTab.addItemDecoration(decoration)
-            binding.rvContainer.addItemDecoration(decoration)
+            binding.rvTab.setMargin(
+                top = it.toolbar.getToolbarLayoutHeight(),
+                bottom = resources.getDimension(R.dimen.navigation_bar_height).toInt()
+            )
+            binding.rvContainer.setMargin(
+                top = it.toolbar.getToolbarLayoutHeight(),
+                bottom = resources.getDimension(R.dimen.navigation_bar_height).toInt()
+            )
         }
 
         mNavigationTabAdapter = NavigationTabAdapter(arrayListOf())
         binding.rvTab.adapter = mNavigationTabAdapter
-
+        binding.rvTab.itemAnimator = null
 
         mNavigationContentAdapter = NavigationContentAdapter(requireContext(), arrayListOf())
         binding.rvContainer.adapter = mNavigationContentAdapter.proxy
 
-        mNavigationTabAdapter.setItemClickCall(object : VerticalTabAdapter.ItemClickCall {
-            override fun itemClick(position: Int) {
-                val selectItem = mNavigationTabAdapter.data[position]
-                val selectPosition = mNavigationContentAdapter.data.indexOf(selectItem)
-                binding.rvContainer.smoothScrollToPosition(selectPosition)
-            }
-        })
-        binding.rvContainer.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
-                super.onScrollStateChanged(recyclerView, newState)
-                if (newState == RecyclerView.SCROLL_STATE_IDLE) {
-                    val layoutManager = recyclerView.layoutManager as LinearLayoutManager
-                    val position = layoutManager.findFirstCompletelyVisibleItemPosition()
-                    mNavigationTabAdapter.selectItem(position)
-                    binding.rvTab.smoothScrollToPosition(position)
-                }
-            }
-        })
+        navigationTabSelectListener()
     }
 
     @SuppressLint("NotifyDataSetChanged")
@@ -85,6 +66,10 @@ class NavigationFragment : BaseFragment(R.layout.fragment_navigation) {
             toast(it.message)
         }, loading = {
         })
+
+        viewModel.selectTabLive.observe(this, {
+            mNavigationTabAdapter.selectItem(it)
+        })
     }
 
     override fun bindEvent() {
@@ -95,10 +80,43 @@ class NavigationFragment : BaseFragment(R.layout.fragment_navigation) {
         viewModel.requestNavigationData()
     }
 
+    /**
+     * 双向列表互动监听器处理
+     */
+    private fun navigationTabSelectListener() {
+        var isLock = false
+
+        mNavigationTabAdapter.setItemClickCall(object : VerticalTabAdapter.ItemClickCall {
+            override fun itemClick(position: Int) {
+                val selectItem = mNavigationTabAdapter.data[position]
+                val selectPosition = mNavigationContentAdapter.data.indexOf(selectItem)
+                val scroller = LinearTopSmoothScroller(requireContext())
+                scroller.targetPosition = selectPosition
+                binding.rvContainer.layoutManager?.startSmoothScroll(scroller)
+                viewModel.selectTabIndex(selectPosition)
+                isLock = true
+            }
+        })
+        binding.rvContainer.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                super.onScrollStateChanged(recyclerView, newState)
+                if (newState == RecyclerView.SCROLL_STATE_IDLE) {
+                    if (!isLock) {
+                        val layoutManager = recyclerView.layoutManager as LinearLayoutManager
+                        val position = layoutManager.findFirstVisibleItemPosition()
+                        binding.rvTab.scrollToPosition(position)
+                        viewModel.selectTabIndex(position)
+                    }
+                    isLock = false
+                }
+            }
+        })
+    }
+
     @InjectBus(NavigationSelectEvent.key, isActive = true)
     fun navigationEvent(event: NavigationSelectEvent) {
         if (event.title == getString(R.string.nav_system) && isResumed) {
-            mNavigationTabAdapter.selectItem(0)
+            viewModel.selectTabIndex(0)
             binding.rvTab.smoothScrollToTop()
             binding.rvContainer.smoothScrollToTop()
         }
