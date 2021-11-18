@@ -1,18 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.swiperefreshlayout.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/refresh_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorThemeBackground">
 
-    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-        android:id="@+id/refresh_view"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
         <com.lee.library.widget.SavedRecyclerView
             android:id="@+id/rv_container"
@@ -21,40 +17,40 @@
             android:descendantFocusability="blocksDescendants"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
-    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
-
-    <com.lee.library.widget.toolbar.CustomToolbarLayout
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/shape_gradient_toolbar_bg"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <TextView
-            android:id="@+id/tv_title"
-            android:layout_width="wrap_content"
+        <com.lee.library.widget.toolbar.CustomToolbarLayout
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingTop="@dimen/padding_item"
-            android:paddingEnd="@dimen/padding_item"
-            android:paddingBottom="@dimen/padding_item"
-            android:text="@string/home_header_text"
-            android:textColor="@color/colorAccent"
-            android:textSize="@dimen/font_size_large_xx"
-            android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:background="@drawable/shape_gradient_toolbar_bg"
+            app:layout_constraintTop_toTopOf="parent">
 
-        <ImageView
-            android:id="@+id/iv_search"
-            android:layout_width="36dp"
-            android:layout_height="36dp"
-            android:background="@drawable/shape_search_bg"
-            android:padding="10dp"
-            android:src="@drawable/vector_search"
-            app:layout_constraintBottom_toBottomOf="@id/tv_title"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/tv_title" />
+            <TextView
+                android:id="@+id/tv_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="@dimen/padding_item"
+                android:paddingEnd="@dimen/padding_item"
+                android:paddingBottom="@dimen/padding_item"
+                android:text="@string/home_header_text"
+                android:textColor="@color/colorAccent"
+                android:textSize="@dimen/font_size_large_xx"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-    </com.lee.library.widget.toolbar.CustomToolbarLayout>
+            <ImageView
+                android:id="@+id/iv_search"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:background="@drawable/shape_search_bg"
+                android:padding="10dp"
+                android:src="@drawable/vector_search"
+                app:layout_constraintBottom_toBottomOf="@id/tv_title"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/tv_title" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        </com.lee.library.widget.toolbar.CustomToolbarLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
