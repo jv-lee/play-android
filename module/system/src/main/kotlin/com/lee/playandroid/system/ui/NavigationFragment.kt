@@ -11,6 +11,7 @@ import com.lee.library.extensions.*
 import com.lee.library.livedatabus.InjectBus
 import com.lee.library.livedatabus.LiveDataBus
 import com.lee.library.mvvm.ui.observeState
+import com.lee.library.widget.StatusLayout
 import com.lee.library.widget.layoutmanager.LinearTopSmoothScroller
 import com.lee.playandroid.library.common.entity.NavigationItem
 import com.lee.playandroid.library.common.entity.NavigationSelectEvent
@@ -54,17 +55,24 @@ class NavigationFragment : BaseNavigationFragment(R.layout.fragment_navigation) 
         mNavigationContentAdapter = NavigationContentAdapter(requireContext(), arrayListOf())
         binding.rvContainer.adapter = mNavigationContentAdapter.proxy
 
+        binding.statusLayout.setOnReloadListener {
+            viewModel.requestNavigationData()
+        }
+
         navigationTabSelectListener()
     }
 
     @SuppressLint("NotifyDataSetChanged")
     override fun bindData() {
         viewModel.navigationLive.observeState<List<NavigationItem>>(this, success = {
+            binding.statusLayout.setStatus(StatusLayout.STATUS_DATA)
             mNavigationTabAdapter.updateNotify(it)
             mNavigationContentAdapter.submitSinglePage(it)
         }, error = {
             toast(it.message)
+            binding.statusLayout.setStatus(StatusLayout.STATUS_DATA_ERROR)
         }, loading = {
+            binding.statusLayout.setStatus(StatusLayout.STATUS_LOADING)
         })
 
         viewModel.selectTabLive.observe(this, {
