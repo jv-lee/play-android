@@ -8,7 +8,6 @@ import com.lee.library.extensions.putCache
 import com.lee.library.mvvm.ui.UiState
 import com.lee.library.mvvm.ui.stateCacheFlow
 import com.lee.library.mvvm.viewmodel.CoroutineViewModel
-import com.lee.library.utils.LogUtil
 import com.lee.playandroid.system.constants.Constants
 import com.lee.playandroid.system.model.repository.ApiRepository
 import kotlinx.coroutines.flow.collect
@@ -36,7 +35,7 @@ class NavigationViewModel : CoroutineViewModel() {
                 repository.api.getNavigationDataAsync().data
                     .filter {
                         //navigation框架url规则判断存在bug 过滤存在错误url的板块
-                        it.name != "个人博客" && it.name != "优秀的博客"
+                        it.name != "个人博客" && it.name != "优秀的博客" && it.articles.isNotEmpty()
                     }
             }, {
                 cacheManager.getCache(Constants.CACHE_KEY_NAVIGATION_CONTENT)
@@ -49,7 +48,6 @@ class NavigationViewModel : CoroutineViewModel() {
     }
 
     fun selectTabIndex(index: Int) {
-        LogUtil.i("select index:$index")
         _selectTabLive.postValue(index)
     }
 
