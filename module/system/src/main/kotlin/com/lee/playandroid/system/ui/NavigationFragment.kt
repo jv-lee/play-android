@@ -90,8 +90,8 @@ class NavigationFragment : BaseFragment(R.layout.fragment_navigation) {
             override fun itemClick(position: Int) {
                 val selectItem = mNavigationTabAdapter.data[position]
                 val selectPosition = mNavigationContentAdapter.data.indexOf(selectItem)
-                val scroller = LinearTopSmoothScroller(requireContext())
-                scroller.targetPosition = selectPosition
+                val scroller = LinearTopSmoothScroller(requireContext(),selectPosition)
+
                 binding.rvContainer.layoutManager?.startSmoothScroll(scroller)
                 viewModel.selectTabIndex(selectPosition)
                 isLock = true
@@ -104,7 +104,9 @@ class NavigationFragment : BaseFragment(R.layout.fragment_navigation) {
                     if (!isLock) {
                         val layoutManager = recyclerView.layoutManager as LinearLayoutManager
                         val position = layoutManager.findFirstVisibleItemPosition()
-                        binding.rvTab.scrollToPosition(position)
+                        val scroller = LinearTopSmoothScroller(requireContext(),position)
+
+                        binding.rvTab.layoutManager?.startSmoothScroll(scroller)
                         viewModel.selectTabIndex(position)
                     }
                     isLock = false
