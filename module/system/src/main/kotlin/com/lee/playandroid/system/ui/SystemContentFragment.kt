@@ -48,6 +48,9 @@ class SystemContentFragment : BaseNavigationFragment(R.layout.fragment_system_co
         }
 
         mAdapter.apply {
+            mAdapter.initStatusView()
+            mAdapter.pageLoading()
+
             setAutoLoadMoreListener {
                 viewModel.requestParentTab()
             }
@@ -71,9 +74,6 @@ class SystemContentFragment : BaseNavigationFragment(R.layout.fragment_system_co
         }, error = {
             toast(it.message)
             mAdapter.submitFailed()
-        }, loading = {
-            mAdapter.initStatusView()
-            mAdapter.pageLoading()
         })
     }
 
