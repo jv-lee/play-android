@@ -12,5 +12,6 @@
     <include app:graph="@navigation/project_navigation" />
 
     <include app:graph="@navigation/details_navigation" />
+    <include app:graph="@navigation/search_navigation" />
 
 </navigation>

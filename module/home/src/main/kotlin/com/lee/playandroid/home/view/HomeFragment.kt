@@ -23,6 +23,7 @@ import com.lee.playandroid.library.common.entity.NavigationSelectEvent
 import com.lee.playandroid.library.common.entity.PageUiData
 import com.lee.playandroid.library.common.ui.widget.OffsetItemDecoration
 import com.lee.playandroid.router.navigateDetails
+import com.lee.playandroid.router.navigateSearch
 
 /**
  * @author jv.lee
@@ -40,17 +41,18 @@ class HomeFragment : BaseFragment(R.layout.fragment_home) {
     override fun bindView() {
         delayBackEvent()
 
-        mAdapter = ContentAdapter(requireContext(), arrayListOf())
-
-        binding.rvContainer.addItemDecoration(OffsetItemDecoration(binding.toolbar.getToolbarLayoutHeight()))
-        binding.rvContainer.adapter = mAdapter.proxy
+        binding.ivSearch.setOnClickListener {
+            findNavController().navigateSearch()
+        }
 
         binding.refreshView.setOnRefreshListener {
             mAdapter.openLoadMore()
             viewModel.loadListData(LoadStatus.REFRESH)
         }
 
-        mAdapter.apply {
+        binding.rvContainer.addItemDecoration(OffsetItemDecoration(binding.toolbar.getToolbarLayoutHeight()))
+        binding.rvContainer.adapter = ContentAdapter(requireContext(), arrayListOf()).apply {
+            mAdapter = this
             initStatusView()
             pageLoading()
             setAutoLoadMoreListener {
@@ -70,7 +72,7 @@ class HomeFragment : BaseFragment(R.layout.fragment_home) {
                     findNavController().navigateDetails(link)
                 }
             }
-        }
+        }.proxy
     }
 
     override fun bindData() {
