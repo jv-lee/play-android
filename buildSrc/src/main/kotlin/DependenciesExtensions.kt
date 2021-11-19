@@ -35,6 +35,7 @@ fun DependencyHandlerScope.commonModules() {
     implementation(project(BuildModules.Module.project))
     implementation(project(BuildModules.Module.me))
     implementation(project(BuildModules.Module.details))
+    implementation(project(BuildModules.Module.search))
 }
 
 //基础测试依赖
