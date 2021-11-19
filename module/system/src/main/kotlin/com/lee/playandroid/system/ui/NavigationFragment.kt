@@ -64,6 +64,8 @@ class NavigationFragment : BaseNavigationFragment(R.layout.fragment_navigation) 
 
     @SuppressLint("NotifyDataSetChanged")
     override fun bindData() {
+        LiveDataBus.getInstance().injectBus(this)
+
         viewModel.navigationLive.observeState<List<NavigationItem>>(this, success = {
             binding.statusLayout.setStatus(StatusLayout.STATUS_DATA)
             mNavigationTabAdapter.updateNotify(it)
@@ -78,10 +80,6 @@ class NavigationFragment : BaseNavigationFragment(R.layout.fragment_navigation) 
         viewModel.selectTabLive.observe(this, {
             mNavigationTabAdapter.selectItem(it)
         })
-    }
-
-    override fun bindEvent() {
-        LiveDataBus.getInstance().injectBus(this)
     }
 
     override fun lazyLoad() {

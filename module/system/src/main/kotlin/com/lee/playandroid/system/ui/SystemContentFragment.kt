@@ -69,16 +69,14 @@ class SystemContentFragment : BaseNavigationFragment(R.layout.fragment_system_co
     }
 
     override fun bindData() {
+        LiveDataBus.getInstance().injectBus(this)
+
         viewModel.parentTabLive.observeState<List<ParentTab>>(this, success = { data ->
             mAdapter.submitSinglePage(data)
         }, error = {
             toast(it.message)
             mAdapter.submitFailed()
         })
-    }
-
-    override fun bindEvent() {
-        LiveDataBus.getInstance().injectBus(this)
     }
 
     override fun lazyLoad() {

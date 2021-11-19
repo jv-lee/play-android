@@ -15,11 +15,6 @@ abstract class BaseFragment(private val resourceId: Int? = 0) : Fragment() {
 
     private var fistVisible = true
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        bindEvent()
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -74,8 +69,6 @@ abstract class BaseFragment(private val resourceId: Int? = 0) : Fragment() {
      * 使用page 多fragment时 懒加载
      */
     open fun lazyLoad() {}
-
-    open fun bindEvent() {}
 
     private fun getChildClassName(): String {
         return javaClass.simpleName

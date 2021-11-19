@@ -22,9 +22,6 @@ class MeFragment : BaseFragment(R.layout.fragment_me) {
     }
 
     override fun bindData() {
-    }
-
-    override fun bindEvent() {
         LiveDataBus.getInstance().injectBus(this)
     }
 

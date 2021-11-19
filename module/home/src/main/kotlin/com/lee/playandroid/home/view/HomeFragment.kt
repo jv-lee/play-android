@@ -74,6 +74,8 @@ class HomeFragment : BaseFragment(R.layout.fragment_home) {
     }
 
     override fun bindData() {
+        LiveDataBus.getInstance().injectBus(this)
+
         viewModel.contentListLive.observeState<PageUiData<HomeContent>>(this, success = {
             binding.refreshView.isRefreshing = false
             mAdapter.submitData(it, diff = true)
@@ -82,10 +84,6 @@ class HomeFragment : BaseFragment(R.layout.fragment_home) {
             binding.refreshView.isRefreshing = false
             mAdapter.submitFailed()
         })
-    }
-
-    override fun bindEvent() {
-        LiveDataBus.getInstance().injectBus(this)
     }
 
     override fun onDestroyView() {
