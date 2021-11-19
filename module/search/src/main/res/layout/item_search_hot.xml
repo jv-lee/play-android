@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.lee.library.widget.SelectorTextView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/tv_hot"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/margin_small"
+    android:overScrollMode="never"
+    android:padding="@dimen/padding_medium"
+    android:textSize="@dimen/font_size_small"
+    app:buttonRadius="@dimen/radius_item"
+    app:normalBackgroundColor="#ebebeb"
+    app:normalTextColor="@color/colorAccent"
+    app:pressedBackgroundColor="#ebebeb"
+    app:pressedTextColor="@color/colorAccent"
+    app:rippleMode="stateMode"
+    tools:text="Kotlin">
+
+</com.lee.library.widget.SelectorTextView>

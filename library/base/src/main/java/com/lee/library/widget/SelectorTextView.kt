@@ -4,7 +4,6 @@ import android.content.Context
 import android.content.res.ColorStateList
 import android.graphics.Canvas
 import android.graphics.Paint
-import android.graphics.Rect
 import android.graphics.RectF
 import android.graphics.drawable.*
 import android.graphics.drawable.shapes.RectShape
@@ -200,6 +199,51 @@ class SelectorTextView(context: Context, attributeSet: AttributeSet) :
                 canvas.drawRoundRect(rect, buttonRadius, buttonRadius, paint)
             }
         })
+    }
+
+    fun setPressBackgroundColor(color: Int) {
+        pressedBackgroundColor = color
+        initBackground()
+    }
+
+    fun setNormalBackgroundColor(color: Int) {
+        normalBackgroundColor = color
+        initBackground()
+    }
+
+    fun setDisableBackgroundColor(color: Int) {
+        disableBackgroundColor = color
+        initBackground()
+    }
+
+    fun setPressTextColor(color: Int) {
+        pressedTextColor = color
+        initBackground()
+    }
+
+    fun setNormalTextColor(color: Int) {
+        normalTextColor = color
+        initBackground()
+    }
+
+    fun setDisableTextColor(color: Int) {
+        disableTextColor = color
+        initBackground()
+    }
+
+    fun setPressStrokeColor(color: Int) {
+        pressedStrokeColor = color
+        initBackground()
+    }
+
+    fun setNormalStrokeColor(color: Int) {
+        normalStrokeColor = color
+        initBackground()
+    }
+
+    fun setDisableStrokeColor(color: Int) {
+        disableStrokeColor = ContextCompat.getColor(context, color)
+        initBackground()
     }
 
 }

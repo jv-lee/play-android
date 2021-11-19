@@ -5,13 +5,96 @@
     android:layout_height="match_parent"
     android:background="@color/colorThemeBackground">
 
-    <TextView
-        android:layout_width="wrap_content"
+    <com.lee.library.widget.toolbar.TitleToolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Search Page."
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:menuEnable="gone">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="76dp"
+            android:layout_marginEnd="76dp"
+            android:background="@android:color/transparent"
+            android:gravity="start"
+            android:hint="@string/search_hint"
+            android:imeOptions="actionSearch"
+            android:inputType="text"
+            android:maxLines="1"
+            android:textSize="@dimen/font_size_large"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </com.lee.library.widget.toolbar.TitleToolbar>
+
+    <TextView
+        android:id="@+id/tv_hot_label"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/padding_item"
+        android:text="@string/search_hot_label"
+        android:textColor="@color/colorThemeAccent"
+        android:textSize="@dimen/font_size_medium"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/toolbar" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_hot_container"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/padding_item"
+        app:layoutManager="com.lee.library.widget.layoutmanager.FlowLayoutManager"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_hot_label" />
+
+    <TextView
+        android:id="@+id/tv_history_label"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/padding_item"
+        android:text="@string/search_history_label"
+        android:textColor="@color/colorThemeAccent"
+        android:textSize="@dimen/font_size_medium"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/rv_hot_container" />
+
+    <TextView
+        android:id="@+id/tv_history_clear"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/padding_item"
+        android:text="@string/search_clear"
+        android:textColor="@color/colorThemePrimary"
+        android:textSize="@dimen/font_size_medium"
+        app:layout_constraintBottom_toBottomOf="@id/tv_history_label"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/tv_history_label" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_history_container"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/padding_item"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_history_label" />
+
+    <TextView
+        android:id="@+id/tv_history_empty"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="@string/search_history_empty_text"
+        android:textColor="@color/colorThemePrimary"
+        android:textSize="@dimen/font_size_medium"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_history_label" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
