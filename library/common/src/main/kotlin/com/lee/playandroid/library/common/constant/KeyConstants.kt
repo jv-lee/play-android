@@ -7,6 +7,7 @@ package com.lee.playandroid.library.common.constant
  */
 interface KeyConstants {
     companion object {
+        const val ARG_PARAMS_TITLE = "title"
         const val ARG_PARAMS_URL = "url"
     }
 }

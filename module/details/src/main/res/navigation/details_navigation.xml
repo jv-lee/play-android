@@ -10,7 +10,7 @@
         android:name="com.lee.playandroid.details.ContentDetailsFragment"
         android:label="details"
         tools:layout="@layout/fragment_content_details">
-        <deepLink app:uri="play-android://com.lee.play-android/details_fragment?url={url}" />
+        <deepLink app:uri="play-android://com.lee.play-android/details_fragment?title={title}&amp;url={url}" />
     </fragment>
 
 </navigation>

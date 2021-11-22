@@ -69,7 +69,7 @@ class HomeFragment : BaseFragment(R.layout.fragment_home) {
             })
             setOnItemClickListener { _, entity, _ ->
                 entity?.content?.apply {
-                    findNavController().navigateDetails(link)
+                    findNavController().navigateDetails(title, link)
                 }
             }
         }.proxy

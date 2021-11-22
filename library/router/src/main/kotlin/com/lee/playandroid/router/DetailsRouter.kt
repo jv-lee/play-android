@@ -10,9 +10,9 @@ import com.lee.playandroid.router.extensions.navigateDeepLink
  * @data 2021/11/5
  * @description
  */
-fun NavController.navigateDetails(url:String) {
+fun NavController.navigateDetails(title:String,url:String) {
     navigateDeepLink(
-        "play-android://com.lee.play-android/details_fragment?url=$url".toUri(),
+        "play-android://com.lee.play-android/details_fragment?title=$title&url=$url".toUri(),
         NavigationAnim.SlideInOut
     )
 }

@@ -18,6 +18,7 @@ import com.lee.playandroid.library.common.extensions.bindLifecycle
 class ContentDetailsFragment :
     BaseFragment(R.layout.fragment_content_details) {
 
+    private val title by arguments<String>(KeyConstants.ARG_PARAMS_TITLE)
     private val detailsUrl by arguments<String>(KeyConstants.ARG_PARAMS_URL)
 
     private val binding by binding(FragmentContentDetailsBinding::bind)
@@ -25,6 +26,8 @@ class ContentDetailsFragment :
     private lateinit var web: AgentWeb
 
     override fun bindView() {
+        binding.toolbar.setTitleText(title)
+
         web = AgentWeb.with(this)
             .setAgentWebParent(binding.frameContainer, FrameLayout.LayoutParams(-1, -1))
             .useDefaultIndicator(R.color.colorThemeAccent)

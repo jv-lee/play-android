@@ -22,7 +22,6 @@
         android:layout_height="wrap_content"
         android:elevation="10dp"
         app:layout_constraintTop_toTopOf="parent"
-        app:menuEnable="gone"
-        app:titleText="内容详情" />
+        app:menuEnable="gone" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

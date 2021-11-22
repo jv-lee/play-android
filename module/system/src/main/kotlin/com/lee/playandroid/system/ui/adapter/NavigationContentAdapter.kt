@@ -39,7 +39,8 @@ class NavigationContentAdapter(context: Context, data: List<NavigationItem>) :
                 //构建适配器
                 rvContainer.adapter = NavigationContentTagAdapter(context, entity.articles).apply {
                     setOnItemChildClickListener({ view, entity, _ ->
-                        Navigation.findNavController(view).navigateDetails(entity.link)
+                        Navigation.findNavController(view)
+                            .navigateDetails(entity.title, entity.link)
                     }, R.id.tv_tag)
                 }
             }
