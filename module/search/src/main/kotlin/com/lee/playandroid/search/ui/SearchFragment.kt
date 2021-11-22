@@ -1,6 +1,7 @@
 package com.lee.playandroid.search.ui
 
 import android.os.Bundle
+import android.view.View
 import android.view.inputmethod.EditorInfo.IME_ACTION_SEARCH
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -9,10 +10,13 @@ import com.lee.library.base.BaseFragment
 import com.lee.library.extensions.binding
 import com.lee.library.extensions.toast
 import com.lee.library.mvvm.ui.observeState
+import com.lee.library.tools.KeyboardTools
+import com.lee.playandroid.library.common.entity.SearchHistory
 import com.lee.playandroid.search.R
 import com.lee.playandroid.search.constants.Constants
 import com.lee.playandroid.search.databinding.FragmentSearchBinding
 import com.lee.playandroid.search.helper.SearchHot
+import com.lee.playandroid.search.ui.adapter.SearchHistoryAdapter
 import com.lee.playandroid.search.ui.adapter.SearchHotAdapter
 import com.lee.playandroid.search.viewmodel.SearchViewModel
 
@@ -28,14 +32,24 @@ class SearchFragment : BaseFragment(R.layout.fragment_search) {
     private val binding by binding(FragmentSearchBinding::bind)
 
     private lateinit var mHotAdapter: SearchHotAdapter
+    private lateinit var mHistoryAdapter: SearchHistoryAdapter
 
     override fun bindView() {
-        mHotAdapter = SearchHotAdapter(requireContext(), arrayListOf())
-        binding.rvHotContainer.adapter = mHotAdapter.proxy
+        binding.rvHotContainer.adapter =
+            SearchHotAdapter(requireContext(), arrayListOf()).apply {
+                mHotAdapter = this
+                setOnItemClickListener { _, entity, _ ->
+                    navigationResult(entity.key)
+                }
+            }.proxy
 
-        mHotAdapter.setOnItemClickListener { _, entity, _ ->
-            navigationResult(entity.key)
-        }
+        binding.rvHistoryContainer.adapter =
+            SearchHistoryAdapter(requireContext(), arrayListOf()).apply {
+                mHistoryAdapter = this
+                setOnItemClickListener { _, entity, _ ->
+                    navigationResult(entity.key)
+                }
+            }.proxy
 
         binding.editQuery.setOnEditorActionListener { textView, actionId, _ ->
             val text = textView.text
@@ -52,6 +66,13 @@ class SearchFragment : BaseFragment(R.layout.fragment_search) {
         }, error = {
             toast(it.message)
         })
+
+        viewModel.searchHistoryLive.observeState<List<SearchHistory>>(this, success = {
+            binding.tvHistoryEmpty.visibility = if (it.isEmpty()) View.VISIBLE else View.GONE
+            mHistoryAdapter.submitSinglePage(it)
+        }, error = {
+            toast(it.message)
+        })
     }
 
     /**
@@ -59,6 +80,12 @@ class SearchFragment : BaseFragment(R.layout.fragment_search) {
      * @param key 搜索key
      */
     private fun navigationResult(key: String) {
+        //隐藏键盘
+        KeyboardTools.hideSoftInput(requireActivity())
+
+        //存储搜索记录
+        viewModel.addSearchHistory(key)
+
         val bundle = Bundle()
         bundle.putString(Constants.ARG_PARAMS_SEARCH_KEY, key)
         findNavController().navigate(R.id.action_search_to_result, bundle)

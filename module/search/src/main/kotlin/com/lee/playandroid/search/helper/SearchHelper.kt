@@ -10,7 +10,7 @@ object SearchHelper {
     /**
      * 提供热门搜索词条
      */
-    fun getHomeCategory() = arrayListOf(
+    fun getHotCategory() = arrayListOf(
         SearchHot("MVVM"),
         SearchHot("面试"),
         SearchHot("gradle"),
