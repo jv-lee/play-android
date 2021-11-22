@@ -60,6 +60,27 @@ class SearchViewModel : CoroutineViewModel() {
         }
     }
 
+    /**
+     * 删除搜索记录
+     * @param key 被搜索的key
+     */
+    fun deleteSearchHistory(key: String) {
+        launchIO {
+            SearchHistoryDatabase.get().searchHistoryDao().delete(SearchHistory(key = key))
+            requestSearchHistoryData()
+        }
+    }
+
+    /**
+     * 清空所有搜索记录
+     */
+    fun clearSearchHistory() {
+        launchIO {
+            SearchHistoryDatabase.get().searchHistoryDao().clearSearchHistory()
+            requestSearchHistoryData()
+        }
+    }
+
     init {
         requestSearchHotData()
         requestSearchHistoryData()

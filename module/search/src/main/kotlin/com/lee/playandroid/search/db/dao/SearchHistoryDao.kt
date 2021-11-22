@@ -19,4 +19,10 @@ interface SearchHistoryDao : BaseDao<SearchHistory> {
     @Query("SELECT * FROM SearchHistory ORDER BY search_history_time DESC LIMIT 0,10")
     fun querySearchHistory(): List<SearchHistory>
 
+    /**
+     * 清楚所有搜索记录
+     */
+    @Query("DELETE FROM SearchHistory WHERE 1=1")
+    fun clearSearchHistory()
+
 }

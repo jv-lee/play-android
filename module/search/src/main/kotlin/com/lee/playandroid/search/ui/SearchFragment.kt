@@ -49,6 +49,9 @@ class SearchFragment : BaseFragment(R.layout.fragment_search) {
                 setOnItemClickListener { _, entity, _ ->
                     navigationResult(entity.key)
                 }
+                setOnItemChildClickListener({ _, entity, _ ->
+                    viewModel.deleteSearchHistory(entity.key)
+                }, R.id.iv_delete)
             }.proxy
 
         binding.editQuery.setOnEditorActionListener { textView, actionId, _ ->
@@ -57,6 +60,10 @@ class SearchFragment : BaseFragment(R.layout.fragment_search) {
                 navigationResult(text.toString())
             }
             return@setOnEditorActionListener false
+        }
+
+        binding.tvHistoryClear.setOnClickListener {
+            viewModel.clearSearchHistory()
         }
     }
 
@@ -68,6 +75,7 @@ class SearchFragment : BaseFragment(R.layout.fragment_search) {
         })
 
         viewModel.searchHistoryLive.observeState<List<SearchHistory>>(this, success = {
+            binding.rvHistoryContainer.visibility = if (it.isEmpty()) View.GONE else View.VISIBLE
             binding.tvHistoryEmpty.visibility = if (it.isEmpty()) View.VISIBLE else View.GONE
             mHistoryAdapter.submitSinglePage(it)
         }, error = {
