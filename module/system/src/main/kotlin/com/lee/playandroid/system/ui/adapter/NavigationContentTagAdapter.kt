@@ -19,10 +19,10 @@ class NavigationContentTagAdapter(context: Context, data: List<Content>) :
     ViewBindingAdapter<Content>(context, data) {
 
     init {
-        addItemStyles(NavigationContentTagViewHolder())
+        addItemStyles(NavigationContentTagItem())
     }
 
-    inner class NavigationContentTagViewHolder : ViewBindingItem<Content>() {
+    inner class NavigationContentTagItem : ViewBindingItem<Content>() {
         override fun getItemViewBinding(context: Context, parent: ViewGroup): ViewBinding {
             return ItemNavigationContentTagBinding.inflate(
                 LayoutInflater.from(context),

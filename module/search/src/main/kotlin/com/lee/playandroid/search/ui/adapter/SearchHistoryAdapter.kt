@@ -23,10 +23,10 @@ class SearchHistoryAdapter(context: Context, data: List<SearchHistory>) :
     ViewBindingAdapter<SearchHistory>(context, data) {
 
     init {
-        addItemStyles(SearchHistoryItemViewHolder())
+        addItemStyles(SearchHistoryItem())
     }
 
-    inner class SearchHistoryItemViewHolder : ViewBindingItem<SearchHistory>() {
+    inner class SearchHistoryItem : ViewBindingItem<SearchHistory>() {
         override fun getItemViewBinding(context: Context, parent: ViewGroup): ViewBinding {
             return ItemSearchHistoryBinding.inflate(LayoutInflater.from(context), parent, false)
         }

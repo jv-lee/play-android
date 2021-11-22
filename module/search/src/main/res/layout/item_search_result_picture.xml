@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.lee.library.widget.ShadowConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/margin_item"
+    app:rippleEnable="true"
+    app:shadowColor="@color/colorShadow"
+    app:shadowFillColor="@color/colorThemeItem"
+    app:shadowRound="@dimen/radius_item">
+
+    <com.lee.library.widget.RoundImageView
+        android:id="@+id/iv_image"
+        android:layout_width="86dp"
+        android:layout_height="146dp"
+        app:bottomLeftRadius="@dimen/radius_item"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_mode="round"
+        app:topLeftRadius="@dimen/radius_item" />
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_item"
+        android:layout_marginTop="@dimen/margin_item"
+        android:layout_marginEnd="@dimen/margin_item"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:textColor="@color/colorAccent"
+        android:textSize="@dimen/font_size_medium"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/iv_image"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="title" />
+
+    <TextView
+        android:id="@+id/tv_description"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_large"
+        android:layout_marginEnd="@dimen/margin_item"
+        android:ellipsize="end"
+        android:maxLines="5"
+        android:textColor="@color/colorPrimary"
+        android:textSize="@dimen/font_size_small"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@id/tv_title"
+        app:layout_constraintTop_toBottomOf="@id/tv_title"
+        app:layout_goneMarginTop="@dimen/margin_item"
+        tools:text="content" />
+
+    <TextView
+        android:id="@+id/tv_author"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_item"
+        android:layout_marginBottom="@dimen/margin_item"
+        android:textColor="@color/colorFocus"
+        android:textSize="@dimen/font_size_small_x"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@id/iv_image"
+        tools:text="author" />
+
+    <TextView
+        android:id="@+id/tv_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/padding_item"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="@dimen/font_size_small_x"
+        app:layout_constraintBottom_toBottomOf="@id/tv_author"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/tv_author"
+        tools:text="昨天" />
+
+
+</com.lee.library.widget.ShadowConstraintLayout>

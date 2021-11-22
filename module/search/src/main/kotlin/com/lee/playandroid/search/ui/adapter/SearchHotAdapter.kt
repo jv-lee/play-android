@@ -1,10 +1,8 @@
 package com.lee.playandroid.search.ui.adapter
 
 import android.content.Context
-import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
 import androidx.viewbinding.ViewBinding
 import com.lee.library.adapter.binding.ViewBindingAdapter
 import com.lee.library.adapter.binding.ViewBindingHolder
@@ -22,10 +20,10 @@ class SearchHotAdapter(context: Context, data: List<SearchHot>) :
     ViewBindingAdapter<SearchHot>(context, data) {
 
     init {
-        addItemStyles(SearchHotItemViewHolder())
+        addItemStyles(SearchHotItem())
     }
 
-    inner class SearchHotItemViewHolder : ViewBindingItem<SearchHot>() {
+    inner class SearchHotItem : ViewBindingItem<SearchHot>() {
         override fun getItemViewBinding(context: Context, parent: ViewGroup): ViewBinding {
             return ItemSearchHotBinding.inflate(LayoutInflater.from(context), parent, false)
         }

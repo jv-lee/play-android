@@ -22,10 +22,10 @@ class NavigationContentAdapter(context: Context, data: List<NavigationItem>) :
     ViewBindingAdapter<NavigationItem>(context, data) {
 
     init {
-        addItemStyles(NavigationContentViewHolder())
+        addItemStyles(NavigationContentItem())
     }
 
-    inner class NavigationContentViewHolder : ViewBindingItem<NavigationItem>() {
+    inner class NavigationContentItem : ViewBindingItem<NavigationItem>() {
 
         override fun getItemViewBinding(context: Context, parent: ViewGroup): ViewBinding {
             return ItemNavigationContentBinding.inflate(LayoutInflater.from(context), parent, false)
