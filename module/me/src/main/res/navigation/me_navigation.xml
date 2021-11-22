@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/me_fragment"
-        android:name="com.lee.playandroid.me.MeFragment"
+        android:name="com.lee.playandroid.me.ui.MeFragment"
         android:label="@string/nav_me"
         tools:layout="@layout/fragment_me" />
 

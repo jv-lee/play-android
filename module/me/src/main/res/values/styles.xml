@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--  通用行view样式 左图文 右图   -->
+    <style name="CommendLineButtonView">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:foreground">?attr/selectableItemBackground</item>
+        <item name="android:background">@color/colorThemeItem</item>
+        <item name="android:padding">@dimen/view_line_item_padding</item>
+        <item name="android:layout_marginTop">1dp</item>
+        <item name="rightDrawable">@drawable/vector_arrow</item>
+    </style>
+</resources>

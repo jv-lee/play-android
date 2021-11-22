@@ -5,13 +5,85 @@
     android:layout_height="match_parent"
     android:background="@color/colorThemeBackground">
 
-    <TextView
-        android:layout_width="wrap_content"
+    <com.lee.library.widget.toolbar.CustomToolbarLayout
+        android:id="@+id/toolbar_layout"
+        android:layout_width="match_parent"
+        android:layout_height="160dp"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.lee.library.widget.RoundImageView
+            android:id="@+id/iv_header"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:layout_marginStart="36dp"
+            android:src="@drawable/vector_account"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_mode="circle"
+            app:lineColor="@color/colorThemeAccent"
+            app:lineWidth="2dp" />
+
+        <TextView
+            android:id="@+id/tv_account_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="26dp"
+            android:text="未登录"
+            android:textColor="@color/colorThemeAccent"
+            android:textSize="@dimen/font_size_large"
+            app:layout_constraintBottom_toTopOf="@id/tv_level"
+            app:layout_constraintStart_toEndOf="@id/iv_header"
+            app:layout_constraintTop_toTopOf="@id/iv_header" />
+
+        <TextView
+            android:id="@+id/tv_level"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Level:100"
+            app:layout_constraintBottom_toBottomOf="@id/iv_header"
+            app:layout_constraintStart_toStartOf="@id/tv_account_name"
+            app:layout_constraintTop_toBottomOf="@id/tv_account_name" />
+
+    </com.lee.library.widget.toolbar.CustomToolbarLayout>
+
+    <LinearLayout
+        android:id="@+id/linear_layout"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/nav_me"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:orientation="vertical"
+        app:layout_constraintTop_toBottomOf="@id/toolbar_layout">
+
+        <com.lee.playandroid.me.ui.widget.LineButtonView
+            android:id="@+id/line_integral"
+            style="@style/CommendLineButtonView"
+            app:leftDrawable="@drawable/vector_integral"
+            app:leftText="@string/me_item_integral" />
+
+        <com.lee.playandroid.me.ui.widget.LineButtonView
+            android:id="@+id/line_collect"
+            style="@style/CommendLineButtonView"
+            app:leftDrawable="@drawable/vector_collect"
+            app:leftText="@string/me_item_collect" />
+
+        <com.lee.playandroid.me.ui.widget.LineButtonView
+            android:id="@+id/line_share"
+            style="@style/CommendLineButtonView"
+            app:leftDrawable="@drawable/vector_share"
+            app:leftText="@string/me_item_share" />
+
+        <com.lee.playandroid.me.ui.widget.LineButtonView
+            android:id="@+id/line_todo"
+            style="@style/CommendLineButtonView"
+            app:leftDrawable="@drawable/vector_todo"
+            app:leftText="@string/me_item_todo" />
+
+        <com.lee.playandroid.me.ui.widget.LineButtonView
+            android:id="@+id/line_settings"
+            style="@style/CommendLineButtonView"
+            app:leftDrawable="@drawable/vector_settings"
+            app:leftText="@string/me_item_settings" />
+
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

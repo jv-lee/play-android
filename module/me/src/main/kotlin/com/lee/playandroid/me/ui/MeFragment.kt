@@ -1,12 +1,12 @@
-package com.lee.playandroid.me
+package com.lee.playandroid.me.ui
 
+import androidx.fragment.app.viewModels
 import com.lee.library.base.BaseFragment
 import com.lee.library.extensions.binding
 import com.lee.library.extensions.delayBackEvent
-import com.lee.library.livedatabus.InjectBus
-import com.lee.library.livedatabus.LiveDataBus
-import com.lee.playandroid.library.common.entity.NavigationSelectEvent
+import com.lee.playandroid.me.R
 import com.lee.playandroid.me.databinding.FragmentMeBinding
+import com.lee.playandroid.me.viewmodel.MeViewModel
 
 /**
  * @author jv.lee
@@ -15,6 +15,8 @@ import com.lee.playandroid.me.databinding.FragmentMeBinding
  */
 class MeFragment : BaseFragment(R.layout.fragment_me) {
 
+    private val viewModel by viewModels<MeViewModel>()
+
     private val binding by binding(FragmentMeBinding::bind)
 
     override fun bindView() {
@@ -22,12 +24,6 @@ class MeFragment : BaseFragment(R.layout.fragment_me) {
     }
 
     override fun bindData() {
-        LiveDataBus.getInstance().injectBus(this)
-    }
-
-    @InjectBus(NavigationSelectEvent.key, isActive = true)
-    fun navigationEvent(event: NavigationSelectEvent) {
-
     }
 
 }
