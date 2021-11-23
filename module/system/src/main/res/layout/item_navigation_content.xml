@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:ellipsize="end"
         android:maxLines="1"
-        android:textColor="@color/colorAccent"
+        android:textColor="@color/colorThemeAccent"
         android:textSize="@dimen/font_size_medium"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"

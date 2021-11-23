@@ -27,11 +27,11 @@
             android:layout_height="@dimen/tab_height"
             android:background="@color/colorThemeItem"
             app:tabBackground="@android:color/transparent"
-            app:tabIndicatorColor="@color/colorAccent"
+            app:tabIndicatorColor="@color/colorThemeAccent"
             app:tabIndicatorFullWidth="false"
             app:tabMode="scrollable"
             app:tabRippleColor="@android:color/transparent"
-            app:tabSelectedTextColor="@color/colorAccent"
+            app:tabSelectedTextColor="@color/colorThemeAccent"
             app:tabTextColor="@color/colorThemePrimary" />
 
         <androidx.viewpager2.widget.ViewPager2

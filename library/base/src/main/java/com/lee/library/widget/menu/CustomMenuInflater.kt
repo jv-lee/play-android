@@ -119,7 +119,7 @@ class CustomMenuInflater(var context: Context) {
         val itemIconTint =
             typed.getColor(
                 R.styleable.CustomMenuItem_android_iconTint,
-                ContextCompat.getColor(context, R.color.colorAccent)
+                ContextCompat.getColor(context, R.color.colorThemeAccent)
             )
 
         val view = CustomMenuItemView(context)

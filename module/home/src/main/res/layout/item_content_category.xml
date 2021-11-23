@@ -12,7 +12,7 @@
         android:paddingStart="@dimen/padding_item"
         android:paddingTop="@dimen/padding_item"
         android:text="@string/home_category_label"
-        android:textColor="@color/colorAccent"
+        android:textColor="@color/colorThemeAccent"
         android:textSize="@dimen/font_size_large_xx"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"

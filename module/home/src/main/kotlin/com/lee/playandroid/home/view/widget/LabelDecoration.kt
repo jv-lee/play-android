@@ -26,7 +26,7 @@ class LabelDecoration(context: Context) : RecyclerView.ItemDecoration() {
     private var textLabel: String
 
     init {
-        textPaint.color = ContextCompat.getColor(context, R.color.colorAccent)
+        textPaint.color = ContextCompat.getColor(context, R.color.colorThemeAccent)
         textPaint.textSize = context.resources.getDimension(R.dimen.font_size_large_xx)
         textPaint.typeface = Typeface.DEFAULT_BOLD
 

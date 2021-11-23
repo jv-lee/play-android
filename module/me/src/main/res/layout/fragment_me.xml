@@ -9,6 +9,9 @@
         android:id="@+id/toolbar_layout"
         android:layout_width="match_parent"
         android:layout_height="160dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:foreground="?selectableItemBackground"
         app:layout_constraintTop_toTopOf="parent">
 
         <com.lee.library.widget.RoundImageView
@@ -21,7 +24,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_mode="circle"
-            app:lineColor="@color/colorThemeAccent"
+            app:lineColor="@color/colorThemeFocus"
             app:lineWidth="2dp" />
 
         <TextView

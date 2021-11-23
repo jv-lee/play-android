@@ -11,9 +11,9 @@
     android:textSize="@dimen/font_size_small"
     app:buttonRadius="@dimen/radius_item"
     app:normalBackgroundColor="#ebebeb"
-    app:normalTextColor="@color/colorAccent"
+    app:normalTextColor="@color/colorThemeAccent"
     app:pressedBackgroundColor="#ebebeb"
-    app:pressedTextColor="@color/colorAccent"
+    app:pressedTextColor="@color/colorThemeAccent"
     app:rippleMode="stateMode"
     tools:text="Kotlin">
 

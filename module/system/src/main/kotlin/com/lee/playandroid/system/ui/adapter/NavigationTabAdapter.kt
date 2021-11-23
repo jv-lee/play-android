@@ -27,7 +27,7 @@ class NavigationTabAdapter(data: MutableList<NavigationItem>) :
         holder.getViewBinding<ItemNavigationTabBinding>().apply {
             tvText.text = entity.name
             if (selectIndex == position) {
-                tvText.setTextColorCompat(R.color.colorFocusDark)
+                tvText.setTextColorCompat(R.color.colorThemeFocusDark)
                 tvText.setBackgroundDrawableCompat(R.drawable.shape_selected_tab)
             } else {
                 tvText.setTextColorCompat(R.color.colorThemePrimary)
