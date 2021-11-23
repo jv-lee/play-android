@@ -155,6 +155,9 @@ public void *(android.webkit.webView, jav.lang.String);
 -keepclasseswithmembers class * {
 @com.lee.library.ioc.annotation.** <methods>;
 }
+-keepclasseswithmembers class * {
+@com.lee.library.livedatabus.InjectBus <methods>;
+}
 # 如果类中有使用了注解的字段，则不混淆类和类成员
 -keepclasseswithmembers class * {
 @com.lee.library.ioc.annotation.** <fields>;
