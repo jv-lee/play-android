@@ -14,7 +14,7 @@ fun NavController.navigateDetails(title: String, url: String) {
     val newUrl = url.trim().replace("\n", "").replace("\t", "")
     val newTitle = title.trim().replace("\n", "").replace("\t", "")
     navigateDeepLink(
-        "play-android://com.lee.play-android/details_fragment?title=$newTitle&url=$newUrl".toUri(),
+        "play://details?title=$newTitle&url=$newUrl".toUri(),
         NavigationAnim.SlideInOut
     )
 }

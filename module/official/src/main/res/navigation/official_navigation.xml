@@ -10,7 +10,7 @@
         android:name="com.lee.playandroid.official.ui.OfficialFragment"
         android:label="official"
         tools:layout="@layout/fragment_base_tab">
-        <deepLink app:uri="play-android://com.lee.playandroid/official_fragment" />
+        <deepLink app:uri="play://official" />
     </fragment>
 
 </navigation>

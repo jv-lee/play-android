@@ -19,7 +19,7 @@
             app:popEnterAnim="@anim/slide_left_in"
             app:popExitAnim="@anim/slide_right_out" />
 
-        <deepLink app:uri="play-android://com.lee.playandroid/search_fragment" />
+        <deepLink app:uri="play://search" />
     </fragment>
 
     <fragment

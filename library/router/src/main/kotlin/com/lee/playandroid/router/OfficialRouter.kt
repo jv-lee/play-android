@@ -12,7 +12,7 @@ import com.lee.playandroid.router.extensions.navigateDeepLink
  */
 fun NavController.navigateOfficial() {
     navigateDeepLink(
-        "play-android://com.lee.playandroid/official_fragment".toUri(),
+        "play://official".toUri(),
         NavigationAnim.SlideInOut
     )
 }

@@ -16,12 +16,12 @@ object CategoryHelper {
         HomeCategory(
             R.drawable.vector_icon_official,
             "公众号",
-            "play-android://com.lee.playandroid/official_fragment"
+            "play://official"
         ),
         HomeCategory(
             R.drawable.vector_icon_project,
             "项目",
-            "play-android://com.lee.playandroid/project_fragment"
+            "play://project"
         )
     )
 }
