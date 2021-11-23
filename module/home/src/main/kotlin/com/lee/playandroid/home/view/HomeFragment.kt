@@ -6,6 +6,7 @@ import com.lee.library.adapter.listener.LoadErrorListener
 import com.lee.library.adapter.page.submitData
 import com.lee.library.adapter.page.submitFailed
 import com.lee.library.base.BaseFragment
+import com.lee.library.base.BaseNavigationFragment
 import com.lee.library.extensions.binding
 import com.lee.library.extensions.delayBackEvent
 import com.lee.library.extensions.smoothScrollToTop
@@ -30,7 +31,7 @@ import com.lee.playandroid.router.navigateSearch
  * @data 2021/11/2
  * @description 首页第一个Tab HomeFragment
  */
-class HomeFragment : BaseFragment(R.layout.fragment_home) {
+class HomeFragment : BaseNavigationFragment(R.layout.fragment_home) {
 
     private val viewModel by viewModels<HomeViewModel>()
 
@@ -86,11 +87,6 @@ class HomeFragment : BaseFragment(R.layout.fragment_home) {
             binding.refreshView.isRefreshing = false
             mAdapter.submitFailed()
         })
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        binding.rvContainer.removeAllViews()
     }
 
     @InjectBus(NavigationSelectEvent.key, isActive = true)
