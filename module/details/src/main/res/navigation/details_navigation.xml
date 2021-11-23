@@ -7,9 +7,9 @@
 
     <fragment
         android:id="@+id/details_fragment"
-        android:name="com.lee.playandroid.details.ContentDetailsFragment"
+        android:name="com.lee.playandroid.details.DetailsFragment"
         android:label="details"
-        tools:layout="@layout/fragment_content_details">
+        tools:layout="@layout/fragment_details">
         <deepLink app:uri="play-android://com.lee.play-android/details_fragment?title={title}&amp;url={url}" />
     </fragment>
 
