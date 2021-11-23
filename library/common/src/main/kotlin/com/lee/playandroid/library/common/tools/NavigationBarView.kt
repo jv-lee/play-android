@@ -10,7 +10,6 @@ import androidx.navigation.NavDestination
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavOptions
-import com.google.android.material.navigation.NavigationBarView
 import com.lee.library.widget.nav.BottomNavView
 import java.lang.ref.WeakReference
 

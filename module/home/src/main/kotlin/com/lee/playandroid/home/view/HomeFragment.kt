@@ -5,7 +5,6 @@ import androidx.navigation.fragment.findNavController
 import com.lee.library.adapter.listener.LoadErrorListener
 import com.lee.library.adapter.page.submitData
 import com.lee.library.adapter.page.submitFailed
-import com.lee.library.base.BaseFragment
 import com.lee.library.base.BaseNavigationFragment
 import com.lee.library.extensions.binding
 import com.lee.library.extensions.delayBackEvent
