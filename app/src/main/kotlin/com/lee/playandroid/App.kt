@@ -25,15 +25,14 @@ import kotlinx.coroutines.launch
  * @data 2021/11/2
  * @description
  */
-class App :BaseApplication() {
+class App : BaseApplication() {
 
     private val fragmentLifecycleCallbacks = object : SimpleFragmentLifecycleCallbacks() {
 
-        override fun onFragmentPreAttached(fm: FragmentManager, f: Fragment, context: Context) {
+        override fun onFragmentAttached(fm: FragmentManager, f: Fragment, context: Context) {
             ScreenDensityUtil.init(f.requireActivity())
-            super.onFragmentPreAttached(fm, f, context)
+            super.onFragmentAttached(fm, f, context)
         }
-
     }
 
     private val activityLifecycleCallbacks = object : SimpleActivityLifecycleCallbacks() {
