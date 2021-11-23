@@ -7,7 +7,6 @@ import com.lee.library.adapter.listener.LoadErrorListener
 import com.lee.library.adapter.page.submitFailed
 import com.lee.library.adapter.page.submitSinglePage
 import com.lee.library.base.BaseFragment
-import com.lee.library.base.BaseNavigationFragment
 import com.lee.library.extensions.binding
 import com.lee.library.extensions.findParentFragment
 import com.lee.library.extensions.smoothScrollToTop
@@ -78,10 +77,6 @@ class SystemContentFragment : BaseFragment(R.layout.fragment_system_content) {
             toast(it.message)
             mAdapter.submitFailed()
         })
-    }
-
-    override fun lazyLoad() {
-        viewModel.requestParentTab()
     }
 
     /**

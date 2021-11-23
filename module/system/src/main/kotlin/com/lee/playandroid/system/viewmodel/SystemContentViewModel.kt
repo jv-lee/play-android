@@ -42,4 +42,8 @@ class SystemContentViewModel : CoroutineViewModel() {
         }
     }
 
+    init {
+        requestParentTab()
+    }
+
 }

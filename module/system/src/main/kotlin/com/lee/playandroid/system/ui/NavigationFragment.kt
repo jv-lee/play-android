@@ -7,7 +7,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.lee.library.adapter.core.VerticalTabAdapter
 import com.lee.library.adapter.page.submitSinglePage
 import com.lee.library.base.BaseFragment
-import com.lee.library.base.BaseNavigationFragment
 import com.lee.library.extensions.*
 import com.lee.library.livedatabus.InjectBus
 import com.lee.library.livedatabus.LiveDataBus
@@ -81,10 +80,6 @@ class NavigationFragment : BaseFragment(R.layout.fragment_navigation) {
         viewModel.selectTabLive.observe(this, {
             mNavigationTabAdapter.selectItem(it)
         })
-    }
-
-    override fun lazyLoad() {
-        viewModel.requestNavigationData()
     }
 
     /**
