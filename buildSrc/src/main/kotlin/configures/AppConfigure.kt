@@ -1,23 +1,23 @@
 package configures
 
+import appDependencies
 import build.*
 import com.android.build.gradle.internal.dsl.BaseAppModuleExtension
+import configures.core.freeCompilerArgs
+import kapt
 import org.gradle.api.JavaVersion
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.configure
 import org.gradle.kotlin.dsl.dependencies
 import org.gradle.kotlin.dsl.withType
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-import kapt
-import appDependencies
-import configures.core.freeCompilerArgs
 
 /**
  * @author jv.lee
  * @data 2021/10/1
  * @description app模块配置依赖扩展
  */
-@Suppress("MISSING_DEPENDENCY_SUPERCLASS","MISSING_DEPENDENCY_CLASS")
+@Suppress("MISSING_DEPENDENCY_SUPERCLASS", "MISSING_DEPENDENCY_CLASS")
 fun Project.appConfigure(
     projectConfigure: Project.() -> Unit = {},
     androidConfigure: BaseAppModuleExtension.() -> Unit = {}
@@ -34,6 +34,7 @@ fun Project.appConfigure(
 
         defaultConfig {
             applicationId = BuildConfig.applicationId
+
             minSdk = BuildConfig.minSdk
             targetSdk = BuildConfig.targetSdk
             versionName = BuildConfig.versionName
@@ -66,12 +67,15 @@ fun Project.appConfigure(
 
         buildTypes {
             getByName(BuildTypes.DEBUG) {
+                applicationIdSuffix = ".debug"
+                manifestPlaceholders["app_name"] = "Play\nDebug"
                 isMinifyEnabled = BuildDebug.isMinifyEnabled //混淆模式
                 isZipAlignEnabled = BuildDebug.zipAlignEnabled
                 proguardFiles("proguard-android-optimize.txt", "proguard-rules.pro")
             }
 
             getByName(BuildTypes.RELEASE) {
+                manifestPlaceholders["app_name"] = "Play\nAndroid"
                 isMinifyEnabled = BuildRelease.isMinifyEnabled //混淆模式
                 isZipAlignEnabled = BuildRelease.zipAlignEnabled
                 proguardFiles("proguard-android-optimize.txt", "proguard-rules.pro")
