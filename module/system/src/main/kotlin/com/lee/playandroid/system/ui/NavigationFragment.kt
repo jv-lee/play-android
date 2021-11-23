@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.lee.library.adapter.core.VerticalTabAdapter
 import com.lee.library.adapter.page.submitSinglePage
+import com.lee.library.base.BaseFragment
 import com.lee.library.base.BaseNavigationFragment
 import com.lee.library.extensions.*
 import com.lee.library.livedatabus.InjectBus
@@ -27,7 +28,7 @@ import com.lee.playandroid.system.viewmodel.NavigationViewModel
  * @description  导航Fragment
  * @see SystemFragment 体系Fragment下第二个Tab
  */
-class NavigationFragment : BaseNavigationFragment(R.layout.fragment_navigation) {
+class NavigationFragment : BaseFragment(R.layout.fragment_navigation) {
 
     private val viewModel by viewModels<NavigationViewModel>()
 
