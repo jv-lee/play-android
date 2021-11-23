@@ -16,8 +16,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:navGraph="@navigation/main_navigation" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <com.lee.library.widget.nav.BottomNavView
         android:id="@+id/navigation_bar"
@@ -27,7 +26,6 @@
         app:itemIconTint="@drawable/main_selector"
         app:itemTextColor="@drawable/main_selector"
         app:labelVisibilityMode="unlabeled"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:menu="@menu/main_menu" />
+        app:layout_constraintBottom_toBottomOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

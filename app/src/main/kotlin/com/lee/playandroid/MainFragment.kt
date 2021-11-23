@@ -5,9 +5,8 @@ import android.os.Bundle
 import android.view.View
 import android.view.animation.AnimationUtils
 import androidx.core.content.ContextCompat
-import androidx.navigation.NavController
-import androidx.navigation.NavDestination
-import androidx.navigation.findNavController
+import androidx.navigation.*
+import androidx.navigation.fragment.FragmentNavigator
 import com.lee.library.base.BaseFragment
 import com.lee.library.extensions.binding
 import com.lee.library.extensions.endListener
@@ -15,8 +14,11 @@ import com.lee.library.extensions.setBackgroundColorCompat
 import com.lee.library.livedatabus.LiveDataBus
 import com.lee.library.tools.DarkViewUpdateTools
 import com.lee.playandroid.databinding.FragmentMainBinding
+import com.lee.playandroid.home.view.HomeFragment
 import com.lee.playandroid.library.common.entity.NavigationSelectEvent
 import com.lee.playandroid.library.common.tools.setupWithNavController2
+import com.lee.playandroid.me.ui.MeFragment
+import com.lee.playandroid.system.ui.SystemFragment
 import java.lang.ref.WeakReference
 
 /**
@@ -51,6 +53,8 @@ class MainFragment : BaseFragment(R.layout.fragment_main),
         //设置深色主题控制器监听
         DarkViewUpdateTools.bindViewCallback(this, this)
 
+        createBottomMenu()
+
         //fragment容器与navigationBar绑定
         bindNavigationAction()
     }
@@ -68,9 +72,45 @@ class MainFragment : BaseFragment(R.layout.fragment_main),
         binding.navigationBar.setBackgroundColorCompat(R.color.colorThemeItem)
     }
 
+    private fun createBottomMenu() {
+
+    }
+
+    private fun createGraph(
+        provider: NavigatorProvider,
+        fragmentNavigator: FragmentNavigator
+    ): NavGraph {
+        val navGraph = NavGraph(NavGraphNavigator(provider))
+
+        val destinationHome = fragmentNavigator.createDestination()
+        destinationHome.id = R.id.home_graph
+        destinationHome.setClassName(HomeFragment::class.java.name)
+        navGraph.addDestination(destinationHome)
+
+        val destinationSystem = fragmentNavigator.createDestination()
+        destinationSystem.id = R.id.system_graph
+        destinationSystem.setClassName(SystemFragment::class.java.name)
+        navGraph.addDestination(destinationSystem)
+
+        val destinationMe = fragmentNavigator.createDestination()
+        destinationMe.id = R.id.me_graph
+        destinationMe.setClassName(MeFragment::class.java.name)
+        navGraph.addDestination(destinationMe)
+
+        navGraph.setStartDestination(destinationHome.id)
+
+        return navGraph
+    }
+
     private fun bindNavigationAction() {
         binding.navigationBar.post {
             val controller = binding.container.findNavController()
+
+            controller.graph = createGraph(
+                controller.navigatorProvider,
+                controller.navigatorProvider.getNavigator(FragmentNavigator::class.java)
+            )
+
             binding.navigationBar.setupWithNavController2(controller) { menuItem, _ ->
                 LiveDataBus.getInstance().getChannel(NavigationSelectEvent.key)
                     .postValue(NavigationSelectEvent(menuItem.title.toString()))
