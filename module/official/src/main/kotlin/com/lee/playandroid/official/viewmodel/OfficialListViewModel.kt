@@ -44,4 +44,8 @@ class OfficialListViewModel(handle: SavedStateHandle) : CoroutineViewModel() {
         }
     }
 
+    init {
+        requestContentList(LoadStatus.INIT)
+    }
+
 }

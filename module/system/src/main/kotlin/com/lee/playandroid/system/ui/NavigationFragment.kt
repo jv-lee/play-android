@@ -82,6 +82,11 @@ class NavigationFragment : BaseFragment(R.layout.fragment_navigation) {
         })
     }
 
+    override fun lazyLoad() {
+        super.lazyLoad()
+        viewModel.requestNavigationData()
+    }
+
     /**
      * 双向列表互动监听器处理
      */

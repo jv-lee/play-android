@@ -51,8 +51,4 @@ class NavigationViewModel : CoroutineViewModel() {
         _selectTabLive.postValue(index)
     }
 
-    init {
-        requestNavigationData()
-    }
-
 }

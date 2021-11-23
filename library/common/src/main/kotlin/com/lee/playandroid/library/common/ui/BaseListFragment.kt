@@ -84,10 +84,6 @@ abstract class BaseListFragment : BaseFragment(R.layout.fragment_base_list) {
             })
     }
 
-    override fun lazyLoad() {
-        requestContentList(LoadStatus.INIT)
-    }
-
     override fun onDestroyView() {
         super.onDestroyView()
         binding.rvContainer.removeAllViews()

@@ -1,6 +1,6 @@
 package com.lee.playandroid.system.ui
 
-import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import com.lee.library.adapter.core.UiPager2Adapter
 import com.lee.library.base.BaseFragment
 import com.lee.library.extensions.bindRadioGroup
@@ -8,6 +8,7 @@ import com.lee.library.extensions.binding
 import com.lee.library.extensions.delayBackEvent
 import com.lee.playandroid.system.R
 import com.lee.playandroid.system.databinding.FragmentSystemBinding
+import com.lee.playandroid.system.viewmodel.SystemViewModel
 
 /**
  * @author jv.lee
@@ -16,19 +17,25 @@ import com.lee.playandroid.system.databinding.FragmentSystemBinding
  */
 class SystemFragment : BaseFragment(R.layout.fragment_system) {
 
-    private val binding by binding(FragmentSystemBinding::bind)
+    private val viewModel by viewModels<SystemViewModel>()
 
-    private val fragmentList: MutableList<Fragment> =
-        mutableListOf(SystemContentFragment(), NavigationFragment())
+    private val binding by binding(FragmentSystemBinding::bind)
 
     override fun bindView() {
         delayBackEvent()
 
-        binding.vpContainer.adapter = UiPager2Adapter(this, fragmentList)
         binding.vpContainer.bindRadioGroup(binding.radioTabLayout)
     }
 
     override fun bindData() {
+        viewModel.fragmentsLive.observe(this, {
+            binding.vpContainer.adapter = UiPager2Adapter(this, it)
+        })
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        binding.vpContainer.removeAllViews()
     }
 
     /**
