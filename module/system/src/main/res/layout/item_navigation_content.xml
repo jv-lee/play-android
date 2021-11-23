@@ -13,7 +13,7 @@
         android:ellipsize="end"
         android:maxLines="1"
         android:textColor="@color/colorAccent"
-        android:textSize="@dimen/font_size_large"
+        android:textSize="@dimen/font_size_medium"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
