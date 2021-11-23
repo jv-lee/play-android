@@ -32,11 +32,7 @@ class NavigationViewModel : CoroutineViewModel() {
     fun requestNavigationData() {
         launchIO {
             stateCacheFlow({
-                repository.api.getNavigationDataAsync().data
-                    .filter {
-                        //navigation框架url规则判断存在bug 过滤存在错误url的板块
-                        it.name != "个人博客" && it.name != "优秀的博客" && it.articles.isNotEmpty()
-                    }
+                repository.api.getNavigationDataAsync().data.filter { it.articles.isNotEmpty() }
             }, {
                 cacheManager.getCache(Constants.CACHE_KEY_NAVIGATION_CONTENT)
             }, {
