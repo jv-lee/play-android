@@ -1,6 +1,7 @@
 package com.lee.playandroid.me.ui
 
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.lee.library.base.BaseFragment
 import com.lee.library.extensions.binding
 import com.lee.library.extensions.delayBackEvent
@@ -21,6 +22,10 @@ class MeFragment : BaseFragment(R.layout.fragment_me) {
 
     override fun bindView() {
         delayBackEvent()
+
+        binding.toolbarLayout.setOnClickListener {
+            findNavController().navigate(R.id.action_me_fragment_to_login_fragment)
+        }
     }
 
     override fun bindData() {
