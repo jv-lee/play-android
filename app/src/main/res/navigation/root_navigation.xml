@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/root_graph"
+    app:startDestination="@id/root">
+
+    <fragment
+        android:id="@+id/root"
+        android:name="com.lee.playandroid.RootFragment"
+        tools:layout="@layout/fragment_root" />
+
+    <include app:graph="@navigation/home_navigation" />
+    <include app:graph="@navigation/system_navigation" />
+    <include app:graph="@navigation/me_navigation" />
+
+    <include app:graph="@navigation/official_navigation" />
+    <include app:graph="@navigation/project_navigation" />
+
+    <include app:graph="@navigation/details_navigation" />
+    <include app:graph="@navigation/search_navigation" />
+
+</navigation>
