@@ -20,7 +20,7 @@ class HeaderInterceptor : Interceptor {
 
         val url = request.url().toString()
         if (url.contains(BuildConfig.BASE_URI)) {
-            val token = PreferencesTools.get(BuildConfig.BASE_URI, "") as String
+            val token = PreferencesTools.get(BuildConfig.BASE_URI, "")
             if (token.isNotEmpty()) {
                 builder.addHeader("Cookie", token)
             }

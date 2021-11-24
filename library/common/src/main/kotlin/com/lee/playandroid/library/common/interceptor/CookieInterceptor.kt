@@ -54,7 +54,7 @@ class CookieInterceptor : Interceptor {
     }
 
     private fun saveCookie(cookie: String) {
-        PreferencesTools.save(BuildConfig.BASE_URI, cookie)
+        PreferencesTools.put(BuildConfig.BASE_URI, cookie)
     }
 
 }
