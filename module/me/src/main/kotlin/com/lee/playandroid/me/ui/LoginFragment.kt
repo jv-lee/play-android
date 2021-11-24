@@ -19,7 +19,7 @@ class LoginFragment : BaseFragment(R.layout.fragment_login) {
 
     companion object {
         const val REQUEST_KEY = "loginFragment-requestKey"
-        const val IS_REGISTER = "isRegister"
+        const val ARG_PARAMS_REGISTER = "isRegister"
     }
 
     override fun bindView() {
@@ -28,7 +28,7 @@ class LoginFragment : BaseFragment(R.layout.fragment_login) {
         }
 
         setFragmentResultListener(REQUEST_KEY) { _: String, bundle: Bundle ->
-            if (bundle.getBoolean(IS_REGISTER, false)) {
+            if (bundle.getBoolean(ARG_PARAMS_REGISTER, false)) {
                 findNavController().popBackStack()
             }
         }

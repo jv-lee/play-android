@@ -9,9 +9,6 @@ import com.lee.library.extensions.setWebBackEvent
 import com.lee.playandroid.details.databinding.FragmentDetailsBinding
 import com.lee.playandroid.library.common.extensions.bindLifecycle
 
-private const val ARG_PARAMS_TITLE = "title"
-private const val ARG_PARAMS_URL = "url"
-
 /**
  * @author jv.lee
  * @date 2020/3/24
@@ -19,6 +16,11 @@ private const val ARG_PARAMS_URL = "url"
  */
 class DetailsFragment :
     BaseFragment(R.layout.fragment_details) {
+
+    companion object {
+        const val ARG_PARAMS_TITLE = "title"
+        const val ARG_PARAMS_URL = "url"
+    }
 
     private val title by arguments<String>(ARG_PARAMS_TITLE)
     private val detailsUrl by arguments<String>(ARG_PARAMS_URL)
