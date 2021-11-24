@@ -19,7 +19,7 @@ class RegisterFragment : BaseFragment(R.layout.fragment_register) {
 
     override fun bindView() {
         binding.button.setOnClickListener {
-            setFragmentResult("key", Bundle.EMPTY)
+            setFragmentResult(LoginFragment.REQUEST_KEY, Bundle.EMPTY)
             findNavController().popBackStack()
         }
     }

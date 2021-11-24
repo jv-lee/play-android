@@ -17,13 +17,20 @@ class LoginFragment : BaseFragment(R.layout.fragment_login) {
 
     private val binding by binding(FragmentLoginBinding::bind)
 
+    companion object {
+        const val REQUEST_KEY = "loginFragment-requestKey"
+        const val IS_REGISTER = "isRegister"
+    }
+
     override fun bindView() {
         binding.button.setOnClickListener {
             findNavController().navigate(R.id.action_login_fragment_to_register_fragment)
         }
 
-        setFragmentResultListener("key") { requestKey: String, bundle: Bundle ->
-            findNavController().popBackStack()
+        setFragmentResultListener(REQUEST_KEY) { _: String, bundle: Bundle ->
+            if (bundle.getBoolean(IS_REGISTER, false)) {
+                findNavController().popBackStack()
+            }
         }
     }
 
