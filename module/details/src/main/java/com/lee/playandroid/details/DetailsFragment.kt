@@ -7,8 +7,10 @@ import com.lee.library.extensions.arguments
 import com.lee.library.extensions.binding
 import com.lee.library.extensions.setWebBackEvent
 import com.lee.playandroid.details.databinding.FragmentDetailsBinding
-import com.lee.playandroid.library.common.constant.KeyConstants
 import com.lee.playandroid.library.common.extensions.bindLifecycle
+
+private const val ARG_PARAMS_TITLE = "title"
+private const val ARG_PARAMS_URL = "url"
 
 /**
  * @author jv.lee
@@ -18,8 +20,8 @@ import com.lee.playandroid.library.common.extensions.bindLifecycle
 class DetailsFragment :
     BaseFragment(R.layout.fragment_details) {
 
-    private val title by arguments<String>(KeyConstants.ARG_PARAMS_TITLE)
-    private val detailsUrl by arguments<String>(KeyConstants.ARG_PARAMS_URL)
+    private val title by arguments<String>(ARG_PARAMS_TITLE)
+    private val detailsUrl by arguments<String>(ARG_PARAMS_URL)
 
     private val binding by binding(FragmentDetailsBinding::bind)
 
