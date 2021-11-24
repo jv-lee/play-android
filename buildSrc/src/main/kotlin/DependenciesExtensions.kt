@@ -81,6 +81,7 @@ fun DependencyHandlerScope.commonDependencies() {
     api(Dependencies.retrofit)
     api(Dependencies.retrofitConverterGson) { exclude("com.google.code.gson") }
     api(Dependencies.retrofitConverterScalars)
+    api(Dependencies.okhttp3Logging)
 
     api(Dependencies.gson)
 

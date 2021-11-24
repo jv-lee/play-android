@@ -11,10 +11,12 @@ import com.lee.library.cache.CacheManager
 import com.lee.library.extensions.bindFragmentLifecycle
 import com.lee.library.lifecycle.SimpleActivityLifecycleCallbacks
 import com.lee.library.lifecycle.SimpleFragmentLifecycleCallbacks
+import com.lee.library.net.HttpManager
 import com.lee.library.tools.DarkModeTools
 import com.lee.library.tools.PreferencesTools
 import com.lee.library.tools.ScreenDensityUtil
 import com.lee.library.tools.StatusTools
+import com.lee.playandroid.library.common.extensions.setCommonInterceptor
 import com.lee.playandroid.library.service.hepler.ApplicationModuleService
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -68,6 +70,7 @@ class App : BaseApplication() {
 
         //初始化工具类
         CoroutineScope(Dispatchers.IO).launch {
+            HttpManager.getInstance().setCommonInterceptor()
             PreferencesTools.getInstance(this@App)
             CacheManager.init(this@App, BuildConfig.VERSION_CODE)
             ApplicationModuleService.init(this@App)

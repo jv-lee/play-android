@@ -25,7 +25,8 @@ object Dependencies {
     const val recyclerview = "androidx.recyclerview:recyclerview:${Version.recyclerview}"
     const val constraint = "androidx.constraintlayout:constraintlayout:${Version.constraintLayout}"
     const val viewpager2 = "androidx.viewpager2:viewpager2:${Version.viewpager2}"
-    const val swipeRefreshLayout = "androidx.swiperefreshlayout:swiperefreshlayout:${Version.swipeRefreshLayout}"
+    const val swipeRefreshLayout =
+        "androidx.swiperefreshlayout:swiperefreshlayout:${Version.swipeRefreshLayout}"
 
     //fragment导航
     const val navigationFragment =
@@ -48,9 +49,10 @@ object Dependencies {
     const val retrofitConverterGson = "com.squareup.retrofit2:converter-gson:${Version.retrofit}"
     const val retrofitConverterScalars =
         "com.squareup.retrofit2:converter-scalars:${Version.retrofit}"
+    const val okhttp3Logging = "com.squareup.okhttp3:logging-interceptor:3.11.0"
 
     //gson解析
-    const val gson ="com.google.code.gson:gson:${Version.gson}"
+    const val gson = "com.google.code.gson:gson:${Version.gson}"
 
     //protobuf
     const val protobuf = "com.google.protobuf:protobuf-javalite:${Version.protobuf}"
