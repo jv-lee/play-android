@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/login_fragment"
-        android:name="com.lee.playandroid.account.LoginFragment"
+        android:name="com.lee.playandroid.account.ui.LoginFragment"
         android:label="login"
         tools:layout="@layout/fragment_login">
         <action
@@ -24,7 +24,7 @@
 
     <fragment
         android:id="@+id/register_fragment"
-        android:name="com.lee.playandroid.account.RegisterFragment"
+        android:name="com.lee.playandroid.account.ui.RegisterFragment"
         android:label="register"
         tools:layout="@layout/fragment_register" />
 

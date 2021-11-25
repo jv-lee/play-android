@@ -5,6 +5,9 @@ import androidx.navigation.fragment.findNavController
 import com.lee.library.base.BaseFragment
 import com.lee.library.extensions.binding
 import com.lee.library.extensions.delayBackEvent
+import com.lee.library.utils.LogUtil
+import com.lee.playandroid.library.service.AccountService
+import com.lee.playandroid.library.service.hepler.ModuleService
 import com.lee.playandroid.me.R
 import com.lee.playandroid.me.databinding.FragmentMeBinding
 import com.lee.playandroid.me.viewmodel.MeViewModel
@@ -30,6 +33,9 @@ class MeFragment : BaseFragment(R.layout.fragment_me) {
     }
 
     override fun bindData() {
+        ModuleService.find<AccountService>().getAccountLive(requireActivity()).observe(this) {
+            LogUtil.i("accountInfo:$it")
+        }
     }
 
 }

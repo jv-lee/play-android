@@ -11,6 +11,7 @@ import com.lee.playandroid.home.bean.HomeContent
 import com.lee.playandroid.home.constants.Constants
 import com.lee.playandroid.home.helper.CategoryHelper
 import com.lee.playandroid.home.model.repository.ApiRepository
+import com.lee.playandroid.library.common.extensions.checkData
 
 /**
  * @author jv.lee
@@ -37,7 +38,7 @@ class HomeViewModel : CoroutineViewModel() {
 
                     //首页添加header数据
                     if (page == getInitPage()) {
-                        val banner = repository.api.getBannerDataAsync().data
+                        val banner = repository.api.getBannerDataAsync().checkData()
                         dataList.add(HomeContent(bannerList = banner))
 
                         val category = CategoryHelper.getHomeCategory()
@@ -45,7 +46,7 @@ class HomeViewModel : CoroutineViewModel() {
                     }
 
                     //获取网络item数据
-                    val textItemData = repository.api.getContentDataAsync(page).data.apply {
+                    val textItemData = repository.api.getContentDataAsync(page).checkData().apply {
                         data.forEach {
                             dataList.add(HomeContent(content = it))
                         }

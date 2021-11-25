@@ -1,11 +1,14 @@
-package com.lee.playandroid.account
+package com.lee.playandroid.account.ui
 
 import android.os.Bundle
 import androidx.fragment.app.setFragmentResultListener
 import androidx.navigation.fragment.findNavController
 import com.lee.library.base.BaseFragment
 import com.lee.library.extensions.binding
+import com.lee.playandroid.account.R
 import com.lee.playandroid.account.databinding.FragmentLoginBinding
+import com.lee.playandroid.library.service.AccountService
+import com.lee.playandroid.library.service.hepler.ModuleService
 
 /**
  * @author jv.lee
@@ -24,6 +27,9 @@ class LoginFragment : BaseFragment(R.layout.fragment_login) {
     override fun bindView() {
         binding.button.setOnClickListener {
             findNavController().navigate(R.id.action_login_fragment_to_register_fragment)
+        }
+        binding.buttonLogin.setOnClickListener {
+            ModuleService.find<AccountService>().loginUser(requireActivity())
         }
     }
 

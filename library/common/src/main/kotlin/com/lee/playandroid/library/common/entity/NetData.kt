@@ -129,5 +129,5 @@ data class ParentTab(
 data class NavigationItem(
     val cid: Long,
     val name: String,
-    val articles:List<Content>
+    val articles: List<Content>
 )

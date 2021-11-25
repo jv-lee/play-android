@@ -8,6 +8,7 @@ import com.lee.library.extensions.putCache
 import com.lee.library.mvvm.ui.UiState
 import com.lee.library.mvvm.ui.stateCacheFlow
 import com.lee.library.mvvm.viewmodel.CoroutineViewModel
+import com.lee.playandroid.library.common.extensions.checkData
 import com.lee.playandroid.system.constants.Constants
 import com.lee.playandroid.system.model.repository.ApiRepository
 import kotlinx.coroutines.flow.collect
@@ -29,7 +30,7 @@ class SystemContentViewModel : CoroutineViewModel() {
     fun requestParentTab() {
         launchIO {
             stateCacheFlow({
-                repository.api.getParentTabAsync().data.filter {
+                repository.api.getParentTabAsync().checkData().filter {
                     it.children.isNotEmpty()
                 }
             }, {

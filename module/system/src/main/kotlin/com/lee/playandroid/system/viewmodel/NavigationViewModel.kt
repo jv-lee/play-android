@@ -8,6 +8,7 @@ import com.lee.library.extensions.putCache
 import com.lee.library.mvvm.ui.UiState
 import com.lee.library.mvvm.ui.stateCacheFlow
 import com.lee.library.mvvm.viewmodel.CoroutineViewModel
+import com.lee.playandroid.library.common.extensions.checkData
 import com.lee.playandroid.system.constants.Constants
 import com.lee.playandroid.system.model.repository.ApiRepository
 import kotlinx.coroutines.flow.collect
@@ -32,7 +33,7 @@ class NavigationViewModel : CoroutineViewModel() {
     fun requestNavigationData() {
         launchIO {
             stateCacheFlow({
-                repository.api.getNavigationDataAsync().data.filter { it.articles.isNotEmpty() }
+                repository.api.getNavigationDataAsync().checkData().filter { it.articles.isNotEmpty() }
             }, {
                 cacheManager.getCache(Constants.CACHE_KEY_NAVIGATION_CONTENT)
             }, {

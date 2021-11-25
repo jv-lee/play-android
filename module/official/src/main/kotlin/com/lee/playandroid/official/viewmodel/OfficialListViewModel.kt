@@ -9,6 +9,7 @@ import com.lee.library.mvvm.ui.UiStatePageLiveData
 import com.lee.library.mvvm.viewmodel.CoroutineViewModel
 import com.lee.playandroid.library.common.entity.Content
 import com.lee.playandroid.library.common.entity.PageData
+import com.lee.playandroid.library.common.extensions.checkData
 import com.lee.playandroid.official.constants.Constants
 import com.lee.playandroid.official.model.repository.ApiRepository
 import com.lee.playandroid.official.ui.OfficialListFragment
@@ -32,7 +33,7 @@ class OfficialListViewModel(handle: SavedStateHandle) : CoroutineViewModel() {
         launchIO {
             contentListLive.apply {
                 pageLaunch(status, { page ->
-                    repository.api.getOfficialDataAsync(id, page).data.also { newData ->
+                    repository.api.getOfficialDataAsync(id, page).checkData().also { newData ->
                         applyData(getValueData<PageData<Content>>()?.data, newData.data)
                     }
                 }, {

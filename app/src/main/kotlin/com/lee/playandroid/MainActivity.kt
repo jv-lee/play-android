@@ -15,6 +15,8 @@ import com.lee.library.tools.DarkModeTools
 import com.lee.library.tools.ScreenDensityUtil
 import com.lee.library.tools.StatusTools
 import com.lee.playandroid.databinding.ActivityMainBinding
+import com.lee.playandroid.library.service.AccountService
+import com.lee.playandroid.library.service.hepler.ModuleService
 import kotlinx.coroutines.*
 
 /**
@@ -72,7 +74,7 @@ class MainActivity : BaseActivity(),
 
     //客户端入口读取APP配置
     private suspend fun requestConfig() {
-        delay(500)
+        ModuleService.find<AccountService>().requestAccountInfo(this)
     }
 
     /**
