@@ -37,11 +37,14 @@ class MeFragment : BaseFragment(R.layout.fragment_me) {
     }
 
     override fun bindData() {
-        accountService.getAccountLive(requireActivity()).observeState<AccountData>(this, success = {
-            LogUtil.i("setUes Account")
-        }, default = {
-            LogUtil.i("setDefault Account")
-        })
+        accountService.getAccountLive(requireActivity())
+            .observeState<AccountData>(viewLifecycleOwner, success = {
+                LogUtil.i("setUes Account:$it")
+            }, default = {
+                LogUtil.i("setDefault Account")
+            }, error = {
+                LogUtil.i("setError Account")
+            })
     }
 
 }

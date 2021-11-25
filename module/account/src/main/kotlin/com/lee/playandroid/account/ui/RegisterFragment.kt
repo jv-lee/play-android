@@ -35,7 +35,7 @@ class RegisterFragment : BaseFragment(R.layout.fragment_register) {
     }
 
     override fun bindData() {
-        viewModel.accountLive.observeState<AccountData>(this, success = {
+        viewModel.accountLive.observeState<AccountData>(viewLifecycleOwner, success = {
             accountViewModel.updateAccountInfo(it)
             setFragmentResult(REQUEST_KEY, Bundle.EMPTY)
             findNavController().popBackStack()

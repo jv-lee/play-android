@@ -9,10 +9,7 @@ import com.lee.library.base.BaseFragment
 import com.lee.library.extensions.binding
 import com.lee.library.extensions.toast
 import com.lee.library.mvvm.ui.observeState
-import com.lee.library.tools.PreferencesTools
-import com.lee.library.utils.LogUtil
 import com.lee.playandroid.account.R
-import com.lee.playandroid.account.constants.Constants
 import com.lee.playandroid.account.databinding.FragmentLoginBinding
 import com.lee.playandroid.account.viewmodel.AccountViewModel
 import com.lee.playandroid.account.viewmodel.LoginRegisterViewModel
@@ -36,7 +33,7 @@ class LoginFragment : BaseFragment(R.layout.fragment_login) {
             findNavController().navigate(R.id.action_login_fragment_to_register_fragment)
         }
         binding.buttonLogin.setOnClickListener {
-
+            viewModel.requestLogin("u186", "123456")
         }
     }
 
@@ -45,11 +42,10 @@ class LoginFragment : BaseFragment(R.layout.fragment_login) {
             findNavController().popBackStack()
         }
 
-        viewModel.accountLive.observeState<AccountData>(this, success = {
+        viewModel.accountLive.observeState<AccountData>(viewLifecycleOwner, success = {
             accountViewModel.updateAccountInfo(it)
             findNavController().popBackStack()
         }, error = {
-            LogUtil.i("login error")
             toast(it.message)
         })
     }
