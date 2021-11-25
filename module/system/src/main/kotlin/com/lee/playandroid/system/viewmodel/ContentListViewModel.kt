@@ -34,8 +34,4 @@ class ContentListViewModel(handle: SavedStateHandle) : CoroutineViewModel() {
         }
     }
 
-    init {
-        requestContentList(LoadStatus.INIT)
-    }
-
 }

@@ -4,6 +4,7 @@ import androidx.core.net.toUri
 import androidx.navigation.NavController
 import com.lee.playandroid.router.extensions.NavigationAnim
 import com.lee.playandroid.router.extensions.navigateDeepLink
+import java.net.URLEncoder
 
 /**
  * @author jv.lee
@@ -11,8 +12,8 @@ import com.lee.playandroid.router.extensions.navigateDeepLink
  * @description
  */
 fun NavController.navigateDetails(title: String, url: String) {
-    val newUrl = url.trim().replace("\n", "").replace("\t", "")
-    val newTitle = title.trim().replace("\n", "").replace("\t", "")
+    val newUrl = URLEncoder.encode(url.trim().replace("\n", "").replace("\t", ""), "UTF-8")
+    val newTitle = URLEncoder.encode(title.trim().replace("\n", "").replace("\t", ""), "UTF-8")
     navigateDeepLink(
         "play://details?title=$newTitle&url=$newUrl".toUri(),
         NavigationAnim.SlideInOut

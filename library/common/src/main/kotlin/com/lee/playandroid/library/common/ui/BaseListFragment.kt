@@ -7,6 +7,7 @@ import com.lee.library.adapter.listener.LoadErrorListener
 import com.lee.library.adapter.page.submitData
 import com.lee.library.adapter.page.submitFailed
 import com.lee.library.base.BaseFragment
+import com.lee.library.base.BaseNavigationFragment
 import com.lee.library.extensions.binding
 import com.lee.library.extensions.toast
 import com.lee.library.mvvm.livedata.LoadStatus
@@ -22,7 +23,7 @@ import com.lee.playandroid.library.common.entity.PageData
  * @data 2021/11/8
  * @description
  */
-abstract class BaseListFragment : BaseFragment(R.layout.fragment_base_list) {
+abstract class BaseListFragment : BaseNavigationFragment(R.layout.fragment_base_list) {
 
     private val binding by binding(FragmentBaseListBinding::bind)
 
@@ -84,9 +85,9 @@ abstract class BaseListFragment : BaseFragment(R.layout.fragment_base_list) {
             })
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        binding.rvContainer.removeAllViews()
+    override fun lazyLoad() {
+        super.lazyLoad()
+        requestContentList(LoadStatus.INIT)
     }
 
 }

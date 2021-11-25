@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import com.google.android.material.tabs.TabLayoutMediator
 import com.lee.library.adapter.core.UiPager2Adapter
 import com.lee.library.base.BaseFragment
+import com.lee.library.base.BaseNavigationFragment
 import com.lee.library.extensions.binding
 import com.lee.library.extensions.increaseOffscreenPageLimit
 import com.lee.library.extensions.toast
@@ -20,7 +21,7 @@ import com.lee.playandroid.library.common.entity.Tab
  * @data 2021/11/9
  * @description 基础tabFragment类
  */
-abstract class BaseTabFragment : BaseFragment(R.layout.fragment_base_tab) {
+abstract class BaseTabFragment : BaseNavigationFragment(R.layout.fragment_base_tab) {
 
     private val binding by binding(FragmentBaseTabBinding::bind)
 
@@ -72,7 +73,7 @@ abstract class BaseTabFragment : BaseFragment(R.layout.fragment_base_tab) {
         }
 
         binding.vpContainer.increaseOffscreenPageLimit()
-        binding.vpContainer.isSaveEnabled = true
+        binding.vpContainer.isSaveEnabled = false
         binding.vpContainer.adapter = UiPager2Adapter(this, fragments).also {
             adapter = it
         }

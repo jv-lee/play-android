@@ -44,8 +44,4 @@ class ProjectListViewModel(handle: SavedStateHandle) : CoroutineViewModel() {
         }
     }
 
-    init {
-        requestContentList(LoadStatus.INIT)
-    }
-
 }
