@@ -96,7 +96,7 @@ class SearchFragment : BaseFragment(R.layout.fragment_search) {
 
         val bundle = Bundle()
         bundle.putString(Constants.ARG_PARAMS_SEARCH_KEY, key)
-        findNavController().navigate(R.id.action_search_to_result, bundle)
+        findNavController().navigate(R.id.action_search_fragment_to_search_result_fragment, bundle)
     }
 
 }

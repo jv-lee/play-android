@@ -91,7 +91,7 @@ class SystemContentFragment : BaseFragment(R.layout.fragment_system_content) {
         bundle.putString(Constants.ARG_PARAMS_CONTENT_TAB_TITLE, item.name)
         bundle.putParcelableArrayList(Constants.ARG_PARAMS_CONTENT_TAB_DATA, data)
 
-        findNavController().navigate(R.id.action_systemContent_to_contentTab, bundle)
+        findNavController().navigate(R.id.action_system_fragment_to_content_tab_fragment, bundle)
     }
 
     @InjectBus(NavigationSelectEvent.key, isActive = true)

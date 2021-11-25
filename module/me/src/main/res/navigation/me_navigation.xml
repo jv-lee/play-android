@@ -7,8 +7,75 @@
 
     <fragment
         android:id="@+id/me_fragment"
-        android:name="com.lee.playandroid.me.ui.MeFragment"
+        android:name="com.lee.playandroid.me.ui.fragment.MeFragment"
         android:label="@string/nav_me"
-        tools:layout="@layout/fragment_me"/>
+        tools:layout="@layout/fragment_me">
+
+        <action
+            android:id="@+id/action_me_fragment_to_integral_fragment"
+            app:destination="@id/integral_fragment"
+            app:enterAnim="@anim/slide_right_in"
+            app:exitAnim="@anim/slide_left_out"
+            app:popEnterAnim="@anim/slide_left_in"
+            app:popExitAnim="@anim/slide_right_out" />
+        <action
+            android:id="@+id/action_me_fragment_to_collect_fragment"
+            app:destination="@id/collect_fragment"
+            app:enterAnim="@anim/slide_right_in"
+            app:exitAnim="@anim/slide_left_out"
+            app:popEnterAnim="@anim/slide_left_in"
+            app:popExitAnim="@anim/slide_right_out" />
+        <action
+            android:id="@+id/action_me_fragment_to_share_fragment"
+            app:destination="@id/share_fragment"
+            app:enterAnim="@anim/slide_right_in"
+            app:exitAnim="@anim/slide_left_out"
+            app:popEnterAnim="@anim/slide_left_in"
+            app:popExitAnim="@anim/slide_right_out" />
+        <action
+            android:id="@+id/action_me_fragment_to_todo_fragment"
+            app:destination="@id/todo_fragment"
+            app:enterAnim="@anim/slide_right_in"
+            app:exitAnim="@anim/slide_left_out"
+            app:popEnterAnim="@anim/slide_left_in"
+            app:popExitAnim="@anim/slide_right_out" />
+        <action
+            android:id="@+id/action_me_fragment_to_settings_fragment"
+            app:destination="@id/settings_fragment"
+            app:enterAnim="@anim/slide_right_in"
+            app:exitAnim="@anim/slide_left_out"
+            app:popEnterAnim="@anim/slide_left_in"
+            app:popExitAnim="@anim/slide_right_out" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/collect_fragment"
+        android:name="com.lee.playandroid.me.ui.fragment.CollectFragment"
+        android:label="collect"
+        tools:layout="@layout/fragment_collect" />
+
+    <fragment
+        android:id="@+id/integral_fragment"
+        android:name="com.lee.playandroid.me.ui.fragment.IntegralFragment"
+        android:label="integral"
+        tools:layout="@layout/fragment_integral" />
+
+    <fragment
+        android:id="@+id/settings_fragment"
+        android:name="com.lee.playandroid.me.ui.fragment.SettingsFragment"
+        android:label="settings"
+        tools:layout="@layout/fragment_settings" />
+
+    <fragment
+        android:id="@+id/share_fragment"
+        android:name="com.lee.playandroid.me.ui.fragment.ShareFragment"
+        android:label="share"
+        tools:layout="@layout/fragment_share" />
+
+    <fragment
+        android:id="@+id/todo_fragment"
+        android:name="com.lee.playandroid.me.ui.fragment.TodoFragment"
+        android:label="todo"
+        tools:layout="@layout/fragment_todo" />
 
 </navigation>

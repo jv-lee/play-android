@@ -6,7 +6,7 @@ import com.lee.library.base.BaseFragment
 import com.lee.library.extensions.binding
 import com.lee.playandroid.databinding.FragmentRootBinding
 import com.lee.playandroid.home.view.HomeFragment
-import com.lee.playandroid.me.ui.MeFragment
+import com.lee.playandroid.me.ui.fragment.MeFragment
 import com.lee.playandroid.system.ui.SystemFragment
 
 /**

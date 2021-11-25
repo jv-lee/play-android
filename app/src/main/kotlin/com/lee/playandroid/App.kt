@@ -1,7 +1,6 @@
 package com.lee.playandroid
 
 import android.app.Activity
-import android.content.Context
 import android.graphics.Color
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -30,10 +29,15 @@ class App : BaseApplication() {
 
     private val fragmentLifecycleCallbacks = object : SimpleFragmentLifecycleCallbacks() {
 
-        override fun onFragmentAttached(fm: FragmentManager, f: Fragment, context: Context) {
+        override fun onFragmentCreated(
+            fm: FragmentManager,
+            f: Fragment,
+            savedInstanceState: Bundle?
+        ) {
             ScreenDensityUtil.init(f.requireActivity())
-            super.onFragmentAttached(fm, f, context)
+            super.onFragmentCreated(fm, f, savedInstanceState)
         }
+
     }
 
     private val activityLifecycleCallbacks = object : SimpleActivityLifecycleCallbacks() {

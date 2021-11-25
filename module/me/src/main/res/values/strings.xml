@@ -5,4 +5,6 @@
     <string name="me_item_settings">系统设置</string>
     <string name="me_item_todo">TODO</string>
     <string name="me_item_share">我的分享</string>
+
+    <string name="me_login_message">请先登陆</string>
 </resources>
