@@ -13,7 +13,7 @@ import androidx.lifecycle.liveData
 inline fun <reified T> LiveData<UiState>.observeState(
     owner: LifecycleOwner,
     crossinline success: (T) -> Unit,
-    crossinline error: (Throwable) -> Unit,
+    crossinline error: (Throwable) -> Unit = {},
     crossinline loading: () -> Unit = {},
     crossinline default: () -> Unit = {},
 ) {
