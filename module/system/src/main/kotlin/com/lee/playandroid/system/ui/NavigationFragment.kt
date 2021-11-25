@@ -55,6 +55,7 @@ class NavigationFragment : BaseFragment(R.layout.fragment_navigation) {
         mNavigationContentAdapter = NavigationContentAdapter(requireContext(), arrayListOf())
         binding.rvContainer.adapter = mNavigationContentAdapter.proxy
 
+        binding.statusLayout.setStatus(StatusLayout.STATUS_LOADING)
         binding.statusLayout.setOnReloadListener {
             viewModel.requestNavigationData()
         }
@@ -73,8 +74,6 @@ class NavigationFragment : BaseFragment(R.layout.fragment_navigation) {
         }, error = {
             toast(it.message)
             binding.statusLayout.setStatus(StatusLayout.STATUS_DATA_ERROR)
-        }, loading = {
-            binding.statusLayout.setStatus(StatusLayout.STATUS_LOADING)
         })
 
         viewModel.selectTabLive.observe(this, {
