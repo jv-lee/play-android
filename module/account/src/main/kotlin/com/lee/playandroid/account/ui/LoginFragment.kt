@@ -29,12 +29,12 @@ class LoginFragment : BaseFragment(R.layout.fragment_login) {
     private val binding by binding(FragmentLoginBinding::bind)
 
     override fun bindView() {
-        binding.button.setOnClickListener {
-            findNavController().navigate(R.id.action_login_fragment_to_register_fragment)
-        }
-        binding.buttonLogin.setOnClickListener {
-            viewModel.requestLogin("u186", "123456")
-        }
+//        binding.button.setOnClickListener {
+//            findNavController().navigate(R.id.action_login_fragment_to_register_fragment)
+//        }
+//        binding.buttonLogin.setOnClickListener {
+//            viewModel.requestLogin("u186", "123456")
+//        }
     }
 
     override fun bindData() {
