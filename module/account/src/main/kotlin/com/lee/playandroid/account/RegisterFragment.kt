@@ -1,12 +1,11 @@
-package com.lee.playandroid.me.ui
+package com.lee.playandroid.account
 
 import android.os.Bundle
 import androidx.fragment.app.setFragmentResult
 import androidx.navigation.fragment.findNavController
 import com.lee.library.base.BaseFragment
 import com.lee.library.extensions.binding
-import com.lee.playandroid.me.R
-import com.lee.playandroid.me.databinding.FragmentRegisterBinding
+import com.lee.playandroid.account.databinding.FragmentRegisterBinding
 
 /**
  * @author jv.lee

@@ -11,8 +11,5 @@ import com.lee.playandroid.router.extensions.navigateDeepLink
  * @description
  */
 fun NavController.navigateSearch() {
-    navigateDeepLink(
-        "play://search".toUri(),
-        NavigationAnim.ZoomIn
-    )
+    navigateDeepLink("play://search".toUri(), NavigationAnim.ZoomIn)
 }

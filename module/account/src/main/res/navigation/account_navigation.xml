@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/account_graph"
+    app:startDestination="@id/login_fragment">
+
+    <fragment
+        android:id="@+id/login_fragment"
+        android:name="com.lee.playandroid.account.LoginFragment"
+        android:label="login"
+        tools:layout="@layout/fragment_login">
+        <action
+            android:id="@+id/action_login_fragment_to_register_fragment"
+            app:destination="@id/register_fragment"
+            app:enterAnim="@anim/zoom_in"
+            app:exitAnim="@anim/zoom_exit"
+            app:popEnterAnim="@anim/zoom_out"
+            app:popExitAnim="@anim/alpha_default_hide" />
+
+        <deepLink app:uri="play://login" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/register_fragment"
+        android:name="com.lee.playandroid.account.RegisterFragment"
+        android:label="register"
+        tools:layout="@layout/fragment_register" />
+
+</navigation>

@@ -7,9 +7,9 @@ import com.lee.playandroid.router.extensions.navigateDeepLink
 
 /**
  * @author jv.lee
- * @data 2021/11/5
+ * @date 2021/11/25
  * @description
  */
-fun NavController.navigateProject() {
-    navigateDeepLink("play://project".toUri(), NavigationAnim.SlideInOut)
+fun NavController.navigateLogin() {
+    navigateDeepLink("play://login".toUri(), NavigationAnim.ZoomIn)
 }

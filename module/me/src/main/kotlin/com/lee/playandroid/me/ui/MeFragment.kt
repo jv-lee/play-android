@@ -8,6 +8,7 @@ import com.lee.library.extensions.delayBackEvent
 import com.lee.playandroid.me.R
 import com.lee.playandroid.me.databinding.FragmentMeBinding
 import com.lee.playandroid.me.viewmodel.MeViewModel
+import com.lee.playandroid.router.navigateLogin
 
 /**
  * @author jv.lee
@@ -24,7 +25,7 @@ class MeFragment : BaseFragment(R.layout.fragment_me) {
         delayBackEvent()
 
         binding.toolbarLayout.setOnClickListener {
-            findNavController().navigate(R.id.action_me_fragment_to_login_fragment)
+            findNavController().navigateLogin()
         }
     }
 

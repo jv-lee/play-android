@@ -9,34 +9,6 @@
         android:id="@+id/me_fragment"
         android:name="com.lee.playandroid.me.ui.MeFragment"
         android:label="@string/nav_me"
-        tools:layout="@layout/fragment_me">
-        <action
-            android:id="@+id/action_me_fragment_to_login_fragment"
-            app:destination="@id/login_fragment"
-            app:enterAnim="@anim/zoom_in"
-            app:exitAnim="@anim/zoom_exit"
-            app:popEnterAnim="@anim/zoom_out"
-            app:popExitAnim="@anim/alpha_default_hide" />
-    </fragment>
-
-    <fragment
-        android:id="@+id/login_fragment"
-        android:name="com.lee.playandroid.me.ui.LoginFragment"
-        android:label="login"
-        tools:layout="@layout/fragment_login">
-        <action
-            android:id="@+id/action_login_fragment_to_register_fragment"
-            app:destination="@id/register_fragment"
-            app:enterAnim="@anim/zoom_in"
-            app:exitAnim="@anim/zoom_exit"
-            app:popEnterAnim="@anim/zoom_out"
-            app:popExitAnim="@anim/alpha_default_hide" />
-    </fragment>
-
-    <fragment
-        android:id="@+id/register_fragment"
-        android:name="com.lee.playandroid.me.ui.RegisterFragment"
-        android:label="register"
-        tools:layout="@layout/fragment_register" />
+        tools:layout="@layout/fragment_me"/>
 
 </navigation>
