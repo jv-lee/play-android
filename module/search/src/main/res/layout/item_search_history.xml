@@ -5,8 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:foreground="?attr/selectableItemBackgroundBorderless"
-    android:paddingTop="@dimen/padding_medium"
-    android:paddingBottom="@dimen/padding_medium">
+    android:paddingTop="@dimen/medium_offset"
+    android:paddingBottom="@dimen/medium_offset">
 
     <TextView
         android:id="@+id/tv_text"

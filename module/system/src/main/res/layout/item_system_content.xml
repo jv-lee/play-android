@@ -4,18 +4,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="@dimen/margin_item"
+    android:layout_margin="@dimen/medium_offset"
     android:minHeight="108dp"
     app:rippleEnable="true"
     app:shadowColor="@color/colorThemeShadow"
     app:shadowFillColor="@color/colorThemeItem"
-    app:shadowRound="@dimen/radius_item">
+    app:shadowRound="@dimen/radius_offset">
 
     <TextView
         android:id="@+id/tv_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/padding_item"
+        android:layout_margin="@dimen/large_offset"
         android:textColor="@color/colorThemeAccent"
         android:textSize="@dimen/font_size_medium"
         android:textStyle="bold"
@@ -27,7 +27,7 @@
         android:id="@+id/view_line_1"
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_marginTop="@dimen/margin_item"
+        android:layout_marginTop="@dimen/medium_offset"
         android:background="@color/colorThemeBackground"
         app:layout_constraintTop_toBottomOf="@id/tv_title" />
 
@@ -35,7 +35,7 @@
         android:id="@+id/tv_child_label"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/padding_item"
+        android:layout_margin="@dimen/medium_offset"
         android:textColor="@color/colorThemePrimary"
         android:textSize="@dimen/font_size_small"
         app:layout_constraintEnd_toEndOf="parent"
@@ -47,14 +47,14 @@
         android:id="@+id/view_line_2"
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_marginTop="@dimen/margin_item"
+        android:layout_marginTop="@dimen/medium_offset"
         android:background="@color/colorThemeBackground"
         app:layout_constraintTop_toBottomOf="@id/tv_child_label" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/padding_item"
+        android:layout_margin="@dimen/large_offset"
         android:text="@string/item_more"
         android:textColor="@color/colorThemeFocus"
         android:textSize="@dimen/font_size_small_x"

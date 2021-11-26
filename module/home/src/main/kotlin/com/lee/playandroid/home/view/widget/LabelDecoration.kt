@@ -31,7 +31,7 @@ class LabelDecoration(context: Context) : RecyclerView.ItemDecoration() {
         textPaint.typeface = Typeface.DEFAULT_BOLD
 
         textHeight = textPaint.descent() - textPaint.ascent()
-        marginItem = context.resources.getDimension(R.dimen.margin_item)
+        marginItem = context.resources.getDimension(R.dimen.medium_offset)
 
         textLabel = context.getString(R.string.home_recommend_label)
     }

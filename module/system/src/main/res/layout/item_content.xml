@@ -4,12 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="@dimen/margin_item"
-    android:padding="@dimen/padding_item"
+    android:layout_margin="@dimen/medium_offset"
+    android:padding="@dimen/large_offset"
     app:rippleEnable="true"
     app:shadowColor="@color/colorThemeShadow"
     app:shadowFillColor="@color/colorThemeItem"
-    app:shadowRound="@dimen/radius_item">
+    app:shadowRound="@dimen/radius_offset">
 
     <TextView
         android:id="@+id/tv_author"
@@ -26,7 +26,7 @@
         android:id="@+id/tv_title"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margin_large"
+        android:layout_marginTop="@dimen/medium_offset"
         android:ellipsize="end"
         android:maxWidth="360dp"
         android:maxLines="2"
@@ -41,7 +41,7 @@
         android:id="@+id/tv_category"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margin_large"
+        android:layout_marginTop="@dimen/medium_offset"
         android:textColor="@color/colorThemeFocus"
         android:textSize="@dimen/font_size_small_x"
         app:layout_constraintStart_toStartOf="parent"
@@ -52,7 +52,7 @@
         android:id="@+id/tv_time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margin_large"
+        android:layout_marginTop="@dimen/medium_offset"
         android:textColor="@color/colorThemePrimaryDark"
         android:textSize="@dimen/font_size_small_x"
         app:layout_constraintBottom_toBottomOf="@id/tv_category"

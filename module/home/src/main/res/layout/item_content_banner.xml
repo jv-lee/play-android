@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/banner_height"
         app:bannerMode="clipMode"
-        app:indicatorPadding="@dimen/padding_item"
+        app:indicatorPadding="@dimen/large_offset"
         app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
