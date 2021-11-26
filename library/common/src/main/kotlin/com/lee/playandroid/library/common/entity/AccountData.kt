@@ -1,12 +1,16 @@
 package com.lee.playandroid.library.common.entity
 
+import androidx.annotation.Keep
+
 /**
  * @author jv.lee
  * @date 2021/11/25
  * @description
  */
+@Keep
 data class AccountData(val coinInfo: CoinInfo, val userInfo: UserInfo)
 
+@Keep
 data class CoinInfo(
     val coinCount: Int,
     val level: Int,
@@ -16,6 +20,7 @@ data class CoinInfo(
     val username: String
 )
 
+@Keep
 data class UserInfo(
     val id: Long,
     val username: String,
