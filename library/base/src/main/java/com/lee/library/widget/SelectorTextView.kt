@@ -62,27 +62,27 @@ class SelectorTextView(context: Context, attributeSet: AttributeSet) :
         context.obtainStyledAttributes(attributeSet, R.styleable.SelectorTextView).run {
             pressedBackgroundColor = getColor(
                 R.styleable.SelectorTextView_pressedBackgroundColor,
-                ContextCompat.getColor(context, android.R.color.black)
+                ContextCompat.getColor(context, android.R.color.transparent)
             )
             normalBackgroundColor = getColor(
                 R.styleable.SelectorTextView_normalBackgroundColor,
-                ContextCompat.getColor(context, android.R.color.black)
+                ContextCompat.getColor(context, android.R.color.transparent)
             )
             pressedTextColor = getColor(
                 R.styleable.SelectorTextView_pressedTextColor,
-                ContextCompat.getColor(context, android.R.color.white)
+                ContextCompat.getColor(context, android.R.color.black)
             )
             normalTextColor = getColor(
                 R.styleable.SelectorTextView_normalTextColor,
-                ContextCompat.getColor(context, android.R.color.white)
+                ContextCompat.getColor(context, android.R.color.black)
             )
             disableBackgroundColor = getColor(
                 R.styleable.SelectorTextView_disableBackgroundColor,
-                ContextCompat.getColor(context, android.R.color.black)
+                ContextCompat.getColor(context, android.R.color.transparent)
             )
             disableTextColor = getColor(
                 R.styleable.SelectorTextView_disableTextColor,
-                ContextCompat.getColor(context, android.R.color.white)
+                ContextCompat.getColor(context, android.R.color.black)
             )
             pressedStrokeColor = getColor(
                 R.styleable.SelectorTextView_pressedStrokeColor,
