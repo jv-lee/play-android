@@ -36,13 +36,21 @@ class AccountViewModel : CoroutineViewModel() {
         }
     }
 
-    fun requestLogout() {
-        launchIO {
-            val response = repository.api.requestLogout()
+    fun requestLogout(
+        showLoading: () -> Unit = {},
+        hideLoading: () -> Unit = {},
+        failedCall: (String) -> Unit = {}
+    ) {
+        launchMain {
+            showLoading()
+            val response = withIO { repository.api.requestLogout() }
             if (response.errorCode == 0) {
                 _accountLive.postValue(UiState.Default)
                 PreferencesTools.put(Constants.KEY_IS_LOGIN, false)
+            } else {
+                failedCall(response.errorMsg)
             }
+            hideLoading()
         }
     }
 

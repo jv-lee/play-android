@@ -33,8 +33,7 @@ interface ApiService {
         @Field("repassword") rePassword: String
     ): Data<UserInfo>
 
-    @POST("user/logout/json")
-    @FormUrlEncoded
+    @GET("user/logout/json")
     suspend fun requestLogout(): Data<Any>
 
 }

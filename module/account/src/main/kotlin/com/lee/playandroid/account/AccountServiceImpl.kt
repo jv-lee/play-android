@@ -26,8 +26,17 @@ class AccountServiceImpl : AccountService {
         activity.viewModels<AccountViewModel>().value.requestAccountInfo()
     }
 
-    override fun requestLogout(activity: FragmentActivity) {
-        activity.viewModels<AccountViewModel>().value.requestLogout()
+    override fun requestLogout(
+        activity: FragmentActivity,
+        showLoading: () -> Unit,
+        hideLoading: () -> Unit,
+        failedCall: (String) -> Unit
+    ) {
+        activity.viewModels<AccountViewModel>().value.requestLogout(
+            showLoading,
+            hideLoading,
+            failedCall
+        )
     }
 
     override fun isLogin(): Boolean {

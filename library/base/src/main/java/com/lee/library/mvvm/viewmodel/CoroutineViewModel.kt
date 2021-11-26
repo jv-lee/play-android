@@ -30,6 +30,12 @@ open class CoroutineViewModel : BaseViewModel() {
         }
     }
 
+    suspend fun <T> withMain(block: suspend CoroutineScope.() -> T): T {
+        return withContext(Dispatchers.Main) {
+            block()
+        }
+    }
+
     fun launchOnUITryCatch(
         tryBlock: suspend CoroutineScope.() -> Unit,
         catchBlock: suspend CoroutineScope.(Throwable) -> Unit,

@@ -8,9 +8,8 @@ import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.lee.library.base.BaseFragment
-import com.lee.library.extensions.binding
-import com.lee.library.extensions.keyboardObserver
-import com.lee.library.extensions.toast
+import com.lee.library.dialog.LoadingDialog
+import com.lee.library.extensions.*
 import com.lee.library.interadp.TextWatcherAdapter
 import com.lee.library.mvvm.ui.observeState
 import com.lee.library.tools.KeyboardTools
@@ -35,6 +34,8 @@ class LoginFragment : BaseFragment(R.layout.fragment_login), View.OnClickListene
     private val accountViewModel by activityViewModels<AccountViewModel>()
 
     private val binding by binding(FragmentLoginBinding::bind)
+
+    private val loadingDialog by lazy { LoadingDialog(requireContext()) }
 
     override fun bindView() {
         //设置登陆过的账户名
@@ -62,10 +63,12 @@ class LoginFragment : BaseFragment(R.layout.fragment_login), View.OnClickListene
 
         //监听登陆成功后获取的账户信息
         viewModel.accountLive.observeState<AccountData>(viewLifecycleOwner, success = {
+            dismiss(loadingDialog)
             PreferencesTools.put(KEY_SAVE_INPUT_USERNAME, it.userInfo.username)
             accountViewModel.updateAccountInfo(it)
             findNavController().popBackStack()
         }, error = {
+            dismiss(loadingDialog)
             toast(it.message)
         })
     }
@@ -73,17 +76,10 @@ class LoginFragment : BaseFragment(R.layout.fragment_login), View.OnClickListene
     override fun onClick(view: View) {
         when (view) {
             binding.tvRegister -> {
-                if (binding.constRoot.paddingBottom > 10) {
-                    KeyboardTools.hideSoftInput(requireActivity())
-                } else {
-                    findNavController().navigate(R.id.action_login_fragment_to_register_fragment)
-                }
+                goRegister()
             }
             binding.tvLogin -> {
-                viewModel.requestLogin(
-                    binding.editUsername.text.toString(),
-                    binding.editPassword.text.toString()
-                )
+                requestLogin()
             }
         }
     }
@@ -96,6 +92,33 @@ class LoginFragment : BaseFragment(R.layout.fragment_login), View.OnClickListene
         } else {
             binding.tvLogin.setButtonDisable(false)
         }
+    }
+
+    /**
+     * 跳转至注册页
+     * 判断当前软键盘是否弹起，优先关闭软键盘
+     */
+    private fun goRegister() {
+        if (binding.constRoot.paddingBottom > 10) {
+            KeyboardTools.hideSoftInput(requireActivity())
+        } else {
+            findNavController().navigate(R.id.action_login_fragment_to_register_fragment)
+        }
+    }
+
+    /**
+     * 发起登陆处理
+     * 隐藏键盘后延时处理使ui更平滑
+     */
+    private fun requestLogin() {
+        KeyboardTools.hideSoftInput(requireActivity())
+        binding.tvLogin.postDelayed({
+            show(loadingDialog)
+            viewModel.requestLogin(
+                binding.editUsername.text.toString(),
+                binding.editPassword.text.toString()
+            )
+        }, 300)
     }
 
 }

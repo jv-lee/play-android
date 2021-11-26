@@ -3,9 +3,8 @@ package com.lee.playandroid.me.ui.fragment
 import android.view.View
 import androidx.navigation.fragment.findNavController
 import com.lee.library.base.BaseFragment
-import com.lee.library.extensions.binding
-import com.lee.library.extensions.delayBackEvent
-import com.lee.library.extensions.toast
+import com.lee.library.dialog.LoadingDialog
+import com.lee.library.extensions.*
 import com.lee.library.mvvm.ui.observeState
 import com.lee.playandroid.library.common.entity.AccountData
 import com.lee.playandroid.library.service.AccountService
@@ -25,6 +24,8 @@ class MeFragment : BaseFragment(R.layout.fragment_me), View.OnClickListener {
 
     private val accountService = ModuleService.find<AccountService>()
 
+    private val loadingDialog by lazy { LoadingDialog(requireContext()) }
+
     override fun bindView() {
         delayBackEvent()
 
@@ -34,6 +35,7 @@ class MeFragment : BaseFragment(R.layout.fragment_me), View.OnClickListener {
         binding.lineCollect.setOnClickListener(this)
         binding.lineShare.setOnClickListener(this)
         binding.lineTodo.setOnClickListener(this)
+        binding.lineLogout.setOnClickListener(this)
     }
 
     override fun bindData() {
@@ -51,6 +53,13 @@ class MeFragment : BaseFragment(R.layout.fragment_me), View.OnClickListener {
         //无需校验登陆状态
         if (view == binding.lineSettings) {
             findNavController().navigate(R.id.action_me_fragment_to_settings_fragment)
+            return
+        } else if (view == binding.lineLogout) {
+            accountService.requestLogout(
+                requireActivity(),
+                { show(loadingDialog) },
+                { dismiss(loadingDialog) },
+                { toast(it) })
             return
         }
 
@@ -77,14 +86,23 @@ class MeFragment : BaseFragment(R.layout.fragment_me), View.OnClickListener {
      * @param account 账户信息
      */
     private fun setLoginAccountUi(account: AccountData) {
-
+        binding.ivHeader.setImageResource(R.mipmap.ic_launcher_round)
+        binding.tvAccountName.text = account.userInfo.username
+        binding.tvLevel.text =
+            getString(R.string.me_account_info_text, account.coinInfo.level, account.coinInfo.rank)
+        binding.tvLevel.visibility = View.VISIBLE
+        binding.lineLogout.visibility = View.VISIBLE
     }
 
     /**
      * 设置未登状态ui
      */
     private fun setUnLoginAccountUi() {
-
+        binding.ivHeader.setImageResource(R.drawable.vector_account)
+        binding.tvAccountName.text = getString(R.string.me_account_default_text)
+        binding.tvLevel.text = ""
+        binding.tvLevel.visibility = View.GONE
+        binding.lineLogout.visibility = View.GONE
     }
 
 }

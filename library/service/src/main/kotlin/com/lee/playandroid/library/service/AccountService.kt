@@ -15,7 +15,12 @@ interface AccountService {
 
     suspend fun requestAccountInfo(activity: FragmentActivity)
 
-    fun requestLogout(activity: FragmentActivity)
+    fun requestLogout(
+        activity: FragmentActivity,
+        showLoading: () -> Unit = {},
+        hideLoading: () -> Unit = {},
+        failedCall: (String) -> Unit = {}
+    )
 
     fun isLogin(): Boolean
 

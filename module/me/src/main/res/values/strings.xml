@@ -5,6 +5,9 @@
     <string name="me_item_settings">系统设置</string>
     <string name="me_item_todo">TODO</string>
     <string name="me_item_share">我的分享</string>
+    <string name="me_item_logout">退出登陆</string>
 
     <string name="me_login_message">请先登陆</string>
+    <string name="me_account_default_text">未登录</string>
+    <string name="me_account_info_text">等级：%1$d  排名：%2$s</string>
 </resources>
