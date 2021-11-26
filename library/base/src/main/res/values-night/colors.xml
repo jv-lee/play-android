@@ -5,14 +5,16 @@
     <color name="colorThemePrimaryDark">#7E7E7E</color>
     <color name="colorThemeAccent">#9F9F9F</color>
 
+    <!--  主题强调色  -->
+    <color name="colorThemeFocus">#874EFF</color>
+    <color name="colorThemeFocusDark">#EADEFF</color>
+
     <!--  主题颜色  -->
     <color name="colorThemeWindow">#010101</color>
     <color name="colorThemeBackground">#010101</color>
     <color name="colorThemeItem">#1B1B1B</color>
     <color name="colorThemeSearch">#2E2E2E</color>
     <color name="colorThemePlaceholder">#575757</color>
-    <color name="colorThemeFocus">#874EFF</color>
-    <color name="colorThemeFocusDark">#EADEFF</color>
     <color name="colorThemeShadow">#ebebeb</color>
 
 </resources>
