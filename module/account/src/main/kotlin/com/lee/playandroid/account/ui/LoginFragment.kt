@@ -14,7 +14,9 @@ import com.lee.library.extensions.toast
 import com.lee.library.interadp.TextWatcherAdapter
 import com.lee.library.mvvm.ui.observeState
 import com.lee.library.tools.KeyboardTools
+import com.lee.library.tools.PreferencesTools
 import com.lee.playandroid.account.R
+import com.lee.playandroid.account.constants.Constants.KEY_SAVE_INPUT_USERNAME
 import com.lee.playandroid.account.databinding.FragmentLoginBinding
 import com.lee.playandroid.account.viewmodel.AccountViewModel
 import com.lee.playandroid.account.viewmodel.LoginRegisterViewModel
@@ -35,12 +37,17 @@ class LoginFragment : BaseFragment(R.layout.fragment_login), View.OnClickListene
     private val binding by binding(FragmentLoginBinding::bind)
 
     override fun bindView() {
+        //设置登陆过的账户名
+        binding.editUsername.setText(PreferencesTools.get(KEY_SAVE_INPUT_USERNAME, ""))
+
+        //监听键盘弹起
         binding.constRoot.keyboardObserver { diff ->
             if (isResumed) {
                 binding.constRoot.updatePadding(bottom = diff)
             }
         }
 
+        //设置监听
         binding.tvLogin.setOnClickListener(this)
         binding.tvRegister.setOnClickListener(this)
         binding.editUsername.addTextChangedListener(this)
@@ -48,11 +55,14 @@ class LoginFragment : BaseFragment(R.layout.fragment_login), View.OnClickListene
     }
 
     override fun bindData() {
+        //监听登陆页面回调时是否已经成功注册 注册成功后直接退出至前置页面
         setFragmentResultListener(REQUEST_KEY) { _: String, _: Bundle ->
             findNavController().popBackStack()
         }
 
+        //监听登陆成功后获取的账户信息
         viewModel.accountLive.observeState<AccountData>(viewLifecycleOwner, success = {
+            PreferencesTools.put(KEY_SAVE_INPUT_USERNAME, it.userInfo.username)
             accountViewModel.updateAccountInfo(it)
             findNavController().popBackStack()
         }, error = {

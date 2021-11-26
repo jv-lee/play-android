@@ -14,7 +14,9 @@ import com.lee.library.extensions.toast
 import com.lee.library.interadp.TextWatcherAdapter
 import com.lee.library.mvvm.ui.observeState
 import com.lee.library.tools.KeyboardTools
+import com.lee.library.tools.PreferencesTools
 import com.lee.playandroid.account.R
+import com.lee.playandroid.account.constants.Constants
 import com.lee.playandroid.account.databinding.FragmentRegisterBinding
 import com.lee.playandroid.account.viewmodel.AccountViewModel
 import com.lee.playandroid.account.viewmodel.LoginRegisterViewModel
@@ -35,12 +37,14 @@ class RegisterFragment : BaseFragment(R.layout.fragment_register), View.OnClickL
     private val binding by binding(FragmentRegisterBinding::bind)
 
     override fun bindView() {
+        //监听键盘弹起
         binding.constRoot.keyboardObserver { diff ->
             if (isResumed) {
                 binding.constRoot.updatePadding(bottom = diff)
             }
         }
 
+        //设置监听
         binding.tvLogin.setOnClickListener(this)
         binding.tvRegister.setOnClickListener(this)
         binding.editUsername.addTextChangedListener(this)
@@ -49,7 +53,9 @@ class RegisterFragment : BaseFragment(R.layout.fragment_register), View.OnClickL
     }
 
     override fun bindData() {
+        //监听注册成功后获取的账户信息
         viewModel.accountLive.observeState<AccountData>(viewLifecycleOwner, success = {
+            PreferencesTools.put(Constants.KEY_SAVE_INPUT_USERNAME, it.userInfo.username)
             accountViewModel.updateAccountInfo(it)
             setFragmentResult(REQUEST_KEY, Bundle.EMPTY)
             findNavController().popBackStack()

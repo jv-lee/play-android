@@ -7,4 +7,5 @@ package com.lee.playandroid.account.constants
  */
 object Constants {
     const val KEY_IS_LOGIN = "key-is-login"
+    const val KEY_SAVE_INPUT_USERNAME = "key-save-input-username"
 }
