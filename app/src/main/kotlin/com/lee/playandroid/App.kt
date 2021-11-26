@@ -8,8 +8,8 @@ import androidx.fragment.app.FragmentManager
 import com.lee.library.base.BaseApplication
 import com.lee.library.cache.CacheManager
 import com.lee.library.extensions.bindFragmentLifecycle
-import com.lee.library.lifecycle.SimpleActivityLifecycleCallbacks
-import com.lee.library.lifecycle.SimpleFragmentLifecycleCallbacks
+import com.lee.library.interadp.SimpleActivityLifecycleCallbacks
+import com.lee.library.interadp.SimpleFragmentLifecycleCallbacks
 import com.lee.library.net.HttpManager
 import com.lee.library.tools.DarkModeTools
 import com.lee.library.tools.ScreenDensityUtil
