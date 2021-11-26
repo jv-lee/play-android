@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/const_root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorThemeBackground">
@@ -9,7 +10,7 @@
         android:id="@+id/tv_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Login"
+        android:text="@string/account_login_title"
         android:textColor="@color/colorThemeAccent"
         android:textSize="26sp"
         android:textStyle="bold"
@@ -27,7 +28,7 @@
         android:orientation="vertical"
         android:paddingStart="@dimen/large_offset"
         android:paddingEnd="@dimen/large_offset"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/tv_register"
         app:layout_constraintTop_toBottomOf="@id/tv_title"
         app:shadowColor="#ebebeb"
         app:shadowRound="26dp">
@@ -37,7 +38,11 @@
             android:layout_width="match_parent"
             android:layout_height="56dp"
             android:background="@android:color/transparent"
-            android:hint="username"
+            android:drawableStart="@drawable/vector_username"
+            android:drawablePadding="@dimen/small_offset"
+            android:hint="@string/account_username_text"
+            android:inputType="textVisiblePassword"
+            android:maxLines="1"
             app:layout_constraintBottom_toTopOf="@id/view_line"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -54,21 +59,50 @@
             android:layout_width="match_parent"
             android:layout_height="56dp"
             android:background="@android:color/transparent"
-            android:hint="password"
+            android:drawableStart="@drawable/vector_password"
+            android:drawablePadding="@dimen/small_offset"
+            android:hint="@string/account_password_text"
+            android:inputType="textPassword"
+            android:maxLines="1"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@id/view_line" />
 
     </com.lee.library.widget.ShadowConstraintLayout>
 
-    <TextView
+    <com.lee.library.widget.SelectorTextView
         android:id="@+id/tv_register"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/large_offset"
         android:layout_marginTop="@dimen/large_offset"
-        android:text="没有账号，去注册？"
-        android:textColor="@color/colorThemeFocus"
+        android:text="@string/account_go_to_register_text"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="@id/input_layout"
-        app:layout_constraintTop_toBottomOf="@id/input_layout" />
+        app:layout_constraintTop_toBottomOf="@id/input_layout"
+        app:normalTextColor="@color/colorThemeFocus"
+        app:pressedTextColor="@color/colorThemeAccent" />
+
+    <com.lee.library.widget.SelectorTextView
+        android:id="@+id/tv_login"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/large_offset"
+        android:maxLines="1"
+        android:paddingStart="@dimen/large_offset"
+        android:paddingTop="@dimen/medium_offset"
+        android:paddingEnd="@dimen/large_offset"
+        android:paddingBottom="@dimen/medium_offset"
+        android:text="@string/account_login_button"
+        app:buttonDisable="true"
+        app:buttonRadius="@dimen/radius_offset"
+        app:disableBackgroundColor="@color/colorThemeLock"
+        app:disableTextColor="@color/colorThemeLockDark"
+        app:layout_constraintBottom_toBottomOf="@id/tv_register"
+        app:layout_constraintEnd_toEndOf="@id/input_layout"
+        app:layout_constraintTop_toTopOf="@id/tv_register"
+        app:normalBackgroundColor="@color/colorThemeFocus"
+        app:normalTextColor="@android:color/white"
+        app:pressedBackgroundColor="@color/colorThemeFocusDark"
+        app:pressedTextColor="@android:color/white" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
