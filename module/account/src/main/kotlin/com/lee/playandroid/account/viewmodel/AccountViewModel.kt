@@ -36,6 +36,19 @@ class AccountViewModel : CoroutineViewModel() {
         }
     }
 
+    fun updateAccountInfo(accountData: AccountData) {
+        PreferencesTools.put(Constants.KEY_IS_LOGIN, true)
+        _accountLive.postValue(UiState.Success(accountData))
+    }
+
+    fun getAccountInfo(): AccountData? {
+        val item = _accountLive.value
+        if (item is UiState.Success<*>) {
+            return item.data as? AccountData
+        }
+        return null
+    }
+
     fun requestLogout(
         showLoading: () -> Unit = {},
         hideLoading: () -> Unit = {},
@@ -52,11 +65,6 @@ class AccountViewModel : CoroutineViewModel() {
             }
             hideLoading()
         }
-    }
-
-    fun updateAccountInfo(accountData: AccountData) {
-        PreferencesTools.put(Constants.KEY_IS_LOGIN, true)
-        _accountLive.postValue(UiState.Success(accountData))
     }
 
     init {

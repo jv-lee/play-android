@@ -8,6 +8,7 @@ import com.lee.library.mvvm.ui.UiState
 import com.lee.library.tools.PreferencesTools
 import com.lee.playandroid.account.constants.Constants
 import com.lee.playandroid.account.viewmodel.AccountViewModel
+import com.lee.playandroid.library.common.entity.AccountData
 import com.lee.playandroid.library.service.AccountService
 
 /**
@@ -20,6 +21,10 @@ class AccountServiceImpl : AccountService {
 
     override fun getAccountLive(activity: FragmentActivity): LiveData<UiState> {
         return activity.viewModels<AccountViewModel>().value.accountLive
+    }
+
+    override fun getAccountInfo(activity: FragmentActivity): AccountData? {
+        return activity.viewModels<AccountViewModel>().value.getAccountInfo()
     }
 
     override suspend fun requestAccountInfo(activity: FragmentActivity) {
@@ -42,6 +47,5 @@ class AccountServiceImpl : AccountService {
     override fun isLogin(): Boolean {
         return PreferencesTools.get(Constants.KEY_IS_LOGIN, false)
     }
-
 
 }
