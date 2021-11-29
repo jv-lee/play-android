@@ -2,10 +2,10 @@
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:drawable="@color/colorThemeWindow" />
 
-    <item android:top="160dp">
+    <item android:bottom="86dp">
         <bitmap
             android:antialias="true"
-            android:gravity="top"
+            android:gravity="center"
             android:src="@mipmap/ic_splash_logo" />
     </item>
 
