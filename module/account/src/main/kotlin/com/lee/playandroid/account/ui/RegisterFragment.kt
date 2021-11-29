@@ -39,9 +39,9 @@ class RegisterFragment : BaseFragment(R.layout.fragment_register), View.OnClickL
 
     override fun bindView() {
         //监听键盘弹起
-        binding.constRoot.keyboardObserver { diff ->
+        binding.rootLayout.keyboardObserver { diff ->
             if (isResumed) {
-                binding.constRoot.updatePadding(bottom = diff)
+                binding.rootLayout.updatePadding(bottom = diff)
             }
         }
 
@@ -94,7 +94,7 @@ class RegisterFragment : BaseFragment(R.layout.fragment_register), View.OnClickL
      * 判断当前软键盘是否弹起，优先关闭软键盘
      */
     private fun goLogin() {
-        if (binding.constRoot.paddingBottom > 10) {
+        if (binding.rootLayout.paddingBottom > 10) {
             KeyboardTools.hideSoftInput(requireActivity())
         } else {
             findNavController().popBackStack()

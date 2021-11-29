@@ -42,9 +42,9 @@ class LoginFragment : BaseFragment(R.layout.fragment_login), View.OnClickListene
         binding.editUsername.setText(PreferencesTools.get(KEY_SAVE_INPUT_USERNAME, ""))
 
         //监听键盘弹起
-        binding.constRoot.keyboardObserver { diff ->
+        binding.rootLayout.keyboardObserver { diff ->
             if (isResumed) {
-                binding.constRoot.updatePadding(bottom = diff)
+                binding.rootLayout.updatePadding(bottom = diff)
             }
         }
 
@@ -99,7 +99,7 @@ class LoginFragment : BaseFragment(R.layout.fragment_login), View.OnClickListene
      * 判断当前软键盘是否弹起，优先关闭软键盘
      */
     private fun goRegister() {
-        if (binding.constRoot.paddingBottom > 10) {
+        if (binding.rootLayout.paddingBottom > 10) {
             KeyboardTools.hideSoftInput(requireActivity())
         } else {
             findNavController().navigate(R.id.action_login_fragment_to_register_fragment)
