@@ -8,7 +8,7 @@ import com.lee.playandroid.me.databinding.FragmentIntegralBinding
 /**
  * @author jv.lee
  * @date 2021/11/25
- * @description
+ * @description 积分页面
  */
 class IntegralFragment : BaseFragment(R.layout.fragment_integral) {
 
