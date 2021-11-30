@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <shape xmlns:android="http://schemas.android.com/apk/res/android">
-    <solid android:color="@color/colorThemeFocusDark" />
+    <solid android:color="@color/colorThemeFocusLight" />
     <corners android:radius="@dimen/system_tab_radius" />
 </shape>

@@ -7,7 +7,7 @@
 
     <!--  主题强调色  -->
     <color name="colorThemeFocus">#4100AB</color>
-    <color name="colorThemeFocusDark">#EADEFF</color>
+    <color name="colorThemeFocusLight">#EADEFF</color>
 
     <!--  主题颜色  -->
     <color name="colorThemeWindow">#FFFFFF</color>

@@ -109,7 +109,7 @@
             app:layout_constraintTop_toTopOf="@id/tv_register"
             app:normalBackgroundColor="@color/colorThemeFocus"
             app:normalTextColor="@android:color/white"
-            app:pressedBackgroundColor="@color/colorThemeFocusDark"
+            app:pressedBackgroundColor="@color/colorThemeFocusLight"
             app:pressedTextColor="@android:color/white" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
