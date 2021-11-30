@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:background="@drawable/shape_integral_header_bg"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.lee.library.widget.ShadowConstraintLayout
+        android:id="@+id/shadow_container"
+        android:layout_width="match_parent"
+        android:layout_height="180dp"
+        android:layout_marginStart="@dimen/medium_offset"
+        android:layout_marginTop="@dimen/small_offset"
+        android:layout_marginEnd="@dimen/medium_offset"
+        app:layout_constraintTop_toTopOf="parent"
+        app:shadowColor="@color/colorThemeShadow"
+        app:shadowRound="@dimen/radius_offset">
+
+        <TextView
+            android:id="@+id/tv_title_description"
+            android:layout_width="match_parent"
+            android:layout_height="26dp"
+            android:background="@drawable/shape_integral_title_bg"
+            android:gravity="center"
+            android:text="每天登陆赚取积分"
+            android:textColor="@color/colorIntegral"
+            android:textSize="@dimen/font_size_medium" />
+
+        <TextView
+            android:id="@+id/tv_integral_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/large_offset"
+            android:text="当前积分总数"
+            android:textColor="@color/colorThemePrimary"
+            android:textSize="@dimen/font_size_small"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_title_description" />
+
+        <TextView
+            android:id="@+id/tv_integral_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/large_offset"
+            android:text="0"
+            android:textColor="@color/colorThemeAccent"
+            android:textSize="26sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_integral_title" />
+
+        <View
+            android:id="@+id/line"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginStart="@dimen/large_offset"
+            android:layout_marginEnd="@dimen/large_offset"
+            android:background="@color/colorThemeFocusDark"
+            app:layout_constraintBottom_toTopOf="@id/tv_rank_label" />
+
+        <TextView
+            android:id="@+id/tv_rank_label"
+            android:layout_width="match_parent"
+            android:layout_height="46dp"
+            android:drawableEnd="@drawable/vector_arrow"
+            android:foreground="?attr/selectableItemBackgroundBorderless"
+            android:gravity="center_vertical"
+            android:includeFontPadding="true"
+            android:paddingStart="@dimen/large_offset"
+            android:paddingEnd="@dimen/medium_offset"
+            android:text="查看积分排行榜"
+            android:textColor="@color/colorThemeAccent"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+    </com.lee.library.widget.ShadowConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
