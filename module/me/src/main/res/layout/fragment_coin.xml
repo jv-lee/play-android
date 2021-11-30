@@ -9,12 +9,12 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorIntegral"
+        android:background="@color/colorCoin"
         app:backIconTint="@android:color/white"
         app:layout_constraintTop_toTopOf="parent"
         app:menuEnable="gone"
         app:titleColor="@android:color/white"
-        app:titleText="@string/me_item_integral" />
+        app:titleText="@string/me_item_coin" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_container"

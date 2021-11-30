@@ -67,7 +67,7 @@ class MeFragment : BaseFragment(R.layout.fragment_me), View.OnClickListener {
         if (accountService.isLogin()) {
             when (view) {
                 binding.lineIntegral ->
-                    findNavController().navigate(R.id.action_me_fragment_to_integral_fragment)
+                    findNavController().navigate(R.id.action_me_fragment_to_coin_fragment)
                 binding.lineCollect ->
                     findNavController().navigate(R.id.action_me_fragment_to_collect_fragment)
                 binding.lineShare ->

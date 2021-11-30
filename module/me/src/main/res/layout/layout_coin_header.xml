@@ -7,7 +7,7 @@
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="120dp"
-        android:background="@drawable/shape_integral_header_bg"
+        android:background="@drawable/shape_coin_header_bg"
         app:layout_constraintTop_toTopOf="parent" />
 
     <com.lee.library.widget.ShadowConstraintLayout
@@ -25,10 +25,10 @@
             android:id="@+id/tv_title_description"
             android:layout_width="match_parent"
             android:layout_height="26dp"
-            android:background="@drawable/shape_integral_title_bg"
+            android:background="@drawable/shape_coin_title_bg"
             android:gravity="center"
             android:text="每天登陆赚取积分"
-            android:textColor="@color/colorIntegral"
+            android:textColor="@color/colorCoin"
             android:textSize="@dimen/font_size_medium" />
 
         <TextView
