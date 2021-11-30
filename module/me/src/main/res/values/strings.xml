@@ -10,4 +10,10 @@
     <string name="me_login_message">请先登陆</string>
     <string name="me_account_default_text">未登录</string>
     <string name="me_account_info_text">等级：%1$d  排名：%2$s</string>
+
+    <!--  coin  -->
+    <string name="coin_title_label_text">每天登陆赚取积分</string>
+    <string name="coin_total_description">当前积分总数</string>
+    <string name="coin_default_value">0</string>
+    <string name="coin_to_rank_text">查看积分排行榜</string>
 </resources>

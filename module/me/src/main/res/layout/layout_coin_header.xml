@@ -26,7 +26,7 @@
             android:layout_height="26dp"
             android:background="@drawable/shape_coin_title_bg"
             android:gravity="center"
-            android:text="每天登陆赚取积分"
+            android:text="@string/coin_title_label_text"
             android:textColor="@color/colorThemeFocus"
             android:textSize="@dimen/font_size_small" />
 
@@ -35,7 +35,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/large_offset"
-            android:text="当前积分总数"
+            android:text="@string/coin_total_description"
             android:textColor="@color/colorThemePrimary"
             android:textSize="@dimen/font_size_small_x"
             app:layout_constraintEnd_toEndOf="parent"
@@ -46,7 +46,7 @@
             android:id="@+id/tv_integral_count"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="0"
+            android:text="@string/coin_default_value"
             android:textColor="@color/colorThemeAccent"
             android:textSize="26sp"
             android:textStyle="bold"
@@ -74,7 +74,7 @@
             android:includeFontPadding="true"
             android:paddingStart="@dimen/large_offset"
             android:paddingEnd="@dimen/medium_offset"
-            android:text="查看积分排行榜"
+            android:text="@string/coin_to_rank_text"
             android:textColor="@color/colorThemeAccent"
             app:layout_constraintBottom_toBottomOf="parent" />
 
