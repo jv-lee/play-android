@@ -17,6 +17,15 @@ interface ApiService {
     @GET("lg/coin/userinfo/json")
     suspend fun getCoinInfoAsync(): Data<CoinInfo>
 
+    /**
+     * @param page 1-*
+     */
     @GET("lg/coin/list/{page}/json")
     suspend fun getCoinRecordAsync(@Path("page") page: Int): Data<PageData<Coin>>
+
+    /**
+     * @param page 0-*
+     */
+    @GET("lg/collect/list/{page}/json")
+    suspend fun getCollectListAsync(@Path("page") page: Int): Data<PageData<String>>
 }
