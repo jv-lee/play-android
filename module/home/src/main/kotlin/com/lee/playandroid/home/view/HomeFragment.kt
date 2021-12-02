@@ -28,7 +28,7 @@ import com.lee.playandroid.router.navigateSearch
 
 /**
  * @author jv.lee
- * @data 2021/11/2
+ * @date 2021/11/2
  * @description 首页第一个Tab HomeFragment
  */
 class HomeFragment : BaseNavigationFragment(R.layout.fragment_home) {

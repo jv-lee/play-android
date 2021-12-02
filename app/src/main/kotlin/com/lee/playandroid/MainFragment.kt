@@ -21,7 +21,7 @@ import java.lang.ref.WeakReference
 
 /**
  * @author jv.lee
- * @data 2021/11/2
+ * @date 2021/11/2
  * @description MainFragment 是所有Fragment的容器类
  */
 class MainFragment : BaseFragment(R.layout.fragment_main),

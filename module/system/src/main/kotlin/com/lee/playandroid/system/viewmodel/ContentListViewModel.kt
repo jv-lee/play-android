@@ -12,7 +12,7 @@ import com.lee.playandroid.system.ui.ContentListFragment
 
 /**
  * @author jv.lee
- * @data 2021/11/10
+ * @date 2021/11/10
  * @description 体系内容 子内容列表 ViewModel
  */
 class ContentListViewModel(handle: SavedStateHandle) : CoroutineViewModel() {

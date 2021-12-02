@@ -16,7 +16,7 @@ import com.lee.playandroid.official.ui.OfficialListFragment
 
 /**
  * @author jv.lee
- * @data 2021/11/8
+ * @date 2021/11/8
  * @description 公众号列表 ViewModel
  */
 class OfficialListViewModel(handle: SavedStateHandle) : CoroutineViewModel() {

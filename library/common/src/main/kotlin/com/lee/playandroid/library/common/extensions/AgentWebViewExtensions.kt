@@ -7,7 +7,7 @@ import com.just.agentweb.AgentWeb
 
 /**
  * @author jv.lee
- * @data 2021/11/18
+ * @date 2021/11/18
  * @description
  */
 fun AgentWeb.bindLifecycle(lifecycle: Lifecycle): AgentWeb {

@@ -6,7 +6,7 @@ import com.lee.playandroid.system.model.api.ApiService
 
 /**
  * @author jv.lee
- * @data 2021/11/2
+ * @date 2021/11/2
  * @description
  */
 class ApiRepository : BaseRepository() {

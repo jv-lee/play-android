@@ -15,7 +15,7 @@ import com.lee.playandroid.library.common.extensions.checkData
 
 /**
  * @author jv.lee
- * @data 2021/11/2
+ * @date 2021/11/2
  * @description 首页viewModel
  */
 class HomeViewModel : CoroutineViewModel() {

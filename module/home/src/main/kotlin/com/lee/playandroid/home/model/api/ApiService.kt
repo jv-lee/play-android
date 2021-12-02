@@ -9,7 +9,7 @@ import retrofit2.http.Path
 
 /**
  * @author jv.lee
- * @data 2021/11/2
+ * @date 2021/11/2
  * @description
  */
 interface ApiService {

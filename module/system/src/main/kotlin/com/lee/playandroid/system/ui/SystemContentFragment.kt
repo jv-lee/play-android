@@ -26,7 +26,7 @@ import com.lee.playandroid.system.viewmodel.SystemContentViewModel
 
 /**
  * @author jv.lee
- * @data 2021/11/10
+ * @date 2021/11/10
  * @description  体系列表Fragment
  * @see SystemFragment 体系Fragment下第一个Tab
  */

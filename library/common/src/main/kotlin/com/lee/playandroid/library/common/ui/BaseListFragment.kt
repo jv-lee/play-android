@@ -20,7 +20,7 @@ import com.lee.playandroid.library.common.entity.PageData
 
 /**
  * @author jv.lee
- * @data 2021/11/8
+ * @date 2021/11/8
  * @description
  */
 abstract class BaseListFragment : BaseNavigationFragment(R.layout.fragment_base_list) {

@@ -6,7 +6,7 @@ import com.lee.library.utils.LogUtil
 
 /**
  * @author jv.lee
- * @data 2021/10/21
+ * @date 2021/10/21
  * @description uiState 类型 LiveData分页处理
  */
 class UiStatePageLiveData(private val initPage: Int = 0) : LiveData<UiState>() {

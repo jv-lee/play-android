@@ -21,7 +21,7 @@ import kotlinx.coroutines.*
 
 /**
  * @author jv.lee
- * @data 2021/11/2
+ * @date 2021/11/2
  * @description 程序主窗口 单Activity架构
  */
 class MainActivity : BaseActivity(),

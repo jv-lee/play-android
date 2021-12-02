@@ -11,7 +11,7 @@ import com.lee.playandroid.system.constants.Constants
 
 /**
  * @author jv.lee
- * @data 2021/11/10
+ * @date 2021/11/10
  * @description 体系内容Tab页
  * @see SystemContentFragment 体系列表跳转至当前该体系tab页面
  */

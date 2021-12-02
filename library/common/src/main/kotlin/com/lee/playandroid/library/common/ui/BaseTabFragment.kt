@@ -18,7 +18,7 @@ import com.lee.playandroid.library.common.entity.Tab
 
 /**
  * @author jv.lee
- * @data 2021/11/9
+ * @date 2021/11/9
  * @description 基础tabFragment类
  */
 abstract class BaseTabFragment : BaseNavigationFragment(R.layout.fragment_base_tab) {

@@ -14,7 +14,7 @@ import com.lee.playandroid.router.navigateDetails
 
 /**
  * @author jv.lee
- * @data 2021/11/8
+ * @date 2021/11/8
  * @description 公众号列表页
  */
 class OfficialListFragment : BaseListFragment() {

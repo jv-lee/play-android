@@ -2,7 +2,7 @@ package com.lee.playandroid.home.constants
 
 /**
  * @author jv.lee
- * @data 2021/11/2
+ * @date 2021/11/2
  * @description
  */
 object Constants {

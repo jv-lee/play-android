@@ -15,7 +15,7 @@ import com.lee.playandroid.system.databinding.ItemNavigationContentBinding
 
 /**
  * @author jv.lee
- * @data 2021/11/16
+ * @date 2021/11/16
  * @description
  */
 class NavigationContentAdapter(context: Context, data: List<NavigationItem>) :

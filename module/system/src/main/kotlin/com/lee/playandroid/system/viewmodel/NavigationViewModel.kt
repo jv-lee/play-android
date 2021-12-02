@@ -15,7 +15,7 @@ import kotlinx.coroutines.flow.collect
 
 /**
  * @author jv.lee
- * @data 2021/11/12
+ * @date 2021/11/12
  * @description
  */
 class NavigationViewModel : CoroutineViewModel() {

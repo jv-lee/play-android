@@ -10,7 +10,7 @@ import retrofit2.http.Query
 
 /**
  * @author jv.lee
- * @data 2021/11/8
+ * @date 2021/11/8
  * @description
  */
 interface ApiService {

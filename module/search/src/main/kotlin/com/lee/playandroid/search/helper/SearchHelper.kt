@@ -2,7 +2,7 @@ package com.lee.playandroid.search.helper
 
 /**
  * @author jv.lee
- * @data 2021/11/4
+ * @date 2021/11/4
  * @description 热门搜索词条数据帮助类
  */
 object SearchHelper {

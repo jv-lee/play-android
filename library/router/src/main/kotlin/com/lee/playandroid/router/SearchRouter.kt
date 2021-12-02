@@ -7,7 +7,7 @@ import com.lee.playandroid.router.extensions.navigateDeepLink
 
 /**
  * @author jv.lee
- * @data 2021/11/5
+ * @date 2021/11/5
  * @description
  */
 fun NavController.navigateSearch() {

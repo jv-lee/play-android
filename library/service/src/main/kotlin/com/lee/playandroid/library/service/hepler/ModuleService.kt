@@ -4,7 +4,7 @@ import java.util.*
 
 /**
  * @author jv.lee
- * @data 2021/9/9
+ * @date 2021/9/9
  * @description AutoService工具类
  */
 object ModuleService {

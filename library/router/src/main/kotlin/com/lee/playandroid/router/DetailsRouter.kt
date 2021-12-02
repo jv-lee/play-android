@@ -8,7 +8,7 @@ import java.net.URLEncoder
 
 /**
  * @author jv.lee
- * @data 2021/11/5
+ * @date 2021/11/5
  * @description
  */
 fun NavController.navigateDetails(title: String, url: String) {

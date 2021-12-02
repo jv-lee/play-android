@@ -17,7 +17,7 @@ import configures.core.freeCompilerArgs
 
 /**
  * @author jv.lee
- * @data 2021/10/1
+ * @date 2021/10/1
  * @description 组件模块配置依赖扩展
  */
 @Suppress("MISSING_DEPENDENCY_SUPERCLASS")

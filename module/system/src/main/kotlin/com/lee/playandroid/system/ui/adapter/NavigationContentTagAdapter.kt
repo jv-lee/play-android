@@ -12,7 +12,7 @@ import com.lee.playandroid.system.databinding.ItemNavigationContentTagBinding
 
 /**
  * @author jv.lee
- * @data 2021/11/16
+ * @date 2021/11/16
  * @description
  */
 class NavigationContentTagAdapter(context: Context, data: List<Content>) :

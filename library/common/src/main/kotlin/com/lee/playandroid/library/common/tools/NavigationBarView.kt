@@ -15,7 +15,7 @@ import java.lang.ref.WeakReference
 
 /**
  * @author jv.lee
- * @data 2021/9/10
+ * @date 2021/9/10
  * @description 取消navigation 切换动画效果
  */
 fun BottomNavView.setupWithNavController2(

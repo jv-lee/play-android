@@ -12,7 +12,7 @@ import com.lee.playandroid.home.helper.HomeCategory
 
 /**
  * @author jv.lee
- * @data 2021/11/8
+ * @date 2021/11/8
  * @description 首页分类列表适配器 基于
  * @see ContentAdapter.ContentCategoryItem
  */

@@ -23,7 +23,7 @@ import com.lee.playandroid.system.viewmodel.NavigationViewModel
 
 /**
  * @author jv.lee
- * @data 2021/11/10
+ * @date 2021/11/10
  * @description  导航Fragment
  * @see SystemFragment 体系Fragment下第二个Tab
  */

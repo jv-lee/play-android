@@ -15,7 +15,7 @@ import kotlinx.coroutines.flow.collect
 
 /**
  * @author jv.lee
- * @data 2021/11/8
+ * @date 2021/11/8
  * @description 公众号Tab ViewModel
  */
 class OfficialViewModel : CoroutineViewModel() {

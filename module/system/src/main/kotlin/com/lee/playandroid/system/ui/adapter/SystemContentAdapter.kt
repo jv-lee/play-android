@@ -14,7 +14,7 @@ import com.lee.playandroid.system.databinding.ItemSystemContentBinding
 
 /**
  * @author jv.lee
- * @data 2021/11/10
+ * @date 2021/11/10
  * @description 体系列表适配器
  */
 class SystemContentAdapter(context: Context, data: List<ParentTab>) :

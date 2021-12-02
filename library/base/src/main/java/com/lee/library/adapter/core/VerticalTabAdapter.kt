@@ -9,7 +9,7 @@ import androidx.viewbinding.ViewBinding
 
 /**
  * @author jv.lee
- * @data 2021/11/16
+ * @date 2021/11/16
  * @description 垂直tab选择item
  */
 abstract class VerticalTabAdapter<T>(val data: MutableList<T>) :

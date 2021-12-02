@@ -22,7 +22,7 @@ import kotlinx.coroutines.launch
 
 /**
  * @author jv.lee
- * @data 2021/11/2
+ * @date 2021/11/2
  * @description
  */
 class App : BaseApplication() {

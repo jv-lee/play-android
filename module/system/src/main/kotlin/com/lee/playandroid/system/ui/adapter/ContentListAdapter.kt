@@ -14,7 +14,7 @@ import com.lee.playandroid.system.databinding.ItemContentBinding
 
 /**
  * @author jv.lee
- * @data 2021/11/10
+ * @date 2021/11/10
  * @description 体系列表 子内容列表适配器
  */
 class ContentListAdapter(context: Context, data: List<Content>) :

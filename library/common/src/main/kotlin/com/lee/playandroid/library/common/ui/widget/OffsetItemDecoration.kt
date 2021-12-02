@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 
 /**
  * @author jv.lee
- * @data 2021/11/11
+ * @date 2021/11/11
  * @description
  */
 class OffsetItemDecoration(
