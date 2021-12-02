@@ -5,6 +5,7 @@ import com.lee.library.adapter.listener.LoadErrorListener
 import com.lee.library.adapter.page.submitData
 import com.lee.library.adapter.page.submitFailed
 import com.lee.library.base.BaseFragment
+import com.lee.library.base.BaseNavigationAnimationFragment
 import com.lee.library.extensions.binding
 import com.lee.library.extensions.inflate
 import com.lee.library.extensions.toast
@@ -27,7 +28,7 @@ import com.lee.playandroid.me.viewmodel.CoinViewModel
  * @date 2021/11/25
  * @description 积分页面
  */
-class CoinFragment : BaseFragment(R.layout.fragment_coin) {
+class CoinFragment : BaseNavigationAnimationFragment(R.layout.fragment_coin) {
 
     private val accountService = ModuleService.find<AccountService>()
 
