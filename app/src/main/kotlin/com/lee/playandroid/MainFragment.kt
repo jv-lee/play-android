@@ -71,7 +71,7 @@ class MainFragment : BaseFragment(R.layout.fragment_main),
     private fun bindNavigationAction() {
         binding.navigationBar.post {
             val controller = binding.container.findNavController()
-            binding.navigationBar.setupWithNavController2(controller) { menuItem, _ ->
+            binding.navigationBar.setupWithNavController2(controller, true) { menuItem, _ ->
                 LiveDataBus.getInstance().getChannel(NavigationSelectEvent.key)
                     .postValue(NavigationSelectEvent(menuItem.title.toString()))
             }

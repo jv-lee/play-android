@@ -20,10 +20,15 @@ import java.lang.ref.WeakReference
  */
 fun BottomNavView.setupWithNavController2(
     navController: NavController,
+    isNavigationAnimation: Boolean = false,
     itemPositionListener: (MenuItem, Int) -> Unit
 ) {
     setItemPositionListener(object : BottomNavView.ItemPositionListener {
         override fun onPosition(menuItem: MenuItem, position: Int) {
+            //navigation使用动画效果时不可以被点击触发
+            if (animation != null && isNavigationAnimation) {
+                return
+            }
             itemPositionListener(menuItem, position)
             onNavDestinationSelected(
                 menuItem,

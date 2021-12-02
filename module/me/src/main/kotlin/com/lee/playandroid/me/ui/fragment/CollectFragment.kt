@@ -6,12 +6,10 @@ import com.lee.library.adapter.listener.LoadErrorListener
 import com.lee.library.adapter.page.submitData
 import com.lee.library.adapter.page.submitFailed
 import com.lee.library.base.BaseFragment
-import com.lee.library.base.BaseNavigationAnimationFragment
 import com.lee.library.extensions.binding
 import com.lee.library.extensions.toast
 import com.lee.library.mvvm.livedata.LoadStatus
 import com.lee.library.mvvm.ui.observeState
-import com.lee.library.utils.LogUtil
 import com.lee.playandroid.library.common.entity.Content
 import com.lee.playandroid.library.common.entity.PageData
 import com.lee.playandroid.me.R
@@ -60,9 +58,7 @@ class CollectFragment : BaseFragment(R.layout.fragment_collect) {
     }
 
     override fun bindData() {
-        LogUtil.i("bindData")
         viewModel.collectLive.observeState<PageData<Content>>(this, success = {
-            LogUtil.i("setData")
             mAdapter.submitData(it)
         }, error = {
             toast(it.message)
