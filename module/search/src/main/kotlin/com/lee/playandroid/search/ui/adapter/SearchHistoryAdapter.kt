@@ -7,12 +7,8 @@ import androidx.viewbinding.ViewBinding
 import com.lee.library.adapter.binding.ViewBindingAdapter
 import com.lee.library.adapter.binding.ViewBindingHolder
 import com.lee.library.adapter.item.ViewBindingItem
-import com.lee.library.extensions.setImageTintCompat
 import com.lee.playandroid.library.common.entity.SearchHistory
-import com.lee.playandroid.library.common.tools.CommonTools
-import com.lee.playandroid.search.R
 import com.lee.playandroid.search.databinding.ItemSearchHistoryBinding
-import com.lee.playandroid.search.databinding.ItemSearchHotBinding
 
 /**
  * @author jv.lee
@@ -34,7 +30,6 @@ class SearchHistoryAdapter(context: Context, data: List<SearchHistory>) :
         override fun convert(holder: ViewBindingHolder, entity: SearchHistory, position: Int) {
             holder.getViewBinding<ItemSearchHistoryBinding>().apply {
                 tvText.text = entity.key
-                ivDelete.setImageTintCompat(R.drawable.vector_close, R.color.colorThemePrimary)
             }
         }
 

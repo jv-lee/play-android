@@ -18,5 +18,6 @@
     <color name="colorThemeShadow">#ebebeb</color>
     <color name="colorThemeLock">#e6e6e6</color>
     <color name="colorThemeLockDark">#ffffff</color>
+    <color name="colorThemeLabel">#ebebeb</color>
 
 </resources>

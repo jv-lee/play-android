@@ -18,5 +18,6 @@
     <color name="colorThemeShadow">#111111</color>
     <color name="colorThemeLock">#e6e6e6</color>
     <color name="colorThemeLockDark">#ffffff</color>
+    <color name="colorThemeLabel">#575757</color>
 
 </resources>
