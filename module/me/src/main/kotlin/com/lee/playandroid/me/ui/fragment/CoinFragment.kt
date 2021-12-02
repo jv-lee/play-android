@@ -5,12 +5,12 @@ import com.lee.library.adapter.listener.LoadErrorListener
 import com.lee.library.adapter.page.submitData
 import com.lee.library.adapter.page.submitFailed
 import com.lee.library.base.BaseFragment
-import com.lee.library.base.BaseNavigationAnimationFragment
 import com.lee.library.extensions.binding
 import com.lee.library.extensions.inflate
 import com.lee.library.extensions.toast
 import com.lee.library.mvvm.livedata.LoadStatus
 import com.lee.library.mvvm.ui.observeState
+import com.lee.library.tools.DarkModeTools
 import com.lee.library.tools.StatusTools
 import com.lee.playandroid.library.common.entity.Coin
 import com.lee.playandroid.library.common.entity.PageData
@@ -80,12 +80,16 @@ class CoinFragment : BaseFragment(R.layout.fragment_coin) {
 
     override fun onResume() {
         super.onResume()
-        StatusTools.setLightStatusIcon(requireActivity())
+        if (!DarkModeTools.get().isDarkTheme()) {
+            StatusTools.setLightStatusIcon(requireActivity())
+        }
     }
 
     override fun onStop() {
         super.onStop()
-        StatusTools.setDarkStatusIcon(requireActivity())
+        if (!DarkModeTools.get().isDarkTheme()) {
+            StatusTools.setDarkStatusIcon(requireActivity())
+        }
     }
 
 }
