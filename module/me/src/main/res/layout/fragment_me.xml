@@ -1,108 +1,197 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/colorThemeBackground">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <com.lee.library.widget.toolbar.CustomToolbarLayout
-        android:id="@+id/toolbar_layout"
+
+    <data>
+
+        <variable
+            name="onClickListener"
+            type="android.view.View.OnClickListener" />
+
+        <variable
+            name="onLongClickListener"
+            type="android.view.View.OnLongClickListener" />
+
+        <variable
+            name="isSystem"
+            type="java.lang.Boolean" />
+
+        <variable
+            name="isNight"
+            type="java.lang.Boolean" />
+
+        <variable
+            name="view"
+            type="android.view.View" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/const_root"
         android:layout_width="match_parent"
-        android:layout_height="160dp"
-        android:clickable="true"
-        android:focusable="true"
-        android:foreground="?selectableItemBackground"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_height="match_parent"
+        android:background="@color/colorThemeBackground">
 
-        <com.lee.library.widget.RoundImageView
-            android:id="@+id/iv_header"
-            android:layout_width="56dp"
-            android:layout_height="56dp"
-            android:layout_marginStart="36dp"
-            android:src="@drawable/vector_account"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_mode="circle"
-            app:lineColor="@color/colorThemeFocus"
-            app:lineWidth="2dp" />
+        <com.lee.library.widget.toolbar.CustomToolbarLayout
+            android:id="@+id/toolbar_layout"
+            android:layout_width="match_parent"
+            android:layout_height="160dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="?selectableItemBackground"
+            app:layout_constraintTop_toTopOf="parent">
 
-        <TextView
-            android:id="@+id/tv_account_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="26dp"
-            android:text="@string/me_account_default_text"
-            android:textColor="@color/colorThemeAccent"
-            android:textSize="@dimen/font_size_large"
-            app:layout_constraintBottom_toTopOf="@id/tv_level"
-            app:layout_constraintStart_toEndOf="@id/iv_header"
-            app:layout_constraintTop_toTopOf="@id/iv_header" />
+            <com.lee.library.widget.RoundImageView
+                android:id="@+id/iv_header"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:layout_marginStart="36dp"
+                android:src="@drawable/vector_account"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_mode="circle"
+                app:lineColor="@color/colorThemeFocus"
+                app:lineWidth="2dp" />
 
-        <TextView
-            android:id="@+id/tv_level"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/colorThemeFocus"
-            android:textSize="@dimen/font_size_small"
-            android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="@id/iv_header"
-            app:layout_constraintStart_toStartOf="@id/tv_account_name"
-            app:layout_constraintTop_toBottomOf="@id/tv_account_name" />
+            <TextView
+                android:id="@+id/tv_account_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="26dp"
+                android:text="@string/me_account_default_text"
+                android:textColor="@color/colorThemeAccent"
+                android:textSize="@dimen/font_size_large"
+                app:layout_constraintBottom_toTopOf="@id/tv_level"
+                app:layout_constraintStart_toEndOf="@id/iv_header"
+                app:layout_constraintTop_toTopOf="@id/iv_header" />
 
-    </com.lee.library.widget.toolbar.CustomToolbarLayout>
+            <TextView
+                android:id="@+id/tv_level"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorThemeFocus"
+                android:textSize="@dimen/font_size_small"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="@id/iv_header"
+                app:layout_constraintStart_toStartOf="@id/tv_account_name"
+                app:layout_constraintTop_toBottomOf="@id/tv_account_name" />
 
-    <androidx.core.widget.NestedScrollView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintTop_toBottomOf="@id/toolbar_layout">
+        </com.lee.library.widget.toolbar.CustomToolbarLayout>
 
-        <LinearLayout
-            android:id="@+id/linear_layout"
+        <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            app:layout_constraintTop_toBottomOf="@id/toolbar_layout">
 
-            <com.lee.playandroid.me.ui.widget.LineButtonView
-                android:id="@+id/line_integral"
-                style="@style/CommendLineButtonView"
-                app:leftDrawable="@drawable/vector_coin"
-                app:leftText="@string/me_item_coin" />
+            <LinearLayout
+                android:id="@+id/linear_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
-            <com.lee.playandroid.me.ui.widget.LineButtonView
-                android:id="@+id/line_collect"
-                style="@style/CommendLineButtonView"
-                app:leftDrawable="@drawable/vector_collect"
-                app:leftText="@string/me_item_collect" />
+                <com.lee.playandroid.me.ui.widget.LineButtonView
+                    android:id="@+id/line_integral"
+                    style="@style/CommendLineButtonView"
+                    android:onClick="@{onClickListener}"
+                    app:leftDrawable="@drawable/vector_coin"
+                    app:leftText="@string/me_item_coin" />
 
-            <com.lee.playandroid.me.ui.widget.LineButtonView
-                android:id="@+id/line_share"
-                style="@style/CommendLineButtonView"
-                app:leftDrawable="@drawable/vector_share"
-                app:leftText="@string/me_item_share" />
+                <com.lee.playandroid.me.ui.widget.LineButtonView
+                    android:id="@+id/line_collect"
+                    style="@style/CommendLineButtonView"
+                    android:onClick="@{onClickListener}"
+                    app:leftDrawable="@drawable/vector_collect"
+                    app:leftText="@string/me_item_collect" />
 
-            <com.lee.playandroid.me.ui.widget.LineButtonView
-                android:id="@+id/line_todo"
-                style="@style/CommendLineButtonView"
-                app:leftDrawable="@drawable/vector_todo"
-                app:leftText="@string/me_item_todo" />
+                <com.lee.playandroid.me.ui.widget.LineButtonView
+                    android:id="@+id/line_share"
+                    style="@style/CommendLineButtonView"
+                    android:onClick="@{onClickListener}"
+                    app:leftDrawable="@drawable/vector_share"
+                    app:leftText="@string/me_item_share" />
 
-            <com.lee.playandroid.me.ui.widget.LineButtonView
-                android:id="@+id/line_settings"
-                style="@style/CommendLineButtonView"
-                app:leftDrawable="@drawable/vector_settings"
-                app:leftText="@string/me_item_settings" />
+                <com.lee.playandroid.me.ui.widget.LineButtonView
+                    android:id="@+id/line_todo"
+                    style="@style/CommendLineButtonView"
+                    android:onClick="@{onClickListener}"
+                    app:leftDrawable="@drawable/vector_todo"
+                    app:leftText="@string/me_item_todo" />
 
-            <com.lee.playandroid.me.ui.widget.LineButtonView
-                android:id="@+id/line_logout"
-                style="@style/CommendLineButtonView"
-                android:visibility="gone"
-                app:leftDrawable="@drawable/vector_logout"
-                app:leftText="@string/me_item_logout" />
+                <com.lee.playandroid.me.ui.widget.LineButtonView
+                    android:id="@+id/line_settings"
+                    style="@style/CommendLineButtonView"
+                    android:onClick="@{onClickListener}"
+                    app:leftDrawable="@drawable/vector_settings"
+                    app:leftText="@string/me_item_settings" />
 
-        </LinearLayout>
+                <com.lee.playandroid.me.ui.widget.LineButtonView
+                    android:id="@+id/line_logout"
+                    style="@style/CommendLineButtonView"
+                    android:onClick="@{onClickListener}"
+                    android:visibility="gone"
+                    app:leftDrawable="@drawable/vector_logout"
+                    app:leftText="@string/me_item_logout" />
 
-    </androidx.core.widget.NestedScrollView>
+                <FrameLayout
+                    android:id="@+id/frame_system"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/medium_offset"
+                    android:background="@color/colorThemeItem"
+                    android:padding="@dimen/view_line_item_padding">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+                    <TextView
+                        android:id="@+id/tv_system"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="start|center"
+                        android:text="@string/dark_mode_system"
+                        android:textColor="@color/colorThemeAccent"
+                        android:textSize="@dimen/view_line_text_size" />
+
+                    <androidx.appcompat.widget.SwitchCompat
+                        android:id="@+id/switch_system_enable"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="end"
+                        android:checked="@{isSystem}"
+                        app:theme="@style/Switch" />
+
+                </FrameLayout>
+
+                <FrameLayout
+                    android:id="@+id/frame_night"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="1dp"
+                    android:background="@color/colorThemeItem"
+                    android:padding="@dimen/view_line_item_padding">
+
+                    <TextView
+                        android:id="@+id/tv_night"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="start|center"
+                        android:text="@string/dark_mode_night"
+                        android:textColor="@color/colorThemeAccent"
+                        android:textSize="@dimen/view_line_text_size" />
+
+                    <androidx.appcompat.widget.SwitchCompat
+                        android:id="@+id/switch_dark_enable"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="end"
+                        android:checked="@{isNight}"
+                        android:enabled="@{!isSystem}"
+                        app:theme="@style/Switch" />
+
+                </FrameLayout>
+
+            </LinearLayout>
+
+        </androidx.core.widget.NestedScrollView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

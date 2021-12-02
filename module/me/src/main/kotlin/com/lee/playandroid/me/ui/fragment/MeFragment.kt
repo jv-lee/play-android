@@ -2,15 +2,18 @@ package com.lee.playandroid.me.ui.fragment
 
 import android.view.View
 import androidx.navigation.fragment.findNavController
-import com.lee.library.base.BaseFragment
+import com.lee.library.base.BaseVMFragment
 import com.lee.library.dialog.LoadingDialog
 import com.lee.library.extensions.*
 import com.lee.library.mvvm.ui.observeState
+import com.lee.library.tools.DarkModeTools
+import com.lee.library.tools.DarkViewUpdateTools
 import com.lee.playandroid.library.common.entity.AccountData
 import com.lee.playandroid.library.service.AccountService
 import com.lee.playandroid.library.service.hepler.ModuleService
 import com.lee.playandroid.me.R
 import com.lee.playandroid.me.databinding.FragmentMeBinding
+import com.lee.playandroid.me.viewmodel.MeViewModel
 import com.lee.playandroid.router.navigateLogin
 
 /**
@@ -18,9 +21,8 @@ import com.lee.playandroid.router.navigateLogin
  * @date 2021/11/2
  * @description 首页tab 我的页面
  */
-class MeFragment : BaseFragment(R.layout.fragment_me), View.OnClickListener {
-
-    private val binding by binding(FragmentMeBinding::bind)
+class MeFragment : BaseVMFragment<FragmentMeBinding, MeViewModel>(R.layout.fragment_me),
+    View.OnClickListener, DarkViewUpdateTools.ViewCallback {
 
     private val accountService = ModuleService.find<AccountService>()
 
@@ -28,14 +30,28 @@ class MeFragment : BaseFragment(R.layout.fragment_me), View.OnClickListener {
 
     override fun bindView() {
         delayBackEvent()
+        DarkViewUpdateTools.bindViewCallback(this, this)
 
-        binding.toolbarLayout.setOnClickListener(this)
-        binding.lineSettings.setOnClickListener(this)
-        binding.lineIntegral.setOnClickListener(this)
-        binding.lineCollect.setOnClickListener(this)
-        binding.lineShare.setOnClickListener(this)
-        binding.lineTodo.setOnClickListener(this)
-        binding.lineLogout.setOnClickListener(this)
+        binding.onClickListener = this
+        binding.isSystem = DarkModeTools.get().isSystemTheme()
+        binding.isNight = DarkModeTools.get().isDarkTheme()
+
+        binding.switchSystemEnable.setOnCheckedChangeListener { _, isChecked ->
+            if (isResumed) {
+                DarkModeTools.get().updateSystemTheme(isChecked)
+                binding.isSystem = isChecked
+                binding.isNight = DarkModeTools.get().isDarkTheme()
+                DarkViewUpdateTools.notifyUiMode()
+            }
+        }
+        binding.switchDarkEnable.setOnCheckedChangeListener { _, isChecked ->
+            if (isResumed) {
+                if (DarkModeTools.get().isDarkTheme() != isChecked) {
+                    DarkModeTools.get().updateNightTheme(isChecked)
+                    DarkViewUpdateTools.notifyUiMode()
+                }
+            }
+        }
     }
 
     override fun bindData() {
@@ -79,6 +95,42 @@ class MeFragment : BaseFragment(R.layout.fragment_me), View.OnClickListener {
             toast(getString(R.string.me_login_message))
             findNavController().navigateLogin()
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        binding.switchDarkEnable.setOnCheckedChangeListener(null)
+        binding.switchSystemEnable.setOnCheckedChangeListener(null)
+    }
+
+    override fun updateDarkView() {
+        binding.constRoot.setBackgroundColorCompat(R.color.colorThemeBackground)
+        binding.toolbarLayout.setBackgroundColorCompat(R.color.colorThemeItem)
+        binding.tvAccountName.setTextColorCompat(R.color.colorThemeAccent)
+
+        binding.lineIntegral.setBackgroundColorCompat(R.color.colorThemeItem)
+        binding.lineIntegral.getLeftTextView()?.setTextColorCompat(R.color.colorThemeAccent)
+
+        binding.lineCollect.setBackgroundColorCompat(R.color.colorThemeItem)
+        binding.lineCollect.getLeftTextView()?.setTextColorCompat(R.color.colorThemeAccent)
+
+        binding.lineShare.setBackgroundColorCompat(R.color.colorThemeItem)
+        binding.lineShare.getLeftTextView()?.setTextColorCompat(R.color.colorThemeAccent)
+
+        binding.lineTodo.setBackgroundColorCompat(R.color.colorThemeItem)
+        binding.lineTodo.getLeftTextView()?.setTextColorCompat(R.color.colorThemeAccent)
+
+        binding.lineSettings.setBackgroundColorCompat(R.color.colorThemeItem)
+        binding.lineSettings.getLeftTextView()?.setTextColorCompat(R.color.colorThemeAccent)
+
+        binding.lineLogout.setBackgroundColorCompat(R.color.colorThemeItem)
+        binding.lineLogout.getLeftTextView()?.setTextColorCompat(R.color.colorThemeAccent)
+
+        binding.frameSystem.setBackgroundColorCompat(R.color.colorThemeItem)
+        binding.tvSystem.setTextColorCompat(R.color.colorThemeAccent)
+
+        binding.frameNight.setBackgroundColorCompat(R.color.colorThemeItem)
+        binding.tvNight.setTextColorCompat(R.color.colorThemeAccent)
     }
 
     /**
