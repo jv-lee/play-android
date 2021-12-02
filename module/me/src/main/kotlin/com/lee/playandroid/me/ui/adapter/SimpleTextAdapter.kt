@@ -31,7 +31,6 @@ class SimpleTextAdapter(context: Context, data: List<Content>) :
         override fun convert(holder: ViewBindingHolder, entity: Content, position: Int) {
             holder.getViewBinding<ItemSimpleTextBinding>().apply {
                 tvTitle.text = entity.title
-                tvDescription.text = entity.desc
                 tvTime.text = TimeUtil.getChineseTimeMill(entity.publishTime)
             }
         }

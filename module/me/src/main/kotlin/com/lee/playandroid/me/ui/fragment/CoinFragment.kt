@@ -28,7 +28,7 @@ import com.lee.playandroid.me.viewmodel.CoinViewModel
  * @date 2021/11/25
  * @description 积分页面
  */
-class CoinFragment : BaseNavigationAnimationFragment(R.layout.fragment_coin) {
+class CoinFragment : BaseFragment(R.layout.fragment_coin) {
 
     private val accountService = ModuleService.find<AccountService>()
 

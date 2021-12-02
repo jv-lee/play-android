@@ -5,6 +5,7 @@ import androidx.navigation.fragment.findNavController
 import com.lee.library.adapter.listener.LoadErrorListener
 import com.lee.library.adapter.page.submitData
 import com.lee.library.adapter.page.submitFailed
+import com.lee.library.base.BaseFragment
 import com.lee.library.base.BaseNavigationAnimationFragment
 import com.lee.library.extensions.binding
 import com.lee.library.extensions.toast
@@ -24,7 +25,7 @@ import com.lee.playandroid.router.navigateDetails
  * @date 2021/11/25
  * @description 收藏列表页
  */
-class CollectFragment : BaseNavigationAnimationFragment(R.layout.fragment_collect) {
+class CollectFragment : BaseFragment(R.layout.fragment_collect) {
 
     private val viewModel by viewModels<CollectViewModel>()
 
