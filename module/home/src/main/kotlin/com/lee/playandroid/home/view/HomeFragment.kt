@@ -7,13 +7,13 @@ import com.lee.library.adapter.listener.LoadErrorListener
 import com.lee.library.adapter.page.submitData
 import com.lee.library.adapter.page.submitFailed
 import com.lee.library.base.BaseFragment
-import com.lee.library.base.BaseNavigationFragment
 import com.lee.library.extensions.*
 import com.lee.library.livedatabus.InjectBus
 import com.lee.library.livedatabus.LiveDataBus
 import com.lee.library.mvvm.livedata.LoadStatus
 import com.lee.library.mvvm.ui.observeState
 import com.lee.library.tools.DarkViewUpdateTools
+import com.lee.library.widget.banner.BannerView
 import com.lee.playandroid.home.R
 import com.lee.playandroid.home.bean.HomeContent
 import com.lee.playandroid.home.databinding.FragmentHomeBinding
@@ -52,6 +52,7 @@ class HomeFragment : BaseFragment(R.layout.fragment_home),
             viewModel.loadListData(LoadStatus.REFRESH)
         }
 
+        binding.rvContainer.addSaveStateViewType(BannerView::class.java)
         binding.rvContainer.addItemDecoration(OffsetItemDecoration(binding.toolbar.getToolbarLayoutHeight()))
         binding.rvContainer.adapter = ContentAdapter(requireContext(), arrayListOf()).apply {
             mAdapter = this
