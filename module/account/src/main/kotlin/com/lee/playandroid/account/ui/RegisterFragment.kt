@@ -83,9 +83,9 @@ class RegisterFragment : BaseFragment(R.layout.fragment_register), View.OnClickL
             binding.editPassword.text.toString().isEmpty() ||
             binding.editRePassword.text.toString().isEmpty()
         ) {
-            binding.tvLogin.setButtonDisable(true)
+            binding.tvRegister.setButtonDisable(true)
         } else {
-            binding.tvLogin.setButtonDisable(false)
+            binding.tvRegister.setButtonDisable(false)
         }
     }
 
