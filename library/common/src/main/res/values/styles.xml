@@ -39,8 +39,8 @@
 
     <style name="Switch" parent="AppTheme">
         <!-- Active thumb color & Active track color(30% transparency) switch 打开时的拇指按钮的颜色 轨迹颜色默认为30%这个颜色 -->
-        <item name="colorControlActivated">@android:color/holo_blue_dark</item>
-        <item name="colorControlNormal">@android:color/darker_gray</item>
+        <item name="colorControlActivated">@color/colorThemeFocus</item>
+        <item name="colorControlNormal">@color/colorThemeFocusLight</item>
         <!-- Inactive thumb color switch关闭时的拇指按钮的颜色 -->
 <!--        <item name="colorSwitchThumbNormal">#ff0000</item>-->
 
