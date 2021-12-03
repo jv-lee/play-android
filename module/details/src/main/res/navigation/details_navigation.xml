@@ -11,6 +11,7 @@
         android:label="details"
         tools:layout="@layout/fragment_details">
         <deepLink app:uri="play://details?title={title}&amp;url={url}" />
+        <deepLink app:uri="play://details?id={id}&amp;title={title}&amp;url={url}&amp;isCollect={isCollect}" />
     </fragment>
 
 </navigation>

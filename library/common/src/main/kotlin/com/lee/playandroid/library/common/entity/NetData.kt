@@ -47,7 +47,7 @@ data class PageData<T>(
  */
 @Keep
 data class Banner(
-    val id: String,
+    val id: Long,
     val title: String,
     val desc: String,
     val imagePath: String,
@@ -55,6 +55,7 @@ data class Banner(
     val isVisible: Int,
     val order: Int,
     val type: Int,
+    val collect: Boolean = false
 )
 
 /**

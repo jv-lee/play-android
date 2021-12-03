@@ -57,7 +57,7 @@ class SearchResultFragment : BaseFragment(R.layout.fragment_search_result) {
             })
             setOnItemClickListener { _, entity, _ ->
                 entity?.apply {
-                    findNavController().navigateDetails(title, link)
+                    findNavController().navigateDetails(id,title, link,collect)
                 }
             }
         }.proxy

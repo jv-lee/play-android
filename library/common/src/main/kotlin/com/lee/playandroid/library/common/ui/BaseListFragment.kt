@@ -33,7 +33,7 @@ abstract class BaseListFragment : BaseNavigationFragment(R.layout.fragment_base_
 
     abstract fun requestContentList(@LoadStatus status: Int)
 
-    abstract fun navigationDetails(title: String, link: String)
+    abstract fun navigationDetails(content: Content)
 
     abstract fun dataObserveState(): LiveData<UiState>
 
@@ -66,7 +66,7 @@ abstract class BaseListFragment : BaseNavigationFragment(R.layout.fragment_base_
             })
 
             setOnItemClickListener { _, entity, _ ->
-                navigationDetails(entity.title, entity.link)
+                navigationDetails(entity)
             }
         }
     }

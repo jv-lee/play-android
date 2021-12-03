@@ -52,7 +52,8 @@ class CollectFragment : BaseFragment(R.layout.fragment_collect) {
             })
 
             setOnItemClickListener { _, entity, _ ->
-                findNavController().navigateDetails(entity.title, entity.link)
+                findNavController()
+                    .navigateDetails(entity.id, entity.title, entity.link, entity.collect)
             }
         }.proxy
     }

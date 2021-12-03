@@ -37,8 +37,10 @@ class OfficialListFragment : BaseListFragment() {
         viewModel.requestContentList(status)
     }
 
-    override fun navigationDetails(title: String, link: String) {
-        findNavController().navigateDetails(title, link)
+    override fun navigationDetails(content: Content) {
+        findNavController().navigateDetails(
+            content.id, content.title, content.link, content.collect
+        )
     }
 
     override fun dataObserveState(): LiveData<UiState> {
