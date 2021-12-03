@@ -14,9 +14,9 @@ import com.lee.playandroid.library.common.entity.SearchHistory
 interface SearchHistoryDao : BaseDao<SearchHistory> {
 
     /**
-     * 查询最近搜索倒序10条数据
+     * 查询最近搜索倒序5条数据
      */
-    @Query("SELECT * FROM SearchHistory ORDER BY search_history_time DESC LIMIT 0,10")
+    @Query("SELECT * FROM SearchHistory ORDER BY search_history_time DESC LIMIT 0,5")
     fun querySearchHistory(): List<SearchHistory>
 
     /**
