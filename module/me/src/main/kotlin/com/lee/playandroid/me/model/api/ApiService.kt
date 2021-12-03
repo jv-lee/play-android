@@ -31,7 +31,6 @@ interface ApiService {
      * @param id 文章id
      */
     @POST("lg/collect/{id}/json")
-    @FormUrlEncoded
     suspend fun requestCollectAsync(@Path("id") id: Long) : Data<String>
 
     /**

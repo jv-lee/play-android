@@ -1,5 +1,6 @@
 package com.lee.playandroid.library.common.extensions
 
+import com.lee.playandroid.library.common.constants.ApiConstants
 import com.lee.playandroid.library.common.entity.Data
 
 /**
@@ -8,7 +9,7 @@ import com.lee.playandroid.library.common.entity.Data
  * @description
  */
 fun <T> Data<T>.checkData(): T {
-    if (errorCode == 0) {
+    if (errorCode == ApiConstants.REQUEST_OK) {
         return data
     }
     throw RuntimeException(errorMsg)
