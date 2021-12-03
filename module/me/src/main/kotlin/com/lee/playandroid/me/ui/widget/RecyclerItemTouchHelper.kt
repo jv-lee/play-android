@@ -3,8 +3,10 @@ package com.lee.playandroid.me.ui.widget
 import android.content.res.Resources
 import android.graphics.*
 import android.view.View
+import android.widget.FrameLayout
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
+import com.lee.playandroid.me.R
 
 
 /**
@@ -117,62 +119,13 @@ class RecyclerItemTouchHelper(private val helperCallback: ItemTouchHelperCallbac
         if (actionState == ItemTouchHelper.ACTION_STATE_SWIPE) {
             //dX大于0时向右滑动，小于0向左滑动
             val itemView: View = viewHolder.itemView //获取滑动的view
-            val resources: Resources = recyclerView.context.resources
-            val bitmap: Bitmap = BitmapFactory.decodeResource(
-                resources,
-                android.R.mipmap.sym_def_app_icon
-            ) //获取删除指示的背景图片
-            val padding = 10 //图片绘制的padding
-            val maxDrawWidth: Int = 2 * padding + bitmap.width //最大的绘制宽度
-            val paint = Paint()
-            paint.color = Color.RED
-            val x = Math.round(Math.abs(dX))
-            val drawWidth = Math.min(x, maxDrawWidth) //实际的绘制宽度，取实时滑动距离x和最大绘制距离maxDrawWidth最小值
-            val itemTop: Int = itemView.getBottom() - itemView.getHeight() //绘制的top位置
+            val childView = itemView.findViewById<FrameLayout>(R.id.frame_container)
             //向右滑动
-            if (dX > 0) {
-                //根据滑动实时绘制一个背景
-                c.drawRect(
-                    itemView.left.toFloat(), itemTop.toFloat(),
-                    drawWidth.toFloat(), itemView.bottom.toFloat(), paint
-                )
-                //在背景上面绘制图片
-                if (x > padding) { //滑动距离大于padding时开始绘制图片
-                    //指定图片绘制的位置
-                    val rect = Rect() //画图的位置
-                    rect.left = itemView.left + padding
-                    rect.top =
-                        itemTop + (itemView.bottom - itemTop - bitmap.height) / 2 //图片居中
-                    val maxRight: Int = rect.left + bitmap.width
-                    rect.right = Math.min(x, maxRight)
-                    rect.bottom = rect.top + bitmap.height
-                    //指定图片的绘制区域
-                    var rect1: Rect? = null
-                    if (x < maxRight) {
-                        rect1 = Rect() //不能再外面初始化，否则dx大于画图区域时，删除图片不显示
-                        rect1.left = 0
-                        rect1.top = 0
-                        rect1.bottom = bitmap.height
-                        rect1.right = x - padding
-                    }
-                    c.drawBitmap(bitmap, rect1, rect, paint)
-                }
-                //绘制时需调用平移动画，否则滑动看不到反馈
-                itemView.translationX = dX
-            } else {
-                //如果在getMovementFlags指定了向左滑动（ItemTouchHelper。START）时则绘制工作可参考向右的滑动绘制，也可直接使用下面语句交友系统自己处理
-                super.onChildDraw(
-                    c,
-                    recyclerView,
-                    viewHolder,
-                    dX,
-                    dY,
-                    actionState,
-                    isCurrentlyActive
-                )
+            if (dX <= 100) {
+                childView.translationX = dX
             }
         } else {
-            //拖动时有系统自己完成
+            //拖动时由系统自己完成
             super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
         }
     }
