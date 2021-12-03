@@ -2,6 +2,7 @@ package com.lee.playandroid.me.ui.fragment
 
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.ItemTouchHelper
 import com.lee.library.adapter.listener.LoadErrorListener
 import com.lee.library.adapter.page.submitData
 import com.lee.library.adapter.page.submitFailed
@@ -15,15 +16,18 @@ import com.lee.playandroid.library.common.entity.PageData
 import com.lee.playandroid.me.R
 import com.lee.playandroid.me.databinding.FragmentCollectBinding
 import com.lee.playandroid.me.ui.adapter.SimpleTextAdapter
+import com.lee.playandroid.me.ui.widget.RecyclerItemTouchHelper
 import com.lee.playandroid.me.viewmodel.CollectViewModel
 import com.lee.playandroid.router.navigateDetails
+import java.util.*
 
 /**
  * @author jv.lee
  * @date 2021/11/25
  * @description 收藏列表页
  */
-class CollectFragment : BaseFragment(R.layout.fragment_collect) {
+class CollectFragment : BaseFragment(R.layout.fragment_collect),
+    RecyclerItemTouchHelper.ItemTouchHelperCallback {
 
     private val viewModel by viewModels<CollectViewModel>()
 
@@ -56,6 +60,11 @@ class CollectFragment : BaseFragment(R.layout.fragment_collect) {
                     .navigateDetails(entity.id, entity.title, entity.link, entity.collect)
             }
         }.proxy
+
+        //绑定拖动滑动处理
+        val callback = RecyclerItemTouchHelper(this)
+        val itemTouchHelper = ItemTouchHelper(callback)
+        itemTouchHelper.attachToRecyclerView(binding.rvContainer)
     }
 
     override fun bindData() {
@@ -65,6 +74,28 @@ class CollectFragment : BaseFragment(R.layout.fragment_collect) {
             toast(it.message)
             mAdapter.submitFailed()
         })
+    }
+
+    override fun onItemDelete(position: Int) {
+        //数据删除
+        mAdapter.data.removeAt(position)
+        mAdapter.notifyItemRemoved(position)
+
+        //viewModel数据源处理
+        viewModel.collectLive.getValueData<PageData<Content>>()?.apply {
+            data.removeAt(position)
+        }
+    }
+
+    override fun onMove(fromPosition: Int, toPosition: Int) {
+        //数据交换
+        Collections.swap(mAdapter.data, fromPosition, toPosition)
+        mAdapter.notifyItemMoved(fromPosition, toPosition)
+
+        //viewModel数据源处理
+        viewModel.collectLive.getValueData<PageData<Content>>()?.apply {
+            Collections.swap(data, fromPosition, toPosition)
+        }
     }
 
 }
