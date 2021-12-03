@@ -39,6 +39,7 @@
             android:clickable="true"
             android:focusable="true"
             android:foreground="?selectableItemBackground"
+            android:onClick="@{onClickListener}"
             app:layout_constraintTop_toTopOf="parent">
 
             <com.lee.library.widget.RoundImageView

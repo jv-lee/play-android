@@ -18,6 +18,7 @@
         android:layout_marginTop="@dimen/small_offset"
         android:layout_marginEnd="@dimen/medium_offset"
         app:shadowColor="@color/colorThemeShadow"
+        app:shadowFillColor="@color/colorThemeItem"
         app:shadowRound="@dimen/radius_offset">
 
         <TextView

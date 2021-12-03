@@ -26,7 +26,6 @@ import androidx.viewpager2.widget.ViewPager2
 import com.lee.library.R
 import com.lee.library.extensions.dp2px
 import com.lee.library.extensions.setMargin
-import com.lee.library.utils.LogUtil
 import com.lee.library.widget.banner.BannerView.BannerMode.Companion.MODE_CLIP
 import com.lee.library.widget.banner.BannerView.BannerMode.Companion.MODE_CLIP_SCALE
 import com.lee.library.widget.banner.BannerView.BannerMode.Companion.MODE_DEFAULT
@@ -376,7 +375,6 @@ class BannerView : RelativeLayout {
             while (realIndex != 0) {
                 currentItem++
             }
-            LogUtil.i("currentItem->$currentItem")
             return currentItem
         }
 
@@ -411,7 +409,6 @@ class BannerView : RelativeLayout {
     }
 
     override fun onSaveInstanceState(): Parcelable {
-        LogUtil.i("onSaveBanner")
         val parcelable = super.onSaveInstanceState()
         val saveState = SaveState(parcelable)
         saveState.currentItem = mViewPager.currentItem
@@ -419,7 +416,6 @@ class BannerView : RelativeLayout {
     }
 
     override fun onRestoreInstanceState(state: Parcelable) {
-        LogUtil.i("onRestoreBanner")
         val saveState = state as SaveState
         super.onRestoreInstanceState(saveState.superState)
         saveIndex = saveState.currentItem

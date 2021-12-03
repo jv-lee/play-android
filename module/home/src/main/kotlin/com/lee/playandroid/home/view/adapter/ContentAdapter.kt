@@ -12,18 +12,17 @@ import androidx.viewbinding.ViewBinding
 import com.lee.library.adapter.binding.ViewBindingAdapter
 import com.lee.library.adapter.binding.ViewBindingHolder
 import com.lee.library.adapter.item.ViewBindingItem
-import com.lee.library.utils.LogUtil
 import com.lee.library.utils.TimeUtil
 import com.lee.library.widget.banner.holder.CardImageCreateHolder
+import com.lee.playandroid.home.bean.HomeContent
+import com.lee.playandroid.home.databinding.ItemContentBannerBinding
+import com.lee.playandroid.home.databinding.ItemContentCategoryBinding
+import com.lee.playandroid.home.databinding.ItemContentTextBinding
 import com.lee.playandroid.library.common.entity.Banner
 import com.lee.playandroid.library.common.tools.GlideTools
 import com.lee.playandroid.router.extensions.NavigationAnim
 import com.lee.playandroid.router.extensions.navigateDeepLink
 import com.lee.playandroid.router.navigateDetails
-import com.lee.playandroid.home.bean.HomeContent
-import com.lee.playandroid.home.databinding.ItemContentBannerBinding
-import com.lee.playandroid.home.databinding.ItemContentCategoryBinding
-import com.lee.playandroid.home.databinding.ItemContentTextBinding
 
 /**
  * @author jv.lee
@@ -49,7 +48,6 @@ class ContentAdapter(context: Context, data: List<HomeContent>) :
      */
     inner class ContentBannerItem : ViewBindingItem<HomeContent>() {
         override fun getItemViewBinding(context: Context, parent: ViewGroup): ViewBinding {
-            LogUtil.i("create banner-> viewHolder")
             return ItemContentBannerBinding.inflate(LayoutInflater.from(context), parent, false)
         }
 
@@ -60,7 +58,6 @@ class ContentAdapter(context: Context, data: List<HomeContent>) :
         override fun convert(holder: ViewBindingHolder, entity: HomeContent, position: Int) {
             holder.getViewBinding<ItemContentBannerBinding>().apply {
                 entity.bannerList?.apply {
-                    LogUtil.i("create banner->")
                     banner.bindDataCreate(this, object : CardImageCreateHolder<Banner>() {
                         override fun bindItem(imageView: ImageView, data: Banner) {
                             GlideTools.get().loadImage(data.imagePath, imageView)
