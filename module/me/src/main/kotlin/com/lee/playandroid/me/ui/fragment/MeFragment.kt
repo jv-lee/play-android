@@ -1,6 +1,7 @@
 package com.lee.playandroid.me.ui.fragment
 
 import android.view.View
+import android.widget.CompoundButton
 import androidx.navigation.fragment.findNavController
 import com.lee.library.base.BaseVMFragment
 import com.lee.library.dialog.LoadingDialog
@@ -22,7 +23,7 @@ import com.lee.playandroid.router.navigateLogin
  * @description 首页tab 我的页面
  */
 class MeFragment : BaseVMFragment<FragmentMeBinding, MeViewModel>(R.layout.fragment_me),
-    View.OnClickListener, DarkViewUpdateTools.ViewCallback {
+    View.OnClickListener, CompoundButton.OnCheckedChangeListener, DarkViewUpdateTools.ViewCallback {
 
     private val accountService = ModuleService.find<AccountService>()
 
@@ -32,26 +33,12 @@ class MeFragment : BaseVMFragment<FragmentMeBinding, MeViewModel>(R.layout.fragm
         delayBackEvent()
         DarkViewUpdateTools.bindViewCallback(this, this)
 
-        binding.onClickListener = this
-        binding.isSystem = DarkModeTools.get().isSystemTheme()
-        binding.isNight = DarkModeTools.get().isDarkTheme()
+        binding.switchSystemEnable.isChecked = DarkModeTools.get().isSystemTheme()
+        binding.switchDarkEnable.isChecked = DarkModeTools.get().isDarkTheme()
+        binding.switchDarkEnable.isEnabled = !DarkModeTools.get().isSystemTheme()
 
-        binding.switchSystemEnable.setOnCheckedChangeListener { _, isChecked ->
-            if (isResumed) {
-                DarkModeTools.get().updateSystemTheme(isChecked)
-                binding.isSystem = isChecked
-                binding.isNight = DarkModeTools.get().isDarkTheme()
-                DarkViewUpdateTools.notifyUiMode()
-            }
-        }
-        binding.switchDarkEnable.setOnCheckedChangeListener { _, isChecked ->
-            if (isResumed) {
-                if (DarkModeTools.get().isDarkTheme() != isChecked) {
-                    DarkModeTools.get().updateNightTheme(isChecked)
-                    DarkViewUpdateTools.notifyUiMode()
-                }
-            }
-        }
+        binding.onClickListener = this
+        binding.onCheckedChangeListener = this
     }
 
     override fun bindData() {
@@ -94,6 +81,25 @@ class MeFragment : BaseVMFragment<FragmentMeBinding, MeViewModel>(R.layout.fragm
         } else {
             toast(getString(R.string.me_login_message))
             findNavController().navigateLogin()
+        }
+    }
+
+    override fun onCheckedChanged(buttonView: CompoundButton, isChecked: Boolean) {
+        if (!isResumed) return
+
+        when (buttonView) {
+            binding.switchSystemEnable -> {
+                DarkModeTools.get().updateSystemTheme(isChecked)
+                binding.switchDarkEnable.isChecked = DarkModeTools.get().isDarkTheme()
+                binding.switchDarkEnable.isEnabled = !isChecked
+                DarkViewUpdateTools.notifyUiMode()
+            }
+            binding.switchDarkEnable -> {
+                if (DarkModeTools.get().isDarkTheme() != isChecked) {
+                    DarkModeTools.get().updateNightTheme(isChecked)
+                    DarkViewUpdateTools.notifyUiMode()
+                }
+            }
         }
     }
 

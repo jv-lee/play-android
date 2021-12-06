@@ -2,7 +2,6 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-
     <data>
 
         <variable
@@ -10,16 +9,8 @@
             type="android.view.View.OnClickListener" />
 
         <variable
-            name="onLongClickListener"
-            type="android.view.View.OnLongClickListener" />
-
-        <variable
-            name="isSystem"
-            type="java.lang.Boolean" />
-
-        <variable
-            name="isNight"
-            type="java.lang.Boolean" />
+            name="OnCheckedChangeListener"
+            type="android.widget.CompoundButton.OnCheckedChangeListener" />
 
         <variable
             name="view"
@@ -145,7 +136,7 @@
                         android:id="@+id/switch_system_enable"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:checked="@{isSystem}"
+                        android:onCheckedChanged="@{OnCheckedChangeListener}"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
@@ -162,8 +153,7 @@
                         android:id="@+id/switch_dark_enable"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:checked="@{isNight}"
-                        android:enabled="@{!isSystem}"
+                        android:onCheckedChanged="@{OnCheckedChangeListener}"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
