@@ -10,14 +10,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
-        app:menuEnable="gone"
         app:titleText="@string/me_item_collect" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_container"
-        android:layout_marginTop="@dimen/small_offset"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layout_marginTop="@dimen/small_offset"
         android:overScrollMode="never"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
