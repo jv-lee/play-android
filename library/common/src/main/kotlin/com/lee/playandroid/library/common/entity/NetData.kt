@@ -76,6 +76,7 @@ data class Content(
     val envelopePic: String,
     val fresh: Boolean,
     val id: Long,
+    val originId:Long,
     val link: String,
     val niceDate: String,
     val niceShareDate: String,

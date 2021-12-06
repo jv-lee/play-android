@@ -1,10 +1,7 @@
 package com.lee.playandroid.me.model.api
 
 import com.lee.playandroid.library.common.entity.*
-import retrofit2.http.FormUrlEncoded
-import retrofit2.http.GET
-import retrofit2.http.POST
-import retrofit2.http.Path
+import retrofit2.http.*
 
 /**
  * @author jv.lee
@@ -31,7 +28,7 @@ interface ApiService {
      * @param id 文章id
      */
     @POST("lg/collect/{id}/json")
-    suspend fun requestCollectAsync(@Path("id") id: Long) : Data<String>
+    suspend fun requestCollectAsync(@Path("id") id: Long): Data<String>
 
     /**
      * 取消收藏文章
@@ -39,7 +36,10 @@ interface ApiService {
      */
     @POST("lg/uncollect/{id}/json")
     @FormUrlEncoded
-    suspend fun requestUnCollectAsync(@Path("id") id: Long) : Data<String>
+    suspend fun requestUnCollectAsync(
+        @Path("id") id: Long,
+        @Field("originId") originId: Long
+    ): Data<String>
 
     /**
      * 获取收藏记录

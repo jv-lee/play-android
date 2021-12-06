@@ -74,9 +74,21 @@ class CollectFragment : BaseFragment(R.layout.fragment_collect),
             toast(it.message)
             mAdapter.submitFailed()
         })
+
+        viewModel.unCollectLive.observeState<String>(this, success = {
+            toast(it)
+        }, error = {
+            toast(it.message)
+        })
     }
 
     override fun onItemDelete(position: Int) {
+        //网络请求删除收藏
+        if (mAdapter.data.size > position) {
+            val item = mAdapter.data[position]
+            viewModel.requestUnCollect(item.id, item.originId)
+        }
+
         //数据删除
         mAdapter.data.removeAt(position)
         mAdapter.notifyItemRemoved(position)
