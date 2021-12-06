@@ -10,7 +10,7 @@ import okhttp3.Response
  * @date 2021/11/24
  * @description Cookie处理拦截器 用于保存账号cookie信息
  */
-class CookieInterceptor : Interceptor {
+class SaveCookieInterceptor : Interceptor {
 
     companion object {
         private const val SET_COOKIE_KEY = "set-cookie"
