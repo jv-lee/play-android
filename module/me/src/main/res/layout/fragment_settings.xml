@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/const_root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorThemeBackground">
@@ -11,5 +13,49 @@
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
         app:titleText="@string/me_item_settings" />
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="1dp"
+        android:orientation="vertical"
+        app:layout_constraintTop_toBottomOf="@id/toolbar">
+
+        <LinearLayout
+            android:id="@+id/linear_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <com.lee.playandroid.me.ui.widget.LineButtonView
+                android:id="@+id/line_system"
+                style="@style/CommendLineButtonSwitchView"
+                android:layout_marginTop="@dimen/medium_offset"
+                app:leftText="@string/dark_mode_system" />
+
+            <com.lee.playandroid.me.ui.widget.LineButtonView
+                android:id="@+id/line_night"
+                style="@style/CommendLineButtonSwitchView"
+                app:leftText="@string/dark_mode_night" />
+
+            <com.lee.playandroid.me.ui.widget.LineButtonView
+                android:id="@+id/line_clear_cache"
+                style="@style/CommendLineButtonView"
+                android:layout_marginTop="@dimen/medium_offset"
+                app:leftText="@string/settings_clear_text"
+                app:rightText="0.0b" />
+
+            <com.lee.playandroid.me.ui.widget.LineButtonView
+                android:id="@+id/line_logout"
+                style="@style/CommendLineButtonView"
+                android:layout_marginTop="@dimen/medium_offset"
+                android:visibility="gone"
+                app:leftDrawable="@drawable/vector_logout"
+                app:leftText="@string/me_item_logout"
+                tools:visibility="visible" />
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

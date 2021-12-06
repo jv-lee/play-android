@@ -1,20 +1,20 @@
 package com.lee.playandroid.me.ui.fragment
 
 import android.view.View
-import android.widget.CompoundButton
 import androidx.navigation.fragment.findNavController
 import com.lee.library.base.BaseVMFragment
-import com.lee.library.dialog.LoadingDialog
-import com.lee.library.extensions.*
+import com.lee.library.extensions.delayBackEvent
+import com.lee.library.extensions.setBackgroundColorCompat
+import com.lee.library.extensions.setTextColorCompat
+import com.lee.library.extensions.toast
+import com.lee.library.mvvm.base.BaseViewModel
 import com.lee.library.mvvm.ui.observeState
-import com.lee.library.tools.DarkModeTools
 import com.lee.library.tools.DarkViewUpdateTools
 import com.lee.playandroid.library.common.entity.AccountData
 import com.lee.playandroid.library.service.AccountService
 import com.lee.playandroid.library.service.hepler.ModuleService
 import com.lee.playandroid.me.R
 import com.lee.playandroid.me.databinding.FragmentMeBinding
-import com.lee.playandroid.me.viewmodel.MeViewModel
 import com.lee.playandroid.router.navigateLogin
 
 /**
@@ -22,23 +22,14 @@ import com.lee.playandroid.router.navigateLogin
  * @date 2021/11/2
  * @description 首页tab 我的页面
  */
-class MeFragment : BaseVMFragment<FragmentMeBinding, MeViewModel>(R.layout.fragment_me),
-    View.OnClickListener, CompoundButton.OnCheckedChangeListener, DarkViewUpdateTools.ViewCallback {
+class MeFragment : BaseVMFragment<FragmentMeBinding, BaseViewModel>(R.layout.fragment_me),
+    View.OnClickListener, DarkViewUpdateTools.ViewCallback {
 
     private val accountService = ModuleService.find<AccountService>()
-
-    private val loadingDialog by lazy { LoadingDialog(requireContext()) }
 
     override fun bindView() {
         delayBackEvent()
         DarkViewUpdateTools.bindViewCallback(this, this)
-
-        binding.lineSystem.getRightSwitch()?.isChecked = DarkModeTools.get().isSystemTheme()
-        binding.lineNight.getRightSwitch()?.isChecked = DarkModeTools.get().isDarkTheme()
-        binding.lineNight.getRightSwitch()?.isEnabled = !DarkModeTools.get().isSystemTheme()
-
-        binding.lineSystem.getRightSwitch()?.setOnCheckedChangeListener(this)
-        binding.lineNight.getRightSwitch()?.setOnCheckedChangeListener(this)
 
         binding.onClickListener = this
     }
@@ -59,13 +50,6 @@ class MeFragment : BaseVMFragment<FragmentMeBinding, MeViewModel>(R.layout.fragm
         if (view == binding.lineSettings) {
             findNavController().navigate(R.id.action_me_fragment_to_settings_fragment)
             return
-        } else if (view == binding.lineLogout) {
-            accountService.requestLogout(
-                requireActivity(),
-                { show(loadingDialog) },
-                { dismiss(loadingDialog) },
-                { toast(it) })
-            return
         }
 
         //需要校验登陆状态
@@ -83,26 +67,6 @@ class MeFragment : BaseVMFragment<FragmentMeBinding, MeViewModel>(R.layout.fragm
         } else {
             toast(getString(R.string.me_login_message))
             findNavController().navigateLogin()
-        }
-    }
-
-    override fun onCheckedChanged(buttonView: CompoundButton, isChecked: Boolean) {
-        if (!isResumed) return
-
-        when (buttonView) {
-            binding.lineSystem.getRightSwitch() -> {
-                DarkModeTools.get().updateSystemTheme(isChecked)
-                DarkViewUpdateTools.notifyUiMode()
-                //系统主题更新动态更新夜间模式状态
-                binding.lineNight.getRightSwitch()?.isChecked = DarkModeTools.get().isDarkTheme()
-                binding.lineNight.getRightSwitch()?.isEnabled = !isChecked
-            }
-            binding.lineNight.getRightSwitch() -> {
-                if (DarkModeTools.get().isDarkTheme() != isChecked) {
-                    DarkModeTools.get().updateNightTheme(isChecked)
-                    DarkViewUpdateTools.notifyUiMode()
-                }
-            }
         }
     }
 
@@ -125,15 +89,6 @@ class MeFragment : BaseVMFragment<FragmentMeBinding, MeViewModel>(R.layout.fragm
 
         binding.lineSettings.setBackgroundColorCompat(R.color.colorThemeItem)
         binding.lineSettings.getLeftTextView().setTextColorCompat(R.color.colorThemeAccent)
-
-        binding.lineLogout.setBackgroundColorCompat(R.color.colorThemeItem)
-        binding.lineLogout.getLeftTextView().setTextColorCompat(R.color.colorThemeAccent)
-
-        binding.lineSystem.setBackgroundColorCompat(R.color.colorThemeItem)
-        binding.lineSystem.getLeftTextView().setTextColorCompat(R.color.colorThemeAccent)
-
-        binding.lineNight.setBackgroundColorCompat(R.color.colorThemeItem)
-        binding.lineNight.getLeftTextView().setTextColorCompat(R.color.colorThemeAccent)
     }
 
     /**
@@ -146,7 +101,6 @@ class MeFragment : BaseVMFragment<FragmentMeBinding, MeViewModel>(R.layout.fragm
         binding.tvLevel.text =
             getString(R.string.me_account_info_text, account.coinInfo.level, account.coinInfo.rank)
         binding.tvLevel.visibility = View.VISIBLE
-        binding.lineLogout.visibility = View.VISIBLE
     }
 
     /**
@@ -157,7 +111,6 @@ class MeFragment : BaseVMFragment<FragmentMeBinding, MeViewModel>(R.layout.fragm
         binding.tvAccountName.text = getString(R.string.me_account_default_text)
         binding.tvLevel.text = ""
         binding.tvLevel.visibility = View.GONE
-        binding.lineLogout.visibility = View.GONE
     }
 
 }

@@ -114,25 +114,6 @@
                     app:leftDrawable="@drawable/vector_settings"
                     app:leftText="@string/me_item_settings" />
 
-                <com.lee.playandroid.me.ui.widget.LineButtonView
-                    android:id="@+id/line_logout"
-                    style="@style/CommendLineButtonView"
-                    android:onClick="@{onClickListener}"
-                    android:visibility="gone"
-                    app:leftDrawable="@drawable/vector_logout"
-                    app:leftText="@string/me_item_logout" />
-
-                <com.lee.playandroid.me.ui.widget.LineButtonView
-                    android:id="@+id/line_system"
-                    style="@style/CommendLineButtonSwitchView"
-                    android:layout_marginTop="@dimen/medium_offset"
-                    app:leftText="@string/dark_mode_system" />
-
-                <com.lee.playandroid.me.ui.widget.LineButtonView
-                    android:id="@+id/line_night"
-                    style="@style/CommendLineButtonSwitchView"
-                    app:leftText="@string/dark_mode_night" />
-
             </LinearLayout>
 
         </androidx.core.widget.NestedScrollView>
