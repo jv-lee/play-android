@@ -197,6 +197,13 @@ open class TitleToolbar : CustomToolbarLayout {
         ivBack.setImageDrawable(drawable)
     }
 
+    /**
+     * 设置Back按键资源
+     */
+    fun setBackDrawableRes(drawable: Int, tint: Int = R.color.colorThemeAccent) {
+        ivBack.setImageTintCompat(drawable, ContextCompat.getColor(context, tint))
+    }
+
     fun setTitleColor(color: Int) {
         tvTitle.setTextColorCompat(color)
     }
