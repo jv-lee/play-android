@@ -13,6 +13,11 @@
         <attr name="leftTextColor" format="color" />
         <attr name="leftText" format="string" />
 
+        <attr name="leftSubTextSize" format="dimension" />
+        <attr name="leftSubTextMargin" format="dimension" />
+        <attr name="leftSubTextColor" format="color" />
+        <attr name="leftSubText" format="string" />
+
         <attr name="rightTextSize" format="dimension" />
         <attr name="rightTextMargin" format="dimension" />
         <attr name="rightTextColor" format="color" />

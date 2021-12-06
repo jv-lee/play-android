@@ -109,28 +109,28 @@ class MeFragment : BaseVMFragment<FragmentMeBinding, MeViewModel>(R.layout.fragm
         binding.tvAccountName.setTextColorCompat(R.color.colorThemeAccent)
 
         binding.lineIntegral.setBackgroundColorCompat(R.color.colorThemeItem)
-        binding.lineIntegral.getLeftTextView()?.setTextColorCompat(R.color.colorThemeAccent)
+        binding.lineIntegral.getLeftTextView().setTextColorCompat(R.color.colorThemeAccent)
 
         binding.lineCollect.setBackgroundColorCompat(R.color.colorThemeItem)
-        binding.lineCollect.getLeftTextView()?.setTextColorCompat(R.color.colorThemeAccent)
+        binding.lineCollect.getLeftTextView().setTextColorCompat(R.color.colorThemeAccent)
 
         binding.lineShare.setBackgroundColorCompat(R.color.colorThemeItem)
-        binding.lineShare.getLeftTextView()?.setTextColorCompat(R.color.colorThemeAccent)
+        binding.lineShare.getLeftTextView().setTextColorCompat(R.color.colorThemeAccent)
 
         binding.lineTodo.setBackgroundColorCompat(R.color.colorThemeItem)
-        binding.lineTodo.getLeftTextView()?.setTextColorCompat(R.color.colorThemeAccent)
+        binding.lineTodo.getLeftTextView().setTextColorCompat(R.color.colorThemeAccent)
 
         binding.lineSettings.setBackgroundColorCompat(R.color.colorThemeItem)
-        binding.lineSettings.getLeftTextView()?.setTextColorCompat(R.color.colorThemeAccent)
+        binding.lineSettings.getLeftTextView().setTextColorCompat(R.color.colorThemeAccent)
 
         binding.lineLogout.setBackgroundColorCompat(R.color.colorThemeItem)
-        binding.lineLogout.getLeftTextView()?.setTextColorCompat(R.color.colorThemeAccent)
+        binding.lineLogout.getLeftTextView().setTextColorCompat(R.color.colorThemeAccent)
 
-        binding.frameSystem.setBackgroundColorCompat(R.color.colorThemeItem)
-        binding.tvSystem.setTextColorCompat(R.color.colorThemeAccent)
+        binding.lineSystem.setBackgroundColorCompat(R.color.colorThemeItem)
+        binding.lineSystem.getLeftTextView().setTextColorCompat(R.color.colorThemeAccent)
 
-        binding.frameNight.setBackgroundColorCompat(R.color.colorThemeItem)
-        binding.tvNight.setTextColorCompat(R.color.colorThemeAccent)
+        binding.lineNight.setBackgroundColorCompat(R.color.colorThemeItem)
+        binding.lineNight.getLeftTextView().setTextColorCompat(R.color.colorThemeAccent)
     }
 
     /**
