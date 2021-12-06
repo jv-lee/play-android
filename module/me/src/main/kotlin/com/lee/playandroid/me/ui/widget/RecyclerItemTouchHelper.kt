@@ -6,6 +6,7 @@ import android.view.View
 import android.widget.FrameLayout
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
+import com.lee.library.extensions.dp2px
 import com.lee.playandroid.me.R
 
 
@@ -89,11 +90,8 @@ class RecyclerItemTouchHelper(private val helperCallback: ItemTouchHelperCallbac
      * @return true  支持滑动操作 / false 不支持滑动操作
      */
     override fun isItemViewSwipeEnabled(): Boolean {
-//        return super.isItemViewSwipeEnabled()
-        return isSwipeEnable
+        return super.isItemViewSwipeEnabled()
     }
-
-    private var isSwipeEnable = true
 
     /**
      * 移动过程中绘制Item
@@ -115,23 +113,22 @@ class RecyclerItemTouchHelper(private val helperCallback: ItemTouchHelperCallbac
         actionState: Int,
         isCurrentlyActive: Boolean
     ) {
-        //滑动时自己实现背景及图片
-        if (actionState == ItemTouchHelper.ACTION_STATE_SWIPE) {
-            //dX大于0时向右滑动，小于0向左滑动
-            val itemView: View = viewHolder.itemView //获取滑动的view
-            val childView = itemView.findViewById<FrameLayout>(R.id.frame_container)
-            //向右滑动
-            if (dX <= 100) {
-                childView.translationX = dX
-            }
-        } else {
-            //拖动时由系统自己完成
-            super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
-        }
-    }
-
-    override fun clearView(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder) {
-        super.clearView(recyclerView, viewHolder)
+//        val context = recyclerView.context
+//
+//        //滑动时自己实现背景及图片
+//        if (actionState == ItemTouchHelper.ACTION_STATE_SWIPE) {
+//            //dX大于0时向右滑动，小于0向左滑动
+//            val itemView: View = viewHolder.itemView //获取滑动的view
+//            val childView = itemView.findViewById<FrameLayout>(R.id.frame_container)
+//            //向右滑动
+//            if (dX > 0) {
+//                itemView.translationX = dX
+//            }
+//        } else {
+//            //拖动时由系统自己完成
+//            super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
+//        }
+        super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
     }
 
     interface ItemTouchHelperCallback {

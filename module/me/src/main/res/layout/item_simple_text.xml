@@ -1,50 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/frame_container"
     android:layout_width="match_parent"
     android:layout_height="76dp"
-    android:layout_marginBottom="@dimen/medium_offset">
+    android:layout_marginBottom="@dimen/medium_offset"
+    android:background="@color/colorThemeItem"
+    android:foreground="?attr/selectableItemBackgroundBorderless"
+    android:padding="@dimen/large_offset">
 
     <TextView
-        android:id="@+id/tv_delete"
-        android:layout_width="56dp"
-        android:layout_height="match_parent"
-        android:background="@android:color/holo_red_dark"
-        android:gravity="center"
-        android:text="删除"
-        android:textColor="@android:color/white" />
+        android:id="@+id/tv_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top"
+        android:ellipsize="end"
+        android:includeFontPadding="false"
+        android:maxLines="1"
+        android:textColor="@color/colorThemeAccent"
+        android:textSize="@dimen/font_size_small"
+        android:textStyle="bold"
+        tools:text="JackeyLove专访" />
 
-    <FrameLayout
-        android:id="@+id/frame_container"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/colorThemeItem"
-        android:foreground="?attr/selectableItemBackgroundBorderless"
-        android:padding="@dimen/large_offset">
-
-        <TextView
-            android:id="@+id/tv_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="top"
-            android:ellipsize="end"
-            android:includeFontPadding="false"
-            android:maxLines="1"
-            android:textColor="@color/colorThemeAccent"
-            android:textSize="@dimen/font_size_small"
-            android:textStyle="bold"
-            tools:text="JackeyLove专访" />
-
-        <TextView
-            android:id="@+id/tv_time"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:includeFontPadding="false"
-            android:textColor="@color/colorThemePrimary"
-            android:textSize="@dimen/font_size_small_x"
-            tools:text="2022-12-12" />
-
-    </FrameLayout>
+    <TextView
+        android:id="@+id/tv_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:includeFontPadding="false"
+        android:textColor="@color/colorThemePrimary"
+        android:textSize="@dimen/font_size_small_x"
+        tools:text="2022-12-12" />
 
 </FrameLayout>
+
