@@ -22,6 +22,9 @@
         <attr name="rightTextMargin" format="dimension" />
         <attr name="rightTextColor" format="color" />
         <attr name="rightText" format="string" />
+
+        <attr name="rightSwitchEnable" format="boolean" />
+        <attr name="switchTheme" format="reference" />
     </declare-styleable>
 
 </resources>

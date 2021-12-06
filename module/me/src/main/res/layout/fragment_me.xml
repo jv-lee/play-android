@@ -9,10 +9,6 @@
             type="android.view.View.OnClickListener" />
 
         <variable
-            name="OnCheckedChangeListener"
-            type="android.widget.CompoundButton.OnCheckedChangeListener" />
-
-        <variable
             name="view"
             type="android.view.View" />
     </data>
@@ -130,36 +126,12 @@
                     android:id="@+id/line_system"
                     style="@style/CommendLineButtonSwitchView"
                     android:layout_marginTop="@dimen/medium_offset"
-                    app:leftText="@string/dark_mode_system">
-
-                    <androidx.appcompat.widget.SwitchCompat
-                        android:id="@+id/switch_system_enable"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:onCheckedChanged="@{OnCheckedChangeListener}"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:theme="@style/Switch" />
-
-                </com.lee.playandroid.me.ui.widget.LineButtonView>
+                    app:leftText="@string/dark_mode_system" />
 
                 <com.lee.playandroid.me.ui.widget.LineButtonView
                     android:id="@+id/line_night"
                     style="@style/CommendLineButtonSwitchView"
-                    app:leftText="@string/dark_mode_night">
-
-                    <androidx.appcompat.widget.SwitchCompat
-                        android:id="@+id/switch_dark_enable"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:onCheckedChanged="@{OnCheckedChangeListener}"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:theme="@style/Switch" />
-
-                </com.lee.playandroid.me.ui.widget.LineButtonView>
+                    app:leftText="@string/dark_mode_night" />
 
             </LinearLayout>
 

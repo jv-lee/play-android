@@ -8,6 +8,8 @@ import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.appcompat.view.ContextThemeWrapper
+import androidx.appcompat.widget.SwitchCompat
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.core.view.updateLayoutParams
@@ -44,9 +46,13 @@ class LineButtonView : ConstraintLayout {
     private var rightTextColor: Int = 0
     private lateinit var rightText: String
 
+    private var rightSwitchEnable: Boolean = false
+    private var switchThemeRes: Int = 0
+
     private lateinit var tvLeftText: TextView
     private lateinit var tvRightText: TextView
     private lateinit var tvLeftSubText: TextView
+    private lateinit var switchRight: SwitchCompat
 
     private val leftTextId = View.generateViewId()
     private val leftSubTextId = View.generateViewId()
@@ -135,6 +141,12 @@ class LineButtonView : ConstraintLayout {
                 0
             )
 
+            //右侧switch是否显示
+            rightSwitchEnable = getBoolean(R.styleable.LineButtonView_rightSwitchEnable, false)
+            switchThemeRes = getResourceId(
+                R.styleable.LineButtonView_switchTheme,
+                android.R.style.Widget
+            )
             recycle()
         }
     }
@@ -204,6 +216,19 @@ class LineButtonView : ConstraintLayout {
             gravity = Gravity.CENTER_VERTICAL
             addView(this)
         }
+
+        if (rightSwitchEnable) {
+            switchRight = SwitchCompat(ContextThemeWrapper(context, switchThemeRes)).apply {
+                layoutParams =
+                    LayoutParams(LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+                updateLayoutParams<LayoutParams> {
+                    endToEnd = 0
+                    topToTop = 0
+                    bottomToBottom = 0
+                }
+                addView(this)
+            }
+        }
     }
 
     private fun initItemPadding() {
@@ -231,6 +256,10 @@ class LineButtonView : ConstraintLayout {
 
     fun getRightTextView(): TextView {
         return tvRightText
+    }
+
+    fun getRightSwitch(): SwitchCompat? {
+        return switchRight
     }
 
 }

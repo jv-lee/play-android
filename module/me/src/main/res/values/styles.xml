@@ -16,5 +16,7 @@
         <item name="android:foreground">?attr/selectableItemBackground</item>
         <item name="android:background">@color/colorThemeItem</item>
         <item name="android:layout_marginTop">1dp</item>
+        <item name="rightSwitchEnable">true</item>
+        <item name="switchTheme">@style/Switch</item>
     </style>
 </resources>

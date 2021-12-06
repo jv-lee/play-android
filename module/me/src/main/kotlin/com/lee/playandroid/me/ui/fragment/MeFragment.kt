@@ -33,12 +33,14 @@ class MeFragment : BaseVMFragment<FragmentMeBinding, MeViewModel>(R.layout.fragm
         delayBackEvent()
         DarkViewUpdateTools.bindViewCallback(this, this)
 
-        binding.switchSystemEnable.isChecked = DarkModeTools.get().isSystemTheme()
-        binding.switchDarkEnable.isChecked = DarkModeTools.get().isDarkTheme()
-        binding.switchDarkEnable.isEnabled = !DarkModeTools.get().isSystemTheme()
+        binding.lineSystem.getRightSwitch()?.isChecked = DarkModeTools.get().isSystemTheme()
+        binding.lineNight.getRightSwitch()?.isChecked = DarkModeTools.get().isDarkTheme()
+        binding.lineNight.getRightSwitch()?.isEnabled = !DarkModeTools.get().isSystemTheme()
+
+        binding.lineSystem.getRightSwitch()?.setOnCheckedChangeListener(this)
+        binding.lineNight.getRightSwitch()?.setOnCheckedChangeListener(this)
 
         binding.onClickListener = this
-        binding.onCheckedChangeListener = this
     }
 
     override fun bindData() {
@@ -88,25 +90,20 @@ class MeFragment : BaseVMFragment<FragmentMeBinding, MeViewModel>(R.layout.fragm
         if (!isResumed) return
 
         when (buttonView) {
-            binding.switchSystemEnable -> {
+            binding.lineSystem.getRightSwitch() -> {
                 DarkModeTools.get().updateSystemTheme(isChecked)
-                binding.switchDarkEnable.isChecked = DarkModeTools.get().isDarkTheme()
-                binding.switchDarkEnable.isEnabled = !isChecked
                 DarkViewUpdateTools.notifyUiMode()
+                //系统主题更新动态更新夜间模式状态
+                binding.lineNight.getRightSwitch()?.isChecked = DarkModeTools.get().isDarkTheme()
+                binding.lineNight.getRightSwitch()?.isEnabled = !isChecked
             }
-            binding.switchDarkEnable -> {
+            binding.lineNight.getRightSwitch() -> {
                 if (DarkModeTools.get().isDarkTheme() != isChecked) {
                     DarkModeTools.get().updateNightTheme(isChecked)
                     DarkViewUpdateTools.notifyUiMode()
                 }
             }
         }
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        binding.switchDarkEnable.setOnCheckedChangeListener(null)
-        binding.switchSystemEnable.setOnCheckedChangeListener(null)
     }
 
     override fun updateDarkView() {
