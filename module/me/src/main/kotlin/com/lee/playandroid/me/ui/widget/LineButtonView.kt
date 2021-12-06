@@ -3,6 +3,7 @@ package com.lee.playandroid.me.ui.widget
 import android.content.Context
 import android.util.AttributeSet
 import android.util.TypedValue
+import android.view.Gravity
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
@@ -10,6 +11,8 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.core.view.updateLayoutParams
 import com.lee.library.extensions.dimensToSp
+import com.lee.library.extensions.dp2px
+import com.lee.library.extensions.setDrawableCompat
 import com.lee.library.extensions.setImageTintCompat
 import com.lee.playandroid.me.R
 
@@ -38,8 +41,6 @@ class LineButtonView : ConstraintLayout {
 
     private lateinit var tvLeftText: TextView
     private lateinit var tvRightText: TextView
-    private lateinit var ivLeftDrawable: ImageView
-    private lateinit var ivRightDrawable: ImageView
 
     constructor(context: Context) : this(context, null, 0)
     constructor(context: Context, attributes: AttributeSet) : this(context, attributes, 0)
@@ -115,7 +116,7 @@ class LineButtonView : ConstraintLayout {
         tvLeftText.run {
             layoutParams =
                 LayoutParams(LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
-            updateLayoutParams<ConstraintLayout.LayoutParams> {
+            updateLayoutParams<LayoutParams> {
                 startToStart = 0
                 topToTop = 0
                 bottomToBottom = 0
@@ -127,6 +128,9 @@ class LineButtonView : ConstraintLayout {
             )
             setTextColor(leftTextColor)
             text = leftText
+            setDrawableCompat(left = leftDrawableId, tint = leftTint)
+            compoundDrawablePadding = context.dp2px(6).toInt()
+            gravity = Gravity.CENTER_VERTICAL
             addView(this)
         }
 
@@ -134,7 +138,7 @@ class LineButtonView : ConstraintLayout {
         tvRightText.run {
             layoutParams =
                 LayoutParams(LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
-            updateLayoutParams<ConstraintLayout.LayoutParams> {
+            updateLayoutParams<LayoutParams> {
                 endToEnd = 0
                 topToTop = 0
                 bottomToBottom = 0
@@ -146,32 +150,9 @@ class LineButtonView : ConstraintLayout {
             )
             setTextColor(rightTextColor)
             text = rightText
-            addView(this)
-        }
-
-        ivLeftDrawable = ImageView(context)
-        ivLeftDrawable.run {
-            layoutParams = LayoutParams(iconSize, iconSize)
-            updateLayoutParams<ConstraintLayout.LayoutParams> {
-                startToStart = 0
-                topToTop = 0
-                bottomToBottom = 0
-            }
-            //设置兼容资源及调色
-            setImageTintCompat(leftDrawableId, leftTint)
-            addView(this)
-        }
-
-        ivRightDrawable = ImageView(context)
-        ivRightDrawable.run {
-            layoutParams = LayoutParams(iconSize, iconSize)
-            updateLayoutParams<ConstraintLayout.LayoutParams> {
-                endToEnd = 0
-                topToTop = 0
-                bottomToBottom = 0
-            }
-            //设置兼容资源及调色
-            setImageTintCompat(rightDrawableId, rightTint)
+            setDrawableCompat(right = rightDrawableId, tint = rightTint)
+            compoundDrawablePadding = context.dp2px(6).toInt()
+            gravity = Gravity.CENTER_VERTICAL
             addView(this)
         }
     }
@@ -186,11 +167,11 @@ class LineButtonView : ConstraintLayout {
         tvRightText.text = text
     }
 
-    fun getLeftTextView(): TextView? {
+    fun getLeftTextView(): TextView {
         return tvLeftText
     }
 
-    fun getRightTextView(): TextView? {
+    fun getRightTextView(): TextView {
         return tvRightText
     }
 

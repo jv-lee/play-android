@@ -36,8 +36,9 @@
 
     <!--   自定义VIEW  -->
     <dimen name="view_line_icon_size">24dp</dimen>
-    <dimen name="view_line_text_margin">36dp</dimen>
+    <dimen name="view_line_text_margin">0dp</dimen>
     <dimen name="view_line_text_size">@dimen/font_size_small</dimen>
-    <dimen name="view_line_item_padding">12dp</dimen>
+    <dimen name="view_line_item_padding_horizontal">16dp</dimen>
+    <dimen name="view_line_item_padding_vertical">12dp</dimen>
 
 </resources>

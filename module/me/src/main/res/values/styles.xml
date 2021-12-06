@@ -6,7 +6,10 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:foreground">?attr/selectableItemBackground</item>
         <item name="android:background">@color/colorThemeItem</item>
-        <item name="android:padding">@dimen/view_line_item_padding</item>
+        <item name="android:paddingTop">@dimen/view_line_item_padding_vertical</item>
+        <item name="android:paddingBottom">@dimen/view_line_item_padding_vertical</item>
+        <item name="android:paddingStart">@dimen/view_line_item_padding_horizontal</item>
+        <item name="android:paddingEnd">@dimen/view_line_item_padding_horizontal</item>
         <item name="android:layout_marginTop">1dp</item>
         <item name="rightDrawable">@drawable/vector_arrow</item>
     </style>
