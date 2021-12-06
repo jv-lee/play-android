@@ -2,12 +2,8 @@ package com.lee.playandroid.me.ui.fragment
 
 import android.view.View
 import androidx.navigation.fragment.findNavController
-import com.lee.library.base.BaseVMFragment
-import com.lee.library.extensions.delayBackEvent
-import com.lee.library.extensions.setBackgroundColorCompat
-import com.lee.library.extensions.setTextColorCompat
-import com.lee.library.extensions.toast
-import com.lee.library.mvvm.base.BaseViewModel
+import com.lee.library.base.BaseFragment
+import com.lee.library.extensions.*
 import com.lee.library.mvvm.ui.observeState
 import com.lee.library.tools.DarkViewUpdateTools
 import com.lee.playandroid.library.common.entity.AccountData
@@ -22,16 +18,24 @@ import com.lee.playandroid.router.navigateLogin
  * @date 2021/11/2
  * @description 首页tab 我的页面
  */
-class MeFragment : BaseVMFragment<FragmentMeBinding, BaseViewModel>(R.layout.fragment_me),
+class MeFragment : BaseFragment(R.layout.fragment_me),
     View.OnClickListener, DarkViewUpdateTools.ViewCallback {
 
     private val accountService = ModuleService.find<AccountService>()
 
+    private val binding by binding(FragmentMeBinding::bind)
+
     override fun bindView() {
         delayBackEvent()
+
         DarkViewUpdateTools.bindViewCallback(this, this)
 
-        binding.onClickListener = this
+        binding.toolbarLayout.setOnClickListener(this)
+        binding.lineIntegral.setOnClickListener(this)
+        binding.lineCollect.setOnClickListener(this)
+        binding.lineShare.setOnClickListener(this)
+        binding.lineTodo.setOnClickListener(this)
+        binding.lineSettings.setOnClickListener(this)
     }
 
     override fun bindData() {
