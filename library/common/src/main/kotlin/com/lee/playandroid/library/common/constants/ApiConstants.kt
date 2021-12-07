@@ -8,4 +8,7 @@ package com.lee.playandroid.library.common.constants
 object ApiConstants {
 
     const val REQUEST_OK = 0
+
+    //未登陆
+    const val REQUEST_TOKEN_ERROR = -1001
 }

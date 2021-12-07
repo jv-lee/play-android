@@ -14,6 +14,9 @@ class SaveCookieInterceptor : Interceptor {
 
     companion object {
         private const val SET_COOKIE_KEY = "set-cookie"
+
+        private const val SAVE_USER_LOGIN_KEY = "user/login"
+        private const val SAVE_USER_REGISTER_KEY = "user/register"
     }
 
     override fun intercept(chain: Interceptor.Chain): Response {
@@ -22,7 +25,10 @@ class SaveCookieInterceptor : Interceptor {
 
         val url = request.url().toString()
 
-        if (url.contains(BuildConfig.BASE_URI) && response.headers(SET_COOKIE_KEY).isNotEmpty()) {
+        //登陆注册时保存登陆 cookie作为token校验接口header参数
+        if ((url.contains(SAVE_USER_LOGIN_KEY) || url.contains(SAVE_USER_REGISTER_KEY))
+            && response.headers(SET_COOKIE_KEY).isNotEmpty()
+        ) {
             val cookies = response.headers(SET_COOKIE_KEY)
             val cookie = encodeCookie(cookies)
             saveCookie(cookie)

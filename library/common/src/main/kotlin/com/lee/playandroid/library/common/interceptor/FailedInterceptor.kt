@@ -1,6 +1,9 @@
 package com.lee.playandroid.library.common.interceptor
 
 import com.google.gson.JsonParser
+import com.lee.library.livedatabus.LiveDataBus
+import com.lee.playandroid.library.common.constants.ApiConstants
+import com.lee.playandroid.library.common.entity.LoginEvent
 import okhttp3.Interceptor
 import okhttp3.Response
 import java.nio.charset.Charset
@@ -28,7 +31,10 @@ class FailedInterceptor : Interceptor {
                     val body = buffer.clone().readString(charset)
                     val json = JsonParser.parseString(body)
                     val code = json.asJsonObject.get("errorCode").asInt
-                    val message = json.asJsonObject.get("errorMsg").asString
+                    //登陆失效,打开登陆页面
+                    if (code == ApiConstants.REQUEST_TOKEN_ERROR) {
+                        LiveDataBus.getInstance().getChannel(LoginEvent.key).postValue(LoginEvent())
+                    }
                 }
             }
 

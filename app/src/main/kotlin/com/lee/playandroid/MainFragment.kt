@@ -12,11 +12,15 @@ import com.lee.library.base.BaseFragment
 import com.lee.library.extensions.binding
 import com.lee.library.extensions.endListener
 import com.lee.library.extensions.setBackgroundColorCompat
+import com.lee.library.extensions.toast
+import com.lee.library.livedatabus.InjectBus
 import com.lee.library.livedatabus.LiveDataBus
 import com.lee.library.tools.DarkViewUpdateTools
 import com.lee.playandroid.databinding.FragmentMainBinding
+import com.lee.playandroid.library.common.entity.LoginEvent
 import com.lee.playandroid.library.common.entity.NavigationSelectEvent
 import com.lee.playandroid.library.common.tools.setupWithNavController2
+import com.lee.playandroid.router.navigateLogin
 import java.lang.ref.WeakReference
 
 /**
@@ -56,7 +60,7 @@ class MainFragment : BaseFragment(R.layout.fragment_main),
     }
 
     override fun bindData() {
-
+        LiveDataBus.getInstance().injectBus(this)
     }
 
     @SuppressLint("ResourceType")
@@ -106,6 +110,12 @@ class MainFragment : BaseFragment(R.layout.fragment_main),
                 }
             })
         }
+    }
+
+    @InjectBus(LoginEvent.key, isActive = true)
+    fun loginEvent(event: LoginEvent) {
+        toast(getString(R.string.login_token_failed))
+        binding.container.findNavController().navigateLogin()
     }
 
 }

@@ -13,3 +13,10 @@ data class NavigationSelectEvent(val title: String) {
         const val key = "NavigationSelectEvent"
     }
 }
+
+@Keep
+class LoginEvent {
+    companion object {
+        const val key = "LoginEvent"
+    }
+}

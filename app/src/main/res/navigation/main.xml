@@ -9,4 +9,6 @@
         android:name="com.lee.playandroid.MainFragment"
         tools:layout="@layout/fragment_main" />
 
+    <include app:graph="@navigation/main_navigation" />
+
 </navigation>
