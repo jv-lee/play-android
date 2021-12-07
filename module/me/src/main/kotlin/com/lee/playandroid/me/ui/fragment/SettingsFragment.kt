@@ -113,10 +113,16 @@ class SettingsFragment : BaseFragment(R.layout.fragment_settings),
         createClearDialog()
     }
 
+    /**
+     * 获取登陆状态设置退出登陆item显示状态
+     */
     private fun changeLogoutLine() {
         binding.lineLogout.visibility = if (accountService.isLogin()) View.VISIBLE else View.GONE
     }
 
+    /**
+     * 重建清除缓存弹窗
+     */
     private fun createClearDialog() {
         clearDialog = ChoiceDialog(requireContext()).apply {
             setTitle(getString(R.string.settings_clear_title))
