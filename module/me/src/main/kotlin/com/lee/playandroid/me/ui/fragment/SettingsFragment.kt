@@ -31,6 +31,7 @@ class SettingsFragment : BaseFragment(R.layout.fragment_settings),
     private val loadingDialog by lazy { LoadingDialog(requireContext()) }
 
     private lateinit var clearDialog: Dialog
+    private lateinit var logoutDialog: Dialog
 
     override fun bindView() {
         DarkViewUpdateTools.bindViewCallback(viewLifecycleOwner, this)
@@ -45,7 +46,7 @@ class SettingsFragment : BaseFragment(R.layout.fragment_settings),
         binding.lineClearCache.setOnClickListener(this)
         binding.lineLogout.setOnClickListener(this)
 
-        createClearDialog()
+        createAlertDialog()
         changeLogoutLine()
     }
 
@@ -56,14 +57,7 @@ class SettingsFragment : BaseFragment(R.layout.fragment_settings),
     override fun onClick(v: View) {
         when (v) {
             binding.lineLogout -> {
-                accountService.requestLogout(requireActivity(), {
-                    show(loadingDialog)
-                }, {
-                    dismiss(loadingDialog)
-                    changeLogoutLine()
-                }, {
-                    toast(it)
-                })
+                show(logoutDialog)
             }
             binding.lineClearCache -> {
                 show(clearDialog)
@@ -110,7 +104,7 @@ class SettingsFragment : BaseFragment(R.layout.fragment_settings),
         binding.lineNight.setBackgroundColorCompat(R.color.colorThemeItem)
         binding.lineNight.getLeftTextView().setTextColorCompat(R.color.colorThemeAccent)
 
-        createClearDialog()
+        createAlertDialog()
     }
 
     /**
@@ -121,9 +115,10 @@ class SettingsFragment : BaseFragment(R.layout.fragment_settings),
     }
 
     /**
-     * 重建清除缓存弹窗
+     * 创建设置页Dialog提示弹窗
      */
-    private fun createClearDialog() {
+    private fun createAlertDialog() {
+        //清除弹窗创建
         clearDialog = ChoiceDialog(requireContext()).apply {
             setTitle(getString(R.string.settings_clear_title))
             setCancelable(true)
@@ -135,6 +130,23 @@ class SettingsFragment : BaseFragment(R.layout.fragment_settings),
                 } else {
                     toast(getString(R.string.settings_clear_failed))
                 }
+                dismiss()
+            }
+        }
+
+        //退出登陆弹窗创建
+        logoutDialog = ChoiceDialog(requireContext()).apply {
+            setTitle(getString(R.string.settings_logout_title))
+            setCancelable(true)
+            confirmListener = ConfirmListener {
+                accountService.requestLogout(requireActivity(), {
+                    show(loadingDialog)
+                }, {
+                    dismiss(loadingDialog)
+                    changeLogoutLine()
+                }, {
+                    toast(it)
+                })
                 dismiss()
             }
         }
