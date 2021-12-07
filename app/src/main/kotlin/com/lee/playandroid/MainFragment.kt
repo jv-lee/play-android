@@ -53,7 +53,7 @@ class MainFragment : BaseFragment(R.layout.fragment_main),
 
     override fun bindView() {
         //设置深色主题控制器监听
-        DarkViewUpdateTools.bindViewCallback(this, this)
+        DarkViewUpdateTools.bindViewCallback(viewLifecycleOwner, this)
 
         //fragment容器与navigationBar绑定
         bindNavigationAction()

@@ -47,7 +47,7 @@ class SettingsFragment : BaseFragment(R.layout.fragment_settings),
     }
 
     override fun bindView() {
-        DarkViewUpdateTools.bindViewCallback(this, this)
+        DarkViewUpdateTools.bindViewCallback(viewLifecycleOwner, this)
 
         binding.lineSystem.getRightSwitch()?.isChecked = DarkModeTools.get().isSystemTheme()
         binding.lineNight.getRightSwitch()?.isChecked = DarkModeTools.get().isDarkTheme()

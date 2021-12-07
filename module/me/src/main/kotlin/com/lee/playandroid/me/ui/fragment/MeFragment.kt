@@ -28,7 +28,7 @@ class MeFragment : BaseFragment(R.layout.fragment_me),
     override fun bindView() {
         delayBackEvent()
 
-        DarkViewUpdateTools.bindViewCallback(this, this)
+        DarkViewUpdateTools.bindViewCallback(viewLifecycleOwner, this)
 
         binding.toolbarLayout.setOnClickListener(this)
         binding.lineIntegral.setOnClickListener(this)
@@ -75,6 +75,7 @@ class MeFragment : BaseFragment(R.layout.fragment_me),
     }
 
     override fun updateDarkView() {
+        if (!isResumed) return
         binding.constRoot.setBackgroundColorCompat(R.color.colorThemeBackground)
         binding.toolbarLayout.setBackgroundColorCompat(R.color.colorThemeItem)
         binding.tvAccountName.setTextColorCompat(R.color.colorThemeAccent)

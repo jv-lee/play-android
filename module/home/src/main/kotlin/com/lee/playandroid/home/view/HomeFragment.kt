@@ -41,7 +41,7 @@ class HomeFragment : BaseFragment(R.layout.fragment_home),
 
     override fun bindView() {
         delayBackEvent()
-        DarkViewUpdateTools.bindViewCallback(this, this)
+        DarkViewUpdateTools.bindViewCallback(viewLifecycleOwner, this)
 
         binding.ivSearch.setOnClickListener {
             findNavController().navigateSearch()
