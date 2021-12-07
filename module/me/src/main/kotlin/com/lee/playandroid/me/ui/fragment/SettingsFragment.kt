@@ -1,5 +1,6 @@
 package com.lee.playandroid.me.ui.fragment
 
+import android.app.Dialog
 import android.view.View
 import android.widget.CompoundButton
 import com.lee.library.base.BaseFragment
@@ -18,33 +19,18 @@ import com.lee.playandroid.me.databinding.FragmentSettingsBinding
 /**
  * @author jv.lee
  * @date 2021/11/25
- * @description
+ * @description 应用设置页
  */
 class SettingsFragment : BaseFragment(R.layout.fragment_settings),
     View.OnClickListener, CompoundButton.OnCheckedChangeListener, DarkViewUpdateTools.ViewCallback {
 
     private val accountService = ModuleService.find<AccountService>()
 
-    private val loadingDialog by lazy { LoadingDialog(requireContext()) }
-
     private val binding by binding(FragmentSettingsBinding::bind)
 
-    private val clearDialog by lazy {
-        ChoiceDialog(requireContext()).apply {
-            setTitle(getString(R.string.settings_clear_title))
-            setCancelable(true)
-            confirmListener = ConfirmListener {
-                if (CacheUtil.clearAllCache(activity)) {
-                    binding.lineClearCache.getRightTextView().text =
-                        CacheUtil.getTotalCacheSize(activity)
-                    toast(getString(R.string.settings_clear_success))
-                } else {
-                    toast(getString(R.string.settings_clear_failed))
-                }
-                dismiss()
-            }
-        }
-    }
+    private val loadingDialog by lazy { LoadingDialog(requireContext()) }
+
+    private lateinit var clearDialog: Dialog
 
     override fun bindView() {
         DarkViewUpdateTools.bindViewCallback(viewLifecycleOwner, this)
@@ -59,6 +45,7 @@ class SettingsFragment : BaseFragment(R.layout.fragment_settings),
         binding.lineClearCache.setOnClickListener(this)
         binding.lineLogout.setOnClickListener(this)
 
+        createClearDialog()
         changeLogoutLine()
     }
 
@@ -122,10 +109,29 @@ class SettingsFragment : BaseFragment(R.layout.fragment_settings),
 
         binding.lineNight.setBackgroundColorCompat(R.color.colorThemeItem)
         binding.lineNight.getLeftTextView().setTextColorCompat(R.color.colorThemeAccent)
+
+        createClearDialog()
     }
 
     private fun changeLogoutLine() {
         binding.lineLogout.visibility = if (accountService.isLogin()) View.VISIBLE else View.GONE
+    }
+
+    private fun createClearDialog() {
+        clearDialog = ChoiceDialog(requireContext()).apply {
+            setTitle(getString(R.string.settings_clear_title))
+            setCancelable(true)
+            confirmListener = ConfirmListener {
+                if (CacheUtil.clearAllCache(activity)) {
+                    binding.lineClearCache.getRightTextView().text =
+                        CacheUtil.getTotalCacheSize(activity)
+                    toast(getString(R.string.settings_clear_success))
+                } else {
+                    toast(getString(R.string.settings_clear_failed))
+                }
+                dismiss()
+            }
+        }
     }
 
 }
