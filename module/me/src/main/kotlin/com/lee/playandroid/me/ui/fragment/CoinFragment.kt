@@ -1,6 +1,7 @@
 package com.lee.playandroid.me.ui.fragment
 
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.lee.library.adapter.listener.LoadErrorListener
 import com.lee.library.adapter.page.submitData
 import com.lee.library.adapter.page.submitFailed
@@ -67,6 +68,10 @@ class CoinFragment : BaseFragment(R.layout.fragment_coin) {
             })
 
         }.proxy
+
+        headerBinding.tvRankLabel.setOnClickListener {
+            findNavController().navigate(R.id.action_coin_fragment_to_coin_rank_fragment)
+        }
     }
 
     override fun bindData() {

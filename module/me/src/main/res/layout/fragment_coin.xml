@@ -12,6 +12,8 @@
         android:background="@color/colorThemeFocus"
         app:backIconTint="@android:color/white"
         app:layout_constraintTop_toTopOf="parent"
+        app:menuEnable="visible"
+        app:menuIconTint="@android:color/white"
         app:titleColor="@android:color/white"
         app:titleText="@string/me_item_coin" />
 
