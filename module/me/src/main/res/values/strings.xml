@@ -16,6 +16,7 @@
     <string name="coin_total_description">当前积分总数</string>
     <string name="coin_default_value">0</string>
     <string name="coin_to_rank_text">查看积分排行榜</string>
+    <string name="coin_rank_title">积分排行榜</string>
 
     <!--  collect  -->
     <string name="collect_remove_item_success">移除收藏成功</string>
@@ -23,7 +24,6 @@
     <!--  settings  -->
     <string name="dark_mode_system">夜间模式跟随系统设置</string>
     <string name="dark_mode_night">夜间模式</string>
-
     <string name="settings_clear_text">清除缓存</string>
     <string name="settings_clear_title">确认清除缓存?</string>
     <string name="settings_clear_success">清除成功</string>

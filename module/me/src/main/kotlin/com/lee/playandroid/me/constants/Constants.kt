@@ -7,4 +7,5 @@ package com.lee.playandroid.me.constants
  */
 object Constants {
     const val CACHE_KEY_COIN_RECORD = "cache-key-coin-record"//积分记录列表
+    const val CACHE_KEY_COIN_RANK = "cache-key-coin-rank"//积分排行列表
 }
