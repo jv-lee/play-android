@@ -17,6 +17,7 @@
     <string name="coin_default_value">0</string>
     <string name="coin_to_rank_text">查看积分排行榜</string>
     <string name="coin_rank_title">积分排行榜</string>
+    <string name="coin_help_title">本站积分规则</string>
 
     <!--  collect  -->
     <string name="collect_remove_item_success">移除收藏成功</string>

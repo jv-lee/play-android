@@ -13,6 +13,8 @@ import com.lee.library.mvvm.livedata.LoadStatus
 import com.lee.library.mvvm.ui.observeState
 import com.lee.library.tools.DarkModeTools
 import com.lee.library.tools.StatusTools
+import com.lee.library.widget.toolbar.TitleToolbar
+import com.lee.playandroid.library.common.constants.ApiConstants
 import com.lee.playandroid.library.common.entity.CoinRecord
 import com.lee.playandroid.library.common.entity.PageData
 import com.lee.playandroid.library.common.ui.widget.SimpleLoadResource
@@ -23,6 +25,7 @@ import com.lee.playandroid.me.databinding.FragmentCoinBinding
 import com.lee.playandroid.me.databinding.LayoutCoinHeaderBinding
 import com.lee.playandroid.me.ui.adapter.CoinRecordAdapter
 import com.lee.playandroid.me.viewmodel.CoinViewModel
+import com.lee.playandroid.router.navigateDetails
 
 /**
  * @author jv.lee
@@ -69,6 +72,14 @@ class CoinFragment : BaseFragment(R.layout.fragment_coin) {
 
         }.proxy
 
+        binding.toolbar.setClickListener(object : TitleToolbar.ClickListener() {
+            override fun menuClick() {
+                findNavController().navigateDetails(
+                    getString(R.string.coin_help_title),
+                    ApiConstants.URI_COIN_HELP
+                )
+            }
+        })
         headerBinding.tvRankLabel.setOnClickListener {
             findNavController().navigate(R.id.action_coin_fragment_to_coin_rank_fragment)
         }
