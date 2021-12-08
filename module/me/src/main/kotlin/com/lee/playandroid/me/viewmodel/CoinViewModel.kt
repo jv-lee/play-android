@@ -6,7 +6,7 @@ import com.lee.library.extensions.putCache
 import com.lee.library.mvvm.livedata.LoadStatus
 import com.lee.library.mvvm.ui.UiStatePageLiveData
 import com.lee.library.mvvm.viewmodel.CoroutineViewModel
-import com.lee.playandroid.library.common.entity.Coin
+import com.lee.playandroid.library.common.entity.CoinRecord
 import com.lee.playandroid.library.common.entity.PageData
 import com.lee.playandroid.library.common.extensions.checkData
 import com.lee.playandroid.me.constants.Constants.CACHE_KEY_COIN_RECORD
@@ -30,7 +30,7 @@ class CoinViewModel : CoroutineViewModel() {
             coinRecordLive.apply {
                 pageLaunch(status, { page ->
                     repository.api.getCoinRecordAsync(page).checkData().also { newData ->
-                        applyData(getValueData<PageData<Coin>>()?.data, newData.data)
+                        applyData(getValueData<PageData<CoinRecord>>()?.data, newData.data)
                     }
                 }, {
                     cacheManager.getCache(CACHE_KEY_COIN_RECORD)

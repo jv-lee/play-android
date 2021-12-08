@@ -76,7 +76,7 @@ data class Content(
     val envelopePic: String,
     val fresh: Boolean,
     val id: Long,
-    val originId:Long,
+    val originId: Long,
     val link: String,
     val niceDate: String,
     val niceShareDate: String,
@@ -135,7 +135,7 @@ data class NavigationItem(
 )
 
 @Keep
-data class Coin(
+data class CoinRecord(
     val coinCount: Int,
     val date: Long,
     val desc: String,
@@ -144,4 +144,14 @@ data class Coin(
     val type: Int,
     val userId: Long,
     val userName: String
+)
+
+@Keep
+data class CoinRank(
+    val coinCount: Int,
+    val level: Int,
+    val nickname: String,
+    val rank: String,
+    val userId: Long,
+    val username: String
 )

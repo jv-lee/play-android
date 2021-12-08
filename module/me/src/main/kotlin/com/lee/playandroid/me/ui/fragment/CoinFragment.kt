@@ -12,7 +12,7 @@ import com.lee.library.mvvm.livedata.LoadStatus
 import com.lee.library.mvvm.ui.observeState
 import com.lee.library.tools.DarkModeTools
 import com.lee.library.tools.StatusTools
-import com.lee.playandroid.library.common.entity.Coin
+import com.lee.playandroid.library.common.entity.CoinRecord
 import com.lee.playandroid.library.common.entity.PageData
 import com.lee.playandroid.library.common.ui.widget.SimpleLoadResource
 import com.lee.playandroid.library.service.AccountService
@@ -70,7 +70,7 @@ class CoinFragment : BaseFragment(R.layout.fragment_coin) {
     }
 
     override fun bindData() {
-        viewModel.coinRecordLive.observeState<PageData<Coin>>(this, success = {
+        viewModel.coinRecordLive.observeState<PageData<CoinRecord>>(this, success = {
             mAdapter.submitData(it)
         }, error = {
             toast(it.message)

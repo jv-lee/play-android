@@ -18,10 +18,17 @@ interface ApiService {
 
     /**
      * 获取积分记录
-     * @param page 1-*
+     * @param page 1 - *
      */
     @GET("lg/coin/list/{page}/json")
-    suspend fun getCoinRecordAsync(@Path("page") page: Int): Data<PageData<Coin>>
+    suspend fun getCoinRecordAsync(@Path("page") page: Int): Data<PageData<CoinRecord>>
+
+    /**
+     * 获取积分排行榜列表
+     * @param page 1 - *
+     */
+    @GET("coin/rank/{page}/json")
+    suspend fun getCoinRankAsync(@Path("page") page: Int): Data<PageData<CoinRank>>
 
     /**
      * 收藏文章
@@ -43,7 +50,7 @@ interface ApiService {
 
     /**
      * 获取收藏记录
-     * @param page 0-*
+     * @param page 0 - *
      */
     @GET("lg/collect/list/{page}/json")
     suspend fun getCollectListAsync(@Path("page") page: Int): Data<PageData<Content>>
