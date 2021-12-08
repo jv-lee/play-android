@@ -73,7 +73,9 @@ class NavigationFragment : BaseFragment(R.layout.fragment_navigation) {
             mNavigationContentAdapter.submitSinglePage(it)
         }, error = {
             toast(it.message)
-            binding.statusLayout.setStatus(StatusLayout.STATUS_DATA_ERROR)
+            if (mNavigationTabAdapter.data.isNullOrEmpty()) {
+                binding.statusLayout.setStatus(StatusLayout.STATUS_DATA_ERROR)
+            }
         })
 
         viewModel.selectTabLive.observe(this, {
