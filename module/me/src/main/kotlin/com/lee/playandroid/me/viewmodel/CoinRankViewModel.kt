@@ -11,6 +11,7 @@ import com.lee.playandroid.library.common.entity.PageData
 import com.lee.playandroid.library.common.extensions.checkData
 import com.lee.playandroid.me.constants.Constants.CACHE_KEY_COIN_RANK
 import com.lee.playandroid.me.model.repository.ApiRepository
+import java.util.*
 
 /**
  * @author jv.lee
@@ -30,6 +31,11 @@ class CoinRankViewModel : CoroutineViewModel() {
             coinRankLive.apply {
                 pageLaunch(status, { page ->
                     repository.api.getCoinRankAsync(page).checkData().also { newData ->
+                        //排行榜UI显示 0 —><- 1 位置数据对掉
+                        if (page == coinRankLive.getInitPage() && newData.size >= 2) {
+                            Collections.swap(newData.data, 0, 1)
+                        }
+                        //内存存储每页数据至LiveData
                         applyData(getValueData<PageData<CoinRank>>()?.data, newData.data)
                     }
                 }, {

@@ -2,6 +2,7 @@ package com.lee.playandroid.me.ui.fragment
 
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.GridLayoutManager
 import com.lee.library.adapter.listener.LoadErrorListener
 import com.lee.library.adapter.page.submitData
 import com.lee.library.adapter.page.submitFailed
@@ -17,6 +18,7 @@ import com.lee.playandroid.library.common.extensions.actionFailed
 import com.lee.playandroid.me.R
 import com.lee.playandroid.me.databinding.FragmentCoinRankBinding
 import com.lee.playandroid.me.ui.adapter.CoinRankAdapter
+import com.lee.playandroid.me.ui.widget.RankSpanSizeLookup
 import com.lee.playandroid.me.viewmodel.CoinRankViewModel
 import com.lee.playandroid.router.navigateDetails
 
@@ -34,6 +36,9 @@ class CoinRankFragment : BaseFragment(R.layout.fragment_coin_rank) {
     private lateinit var mAdapter: CoinRankAdapter
 
     override fun bindView() {
+        binding.rvContainer.layoutManager = GridLayoutManager(requireContext(), 3).apply {
+            spanSizeLookup = RankSpanSizeLookup()
+        }
         binding.rvContainer.adapter = CoinRankAdapter(requireContext(), arrayListOf()).apply {
             mAdapter = this
             initStatusView()
@@ -51,23 +56,23 @@ class CoinRankFragment : BaseFragment(R.layout.fragment_coin_rank) {
                 override fun itemReload() {
                     viewModel.requestCoinRank(LoadStatus.RELOAD)
                 }
-
             })
         }.proxy
 
-        binding.toolbar.setClickListener(object : TitleToolbar.ClickListener() {
-            override fun moreClick() {
-                findNavController().navigateDetails(
-                    getString(R.string.coin_help_title),
-                    ApiConstants.URI_COIN_HELP
-                )
-            }
-        })
+        binding.toolbar.setClickListener(
+            object : TitleToolbar.ClickListener() {
+                override fun moreClick() {
+                    findNavController().navigateDetails(
+                        getString(R.string.coin_help_title),
+                        ApiConstants.URI_COIN_HELP
+                    )
+                }
+            })
     }
 
     override fun bindData() {
         viewModel.coinRankLive.observeState<PageData<CoinRank>>(this, success = {
-            mAdapter.submitData(it)
+            mAdapter.submitData(it, diff = true)
         }, error = {
             mAdapter.submitFailed()
             actionFailed(it)

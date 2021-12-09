@@ -87,7 +87,7 @@ class CoinFragment : BaseFragment(R.layout.fragment_coin) {
 
     override fun bindData() {
         viewModel.coinRecordLive.observeState<PageData<CoinRecord>>(this, success = {
-            mAdapter.submitData(it)
+            mAdapter.submitData(it, diff = true)
         }, error = {
             mAdapter.submitFailed()
             actionFailed(it)

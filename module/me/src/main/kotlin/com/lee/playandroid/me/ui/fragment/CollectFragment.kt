@@ -70,7 +70,7 @@ class CollectFragment : BaseFragment(R.layout.fragment_collect),
 
     override fun bindData() {
         viewModel.collectLive.observeState<PageData<Content>>(this, success = {
-            mAdapter.submitData(it)
+            mAdapter.submitData(it,diff = true)
         }, error = {
             mAdapter.submitFailed()
             actionFailed(it)
