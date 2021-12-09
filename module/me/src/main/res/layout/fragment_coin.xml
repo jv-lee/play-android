@@ -12,9 +12,9 @@
         android:background="@color/colorThemeFocus"
         app:backIconTint="@android:color/white"
         app:layout_constraintTop_toTopOf="parent"
-        app:menuEnable="visible"
-        app:menuIcon="@drawable/vector_help"
-        app:menuIconTint="@android:color/white"
+        app:moreEnable="visible"
+        app:moreIcon="@drawable/vector_help"
+        app:moreIconTint="@android:color/white"
         app:titleColor="@android:color/white"
         app:titleText="@string/me_item_coin" />
 

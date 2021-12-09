@@ -73,7 +73,7 @@ class CoinFragment : BaseFragment(R.layout.fragment_coin) {
         }.proxy
 
         binding.toolbar.setClickListener(object : TitleToolbar.ClickListener() {
-            override fun menuClick() {
+            override fun moreClick() {
                 findNavController().navigateDetails(
                     getString(R.string.coin_help_title),
                     ApiConstants.URI_COIN_HELP

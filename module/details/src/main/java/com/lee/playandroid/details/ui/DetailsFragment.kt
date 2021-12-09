@@ -10,7 +10,6 @@ import com.lee.library.widget.toolbar.TitleToolbar
 import com.lee.playandroid.details.R
 import com.lee.playandroid.details.databinding.FragmentDetailsBinding
 import com.lee.playandroid.details.viewmodel.DetailsViewModel
-import com.lee.playandroid.library.common.constants.ApiConstants
 import com.lee.playandroid.library.common.extensions.bindLifecycle
 
 /**
@@ -27,6 +26,7 @@ class DetailsFragment : BaseFragment(R.layout.fragment_details) {
         const val ARG_PARAMS_COLLECT = "isCollect"
     }
 
+    private val id by arguments<String>(ARG_PARAMS_ID)
     private val title by arguments<String>(ARG_PARAMS_TITLE)
     private val detailsUrl by arguments<String>(ARG_PARAMS_URL)
 
@@ -37,7 +37,7 @@ class DetailsFragment : BaseFragment(R.layout.fragment_details) {
     private lateinit var web: AgentWeb
 
     private val toolbarClickListener = object : TitleToolbar.ClickListener() {
-        override fun menuClick() {
+        override fun moreClick() {
             binding.toolbar.showMenu(-40, 10)
         }
 
@@ -56,7 +56,7 @@ class DetailsFragment : BaseFragment(R.layout.fragment_details) {
     override fun bindView() {
         binding.toolbar.setTitleText(title)
         binding.toolbar.setClickListener(toolbarClickListener)
-        binding.toolbar.setMenuEnable(detailsUrl != ApiConstants.URI_COIN_HELP)
+        binding.toolbar.setMoreEnable(id != "0")
 
         web = AgentWeb.with(this)
             .setAgentWebParent(binding.frameContainer, FrameLayout.LayoutParams(-1, -1))
