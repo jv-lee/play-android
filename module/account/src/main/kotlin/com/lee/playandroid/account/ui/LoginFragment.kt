@@ -16,7 +16,7 @@ import com.lee.library.tools.KeyboardTools
 import com.lee.library.tools.PreferencesTools
 import com.lee.playandroid.account.R
 import com.lee.playandroid.account.constants.Constants.SP_KEY_SAVE_INPUT_USERNAME
-import com.lee.playandroid.account.constants.Constants.REQUEST_LOGIN_KEY
+import com.lee.playandroid.account.constants.Constants.REQUEST_KEY_LOGIN
 import com.lee.playandroid.account.databinding.FragmentLoginBinding
 import com.lee.playandroid.account.viewmodel.AccountViewModel
 import com.lee.playandroid.account.viewmodel.LoginRegisterViewModel
@@ -57,7 +57,7 @@ class LoginFragment : BaseFragment(R.layout.fragment_login), View.OnClickListene
 
     override fun bindData() {
         //监听登陆页面回调时是否已经成功注册 注册成功后直接退出至前置页面
-        setFragmentResultListener(REQUEST_LOGIN_KEY) { _: String, _: Bundle ->
+        setFragmentResultListener(REQUEST_KEY_LOGIN) { _: String, _: Bundle ->
             findNavController().popBackStack()
         }
 

@@ -13,5 +13,5 @@ object Constants {
     const val SP_KEY_SAVE_INPUT_USERNAME = "key-save-input-username"
 
     // login/register 页面回传注册key
-    const val REQUEST_LOGIN_KEY = "request-login"
+    const val REQUEST_KEY_LOGIN = "request-login"
 }
