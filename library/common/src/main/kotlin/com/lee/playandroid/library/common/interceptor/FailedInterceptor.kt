@@ -19,7 +19,7 @@ class FailedInterceptor : Interceptor {
 
     companion object {
         private const val RESPONSE_CODE = "errorCode"
-        private const val IS_LOGIN_KEY = "key-is-login"
+        private const val SP_KEY_IS_LOGIN = "key-is-login"
     }
 
     override fun intercept(chain: Interceptor.Chain): Response {
@@ -42,7 +42,7 @@ class FailedInterceptor : Interceptor {
                     //登陆失效,打开登陆页面
                     if (code == ApiConstants.REQUEST_TOKEN_ERROR) {
                         //单独处理登陆状态 ， 已登陆状态发起重新登陆事件
-                        if (PreferencesTools.get(IS_LOGIN_KEY, false)) {
+                        if (PreferencesTools.get(SP_KEY_IS_LOGIN, false)) {
                             LiveDataBus.getInstance().getChannel(LoginEvent.key)
                                 .postValue(LoginEvent())
                         }

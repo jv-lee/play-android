@@ -45,7 +45,7 @@ class AccountServiceImpl : AccountService {
     }
 
     override fun isLogin(): Boolean {
-        return PreferencesTools.get(Constants.KEY_IS_LOGIN, false)
+        return PreferencesTools.get(Constants.SP_KEY_IS_LOGIN, false)
     }
 
 }

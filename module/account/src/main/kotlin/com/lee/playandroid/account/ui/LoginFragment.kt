@@ -15,7 +15,7 @@ import com.lee.library.mvvm.ui.observeState
 import com.lee.library.tools.KeyboardTools
 import com.lee.library.tools.PreferencesTools
 import com.lee.playandroid.account.R
-import com.lee.playandroid.account.constants.Constants.KEY_SAVE_INPUT_USERNAME
+import com.lee.playandroid.account.constants.Constants.SP_KEY_SAVE_INPUT_USERNAME
 import com.lee.playandroid.account.constants.Constants.REQUEST_LOGIN_KEY
 import com.lee.playandroid.account.databinding.FragmentLoginBinding
 import com.lee.playandroid.account.viewmodel.AccountViewModel
@@ -39,7 +39,7 @@ class LoginFragment : BaseFragment(R.layout.fragment_login), View.OnClickListene
 
     override fun bindView() {
         //设置登陆过的账户名
-        binding.editUsername.setText(PreferencesTools.get(KEY_SAVE_INPUT_USERNAME, ""))
+        binding.editUsername.setText(PreferencesTools.get(SP_KEY_SAVE_INPUT_USERNAME, ""))
 
         //监听键盘弹起
         binding.rootLayout.keyboardObserver { diff ->
@@ -64,7 +64,7 @@ class LoginFragment : BaseFragment(R.layout.fragment_login), View.OnClickListene
         //监听登陆成功后获取的账户信息
         viewModel.accountLive.observeState<AccountData>(viewLifecycleOwner, success = {
             dismiss(loadingDialog)
-            PreferencesTools.put(KEY_SAVE_INPUT_USERNAME, it.userInfo.username)
+            PreferencesTools.put(SP_KEY_SAVE_INPUT_USERNAME, it.userInfo.username)
             accountViewModel.updateAccountInfo(it)
             findNavController().popBackStack()
         }, error = {

@@ -29,7 +29,7 @@ class AccountViewModel : CoroutineViewModel() {
     suspend fun requestAccountInfo() {
         stateFlow {
             repository.api.getAccountInfo().apply {
-                PreferencesTools.put(Constants.KEY_IS_LOGIN, errorCode == 0)
+                PreferencesTools.put(Constants.SP_KEY_IS_LOGIN, errorCode == 0)
             }.checkData()
         }.collect {
             _accountLive.postValue(it)
@@ -37,7 +37,7 @@ class AccountViewModel : CoroutineViewModel() {
     }
 
     fun updateAccountInfo(accountData: AccountData) {
-        PreferencesTools.put(Constants.KEY_IS_LOGIN, true)
+        PreferencesTools.put(Constants.SP_KEY_IS_LOGIN, true)
         _accountLive.postValue(UiState.Success(accountData))
     }
 
@@ -59,7 +59,7 @@ class AccountViewModel : CoroutineViewModel() {
             val response = withIO { repository.api.requestLogout() }
             if (response.errorCode == 0) {
                 _accountLive.postValue(UiState.Default)
-                PreferencesTools.put(Constants.KEY_IS_LOGIN, false)
+                PreferencesTools.put(Constants.SP_KEY_IS_LOGIN, false)
             } else {
                 failedCall(response.errorMsg)
             }

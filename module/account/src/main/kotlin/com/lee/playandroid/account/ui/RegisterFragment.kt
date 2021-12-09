@@ -57,7 +57,7 @@ class RegisterFragment : BaseFragment(R.layout.fragment_register), View.OnClickL
         //监听注册成功后获取的账户信息
         viewModel.accountLive.observeState<AccountData>(viewLifecycleOwner, success = {
             dismiss(loadingDialog)
-            PreferencesTools.put(Constants.KEY_SAVE_INPUT_USERNAME, it.userInfo.username)
+            PreferencesTools.put(Constants.SP_KEY_SAVE_INPUT_USERNAME, it.userInfo.username)
             accountViewModel.updateAccountInfo(it)
             setFragmentResult(REQUEST_LOGIN_KEY, Bundle.EMPTY)
             findNavController().popBackStack()
