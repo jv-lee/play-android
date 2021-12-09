@@ -19,7 +19,7 @@ class FailedInterceptor : Interceptor {
 
     companion object {
         private const val RESPONSE_CODE = "errorCode"
-        private const val SP_KEY_IS_LOGIN = "key-is-login"
+        private const val SP_KEY_IS_LOGIN = "spKey:is-login"
     }
 
     override fun intercept(chain: Interceptor.Chain): Response {
