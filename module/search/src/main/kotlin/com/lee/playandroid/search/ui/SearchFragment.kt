@@ -8,10 +8,10 @@ import androidx.navigation.fragment.findNavController
 import com.lee.library.adapter.page.submitSinglePage
 import com.lee.library.base.BaseFragment
 import com.lee.library.extensions.binding
-import com.lee.library.extensions.toast
 import com.lee.library.mvvm.ui.observeState
 import com.lee.library.tools.KeyboardTools
 import com.lee.playandroid.library.common.entity.SearchHistory
+import com.lee.playandroid.library.common.extensions.actionFailed
 import com.lee.playandroid.search.R
 import com.lee.playandroid.search.constants.Constants
 import com.lee.playandroid.search.databinding.FragmentSearchBinding
@@ -71,7 +71,7 @@ class SearchFragment : BaseFragment(R.layout.fragment_search) {
         viewModel.searchHotLive.observeState<List<SearchHot>>(this, success = {
             mHotAdapter.submitSinglePage(it)
         }, error = {
-            toast(it.message)
+            actionFailed(it)
         })
 
         viewModel.searchHistoryLive.observeState<List<SearchHistory>>(this, success = {
@@ -79,7 +79,7 @@ class SearchFragment : BaseFragment(R.layout.fragment_search) {
             binding.tvHistoryEmpty.visibility = if (it.isEmpty()) View.VISIBLE else View.GONE
             mHistoryAdapter.submitSinglePage(it)
         }, error = {
-            toast(it.message)
+            actionFailed(it)
         })
     }
 

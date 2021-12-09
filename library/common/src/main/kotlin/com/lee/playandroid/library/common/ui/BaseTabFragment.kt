@@ -4,17 +4,16 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.LiveData
 import com.google.android.material.tabs.TabLayoutMediator
 import com.lee.library.adapter.core.UiPager2Adapter
-import com.lee.library.base.BaseFragment
 import com.lee.library.base.BaseNavigationFragment
 import com.lee.library.extensions.binding
 import com.lee.library.extensions.increaseOffscreenPageLimit
-import com.lee.library.extensions.toast
 import com.lee.library.mvvm.ui.UiState
 import com.lee.library.mvvm.ui.observeState
 import com.lee.library.widget.StatusLayout
 import com.lee.playandroid.library.common.R
 import com.lee.playandroid.library.common.databinding.FragmentBaseTabBinding
 import com.lee.playandroid.library.common.entity.Tab
+import com.lee.playandroid.library.common.extensions.actionFailed
 
 /**
  * @author jv.lee
@@ -47,7 +46,7 @@ abstract class BaseTabFragment : BaseNavigationFragment(R.layout.fragment_base_t
             binding.statusLayout.setStatus(StatusLayout.STATUS_DATA)
             bindAdapter(it)
         }, error = {
-            toast(it.message)
+            actionFailed(it)
             adapter?.getFragments()?.isNullOrEmpty() ?: kotlin.run {
                 binding.statusLayout.setStatus(StatusLayout.STATUS_DATA_ERROR)
             }

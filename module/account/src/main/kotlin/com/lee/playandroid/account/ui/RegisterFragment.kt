@@ -9,7 +9,10 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.lee.library.base.BaseFragment
 import com.lee.library.dialog.LoadingDialog
-import com.lee.library.extensions.*
+import com.lee.library.extensions.binding
+import com.lee.library.extensions.dismiss
+import com.lee.library.extensions.keyboardObserver
+import com.lee.library.extensions.show
 import com.lee.library.interadp.TextWatcherAdapter
 import com.lee.library.mvvm.ui.observeState
 import com.lee.library.tools.KeyboardTools
@@ -21,6 +24,7 @@ import com.lee.playandroid.account.databinding.FragmentRegisterBinding
 import com.lee.playandroid.account.viewmodel.AccountViewModel
 import com.lee.playandroid.account.viewmodel.LoginRegisterViewModel
 import com.lee.playandroid.library.common.entity.AccountData
+import com.lee.playandroid.library.common.extensions.actionFailed
 
 /**
  * @author jv.lee
@@ -63,7 +67,7 @@ class RegisterFragment : BaseFragment(R.layout.fragment_register), View.OnClickL
             findNavController().popBackStack()
         }, error = {
             dismiss(loadingDialog)
-            toast(it.message)
+            actionFailed(it)
         })
     }
 

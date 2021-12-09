@@ -7,7 +7,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.lee.library.adapter.core.VerticalTabAdapter
 import com.lee.library.adapter.page.submitSinglePage
 import com.lee.library.base.BaseFragment
-import com.lee.library.extensions.*
+import com.lee.library.extensions.binding
+import com.lee.library.extensions.findParentFragment
+import com.lee.library.extensions.setMargin
+import com.lee.library.extensions.smoothScrollToTop
 import com.lee.library.livedatabus.InjectBus
 import com.lee.library.livedatabus.LiveDataBus
 import com.lee.library.mvvm.ui.observeState
@@ -15,6 +18,7 @@ import com.lee.library.widget.StatusLayout
 import com.lee.library.widget.layoutmanager.LinearTopSmoothScroller
 import com.lee.playandroid.library.common.entity.NavigationItem
 import com.lee.playandroid.library.common.entity.NavigationSelectEvent
+import com.lee.playandroid.library.common.extensions.actionFailed
 import com.lee.playandroid.system.R
 import com.lee.playandroid.system.databinding.FragmentNavigationBinding
 import com.lee.playandroid.system.ui.adapter.NavigationContentAdapter
@@ -72,7 +76,7 @@ class NavigationFragment : BaseFragment(R.layout.fragment_navigation) {
             mNavigationTabAdapter.updateNotify(it)
             mNavigationContentAdapter.submitSinglePage(it)
         }, error = {
-            toast(it.message)
+            actionFailed(it)
             if (mNavigationTabAdapter.data.isNullOrEmpty()) {
                 binding.statusLayout.setStatus(StatusLayout.STATUS_DATA_ERROR)
             }

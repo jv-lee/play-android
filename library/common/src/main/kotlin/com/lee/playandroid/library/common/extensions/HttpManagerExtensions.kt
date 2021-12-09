@@ -2,10 +2,7 @@ package com.lee.playandroid.library.common.extensions
 
 import com.lee.library.net.HttpManager
 import com.lee.playandroid.library.common.BuildConfig
-import com.lee.playandroid.library.common.interceptor.SaveCookieInterceptor
-import com.lee.playandroid.library.common.interceptor.FailedInterceptor
-import com.lee.playandroid.library.common.interceptor.HeaderInterceptor
-import com.lee.playandroid.library.common.interceptor.ParameterInterceptor
+import com.lee.playandroid.library.common.interceptor.*
 import okhttp3.logging.HttpLoggingInterceptor
 
 /**
@@ -22,4 +19,5 @@ fun HttpManager.setCommonInterceptor() {
     putInterceptor(ParameterInterceptor())
     putInterceptor(HeaderInterceptor())
     putInterceptor(SaveCookieInterceptor())
+    putInterceptor(NetworkStatusInterceptor())
 }

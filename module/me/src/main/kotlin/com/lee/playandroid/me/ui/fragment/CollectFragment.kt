@@ -13,6 +13,7 @@ import com.lee.library.mvvm.livedata.LoadStatus
 import com.lee.library.mvvm.ui.observeState
 import com.lee.playandroid.library.common.entity.Content
 import com.lee.playandroid.library.common.entity.PageData
+import com.lee.playandroid.library.common.extensions.actionFailed
 import com.lee.playandroid.me.R
 import com.lee.playandroid.me.databinding.FragmentCollectBinding
 import com.lee.playandroid.me.ui.adapter.SimpleTextAdapter
@@ -71,14 +72,14 @@ class CollectFragment : BaseFragment(R.layout.fragment_collect),
         viewModel.collectLive.observeState<PageData<Content>>(this, success = {
             mAdapter.submitData(it)
         }, error = {
-            toast(it.message)
+            actionFailed(it)
             mAdapter.submitFailed()
         })
 
         viewModel.unCollectLive.observeState<String>(this, success = {
             toast(it)
         }, error = {
-            toast(it.message)
+            actionFailed(it)
         })
     }
 

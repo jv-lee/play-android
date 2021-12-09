@@ -10,13 +10,13 @@ import com.lee.library.base.BaseFragment
 import com.lee.library.extensions.binding
 import com.lee.library.extensions.findParentFragment
 import com.lee.library.extensions.smoothScrollToTop
-import com.lee.library.extensions.toast
 import com.lee.library.livedatabus.InjectBus
 import com.lee.library.livedatabus.LiveDataBus
 import com.lee.library.mvvm.ui.observeState
 import com.lee.playandroid.library.common.entity.NavigationSelectEvent
 import com.lee.playandroid.library.common.entity.ParentTab
 import com.lee.playandroid.library.common.entity.Tab
+import com.lee.playandroid.library.common.extensions.actionFailed
 import com.lee.playandroid.library.common.ui.widget.OffsetItemDecoration
 import com.lee.playandroid.system.R
 import com.lee.playandroid.system.constants.Constants
@@ -74,7 +74,7 @@ class SystemContentFragment : BaseFragment(R.layout.fragment_system_content) {
         viewModel.parentTabLive.observeState<List<ParentTab>>(this, success = { data ->
             mAdapter.submitSinglePage(data)
         }, error = {
-            toast(it.message)
+            actionFailed(it)
             mAdapter.submitFailed()
         })
     }

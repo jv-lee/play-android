@@ -1,15 +1,12 @@
 package com.lee.playandroid.library.common.ui
 
 import androidx.lifecycle.LiveData
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.lee.library.adapter.base.BaseViewAdapter
 import com.lee.library.adapter.listener.LoadErrorListener
 import com.lee.library.adapter.page.submitData
 import com.lee.library.adapter.page.submitFailed
-import com.lee.library.base.BaseFragment
 import com.lee.library.base.BaseNavigationFragment
 import com.lee.library.extensions.binding
-import com.lee.library.extensions.toast
 import com.lee.library.mvvm.livedata.LoadStatus
 import com.lee.library.mvvm.ui.UiState
 import com.lee.library.mvvm.ui.observeState
@@ -17,6 +14,7 @@ import com.lee.playandroid.library.common.R
 import com.lee.playandroid.library.common.databinding.FragmentBaseListBinding
 import com.lee.playandroid.library.common.entity.Content
 import com.lee.playandroid.library.common.entity.PageData
+import com.lee.playandroid.library.common.extensions.actionFailed
 
 /**
  * @author jv.lee
@@ -79,7 +77,7 @@ abstract class BaseListFragment : BaseNavigationFragment(R.layout.fragment_base_
                 mAdapter.submitData(it, diff = true)
             },
             error = {
-                toast(it.message)
+                actionFailed(it)
                 binding.refreshLayout.isRefreshing = false
                 mAdapter.submitFailed()
             })
