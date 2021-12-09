@@ -37,7 +37,7 @@ data class PageData<T>(
         return pageCount
     }
 
-    override fun getDataSource(): List<T> {
+    override fun getDataSource(): MutableList<T> {
         return data
     }
 }

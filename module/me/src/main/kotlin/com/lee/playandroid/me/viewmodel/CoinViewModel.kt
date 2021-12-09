@@ -30,7 +30,7 @@ class CoinViewModel : CoroutineViewModel() {
             coinRecordLive.apply {
                 pageLaunch(status, { page ->
                     repository.api.getCoinRecordAsync(page).checkData().also { newData ->
-                        applyData(getValueData<PageData<CoinRecord>>()?.data, newData.data)
+                        applyData(getValueData<PageData<CoinRecord>>()?.data, newData)
                     }
                 }, {
                     cacheManager.getCache(CACHE_KEY_COIN_RECORD)

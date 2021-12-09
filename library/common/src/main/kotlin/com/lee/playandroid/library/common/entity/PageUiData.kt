@@ -12,7 +12,7 @@ data class PageUiData<T>(val page: Int, val pageTotal: Int, val data: MutableLis
         return pageTotal
     }
 
-    override fun getDataSource(): List<T> {
+    override fun getDataSource(): MutableList<T> {
         return data
     }
 
