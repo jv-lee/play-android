@@ -68,8 +68,8 @@ class SearchResultFragment : BaseFragment(R.layout.fragment_search_result) {
         viewModel.searchResultLive.observeState<PageData<Content>>(this, success = {
             mAdapter.submitData(it, diff = true)
         }, error = {
-            actionFailed(it)
             mAdapter.submitFailed()
+            actionFailed(it)
         })
     }
 }

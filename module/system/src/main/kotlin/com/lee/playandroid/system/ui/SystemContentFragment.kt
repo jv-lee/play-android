@@ -74,8 +74,8 @@ class SystemContentFragment : BaseFragment(R.layout.fragment_system_content) {
         viewModel.parentTabLive.observeState<List<ParentTab>>(this, success = { data ->
             mAdapter.submitSinglePage(data)
         }, error = {
-            actionFailed(it)
             mAdapter.submitFailed()
+            actionFailed(it)
         })
     }
 

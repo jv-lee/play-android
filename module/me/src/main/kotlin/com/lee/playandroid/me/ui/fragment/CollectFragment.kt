@@ -72,8 +72,8 @@ class CollectFragment : BaseFragment(R.layout.fragment_collect),
         viewModel.collectLive.observeState<PageData<Content>>(this, success = {
             mAdapter.submitData(it)
         }, error = {
-            actionFailed(it)
             mAdapter.submitFailed()
+            actionFailed(it)
         })
 
         viewModel.unCollectLive.observeState<String>(this, success = {

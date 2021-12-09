@@ -77,9 +77,9 @@ abstract class BaseListFragment : BaseNavigationFragment(R.layout.fragment_base_
                 mAdapter.submitData(it, diff = true)
             },
             error = {
-                actionFailed(it)
                 binding.refreshLayout.isRefreshing = false
                 mAdapter.submitFailed()
+                actionFailed(it)
             })
     }
 

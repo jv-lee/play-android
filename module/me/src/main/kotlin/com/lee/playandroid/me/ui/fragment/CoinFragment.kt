@@ -89,8 +89,8 @@ class CoinFragment : BaseFragment(R.layout.fragment_coin) {
         viewModel.coinRecordLive.observeState<PageData<CoinRecord>>(this, success = {
             mAdapter.submitData(it)
         }, error = {
-            actionFailed(it)
             mAdapter.submitFailed()
+            actionFailed(it)
         })
     }
 

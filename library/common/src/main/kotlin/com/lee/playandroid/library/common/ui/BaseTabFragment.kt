@@ -46,10 +46,10 @@ abstract class BaseTabFragment : BaseNavigationFragment(R.layout.fragment_base_t
             binding.statusLayout.setStatus(StatusLayout.STATUS_DATA)
             bindAdapter(it)
         }, error = {
-            actionFailed(it)
             adapter?.getFragments()?.isNullOrEmpty() ?: kotlin.run {
                 binding.statusLayout.setStatus(StatusLayout.STATUS_DATA_ERROR)
             }
+            actionFailed(it)
         }, loading = {
             binding.statusLayout.setStatus(StatusLayout.STATUS_LOADING)
         })
