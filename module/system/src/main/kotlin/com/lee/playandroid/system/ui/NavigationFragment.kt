@@ -31,7 +31,8 @@ import com.lee.playandroid.system.viewmodel.NavigationViewModel
  * @description  导航Fragment
  * @see SystemFragment 体系Fragment下第二个Tab
  */
-class NavigationFragment : BaseFragment(R.layout.fragment_navigation) {
+class NavigationFragment : BaseFragment(R.layout.fragment_navigation),
+    StatusLayout.OnReloadListener {
 
     private val viewModel by viewModels<NavigationViewModel>()
 
@@ -60,9 +61,7 @@ class NavigationFragment : BaseFragment(R.layout.fragment_navigation) {
         binding.rvContainer.adapter = mNavigationContentAdapter.proxy
 
         binding.statusLayout.setStatus(StatusLayout.STATUS_LOADING)
-        binding.statusLayout.setOnReloadListener {
-            viewModel.requestNavigationData()
-        }
+        binding.statusLayout.setOnReloadListener(this)
 
         navigationTabSelectListener()
     }
@@ -89,6 +88,10 @@ class NavigationFragment : BaseFragment(R.layout.fragment_navigation) {
 
     override fun lazyLoad() {
         super.lazyLoad()
+        viewModel.requestNavigationData()
+    }
+
+    override fun onReload() {
         viewModel.requestNavigationData()
     }
 

@@ -20,7 +20,8 @@ import com.lee.playandroid.library.common.extensions.actionFailed
  * @date 2021/11/9
  * @description 基础tabFragment类
  */
-abstract class BaseTabFragment : BaseNavigationFragment(R.layout.fragment_base_tab) {
+abstract class BaseTabFragment : BaseNavigationFragment(R.layout.fragment_base_tab),
+    StatusLayout.OnReloadListener {
 
     private val binding by binding(FragmentBaseTabBinding::bind)
 
@@ -36,9 +37,7 @@ abstract class BaseTabFragment : BaseNavigationFragment(R.layout.fragment_base_t
     open fun findBinding() = binding
 
     override fun bindView() {
-        binding.statusLayout.setOnReloadListener {
-            requestTabs()
-        }
+        binding.statusLayout.setOnReloadListener(this)
     }
 
     override fun bindData() {
@@ -51,8 +50,12 @@ abstract class BaseTabFragment : BaseNavigationFragment(R.layout.fragment_base_t
             }
             actionFailed(it)
         }, loading = {
-            binding.statusLayout.setStatus(StatusLayout.STATUS_LOADING)
+            binding.statusLayout.postLoading()
         })
+    }
+
+    override fun onReload() {
+        requestTabs()
     }
 
     override fun onDestroy() {
