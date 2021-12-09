@@ -7,4 +7,6 @@
     <!--    通用字符-->
     <string name="search_hint">点击搜索内容</string>
 
+    <string name="network_not_access">网络不可用，请检查网络是否连接。</string>
+
 </resources>
