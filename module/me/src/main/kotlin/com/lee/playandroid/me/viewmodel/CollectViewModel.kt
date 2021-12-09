@@ -22,7 +22,7 @@ import kotlinx.coroutines.flow.collect
 /**
  * @author jv.lee
  * @date 2021/12/2
- * @description
+ * @description 收藏页面ViewModel
  */
 class CollectViewModel : CoroutineViewModel() {
 

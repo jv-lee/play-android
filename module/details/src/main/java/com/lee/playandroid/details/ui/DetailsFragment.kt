@@ -10,6 +10,7 @@ import com.lee.library.widget.toolbar.TitleToolbar
 import com.lee.playandroid.details.R
 import com.lee.playandroid.details.databinding.FragmentDetailsBinding
 import com.lee.playandroid.details.viewmodel.DetailsViewModel
+import com.lee.playandroid.library.common.constants.ApiConstants
 import com.lee.playandroid.library.common.extensions.bindLifecycle
 
 /**
@@ -55,6 +56,7 @@ class DetailsFragment : BaseFragment(R.layout.fragment_details) {
     override fun bindView() {
         binding.toolbar.setTitleText(title)
         binding.toolbar.setClickListener(toolbarClickListener)
+        binding.toolbar.setMenuEnable(detailsUrl != ApiConstants.URI_COIN_HELP)
 
         web = AgentWeb.with(this)
             .setAgentWebParent(binding.frameContainer, FrameLayout.LayoutParams(-1, -1))
