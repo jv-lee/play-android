@@ -40,7 +40,7 @@ class CollectViewModel : CoroutineViewModel() {
             collectLive.apply {
                 pageLaunch(status, { page ->
                     repository.api.getCollectListAsync(page).checkData().also { newData ->
-                        applyData(getValueData<PageData<Content>>()?.data, newData)
+                        applyData(getValueData<PageData<Content>>()?.data, newData.data)
                     }
                 }, {
                     cacheManager.getCache(Constants.CACHE_KEY_COLLECT)

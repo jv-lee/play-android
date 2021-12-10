@@ -58,7 +58,7 @@ class HomeViewModel : CoroutineViewModel() {
                         textItemData.total,
                         dataList
                     ).also { newData ->
-                        applyData(getValueData<PageUiData<HomeContent>>()?.data, newData)
+                        applyData(getValueData<PageUiData<HomeContent>>()?.data, newData.data)
                     }
                 }, {
                     //缓存数据

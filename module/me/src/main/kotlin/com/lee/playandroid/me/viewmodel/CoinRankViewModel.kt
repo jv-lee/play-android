@@ -36,7 +36,7 @@ class CoinRankViewModel : CoroutineViewModel() {
                             Collections.swap(newData.data, 0, 1)
                         }
                         //内存存储每页数据至LiveData
-                        applyData(getValueData<PageData<CoinRank>>()?.data, newData)
+                        applyData(getValueData<PageData<CoinRank>>()?.data, newData.data)
                     }
                 }, {
                     cacheManager.getCache(CACHE_KEY_COIN_RANK)
