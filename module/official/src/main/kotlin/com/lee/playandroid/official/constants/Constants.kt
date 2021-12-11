@@ -6,6 +6,6 @@ package com.lee.playandroid.official.constants
  * @description
  */
 object Constants {
-    const val CACHE_KEY_OFFICIAL_TAB = "cache-key-official-tab"
-    const val CACHE_KEY_OFFICIAL_DATA = "cache-key-official-data"
+    const val CACHE_KEY_OFFICIAL_TAB = "cacheKey:official-tab"
+    const val CACHE_KEY_OFFICIAL_DATA = "cacheKey:official-data"
 }

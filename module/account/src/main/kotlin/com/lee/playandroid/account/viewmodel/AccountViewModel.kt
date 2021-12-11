@@ -2,7 +2,11 @@ package com.lee.playandroid.account.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.lee.library.cache.CacheManager
+import com.lee.library.extensions.getCache
+import com.lee.library.extensions.putCache
 import com.lee.library.mvvm.ui.UiState
+import com.lee.library.mvvm.ui.stateCacheFlow
 import com.lee.library.mvvm.ui.stateFlow
 import com.lee.library.mvvm.viewmodel.CoroutineViewModel
 import com.lee.library.tools.PreferencesTools
@@ -21,17 +25,23 @@ import kotlinx.coroutines.flow.collect
  */
 class AccountViewModel : CoroutineViewModel() {
 
+    private val cacheManager = CacheManager.getDefault()
+
     private val repository = ApiRepository()
 
     private val _accountLive = MutableLiveData<UiState>()
     val accountLive: LiveData<UiState> = _accountLive
 
     suspend fun requestAccountInfo() {
-        stateFlow {
-            repository.api.getAccountInfo().apply {
-                PreferencesTools.put(Constants.SP_KEY_IS_LOGIN, errorCode == 0)
-            }.checkData()
-        }.collect {
+        stateCacheFlow({
+            repository.api.getAccountInfo().checkData().apply {
+                PreferencesTools.put(Constants.SP_KEY_IS_LOGIN, true)
+            }
+        }, {
+            cacheManager.getCache(Constants.CACHE_KEY_ACCOUNT_DATA)
+        }, {
+            cacheManager.putCache(Constants.CACHE_KEY_ACCOUNT_DATA, it)
+        }).collect {
             _accountLive.postValue(it)
         }
     }

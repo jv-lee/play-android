@@ -43,7 +43,9 @@ class MeFragment : BaseFragment(R.layout.fragment_me), View.OnClickListener {
             }, default = {
                 setUnLoginAccountUi()
             }, error = {
-                setUnLoginAccountUi()
+                if (!accountService.isLogin()) {
+                    setUnLoginAccountUi()
+                }
             })
     }
 
