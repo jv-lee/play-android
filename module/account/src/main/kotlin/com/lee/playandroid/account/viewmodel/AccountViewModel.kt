@@ -7,7 +7,6 @@ import com.lee.library.extensions.getCache
 import com.lee.library.extensions.putCache
 import com.lee.library.mvvm.ui.UiState
 import com.lee.library.mvvm.ui.stateCacheFlow
-import com.lee.library.mvvm.ui.stateFlow
 import com.lee.library.mvvm.viewmodel.CoroutineViewModel
 import com.lee.library.tools.PreferencesTools
 import com.lee.library.utils.LogUtil
@@ -52,11 +51,7 @@ class AccountViewModel : CoroutineViewModel() {
     }
 
     fun getAccountInfo(): AccountData? {
-        val item = _accountLive.value
-        if (item is UiState.Success<*>) {
-            return item.data as? AccountData
-        }
-        return null
+        return CacheManager.getDefault().getCache(Constants.CACHE_KEY_ACCOUNT_DATA)
     }
 
     fun requestLogout(
