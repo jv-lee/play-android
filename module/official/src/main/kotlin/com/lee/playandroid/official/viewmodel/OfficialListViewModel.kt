@@ -34,7 +34,7 @@ class OfficialListViewModel(handle: SavedStateHandle) : CoroutineViewModel() {
             contentListLive.apply {
                 pageLaunch(status, { page ->
                     repository.api.getOfficialDataAsync(id, page).checkData().also { newData ->
-                        applyData(getValueData<PageData<Content>>()?.data, newData.data)
+                        applyData(getValueData<PageData<Content>>(), newData)
                     }
                 }, {
                     cacheManager.getCache(Constants.CACHE_KEY_OFFICIAL_DATA + id)

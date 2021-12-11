@@ -28,7 +28,7 @@ class ContentListViewModel(handle: SavedStateHandle) : CoroutineViewModel() {
             contentListLive.apply {
                 pageLaunch(status, { page ->
                     repository.api.getContentDataAsync(page, id).checkData().also { newData ->
-                        applyData(getValueData<PageData<Content>>()?.data, newData.data)
+                        applyData(getValueData<PageData<Content>>(), newData)
                     }
                 })
             }

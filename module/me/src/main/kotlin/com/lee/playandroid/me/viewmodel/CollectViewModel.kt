@@ -11,6 +11,7 @@ import com.lee.library.mvvm.ui.UiState
 import com.lee.library.mvvm.ui.UiStatePageLiveData
 import com.lee.library.mvvm.ui.stateFlow
 import com.lee.library.mvvm.viewmodel.CoroutineViewModel
+import com.lee.library.utils.LogUtil
 import com.lee.playandroid.library.common.entity.Content
 import com.lee.playandroid.library.common.entity.PageData
 import com.lee.playandroid.library.common.extensions.checkData
@@ -33,14 +34,15 @@ class CollectViewModel : CoroutineViewModel() {
     private val _unCollectLive = MutableLiveData<UiState>()
     val unCollectLive: LiveData<UiState> = _unCollectLive
 
-    val collectLive = UiStatePageLiveData(0)
+    val collectLive = UiStatePageLiveData()
 
     fun requestCollect(@LoadStatus status: Int) {
         launchIO {
             collectLive.apply {
                 pageLaunch(status, { page ->
                     repository.api.getCollectListAsync(page).checkData().also { newData ->
-                        applyData(getValueData<PageData<Content>>()?.data, newData.data)
+                        LogUtil.i("newDataPage:${newData.curPage}")
+                        applyData(getValueData<PageData<Content>>(), newData)
                     }
                 }, {
                     cacheManager.getCache(Constants.CACHE_KEY_COLLECT)

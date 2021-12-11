@@ -1,6 +1,7 @@
 package com.lee.library.mvvm.ui
 
 import androidx.lifecycle.LiveData
+import com.lee.library.adapter.page.PagingData
 import com.lee.library.mvvm.livedata.LoadStatus
 import com.lee.library.utils.LogUtil
 
@@ -9,8 +10,9 @@ import com.lee.library.utils.LogUtil
  * @date 2021/10/21
  * @description uiState 类型 LiveData分页处理
  */
-class UiStatePageLiveData(private val initPage: Int = 0) : LiveData<UiState>() {
-    @Volatile
+class UiStatePageLiveData(private val initPage: Int = 0, private val limitedPage: Int = 1) :
+    LiveData<UiState>() {
+
     private var page = initPage
     private var firstCache = true
 
@@ -53,8 +55,6 @@ class UiStatePageLiveData(private val initPage: Int = 0) : LiveData<UiState>() {
                 return
             }
 
-            LogUtil.i("loadPage->$page")
-
             //首次加载缓存数据
             if (firstCache) {
                 firstCache = false
@@ -87,11 +87,15 @@ class UiStatePageLiveData(private val initPage: Int = 0) : LiveData<UiState>() {
         }
     }
 
-    //分页数据合并
-    fun <T> applyData(oldData: MutableList<T>?, newData: MutableList<T>) {
-        oldData ?: return
-        if (oldData == newData) return
-        if (page != initPage) newData.addAll(0, oldData)
+    //新旧数据根据页码合并
+    fun <T> applyData(oldItem: PagingData<T>?, newItem: PagingData<T>) {
+        oldItem ?: return
+
+        if (oldItem.getDataSource() == newItem.getDataSource()) return
+
+        if (newItem.getPageNumber() != limitedPage) {
+            newItem.getDataSource().addAll(0, oldItem.getDataSource())
+        }
     }
 
 }
