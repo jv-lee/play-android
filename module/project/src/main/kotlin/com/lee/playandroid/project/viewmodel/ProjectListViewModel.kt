@@ -27,7 +27,7 @@ class ProjectListViewModel(handle: SavedStateHandle) : CoroutineViewModel() {
 
     private val repository = ApiRepository()
 
-    val contentListLive = UiStatePageLiveData(initPage = 1)
+    val contentListLive = UiStatePageLiveData(1)
 
     fun requestContentList(@LoadStatus status: Int) {
         launchIO {

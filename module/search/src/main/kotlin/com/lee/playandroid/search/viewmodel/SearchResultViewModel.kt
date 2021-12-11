@@ -21,7 +21,7 @@ class SearchResultViewModel(handle: SavedStateHandle) : CoroutineViewModel() {
 
     private val repository = ApiRepository()
 
-    val searchResultLive = UiStatePageLiveData()
+    val searchResultLive = UiStatePageLiveData(0)
 
     fun loadSearchResult(@LoadStatus status: Int) {
         launchIO {

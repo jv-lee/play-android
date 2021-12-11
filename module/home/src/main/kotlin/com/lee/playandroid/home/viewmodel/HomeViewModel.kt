@@ -24,7 +24,7 @@ class HomeViewModel : CoroutineViewModel() {
 
     private val repository = ApiRepository()
 
-    val contentListLive = UiStatePageLiveData()
+    val contentListLive = UiStatePageLiveData(0)
 
     /**
      * 获取contentList列表
