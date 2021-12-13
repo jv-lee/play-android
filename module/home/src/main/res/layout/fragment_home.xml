@@ -42,7 +42,7 @@
                 android:id="@+id/iv_search"
                 android:layout_width="36dp"
                 android:layout_height="36dp"
-                android:background="@drawable/shape_search_bg"
+                android:background="@drawable/shape_oval_theme_bg"
                 android:foreground="?attr/selectableItemBackgroundBorderless"
                 android:padding="10dp"
                 android:src="@drawable/vector_search"

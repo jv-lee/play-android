@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/square_fragment"
-        android:name="com.lee.playandroid.square.SquareFragment"
+        android:name="com.lee.playandroid.square.ui.fragment.SquareFragment"
         android:label="@string/nav_square"
         tools:layout="@layout/fragment_square" />
 

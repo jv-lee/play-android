@@ -6,11 +6,11 @@ import com.lee.library.extensions.putCache
 import com.lee.library.mvvm.livedata.LoadStatus
 import com.lee.library.mvvm.ui.UiStatePageLiveData
 import com.lee.library.mvvm.viewmodel.CoroutineViewModel
-import com.lee.playandroid.library.common.entity.PageUiData
 import com.lee.playandroid.home.bean.HomeContent
 import com.lee.playandroid.home.constants.Constants
 import com.lee.playandroid.home.helper.CategoryHelper
 import com.lee.playandroid.home.model.repository.ApiRepository
+import com.lee.playandroid.library.common.entity.PageUiData
 import com.lee.playandroid.library.common.extensions.checkData
 
 /**
@@ -73,7 +73,7 @@ class HomeViewModel : CoroutineViewModel() {
             textItemData.total,
             dataList
         ).also { newData ->
-            applyData(getValueData<PageUiData<HomeContent>>(), newData)
+            applyData(getValueData(), newData)
         }
     }
 
