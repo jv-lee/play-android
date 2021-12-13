@@ -24,8 +24,8 @@ class LoginRegisterViewModel : CoroutineViewModel() {
     fun requestLogin(userName: String, password: String) {
         launchIO {
             stateFlow {
-                repository.api.requestLogin(userName, password).checkData()
-                repository.api.getAccountInfo().checkData()
+                repository.api.postLoginAsync(userName, password).checkData()
+                repository.api.getAccountInfoAsync().checkData()
             }.collect {
                 _accountLive.postValue(it)
             }
@@ -35,8 +35,8 @@ class LoginRegisterViewModel : CoroutineViewModel() {
     fun requestRegister(userName: String, password: String, rePassword: String) {
         launchIO {
             stateFlow {
-                repository.api.requestRegister(userName, password, rePassword).checkData()
-                repository.api.getAccountInfo().checkData()
+                repository.api.postRegisterAsync(userName, password, rePassword).checkData()
+                repository.api.getAccountInfoAsync().checkData()
             }.collect {
                 _accountLive.postValue(it)
             }

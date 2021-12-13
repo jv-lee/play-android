@@ -35,7 +35,7 @@ interface ApiService {
      * @param id 文章id
      */
     @POST("lg/collect/{id}/json")
-    suspend fun requestCollectAsync(@Path("id") id: Long): Data<String>
+    suspend fun postCollectAsync(@Path("id") id: Long): Data<String>
 
     /**
      * 取消收藏文章
@@ -43,7 +43,7 @@ interface ApiService {
      */
     @POST("lg/uncollect/{id}/json")
     @FormUrlEncoded
-    suspend fun requestUnCollectAsync(
+    suspend fun postUnCollectAsync(
         @Path("id") id: Long,
         @Field("originId") originId: Long
     ): Data<String>

@@ -23,11 +23,11 @@ class SearchResultViewModel(handle: SavedStateHandle) : CoroutineViewModel() {
 
     val searchResultLive = UiStatePageLiveData(0)
 
-    fun loadSearchResult(@LoadStatus status: Int) {
+    fun requestSearch(@LoadStatus status: Int) {
         launchIO {
             searchResultLive.apply {
                 pageLaunch(status, { page ->
-                    repository.api.requestSearchByAsync(page, key).checkData().also { newData ->
+                    repository.api.postSearchAsync(page, key).checkData().also { newData ->
                         applyData(getValueData<PageData<Content>>(), newData)
                     }
                 })
@@ -36,7 +36,7 @@ class SearchResultViewModel(handle: SavedStateHandle) : CoroutineViewModel() {
     }
 
     init {
-        loadSearchResult(LoadStatus.INIT)
+        requestSearch(LoadStatus.INIT)
     }
 
 }

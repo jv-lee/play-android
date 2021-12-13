@@ -44,15 +44,15 @@ class SearchResultFragment : BaseFragment(R.layout.fragment_search_result) {
             initStatusView()
             pageLoading()
             setAutoLoadMoreListener {
-                viewModel.loadSearchResult(LoadStatus.LOAD_MORE)
+                viewModel.requestSearch(LoadStatus.LOAD_MORE)
             }
             setLoadErrorListener(object : LoadErrorListener {
                 override fun pageReload() {
-                    viewModel.loadSearchResult(LoadStatus.REFRESH)
+                    viewModel.requestSearch(LoadStatus.REFRESH)
                 }
 
                 override fun itemReload() {
-                    viewModel.loadSearchResult(LoadStatus.RELOAD)
+                    viewModel.requestSearch(LoadStatus.RELOAD)
                 }
             })
             setOnItemClickListener { _, entity, _ ->

@@ -16,24 +16,24 @@ import retrofit2.http.POST
 interface ApiService {
 
     @GET("user/lg/userinfo/json")
-    suspend fun getAccountInfo(): Data<AccountData>
+    suspend fun getAccountInfoAsync(): Data<AccountData>
 
     @POST("user/login")
     @FormUrlEncoded
-    suspend fun requestLogin(
+    suspend fun postLoginAsync(
         @Field("username") username: String,
         @Field("password") password: String
     ): Data<UserInfo>
 
     @POST("user/register")
     @FormUrlEncoded
-    suspend fun requestRegister(
+    suspend fun postRegisterAsync(
         @Field("username") username: String,
         @Field("password") password: String,
         @Field("repassword") rePassword: String
     ): Data<UserInfo>
 
     @GET("user/logout/json")
-    suspend fun requestLogout(): Data<Any>
+    suspend fun getLogoutAsync(): Data<Any>
 
 }

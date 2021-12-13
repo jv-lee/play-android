@@ -17,7 +17,7 @@ interface ApiService {
 
     @POST("article/query/{page}/json")
     @FormUrlEncoded
-    suspend fun requestSearchByAsync(
+    suspend fun postSearchAsync(
         @Path("page") page: Int,
         @Field("k") key: String
     ): Data<PageData<Content>>

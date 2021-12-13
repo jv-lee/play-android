@@ -33,7 +33,7 @@ class AccountViewModel : CoroutineViewModel() {
 
     suspend fun requestAccountInfo() {
         stateCacheFlow({
-            repository.api.getAccountInfo().checkData().apply {
+            repository.api.getAccountInfoAsync().checkData().apply {
                 PreferencesTools.put(Constants.SP_KEY_IS_LOGIN, true)
             }
         }, {
@@ -45,15 +45,6 @@ class AccountViewModel : CoroutineViewModel() {
         }
     }
 
-    fun updateAccountInfo(accountData: AccountData) {
-        PreferencesTools.put(Constants.SP_KEY_IS_LOGIN, true)
-        _accountLive.postValue(UiState.Success(accountData))
-    }
-
-    fun getAccountInfo(): AccountData? {
-        return CacheManager.getDefault().getCache(Constants.CACHE_KEY_ACCOUNT_DATA)
-    }
-
     fun requestLogout(
         showLoading: () -> Unit = {},
         hideLoading: () -> Unit = {},
@@ -61,7 +52,7 @@ class AccountViewModel : CoroutineViewModel() {
     ) {
         launchMain {
             showLoading()
-            val response = withIO { repository.api.requestLogout() }
+            val response = withIO { repository.api.getLogoutAsync() }
             if (response.errorCode == 0) {
                 _accountLive.postValue(UiState.Default)
                 PreferencesTools.put(Constants.SP_KEY_IS_LOGIN, false)
@@ -70,6 +61,15 @@ class AccountViewModel : CoroutineViewModel() {
             }
             hideLoading()
         }
+    }
+
+    fun updateAccountInfo(accountData: AccountData) {
+        PreferencesTools.put(Constants.SP_KEY_IS_LOGIN, true)
+        _accountLive.postValue(UiState.Success(accountData))
+    }
+
+    fun getAccountInfo(): AccountData? {
+        return CacheManager.getDefault().getCache(Constants.CACHE_KEY_ACCOUNT_DATA)
     }
 
     init {

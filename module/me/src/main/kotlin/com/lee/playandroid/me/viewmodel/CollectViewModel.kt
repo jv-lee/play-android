@@ -56,7 +56,7 @@ class CollectViewModel : CoroutineViewModel() {
     fun requestUnCollect(id: Long, originId: Long) {
         launchIO {
             stateFlow {
-                val response = repository.api.requestUnCollectAsync(id, originId)
+                val response = repository.api.postUnCollectAsync(id, originId)
                 if (response.errorCode == 0) {
                     BaseApplication.getContext().getString(R.string.collect_remove_item_success)
                 } else {

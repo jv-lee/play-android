@@ -14,7 +14,7 @@ import com.lee.playandroid.me.model.repository.ApiRepository
 class MeServiceImpl : MeService {
 
     override suspend fun requestCollectAsync(id: Long): Data<String> {
-        return ApiRepository().api.requestCollectAsync(id)
+        return ApiRepository().api.postCollectAsync(id)
     }
 
 }

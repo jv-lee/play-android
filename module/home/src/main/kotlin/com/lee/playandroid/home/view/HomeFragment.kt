@@ -48,7 +48,7 @@ class HomeFragment : BaseFragment(R.layout.fragment_home) {
 
         binding.refreshView.setOnRefreshListener {
             mAdapter.openLoadMore()
-            viewModel.loadListData(LoadStatus.REFRESH)
+            viewModel.requestHomeData(LoadStatus.REFRESH)
         }
 
         binding.rvContainer.addSaveStateViewType(BannerView::class.java)
@@ -58,15 +58,15 @@ class HomeFragment : BaseFragment(R.layout.fragment_home) {
             initStatusView()
             pageLoading()
             setAutoLoadMoreListener {
-                viewModel.loadListData(LoadStatus.LOAD_MORE)
+                viewModel.requestHomeData(LoadStatus.LOAD_MORE)
             }
             setLoadErrorListener(object : LoadErrorListener {
                 override fun pageReload() {
-                    viewModel.loadListData(LoadStatus.REFRESH)
+                    viewModel.requestHomeData(LoadStatus.REFRESH)
                 }
 
                 override fun itemReload() {
-                    viewModel.loadListData(LoadStatus.RELOAD)
+                    viewModel.requestHomeData(LoadStatus.RELOAD)
                 }
             })
             setOnItemClickListener { _, entity, _ ->

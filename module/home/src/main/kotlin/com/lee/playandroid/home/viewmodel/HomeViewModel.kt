@@ -29,7 +29,7 @@ class HomeViewModel : CoroutineViewModel() {
     /**
      * 获取contentList列表
      */
-    fun loadListData(@LoadStatus status: Int) {
+    fun requestHomeData(@LoadStatus status: Int) {
         launchIO {
             contentListLive.apply {
                 pageLaunch(status, { page: Int ->
@@ -78,7 +78,7 @@ class HomeViewModel : CoroutineViewModel() {
     }
 
     init {
-        loadListData(LoadStatus.INIT)
+        requestHomeData(LoadStatus.INIT)
     }
 
 }
