@@ -6,64 +6,47 @@
     android:layout_height="wrap_content"
     android:padding="@dimen/large_offset">
 
-    <TextView
-        android:id="@+id/tv_rank_number"
+    <ImageView
+        android:id="@+id/iv_rank_icon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/colorThemeAccent"
-        android:textSize="@dimen/font_size_large"
-        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="1" />
+        tools:src="@drawable/vector_rank_no1" />
 
     <TextView
         android:id="@+id/tv_username"
-        android:layout_width="126dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/large_offset"
+        android:layout_marginTop="@dimen/medium_offset"
         android:ellipsize="end"
         android:gravity="center"
         android:maxLines="1"
+        android:paddingStart="@dimen/medium_offset"
+        android:paddingEnd="@dimen/medium_offset"
         android:textColor="@color/colorThemeAccent"
         android:textSize="@dimen/font_size_medium"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_rank_number"
+        app:layout_constraintTop_toBottomOf="@id/iv_rank_icon"
         tools:text="userName" />
-
-    <TextView
-        android:id="@+id/tv_user_level"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:drawableStart="@drawable/vector_user_level"
-        android:ellipsize="end"
-        android:gravity="center"
-        android:maxLines="1"
-        android:textColor="@color/colorThemeFocus"
-        android:textSize="@dimen/font_size_medium"
-        android:textStyle="bold"
-        android:visibility="gone"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_username"
-        tools:text="12" />
 
     <TextView
         android:id="@+id/tv_user_coin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/medium_offset"
         android:layout_marginEnd="@dimen/medium_offset"
         android:drawableStart="@drawable/vector_user_coin"
         android:ellipsize="end"
-        android:gravity="center_vertical"
+        android:gravity="center"
         android:maxLines="1"
         android:textColor="@color/colorThemePrimary"
         android:textSize="@dimen/font_size_small"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_user_level"
+        app:layout_constraintTop_toBottomOf="@id/tv_username"
         tools:text="5666666" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -8,6 +8,7 @@ import com.lee.library.adapter.binding.ViewBindingAdapter
 import com.lee.library.adapter.binding.ViewBindingHolder
 import com.lee.library.adapter.item.ViewBindingItem
 import com.lee.playandroid.library.common.entity.CoinRank
+import com.lee.playandroid.me.R
 import com.lee.playandroid.me.databinding.ItemCoinRankBinding
 import com.lee.playandroid.me.databinding.ItemCoinRankTopBinding
 
@@ -55,10 +56,17 @@ class CoinRankAdapter(context: Context, data: List<CoinRank>) :
 
         override fun convert(holder: ViewBindingHolder, entity: CoinRank, position: Int) {
             holder.getViewBinding<ItemCoinRankTopBinding>().apply {
-                tvRankNumber.text = entity.rank
                 tvUsername.text = entity.username
                 tvUserCoin.text = entity.coinCount.toString()
-                tvUserLevel.text = entity.level.toString()
+
+                ivRankIcon.setImageResource(
+                    when (entity.rank) {
+                        "1" -> R.drawable.vector_rank_no1
+                        "2" -> R.drawable.vector_rank_no2
+                        "3" -> R.drawable.vector_rank_no3
+                        else -> 0
+                    }
+                )
             }
         }
 
