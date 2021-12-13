@@ -32,34 +32,8 @@ class HomeViewModel : CoroutineViewModel() {
     fun loadListData(@LoadStatus status: Int) {
         launchIO {
             contentListLive.apply {
-
                 pageLaunch(status, { page: Int ->
-                    val dataList = mutableListOf<HomeContent>()
-
-                    //首页添加header数据
-                    if (page == getInitPage()) {
-                        val banner = repository.api.getBannerDataAsync().checkData()
-                        dataList.add(HomeContent(bannerList = banner))
-
-                        val category = CategoryHelper.getHomeCategory()
-                        dataList.add(HomeContent(categoryList = category))
-                    }
-
-                    //获取网络item数据
-                    val textItemData = repository.api.getContentDataAsync(page).checkData().apply {
-                        data.forEach {
-                            dataList.add(HomeContent(content = it))
-                        }
-                    }
-
-                    //构建分页ui数据
-                    PageUiData(
-                        textItemData.curPage,
-                        textItemData.total,
-                        dataList
-                    ).also { newData ->
-                        applyData(getValueData<PageUiData<HomeContent>>(), newData)
-                    }
+                    buildHomePageData(page)
                 }, {
                     //缓存数据
                     cacheManager.getCache(Constants.CACHE_KEY_HOME_CONTENT)
@@ -67,8 +41,39 @@ class HomeViewModel : CoroutineViewModel() {
                     //存储缓存数据
                     cacheManager.putCache(Constants.CACHE_KEY_HOME_CONTENT, it)
                 })
-
             }
+        }
+    }
+
+    /**
+     * 根据页码构建首页数据
+     */
+    private suspend fun UiStatePageLiveData.buildHomePageData(page: Int): PageUiData<HomeContent> {
+        val dataList = mutableListOf<HomeContent>()
+
+        //首页添加header数据
+        if (page == getInitPage()) {
+            val banner = repository.api.getBannerDataAsync().checkData()
+            dataList.add(HomeContent(bannerList = banner))
+
+            val category = CategoryHelper.getHomeCategory()
+            dataList.add(HomeContent(categoryList = category))
+        }
+
+        //获取网络item数据
+        val textItemData = repository.api.getContentDataAsync(page).checkData().apply {
+            data.forEach {
+                dataList.add(HomeContent(content = it))
+            }
+        }
+
+        //构建分页ui数据
+        return PageUiData(
+            textItemData.curPage,
+            textItemData.total,
+            dataList
+        ).also { newData ->
+            applyData(getValueData<PageUiData<HomeContent>>(), newData)
         }
     }
 
