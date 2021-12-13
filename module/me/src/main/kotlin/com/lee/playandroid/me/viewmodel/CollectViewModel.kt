@@ -11,9 +11,6 @@ import com.lee.library.mvvm.ui.UiState
 import com.lee.library.mvvm.ui.UiStatePageLiveData
 import com.lee.library.mvvm.ui.stateFlow
 import com.lee.library.mvvm.viewmodel.CoroutineViewModel
-import com.lee.library.utils.LogUtil
-import com.lee.playandroid.library.common.entity.Content
-import com.lee.playandroid.library.common.entity.PageData
 import com.lee.playandroid.library.common.extensions.checkData
 import com.lee.playandroid.me.R
 import com.lee.playandroid.me.constants.Constants
@@ -41,8 +38,7 @@ class CollectViewModel : CoroutineViewModel() {
             collectLive.apply {
                 pageLaunch(status, { page ->
                     repository.api.getCollectListAsync(page).checkData().also { newData ->
-                        LogUtil.i("newDataPage:${newData.curPage}")
-                        applyData(getValueData<PageData<Content>>(), newData)
+                        applyData(getValueData(), newData)
                     }
                 }, {
                     cacheManager.getCache(Constants.CACHE_KEY_COLLECT)

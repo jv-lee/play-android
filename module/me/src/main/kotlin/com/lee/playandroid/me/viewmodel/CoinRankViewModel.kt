@@ -6,8 +6,6 @@ import com.lee.library.extensions.putCache
 import com.lee.library.mvvm.livedata.LoadStatus
 import com.lee.library.mvvm.ui.UiStatePageLiveData
 import com.lee.library.mvvm.viewmodel.CoroutineViewModel
-import com.lee.playandroid.library.common.entity.CoinRank
-import com.lee.playandroid.library.common.entity.PageData
 import com.lee.playandroid.library.common.extensions.checkData
 import com.lee.playandroid.me.constants.Constants.CACHE_KEY_COIN_RANK
 import com.lee.playandroid.me.model.repository.ApiRepository
@@ -36,7 +34,7 @@ class CoinRankViewModel : CoroutineViewModel() {
                             Collections.swap(newData.data, 0, 1)
                         }
                         //内存存储每页数据至LiveData
-                        applyData(getValueData<PageData<CoinRank>>(), newData)
+                        applyData(getValueData(), newData)
                     }
                 }, {
                     cacheManager.getCache(CACHE_KEY_COIN_RANK)

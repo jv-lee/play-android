@@ -4,8 +4,6 @@ import androidx.lifecycle.SavedStateHandle
 import com.lee.library.mvvm.livedata.LoadStatus
 import com.lee.library.mvvm.ui.UiStatePageLiveData
 import com.lee.library.mvvm.viewmodel.CoroutineViewModel
-import com.lee.playandroid.library.common.entity.Content
-import com.lee.playandroid.library.common.entity.PageData
 import com.lee.playandroid.library.common.extensions.checkData
 import com.lee.playandroid.search.constants.Constants
 import com.lee.playandroid.search.model.repository.ApiRepository
@@ -28,7 +26,7 @@ class SearchResultViewModel(handle: SavedStateHandle) : CoroutineViewModel() {
             searchResultLive.apply {
                 pageLaunch(status, { page ->
                     repository.api.postSearchAsync(page, key).checkData().also { newData ->
-                        applyData(getValueData<PageData<Content>>(), newData)
+                        applyData(getValueData(), newData)
                     }
                 })
             }
