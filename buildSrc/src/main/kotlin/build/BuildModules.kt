@@ -17,10 +17,11 @@ object BuildModules {
 
     object Module {
         const val home = ":module:home"
-        const val official = ":module:official" //Official Accounts
+        const val square = ":module:square"
         const val system = ":module:system"
-        const val project = ":module:project"
         const val me = ":module:me"
+        const val official = ":module:official" //Official Accounts
+        const val project = ":module:project"
         const val details = ":module:details"
         const val search = ":module:search"
         const val account = ":module:account"

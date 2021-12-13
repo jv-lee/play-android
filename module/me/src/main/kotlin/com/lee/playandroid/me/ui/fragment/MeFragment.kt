@@ -17,7 +17,7 @@ import com.lee.playandroid.router.navigateLogin
 /**
  * @author jv.lee
  * @date 2021/11/2
- * @description 首页tab 我的页面
+ * @description 首页第四个Tab 我的页面
  */
 class MeFragment : BaseFragment(R.layout.fragment_me), View.OnClickListener {
 

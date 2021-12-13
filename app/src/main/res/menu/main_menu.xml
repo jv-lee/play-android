@@ -6,6 +6,11 @@
         android:title="@string/nav_home" />
 
     <item
+        android:id="@+id/square_graph"
+        android:icon="@drawable/vector_square"
+        android:title="@string/nav_square" />
+
+    <item
         android:id="@+id/system_graph"
         android:icon="@drawable/vector_system"
         android:title="@string/nav_system" />

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/square_graph"
+    app:startDestination="@id/square_fragment">
+
+    <fragment
+        android:id="@+id/square_fragment"
+        android:name="com.lee.playandroid.square.SquareFragment"
+        android:label="@string/nav_square"
+        tools:layout="@layout/fragment_square" />
+
+</navigation>

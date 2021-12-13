@@ -1,6 +1,7 @@
 <resources>
     <!--    首页导航-->
     <string name="nav_home">首页</string>
+    <string name="nav_square">广场</string>
     <string name="nav_system">体系</string>
     <string name="nav_me">我的</string>
 

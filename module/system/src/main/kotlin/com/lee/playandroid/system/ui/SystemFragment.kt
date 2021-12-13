@@ -13,7 +13,7 @@ import com.lee.playandroid.system.viewmodel.SystemViewModel
 /**
  * @author jv.lee
  * @date 2021/11/2
- * @description 首页第二个Tab 体系Fragment
+ * @description 首页第三个Tab 体系页面
  */
 class SystemFragment : BaseFragment(R.layout.fragment_system) {
 

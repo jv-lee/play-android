@@ -95,6 +95,7 @@ class MainFragment : BaseFragment(R.layout.fragment_main),
                     }
                     when (destination.label) {
                         getString(R.string.nav_home),
+                        getString(R.string.nav_square),
                         getString(R.string.nav_system),
                         getString(R.string.nav_me) -> {
                             if (view.visibility == View.GONE && view.animation == null) {

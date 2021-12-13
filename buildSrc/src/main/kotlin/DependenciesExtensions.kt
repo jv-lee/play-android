@@ -30,10 +30,11 @@ fun DependencyHandlerScope.commonProcessors() {
 //各业务组建基础依赖
 fun DependencyHandlerScope.commonModules() {
     implementation(project(BuildModules.Module.home))
-    implementation(project(BuildModules.Module.official))
+    implementation(project(BuildModules.Module.square))
     implementation(project(BuildModules.Module.system))
-    implementation(project(BuildModules.Module.project))
     implementation(project(BuildModules.Module.me))
+    implementation(project(BuildModules.Module.official))
+    implementation(project(BuildModules.Module.project))
     implementation(project(BuildModules.Module.details))
     implementation(project(BuildModules.Module.search))
     implementation(project(BuildModules.Module.account))

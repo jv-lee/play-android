@@ -5,6 +5,7 @@
     app:startDestination="@id/home_graph">
 
     <include app:graph="@navigation/home_navigation" />
+    <include app:graph="@navigation/square_navigation" />
     <include app:graph="@navigation/system_navigation" />
     <include app:graph="@navigation/me_navigation" />
 
