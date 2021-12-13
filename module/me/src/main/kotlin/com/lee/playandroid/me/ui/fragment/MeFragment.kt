@@ -13,6 +13,7 @@ import com.lee.playandroid.library.service.hepler.ModuleService
 import com.lee.playandroid.me.R
 import com.lee.playandroid.me.databinding.FragmentMeBinding
 import com.lee.playandroid.router.navigateLogin
+import com.lee.playandroid.router.navigateMyShare
 
 /**
  * @author jv.lee
@@ -64,7 +65,7 @@ class MeFragment : BaseFragment(R.layout.fragment_me), View.OnClickListener {
                 binding.lineCollect ->
                     findNavController().navigate(R.id.action_me_fragment_to_collect_fragment)
                 binding.lineShare ->
-                    findNavController().navigate(R.id.action_me_fragment_to_share_fragment)
+                    findNavController().navigateMyShare()
                 binding.lineTodo ->
                     findNavController().navigate(R.id.action_me_fragment_to_todo_fragment)
             }

@@ -9,6 +9,39 @@
         android:id="@+id/square_fragment"
         android:name="com.lee.playandroid.square.ui.fragment.SquareFragment"
         android:label="@string/nav_square"
-        tools:layout="@layout/fragment_square" />
+        tools:layout="@layout/fragment_square">
+        <action
+            android:id="@+id/action_square_fragment_to_create_share_fragment"
+            app:destination="@id/create_share_fragment"
+            app:enterAnim="@anim/zoom_in"
+            app:exitAnim="@anim/zoom_exit"
+            app:popEnterAnim="@anim/zoom_out"
+            app:popExitAnim="@anim/alpha_default_hide" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/create_share_fragment"
+        android:name="com.lee.playandroid.square.ui.fragment.CreateShareFragment"
+        android:label="createShare"
+        tools:layout="@layout/fragment_create_share">
+        <deepLink app:uri="play://createShare" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/my_share_fragment"
+        android:name="com.lee.playandroid.square.ui.fragment.MyShareFragment"
+        android:label="myShare"
+        tools:layout="@layout/fragment_my_share">
+        <deepLink app:uri="play://myShare" />
+        <action
+            android:id="@+id/action_my_share_fragment_to_create_share_fragment"
+            app:destination="@id/create_share_fragment"
+            app:enterAnim="@anim/zoom_in"
+            app:exitAnim="@anim/zoom_exit"
+            app:popEnterAnim="@anim/zoom_out"
+            app:popExitAnim="@anim/alpha_default_hide" />
+    </fragment>
+
 
 </navigation>

@@ -40,7 +40,7 @@ class SquareFragment : BaseFragment(R.layout.fragment_square) {
         delayBackEvent()
 
         binding.ivCreate.setOnClickListener {
-
+            findNavController().navigate(R.id.action_square_fragment_to_create_share_fragment)
         }
 
         binding.refreshView.setOnRefreshListener {
