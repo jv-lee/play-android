@@ -7,16 +7,16 @@
 
     <item
         android:id="@+id/square_graph"
-        android:icon="@drawable/vector_square"
+        android:icon="@drawable/square_selector"
         android:title="@string/nav_square" />
 
     <item
         android:id="@+id/system_graph"
-        android:icon="@drawable/vector_system"
+        android:icon="@drawable/system_selector"
         android:title="@string/nav_system" />
 
     <item
         android:id="@+id/me_graph"
-        android:icon="@drawable/vector_me"
+        android:icon="@drawable/me_selector"
         android:title="@string/nav_me" />
 </menu>
