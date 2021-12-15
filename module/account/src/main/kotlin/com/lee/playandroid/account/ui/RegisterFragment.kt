@@ -42,14 +42,17 @@ class RegisterFragment : BaseFragment(R.layout.fragment_register), View.OnClickL
     private val loadingDialog by lazy { LoadingDialog(requireContext()) }
 
     override fun bindView() {
-        //监听键盘弹起
+        // 设置点击空白区域隐藏软键盘
+        KeyboardTools.parentTouchHideSoftInput(requireActivity(),binding.root)
+
+        // 监听键盘弹起
         binding.root.keyboardObserver { diff ->
             if (isResumed) {
                 binding.root.updatePadding(bottom = diff)
             }
         }
 
-        //设置监听
+        // 设置监听
         binding.root.setOnClickListener(this)
         binding.tvLogin.setOnClickListener(this)
         binding.tvRegister.setOnClickListener(this)
@@ -59,7 +62,7 @@ class RegisterFragment : BaseFragment(R.layout.fragment_register), View.OnClickL
     }
 
     override fun bindData() {
-        //监听注册成功后获取的账户信息
+        // 监听注册成功后获取的账户信息
         viewModel.accountLive.observeState<AccountData>(viewLifecycleOwner, success = {
             dismiss(loadingDialog)
             PreferencesTools.put(Constants.SP_KEY_SAVE_INPUT_USERNAME, it.userInfo.username)
@@ -102,7 +105,7 @@ class RegisterFragment : BaseFragment(R.layout.fragment_register), View.OnClickL
      * 判断当前软键盘是否弹起，优先关闭软键盘
      */
     private fun goLogin() {
-        if (binding.root.paddingBottom > 200) {
+        if (KeyboardTools.keyboardIsShow(binding.root)) {
             KeyboardTools.hideSoftInput(requireActivity())
         } else {
             findNavController().popBackStack()

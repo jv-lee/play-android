@@ -42,18 +42,20 @@ class LoginFragment : BaseFragment(R.layout.fragment_login), View.OnClickListene
     private val loadingDialog by lazy { LoadingDialog(requireContext()) }
 
     override fun bindView() {
-        //设置登陆过的账户名
+        // 设置点击空白区域隐藏软键盘
+        KeyboardTools.parentTouchHideSoftInput(requireActivity(),binding.root)
+
+        // 设置登陆过的账户名
         binding.editUsername.setText(PreferencesTools.get(SP_KEY_SAVE_INPUT_USERNAME, ""))
 
-        //监听键盘弹起
+        // 监听键盘弹起
         binding.root.keyboardObserver { diff ->
             if (isResumed) {
                 binding.root.updatePadding(bottom = diff)
             }
         }
 
-        //设置监听
-        binding.root.setOnClickListener(this)
+        // 设置监听
         binding.tvLogin.setOnClickListener(this)
         binding.tvRegister.setOnClickListener(this)
         binding.editUsername.addTextChangedListener(this)
@@ -61,12 +63,12 @@ class LoginFragment : BaseFragment(R.layout.fragment_login), View.OnClickListene
     }
 
     override fun bindData() {
-        //监听登陆页面回调时是否已经成功注册 注册成功后直接退出至前置页面
+        // 监听登陆页面回调时是否已经成功注册 注册成功后直接退出至前置页面
         setFragmentResultListener(REQUEST_KEY_LOGIN) { _: String, _: Bundle ->
             findNavController().popBackStack()
         }
 
-        //监听登陆成功后获取的账户信息
+        // 监听登陆成功后获取的账户信息
         viewModel.accountLive.observeState<AccountData>(viewLifecycleOwner, success = {
             dismiss(loadingDialog)
             PreferencesTools.put(SP_KEY_SAVE_INPUT_USERNAME, it.userInfo.username)
@@ -86,9 +88,6 @@ class LoginFragment : BaseFragment(R.layout.fragment_login), View.OnClickListene
             binding.tvLogin -> {
                 requestLogin()
             }
-            binding.root -> {
-                KeyboardTools.hideSoftInput(requireActivity())
-            }
         }
     }
 
@@ -107,7 +106,7 @@ class LoginFragment : BaseFragment(R.layout.fragment_login), View.OnClickListene
      * 判断当前软键盘是否弹起，优先关闭软键盘
      */
     private fun goRegister() {
-        if (binding.root.paddingBottom > 200) {
+        if (KeyboardTools.keyboardIsShow(binding.root)) {
             KeyboardTools.hideSoftInput(requireActivity())
         } else {
             findNavController().navigate(R.id.action_login_fragment_to_register_fragment)
