@@ -3,21 +3,81 @@ package com.lee.playandroid.library.common.tools
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
+import android.view.animation.AnimationUtils
 import androidx.annotation.IdRes
 import androidx.core.view.forEach
+import androidx.fragment.app.FragmentContainerView
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavOptions
+import androidx.navigation.findNavController
+import com.lee.library.extensions.endListener
 import com.lee.library.widget.nav.BottomNavView
+import com.lee.playandroid.library.common.R
 import java.lang.ref.WeakReference
 
 /**
  * @author jv.lee
  * @date 2021/9/10
- * @description 取消navigation 切换动画效果
+ * @description Navigation扩展方法及动画修改
  */
+fun BottomNavView.bindNavigationAction(
+    container: FragmentContainerView,
+    labels: List<String>,
+    itemPositionListener: (MenuItem, Int) -> Unit
+) {
+    val navigationInAnim =
+        AnimationUtils.loadAnimation(context, R.anim.slide_bottom_in).apply {
+            endListener {
+                visibility = View.VISIBLE
+                clearAnimation()
+            }
+        }
+
+    val navigationOutAnim =
+        AnimationUtils.loadAnimation(context, R.anim.slide_bottom_out).apply {
+            endListener {
+                visibility = View.GONE
+                clearAnimation()
+            }
+        }
+
+    post {
+        val controller = container.findNavController()
+        setupWithNavController2(controller, true) { menuItem, position ->
+            itemPositionListener(menuItem, position)
+        }
+
+        val weakReference = WeakReference(this)
+        controller.addOnDestinationChangedListener(object :
+            NavController.OnDestinationChangedListener {
+            override fun onDestinationChanged(
+                controller: NavController,
+                destination: NavDestination,
+                arguments: Bundle?
+            ) {
+                val view = weakReference.get()
+                if (view == null) {
+                    controller.removeOnDestinationChangedListener(this)
+                    return
+                }
+                if (labels.contains(destination.label)) {
+                    if (view.visibility == View.GONE && view.animation == null) {
+                        view.startAnimation(navigationInAnim)
+                    }
+                } else {
+                    if (view.visibility == View.VISIBLE && view.animation == null) {
+                        view.startAnimation(navigationOutAnim)
+                    }
+                }
+            }
+        })
+    }
+}
+
 fun BottomNavView.setupWithNavController2(
     navController: NavController,
     isNavigationAnimation: Boolean = false,
