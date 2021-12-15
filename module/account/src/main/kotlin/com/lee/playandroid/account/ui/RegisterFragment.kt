@@ -43,13 +43,14 @@ class RegisterFragment : BaseFragment(R.layout.fragment_register), View.OnClickL
 
     override fun bindView() {
         //监听键盘弹起
-        binding.rootLayout.keyboardObserver { diff ->
+        binding.root.keyboardObserver { diff ->
             if (isResumed) {
-                binding.rootLayout.updatePadding(bottom = diff)
+                binding.root.updatePadding(bottom = diff)
             }
         }
 
         //设置监听
+        binding.root.setOnClickListener(this)
         binding.tvLogin.setOnClickListener(this)
         binding.tvRegister.setOnClickListener(this)
         binding.editUsername.addTextChangedListener(this)
@@ -79,6 +80,9 @@ class RegisterFragment : BaseFragment(R.layout.fragment_register), View.OnClickL
             binding.tvLogin -> {
                 goLogin()
             }
+            binding.root -> {
+                KeyboardTools.hideSoftInput(requireActivity())
+            }
         }
     }
 
@@ -98,7 +102,7 @@ class RegisterFragment : BaseFragment(R.layout.fragment_register), View.OnClickL
      * 判断当前软键盘是否弹起，优先关闭软键盘
      */
     private fun goLogin() {
-        if (binding.rootLayout.paddingBottom > 10) {
+        if (binding.root.paddingBottom > 200) {
             KeyboardTools.hideSoftInput(requireActivity())
         } else {
             findNavController().popBackStack()
