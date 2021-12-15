@@ -7,8 +7,8 @@
 
     <fragment
         android:id="@+id/root"
-        android:name="com.lee.playandroid.RootFragment"
-        tools:layout="@layout/fragment_root" />
+        android:name="com.lee.playandroid.SingleMainFragment"
+        tools:layout="@layout/fragment_single_main" />
 
     <include app:graph="@navigation/home_navigation" />
     <include app:graph="@navigation/system_navigation" />

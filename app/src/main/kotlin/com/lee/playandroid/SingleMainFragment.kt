@@ -4,7 +4,7 @@ import androidx.fragment.app.Fragment
 import com.lee.library.adapter.core.UiPager2Adapter
 import com.lee.library.base.BaseFragment
 import com.lee.library.extensions.binding
-import com.lee.playandroid.databinding.FragmentRootBinding
+import com.lee.playandroid.databinding.FragmentSingleMainBinding
 import com.lee.playandroid.home.view.HomeFragment
 import com.lee.playandroid.me.ui.fragment.MeFragment
 import com.lee.playandroid.system.ui.SystemFragment
@@ -14,10 +14,10 @@ import com.lee.playandroid.system.ui.SystemFragment
  * @date 2021/11/24
  * @description
  */
-@Deprecated("")
-class RootFragment : BaseFragment(R.layout.fragment_root) {
+@Deprecated("放弃使用单Navigation回退栈模式")
+class SingleMainFragment : BaseFragment(R.layout.fragment_single_main) {
 
-    private val binding by binding(FragmentRootBinding::bind)
+    private val binding by binding(FragmentSingleMainBinding::bind)
 
     private val fragments = arrayListOf<Fragment>(
         HomeFragment(),
