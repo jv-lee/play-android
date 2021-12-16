@@ -3,6 +3,7 @@ package com.lee.playandroid.account.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.lee.library.cache.CacheManager
+import com.lee.library.extensions.clearCache
 import com.lee.library.extensions.getCache
 import com.lee.library.extensions.putCache
 import com.lee.library.mvvm.ui.UiState
@@ -55,7 +56,7 @@ class AccountViewModel : CoroutineViewModel() {
             val response = withIO { repository.api.getLogoutAsync() }
             if (response.errorCode == 0) {
                 PreferencesTools.put(Constants.SP_KEY_IS_LOGIN, false)
-                cacheManager.putCache(Constants.CACHE_KEY_ACCOUNT_DATA, "")
+                cacheManager.clearCache(Constants.CACHE_KEY_ACCOUNT_DATA)
                 _accountLive.postValue(UiState.Default)
             } else {
                 failedCall(response.errorMsg)
