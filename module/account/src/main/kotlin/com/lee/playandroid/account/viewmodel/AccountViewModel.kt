@@ -54,8 +54,9 @@ class AccountViewModel : CoroutineViewModel() {
             showLoading()
             val response = withIO { repository.api.getLogoutAsync() }
             if (response.errorCode == 0) {
-                _accountLive.postValue(UiState.Default)
                 PreferencesTools.put(Constants.SP_KEY_IS_LOGIN, false)
+                cacheManager.putCache(Constants.CACHE_KEY_ACCOUNT_DATA, "")
+                _accountLive.postValue(UiState.Default)
             } else {
                 failedCall(response.errorMsg)
             }
