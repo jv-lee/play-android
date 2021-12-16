@@ -2,6 +2,7 @@ package com.lee.playandroid.square.model.api
 
 import com.lee.playandroid.library.common.entity.Content
 import com.lee.playandroid.library.common.entity.Data
+import com.lee.playandroid.library.common.entity.MyShareData
 import com.lee.playandroid.library.common.entity.PageData
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -18,4 +19,10 @@ interface ApiService {
      */
     @GET("/user_article/list/{page}/json")
     suspend fun getSquareDataSync(@Path("page") page: Int): Data<PageData<Content>>
+
+    /**
+     * @param page 分页页面 取值[1-40]
+     */
+    @GET("/user/lg/private_articles/{page}/json")
+    suspend fun getMyShareDataSync(@Path("page") page: Int): Data<MyShareData>
 }

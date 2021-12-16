@@ -7,4 +7,5 @@ package com.lee.playandroid.square.constants
  */
 object Constants {
     const val CACHE_KEY_SQUARE_CONTENT = "cacheKey:square-content"
+    const val CACHE_KEY_MY_SHARE_CONTENT = "cacheKey:my-share-content"
 }

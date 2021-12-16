@@ -155,3 +155,9 @@ data class CoinRank(
     val userId: Long,
     val username: String
 )
+
+@Keep
+data class MyShareData(
+    val coinInfo: CoinInfo,
+    val shareArticles: PageData<Content>
+)
