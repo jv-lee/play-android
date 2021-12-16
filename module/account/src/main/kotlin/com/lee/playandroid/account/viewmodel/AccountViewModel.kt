@@ -36,12 +36,11 @@ class AccountViewModel : CoroutineViewModel() {
         stateCacheFlow({
             repository.api.getAccountInfoAsync().checkData().apply {
                 PreferencesTools.put(Constants.SP_KEY_IS_LOGIN, true)
+                cacheManager.putCache(Constants.CACHE_KEY_ACCOUNT_DATA, this)
             }
         }, {
-            cacheManager.getCache(Constants.CACHE_KEY_ACCOUNT_DATA)
-        }, {
-            cacheManager.putCache(Constants.CACHE_KEY_ACCOUNT_DATA, it)
-        }).collect {
+            cacheManager.getCache<AccountData>(Constants.CACHE_KEY_ACCOUNT_DATA)
+        }, {}).collect {
             _accountLive.postValue(it)
         }
     }
