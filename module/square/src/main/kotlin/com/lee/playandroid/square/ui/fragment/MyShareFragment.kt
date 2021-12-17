@@ -4,6 +4,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.lee.library.adapter.listener.LoadErrorListener
 import com.lee.library.adapter.page.submitData
+import com.lee.library.adapter.page.submitFailed
 import com.lee.library.base.BaseFragment
 import com.lee.library.extensions.binding
 import com.lee.library.mvvm.livedata.LoadStatus
@@ -62,7 +63,7 @@ class MyShareFragment : BaseFragment(R.layout.fragment_my_share) {
         viewModel.myShareLive.observeState<PageData<Content>>(this, success = {
             mAdapter.submitData(it, diff = true)
         }, error = {
-            mAdapter.loadFailed()
+            mAdapter.submitFailed()
             actionFailed(it)
         })
     }
