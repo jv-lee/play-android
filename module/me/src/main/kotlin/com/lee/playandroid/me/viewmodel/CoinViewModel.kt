@@ -3,6 +3,7 @@ package com.lee.playandroid.me.viewmodel
 import com.lee.library.cache.CacheManager
 import com.lee.library.extensions.getCache
 import com.lee.library.extensions.putCache
+import com.lee.library.extensions.putPageCache
 import com.lee.library.mvvm.livedata.LoadStatus
 import com.lee.library.mvvm.ui.UiStatePageLiveData
 import com.lee.library.mvvm.viewmodel.CoroutineViewModel
@@ -33,7 +34,7 @@ class CoinViewModel : CoroutineViewModel() {
                 }, {
                     cacheManager.getCache(CACHE_KEY_COIN_RECORD)
                 }, {
-                    cacheManager.putCache(CACHE_KEY_COIN_RECORD, it)
+                    cacheManager.putPageCache(CACHE_KEY_COIN_RECORD, it)
                 })
             }
         }

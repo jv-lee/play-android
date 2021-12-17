@@ -6,6 +6,7 @@ import com.lee.library.base.BaseApplication
 import com.lee.library.cache.CacheManager
 import com.lee.library.extensions.getCache
 import com.lee.library.extensions.putCache
+import com.lee.library.extensions.putPageCache
 import com.lee.library.mvvm.livedata.LoadStatus
 import com.lee.library.mvvm.ui.UiState
 import com.lee.library.mvvm.ui.UiStatePageLiveData
@@ -43,7 +44,7 @@ class CollectViewModel : CoroutineViewModel() {
                 }, {
                     cacheManager.getCache(Constants.CACHE_KEY_COLLECT)
                 }, {
-                    cacheManager.putCache(Constants.CACHE_KEY_COLLECT, it)
+                    cacheManager.putPageCache(Constants.CACHE_KEY_COLLECT, it)
                 })
             }
         }

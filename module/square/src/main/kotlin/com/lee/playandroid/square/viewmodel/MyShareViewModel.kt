@@ -3,6 +3,7 @@ package com.lee.playandroid.square.viewmodel
 import com.lee.library.cache.CacheManager
 import com.lee.library.extensions.getCache
 import com.lee.library.extensions.putCache
+import com.lee.library.extensions.putPageCache
 import com.lee.library.mvvm.livedata.LoadStatus
 import com.lee.library.mvvm.ui.UiStatePageLiveData
 import com.lee.library.mvvm.viewmodel.CoroutineViewModel
@@ -29,12 +30,12 @@ class MyShareViewModel : CoroutineViewModel() {
                 pageLaunch(status, { page ->
                     repository.api.getMyShareDataSync(page)
                         .checkData().shareArticles.also { newData ->
-                        applyData(getValueData(), newData)
-                    }
+                            applyData(getValueData(), newData)
+                        }
                 }, {
                     cacheManager.getCache(Constants.CACHE_KEY_MY_SHARE_CONTENT)
                 }, {
-                    cacheManager.putCache(Constants.CACHE_KEY_MY_SHARE_CONTENT, it)
+                    cacheManager.putPageCache(Constants.CACHE_KEY_MY_SHARE_CONTENT, it)
                 })
             }
         }

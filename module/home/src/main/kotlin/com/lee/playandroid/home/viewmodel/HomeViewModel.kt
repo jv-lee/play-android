@@ -3,6 +3,7 @@ package com.lee.playandroid.home.viewmodel
 import com.lee.library.cache.CacheManager
 import com.lee.library.extensions.getCache
 import com.lee.library.extensions.putCache
+import com.lee.library.extensions.putPageCache
 import com.lee.library.mvvm.livedata.LoadStatus
 import com.lee.library.mvvm.ui.UiStatePageLiveData
 import com.lee.library.mvvm.viewmodel.CoroutineViewModel
@@ -39,7 +40,7 @@ class HomeViewModel : CoroutineViewModel() {
                     cacheManager.getCache(Constants.CACHE_KEY_HOME_CONTENT)
                 }, {
                     //存储缓存数据
-                    cacheManager.putCache(Constants.CACHE_KEY_HOME_CONTENT, it)
+                    cacheManager.putPageCache(Constants.CACHE_KEY_HOME_CONTENT, it)
                 })
             }
         }

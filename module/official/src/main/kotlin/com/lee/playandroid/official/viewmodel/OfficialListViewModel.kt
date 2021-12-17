@@ -4,6 +4,7 @@ import androidx.lifecycle.SavedStateHandle
 import com.lee.library.cache.CacheManager
 import com.lee.library.extensions.getCache
 import com.lee.library.extensions.putCache
+import com.lee.library.extensions.putPageCache
 import com.lee.library.mvvm.livedata.LoadStatus
 import com.lee.library.mvvm.ui.UiStatePageLiveData
 import com.lee.library.mvvm.viewmodel.CoroutineViewModel
@@ -37,7 +38,7 @@ class OfficialListViewModel(handle: SavedStateHandle) : CoroutineViewModel() {
                 }, {
                     cacheManager.getCache(Constants.CACHE_KEY_OFFICIAL_DATA + id)
                 }, {
-                    cacheManager.putCache(Constants.CACHE_KEY_OFFICIAL_DATA + id, it)
+                    cacheManager.putPageCache(Constants.CACHE_KEY_OFFICIAL_DATA + id, it)
                 })
             }
         }
