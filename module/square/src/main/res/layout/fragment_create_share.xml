@@ -14,4 +14,64 @@
         app:titleColor="@color/colorThemeAccent"
         app:titleText="@string/square_create_share_title" />
 
+    <TextView
+        android:id="@+id/tv_share_title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/medium_offset"
+        android:paddingStart="@dimen/large_offset"
+        android:paddingEnd="@dimen/large_offset"
+        android:text="@string/share_title_text"
+        android:textColor="@color/colorThemeAccent"
+        android:textSize="@dimen/font_size_large_x"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbar" />
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/edit_share_title"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:gravity="center_vertical"
+        android:hint="@string/share_title_hint"
+        android:paddingStart="@dimen/large_offset"
+        android:paddingEnd="@dimen/large_offset"
+        app:layout_constraintTop_toBottomOf="@id/tv_share_title" />
+
+    <TextView
+        android:id="@+id/tv_share_content"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:paddingStart="@dimen/large_offset"
+        android:paddingEnd="@dimen/large_offset"
+        android:text="@string/share_content_text"
+        android:textColor="@color/colorThemeAccent"
+        android:textSize="@dimen/font_size_large_x"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/edit_share_title" />
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/edit_share_content"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:gravity="center_vertical"
+        android:hint="@string/share_content_hint"
+        android:paddingStart="@dimen/large_offset"
+        android:paddingEnd="@dimen/large_offset"
+        app:layout_constraintTop_toBottomOf="@id/tv_share_content" />
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:lineSpacingExtra="@dimen/small_offset"
+        android:paddingStart="@dimen/large_offset"
+        android:paddingEnd="@dimen/large_offset"
+        android:text="@string/share_description"
+        android:textColor="@color/colorThemePrimary"
+        android:textSize="@dimen/font_size_small"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
