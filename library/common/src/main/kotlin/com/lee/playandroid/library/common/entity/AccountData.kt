@@ -15,7 +15,7 @@ data class CoinInfo(
     val coinCount: Int,
     val level: Int,
     val nickname: String,
-    val rank: String,
+    val rank: Int,
     val userId: Long,
     val username: String
 )

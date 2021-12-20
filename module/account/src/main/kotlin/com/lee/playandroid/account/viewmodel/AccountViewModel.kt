@@ -13,6 +13,7 @@ import com.lee.library.tools.PreferencesTools
 import com.lee.library.utils.LogUtil
 import com.lee.playandroid.account.constants.Constants
 import com.lee.playandroid.account.model.repository.ApiRepository
+import com.lee.playandroid.library.common.BuildConfig
 import com.lee.playandroid.library.common.entity.AccountData
 import com.lee.playandroid.library.common.extensions.checkData
 import kotlinx.coroutines.flow.collect
@@ -54,7 +55,9 @@ class AccountViewModel : CoroutineViewModel() {
             showLoading()
             val response = withIO { repository.api.getLogoutAsync() }
             if (response.errorCode == 0) {
+                LogUtil.i("requestLogout:登出")
                 PreferencesTools.put(Constants.SP_KEY_IS_LOGIN, false)
+                PreferencesTools.put(BuildConfig.BASE_URI, "")
                 cacheManager.clearCache(Constants.CACHE_KEY_ACCOUNT_DATA)
                 _accountLive.postValue(UiState.Default)
             } else {

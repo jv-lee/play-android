@@ -83,7 +83,7 @@ class MeFragment : BaseFragment(R.layout.fragment_me), View.OnClickListener {
         binding.ivHeader.setImageResource(R.mipmap.ic_launcher_round)
         binding.tvAccountName.text = account.userInfo.username
         binding.tvLevel.text =
-            getString(R.string.me_account_info_text, account.coinInfo.level, account.coinInfo.rank)
+            getString(R.string.me_account_info_text, account.coinInfo.level, account.coinInfo.rank.toString())
         binding.tvLevel.visibility = View.VISIBLE
     }
 
