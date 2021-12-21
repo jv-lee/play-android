@@ -11,6 +11,9 @@
         android:layout_height="wrap_content"
         app:backIconTint="@color/colorThemeAccent"
         app:layout_constraintTop_toTopOf="parent"
+        app:moreEnable="visible"
+        app:moreIcon="@drawable/vector_send"
+        app:moreIconTint="@color/colorThemeAccent"
         app:titleColor="@color/colorThemeAccent"
         app:titleText="@string/square_create_share_title" />
 
