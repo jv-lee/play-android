@@ -2,6 +2,7 @@ package com.lee.playandroid.square.ui.fragment
 
 import com.lee.library.base.BaseFragment
 import com.lee.library.extensions.binding
+import com.lee.library.tools.KeyboardTools
 import com.lee.playandroid.square.R
 import com.lee.playandroid.square.databinding.FragmentCreateShareBinding
 
@@ -15,7 +16,7 @@ class CreateShareFragment : BaseFragment(R.layout.fragment_create_share) {
     private val binding by binding(FragmentCreateShareBinding::bind)
 
     override fun bindView() {
-
+        KeyboardTools.parentTouchHideSoftInput(requireActivity(), binding.root)
     }
 
     override fun bindData() {
