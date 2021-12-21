@@ -33,11 +33,13 @@ class AccountViewModel : CoroutineViewModel() {
     private val _accountLive = MutableLiveData<UiState>()
     val accountLive: LiveData<UiState> = _accountLive
 
+    /**
+     * 请求账户数据
+     */
     suspend fun requestAccountInfo() {
         stateCacheFlow({
             repository.api.getAccountInfoAsync().checkData().apply {
-                PreferencesTools.put(Constants.SP_KEY_IS_LOGIN, true)
-                cacheManager.putCache(Constants.CACHE_KEY_ACCOUNT_DATA, this)
+                updateAccountStatus(this, true)
             }
         }, {
             cacheManager.getCache<AccountData>(Constants.CACHE_KEY_ACCOUNT_DATA)
@@ -46,6 +48,9 @@ class AccountViewModel : CoroutineViewModel() {
         }
     }
 
+    /**
+     * 请求登出
+     */
     fun requestLogout(
         showLoading: () -> Unit = {},
         hideLoading: () -> Unit = {},
@@ -55,10 +60,7 @@ class AccountViewModel : CoroutineViewModel() {
             showLoading()
             val response = withIO { repository.api.getLogoutAsync() }
             if (response.errorCode == 0) {
-                LogUtil.i("requestLogout:登出")
-                PreferencesTools.put(Constants.SP_KEY_IS_LOGIN, false)
-                PreferencesTools.put(BuildConfig.BASE_URI, "")
-                cacheManager.clearCache(Constants.CACHE_KEY_ACCOUNT_DATA)
+                updateAccountStatus(null, false)
                 _accountLive.postValue(UiState.Default)
             } else {
                 failedCall(response.errorMsg)
@@ -67,13 +69,34 @@ class AccountViewModel : CoroutineViewModel() {
         }
     }
 
+    /**
+     * 更新当前账户缓存信息
+     */
     fun updateAccountInfo(accountData: AccountData) {
-        PreferencesTools.put(Constants.SP_KEY_IS_LOGIN, true)
+        updateAccountStatus(accountData, true)
         _accountLive.postValue(UiState.Success(accountData))
     }
 
+    /**
+     * 获取当前账户缓存信息
+     */
     fun getAccountInfo(): AccountData? {
-        return CacheManager.getDefault().getCache(Constants.CACHE_KEY_ACCOUNT_DATA)
+        return cacheManager.getCache(Constants.CACHE_KEY_ACCOUNT_DATA)
+    }
+
+    /**
+     * @param accountData 账户数据
+     * @param isLogin 登陆结果
+     */
+    private fun updateAccountStatus(accountData: AccountData?, isLogin: Boolean) {
+        if (isLogin) {
+            cacheManager.putCache(Constants.CACHE_KEY_ACCOUNT_DATA, accountData)
+            PreferencesTools.put(Constants.SP_KEY_IS_LOGIN, true)
+        } else {
+            cacheManager.clearCache(Constants.CACHE_KEY_ACCOUNT_DATA)
+            PreferencesTools.put(Constants.SP_KEY_IS_LOGIN, false)
+            PreferencesTools.put(BuildConfig.BASE_URI, "")
+        }
     }
 
     init {
