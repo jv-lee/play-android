@@ -20,7 +20,7 @@ fun NavController.navigateDetails(
     val newUrl = URLEncoder.encode(url.trim().replace("\n", "").replace("\t", ""), "UTF-8")
     val newTitle = URLEncoder.encode(title.trim().replace("\n", "").replace("\t", ""), "UTF-8")
     navigateDeepLink(
-        "play://details?id=$id&title=$newTitle&url=$newUrl&isCollect=$isCollect".toUri(),
+        "play://details?title=$newTitle&url=$newUrl&id=$id&isCollect=$isCollect".toUri(),
         NavigationAnim.SlideInOut
     )
 }
