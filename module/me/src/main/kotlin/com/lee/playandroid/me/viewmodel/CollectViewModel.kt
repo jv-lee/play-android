@@ -12,7 +12,10 @@ import com.lee.library.mvvm.ui.UiState
 import com.lee.library.mvvm.ui.UiStatePageLiveData
 import com.lee.library.mvvm.ui.stateFlow
 import com.lee.library.mvvm.viewmodel.CoroutineViewModel
+import com.lee.library.utils.LogUtil
 import com.lee.playandroid.library.common.constants.ApiConstants
+import com.lee.playandroid.library.common.entity.Content
+import com.lee.playandroid.library.common.entity.PageData
 import com.lee.playandroid.library.common.extensions.checkData
 import com.lee.playandroid.me.R
 import com.lee.playandroid.me.constants.Constants
@@ -43,7 +46,11 @@ class CollectViewModel : CoroutineViewModel() {
                         applyData(getValueData(), newData)
                     }
                 }, {
-                    cacheManager.getCache(Constants.CACHE_KEY_COLLECT)
+                    val data = cacheManager.getCache<PageData<Content>>(Constants.CACHE_KEY_COLLECT)
+                    data?.let {
+                        LogUtil.i("getCacheData:" + it.data.size)
+                    }
+                    data
                 }, {
                     cacheManager.putPageCache(Constants.CACHE_KEY_COLLECT, it)
                 })
@@ -51,11 +58,12 @@ class CollectViewModel : CoroutineViewModel() {
         }
     }
 
-    fun requestUnCollect(id: Long, originId: Long) {
+    fun requestUnCollect(content: Content) {
         launchIO {
             stateFlow {
-                val response = repository.api.postUnCollectAsync(id, originId)
+                val response = repository.api.postUnCollectAsync(content.id, content.originId)
                 if (response.errorCode == ApiConstants.REQUEST_OK) {
+                    updateCacheData(content)
                     BaseApplication.getContext().getString(R.string.collect_remove_item_success)
                 } else {
                     response.errorMsg
@@ -64,6 +72,17 @@ class CollectViewModel : CoroutineViewModel() {
                 _unCollectLive.postValue(it)
             }
         }
+    }
+
+    /**
+     * 更新首页缓存
+     */
+    private fun updateCacheData(content: Content) {
+        val data = collectLive.getCacheValueData<PageData<Content>>() ?: return
+        if (data.data.contains(content)) {
+            data.data.remove(content)
+        }
+        cacheManager.putCache(Constants.CACHE_KEY_COLLECT, data)
     }
 
     init {

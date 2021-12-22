@@ -87,7 +87,7 @@ class CollectFragment : BaseFragment(R.layout.fragment_collect),
         //网络请求删除收藏
         if (mAdapter.data.size > position) {
             val item = mAdapter.data[position]
-            viewModel.requestUnCollect(item.id, item.originId)
+            viewModel.requestUnCollect(item)
         }
 
         //数据删除
