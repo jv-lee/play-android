@@ -7,6 +7,7 @@ import com.lee.library.base.BaseApplication
 import com.lee.library.mvvm.ui.UiState
 import com.lee.library.mvvm.ui.stateFlow
 import com.lee.library.mvvm.viewmodel.CoroutineViewModel
+import com.lee.playandroid.library.common.constants.ApiConstants
 import com.lee.playandroid.square.R
 import com.lee.playandroid.square.model.repository.ApiRepository
 import kotlinx.coroutines.flow.collect
@@ -30,7 +31,7 @@ class CreateShareViewModel : CoroutineViewModel() {
         launchIO {
             stateFlow {
                 val response = apiRepository.api.postShareDataSync(title, content)
-                if (response.errorCode == 0) {
+                if (response.errorCode == ApiConstants.REQUEST_OK) {
                     BaseApplication.getContext().getString(R.string.share_success)
                 } else {
                     response.errorMsg

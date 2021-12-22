@@ -12,6 +12,7 @@ import com.lee.library.mvvm.ui.UiState
 import com.lee.library.mvvm.ui.UiStatePageLiveData
 import com.lee.library.mvvm.ui.stateFlow
 import com.lee.library.mvvm.viewmodel.CoroutineViewModel
+import com.lee.playandroid.library.common.constants.ApiConstants
 import com.lee.playandroid.library.common.extensions.checkData
 import com.lee.playandroid.me.R
 import com.lee.playandroid.me.constants.Constants
@@ -54,7 +55,7 @@ class CollectViewModel : CoroutineViewModel() {
         launchIO {
             stateFlow {
                 val response = repository.api.postUnCollectAsync(id, originId)
-                if (response.errorCode == 0) {
+                if (response.errorCode == ApiConstants.REQUEST_OK) {
                     BaseApplication.getContext().getString(R.string.collect_remove_item_success)
                 } else {
                     response.errorMsg

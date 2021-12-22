@@ -14,6 +14,7 @@ import com.lee.library.utils.LogUtil
 import com.lee.playandroid.account.constants.Constants
 import com.lee.playandroid.account.model.repository.ApiRepository
 import com.lee.playandroid.library.common.BuildConfig
+import com.lee.playandroid.library.common.constants.ApiConstants
 import com.lee.playandroid.library.common.entity.AccountData
 import com.lee.playandroid.library.common.extensions.checkData
 import kotlinx.coroutines.flow.collect
@@ -59,7 +60,7 @@ class AccountViewModel : CoroutineViewModel() {
         launchMain {
             showLoading()
             val response = withIO { repository.api.getLogoutAsync() }
-            if (response.errorCode == 0) {
+            if (response.errorCode == ApiConstants.REQUEST_OK) {
                 updateAccountStatus(null, false)
                 _accountLive.postValue(UiState.Default)
             } else {
