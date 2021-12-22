@@ -2,6 +2,7 @@
 <resources>
     <string name="square_my_share_title">我的分享</string>
     <string name="square_create_share_title">创建分享</string>
+    <string name="share_success">分享成功</string>
     <string name="share_title_text">分享标题</string>
     <string name="share_content_text">分享链接</string>
     <string name="share_title_hint">100字以内</string>

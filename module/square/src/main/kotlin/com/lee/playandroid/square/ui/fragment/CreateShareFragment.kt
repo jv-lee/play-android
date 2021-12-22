@@ -1,6 +1,7 @@
 package com.lee.playandroid.square.ui.fragment
 
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.lee.library.base.BaseFragment
 import com.lee.library.dialog.LoadingDialog
 import com.lee.library.extensions.binding
@@ -44,6 +45,7 @@ class CreateShareFragment : BaseFragment(R.layout.fragment_create_share) {
         viewModel.sendLive.observeState<String>(this, success = {
             toast(it)
             dismiss(loadingDialog)
+            findNavController().popBackStack()
         }, error = {
             toast(it.message)
             dismiss(loadingDialog)
