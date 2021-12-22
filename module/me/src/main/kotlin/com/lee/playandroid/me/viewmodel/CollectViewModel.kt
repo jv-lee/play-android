@@ -37,6 +37,10 @@ class CollectViewModel : CoroutineViewModel() {
 
     val collectLive = UiStatePageLiveData(0)
 
+    /**
+     * 请求收藏内容
+     * @param status 分页状态
+     */
     fun requestCollect(@LoadStatus status: Int) {
         launchIO {
             collectLive.apply {
@@ -53,6 +57,10 @@ class CollectViewModel : CoroutineViewModel() {
         }
     }
 
+    /**
+     * 请求移除收藏内容
+     * @param content 收藏内容实体
+     */
     fun requestUnCollect(content: Content) {
         launchIO {
             stateFlow {
@@ -71,6 +79,7 @@ class CollectViewModel : CoroutineViewModel() {
 
     /**
      * 更新首页缓存
+     * @param content 被更新的数据实体
      */
     private fun updateCacheData(content: Content) {
         val data = collectLive.getCacheValueData<PageData<Content>>() ?: return
