@@ -12,7 +12,6 @@ import com.lee.library.mvvm.ui.UiState
 import com.lee.library.mvvm.ui.UiStatePageLiveData
 import com.lee.library.mvvm.ui.stateFlow
 import com.lee.library.mvvm.viewmodel.CoroutineViewModel
-import com.lee.library.utils.LogUtil
 import com.lee.playandroid.library.common.constants.ApiConstants
 import com.lee.playandroid.library.common.entity.Content
 import com.lee.playandroid.library.common.entity.PageData
@@ -46,11 +45,7 @@ class CollectViewModel : CoroutineViewModel() {
                         applyData(getValueData(), newData)
                     }
                 }, {
-                    val data = cacheManager.getCache<PageData<Content>>(Constants.CACHE_KEY_COLLECT)
-                    data?.let {
-                        LogUtil.i("getCacheData:" + it.data.size)
-                    }
-                    data
+                    cacheManager.getCache<PageData<Content>>(Constants.CACHE_KEY_COLLECT)
                 }, {
                     cacheManager.putPageCache(Constants.CACHE_KEY_COLLECT, it)
                 })
