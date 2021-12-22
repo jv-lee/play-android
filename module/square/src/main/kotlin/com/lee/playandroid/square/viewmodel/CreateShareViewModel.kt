@@ -25,8 +25,10 @@ class CreateShareViewModel : CoroutineViewModel() {
     val sendLive: LiveData<UiState> = _sendLive
 
     fun requestSendShare(title: String, content: String) {
+        // 校验输入格式
         if (TextUtils.isEmpty(title) || TextUtils.isEmpty(content)) {
             _sendLive.postValue(UiState.Error(Throwable("title || content is empty.")))
+            return
         }
         launchIO {
             stateFlow {
@@ -34,7 +36,7 @@ class CreateShareViewModel : CoroutineViewModel() {
                 if (response.errorCode == ApiConstants.REQUEST_OK) {
                     BaseApplication.getContext().getString(R.string.share_success)
                 } else {
-                    response.errorMsg
+                    throw RuntimeException(response.errorMsg)
                 }
             }.collect {
                 _sendLive.postValue(it)

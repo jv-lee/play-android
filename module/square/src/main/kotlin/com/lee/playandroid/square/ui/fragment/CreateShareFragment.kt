@@ -1,5 +1,6 @@
 package com.lee.playandroid.square.ui.fragment
 
+import android.view.inputmethod.EditorInfo
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.lee.library.base.BaseFragment
@@ -31,14 +32,15 @@ class CreateShareFragment : BaseFragment(R.layout.fragment_create_share) {
     override fun bindView() {
         KeyboardTools.parentTouchHideSoftInput(requireActivity(), binding.root)
 
-        binding.toolbar.setClickListener(object : TitleToolbar.ClickListener() {
-            override fun moreClick() {
+        binding.editShareContent.setOnEditorActionListener { _, actionId, _ ->
+            if (actionId == EditorInfo.IME_ACTION_SEND) {
                 viewModel.requestSendShare(
                     binding.editShareTitle.text.toString(),
                     binding.editShareContent.text.toString()
                 )
             }
-        })
+            return@setOnEditorActionListener false
+        }
     }
 
     override fun bindData() {

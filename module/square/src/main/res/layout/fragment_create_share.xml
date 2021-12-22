@@ -11,9 +11,6 @@
         android:layout_height="wrap_content"
         app:backIconTint="@color/colorThemeAccent"
         app:layout_constraintTop_toTopOf="parent"
-        app:moreEnable="visible"
-        app:moreIcon="@drawable/vector_send"
-        app:moreIconTint="@color/colorThemeAccent"
         app:titleColor="@color/colorThemeAccent"
         app:titleText="@string/square_create_share_title" />
 
@@ -38,6 +35,8 @@
         android:background="@android:color/transparent"
         android:gravity="center_vertical"
         android:hint="@string/share_title_hint"
+        android:imeOptions="actionNext"
+        android:inputType="text"
         android:maxEms="100"
         android:paddingStart="@dimen/large_offset"
         android:paddingEnd="@dimen/large_offset"
@@ -65,6 +64,8 @@
         android:background="@android:color/transparent"
         android:gravity="center_vertical"
         android:hint="@string/share_content_hint"
+        android:imeOptions="actionSend"
+        android:inputType="text"
         android:maxEms="100"
         android:paddingStart="@dimen/large_offset"
         android:paddingEnd="@dimen/large_offset"
