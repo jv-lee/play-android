@@ -64,8 +64,10 @@ class ContentAdapter(context: Context, data: List<HomeContent>) :
                         }
 
                         override fun onItemClick(position: Int, item: Banner) {
-                            Navigation.findNavController(banner)
-                                .navigateDetails(item.id, item.title, item.url, item.collect)
+                            item.apply {
+                                Navigation.findNavController(banner)
+                                    .navigateDetails(title, url, id, collect)
+                            }
                         }
                     })
                 }

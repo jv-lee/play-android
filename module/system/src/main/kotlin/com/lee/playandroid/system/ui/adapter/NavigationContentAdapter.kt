@@ -40,7 +40,7 @@ class NavigationContentAdapter(context: Context, data: List<NavigationItem>) :
                 rvContainer.adapter = NavigationContentTagAdapter(context, entity.articles).apply {
                     setOnItemChildClickListener({ view, entity, _ ->
                         Navigation.findNavController(view)
-                            .navigateDetails(entity.id, entity.title, entity.link, entity.collect)
+                            .navigateDetails(entity.title, entity.link, entity.id, entity.collect)
                     }, R.id.tv_tag)
                 }
             }

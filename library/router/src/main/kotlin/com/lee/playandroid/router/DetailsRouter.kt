@@ -11,11 +11,12 @@ import java.net.URLEncoder
  * @date 2021/11/5
  * @description
  */
-fun NavController.navigateDetails(title: String, url: String) {
-    navigateDetails(0, title, url, false)
-}
-
-fun NavController.navigateDetails(id: Long, title: String, url: String, isCollect: Boolean) {
+fun NavController.navigateDetails(
+    title: String,
+    url: String,
+    id: Long = 0,
+    isCollect: Boolean = false
+) {
     val newUrl = URLEncoder.encode(url.trim().replace("\n", "").replace("\t", ""), "UTF-8")
     val newTitle = URLEncoder.encode(title.trim().replace("\n", "").replace("\t", ""), "UTF-8")
     navigateDeepLink(

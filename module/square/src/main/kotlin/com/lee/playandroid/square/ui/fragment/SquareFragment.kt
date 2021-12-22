@@ -68,7 +68,7 @@ class SquareFragment : BaseFragment(R.layout.fragment_square) {
 
             setOnItemClickListener { _, entity, _ ->
                 entity?.apply {
-                    findNavController().navigateDetails(id, title, link, collect)
+                    findNavController().navigateDetails(title, link, id, collect)
                 }
             }
 

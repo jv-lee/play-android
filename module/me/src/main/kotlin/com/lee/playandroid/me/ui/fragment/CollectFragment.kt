@@ -58,7 +58,7 @@ class CollectFragment : BaseFragment(R.layout.fragment_collect),
 
             setOnItemClickListener { _, entity, _ ->
                 findNavController()
-                    .navigateDetails(entity.id, entity.title, entity.link, entity.collect)
+                    .navigateDetails(entity.title, entity.link, entity.id, entity.collect)
             }
         }.proxy
 
@@ -70,7 +70,7 @@ class CollectFragment : BaseFragment(R.layout.fragment_collect),
 
     override fun bindData() {
         viewModel.collectLive.observeState<PageData<Content>>(this, success = {
-            mAdapter.submitData(it,diff = true)
+            mAdapter.submitData(it, diff = true)
         }, error = {
             mAdapter.submitFailed()
             actionFailed(it)

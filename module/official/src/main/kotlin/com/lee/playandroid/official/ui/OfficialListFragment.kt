@@ -39,7 +39,7 @@ class OfficialListFragment : BaseListFragment() {
 
     override fun navigationDetails(content: Content) {
         findNavController().navigateDetails(
-            content.id, content.title, content.link, content.collect
+            content.title, content.link, content.id, content.collect
         )
     }
 
