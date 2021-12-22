@@ -119,9 +119,8 @@ class NavigationFragment : BaseFragment(R.layout.fragment_navigation),
                     if (!isLock) {
                         val layoutManager = recyclerView.layoutManager as LinearLayoutManager
                         val position = layoutManager.findFirstVisibleItemPosition()
-                        val scroller = LinearTopSmoothScroller(requireContext(), position)
 
-                        binding.rvTab.layoutManager?.startSmoothScroll(scroller)
+                        binding.rvTab.scrollToPosition(position)
                         viewModel.selectTabIndex(position)
                     }
                     isLock = false
