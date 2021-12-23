@@ -1,13 +1,8 @@
 package com.lee.playandroid.me.ui.widget
 
-import android.content.res.Resources
-import android.graphics.*
-import android.view.View
-import android.widget.FrameLayout
+import android.graphics.Canvas
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
-import com.lee.library.extensions.dp2px
-import com.lee.playandroid.me.R
 
 
 /**

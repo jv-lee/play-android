@@ -1,8 +1,9 @@
 package com.lee.playandroid.me.ui.fragment
 
+import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.ItemTouchHelper
+import com.lee.library.adapter.base.BaseViewAdapter
 import com.lee.library.adapter.listener.LoadErrorListener
 import com.lee.library.adapter.page.submitData
 import com.lee.library.adapter.page.submitFailed
@@ -11,13 +12,13 @@ import com.lee.library.extensions.binding
 import com.lee.library.extensions.toast
 import com.lee.library.mvvm.livedata.LoadStatus
 import com.lee.library.mvvm.ui.observeState
+import com.lee.library.widget.SwipeItemLayout
 import com.lee.playandroid.library.common.entity.Content
 import com.lee.playandroid.library.common.entity.PageData
 import com.lee.playandroid.library.common.extensions.actionFailed
 import com.lee.playandroid.me.R
 import com.lee.playandroid.me.databinding.FragmentCollectBinding
 import com.lee.playandroid.me.ui.adapter.SimpleTextAdapter
-import com.lee.playandroid.me.ui.widget.RecyclerItemTouchHelper
 import com.lee.playandroid.me.viewmodel.CollectViewModel
 import com.lee.playandroid.router.navigateDetails
 import java.util.*
@@ -28,7 +29,7 @@ import java.util.*
  * @description 收藏列表页
  */
 class CollectFragment : BaseFragment(R.layout.fragment_collect),
-    RecyclerItemTouchHelper.ItemTouchHelperCallback {
+    BaseViewAdapter.OnItemChildView<Content> {
 
     private val viewModel by viewModels<CollectViewModel>()
 
@@ -37,6 +38,11 @@ class CollectFragment : BaseFragment(R.layout.fragment_collect),
     private lateinit var mAdapter: SimpleTextAdapter
 
     override fun bindView() {
+        binding.rvContainer.addOnItemTouchListener(
+            SwipeItemLayout.OnSwipeItemTouchListener(
+                requireContext()
+            )
+        )
         binding.rvContainer.adapter = SimpleTextAdapter(requireContext(), arrayListOf()).apply {
             mAdapter = this
             initStatusView()
@@ -56,16 +62,13 @@ class CollectFragment : BaseFragment(R.layout.fragment_collect),
                 }
             })
 
-            setOnItemClickListener { _, entity, _ ->
-                findNavController()
-                    .navigateDetails(entity.title, entity.link, entity.id, entity.collect)
-            }
+            setOnItemChildClickListener(
+                this@CollectFragment,
+                R.id.frame_container,
+                R.id.btn_done,
+                R.id.btn_delete
+            )
         }.proxy
-
-        //绑定拖动滑动处理
-        val callback = RecyclerItemTouchHelper(this)
-        val itemTouchHelper = ItemTouchHelper(callback)
-        itemTouchHelper.attachToRecyclerView(binding.rvContainer)
     }
 
     override fun bindData() {
@@ -83,7 +86,19 @@ class CollectFragment : BaseFragment(R.layout.fragment_collect),
         })
     }
 
-    override fun onItemDelete(position: Int) {
+    override fun onItemChild(view: View, entity: Content, position: Int) {
+        when (view.id) {
+            R.id.frame_container -> {
+                findNavController()
+                    .navigateDetails(entity.title, entity.link, entity.id, entity.collect)
+            }
+            R.id.btn_delete -> {
+                onItemDelete(position)
+            }
+        }
+    }
+
+    private fun onItemDelete(position: Int) {
         //网络请求删除收藏
         if (mAdapter.data.size > position) {
             val item = mAdapter.data[position]
@@ -97,17 +112,6 @@ class CollectFragment : BaseFragment(R.layout.fragment_collect),
         //viewModel数据源处理
         viewModel.collectLive.getValueData<PageData<Content>>()?.apply {
             data.removeAt(position)
-        }
-    }
-
-    override fun onMove(fromPosition: Int, toPosition: Int) {
-        //数据交换
-        Collections.swap(mAdapter.data, fromPosition, toPosition)
-        mAdapter.notifyItemMoved(fromPosition, toPosition)
-
-        //viewModel数据源处理
-        viewModel.collectLive.getValueData<PageData<Content>>()?.apply {
-            Collections.swap(data, fromPosition, toPosition)
         }
     }
 
