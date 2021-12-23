@@ -2,7 +2,6 @@ package com.lee.playandroid.me.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.lee.library.base.BaseApplication
 import com.lee.library.cache.CacheManager
 import com.lee.library.extensions.getCache
 import com.lee.library.extensions.putCache
@@ -16,10 +15,10 @@ import com.lee.playandroid.library.common.constants.ApiConstants
 import com.lee.playandroid.library.common.entity.Content
 import com.lee.playandroid.library.common.entity.PageData
 import com.lee.playandroid.library.common.extensions.checkData
-import com.lee.playandroid.me.R
 import com.lee.playandroid.me.constants.Constants
 import com.lee.playandroid.me.model.repository.ApiRepository
 import kotlinx.coroutines.flow.collect
+import java.util.concurrent.atomic.AtomicBoolean
 
 /**
  * @author jv.lee
@@ -31,6 +30,8 @@ class CollectViewModel : CoroutineViewModel() {
     private val cacheManager = CacheManager.getDefault()
 
     private val repository = ApiRepository()
+
+    private val deleteLock = AtomicBoolean(false)
 
     private val _unCollectLive = MutableLiveData<UiState>()
     val unCollectLive: LiveData<UiState> = _unCollectLive
@@ -59,19 +60,26 @@ class CollectViewModel : CoroutineViewModel() {
 
     /**
      * 请求移除收藏内容
-     * @param content 收藏内容实体
+     * @param position 收藏内容下标
      */
-    fun requestUnCollect(content: Content) {
+    fun requestUnCollect(position: Int) {
+        if (deleteLock.get()) return
+        deleteLock.set(true)
+
         launchIO {
             stateFlow {
-                val response = repository.api.postUnCollectAsync(content.id, content.originId)
+                val data = collectLive.getValueData<PageData<Content>>()!!
+                val item = data.data[position]
+
+                val response = repository.api.postUnCollectAsync(item.id, item.originId)
                 if (response.errorCode == ApiConstants.REQUEST_OK) {
-                    updateCacheData(content)
-                    BaseApplication.getContext().getString(R.string.collect_remove_item_success)
+                    removeCacheItem(item)
+                    position
                 } else {
-                    response.errorMsg
+                    throw RuntimeException(response.errorMsg)
                 }
             }.collect {
+                deleteLock.set(false)
                 _unCollectLive.postValue(it)
             }
         }
@@ -81,12 +89,18 @@ class CollectViewModel : CoroutineViewModel() {
      * 更新首页缓存
      * @param content 被更新的数据实体
      */
-    private fun updateCacheData(content: Content) {
-        val data = collectLive.getCacheValueData<PageData<Content>>() ?: return
-        if (data.data.contains(content)) {
-            data.data.remove(content)
+    private fun removeCacheItem(content: Content) {
+        // 内存移除
+        collectLive.getValueData<PageData<Content>>()?.apply {
+            this.data.remove(content)
         }
-        cacheManager.putCache(Constants.CACHE_KEY_COLLECT, data)
+
+        // 缓存移除
+        cacheManager.getCache<PageData<Content>>(Constants.CACHE_KEY_COLLECT)?.apply {
+            if (data.remove(content)) {
+                cacheManager.putCache(Constants.CACHE_KEY_COLLECT, this)
+            }
+        }
     }
 
     init {

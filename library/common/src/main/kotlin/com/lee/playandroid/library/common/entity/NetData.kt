@@ -40,6 +40,10 @@ data class PageData<T>(
     override fun getDataSource(): MutableList<T> {
         return data
     }
+
+    override fun toString(): String {
+        return "page:$curPage,pageCount:$pageCount,total:$total,dataSize:${data.size},data:$data"
+    }
 }
 
 /**

@@ -12,6 +12,7 @@ import com.lee.library.extensions.binding
 import com.lee.library.extensions.toast
 import com.lee.library.mvvm.livedata.LoadStatus
 import com.lee.library.mvvm.ui.observeState
+import com.lee.library.utils.NetworkUtil
 import com.lee.library.widget.SwipeItemLayout
 import com.lee.playandroid.library.common.entity.Content
 import com.lee.playandroid.library.common.entity.PageData
@@ -79,9 +80,10 @@ class CollectFragment : BaseFragment(R.layout.fragment_collect),
             actionFailed(it)
         })
 
-        viewModel.unCollectLive.observeState<String>(this, success = {
-            toast(it)
+        viewModel.unCollectLive.observeState<Int>(this, success = { position ->
+            toast(getString(R.string.collect_remove_item_success))
         }, error = {
+            SwipeItemLayout.closeAllItems(binding.rvContainer)
             actionFailed(it)
         })
     }
@@ -93,26 +95,21 @@ class CollectFragment : BaseFragment(R.layout.fragment_collect),
                     .navigateDetails(entity.title, entity.link, entity.id, entity.collect)
             }
             R.id.btn_delete -> {
-                onItemDelete(position)
+                unCollectAction(position)
             }
         }
     }
 
-    private fun onItemDelete(position: Int) {
-        //网络请求删除收藏
-        if (mAdapter.data.size > position) {
-            val item = mAdapter.data[position]
-            viewModel.requestUnCollect(item)
+    private fun unCollectAction(position: Int) {
+        if (NetworkUtil.isNetworkConnected(requireContext())) {
+            mAdapter.data.removeAt(position)
+            mAdapter.notifyItemRemoved(position)
+            viewModel.requestUnCollect(position)
+        } else {
+            SwipeItemLayout.closeAllItems(binding.rvContainer)
+            toast(getString(R.string.network_not_access))
         }
 
-        //数据删除
-        mAdapter.data.removeAt(position)
-        mAdapter.notifyItemRemoved(position)
-
-        //viewModel数据源处理
-        viewModel.collectLive.getValueData<PageData<Content>>()?.apply {
-            data.removeAt(position)
-        }
     }
 
 }
