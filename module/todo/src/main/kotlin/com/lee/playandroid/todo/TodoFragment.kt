@@ -1,14 +1,13 @@
-package com.lee.playandroid.me.ui.fragment
+package com.lee.playandroid.todo
 
 import com.lee.library.base.BaseFragment
 import com.lee.library.extensions.binding
-import com.lee.playandroid.me.R
-import com.lee.playandroid.me.databinding.FragmentTodoBinding
+import com.lee.playandroid.todo.databinding.FragmentTodoBinding
 
 /**
  * @author jv.lee
- * @date 2021/11/25
- * @description
+ * @date 2021/12/23
+ * @description TODO页面
  */
 class TodoFragment : BaseFragment(R.layout.fragment_todo) {
 

@@ -14,6 +14,7 @@ import com.lee.playandroid.me.R
 import com.lee.playandroid.me.databinding.FragmentMeBinding
 import com.lee.playandroid.router.navigateLogin
 import com.lee.playandroid.router.navigateMyShare
+import com.lee.playandroid.router.navigateTodo
 
 /**
  * @author jv.lee
@@ -67,7 +68,7 @@ class MeFragment : BaseFragment(R.layout.fragment_me), View.OnClickListener {
                 binding.lineShare ->
                     findNavController().navigateMyShare()
                 binding.lineTodo ->
-                    findNavController().navigate(R.id.action_me_fragment_to_todo_fragment)
+                    findNavController().navigateTodo()
             }
         } else {
             toast(getString(R.string.me_login_message))

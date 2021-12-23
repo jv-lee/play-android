@@ -25,6 +25,7 @@ object BuildModules {
         const val details = ":module:details"
         const val search = ":module:search"
         const val account = ":module:account"
+        const val todo = ":module:todo"
     }
 
 }

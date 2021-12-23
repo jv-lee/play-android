@@ -11,10 +11,9 @@
 
     <include app:graph="@navigation/official_navigation" />
     <include app:graph="@navigation/project_navigation" />
-
     <include app:graph="@navigation/details_navigation" />
     <include app:graph="@navigation/search_navigation" />
-
     <include app:graph="@navigation/account_navigation" />
+    <include app:graph="@navigation/todo_navigation" />
 
 </navigation>
