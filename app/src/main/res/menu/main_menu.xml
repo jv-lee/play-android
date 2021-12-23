@@ -2,7 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/home_graph"
-        android:icon="@drawable/home_selector"
+        android:icon="@drawable/upcoming_selector"
         android:title="@string/nav_home" />
 
     <item

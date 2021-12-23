@@ -11,5 +11,5 @@ import com.lee.playandroid.router.extensions.navigateDeepLink
  * @description
  */
 fun NavController.navigateTodo() {
-    navigateDeepLink("play://todo".toUri(), NavigationAnim.SlideInOut)
+    navigateDeepLink("play://todo".toUri(), NavigationAnim.ZoomIn)
 }
