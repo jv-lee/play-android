@@ -13,7 +13,7 @@ import com.lee.library.tools.DarkViewUpdateTools
 import com.lee.playandroid.databinding.FragmentMainBinding
 import com.lee.playandroid.library.common.entity.LoginEvent
 import com.lee.playandroid.library.common.entity.NavigationSelectEvent
-import com.lee.playandroid.library.common.tools.bindNavigationAction
+import com.lee.playandroid.library.common.ui.extensions.bindNavigationAction
 import com.lee.playandroid.router.navigateLogin
 
 /**

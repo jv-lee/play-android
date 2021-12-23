@@ -1,4 +1,4 @@
-package com.lee.playandroid.library.common.tools
+package com.lee.playandroid.library.common.ui.extensions
 
 import android.os.Bundle
 import android.view.Menu
@@ -22,8 +22,9 @@ import java.lang.ref.WeakReference
 /**
  * @author jv.lee
  * @date 2021/9/10
- * @description Navigation扩展方法及动画修改
+ * @description 首页BottomNavView -> Navigation扩展方法及动画修改
  */
+
 fun BottomNavView.bindNavigationAction(
     container: FragmentContainerView,
     labels: List<String>,

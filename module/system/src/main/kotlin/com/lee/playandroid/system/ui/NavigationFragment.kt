@@ -2,9 +2,6 @@ package com.lee.playandroid.system.ui
 
 import android.annotation.SuppressLint
 import androidx.fragment.app.viewModels
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.lee.library.adapter.core.VerticalTabAdapter
 import com.lee.library.adapter.page.submitSinglePage
 import com.lee.library.base.BaseFragment
 import com.lee.library.extensions.binding
@@ -15,10 +12,10 @@ import com.lee.library.livedatabus.InjectBus
 import com.lee.library.livedatabus.LiveDataBus
 import com.lee.library.mvvm.ui.observeState
 import com.lee.library.widget.StatusLayout
-import com.lee.library.widget.layoutmanager.LinearTopSmoothScroller
 import com.lee.playandroid.library.common.entity.NavigationItem
 import com.lee.playandroid.library.common.entity.NavigationSelectEvent
 import com.lee.playandroid.library.common.extensions.actionFailed
+import com.lee.playandroid.library.common.ui.extensions.bindTabLinkage
 import com.lee.playandroid.system.R
 import com.lee.playandroid.system.databinding.FragmentNavigationBinding
 import com.lee.playandroid.system.ui.adapter.NavigationContentAdapter
@@ -63,7 +60,9 @@ class NavigationFragment : BaseFragment(R.layout.fragment_navigation),
         binding.statusLayout.setStatus(StatusLayout.STATUS_LOADING)
         binding.statusLayout.setOnReloadListener(this)
 
-        navigationTabSelectListener()
+        mNavigationTabAdapter.bindTabLinkage(binding.rvTab, binding.rvContainer) { position ->
+            viewModel.selectTabIndex(position)
+        }
     }
 
     @SuppressLint("NotifyDataSetChanged")
@@ -93,40 +92,6 @@ class NavigationFragment : BaseFragment(R.layout.fragment_navigation),
 
     override fun onReload() {
         viewModel.requestNavigationData()
-    }
-
-    /**
-     * 双向列表互动监听器处理
-     */
-    private fun navigationTabSelectListener() {
-        var isLock = false
-
-        mNavigationTabAdapter.setItemClickCall(object : VerticalTabAdapter.ItemClickCall {
-            override fun itemClick(position: Int) {
-                val selectItem = mNavigationTabAdapter.data[position]
-                val selectPosition = mNavigationContentAdapter.data.indexOf(selectItem)
-                val scroller = LinearTopSmoothScroller(requireContext(), selectPosition)
-
-                binding.rvContainer.layoutManager?.startSmoothScroll(scroller)
-                viewModel.selectTabIndex(selectPosition)
-                isLock = true
-            }
-        })
-        binding.rvContainer.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
-                super.onScrollStateChanged(recyclerView, newState)
-                if (newState == RecyclerView.SCROLL_STATE_IDLE) {
-                    if (!isLock) {
-                        val layoutManager = recyclerView.layoutManager as LinearLayoutManager
-                        val position = layoutManager.findFirstVisibleItemPosition()
-
-                        binding.rvTab.scrollToPosition(position)
-                        viewModel.selectTabIndex(position)
-                    }
-                    isLock = false
-                }
-            }
-        })
     }
 
     @InjectBus(NavigationSelectEvent.key, isActive = true)
