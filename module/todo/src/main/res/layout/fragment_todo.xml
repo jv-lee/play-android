@@ -9,6 +9,9 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:moreEnable="visible"
+        app:moreIcon="@drawable/vector_replace"
+        app:moreIconTint="@color/colorThemeAccent"
         app:layout_constraintTop_toTopOf="parent"
         app:titleText="TODO" />
 
