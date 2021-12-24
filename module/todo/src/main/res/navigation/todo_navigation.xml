@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/todo_fragment"
-        android:name="com.lee.playandroid.todo.TodoFragment"
+        android:name="com.lee.playandroid.todo.ui.TodoFragment"
         android:label="todo"
         tools:layout="@layout/fragment_todo">
         <deepLink app:uri="play://todo" />

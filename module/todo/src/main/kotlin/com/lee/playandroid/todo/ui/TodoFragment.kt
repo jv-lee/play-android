@@ -1,8 +1,9 @@
-package com.lee.playandroid.todo
+package com.lee.playandroid.todo.ui
 
 import com.lee.library.adapter.core.UiPager2Adapter
 import com.lee.library.base.BaseFragment
 import com.lee.library.extensions.binding
+import com.lee.playandroid.todo.R
 import com.lee.playandroid.todo.databinding.FragmentTodoBinding
 
 /**
