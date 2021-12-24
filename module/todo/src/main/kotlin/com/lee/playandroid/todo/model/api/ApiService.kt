@@ -1,6 +1,8 @@
 package com.lee.playandroid.todo.model.api
 
 import com.lee.playandroid.library.common.entity.Data
+import com.lee.playandroid.library.common.entity.PageData
+import com.lee.playandroid.library.common.entity.TodoData
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
 import retrofit2.http.POST
@@ -77,8 +79,8 @@ interface ApiService {
      * @param page 页码从1开始
      * @param status 状态， 1-完成；0未完成; 默认全部展示；
      * @param type 创建时传入的类型, 默认全部展示
-//     * @param priority 创建时传入的优先级；默认全部展示
-//     * @param order 1:完成日期顺序；2.完成日期逆序；3.创建日期顺序；4.创建日期逆序(默认)；
+    //     * @param priority 创建时传入的优先级；默认全部展示
+    //     * @param order 1:完成日期顺序；2.完成日期逆序；3.创建日期顺序；4.创建日期逆序(默认)；
      */
     @POST("/lg/todo/v2/list/{page}/json")
     @FormUrlEncoded
@@ -88,7 +90,7 @@ interface ApiService {
         @Field("type") type: Int,
 //        @Field("priority") priority: Int,
 //        @Field("orderby") order: Int
-    ): Data<String>
+    ): Data<Data<PageData<TodoData>>>
 
 
 }
