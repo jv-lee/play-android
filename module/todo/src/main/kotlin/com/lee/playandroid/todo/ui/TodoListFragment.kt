@@ -29,7 +29,7 @@ class TodoListFragment : BaseFragment(R.layout.fragment_todo_list) {
 
     companion object {
         // 1:已完成 0:待完成
-        private const val ARG_PARAMS_STATUS = "status"
+        const val ARG_PARAMS_STATUS = "status"
 
         // 待完成TODO列表状态值
         const val UPCOMING_STATUS = 0
@@ -49,9 +49,7 @@ class TodoListFragment : BaseFragment(R.layout.fragment_todo_list) {
 
     private val binding by binding(FragmentTodoListBinding::bind)
 
-    private val viewModel by viewModels<TodoViewModel> {
-        TodoViewModel.CreateFactory(status)
-    }
+    private val viewModel by viewModels<TodoViewModel>()
 
     private lateinit var mAdapter: TodoListAdapter
 
