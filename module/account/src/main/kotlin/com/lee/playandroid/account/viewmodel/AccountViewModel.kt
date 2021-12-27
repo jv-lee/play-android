@@ -43,7 +43,7 @@ class AccountViewModel : CoroutineViewModel() {
                 updateAccountStatus(this, true)
             }
         }, {
-            cacheManager.getCache<AccountData>(Constants.CACHE_KEY_ACCOUNT_DATA)
+            cacheManager.getCache(Constants.CACHE_KEY_ACCOUNT_DATA)
         }, {}).collect {
             _accountLive.postValue(it)
         }
