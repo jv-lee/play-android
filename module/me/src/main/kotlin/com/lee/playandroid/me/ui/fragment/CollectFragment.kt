@@ -17,9 +17,9 @@ import com.lee.library.widget.SwipeItemLayout
 import com.lee.playandroid.library.common.entity.Content
 import com.lee.playandroid.library.common.entity.PageData
 import com.lee.playandroid.library.common.extensions.actionFailed
+import com.lee.playandroid.library.common.ui.adapter.SimpleTextAdapter
 import com.lee.playandroid.me.R
 import com.lee.playandroid.me.databinding.FragmentCollectBinding
-import com.lee.playandroid.me.ui.adapter.SimpleTextAdapter
 import com.lee.playandroid.me.viewmodel.CollectViewModel
 import com.lee.playandroid.router.navigateDetails
 import java.util.*
@@ -66,7 +66,6 @@ class CollectFragment : BaseFragment(R.layout.fragment_collect),
             setOnItemChildClickListener(
                 this@CollectFragment,
                 R.id.frame_container,
-                R.id.btn_done,
                 R.id.btn_delete
             )
         }.proxy

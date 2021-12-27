@@ -1,4 +1,4 @@
-package com.lee.playandroid.me.ui.adapter
+package com.lee.playandroid.library.common.ui.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -8,8 +8,8 @@ import com.lee.library.adapter.binding.ViewBindingAdapter
 import com.lee.library.adapter.binding.ViewBindingHolder
 import com.lee.library.adapter.item.ViewBindingItem
 import com.lee.library.utils.TimeUtil
+import com.lee.playandroid.library.common.databinding.ItemSimpleTextBinding
 import com.lee.playandroid.library.common.entity.Content
-import com.lee.playandroid.me.databinding.ItemSimpleTextBinding
 
 /**
  * @author jv.lee

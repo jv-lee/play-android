@@ -37,4 +37,11 @@ interface ApiService {
         @Field("link") link: String
     ): Data<String>
 
+    /**
+     * 删除我的分享文章
+     * @param id 文章id
+     */
+    @POST("/lg/user_article/delete/{id}/json")
+    suspend fun postDeleteShareAsync(@Path("id") id: Long): Data<String>
+
 }
