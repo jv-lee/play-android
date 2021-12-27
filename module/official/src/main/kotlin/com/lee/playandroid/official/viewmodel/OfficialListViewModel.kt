@@ -3,7 +3,6 @@ package com.lee.playandroid.official.viewmodel
 import androidx.lifecycle.SavedStateHandle
 import com.lee.library.cache.CacheManager
 import com.lee.library.extensions.getCache
-import com.lee.library.extensions.putCache
 import com.lee.library.extensions.putPageCache
 import com.lee.library.mvvm.livedata.LoadStatus
 import com.lee.library.mvvm.ui.UiStatePageLiveData
@@ -32,9 +31,7 @@ class OfficialListViewModel(handle: SavedStateHandle) : CoroutineViewModel() {
         launchIO {
             contentListLive.apply {
                 pageLaunch(status, { page ->
-                    repository.api.getOfficialDataAsync(id, page).checkData().also { newData ->
-                        applyData(getValueData(), newData)
-                    }
+                    applyData { repository.api.getOfficialDataAsync(id, page).checkData() }
                 }, {
                     cacheManager.getCache(Constants.CACHE_KEY_OFFICIAL_DATA + id)
                 }, {

@@ -87,10 +87,10 @@ interface ApiService {
     suspend fun postTodoDataAsync(
         @Path("page") page: Int,
         @Field("status") status: Int,
-        @Field("type") type: Int,
+        @Field("type") type: Int = 0,
 //        @Field("priority") priority: Int,
 //        @Field("orderby") order: Int
-    ): Data<Data<PageData<TodoData>>>
+    ): Data<PageData<TodoData>>
 
 
 }
