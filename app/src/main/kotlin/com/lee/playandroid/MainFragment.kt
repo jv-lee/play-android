@@ -53,9 +53,9 @@ class MainFragment : BaseFragment(R.layout.fragment_main),
     @SuppressLint("ResourceType")
     override fun updateDarkView() {
         binding.navigationBar.itemTextColor =
-            ContextCompat.getColorStateList(requireContext(), R.drawable.main_selector)
+            ContextCompat.getColorStateList(requireContext(), R.drawable.selector_main)
         binding.navigationBar.itemIconTintList =
-            ContextCompat.getColorStateList(requireContext(), R.drawable.main_selector)
+            ContextCompat.getColorStateList(requireContext(), R.drawable.selector_main)
         binding.navigationBar.setBackgroundColorCompat(R.color.colorThemeItem)
     }
 

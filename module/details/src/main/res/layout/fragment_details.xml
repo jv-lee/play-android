@@ -23,6 +23,6 @@
         android:elevation="10dp"
         app:layout_constraintTop_toTopOf="parent"
         app:moreEnable="visible"
-        app:menuRes="@menu/details_menu" />
+        app:menuRes="@menu/menu_details" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -21,10 +21,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorThemeItem"
-        app:itemIconTint="@drawable/main_selector"
-        app:itemTextColor="@drawable/main_selector"
+        app:itemIconTint="@drawable/selector_main"
+        app:itemTextColor="@drawable/selector_main"
         app:labelVisibilityMode="unlabeled"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:menu="@menu/main_menu" />
+        app:menu="@menu/menu_main" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

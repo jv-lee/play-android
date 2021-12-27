@@ -17,17 +17,17 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:navGraph="@navigation/main_navigation" />
+        app:navGraph="@navigation/navigation_main" />
 
     <com.lee.library.widget.nav.BottomNavView
         android:id="@+id/navigation_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorThemeItem"
-        app:itemIconTint="@drawable/main_selector"
-        app:itemTextColor="@drawable/main_selector"
+        app:itemIconTint="@drawable/selector_main"
+        app:itemTextColor="@drawable/selector_main"
         app:labelVisibilityMode="unlabeled"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:menu="@menu/main_menu" />
+        app:menu="@menu/menu_main" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

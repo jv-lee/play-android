@@ -29,10 +29,10 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/navigation_bar_height"
         android:background="@color/colorThemeItem"
-        app:itemIconTint="@drawable/main_selector"
-        app:itemTextColor="@drawable/main_selector"
+        app:itemIconTint="@drawable/selector_main"
+        app:itemTextColor="@drawable/selector_main"
         app:labelVisibilityMode="unlabeled"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:menu="@menu/todo_menu" />
+        app:menu="@menu/menu_todo" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

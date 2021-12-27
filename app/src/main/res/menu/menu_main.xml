@@ -2,21 +2,21 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/home_graph"
-        android:icon="@drawable/upcoming_selector"
+        android:icon="@drawable/selector_upcoming"
         android:title="@string/nav_home" />
 
     <item
         android:id="@+id/square_graph"
-        android:icon="@drawable/square_selector"
+        android:icon="@drawable/selector_square"
         android:title="@string/nav_square" />
 
     <item
         android:id="@+id/system_graph"
-        android:icon="@drawable/system_selector"
+        android:icon="@drawable/selector_system"
         android:title="@string/nav_system" />
 
     <item
         android:id="@+id/me_graph"
-        android:icon="@drawable/me_selector"
+        android:icon="@drawable/selector_me"
         android:title="@string/nav_me" />
 </menu>
