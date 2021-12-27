@@ -6,6 +6,9 @@ import com.lee.library.extensions.binding
 import com.lee.playandroid.todo.R
 import com.lee.playandroid.todo.databinding.FragmentTodoBinding
 
+private const val UPCOMING_STATUS = 0
+private const val COMPLETE_STATUS = 1
+
 /**
  * @author jv.lee
  * @date 2021/12/23
@@ -18,7 +21,10 @@ class TodoFragment : BaseFragment(R.layout.fragment_todo) {
     private val vpAdapter by lazy {
         UiPager2Adapter(
             this,
-            arrayListOf(TodoUpcomingFragment(), TodoCompleteFragment())
+            arrayListOf(
+                TodoListFragment.newInstance(UPCOMING_STATUS),
+                TodoListFragment.newInstance(COMPLETE_STATUS)
+            )
         )
     }
 
