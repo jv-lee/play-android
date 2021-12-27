@@ -63,11 +63,7 @@ class CollectFragment : BaseFragment(R.layout.fragment_collect),
                 }
             })
 
-            setOnItemChildClickListener(
-                this@CollectFragment,
-                R.id.frame_container,
-                R.id.btn_delete
-            )
+            setOnItemChildClickListener(this@CollectFragment)
         }.proxy
     }
 

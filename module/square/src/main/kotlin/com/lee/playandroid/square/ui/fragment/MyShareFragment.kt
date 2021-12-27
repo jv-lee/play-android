@@ -71,11 +71,7 @@ class MyShareFragment : BaseFragment(R.layout.fragment_my_share),
 
             })
 
-            setOnItemChildClickListener(
-                this@MyShareFragment,
-                CR.id.frame_container,
-                CR.id.btn_delete
-            )
+            setOnItemChildClickListener(this@MyShareFragment)
         }.proxy
     }
 

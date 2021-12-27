@@ -8,6 +8,7 @@ import com.lee.library.adapter.binding.ViewBindingAdapter
 import com.lee.library.adapter.binding.ViewBindingHolder
 import com.lee.library.adapter.item.ViewBindingItem
 import com.lee.library.utils.TimeUtil
+import com.lee.playandroid.library.common.R
 import com.lee.playandroid.library.common.databinding.ItemSimpleTextBinding
 import com.lee.playandroid.library.common.entity.Content
 
@@ -20,6 +21,7 @@ class SimpleTextAdapter(context: Context, data: List<Content>) :
     ViewBindingAdapter<Content>(context, data) {
 
     init {
+        addItemChildIds(R.id.frame_container, R.id.btn_delete)
         addItemStyles(SimpleTextItem())
     }
 
