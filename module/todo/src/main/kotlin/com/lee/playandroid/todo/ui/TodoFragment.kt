@@ -5,11 +5,8 @@ import com.lee.library.base.BaseFragment
 import com.lee.library.extensions.binding
 import com.lee.playandroid.todo.R
 import com.lee.playandroid.todo.databinding.FragmentTodoBinding
-
-// 待完成TODO列表状态值
-private const val UPCOMING_STATUS = 0
-// 已完成TODO列表状态值
-private const val COMPLETE_STATUS = 1
+import com.lee.playandroid.todo.ui.TodoListFragment.Companion.COMPLETE_STATUS
+import com.lee.playandroid.todo.ui.TodoListFragment.Companion.UPCOMING_STATUS
 
 /**
  * @author jv.lee
