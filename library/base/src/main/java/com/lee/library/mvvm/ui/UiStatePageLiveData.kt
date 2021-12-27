@@ -101,4 +101,10 @@ class UiStatePageLiveData(
         }
     }
 
+    suspend fun <T> applyData(dataResponse: suspend () -> PagingData<T>): PagingData<T> {
+        return dataResponse().also { newData ->
+            applyData(getValueData(), newData)
+        }
+    }
+
 }
