@@ -22,6 +22,8 @@ fun <T> BaseViewAdapter<T>.submitData(
         if (data == pageData.getDataSource()) {
             // 重复数据空数据校验
             if (pageData.getDataSource().isNullOrEmpty()) {
+                if (isPageCompleted) initStatusView()
+                clearData()
                 pageEmpty()
                 emptyBlock()
             }
@@ -30,6 +32,8 @@ fun <T> BaseViewAdapter<T>.submitData(
 
         //设置空页面
         if (pageData.getDataSource().isNullOrEmpty()) {
+            if (isPageCompleted) initStatusView()
+            clearData()
             pageEmpty()
             emptyBlock()
             return
