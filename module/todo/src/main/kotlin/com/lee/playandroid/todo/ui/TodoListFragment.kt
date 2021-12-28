@@ -17,7 +17,7 @@ import com.lee.playandroid.library.common.extensions.actionFailed
 import com.lee.playandroid.todo.R
 import com.lee.playandroid.todo.databinding.FragmentTodoListBinding
 import com.lee.playandroid.todo.ui.adapter.TodoListAdapter
-import com.lee.playandroid.todo.ui.widget.TodoDividerItemDecoration
+import com.lee.playandroid.todo.ui.widget.StickyDateItemDecoration
 import com.lee.playandroid.todo.viewmodel.TodoViewModel
 
 /**
@@ -33,6 +33,7 @@ class TodoListFragment : BaseFragment(R.layout.fragment_todo_list) {
 
         // 待完成TODO列表状态值
         const val UPCOMING_STATUS = 0
+
         // 已完成TODO列表状态值
         const val COMPLETE_STATUS = 1
 
@@ -54,7 +55,6 @@ class TodoListFragment : BaseFragment(R.layout.fragment_todo_list) {
     private lateinit var mAdapter: TodoListAdapter
 
     override fun bindView() {
-        binding.rvContainer.addItemDecoration(TodoDividerItemDecoration(requireContext()))
         binding.rvContainer.adapter = TodoListAdapter(requireContext(), arrayListOf()).apply {
             mAdapter = this
 
@@ -75,6 +75,7 @@ class TodoListFragment : BaseFragment(R.layout.fragment_todo_list) {
                 }
             })
         }.proxy
+        binding.rvContainer.addItemDecoration(StickyDateItemDecoration(requireContext(), mAdapter))
     }
 
     override fun bindData() {

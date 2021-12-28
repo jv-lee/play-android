@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@color/colorThemeItem"
     android:paddingStart="@dimen/large_offset"
     android:paddingTop="@dimen/medium_offset"
     android:paddingEnd="@dimen/large_offset"
