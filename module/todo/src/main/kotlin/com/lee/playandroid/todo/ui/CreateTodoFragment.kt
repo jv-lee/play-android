@@ -60,6 +60,11 @@ class CreateTodoFragment : BaseFragment(R.layout.fragment_create_todo) {
                 binding.root.updatePadding(bottom = diff)
             }
         }
+
+        // 保存TODO点击事件
+        binding.tvSave.setOnClickListener {
+            requestSaveContent()
+        }
     }
 
     override fun bindData() {
@@ -92,6 +97,18 @@ class CreateTodoFragment : BaseFragment(R.layout.fragment_create_todo) {
         val currentDate =
             TimeUtil.date2String(Date(), SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()))
         binding.tvDateContent.text = if (TextUtils.isEmpty(date)) currentDate else date
+    }
+
+    /**
+     * 请求创建TODO
+     */
+    private fun requestSaveContent() {
+        val title = binding.editTitle.text.toString()
+        val content = binding.editContent.text.toString()
+        val date = binding.tvDateContent.text.toString()
+        val priority =
+            if (binding.radioButtonLow.isChecked) ARG_PRIORITY_LOW else ARG_PRIORITY_HEIGHT
+        viewModel.requestAddTodo(title, content, date, priority)
     }
 
 }
