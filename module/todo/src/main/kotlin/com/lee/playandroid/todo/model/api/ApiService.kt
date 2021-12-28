@@ -21,7 +21,7 @@ interface ApiService {
      * @param content 新增详情（必须）
      * @param date 2018-08-01 预定完成时间（不传默认当天，建议传）
      * @param type 工作:1、生活:2、娱乐:3 如果不设置type则为 0，未来无法做 type=0的筛选，会显示全部（筛选 type 必须为大于 0 的整数）（可选）
-     * @param priority priority 主要用于定义优先级，在app 中预定义几个优先级：重要:1、一般:2（可选）
+     * @param priority priority 主要用于定义优先级，在app 中预定义几个优先级：一般:0 重要:1（可选）
      */
     @POST("/lg/todo/add/json")
     @FormUrlEncoded

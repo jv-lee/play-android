@@ -32,10 +32,10 @@ class TodoListFragment : BaseFragment(R.layout.fragment_todo_list) {
         const val ARG_PARAMS_STATUS = "status"
 
         // 待完成TODO列表状态值
-        const val UPCOMING_STATUS = 0
+        const val ARG_STATUS_UPCOMING = 0
 
         // 已完成TODO列表状态值
-        const val COMPLETE_STATUS = 1
+        const val ARG_STATUS_COMPLETE = 1
 
         fun newInstance(status: Int): Fragment {
             return TodoListFragment().apply {
