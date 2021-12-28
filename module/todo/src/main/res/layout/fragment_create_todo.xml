@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorThemeBackground">
+
+    <com.lee.library.widget.toolbar.TitleToolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:titleText="@string/title_create_todo" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginBottom="@dimen/large_offset"
+        app:layout_constraintBottom_toTopOf="@id/tv_save"
+        app:layout_constraintTop_toBottomOf="@id/toolbar">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/tv_title_label"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/create_todo_item_height"
+                android:layout_marginStart="@dimen/large_offset"
+                android:gravity="center"
+                android:text="@string/todo_create_title_label"
+                android:textColor="@color/colorThemeAccent"
+                android:textSize="@dimen/font_size_medium"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/edit_title"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginEnd="@dimen/large_offset"
+                android:background="@android:color/transparent"
+                android:gravity="center_vertical"
+                android:hint="@string/todo_create_title_hint"
+                android:textSize="@dimen/font_size_medium"
+                app:layout_constraintBottom_toBottomOf="@id/tv_title_label"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/tv_title_label"
+                app:layout_constraintTop_toTopOf="@id/tv_title_label" />
+
+            <View
+                android:id="@+id/line1"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/colorThemeFocusLight"
+                app:layout_constraintTop_toBottomOf="@id/edit_title" />
+
+            <TextView
+                android:id="@+id/tv_content_label"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/create_todo_item_height"
+                android:layout_marginStart="@dimen/large_offset"
+                android:gravity="center"
+                android:text="@string/todo_create_content_label"
+                android:textColor="@color/colorThemeAccent"
+                android:textSize="@dimen/font_size_medium"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/line1" />
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/edit_content"
+                android:layout_width="0dp"
+                android:layout_height="138dp"
+                android:layout_marginEnd="@dimen/large_offset"
+                android:background="@android:color/transparent"
+                android:gravity="top"
+                android:hint="@string/todo_create_content_hint"
+                android:paddingTop="13dp"
+                android:textSize="@dimen/font_size_medium"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/tv_content_label"
+                app:layout_constraintTop_toTopOf="@id/tv_content_label" />
+
+            <View
+                android:id="@+id/line2"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/colorThemeFocusLight"
+                app:layout_constraintTop_toBottomOf="@id/edit_content" />
+
+            <TextView
+                android:id="@+id/tv_level_label"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/create_todo_item_height"
+                android:layout_marginStart="@dimen/large_offset"
+                android:gravity="center"
+                android:text="@string/todo_create_level_label"
+                android:textColor="@color/colorThemeAccent"
+                android:textSize="@dimen/font_size_medium"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/line2" />
+
+            <RadioGroup
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                app:layout_constraintBottom_toBottomOf="@id/tv_level_label"
+                app:layout_constraintStart_toEndOf="@id/tv_level_label"
+                app:layout_constraintTop_toTopOf="@id/tv_level_label">
+
+                <RadioButton
+                    android:id="@+id/radio_button_low"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="true"
+                    android:text="@string/todo_create_level_low"
+                    android:textColor="@color/colorThemePrimary"
+                    android:textSize="@dimen/font_size_medium" />
+
+                <RadioButton
+                    android:id="@+id/radio_button_height"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/medium_offset"
+                    android:text="@string/todo_create_level_height"
+                    android:textColor="@color/colorThemePrimary"
+                    android:textSize="@dimen/font_size_medium" />
+
+            </RadioGroup>
+
+            <View
+                android:id="@+id/line3"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/colorThemeFocusLight"
+                app:layout_constraintTop_toBottomOf="@id/tv_level_label" />
+
+            <TextView
+                android:id="@+id/tv_date_label"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/create_todo_item_height"
+                android:layout_marginStart="@dimen/large_offset"
+                android:gravity="center"
+                android:text="@string/todo_create_date_label"
+                android:textColor="@color/colorThemeAccent"
+                android:textSize="@dimen/font_size_medium"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/line3" />
+
+            <TextView
+                android:id="@+id/tv_date_content"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginEnd="@dimen/large_offset"
+                android:drawableEnd="@drawable/vector_arrow"
+                android:gravity="center_vertical|start"
+                android:textColor="@color/colorThemeAccent"
+                android:textSize="@dimen/font_size_medium"
+                app:layout_constraintBottom_toBottomOf="@id/tv_date_label"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/tv_date_label"
+                app:layout_constraintTop_toTopOf="@id/tv_date_label"
+                tools:text="2021-12-28" />
+
+            <View
+                android:id="@+id/line4"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/colorThemeFocusLight"
+                app:layout_constraintTop_toBottomOf="@id/tv_date_label" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
+
+    <com.lee.library.widget.SelectorTextView
+        android:id="@+id/tv_save"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/create_todo_button_height"
+        android:layout_marginStart="@dimen/large_offset"
+        android:layout_marginEnd="@dimen/large_offset"
+        android:layout_marginBottom="@dimen/large_offset"
+        android:text="@string/todo_create_save"
+        android:textSize="@dimen/font_size_medium"
+        app:buttonRadius="@dimen/radius_offset"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:normalBackgroundColor="@color/colorThemeFocus"
+        app:normalTextColor="@android:color/white"
+        app:pressedBackgroundColor="@color/colorThemeFocus"
+        app:pressedTextColor="@color/colorThemeFocusLight" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

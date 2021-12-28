@@ -11,6 +11,19 @@
         android:label="todo"
         tools:layout="@layout/fragment_todo">
         <deepLink app:uri="play://todo" />
+        <action
+            android:id="@+id/action_todo_fragment_to_create_todo_fragment"
+            app:destination="@id/create_todo_fragment"
+            app:enterAnim="@anim/zoom_in"
+            app:exitAnim="@anim/zoom_exit"
+            app:popEnterAnim="@anim/zoom_out"
+            app:popExitAnim="@anim/alpha_default_hide" />
     </fragment>
+
+    <fragment
+        android:id="@+id/create_todo_fragment"
+        android:name="com.lee.playandroid.todo.ui.CreateTodoFragment"
+        android:label="createTodo"
+        tools:layout="@layout/fragment_create_todo" />
 
 </navigation>

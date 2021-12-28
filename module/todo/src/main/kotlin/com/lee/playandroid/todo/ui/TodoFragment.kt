@@ -1,5 +1,6 @@
 package com.lee.playandroid.todo.ui
 
+import androidx.navigation.fragment.findNavController
 import com.lee.library.adapter.core.UiPager2Adapter
 import com.lee.library.base.BaseFragment
 import com.lee.library.extensions.binding
@@ -17,21 +18,21 @@ class TodoFragment : BaseFragment(R.layout.fragment_todo) {
 
     private val binding by binding(FragmentTodoBinding::bind)
 
-    private val vpAdapter by lazy {
-        UiPager2Adapter(
+    override fun bindView() {
+        binding.vpContainer.isUserInputEnabled = false
+        binding.vpContainer.adapter = UiPager2Adapter(
             this,
             arrayListOf(
                 TodoListFragment.newInstance(UPCOMING_STATUS),
                 TodoListFragment.newInstance(COMPLETE_STATUS)
             )
         )
-    }
-
-    override fun bindView() {
-        binding.vpContainer.adapter = vpAdapter
-        binding.vpContainer.isUserInputEnabled = false
 
         binding.navigationBar.bindViewPager(binding.vpContainer)
+
+        binding.floatingButton.setOnClickListener {
+            findNavController().navigate(R.id.action_todo_fragment_to_create_todo_fragment)
+        }
     }
 
     override fun bindData() {

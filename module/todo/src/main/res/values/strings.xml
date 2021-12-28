@@ -2,4 +2,16 @@
 <resources>
     <string name="title_complete">已完成</string>
     <string name="title_upcoming">待完成</string>
+
+    <string name="title_create_todo">新增</string>
+    <string name="title_edit_todo">编辑</string>
+    <string name="todo_create_title_label">标题：</string>
+    <string name="todo_create_title_hint">必填</string>
+    <string name="todo_create_content_label">详情：</string>
+    <string name="todo_create_content_hint">非必填</string>
+    <string name="todo_create_level_label">优先级：</string>
+    <string name="todo_create_level_low">一般</string>
+    <string name="todo_create_level_height">重要</string>
+    <string name="todo_create_date_label">日期：</string>
+    <string name="todo_create_save">保存</string>
 </resources>

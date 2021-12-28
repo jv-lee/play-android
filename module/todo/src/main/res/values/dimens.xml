@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="create_todo_item_height">46dp</dimen>
+    <dimen name="create_todo_button_height">36dp</dimen>
+</resources>
