@@ -43,10 +43,10 @@ class LoginFragment : BaseFragment(R.layout.fragment_login), View.OnClickListene
 
     override fun bindView() {
         // 设置点击空白区域隐藏软键盘
-        KeyboardTools.parentTouchHideSoftInput(requireActivity(),binding.root)
+        KeyboardTools.parentTouchHideSoftInput(requireActivity(), binding.root)
 
         // 设置登陆过的账户名
-        binding.editUsername.setText(PreferencesTools.get(SP_KEY_SAVE_INPUT_USERNAME, ""))
+        binding.editUsername.setText(PreferencesTools.get<String>(SP_KEY_SAVE_INPUT_USERNAME))
 
         // 监听键盘弹起
         binding.root.keyboardObserver { diff ->
