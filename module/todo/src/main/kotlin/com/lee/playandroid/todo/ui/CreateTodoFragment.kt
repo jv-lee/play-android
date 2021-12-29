@@ -1,7 +1,9 @@
 package com.lee.playandroid.todo.ui
 
+import android.os.Bundle
 import android.text.TextUtils
 import androidx.core.view.updatePadding
+import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.lee.library.base.BaseFragment
@@ -14,6 +16,8 @@ import com.lee.playandroid.library.common.entity.TodoData
 import com.lee.playandroid.library.common.extensions.actionFailed
 import com.lee.playandroid.todo.R
 import com.lee.playandroid.todo.databinding.FragmentCreateTodoBinding
+import com.lee.playandroid.todo.ui.TodoFragment.Companion.REQUEST_KEY_SAVE
+import com.lee.playandroid.todo.ui.TodoFragment.Companion.REQUEST_VALUE_TODO
 import com.lee.playandroid.todo.viewmodel.CreateTodoViewModel
 import java.text.SimpleDateFormat
 import java.util.*
@@ -74,6 +78,9 @@ class CreateTodoFragment : BaseFragment(R.layout.fragment_create_todo) {
 
     override fun bindData() {
         viewModel.addTodoLive.observeState<TodoData>(this, success = {
+            setFragmentResult(REQUEST_KEY_SAVE, Bundle().apply {
+                putParcelable(REQUEST_VALUE_TODO, it)
+            })
             dismiss(loadingDialog)
             toast(getString(R.string.todo_create_success))
             findNavController().popBackStack()

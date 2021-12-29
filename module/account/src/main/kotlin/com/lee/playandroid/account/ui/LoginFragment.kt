@@ -18,7 +18,6 @@ import com.lee.library.mvvm.ui.observeState
 import com.lee.library.tools.KeyboardTools
 import com.lee.library.tools.PreferencesTools
 import com.lee.playandroid.account.R
-import com.lee.playandroid.account.constants.Constants.REQUEST_KEY_LOGIN
 import com.lee.playandroid.account.constants.Constants.SP_KEY_SAVE_INPUT_USERNAME
 import com.lee.playandroid.account.databinding.FragmentLoginBinding
 import com.lee.playandroid.account.viewmodel.AccountViewModel
@@ -33,6 +32,11 @@ import com.lee.playandroid.library.common.extensions.actionFailed
  */
 class LoginFragment : BaseFragment(R.layout.fragment_login), View.OnClickListener,
     TextWatcherAdapter {
+
+    companion object {
+        // login/register 页面回传注册key
+        const val REQUEST_KEY_LOGIN = "requestKey:login"
+    }
 
     private val viewModel by viewModels<LoginRegisterViewModel>()
     private val accountViewModel by activityViewModels<AccountViewModel>()

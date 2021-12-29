@@ -17,6 +17,7 @@ import com.lee.playandroid.library.common.extensions.actionFailed
 import com.lee.playandroid.todo.R
 import com.lee.playandroid.todo.databinding.FragmentTodoListBinding
 import com.lee.playandroid.todo.ui.adapter.TodoListAdapter
+import com.lee.playandroid.todo.ui.listener.TodoActionListener
 import com.lee.playandroid.todo.ui.widget.StickyDateItemDecoration
 import com.lee.playandroid.todo.viewmodel.TodoViewModel
 
@@ -25,7 +26,8 @@ import com.lee.playandroid.todo.viewmodel.TodoViewModel
  * @date 2021/12/23
  * @description TODO列表数据页 (待完成/已完成)
  */
-class TodoListFragment : BaseFragment(R.layout.fragment_todo_list) {
+class TodoListFragment : BaseFragment(R.layout.fragment_todo_list),
+    TodoActionListener {
 
     companion object {
         // 1:已完成 0:待完成
@@ -85,5 +87,12 @@ class TodoListFragment : BaseFragment(R.layout.fragment_todo_list) {
             mAdapter.submitFailed()
             actionFailed(it)
         })
+    }
+
+    override fun addAction(todo: TodoData) {
+        if (status == ARG_STATUS_UPCOMING) {
+            mAdapter.openLoadMore()
+            viewModel.requestTodoData(LoadStatus.REFRESH)
+        }
     }
 }

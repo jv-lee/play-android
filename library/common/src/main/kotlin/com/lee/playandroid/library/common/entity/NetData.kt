@@ -166,6 +166,7 @@ data class MyShareData(
     val shareArticles: PageData<Content>
 )
 
+@Parcelize
 @Keep
 data class TodoData(
     val id: Int,
@@ -179,4 +180,4 @@ data class TodoData(
     val type: Int,
     val userId: Int,
     val priority: Int
-)
+) : Parcelable

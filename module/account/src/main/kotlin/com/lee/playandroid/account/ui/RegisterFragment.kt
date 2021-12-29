@@ -19,8 +19,8 @@ import com.lee.library.tools.KeyboardTools
 import com.lee.library.tools.PreferencesTools
 import com.lee.playandroid.account.R
 import com.lee.playandroid.account.constants.Constants
-import com.lee.playandroid.account.constants.Constants.REQUEST_KEY_LOGIN
 import com.lee.playandroid.account.databinding.FragmentRegisterBinding
+import com.lee.playandroid.account.ui.LoginFragment.Companion.REQUEST_KEY_LOGIN
 import com.lee.playandroid.account.viewmodel.AccountViewModel
 import com.lee.playandroid.account.viewmodel.LoginRegisterViewModel
 import com.lee.playandroid.library.common.entity.AccountData
