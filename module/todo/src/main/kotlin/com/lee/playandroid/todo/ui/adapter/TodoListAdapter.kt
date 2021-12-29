@@ -21,7 +21,7 @@ class TodoListAdapter(context: Context, private val status: Int, data: List<Todo
     ViewBindingAdapter<TodoData>(context, data) {
 
     init {
-        addItemChildIds(R.id.const_container, R.id.btn_delete)
+        addItemChildIds(R.id.const_container, R.id.btn_done, R.id.btn_delete)
         addItemStyles(TodoItem())
     }
 

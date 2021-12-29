@@ -109,19 +109,21 @@ class TodoListFragment : BaseFragment(R.layout.fragment_todo_list),
             SwipeItemLayout.closeAllItems(binding.rvContainer)
             actionFailed(it)
         })
+
+        viewModel.todoUpdateLive.observeState<TodoData>(this, success = {
+            toast(getString(R.string.todo_move_success))
+            (parentFragment as? TodoFragment)?.moveTodoItem(it)
+        }, error = {
+            SwipeItemLayout.closeAllItems(binding.rvContainer)
+            actionFailed(it)
+        })
     }
 
     override fun onItemChild(view: View, entity: TodoData, position: Int) {
         when (view.id) {
-            R.id.const_container -> {
-                startEditTodoPage(entity)
-            }
-            R.id.btn_done -> {
-                toast("itemDone")
-            }
-            R.id.btn_delete -> {
-                deleteTodoAction(position)
-            }
+            R.id.const_container -> startEditTodoPage(entity)
+            R.id.btn_done -> moveTodoAction(position)
+            R.id.btn_delete -> deleteTodoAction(position)
         }
     }
 
@@ -135,6 +137,27 @@ class TodoListFragment : BaseFragment(R.layout.fragment_todo_list),
     override fun updateAction(todo: TodoData) {
         mAdapter.openLoadMore()
         viewModel.requestTodoData(LoadStatus.REFRESH)
+    }
+
+    override fun moveAction(todo: TodoData) {
+        if (todo.status == status) {
+            mAdapter.openLoadMore()
+            viewModel.requestTodoData(LoadStatus.REFRESH)
+        }
+    }
+
+    /**
+     * 移动TODO状态
+     */
+    private fun moveTodoAction(position: Int) {
+        if (NetworkUtil.isNetworkConnected(requireContext())) {
+            mAdapter.data.removeAt(position)
+            mAdapter.notifyItemRemoved(position)
+            viewModel.requestUpdateTodoStatus(position)
+        } else {
+            SwipeItemLayout.closeAllItems(binding.rvContainer)
+            toast(getString(R.string.network_not_access))
+        }
     }
 
     /**

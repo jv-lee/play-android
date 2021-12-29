@@ -73,4 +73,13 @@ class TodoFragment : BaseFragment(R.layout.fragment_todo) {
         findNavController().navigate(R.id.action_todo_fragment_to_create_todo_fragment, bundle)
     }
 
+    /**
+     * 供子Fragment调用互通
+     */
+    fun moveTodoItem(todo: TodoData) {
+        childFragmentManager.fragments.forEach {
+            (it as? TodoActionListener)?.moveAction(todo)
+        }
+    }
+
 }
