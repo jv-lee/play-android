@@ -5,10 +5,21 @@ import com.lee.playandroid.library.common.entity.TodoData
 /**
  * @author jv.lee
  * @date 2021/12/29
- * @description
+ * @description todo双状态列表行为通信
  */
 interface TodoActionListener {
+    /**
+     * 添加TODO数据 回调todo列表更新
+     */
     fun addAction(todo: TodoData)
+
+    /**
+     * 更改TODO数据 回调todo列表更新
+     */
     fun updateAction(todo: TodoData)
+
+    /**
+     * 更改TODO状态 回调todo列表更新
+     */
     fun moveAction(todo: TodoData)
 }

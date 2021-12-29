@@ -2,6 +2,7 @@ package com.lee.playandroid.todo.ui.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.viewbinding.ViewBinding
 import com.lee.library.adapter.binding.ViewBindingAdapter
@@ -38,6 +39,8 @@ class TodoListAdapter(context: Context, private val status: Int, data: List<Todo
                     root.context.getString(R.string.todo_item_complete)
                 else
                     root.context.getString(R.string.todo_item_upcoming)
+                tvLevel.visibility =
+                    if (entity.priority == TodoData.PRIORITY_HEIGHT) View.VISIBLE else View.GONE
             }
         }
 

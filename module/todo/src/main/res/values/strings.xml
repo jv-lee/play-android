@@ -21,4 +21,6 @@
     <string name="todo_move_success">TODO状态修改成功</string>
     <string name="todo_item_complete">标记已完成</string>
     <string name="todo_item_upcoming">标记未完成</string>
+
+    <string name="todo_item_level_height">重要</string>
 </resources>

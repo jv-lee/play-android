@@ -10,28 +10,50 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorThemeItem"
-        android:paddingStart="@dimen/large_offset"
-        android:paddingTop="@dimen/medium_offset"
-        android:paddingEnd="@dimen/large_offset"
         android:paddingBottom="@dimen/medium_offset">
 
         <TextView
+            android:id="@+id/tv_level"
+            android:layout_width="35dp"
+            android:layout_height="20dp"
+            android:layout_marginStart="-13dp"
+            android:layout_marginTop="-5dp"
+            android:background="@android:color/holo_red_dark"
+            android:gravity="bottom|center_horizontal"
+            android:rotation="-45"
+            android:text="@string/todo_item_level_height"
+            android:textColor="@android:color/white"
+            android:textSize="8sp"
+            android:visibility="gone"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="SmallSp"
+            tools:visibility="visible" />
+
+        <TextView
             android:id="@+id/tv_title"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/large_offset"
+            android:layout_marginTop="@dimen/medium_offset"
+            android:layout_marginEnd="@dimen/large_offset"
             android:textColor="@color/colorThemeAccent"
             android:textSize="@dimen/font_size_medium"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="Title" />
 
         <TextView
             android:id="@+id/tv_content"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/large_offset"
             android:layout_marginTop="@dimen/small_offset"
+            android:layout_marginEnd="@dimen/large_offset"
             android:textColor="@color/colorThemePrimary"
             android:textSize="@dimen/font_size_small"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_title"
             tools:text="Content" />
