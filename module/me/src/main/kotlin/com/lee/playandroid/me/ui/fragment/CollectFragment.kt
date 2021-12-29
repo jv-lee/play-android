@@ -75,7 +75,7 @@ class CollectFragment : BaseFragment(R.layout.fragment_collect),
             actionFailed(it)
         })
 
-        viewModel.unCollectLive.observeState<Int>(this, success = { position ->
+        viewModel.unCollectLive.observeState<Int>(this, success = {
             toast(getString(R.string.collect_remove_item_success))
         }, error = {
             SwipeItemLayout.closeAllItems(binding.rvContainer)

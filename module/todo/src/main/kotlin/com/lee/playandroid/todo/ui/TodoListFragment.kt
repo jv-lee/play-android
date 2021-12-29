@@ -15,6 +15,7 @@ import com.lee.library.extensions.binding
 import com.lee.library.extensions.toast
 import com.lee.library.mvvm.livedata.LoadStatus
 import com.lee.library.mvvm.ui.observeState
+import com.lee.library.utils.NetworkUtil
 import com.lee.library.widget.SwipeItemLayout
 import com.lee.playandroid.library.common.entity.PageData
 import com.lee.playandroid.library.common.entity.TodoData
@@ -62,6 +63,7 @@ class TodoListFragment : BaseFragment(R.layout.fragment_todo_list),
     private lateinit var mAdapter: TodoListAdapter
 
     override fun bindView() {
+        binding.rvContainer.itemAnimator = null
         binding.rvContainer.addOnItemTouchListener(
             SwipeItemLayout.OnSwipeItemTouchListener(
                 requireContext()
@@ -100,6 +102,13 @@ class TodoListFragment : BaseFragment(R.layout.fragment_todo_list),
             mAdapter.submitFailed()
             actionFailed(it)
         })
+
+        viewModel.todoDeleteLive.observeState<Int>(this, success = {
+            toast(getString(R.string.todo_delete_success))
+        }, error = {
+            SwipeItemLayout.closeAllItems(binding.rvContainer)
+            actionFailed(it)
+        })
     }
 
     override fun onItemChild(view: View, entity: TodoData, position: Int) {
@@ -111,7 +120,7 @@ class TodoListFragment : BaseFragment(R.layout.fragment_todo_list),
                 toast("itemDone")
             }
             R.id.btn_delete -> {
-                toast("itemDelete")
+                deleteTodoAction(position)
             }
         }
     }
@@ -126,6 +135,20 @@ class TodoListFragment : BaseFragment(R.layout.fragment_todo_list),
     override fun updateAction(todo: TodoData) {
         mAdapter.openLoadMore()
         viewModel.requestTodoData(LoadStatus.REFRESH)
+    }
+
+    /**
+     * 处理todo删除
+     */
+    private fun deleteTodoAction(position: Int) {
+        if (NetworkUtil.isNetworkConnected(requireContext())) {
+            mAdapter.data.removeAt(position)
+            mAdapter.notifyItemRemoved(position)
+            viewModel.requestDeleteTodo(position)
+        } else {
+            SwipeItemLayout.closeAllItems(binding.rvContainer)
+            toast(getString(R.string.network_not_access))
+        }
     }
 
     /**

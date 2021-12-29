@@ -16,6 +16,7 @@
     <string name="todo_create_save">保存</string>
 
     <string name="todo_create_success">创建TODO成功</string>
+    <string name="todo_delete_success">删除TODO成功</string>
     <string name="todo_update_success">更新TODO成功</string>
     <string name="todo_item_complete">标记已完成</string>
     <string name="todo_item_upcoming">标记未完成</string>

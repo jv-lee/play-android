@@ -38,7 +38,7 @@ interface ApiService {
      * @param id todoID
      */
     @POST("lg/todo/delete/{id}/json")
-    suspend fun postDeleteTodoAsync(@Path("id") id: Long): Data<String>
+    suspend fun postDeleteTodoAsync(@Path("id") id: Long): Data<Any>
 
     /**
      * 更新一个TODO
@@ -72,7 +72,7 @@ interface ApiService {
     suspend fun postUpdateTodoStatusAsync(
         @Path("id") id: Long,
         @Field("status") status: Int
-    ): Data<String>
+    ): Data<Any>
 
     /**
      * 获取TODO列表
