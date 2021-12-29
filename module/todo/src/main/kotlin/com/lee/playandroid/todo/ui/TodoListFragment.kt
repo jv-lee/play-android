@@ -1,16 +1,21 @@
 package com.lee.playandroid.todo.ui
 
 import android.os.Bundle
+import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
+import com.lee.library.adapter.base.BaseViewAdapter
 import com.lee.library.adapter.listener.LoadErrorListener
 import com.lee.library.adapter.page.submitData
 import com.lee.library.adapter.page.submitFailed
 import com.lee.library.base.BaseFragment
 import com.lee.library.extensions.arguments
 import com.lee.library.extensions.binding
+import com.lee.library.extensions.toast
 import com.lee.library.mvvm.livedata.LoadStatus
 import com.lee.library.mvvm.ui.observeState
+import com.lee.library.widget.SwipeItemLayout
 import com.lee.playandroid.library.common.entity.PageData
 import com.lee.playandroid.library.common.entity.TodoData
 import com.lee.playandroid.library.common.extensions.actionFailed
@@ -27,7 +32,7 @@ import com.lee.playandroid.todo.viewmodel.TodoViewModel
  * @description TODO列表数据页 (待完成/已完成)
  */
 class TodoListFragment : BaseFragment(R.layout.fragment_todo_list),
-    TodoActionListener {
+    BaseViewAdapter.OnItemChildView<TodoData>, TodoActionListener {
 
     companion object {
         // 1:已完成 0:待完成
@@ -57,26 +62,34 @@ class TodoListFragment : BaseFragment(R.layout.fragment_todo_list),
     private lateinit var mAdapter: TodoListAdapter
 
     override fun bindView() {
-        binding.rvContainer.adapter = TodoListAdapter(requireContext(), arrayListOf()).apply {
-            mAdapter = this
+        binding.rvContainer.addOnItemTouchListener(
+            SwipeItemLayout.OnSwipeItemTouchListener(
+                requireContext()
+            )
+        )
+        binding.rvContainer.adapter =
+            TodoListAdapter(requireContext(), status, arrayListOf()).apply {
+                mAdapter = this
 
-            initStatusView()
-            pageLoading()
+                initStatusView()
+                pageLoading()
 
-            setAutoLoadMoreListener {
-                viewModel.requestTodoData(LoadStatus.LOAD_MORE)
-            }
-
-            setLoadErrorListener(object : LoadErrorListener {
-                override fun pageReload() {
-                    viewModel.requestTodoData(LoadStatus.REFRESH)
+                setAutoLoadMoreListener {
+                    viewModel.requestTodoData(LoadStatus.LOAD_MORE)
                 }
 
-                override fun itemReload() {
-                    viewModel.requestTodoData(LoadStatus.RELOAD)
-                }
-            })
-        }.proxy
+                setLoadErrorListener(object : LoadErrorListener {
+                    override fun pageReload() {
+                        viewModel.requestTodoData(LoadStatus.REFRESH)
+                    }
+
+                    override fun itemReload() {
+                        viewModel.requestTodoData(LoadStatus.RELOAD)
+                    }
+                })
+
+                setOnItemChildClickListener(this@TodoListFragment)
+            }.proxy
         binding.rvContainer.addItemDecoration(StickyDateItemDecoration(requireContext(), mAdapter))
     }
 
@@ -89,10 +102,39 @@ class TodoListFragment : BaseFragment(R.layout.fragment_todo_list),
         })
     }
 
+    override fun onItemChild(view: View, entity: TodoData, position: Int) {
+        when (view.id) {
+            R.id.const_container -> {
+                startEditTodoPage(entity)
+            }
+            R.id.btn_done -> {
+                toast("itemDone")
+            }
+            R.id.btn_delete -> {
+                toast("itemDelete")
+            }
+        }
+    }
+
     override fun addAction(todo: TodoData) {
         if (status == ARG_STATUS_UPCOMING) {
             mAdapter.openLoadMore()
             viewModel.requestTodoData(LoadStatus.REFRESH)
         }
     }
+
+    /**
+     * 导航至todo编辑页
+     */
+    private fun startEditTodoPage(todo: TodoData) {
+        val bundle = Bundle().apply {
+            putInt(CreateTodoFragment.ARG_PARAMS_TYPE, CreateTodoFragment.ARG_TYPE_EDIT)
+            putParcelable(CreateTodoFragment.ARG_PARAMS_TODO, todo)
+        }
+        findNavController().navigate(
+            R.id.action_todo_fragment_to_create_todo_fragment,
+            bundle
+        )
+    }
+
 }

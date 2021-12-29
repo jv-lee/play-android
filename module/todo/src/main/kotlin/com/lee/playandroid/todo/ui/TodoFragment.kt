@@ -24,6 +24,7 @@ class TodoFragment : BaseFragment(R.layout.fragment_todo) {
 
     companion object {
         const val REQUEST_KEY_SAVE = "requestKey:save"
+        const val REQUEST_KEY_UPDATE = "requestKey:update"
         const val REQUEST_VALUE_TODO = "requestValue:todo"
     }
 
@@ -42,10 +43,7 @@ class TodoFragment : BaseFragment(R.layout.fragment_todo) {
         binding.navigationBar.bindViewPager(binding.vpContainer)
 
         binding.floatingButton.setOnClickListener {
-            val bundle = Bundle().apply {
-                putInt(ARG_PARAMS_TYPE, ARG_TYPE_CREATE)
-            }
-            findNavController().navigate(R.id.action_todo_fragment_to_create_todo_fragment, bundle)
+            startCreateTodoPage()
         }
     }
 
@@ -58,4 +56,15 @@ class TodoFragment : BaseFragment(R.layout.fragment_todo) {
             }
         }
     }
+
+    /**
+     * 导航到创建TODO页
+     */
+    private fun startCreateTodoPage() {
+        val bundle = Bundle().apply {
+            putInt(ARG_PARAMS_TYPE, ARG_TYPE_CREATE)
+        }
+        findNavController().navigate(R.id.action_todo_fragment_to_create_todo_fragment, bundle)
+    }
+
 }

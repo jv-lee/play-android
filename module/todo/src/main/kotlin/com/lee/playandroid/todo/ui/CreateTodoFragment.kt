@@ -1,7 +1,6 @@
 package com.lee.playandroid.todo.ui
 
 import android.os.Bundle
-import android.text.TextUtils
 import androidx.core.view.updatePadding
 import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.viewModels
@@ -13,10 +12,13 @@ import com.lee.library.mvvm.ui.observeState
 import com.lee.library.tools.KeyboardTools
 import com.lee.library.utils.TimeUtil
 import com.lee.playandroid.library.common.entity.TodoData
+import com.lee.playandroid.library.common.entity.TodoData.Companion.PRIORITY_HEIGHT
+import com.lee.playandroid.library.common.entity.TodoData.Companion.PRIORITY_LOW
 import com.lee.playandroid.library.common.extensions.actionFailed
 import com.lee.playandroid.todo.R
 import com.lee.playandroid.todo.databinding.FragmentCreateTodoBinding
 import com.lee.playandroid.todo.ui.TodoFragment.Companion.REQUEST_KEY_SAVE
+import com.lee.playandroid.todo.ui.TodoFragment.Companion.REQUEST_KEY_UPDATE
 import com.lee.playandroid.todo.ui.TodoFragment.Companion.REQUEST_VALUE_TODO
 import com.lee.playandroid.todo.viewmodel.CreateTodoViewModel
 import java.text.SimpleDateFormat
@@ -35,21 +37,11 @@ class CreateTodoFragment : BaseFragment(R.layout.fragment_create_todo) {
         const val ARG_TYPE_CREATE = 0
         const val ARG_TYPE_EDIT = 1
 
-        // 0：一般 1：重要
-        const val ARG_PARAMS_PRIORITY = "priority"
-        const val ARG_PRIORITY_LOW = 0
-        const val ARG_PRIORITY_HEIGHT = 1
-
-        const val ARG_PARAMS_TITLE = "title"
-        const val ARG_PARAMS_CONTENT = "content"
-        const val ARG_PARAMS_DATE = "date"
+        const val ARG_PARAMS_TODO = "todo"
     }
 
     private val type by arguments<Int>(ARG_PARAMS_TYPE)
-    private val priority by arguments<Int>(ARG_PARAMS_PRIORITY)
-    private val title by arguments<String>(ARG_PARAMS_TITLE)
-    private val content by arguments<String>(ARG_PARAMS_CONTENT)
-    private val date by arguments<String>(ARG_PARAMS_DATE)
+    private val todoData by lazy<TodoData?> { arguments?.getParcelable(ARG_PARAMS_TODO) }
 
     private val viewModel by viewModels<CreateTodoViewModel>()
 
@@ -72,17 +64,14 @@ class CreateTodoFragment : BaseFragment(R.layout.fragment_create_todo) {
 
         // 保存TODO点击事件
         binding.tvSave.setOnClickListener {
-            requestSaveContent()
+            todoData?.apply { requestUpdateContent() } ?: kotlin.run { requestSaveContent() }
         }
     }
 
     override fun bindData() {
-        viewModel.addTodoLive.observeState<TodoData>(this, success = {
-            setFragmentResult(REQUEST_KEY_SAVE, Bundle().apply {
-                putParcelable(REQUEST_VALUE_TODO, it)
-            })
+        viewModel.todoLive.observeState<TodoData>(this, success = {
+            responseTodo(it)
             dismiss(loadingDialog)
-            toast(getString(R.string.todo_create_success))
             findNavController().popBackStack()
         }, error = {
             dismiss(loadingDialog)
@@ -103,21 +92,30 @@ class CreateTodoFragment : BaseFragment(R.layout.fragment_create_todo) {
             )
         )
 
-        // 设置TODO标题及内容
-        binding.editTitle.setText(title)
-        binding.editContent.setText(content)
+        // 根据数据设置
+        todoData?.apply {
+            // 设置TODO标题及内容
+            binding.editTitle.setText(title)
+            binding.editContent.setText(content)
 
-        // 设置优先级
-        if (priority == ARG_PRIORITY_LOW) {
+            // 设置优先级
+            if (priority == PRIORITY_LOW) {
+                binding.radioButtonLow.isChecked = true
+            } else {
+                binding.radioButtonHeight.isChecked = true
+            }
+
+            // 设置时间Format
+            binding.tvDateContent.text = dateStr
+        } ?: kotlin.run {
+            // 设置默认值
             binding.radioButtonLow.isChecked = true
-        } else {
-            binding.radioButtonHeight.isChecked = true
-        }
 
-        // 设置时间Format
-        val currentDate =
-            TimeUtil.date2String(Date(), SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()))
-        binding.tvDateContent.text = if (TextUtils.isEmpty(date)) currentDate else date
+            // 获取当前时间format
+            val currentDate: String =
+                TimeUtil.date2String(Date(), SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()))
+            binding.tvDateContent.text = currentDate
+        }
     }
 
     /**
@@ -127,9 +125,33 @@ class CreateTodoFragment : BaseFragment(R.layout.fragment_create_todo) {
         val title = binding.editTitle.text.toString()
         val content = binding.editContent.text.toString()
         val date = binding.tvDateContent.text.toString()
-        val priority =
-            if (binding.radioButtonLow.isChecked) ARG_PRIORITY_LOW else ARG_PRIORITY_HEIGHT
+        val priority = if (binding.radioButtonLow.isChecked) PRIORITY_LOW else PRIORITY_HEIGHT
         viewModel.requestAddTodo(title, content, date, priority)
+    }
+
+    /**
+     * 请求更新TODO
+     */
+    private fun requestUpdateContent() {
+        todoData?.apply {
+            title = binding.editTitle.text.toString()
+            content = binding.editContent.text.toString()
+            dateStr = binding.tvDateContent.text.toString()
+            priority = if (binding.radioButtonLow.isChecked) PRIORITY_LOW else PRIORITY_HEIGHT
+            viewModel.requestUpdateTodo(this)
+        }
+    }
+
+    /**
+     * todo操作回调处理
+     */
+    private fun responseTodo(todoData: TodoData) {
+        setFragmentResult(
+            if (type == ARG_TYPE_CREATE) REQUEST_KEY_SAVE else REQUEST_KEY_UPDATE,
+            Bundle().apply {
+                putParcelable(REQUEST_VALUE_TODO, todoData)
+            })
+        toast(getString(if (type == ARG_TYPE_CREATE) R.string.todo_create_success else R.string.todo_update_success))
     }
 
 }

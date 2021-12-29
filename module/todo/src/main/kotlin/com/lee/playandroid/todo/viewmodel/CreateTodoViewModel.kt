@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import com.lee.library.mvvm.ui.UiState
 import com.lee.library.mvvm.ui.stateFlow
 import com.lee.library.mvvm.viewmodel.CoroutineViewModel
+import com.lee.playandroid.library.common.entity.TodoData
 import com.lee.playandroid.library.common.extensions.checkData
 import com.lee.playandroid.todo.model.repository.ApiRepository
 import kotlinx.coroutines.flow.collect
@@ -18,8 +19,8 @@ class CreateTodoViewModel : CoroutineViewModel() {
 
     private val apiRepository = ApiRepository()
 
-    private val _addTodoLive = MutableLiveData<UiState>()
-    val addTodoLive: LiveData<UiState> = _addTodoLive
+    private val _todoLive = MutableLiveData<UiState>()
+    val todoLive: LiveData<UiState> = _todoLive
 
     fun requestAddTodo(title: String, content: String, date: String, priority: Int) {
         launchIO {
@@ -30,7 +31,24 @@ class CreateTodoViewModel : CoroutineViewModel() {
                 apiRepository.api.postAddTodoAsync(title, content, date, priority = priority)
                     .checkData()
             }.collect {
-                _addTodoLive.postValue(it)
+                _todoLive.postValue(it)
+            }
+        }
+    }
+
+    fun requestUpdateTodo(todoData: TodoData) {
+        launchIO {
+            todoData.apply {
+                stateFlow {
+                    if (title.isEmpty() || content.isEmpty()) {
+                        throw RuntimeException("title or content is not empty.")
+                    }
+                    apiRepository.api.postUpdateTodoAsync(
+                        id, title, content, dateStr, type, priority, status
+                    ).checkData()
+                }.collect {
+                    _todoLive.postValue(it)
+                }
             }
         }
     }

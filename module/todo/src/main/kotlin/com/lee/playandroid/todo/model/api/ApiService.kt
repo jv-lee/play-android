@@ -60,7 +60,7 @@ interface ApiService {
         @Field("type") type: Int = 0,
         @Field("priority") priority: Int = 2,
         @Field("status") status: Int
-    ): Data<String>
+    ): Data<TodoData>
 
     /**
      * 仅更新完成状态TODO

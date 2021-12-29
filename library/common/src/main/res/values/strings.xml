@@ -10,4 +10,6 @@
 
     <string name="network_not_access">网络不可用，请检查网络是否连接。</string>
 
+    <string name="item_delete">删除</string>
+
 </resources>

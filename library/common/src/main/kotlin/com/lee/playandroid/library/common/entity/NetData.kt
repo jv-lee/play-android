@@ -169,15 +169,21 @@ data class MyShareData(
 @Parcelize
 @Keep
 data class TodoData(
-    val id: Int,
+    val id: Long,
+    val userId: Int,
     val completeDate: String,
     val completeDateStr: String,
-    val content: String,
-    val date: Long,
-    val dateStr: String,
-    val status: Int,
-    val title: String,
-    val type: Int,
-    val userId: Int,
-    val priority: Int
-) : Parcelable
+    var content: String,
+    var date: Long,
+    var dateStr: String,
+    var status: Int,
+    var title: String,
+    var type: Int,
+    var priority: Int
+) : Parcelable {
+    companion object {
+        // 0：一般 1：重要
+        const val PRIORITY_LOW = 0
+        const val PRIORITY_HEIGHT = 1
+    }
+}
