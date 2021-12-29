@@ -146,12 +146,15 @@ class CreateTodoFragment : BaseFragment(R.layout.fragment_create_todo) {
      * todo操作回调处理
      */
     private fun responseTodo(todoData: TodoData) {
-        setFragmentResult(
-            if (type == ARG_TYPE_CREATE) REQUEST_KEY_SAVE else REQUEST_KEY_UPDATE,
-            Bundle().apply {
-                putParcelable(REQUEST_VALUE_TODO, todoData)
-            })
-        toast(getString(if (type == ARG_TYPE_CREATE) R.string.todo_create_success else R.string.todo_update_success))
+        // 设置回调数据
+        val resultKey = if (type == ARG_TYPE_CREATE) REQUEST_KEY_SAVE else REQUEST_KEY_UPDATE
+        val bundle = Bundle().apply { putParcelable(REQUEST_VALUE_TODO, todoData) }
+        setFragmentResult(resultKey, bundle)
+
+        // 设置结果提示
+        val message = if (type == ARG_TYPE_CREATE) getString(R.string.todo_create_success)
+        else getString(R.string.todo_update_success)
+        toast(message)
     }
 
 }
