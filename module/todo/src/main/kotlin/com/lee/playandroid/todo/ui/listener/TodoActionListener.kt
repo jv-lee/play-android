@@ -9,4 +9,5 @@ import com.lee.playandroid.library.common.entity.TodoData
  */
 interface TodoActionListener {
     fun addAction(todo: TodoData)
+    fun updateAction(todo: TodoData)
 }

@@ -123,6 +123,11 @@ class TodoListFragment : BaseFragment(R.layout.fragment_todo_list),
         }
     }
 
+    override fun updateAction(todo: TodoData) {
+        mAdapter.openLoadMore()
+        viewModel.requestTodoData(LoadStatus.REFRESH)
+    }
+
     /**
      * 导航至todo编辑页
      */

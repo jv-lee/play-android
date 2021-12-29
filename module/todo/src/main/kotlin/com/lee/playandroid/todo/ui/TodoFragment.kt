@@ -47,14 +47,20 @@ class TodoFragment : BaseFragment(R.layout.fragment_todo) {
         }
     }
 
+
     override fun bindData() {
-        setFragmentResultListener(REQUEST_KEY_SAVE) { _: String, bundle: Bundle ->
-            val todoData = bundle.getParcelable<TodoData>(REQUEST_VALUE_TODO)
-                ?: return@setFragmentResultListener
-            childFragmentManager.fragments.forEach {
-                (it as? TodoActionListener)?.addAction(todoData)
+        val listener = fun(requestKey: String, bundle: Bundle) {
+            bundle.getParcelable<TodoData>(REQUEST_VALUE_TODO)?.let { todo ->
+                childFragmentManager.fragments.forEach {
+                    when (requestKey) {
+                        REQUEST_KEY_SAVE -> (it as? TodoActionListener)?.addAction(todo)
+                        REQUEST_KEY_UPDATE -> (it as? TodoActionListener)?.updateAction(todo)
+                    }
+                }
             }
         }
+        setFragmentResultListener(REQUEST_KEY_SAVE, listener)
+        setFragmentResultListener(REQUEST_KEY_UPDATE, listener)
     }
 
     /**
