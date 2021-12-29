@@ -31,7 +31,7 @@ interface ApiService {
         @Field("date") date: String,
         @Field("type") type: Int = 0,
         @Field("priority") priority: Int = 2
-    ): Data<String>
+    ): Data<TodoData>
 
     /**
      * 删除一个TODO

@@ -15,7 +15,7 @@ import com.lee.playandroid.library.common.R
 
 fun FragmentActivity.actionFailed(throwable: Throwable) {
     if (NetworkUtil.isConnected(applicationContext)) {
-        HttpManager.getInstance().getServerMessage(throwable,"errorMsg")
+        toast(HttpManager.getInstance().getServerMessage(throwable, "errorMsg"))
     } else {
         toast(getString(R.string.network_not_access))
     }
@@ -23,7 +23,7 @@ fun FragmentActivity.actionFailed(throwable: Throwable) {
 
 fun Fragment.actionFailed(throwable: Throwable) {
     if (NetworkUtil.isConnected(requireContext().applicationContext)) {
-        HttpManager.getInstance().getServerMessage(throwable,"errorMsg")
+        toast(HttpManager.getInstance().getServerMessage(throwable, "errorMsg"))
     } else {
         toast(getString(R.string.network_not_access))
     }

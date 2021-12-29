@@ -3,12 +3,15 @@ package com.lee.playandroid.todo.ui
 import android.text.TextUtils
 import androidx.core.view.updatePadding
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.lee.library.base.BaseFragment
-import com.lee.library.extensions.arguments
-import com.lee.library.extensions.binding
-import com.lee.library.extensions.keyboardObserver
+import com.lee.library.dialog.LoadingDialog
+import com.lee.library.extensions.*
+import com.lee.library.mvvm.ui.observeState
 import com.lee.library.tools.KeyboardTools
 import com.lee.library.utils.TimeUtil
+import com.lee.playandroid.library.common.entity.TodoData
+import com.lee.playandroid.library.common.extensions.actionFailed
 import com.lee.playandroid.todo.R
 import com.lee.playandroid.todo.databinding.FragmentCreateTodoBinding
 import com.lee.playandroid.todo.viewmodel.CreateTodoViewModel
@@ -48,6 +51,8 @@ class CreateTodoFragment : BaseFragment(R.layout.fragment_create_todo) {
 
     private val binding by binding(FragmentCreateTodoBinding::bind)
 
+    private val loadingDialog by lazy { LoadingDialog(requireContext()) }
+
     override fun bindView() {
         initViewData()
 
@@ -68,7 +73,16 @@ class CreateTodoFragment : BaseFragment(R.layout.fragment_create_todo) {
     }
 
     override fun bindData() {
-
+        viewModel.addTodoLive.observeState<TodoData>(this, success = {
+            dismiss(loadingDialog)
+            toast(getString(R.string.todo_create_success))
+            findNavController().popBackStack()
+        }, error = {
+            dismiss(loadingDialog)
+            actionFailed(it)
+        }, loading = {
+            show(loadingDialog)
+        })
     }
 
     /**
