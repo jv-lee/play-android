@@ -126,7 +126,8 @@ object ScreenDensityUtil : ComponentCallbacks {
     private fun init(activity: Activity, density: Float) {
         activity.resources.displayMetrics.density = density
         activity.resources.displayMetrics.densityDpi = (160 * density).toInt()
-        activity.resources.displayMetrics.scaledDensity = density * (scaledDensity / ScreenDensityUtil.density)
+        activity.resources.displayMetrics.scaledDensity =
+            density * (scaledDensity / ScreenDensityUtil.density)
         scale = ScreenDensityUtil.density / density
 
         setBitmapDensity(activity.resources.displayMetrics.densityDpi)
@@ -190,33 +191,33 @@ annotation class Density {
     }
 }
 
-lateinit var app: Application
+private lateinit var app: Application
 
 /**
  * 判断设备是否处于竖屏状态
  * Check if the device orientation is portrait.
  */
-val Application.isPortrait get() = this.resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT
+private val Application.isPortrait get() = this.resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT
 
 /**
  * 判断设备是否处于横屏状态
  * Check if the device orientation is landscape.
  */
-val Application.isLandscape get() = this.resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
+private val Application.isLandscape get() = this.resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
 
-val Application.windowManager get() = this.getSystemService(Context.WINDOW_SERVICE) as WindowManager
+private val Application.windowManager get() = this.getSystemService(Context.WINDOW_SERVICE) as WindowManager
 
-fun getPixel(id: Int) = app.resources.getDimensionPixelSize(id)
+private fun getPixel(id: Int) = app.resources.getDimensionPixelSize(id)
 
-val status: Int
+private val status: Int
     get() {
         val id = app.resources.getIdentifier("status_bar_height", "dimen", "android")
         return if (id > 0) getPixel(id) else 0
     }
 
-fun width(navigation: Boolean): Int = if (navigation) Screen().width else Display().width
+private fun width(navigation: Boolean): Int = if (navigation) Screen().width else Display().width
 
-fun height(hasStatus: Boolean, navigation: Boolean): Int {
+private fun height(hasStatus: Boolean, navigation: Boolean): Int {
     val screen = Screen()
     val display = Display()
     return when {
