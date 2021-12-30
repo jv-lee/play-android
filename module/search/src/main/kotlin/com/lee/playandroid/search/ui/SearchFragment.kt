@@ -23,7 +23,7 @@ import com.lee.playandroid.search.viewmodel.SearchViewModel
 /**
  * @author jv.lee
  * @date 2021/11/19
- * @description
+ * @description 搜索页面
  */
 class SearchFragment : BaseFragment(R.layout.fragment_search) {
 
