@@ -108,7 +108,7 @@ class RegisterFragment : BaseFragment(R.layout.fragment_register), View.OnClickL
      * 判断当前软键盘是否弹起，优先关闭软键盘
      */
     private fun goLogin() {
-        if (binding.root.keyboardIsShow()) {
+        if (requireContext().keyboardIsShow()) {
             requireActivity().hideSoftInput()
         } else {
             findNavController().popBackStack()
