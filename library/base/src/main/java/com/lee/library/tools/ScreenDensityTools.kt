@@ -34,7 +34,7 @@ object ScreenDensityUtil : ComponentCallbacks {
      * 在Application中初始化Metrics
      */
     fun init(application: Application) {
-        app = application
+        screenApp = application
         //获取application的DisplayMetrics
         metrics = application.resources.displayMetrics
         //判断是否需要初始化
@@ -43,7 +43,7 @@ object ScreenDensityUtil : ComponentCallbacks {
         density = metrics.density
         scaledDensity = metrics.scaledDensity
         //监听字体变化
-        app.registerComponentCallbacks(this)
+        screenApp.registerComponentCallbacks(this)
     }
 
     /**
@@ -116,7 +116,7 @@ object ScreenDensityUtil : ComponentCallbacks {
         navigation: Boolean = false
     ) {
         val pixels = width(navigation)
-        val ruler = if (app.isLandscape) landRuler else portRuler
+        val ruler = if (screenApp.isLandscape) landRuler else portRuler
         init(activity, pixels / ruler)
     }
 
@@ -191,7 +191,7 @@ annotation class Density {
     }
 }
 
-private lateinit var app: Application
+private lateinit var screenApp: Application
 
 /**
  * 判断设备是否处于竖屏状态
@@ -207,11 +207,11 @@ private val Application.isLandscape get() = this.resources.configuration.orienta
 
 private val Application.windowManager get() = this.getSystemService(Context.WINDOW_SERVICE) as WindowManager
 
-private fun getPixel(id: Int) = app.resources.getDimensionPixelSize(id)
+private fun getPixel(id: Int) = screenApp.resources.getDimensionPixelSize(id)
 
 private val status: Int
     get() {
-        val id = app.resources.getIdentifier("status_bar_height", "dimen", "android")
+        val id = screenApp.resources.getIdentifier("status_bar_height", "dimen", "android")
         return if (id > 0) getPixel(id) else 0
     }
 
@@ -228,7 +228,7 @@ private fun height(hasStatus: Boolean, navigation: Boolean): Int {
     }
 }
 
-internal data class Screen(private val display: Display = app.windowManager.defaultDisplay) {
+internal data class Screen(private val display: Display = screenApp.windowManager.defaultDisplay) {
 
     @SuppressLint("ObsoleteSdkInt")
     private val point = Point().apply {
@@ -250,7 +250,7 @@ internal data class Screen(private val display: Display = app.windowManager.defa
     val height: Int = point.y
 }
 
-internal data class Display(private val metrics: DisplayMetrics = app.resources.displayMetrics) {
+internal data class Display(private val metrics: DisplayMetrics = screenApp.resources.displayMetrics) {
 
     /**
      * 展示宽度，不包含虚拟键，单位px
