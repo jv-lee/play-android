@@ -11,7 +11,8 @@ import com.lee.library.extensions.inflate
 import com.lee.library.mvvm.livedata.LoadStatus
 import com.lee.library.mvvm.ui.observeState
 import com.lee.library.tools.DarkModeTools
-import com.lee.library.tools.StatusTools
+import com.lee.library.tools.StatusTools.setDarkStatusIcon
+import com.lee.library.tools.StatusTools.setLightStatusIcon
 import com.lee.library.widget.toolbar.TitleToolbar
 import com.lee.playandroid.library.common.constants.ApiConstants
 import com.lee.playandroid.library.common.entity.CoinRecord
@@ -97,14 +98,14 @@ class CoinFragment : BaseFragment(R.layout.fragment_coin) {
     override fun onResume() {
         super.onResume()
         if (!DarkModeTools.get().isDarkTheme()) {
-            StatusTools.setLightStatusIcon(requireActivity())
+            requireActivity().setLightStatusIcon()
         }
     }
 
     override fun onStop() {
         super.onStop()
         if (!DarkModeTools.get().isDarkTheme()) {
-            StatusTools.setDarkStatusIcon(requireActivity())
+            requireActivity().setDarkStatusIcon()
         }
     }
 

@@ -13,7 +13,9 @@ import com.lee.library.interadp.SimpleFragmentLifecycleCallbacks
 import com.lee.library.net.HttpManager
 import com.lee.library.tools.DarkModeTools
 import com.lee.library.tools.ScreenDensityUtil
-import com.lee.library.tools.StatusTools
+import com.lee.library.tools.StatusTools.setDarkStatusIcon
+import com.lee.library.tools.StatusTools.setLightStatusIcon
+import com.lee.library.tools.StatusTools.setNavigationBarColor
 import com.lee.playandroid.library.common.extensions.setCommonInterceptor
 import com.lee.playandroid.library.service.hepler.ApplicationModuleService
 import kotlinx.coroutines.CoroutineScope
@@ -48,11 +50,11 @@ class App : BaseApplication() {
             activity.bindFragmentLifecycle(fragmentLifecycleCallbacks)
 
             if (DarkModeTools.get().isDarkTheme()) {
-                StatusTools.setNavigationBarColor(activity, Color.BLACK)
-                StatusTools.setLightStatusIcon(activity)
+                activity.setNavigationBarColor(Color.BLACK)
+                activity.setLightStatusIcon()
             } else {
-                StatusTools.setNavigationBarColor(activity, Color.WHITE)
-                StatusTools.setDarkStatusIcon(activity)
+                activity.setNavigationBarColor(Color.WHITE)
+                activity.setDarkStatusIcon()
             }
             super.onActivityCreated(activity, bundle)
         }

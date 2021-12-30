@@ -14,7 +14,9 @@ import com.lee.library.extensions.banBackEvent
 import com.lee.library.extensions.binding
 import com.lee.library.tools.DarkModeTools
 import com.lee.library.tools.ScreenDensityUtil
-import com.lee.library.tools.StatusTools
+import com.lee.library.tools.StatusTools.setDarkStatusIcon
+import com.lee.library.tools.StatusTools.setLightStatusIcon
+import com.lee.library.tools.StatusTools.setNavigationBarColor
 import com.lee.playandroid.databinding.ActivityMainBinding
 import com.lee.playandroid.library.service.AccountService
 import com.lee.playandroid.library.service.hepler.ModuleService
@@ -56,11 +58,11 @@ class MainActivity : BaseActivity(),
         super.onConfigurationChanged(newConfig)
 
         if (DarkModeTools.get().isDarkTheme()) {
-            StatusTools.setNavigationBarColor(this, Color.BLACK)
-            StatusTools.setLightStatusIcon(this)
+            setNavigationBarColor(Color.BLACK)
+            setLightStatusIcon()
         } else {
-            StatusTools.setNavigationBarColor(this, Color.WHITE)
-            StatusTools.setDarkStatusIcon(this)
+            setNavigationBarColor( Color.WHITE)
+            setDarkStatusIcon()
         }
     }
 
