@@ -6,4 +6,5 @@ package com.lee.playandroid.todo.constants
  * @description
  */
 object Constants {
+    const val CACHE_KEY_TODO_CONTENT = "cacheKey:todo-content"
 }
