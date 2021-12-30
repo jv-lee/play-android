@@ -10,8 +10,7 @@ import com.lee.library.extensions.dismiss
 import com.lee.library.extensions.show
 import com.lee.library.extensions.toast
 import com.lee.library.mvvm.ui.observeState
-import com.lee.library.tools.KeyboardTools
-import com.lee.library.widget.toolbar.TitleToolbar
+import com.lee.library.tools.KeyboardTools.parentTouchHideSoftInput
 import com.lee.playandroid.square.R
 import com.lee.playandroid.square.databinding.FragmentCreateShareBinding
 import com.lee.playandroid.square.viewmodel.CreateShareViewModel
@@ -30,7 +29,7 @@ class CreateShareFragment : BaseFragment(R.layout.fragment_create_share) {
     private val loadingDialog by lazy { LoadingDialog(requireContext()) }
 
     override fun bindView() {
-        KeyboardTools.parentTouchHideSoftInput(requireActivity(), binding.root)
+        requireActivity().parentTouchHideSoftInput( binding.root)
 
         binding.editShareContent.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_SEND) {

@@ -9,7 +9,7 @@ import com.lee.library.adapter.page.submitSinglePage
 import com.lee.library.base.BaseFragment
 import com.lee.library.extensions.binding
 import com.lee.library.mvvm.ui.observeState
-import com.lee.library.tools.KeyboardTools
+import com.lee.library.tools.KeyboardTools.hideSoftInput
 import com.lee.playandroid.library.common.entity.SearchHistory
 import com.lee.playandroid.library.common.extensions.actionFailed
 import com.lee.playandroid.search.R
@@ -89,7 +89,7 @@ class SearchFragment : BaseFragment(R.layout.fragment_search) {
      */
     private fun navigationResult(key: String) {
         //隐藏键盘
-        KeyboardTools.hideSoftInput(requireActivity())
+        requireActivity().hideSoftInput()
 
         //存储搜索记录
         viewModel.addSearchHistory(key)

@@ -16,6 +16,9 @@ import com.lee.library.extensions.show
 import com.lee.library.interadp.TextWatcherAdapter
 import com.lee.library.mvvm.ui.observeState
 import com.lee.library.tools.KeyboardTools
+import com.lee.library.tools.KeyboardTools.hideSoftInput
+import com.lee.library.tools.KeyboardTools.keyboardIsShow
+import com.lee.library.tools.KeyboardTools.parentTouchHideSoftInput
 import com.lee.library.tools.PreferencesTools
 import com.lee.playandroid.account.R
 import com.lee.playandroid.account.constants.Constants
@@ -43,7 +46,7 @@ class RegisterFragment : BaseFragment(R.layout.fragment_register), View.OnClickL
 
     override fun bindView() {
         // 设置点击空白区域隐藏软键盘
-        KeyboardTools.parentTouchHideSoftInput(requireActivity(),binding.root)
+        requireActivity().parentTouchHideSoftInput( binding.root)
 
         // 监听键盘弹起
         binding.root.keyboardObserver { diff ->
@@ -84,7 +87,7 @@ class RegisterFragment : BaseFragment(R.layout.fragment_register), View.OnClickL
                 goLogin()
             }
             binding.root -> {
-                KeyboardTools.hideSoftInput(requireActivity())
+                requireActivity().hideSoftInput()
             }
         }
     }
@@ -105,8 +108,8 @@ class RegisterFragment : BaseFragment(R.layout.fragment_register), View.OnClickL
      * 判断当前软键盘是否弹起，优先关闭软键盘
      */
     private fun goLogin() {
-        if (KeyboardTools.keyboardIsShow(binding.root)) {
-            KeyboardTools.hideSoftInput(requireActivity())
+        if (binding.root.keyboardIsShow()) {
+            requireActivity().hideSoftInput()
         } else {
             findNavController().popBackStack()
         }
@@ -117,7 +120,7 @@ class RegisterFragment : BaseFragment(R.layout.fragment_register), View.OnClickL
      * 隐藏键盘后延时处理使ui更平滑
      */
     private fun requestRegister() {
-        KeyboardTools.hideSoftInput(requireActivity())
+        requireActivity().hideSoftInput()
         binding.tvRegister.postDelayed({
             show(loadingDialog)
             viewModel.requestRegister(

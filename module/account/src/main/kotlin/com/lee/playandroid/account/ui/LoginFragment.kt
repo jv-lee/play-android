@@ -15,7 +15,9 @@ import com.lee.library.extensions.keyboardObserver
 import com.lee.library.extensions.show
 import com.lee.library.interadp.TextWatcherAdapter
 import com.lee.library.mvvm.ui.observeState
-import com.lee.library.tools.KeyboardTools
+import com.lee.library.tools.KeyboardTools.hideSoftInput
+import com.lee.library.tools.KeyboardTools.keyboardIsShow
+import com.lee.library.tools.KeyboardTools.parentTouchHideSoftInput
 import com.lee.library.tools.PreferencesTools
 import com.lee.playandroid.account.R
 import com.lee.playandroid.account.constants.Constants.SP_KEY_SAVE_INPUT_USERNAME
@@ -47,7 +49,7 @@ class LoginFragment : BaseFragment(R.layout.fragment_login), View.OnClickListene
 
     override fun bindView() {
         // 设置点击空白区域隐藏软键盘
-        KeyboardTools.parentTouchHideSoftInput(requireActivity(), binding.root)
+        requireActivity().parentTouchHideSoftInput( binding.root)
 
         // 设置登陆过的账户名
         binding.editUsername.setText(PreferencesTools.get<String>(SP_KEY_SAVE_INPUT_USERNAME))
@@ -110,8 +112,8 @@ class LoginFragment : BaseFragment(R.layout.fragment_login), View.OnClickListene
      * 判断当前软键盘是否弹起，优先关闭软键盘
      */
     private fun goRegister() {
-        if (KeyboardTools.keyboardIsShow(binding.root)) {
-            KeyboardTools.hideSoftInput(requireActivity())
+        if (binding.root.keyboardIsShow()) {
+            requireActivity().hideSoftInput()
         } else {
             findNavController().navigate(R.id.action_login_fragment_to_register_fragment)
         }
@@ -122,7 +124,7 @@ class LoginFragment : BaseFragment(R.layout.fragment_login), View.OnClickListene
      * 隐藏键盘后延时处理使ui更平滑
      */
     private fun requestLogin() {
-        KeyboardTools.hideSoftInput(requireActivity())
+        requireActivity().hideSoftInput()
         binding.tvLogin.postDelayed({
             show(loadingDialog)
             viewModel.requestLogin(

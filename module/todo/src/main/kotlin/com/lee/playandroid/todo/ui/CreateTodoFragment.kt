@@ -11,7 +11,7 @@ import com.lee.library.base.BaseFragment
 import com.lee.library.dialog.LoadingDialog
 import com.lee.library.extensions.*
 import com.lee.library.mvvm.ui.observeState
-import com.lee.library.tools.KeyboardTools
+import com.lee.library.tools.KeyboardTools.parentTouchHideSoftInput
 import com.lee.playandroid.library.common.entity.TodoData
 import com.lee.playandroid.library.common.entity.TodoData.Companion.PRIORITY_HEIGHT
 import com.lee.playandroid.library.common.entity.TodoData.Companion.PRIORITY_LOW
@@ -59,7 +59,7 @@ class CreateTodoFragment : BaseFragment(R.layout.fragment_create_todo),
         initDatePickerDialog()
 
         // 设置键盘点击空白区取消
-        KeyboardTools.parentTouchHideSoftInput(requireActivity(), binding.root)
+        requireActivity().parentTouchHideSoftInput( binding.root)
 
         // 监听键盘弹起
         binding.root.keyboardObserver { diff ->
