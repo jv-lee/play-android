@@ -1,6 +1,8 @@
 package com.lee.playandroid.todo.ui
 
+import android.app.DatePickerDialog
 import android.os.Bundle
+import android.widget.DatePicker
 import androidx.core.view.updatePadding
 import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.viewModels
@@ -10,18 +12,18 @@ import com.lee.library.dialog.LoadingDialog
 import com.lee.library.extensions.*
 import com.lee.library.mvvm.ui.observeState
 import com.lee.library.tools.KeyboardTools
-import com.lee.library.utils.TimeUtil
 import com.lee.playandroid.library.common.entity.TodoData
 import com.lee.playandroid.library.common.entity.TodoData.Companion.PRIORITY_HEIGHT
 import com.lee.playandroid.library.common.entity.TodoData.Companion.PRIORITY_LOW
 import com.lee.playandroid.library.common.extensions.actionFailed
 import com.lee.playandroid.todo.R
 import com.lee.playandroid.todo.databinding.FragmentCreateTodoBinding
+import com.lee.playandroid.todo.extensions.dateToStrFormat
+import com.lee.playandroid.todo.extensions.stringToCalendar
 import com.lee.playandroid.todo.ui.TodoFragment.Companion.REQUEST_KEY_SAVE
 import com.lee.playandroid.todo.ui.TodoFragment.Companion.REQUEST_KEY_UPDATE
 import com.lee.playandroid.todo.ui.TodoFragment.Companion.REQUEST_VALUE_TODO
 import com.lee.playandroid.todo.viewmodel.CreateTodoViewModel
-import java.text.SimpleDateFormat
 import java.util.*
 
 /**
@@ -29,7 +31,8 @@ import java.util.*
  * @date 2021/12/28
  * @description 创建TODO页面
  */
-class CreateTodoFragment : BaseFragment(R.layout.fragment_create_todo) {
+class CreateTodoFragment : BaseFragment(R.layout.fragment_create_todo),
+    DatePickerDialog.OnDateSetListener {
 
     companion object {
         // 0：创建 1：编辑
@@ -49,8 +52,11 @@ class CreateTodoFragment : BaseFragment(R.layout.fragment_create_todo) {
 
     private val loadingDialog by lazy { LoadingDialog(requireContext()) }
 
+    private lateinit var datePickerDialog: DatePickerDialog
+
     override fun bindView() {
         initViewData()
+        initDatePickerDialog()
 
         // 设置键盘点击空白区取消
         KeyboardTools.parentTouchHideSoftInput(requireActivity(), binding.root)
@@ -60,6 +66,10 @@ class CreateTodoFragment : BaseFragment(R.layout.fragment_create_todo) {
             if (isResumed) {
                 binding.root.updatePadding(bottom = diff)
             }
+        }
+
+        binding.tvDateContent.setOnClickListener {
+            show(datePickerDialog)
         }
 
         // 保存TODO点击事件
@@ -81,16 +91,22 @@ class CreateTodoFragment : BaseFragment(R.layout.fragment_create_todo) {
         })
     }
 
+    override fun onDateSet(view: DatePicker?, year: Int, month: Int, dayOfMonth: Int) {
+        val date = "$year-${month + 1}-$dayOfMonth"
+        todoData?.apply { dateStr = date } ?: kotlin.run { binding.tvDateContent.text = date }
+    }
+
     /**
      * 根据数据渲染基础ui
      */
     private fun initViewData() {
         // 设置Toolbar标题
-        binding.toolbar.setTitleText(
-            getString(
-                if (type == ARG_TYPE_CREATE) R.string.title_create_todo else R.string.title_edit_todo
-            )
+        val title = getString(
+            if (type == ARG_TYPE_CREATE)
+                R.string.title_create_todo
+            else R.string.title_edit_todo
         )
+        binding.toolbar.setTitleText(title)
 
         // 根据数据设置
         todoData?.apply {
@@ -112,10 +128,23 @@ class CreateTodoFragment : BaseFragment(R.layout.fragment_create_todo) {
             binding.radioButtonLow.isChecked = true
 
             // 获取当前时间format
-            val currentDate: String =
-                TimeUtil.date2String(Date(), SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()))
-            binding.tvDateContent.text = currentDate
+            binding.tvDateContent.text = dateToStrFormat()
         }
+    }
+
+    /**
+     * 初始化时间选择dialog
+     */
+    private fun initDatePickerDialog() {
+        val dateStr = todoData?.dateStr ?: dateToStrFormat()
+        val calender = stringToCalendar(dateStr)
+        datePickerDialog = DatePickerDialog(
+            requireContext(),
+            this,
+            calender.get(Calendar.YEAR),
+            calender.get(Calendar.MONTH),
+            calender.get(Calendar.DAY_OF_MONTH)
+        )
     }
 
     /**

@@ -7,8 +7,8 @@ import androidx.viewbinding.ViewBinding
 import com.lee.library.adapter.binding.ViewBindingAdapter
 import com.lee.library.adapter.binding.ViewBindingHolder
 import com.lee.library.adapter.item.ViewBindingItem
-import com.lee.playandroid.library.common.tools.CommonTools
 import com.lee.playandroid.search.databinding.ItemSearchHotBinding
+import com.lee.playandroid.search.extensions.getRandomColor
 import com.lee.playandroid.search.helper.SearchHot
 
 /**
@@ -31,8 +31,8 @@ class SearchHotAdapter(context: Context, data: List<SearchHot>) :
         override fun convert(holder: ViewBindingHolder, entity: SearchHot, position: Int) {
             holder.getViewBinding<ItemSearchHotBinding>().apply {
                 tvHot.text = entity.key
-                tvHot.setPressTextColor(CommonTools.getRandomColor())
-                tvHot.setNormalTextColor(CommonTools.getRandomColor())
+                tvHot.setPressTextColor(getRandomColor())
+                tvHot.setNormalTextColor(getRandomColor())
             }
         }
 
