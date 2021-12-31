@@ -1,10 +1,10 @@
 package com.lee.playandroid.square.viewmodel
 
 import android.text.TextUtils
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import com.lee.library.base.ApplicationExtensions.app
 import com.lee.library.mvvm.ui.UiState
+import com.lee.library.mvvm.ui.UiStateLiveData
+import com.lee.library.mvvm.ui.UiStateMutableLiveData
 import com.lee.library.mvvm.ui.stateFlow
 import com.lee.library.mvvm.viewmodel.CoroutineViewModel
 import com.lee.playandroid.library.common.constants.ApiConstants
@@ -21,8 +21,8 @@ class CreateShareViewModel : CoroutineViewModel() {
 
     private val apiRepository = ApiRepository()
 
-    private val _sendLive = MutableLiveData<UiState>()
-    val sendLive: LiveData<UiState> = _sendLive
+    private val _sendLive = UiStateMutableLiveData()
+    val sendLive: UiStateLiveData = _sendLive
 
     fun requestSendShare(title: String, content: String) {
         // 校验输入格式

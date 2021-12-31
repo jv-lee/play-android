@@ -1,12 +1,12 @@
 package com.lee.playandroid.account.viewmodel
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import com.lee.library.cache.CacheManager
 import com.lee.library.extensions.clearCache
 import com.lee.library.extensions.getCache
 import com.lee.library.extensions.putCache
 import com.lee.library.mvvm.ui.UiState
+import com.lee.library.mvvm.ui.UiStateLiveData
+import com.lee.library.mvvm.ui.UiStateMutableLiveData
 import com.lee.library.mvvm.ui.stateCacheFlow
 import com.lee.library.mvvm.viewmodel.CoroutineViewModel
 import com.lee.library.tools.PreferencesTools
@@ -31,8 +31,8 @@ class AccountViewModel : CoroutineViewModel() {
 
     private val repository = ApiRepository()
 
-    private val _accountLive = MutableLiveData<UiState>()
-    val accountLive: LiveData<UiState> = _accountLive
+    private val _accountLive = UiStateMutableLiveData()
+    val accountLive: UiStateLiveData = _accountLive
 
     /**
      * 请求账户数据

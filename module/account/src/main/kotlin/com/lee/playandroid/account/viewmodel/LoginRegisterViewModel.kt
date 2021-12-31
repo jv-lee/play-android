@@ -1,8 +1,7 @@
 package com.lee.playandroid.account.viewmodel
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import com.lee.library.mvvm.ui.UiState
+import com.lee.library.mvvm.ui.UiStateLiveData
+import com.lee.library.mvvm.ui.UiStateMutableLiveData
 import com.lee.library.mvvm.ui.stateFlow
 import com.lee.library.mvvm.viewmodel.CoroutineViewModel
 import com.lee.playandroid.account.model.repository.ApiRepository
@@ -18,8 +17,8 @@ class LoginRegisterViewModel : CoroutineViewModel() {
 
     private val repository = ApiRepository()
 
-    private val _accountLive = MutableLiveData<UiState>()
-    val accountLive: LiveData<UiState> = _accountLive
+    private val _accountLive = UiStateMutableLiveData()
+    val accountLive: UiStateLiveData = _accountLive
 
     fun requestLogin(userName: String, password: String) {
         launchIO {

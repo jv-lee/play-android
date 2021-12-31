@@ -1,11 +1,11 @@
 package com.lee.playandroid.system.viewmodel
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.lee.library.cache.CacheManager
 import com.lee.library.extensions.getCache
 import com.lee.library.extensions.putCache
-import com.lee.library.mvvm.ui.UiState
+import com.lee.library.mvvm.ui.UiStateLiveData
+import com.lee.library.mvvm.ui.UiStateMutableLiveData
 import com.lee.library.mvvm.ui.stateCacheFlow
 import com.lee.library.mvvm.viewmodel.CoroutineViewModel
 import com.lee.playandroid.library.common.extensions.checkData
@@ -24,8 +24,8 @@ class NavigationViewModel : CoroutineViewModel() {
 
     private val repository = ApiRepository()
 
-    private val _navigationLive = MutableLiveData<UiState>()
-    val navigationLive: LiveData<UiState> = _navigationLive
+    private val _navigationLive = UiStateMutableLiveData()
+    val navigationLive: UiStateLiveData = _navigationLive
 
     private val _selectTabLive = MutableLiveData(0)
     val selectTabLive = _selectTabLive

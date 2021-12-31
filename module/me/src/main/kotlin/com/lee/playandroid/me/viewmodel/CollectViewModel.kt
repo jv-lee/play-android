@@ -1,13 +1,12 @@
 package com.lee.playandroid.me.viewmodel
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import com.lee.library.cache.CacheManager
 import com.lee.library.extensions.getCache
 import com.lee.library.extensions.putCache
 import com.lee.library.extensions.putPageCache
 import com.lee.library.mvvm.livedata.LoadStatus
-import com.lee.library.mvvm.ui.UiState
+import com.lee.library.mvvm.ui.UiStateLiveData
+import com.lee.library.mvvm.ui.UiStateMutableLiveData
 import com.lee.library.mvvm.ui.UiStatePageLiveData
 import com.lee.library.mvvm.ui.stateFlow
 import com.lee.library.mvvm.viewmodel.CoroutineViewModel
@@ -33,8 +32,8 @@ class CollectViewModel : CoroutineViewModel() {
 
     private val deleteLock = AtomicBoolean(false)
 
-    private val _unCollectLive = MutableLiveData<UiState>()
-    val unCollectLive: LiveData<UiState> = _unCollectLive
+    private val _unCollectLive = UiStateMutableLiveData()
+    val unCollectLive: UiStateLiveData = _unCollectLive
 
     val collectLive = UiStatePageLiveData(0)
 

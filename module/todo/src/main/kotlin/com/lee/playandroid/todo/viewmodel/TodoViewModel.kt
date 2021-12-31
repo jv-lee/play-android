@@ -1,14 +1,13 @@
 package com.lee.playandroid.todo.viewmodel
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import com.lee.library.cache.CacheManager
 import com.lee.library.extensions.getCache
 import com.lee.library.extensions.putCache
 import com.lee.library.extensions.putPageCache
 import com.lee.library.mvvm.livedata.LoadStatus
-import com.lee.library.mvvm.ui.UiState
+import com.lee.library.mvvm.ui.UiStateLiveData
+import com.lee.library.mvvm.ui.UiStateMutableLiveData
 import com.lee.library.mvvm.ui.UiStatePageLiveData
 import com.lee.library.mvvm.ui.stateFlow
 import com.lee.library.mvvm.viewmodel.CoroutineViewModel
@@ -44,11 +43,11 @@ class TodoViewModel(handle: SavedStateHandle) : CoroutineViewModel() {
 
     val todoDataLive = UiStatePageLiveData()
 
-    private val _todoDeleteLive = MutableLiveData<UiState>()
-    val todoDeleteLive: LiveData<UiState> = _todoDeleteLive
+    private val _todoDeleteLive = UiStateMutableLiveData()
+    val todoDeleteLive: UiStateLiveData = _todoDeleteLive
 
-    private val _todoUpdateLive = MutableLiveData<UiState>()
-    val todoUpdateLive: LiveData<UiState> = _todoUpdateLive
+    private val _todoUpdateLive = UiStateMutableLiveData()
+    val todoUpdateLive: UiStateLiveData = _todoUpdateLive
 
     fun requestTodoData(@LoadStatus status: Int) {
         launchIO {

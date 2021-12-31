@@ -1,8 +1,7 @@
 package com.lee.playandroid.todo.viewmodel
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import com.lee.library.mvvm.ui.UiState
+import com.lee.library.mvvm.ui.UiStateLiveData
+import com.lee.library.mvvm.ui.UiStateMutableLiveData
 import com.lee.library.mvvm.ui.stateFlow
 import com.lee.library.mvvm.viewmodel.CoroutineViewModel
 import com.lee.playandroid.library.common.entity.TodoData
@@ -19,8 +18,8 @@ class CreateTodoViewModel : CoroutineViewModel() {
 
     private val apiRepository = ApiRepository()
 
-    private val _todoLive = MutableLiveData<UiState>()
-    val todoLive: LiveData<UiState> = _todoLive
+    private val _todoLive = UiStateMutableLiveData()
+    val todoLive: UiStateLiveData = _todoLive
 
     fun requestAddTodo(title: String, content: String, date: String, priority: Int) {
         launchIO {

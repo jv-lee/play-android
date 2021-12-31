@@ -1,13 +1,12 @@
 package com.lee.playandroid.square.viewmodel
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import com.lee.library.cache.CacheManager
 import com.lee.library.extensions.getCache
 import com.lee.library.extensions.putCache
 import com.lee.library.extensions.putPageCache
 import com.lee.library.mvvm.livedata.LoadStatus
-import com.lee.library.mvvm.ui.UiState
+import com.lee.library.mvvm.ui.UiStateLiveData
+import com.lee.library.mvvm.ui.UiStateMutableLiveData
 import com.lee.library.mvvm.ui.UiStatePageLiveData
 import com.lee.library.mvvm.ui.stateFlow
 import com.lee.library.mvvm.viewmodel.CoroutineViewModel
@@ -33,8 +32,8 @@ class MyShareViewModel : CoroutineViewModel() {
 
     private val deleteLock = AtomicBoolean(false)
 
-    private val _deleteShareLive = MutableLiveData<UiState>()
-    val deleteShareLive: LiveData<UiState> = _deleteShareLive
+    private val _deleteShareLive = UiStateMutableLiveData()
+    val deleteShareLive: UiStateLiveData = _deleteShareLive
 
     val myShareLive = UiStatePageLiveData(1)
 

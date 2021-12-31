@@ -1,11 +1,10 @@
 package com.lee.playandroid.project.viewmodel
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import com.lee.library.cache.CacheManager
 import com.lee.library.extensions.getCache
 import com.lee.library.extensions.putCache
-import com.lee.library.mvvm.ui.UiState
+import com.lee.library.mvvm.ui.UiStateLiveData
+import com.lee.library.mvvm.ui.UiStateMutableLiveData
 import com.lee.library.mvvm.ui.stateCacheFlow
 import com.lee.library.mvvm.viewmodel.CoroutineViewModel
 import com.lee.playandroid.library.common.extensions.checkData
@@ -24,8 +23,8 @@ class ProjectViewModel : CoroutineViewModel() {
 
     private val repository = ApiRepository()
 
-    private val _tabsLive = MutableLiveData<UiState>()
-    val tabsLive: LiveData<UiState> = _tabsLive
+    private val _tabsLive = UiStateMutableLiveData()
+    val tabsLive: UiStateLiveData = _tabsLive
 
     fun requestTabs() {
         launchIO {

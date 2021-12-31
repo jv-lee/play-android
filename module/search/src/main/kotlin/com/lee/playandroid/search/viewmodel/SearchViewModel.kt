@@ -1,8 +1,7 @@
 package com.lee.playandroid.search.viewmodel
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import com.lee.library.mvvm.ui.UiState
+import com.lee.library.mvvm.ui.UiStateLiveData
+import com.lee.library.mvvm.ui.UiStateMutableLiveData
 import com.lee.library.mvvm.ui.stateFlow
 import com.lee.library.mvvm.viewmodel.CoroutineViewModel
 import com.lee.playandroid.library.common.entity.SearchHistory
@@ -17,11 +16,11 @@ import kotlinx.coroutines.flow.collect
  */
 class SearchViewModel : CoroutineViewModel() {
 
-    private val _searchHotLive = MutableLiveData<UiState>()
-    val searchHotLive: LiveData<UiState> = _searchHotLive
+    private val _searchHotLive = UiStateMutableLiveData()
+    val searchHotLive: UiStateLiveData = _searchHotLive
 
-    private val _searchHistoryLive = MutableLiveData<UiState>()
-    val searchHistoryLive: LiveData<UiState> = _searchHistoryLive
+    private val _searchHistoryLive = UiStateMutableLiveData()
+    val searchHistoryLive: UiStateLiveData = _searchHistoryLive
 
     /**
      * 获取搜索热门标签
