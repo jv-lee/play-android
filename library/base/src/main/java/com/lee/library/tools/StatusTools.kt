@@ -10,6 +10,7 @@ import android.view.View
 import android.view.Window
 import android.view.WindowManager
 import android.widget.Toolbar
+import com.lee.library.extensions.statusBarHeight
 
 /**
  * 状态栏工具
@@ -18,30 +19,6 @@ import android.widget.Toolbar
  * @date 2019/4/5
  */
 object StatusTools {
-
-    /**
-     * 状态栏高度
-     */
-    val Context.statusBarHeight: Int
-        get() {
-            val resId: Int =
-                resources.getIdentifier("status_bar_height", "dimen", "android")
-            return if (resId > 0) {
-                resources.getDimensionPixelSize(resId)
-            } else 0
-        }
-
-    /**
-     * 导航栏高度
-     */
-    val Context.navigationBarHeight: Int
-        get() {
-            val resId =
-                resources.getIdentifier("navigation_bar_height", "dimen", "android")
-            return if (resId > 0 && checkHasNavigationBar()) {
-                resources.getDimensionPixelSize(resId)
-            } else 0
-        }
 
     /**
      * 设置沉浸式状态栏

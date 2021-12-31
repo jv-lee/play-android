@@ -8,7 +8,7 @@ import android.view.ViewTreeObserver.OnGlobalLayoutListener
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.lee.library.extensions.smoothScrollToTop
-import com.lee.library.tools.StatusTools.statusBarHeight
+import com.lee.library.extensions.statusBarHeight
 import kotlin.math.abs
 
 /**

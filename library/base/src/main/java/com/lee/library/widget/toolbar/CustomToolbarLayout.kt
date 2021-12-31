@@ -10,7 +10,7 @@ import com.lee.library.R
 import com.lee.library.extensions.dp2px
 import com.lee.library.extensions.px2dp
 import com.lee.library.tools.StatusTools
-import com.lee.library.tools.StatusTools.statusBarHeight
+import com.lee.library.extensions.statusBarHeight
 
 
 /**
