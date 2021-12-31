@@ -111,7 +111,7 @@ object KeyboardTools {
      */
     fun Window.keyboardOpenMoveView(rootView: ViewGroup) {
         val decorView = decorView
-        val statusBarHeight = decorView.context.statusBarHeight()
+        val statusBarHeight = decorView.context.statusBarHeight
         var isStatusDiff = false
         var statusDiff = 0
         decorView.viewTreeObserver.addOnGlobalLayoutListener {

@@ -20,7 +20,7 @@ import com.lee.library.tools.StatusTools.statusBarHeight
  */
 open class CustomToolbarLayout : ConstraintLayout {
 
-    private var statusBarHeight = context.statusBarHeight()
+    private var statusBarHeight = context.statusBarHeight
     private var toolbarLayoutHeight = initLayoutHeight()
 
     constructor(context: Context) : this(context, null, 0)

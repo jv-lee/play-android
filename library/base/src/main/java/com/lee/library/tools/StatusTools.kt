@@ -18,6 +18,31 @@ import android.widget.Toolbar
  * @date 2019/4/5
  */
 object StatusTools {
+
+    /**
+     * 状态栏高度
+     */
+    val Context.statusBarHeight: Int
+        get() {
+            val resId: Int =
+                resources.getIdentifier("status_bar_height", "dimen", "android")
+            return if (resId > 0) {
+                resources.getDimensionPixelSize(resId)
+            } else 0
+        }
+
+    /**
+     * 导航栏高度
+     */
+    val Context.navigationBarHeight: Int
+        get() {
+            val resId =
+                resources.getIdentifier("navigation_bar_height", "dimen", "android")
+            return if (resId > 0 && checkHasNavigationBar()) {
+                resources.getDimensionPixelSize(resId)
+            } else 0
+        }
+
     /**
      * 设置沉浸式状态栏
      *
@@ -135,32 +160,6 @@ object StatusTools {
     }
 
     /**
-     * 获取状态栏高度
-     *
-     * @return
-     */
-    fun Context.statusBarHeight(): Int {
-        val resId =
-            resources.getIdentifier("status_bar_height", "dimen", "android")
-        return if (resId > 0) {
-            resources.getDimensionPixelSize(resId)
-        } else 0
-    }
-
-    /**
-     * 获取导航栏高度
-     *
-     * @return
-     */
-    fun Context.navigationBarHeight(): Int {
-        val resId =
-            resources.getIdentifier("navigation_bar_height", "dimen", "android")
-        return if (resId > 0 && checkHasNavigationBar()) {
-            resources.getDimensionPixelSize(resId)
-        } else 0
-    }
-
-    /**
      * 判断是否存在导航栏
      *
      * @return
@@ -206,7 +205,7 @@ object StatusTools {
      */
     fun Context.setStatusPadding(view: View) {
         val layoutParams = view.layoutParams
-        val statusHeight = statusBarHeight()
+        val statusHeight = statusBarHeight
         layoutParams.height += statusHeight
         view.setPadding(
             view.paddingLeft,
@@ -217,7 +216,8 @@ object StatusTools {
     }
 
     fun Context.setStatusPadding(view: Toolbar) {
-        val statusHeight = statusBarHeight()
+        val statusHeight = statusBarHeight
         view.setPadding(0, statusHeight, 0, 0)
     }
+
 }

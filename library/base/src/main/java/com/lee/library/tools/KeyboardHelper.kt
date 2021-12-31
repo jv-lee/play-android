@@ -41,7 +41,7 @@ class KeyboardHelper(
 
     @TargetApi(Build.VERSION_CODES.KITKAT)
     fun enable() {
-        statusBarHeight = decorView.context.statusBarHeight()
+        statusBarHeight = decorView.context.statusBarHeight
         decorView.viewTreeObserver.addOnGlobalLayoutListener(onGlobalLayoutListener)
         recyclerView?.addOnScrollListener(onScrollListener)
     }
