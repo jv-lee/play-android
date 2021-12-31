@@ -41,13 +41,13 @@ class TodoViewModel(handle: SavedStateHandle) : CoroutineViewModel() {
     private val deleteLock = AtomicBoolean(false)
     private val updateLock = AtomicBoolean(false)
 
-    val todoDataLive = UiStatePageLiveData()
-
     private val _todoDeleteLive = UiStateMutableLiveData()
     val todoDeleteLive: UiStateLiveData = _todoDeleteLive
 
     private val _todoUpdateLive = UiStateMutableLiveData()
     val todoUpdateLive: UiStateLiveData = _todoUpdateLive
+
+    val todoDataLive = UiStatePageLiveData()
 
     fun requestTodoData(@LoadStatus status: Int) {
         launchIO {
