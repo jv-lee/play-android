@@ -25,15 +25,13 @@ class SquareViewModel : CoroutineViewModel() {
 
     fun requestSquareData(@LoadStatus status: Int) {
         launchIO {
-            squareLive.apply {
-                pageLaunch(status, { page ->
-                    applyData { repository.api.getSquareDataSync(page).checkData() }
-                }, {
-                    cacheManager.getCache(CACHE_KEY_SQUARE_CONTENT)
-                }, {
-                    cacheManager.putPageCache(CACHE_KEY_SQUARE_CONTENT, it)
-                })
-            }
+            squareLive.pageLaunch(status, { page ->
+                applyData { repository.api.getSquareDataSync(page).checkData() }
+            }, {
+                cacheManager.getCache(CACHE_KEY_SQUARE_CONTENT)
+            }, {
+                cacheManager.putPageCache(CACHE_KEY_SQUARE_CONTENT, it)
+            })
         }
     }
 

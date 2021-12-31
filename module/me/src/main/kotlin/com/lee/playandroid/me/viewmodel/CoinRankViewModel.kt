@@ -2,7 +2,6 @@ package com.lee.playandroid.me.viewmodel
 
 import com.lee.library.cache.CacheManager
 import com.lee.library.extensions.getCache
-import com.lee.library.extensions.putCache
 import com.lee.library.extensions.putPageCache
 import com.lee.library.mvvm.livedata.LoadStatus
 import com.lee.library.mvvm.ui.UiStatePageLiveData
@@ -27,22 +26,20 @@ class CoinRankViewModel : CoroutineViewModel() {
 
     fun requestCoinRank(@LoadStatus status: Int) {
         launchIO {
-            coinRankLive.apply {
-                pageLaunch(status, { page ->
-                    repository.api.getCoinRankAsync(page).checkData().also { newData ->
-                        //排行榜UI显示 0 —><- 1 位置数据对掉
-                        if (page == coinRankLive.getInitPage() && newData.size >= 2) {
-                            Collections.swap(newData.data, 0, 1)
-                        }
-                        //内存存储每页数据至LiveData
-                        applyData(getValueData(), newData)
+            coinRankLive.pageLaunch(status, { page ->
+                repository.api.getCoinRankAsync(page).checkData().also { newData ->
+                    //排行榜UI显示 0 —><- 1 位置数据对掉
+                    if (page == coinRankLive.getInitPage() && newData.size >= 2) {
+                        Collections.swap(newData.data, 0, 1)
                     }
-                }, {
-                    cacheManager.getCache(CACHE_KEY_COIN_RANK)
-                }, {
-                    cacheManager.putPageCache(CACHE_KEY_COIN_RANK, it)
-                })
-            }
+                    //内存存储每页数据至LiveData
+                    applyData(getValueData(), newData)
+                }
+            }, {
+                cacheManager.getCache(CACHE_KEY_COIN_RANK)
+            }, {
+                cacheManager.putPageCache(CACHE_KEY_COIN_RANK, it)
+            })
         }
     }
 

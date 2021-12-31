@@ -52,17 +52,15 @@ class TodoViewModel(handle: SavedStateHandle) : CoroutineViewModel() {
 
     fun requestTodoData(@LoadStatus status: Int) {
         launchIO {
-            todoDataLive.apply {
-                pageLaunch(status, { page ->
-                    applyData {
-                        apiRepository.api.postTodoDataAsync(page, requestStatus).checkData()
-                    }
-                }, {
-                    cacheManager.getCache(cacheKey)
-                }, {
-                    cacheManager.putPageCache(cacheKey, it)
-                })
-            }
+            todoDataLive.pageLaunch(status, { page ->
+                applyData {
+                    apiRepository.api.postTodoDataAsync(page, requestStatus).checkData()
+                }
+            }, {
+                cacheManager.getCache(cacheKey)
+            }, {
+                cacheManager.putPageCache(cacheKey, it)
+            })
         }
     }
 

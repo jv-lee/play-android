@@ -3,7 +3,6 @@ package com.lee.playandroid.project.viewmodel
 import androidx.lifecycle.SavedStateHandle
 import com.lee.library.cache.CacheManager
 import com.lee.library.extensions.getCache
-import com.lee.library.extensions.putCache
 import com.lee.library.extensions.putPageCache
 import com.lee.library.mvvm.livedata.LoadStatus
 import com.lee.library.mvvm.ui.UiStatePageLiveData
@@ -30,17 +29,15 @@ class ProjectListViewModel(handle: SavedStateHandle) : CoroutineViewModel() {
 
     fun requestContentList(@LoadStatus status: Int) {
         launchIO {
-            contentListLive.apply {
-                pageLaunch(status, { page ->
-                    repository.api.getProjectDataAsync(page, id).checkData().also { newData ->
-                        applyData(getValueData(), newData)
-                    }
-                }, {
-                    cacheManager.getCache(Constants.CACHE_KEY_PROJECT_DATA + id)
-                }, {
-                    cacheManager.putPageCache(Constants.CACHE_KEY_PROJECT_DATA + id, it)
-                })
-            }
+            contentListLive.pageLaunch(status, { page ->
+                repository.api.getProjectDataAsync(page, id).checkData().also { newData ->
+                    applyData(getValueData(), newData)
+                }
+            }, {
+                cacheManager.getCache(Constants.CACHE_KEY_PROJECT_DATA + id)
+            }, {
+                cacheManager.putPageCache(Constants.CACHE_KEY_PROJECT_DATA + id, it)
+            })
         }
     }
 

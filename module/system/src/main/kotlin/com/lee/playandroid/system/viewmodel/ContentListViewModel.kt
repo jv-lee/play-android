@@ -23,11 +23,9 @@ class ContentListViewModel(handle: SavedStateHandle) : CoroutineViewModel() {
 
     fun requestContentList(@LoadStatus status: Int) {
         launchIO {
-            contentListLive.apply {
-                pageLaunch(status, { page ->
-                    applyData { repository.api.getContentDataAsync(page, id).checkData() }
-                })
-            }
+            contentListLive.pageLaunch(status, { page ->
+                applyData { repository.api.getContentDataAsync(page, id).checkData() }
+            })
         }
     }
 

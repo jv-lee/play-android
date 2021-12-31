@@ -23,11 +23,9 @@ class SearchResultViewModel(handle: SavedStateHandle) : CoroutineViewModel() {
 
     fun requestSearch(@LoadStatus status: Int) {
         launchIO {
-            searchResultLive.apply {
-                pageLaunch(status, { page ->
-                    applyData { repository.api.postSearchAsync(page, key).checkData() }
-                })
-            }
+            searchResultLive.pageLaunch(status, { page ->
+                applyData { repository.api.postSearchAsync(page, key).checkData() }
+            })
         }
     }
 

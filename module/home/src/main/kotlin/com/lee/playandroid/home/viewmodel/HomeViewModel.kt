@@ -2,7 +2,6 @@ package com.lee.playandroid.home.viewmodel
 
 import com.lee.library.cache.CacheManager
 import com.lee.library.extensions.getCache
-import com.lee.library.extensions.putCache
 import com.lee.library.extensions.putPageCache
 import com.lee.library.mvvm.livedata.LoadStatus
 import com.lee.library.mvvm.ui.UiStatePageLiveData
@@ -32,17 +31,15 @@ class HomeViewModel : CoroutineViewModel() {
      */
     fun requestHomeData(@LoadStatus status: Int) {
         launchIO {
-            contentListLive.apply {
-                pageLaunch(status, { page: Int ->
-                    buildHomePageData(page)
-                }, {
-                    //缓存数据
-                    cacheManager.getCache(Constants.CACHE_KEY_HOME_CONTENT)
-                }, {
-                    //存储缓存数据
-                    cacheManager.putPageCache(Constants.CACHE_KEY_HOME_CONTENT, it)
-                })
-            }
+            contentListLive.pageLaunch(status, { page: Int ->
+                buildHomePageData(page)
+            }, {
+                //缓存数据
+                cacheManager.getCache(Constants.CACHE_KEY_HOME_CONTENT)
+            }, {
+                //存储缓存数据
+                cacheManager.putPageCache(Constants.CACHE_KEY_HOME_CONTENT, it)
+            })
         }
     }
 

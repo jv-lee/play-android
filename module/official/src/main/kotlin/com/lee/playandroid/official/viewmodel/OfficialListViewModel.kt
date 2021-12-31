@@ -29,15 +29,13 @@ class OfficialListViewModel(handle: SavedStateHandle) : CoroutineViewModel() {
 
     fun requestContentList(@LoadStatus status: Int) {
         launchIO {
-            contentListLive.apply {
-                pageLaunch(status, { page ->
-                    applyData { repository.api.getOfficialDataAsync(id, page).checkData() }
-                }, {
-                    cacheManager.getCache(Constants.CACHE_KEY_OFFICIAL_DATA + id)
-                }, {
-                    cacheManager.putPageCache(Constants.CACHE_KEY_OFFICIAL_DATA + id, it)
-                })
-            }
+            contentListLive.pageLaunch(status, { page ->
+                applyData { repository.api.getOfficialDataAsync(id, page).checkData() }
+            }, {
+                cacheManager.getCache(Constants.CACHE_KEY_OFFICIAL_DATA + id)
+            }, {
+                cacheManager.putPageCache(Constants.CACHE_KEY_OFFICIAL_DATA + id, it)
+            })
         }
     }
 

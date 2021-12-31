@@ -40,18 +40,16 @@ class MyShareViewModel : CoroutineViewModel() {
 
     fun requestMyShareData(@LoadStatus status: Int) {
         launchIO {
-            myShareLive.apply {
-                pageLaunch(status, { page ->
-                    repository.api.getMyShareDataSync(page)
-                        .checkData().shareArticles.also { newData ->
-                            applyData(getValueData(), newData)
-                        }
-                }, {
-                    cacheManager.getCache(Constants.CACHE_KEY_MY_SHARE_CONTENT)
-                }, {
-                    cacheManager.putPageCache(Constants.CACHE_KEY_MY_SHARE_CONTENT, it)
-                })
-            }
+            myShareLive.pageLaunch(status, { page ->
+                repository.api.getMyShareDataSync(page)
+                    .checkData().shareArticles.also { newData ->
+                        applyData(getValueData(), newData)
+                    }
+            }, {
+                cacheManager.getCache(Constants.CACHE_KEY_MY_SHARE_CONTENT)
+            }, {
+                cacheManager.putPageCache(Constants.CACHE_KEY_MY_SHARE_CONTENT, it)
+            })
         }
     }
 

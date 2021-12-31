@@ -44,15 +44,13 @@ class CollectViewModel : CoroutineViewModel() {
      */
     fun requestCollect(@LoadStatus status: Int) {
         launchIO {
-            collectLive.apply {
-                pageLaunch(status, { page ->
-                    applyData { repository.api.getCollectListAsync(page).checkData() }
-                }, {
-                    cacheManager.getCache(Constants.CACHE_KEY_COLLECT)
-                }, {
-                    cacheManager.putPageCache(Constants.CACHE_KEY_COLLECT, it)
-                })
-            }
+            collectLive.pageLaunch(status, { page ->
+                applyData { repository.api.getCollectListAsync(page).checkData() }
+            }, {
+                cacheManager.getCache(Constants.CACHE_KEY_COLLECT)
+            }, {
+                cacheManager.putPageCache(Constants.CACHE_KEY_COLLECT, it)
+            })
         }
     }
 
