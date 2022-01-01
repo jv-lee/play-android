@@ -9,10 +9,10 @@ import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import android.view.animation.LinearInterpolator
-import androidx.navigation.Navigation.findNavController
 import com.lee.library.base.BaseActivity
 import com.lee.library.extensions.banBackEvent
 import com.lee.library.extensions.binding
+import com.lee.library.extensions.setBackgroundDrawableCompat
 import com.lee.library.tools.DarkModeTools
 import com.lee.library.tools.ScreenDensityUtil
 import com.lee.library.tools.StatusTools.setDarkStatusIcon
@@ -44,7 +44,7 @@ class MainActivity : BaseActivity(),
             launch {
                 //进程初始化启动 请求配置
                 requestConfig()
-                animVisibleUi(300)
+                requestSplashAd()
             }
         }
     }
@@ -87,6 +87,15 @@ class MainActivity : BaseActivity(),
     }
 
     /**
+     * 闪屏广告逻辑
+     */
+    private suspend fun requestSplashAd() {
+//        binding.splashContainer.setBackgroundDrawableCompat(R.mipmap.splash_ad)
+//        delay(2000)
+        animVisibleUi(300)
+    }
+
+    /**
      * 动画显示UI页面
      * @param duration 页面预加载时间
      */
@@ -101,24 +110,19 @@ class MainActivity : BaseActivity(),
         anim.interpolator = LinearInterpolator()
         anim.addUpdateListener {
             binding.mainContainer.alpha = it.animatedValue as Float
+            binding.splashContainer.alpha = 1F - (it.animatedValue as Float)
         }
         anim.addListener(object : AnimatorListenerAdapter() {
             override fun onAnimationStart(animation: Animator?) {
                 binding.mainContainer.visibility = View.VISIBLE
-//                startSplash()
             }
 
             override fun onAnimationEnd(animation: Animator?) {
+                binding.root.removeView(binding.splashContainer)
                 window.decorView.background = null
             }
         })
         anim.start()
-    }
-
-    private fun startSplash() {
-        if (isColdStart.compareAndSet(true, false)) {
-            findNavController(this, R.id.nav_main_fragment).navigate(R.id.action_main_to_splash)
-        }
     }
 
 }
