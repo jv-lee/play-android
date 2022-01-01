@@ -8,6 +8,7 @@ import androidx.fragment.app.FragmentManager
 import com.lee.library.base.BaseApplication
 import com.lee.library.cache.CacheManager
 import com.lee.library.extensions.bindFragmentLifecycle
+import com.lee.library.extensions.unbindFragmentLifecycle
 import com.lee.library.interadp.SimpleActivityLifecycleCallbacks
 import com.lee.library.interadp.SimpleFragmentLifecycleCallbacks
 import com.lee.library.net.HttpManager
@@ -25,7 +26,8 @@ import kotlinx.coroutines.launch
 /**
  * @author jv.lee
  * @date 2021/11/2
- * @description
+ * @description 程序主入口
+ * 进行模块、工具类、基础配置初始化 activity/fragment生命周期统一监听功能业务处理
  */
 class App : BaseApplication() {
 
@@ -46,7 +48,6 @@ class App : BaseApplication() {
 
         override fun onActivityCreated(activity: Activity, bundle: Bundle?) {
             ScreenDensityUtil.init(activity)
-
             activity.bindFragmentLifecycle(fragmentLifecycleCallbacks)
 
             if (DarkModeTools.get().isDarkTheme()) {
@@ -60,8 +61,9 @@ class App : BaseApplication() {
         }
 
         override fun onActivityDestroyed(activity: Activity) {
-            super.onActivityDestroyed(activity)
             ScreenDensityUtil.resetDensity(activity)
+            activity.unbindFragmentLifecycle(fragmentLifecycleCallbacks)
+            super.onActivityDestroyed(activity)
         }
 
     }
