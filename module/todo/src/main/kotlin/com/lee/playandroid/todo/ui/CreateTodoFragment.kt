@@ -44,7 +44,7 @@ class CreateTodoFragment : BaseFragment(R.layout.fragment_create_todo),
     }
 
     private val type by arguments<Int>(ARG_PARAMS_TYPE)
-    private val todoData by lazy<TodoData?> { arguments?.getParcelable(ARG_PARAMS_TODO) }
+    private val todoData by argumentsOrNull<TodoData>(ARG_PARAMS_TODO)
 
     private val viewModel by viewModels<CreateTodoViewModel>()
 
