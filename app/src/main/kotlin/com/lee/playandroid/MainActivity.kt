@@ -9,6 +9,7 @@ import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import android.view.animation.LinearInterpolator
+import androidx.navigation.Navigation.findNavController
 import com.lee.library.base.BaseActivity
 import com.lee.library.extensions.banBackEvent
 import com.lee.library.extensions.binding
@@ -21,6 +22,7 @@ import com.lee.playandroid.databinding.ActivityMainBinding
 import com.lee.playandroid.library.service.AccountService
 import com.lee.playandroid.library.service.hepler.ModuleService
 import kotlinx.coroutines.*
+import java.util.concurrent.atomic.AtomicBoolean
 
 /**
  * @author jv.lee
@@ -33,6 +35,8 @@ class MainActivity : BaseActivity(),
     private val binding by binding(ActivityMainBinding::inflate)
 
     private val backCallback = banBackEvent()
+
+    private var isColdStart = AtomicBoolean(true)
 
     override fun initSavedState(intent: Intent, savedInstanceState: Bundle?) {
         super.initSavedState(intent, savedInstanceState)
@@ -61,7 +65,7 @@ class MainActivity : BaseActivity(),
             setNavigationBarColor(Color.BLACK)
             setLightStatusIcon()
         } else {
-            setNavigationBarColor( Color.WHITE)
+            setNavigationBarColor(Color.WHITE)
             setDarkStatusIcon()
         }
     }
@@ -101,6 +105,7 @@ class MainActivity : BaseActivity(),
         anim.addListener(object : AnimatorListenerAdapter() {
             override fun onAnimationStart(animation: Animator?) {
                 binding.mainContainer.visibility = View.VISIBLE
+//                startSplash()
             }
 
             override fun onAnimationEnd(animation: Animator?) {
@@ -109,4 +114,11 @@ class MainActivity : BaseActivity(),
         })
         anim.start()
     }
+
+    private fun startSplash() {
+        if (isColdStart.compareAndSet(true, false)) {
+            findNavController(this, R.id.nav_main_fragment).navigate(R.id.action_main_to_splash)
+        }
+    }
+
 }

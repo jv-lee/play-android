@@ -7,7 +7,18 @@
     <fragment
         android:id="@+id/main"
         android:name="com.lee.playandroid.MainFragment"
-        tools:layout="@layout/fragment_main" />
+        tools:layout="@layout/fragment_main" >
+        <action
+            android:id="@+id/action_main_to_splash"
+            app:destination="@id/splash" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/splash"
+        android:name="com.lee.playandroid.SplashFragment"
+        tools:layout="@layout/fragment_splash" >
+
+    </fragment>
 
     <include app:graph="@navigation/navigation_main" />
 
