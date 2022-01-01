@@ -81,7 +81,9 @@ class MainActivity : BaseActivity(),
         super.onDestroy()
     }
 
-    //客户端入口读取APP配置
+    /**
+     * 客户端入口读取APP配置
+     */
     private suspend fun requestConfig() {
         ModuleService.find<AccountService>().requestAccountInfo(this)
     }
