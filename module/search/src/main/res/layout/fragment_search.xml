@@ -48,7 +48,6 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/large_offset"
-        android:overScrollMode="never"
         android:paddingStart="@dimen/medium_offset"
         android:paddingEnd="@dimen/medium_offset"
         app:layoutManager="com.lee.library.widget.layoutmanager.FlowLayoutManager"
@@ -85,7 +84,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/large_offset"
-        android:overScrollMode="never"
+
         android:paddingStart="@dimen/medium_offset"
         android:paddingEnd="@dimen/medium_offset"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"

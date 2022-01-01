@@ -8,7 +8,6 @@
     android:layout_marginStart="@dimen/small_offset"
     android:layout_marginEnd="@dimen/small_offset"
     android:layout_marginBottom="@dimen/small_offset"
-    android:overScrollMode="never"
     android:padding="@dimen/medium_offset"
     android:textSize="@dimen/font_size_small"
     app:buttonRadius="@dimen/radius_offset"
