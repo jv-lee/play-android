@@ -49,4 +49,9 @@
 <!--        <item name="android:colorForeground">#ff0000</item>-->
     </style>
 
+    <style name="ImageCircleStyle">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">50%</item>
+    </style>
+
 </resources>

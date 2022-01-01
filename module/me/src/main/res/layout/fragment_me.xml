@@ -15,18 +15,19 @@
         android:foreground="?selectableItemBackground"
         app:layout_constraintTop_toTopOf="parent">
 
-        <com.lee.library.widget.RoundImageView
+        <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/iv_header"
             android:layout_width="56dp"
             android:layout_height="56dp"
             android:layout_marginStart="36dp"
+            android:padding="2dp"
             android:src="@drawable/vector_account"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_mode="circle"
-            app:lineColor="@color/colorThemeFocus"
-            app:lineWidth="2dp" />
+            app:shapeAppearance="@style/ImageCircleStyle"
+            app:strokeColor="@color/colorThemeFocus"
+            app:strokeWidth="2dp" />
 
         <TextView
             android:id="@+id/tv_account_name"
