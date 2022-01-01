@@ -7,7 +7,6 @@ import com.lee.library.adapter.core.UiPager2Adapter
 import com.lee.library.base.BaseNavigationFragment
 import com.lee.library.extensions.binding
 import com.lee.library.extensions.increaseOffscreenPageLimit
-import com.lee.library.extensions.overScrollNever
 import com.lee.library.mvvm.ui.UiState
 import com.lee.library.mvvm.ui.observeState
 import com.lee.library.widget.StatusLayout
@@ -38,7 +37,6 @@ abstract class BaseTabFragment : BaseNavigationFragment(R.layout.fragment_base_t
     open fun findBinding() = binding
 
     override fun bindView() {
-        binding.vpContainer.overScrollNever()
         binding.statusLayout.setOnReloadListener(this)
     }
 
