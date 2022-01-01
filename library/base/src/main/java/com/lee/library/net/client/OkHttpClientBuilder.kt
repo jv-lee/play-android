@@ -18,7 +18,9 @@ import javax.net.ssl.*
  */
 class OkHttpClientBuilder {
 
-    private val DEFAULT_TIMEOUT = 10L
+    companion object {
+        private const val DEFAULT_TIME = 5L
+    }
 
     private var safeClient: OkHttpClient? = null
     private var unSafeClient: OkHttpClient? = null
@@ -26,9 +28,9 @@ class OkHttpClientBuilder {
     fun getSafeClient(): OkHttpClient {
         if (safeClient == null) {
             safeClient = OkHttpClient.Builder()
-                .connectTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS)
-                .writeTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS)
-                .readTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS)
+                .connectTimeout(DEFAULT_TIME, TimeUnit.SECONDS)
+                .writeTimeout(DEFAULT_TIME, TimeUnit.SECONDS)
+                .readTimeout(DEFAULT_TIME, TimeUnit.SECONDS)
                 .sslSocketFactory(SSLSocketFactoryCompat())
                 .build()
 

@@ -71,7 +71,7 @@ abstract class BaseListFragment : BaseNavigationFragment(R.layout.fragment_base_
 
     override fun bindData() {
         //列表数据更新
-        dataObserveState().observeState<PageData<Content>>(requireParentFragment(),
+        dataObserveState().observeState<PageData<Content>>(viewLifecycleOwner,
             success = {
                 binding.refreshLayout.isRefreshing = false
                 mAdapter.submitData(it, diff = true)

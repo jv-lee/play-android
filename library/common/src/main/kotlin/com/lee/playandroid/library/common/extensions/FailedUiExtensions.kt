@@ -14,6 +14,7 @@ import com.lee.playandroid.library.common.R
  */
 
 fun FragmentActivity.actionFailed(throwable: Throwable) {
+    if(isDestroyed) return
     if (NetworkUtil.isConnected(applicationContext)) {
         toast(HttpManager.getInstance().getServerMessage(throwable, "errorMsg"))
     } else {
@@ -22,6 +23,7 @@ fun FragmentActivity.actionFailed(throwable: Throwable) {
 }
 
 fun Fragment.actionFailed(throwable: Throwable) {
+    if (!isAdded) return
     if (NetworkUtil.isConnected(requireContext().applicationContext)) {
         toast(HttpManager.getInstance().getServerMessage(throwable, "errorMsg"))
     } else {
