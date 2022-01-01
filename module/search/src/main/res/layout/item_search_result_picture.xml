@@ -10,16 +10,13 @@
     app:shadowFillColor="@color/colorThemeItem"
     app:shadowRound="@dimen/radius_offset">
 
-    <com.lee.library.widget.RoundImageView
+    <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/iv_image"
         android:layout_width="86dp"
         android:layout_height="146dp"
-        app:bottomLeftRadius="@dimen/radius_offset"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_mode="round"
-        app:topLeftRadius="@dimen/radius_offset" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/tv_title"

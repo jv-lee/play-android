@@ -5,12 +5,14 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.text.HtmlCompat
 import androidx.viewbinding.ViewBinding
+import com.google.android.material.shape.ShapeAppearanceModel
 import com.lee.library.adapter.binding.ViewBindingAdapter
 import com.lee.library.adapter.binding.ViewBindingHolder
 import com.lee.library.adapter.item.ViewBindingItem
 import com.lee.library.utils.TimeUtil
 import com.lee.playandroid.library.common.entity.Content
 import com.lee.playandroid.library.common.tools.GlideTools
+import com.lee.playandroid.search.R
 import com.lee.playandroid.search.databinding.ItemSearchResultPictureBinding
 import com.lee.playandroid.search.databinding.ItemSearchResultTextBinding
 
@@ -72,6 +74,10 @@ class SearchResultAdapter(context: Context, data: List<Content>) :
         override fun convert(holder: ViewBindingHolder, entity: Content, position: Int) {
             holder.getViewBinding<ItemSearchResultPictureBinding>().apply {
                 entity.apply {
+                    ivImage.shapeAppearanceModel = ShapeAppearanceModel.Builder()
+                        .setTopLeftCornerSize(root.context.resources.getDimension(R.dimen.radius_offset))
+                        .setBottomLeftCornerSize(root.context.resources.getDimension(R.dimen.radius_offset))
+                        .build()
                     GlideTools.get().loadImage(envelopePic, ivImage)
 
                     tvTitle.text = HtmlCompat.fromHtml(title, HtmlCompat.FROM_HTML_MODE_LEGACY)
