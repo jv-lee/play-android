@@ -12,7 +12,6 @@ import android.view.animation.LinearInterpolator
 import com.lee.library.base.BaseActivity
 import com.lee.library.extensions.banBackEvent
 import com.lee.library.extensions.binding
-import com.lee.library.extensions.setBackgroundDrawableCompat
 import com.lee.library.tools.DarkModeTools
 import com.lee.library.tools.ScreenDensityUtil
 import com.lee.library.tools.StatusTools.setDarkStatusIcon
@@ -22,7 +21,6 @@ import com.lee.playandroid.databinding.ActivityMainBinding
 import com.lee.playandroid.library.service.AccountService
 import com.lee.playandroid.library.service.hepler.ModuleService
 import kotlinx.coroutines.*
-import java.util.concurrent.atomic.AtomicBoolean
 
 /**
  * @author jv.lee
@@ -35,8 +33,6 @@ class MainActivity : BaseActivity(),
     private val binding by binding(ActivityMainBinding::inflate)
 
     private val backCallback = banBackEvent()
-
-    private var isColdStart = AtomicBoolean(true)
 
     override fun initSavedState(intent: Intent, savedInstanceState: Bundle?) {
         super.initSavedState(intent, savedInstanceState)
