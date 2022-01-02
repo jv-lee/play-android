@@ -8,7 +8,7 @@ import com.lee.library.mvvm.ui.UiStatePageLiveData
 import com.lee.library.mvvm.viewmodel.CoroutineViewModel
 import com.lee.playandroid.home.bean.HomeContent
 import com.lee.playandroid.home.constants.Constants
-import com.lee.playandroid.home.helper.CategoryHelper
+import com.lee.playandroid.home.model.entity.HomeCategory
 import com.lee.playandroid.home.model.repository.ApiRepository
 import com.lee.playandroid.library.common.entity.PageUiData
 import com.lee.playandroid.library.common.extensions.checkData
@@ -54,7 +54,7 @@ class HomeViewModel : CoroutineViewModel() {
             val banner = repository.api.getBannerDataAsync().checkData()
             dataList.add(HomeContent(bannerList = banner))
 
-            val category = CategoryHelper.getHomeCategory()
+            val category = HomeCategory.getHomeCategory()
             dataList.add(HomeContent(categoryList = category))
         }
 

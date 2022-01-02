@@ -8,7 +8,7 @@ import com.lee.library.adapter.binding.ViewBindingAdapter
 import com.lee.library.adapter.binding.ViewBindingHolder
 import com.lee.library.adapter.item.ViewBindingItem
 import com.lee.playandroid.home.databinding.ItemContentCategoryChildBinding
-import com.lee.playandroid.home.helper.HomeCategory
+import com.lee.playandroid.home.model.entity.HomeCategory
 
 /**
  * @author jv.lee

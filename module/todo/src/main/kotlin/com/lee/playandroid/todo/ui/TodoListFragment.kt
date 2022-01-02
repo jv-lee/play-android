@@ -25,7 +25,7 @@ import com.lee.playandroid.todo.databinding.FragmentTodoListBinding
 import com.lee.playandroid.todo.ui.adapter.TodoListAdapter
 import com.lee.playandroid.todo.ui.listener.TodoActionListener
 import com.lee.playandroid.todo.ui.widget.StickyDateItemDecoration
-import com.lee.playandroid.todo.viewmodel.TodoViewModel
+import com.lee.playandroid.todo.viewmodel.TodoListViewModel
 
 /**
  * @author jv.lee
@@ -58,7 +58,7 @@ class TodoListFragment : BaseFragment(R.layout.fragment_todo_list),
 
     private val binding by binding(FragmentTodoListBinding::bind)
 
-    private val viewModel by viewModels<TodoViewModel>()
+    private val viewModel by viewModels<TodoListViewModel>()
 
     private lateinit var mAdapter: TodoListAdapter
 

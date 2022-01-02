@@ -2,7 +2,7 @@ package com.lee.playandroid.home.bean
 
 import com.lee.playandroid.library.common.entity.Banner
 import com.lee.playandroid.library.common.entity.Content
-import com.lee.playandroid.home.helper.HomeCategory
+import com.lee.playandroid.home.model.entity.HomeCategory
 
 /**
  * @author jv.lee
