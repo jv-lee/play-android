@@ -62,13 +62,15 @@ class TodoFragment : BaseFragment(R.layout.fragment_todo) {
             val todo = bundle.getParcelable<TodoData>(REQUEST_VALUE_TODO)
             val type = bundle.getInt(REQUEST_VALUE_TYPE)
             childFragmentManager.fragments.forEach {
+                val actionListener = it as? TodoActionListener
                 when (requestKey) {
-                    REQUEST_KEY_SAVE -> (it as? TodoActionListener)?.addAction(todo)
-                    REQUEST_KEY_UPDATE -> (it as? TodoActionListener)?.updateAction(todo)
-                    REQUEST_KEY_TYPE -> (it as? TodoActionListener)?.notifyAction(type)
+                    REQUEST_KEY_SAVE -> actionListener?.addAction(todo)
+                    REQUEST_KEY_UPDATE -> actionListener?.updateAction(todo)
+                    REQUEST_KEY_TYPE -> actionListener?.notifyAction(type)
                 }
             }
         }
+
         setFragmentResultListener(REQUEST_KEY_SAVE, listener)
         setFragmentResultListener(REQUEST_KEY_UPDATE, listener)
         setFragmentResultListener(REQUEST_KEY_TYPE, listener)
