@@ -4,8 +4,11 @@ import com.lee.library.mvvm.ui.UiStateLiveData
 import com.lee.library.mvvm.ui.UiStateMutableLiveData
 import com.lee.library.mvvm.ui.stateFlow
 import com.lee.library.mvvm.viewmodel.CoroutineViewModel
+import com.lee.library.tools.PreferencesTools
 import com.lee.playandroid.library.common.entity.TodoData
 import com.lee.playandroid.library.common.extensions.checkData
+import com.lee.playandroid.todo.constants.Constants.SP_KEY_TODO_TYPE
+import com.lee.playandroid.todo.model.entity.TodoType
 import com.lee.playandroid.todo.model.repository.ApiRepository
 import kotlinx.coroutines.flow.collect
 
@@ -27,8 +30,14 @@ class CreateTodoViewModel : CoroutineViewModel() {
                 if (title.isEmpty() || content.isEmpty()) {
                     throw RuntimeException("title or content is not empty.")
                 }
-                apiRepository.api.postAddTodoAsync(title, content, date, priority = priority)
-                    .checkData()
+                val type = PreferencesTools.get(SP_KEY_TODO_TYPE, TodoType.DEFAULT)
+                apiRepository.api.postAddTodoAsync(
+                    title,
+                    content,
+                    date,
+                    priority = priority,
+                    type = type
+                ).checkData()
             }.collect {
                 _todoLive.postValue(it)
             }
