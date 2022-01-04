@@ -134,13 +134,14 @@ class TodoListViewModel(handle: SavedStateHandle) : CoroutineViewModel() {
             }
     }
 
-    fun updateRequestType(@TodoType type: Int) {
-        if (requestType == type) return
-
-        PreferencesTools.put(SP_KEY_TODO_TYPE, type)
-        requestType = type
-        cacheKey = Constants.CACHE_KEY_TODO_CONTENT + requestStatus + requestType
-        requestTodoData(LoadStatus.REFRESH)
+    fun checkResetRequestType(@TodoType type: Int): Boolean {
+        if (requestType != type) {
+            PreferencesTools.put(SP_KEY_TODO_TYPE, type)
+            requestType = type
+            cacheKey = Constants.CACHE_KEY_TODO_CONTENT + requestStatus + requestType
+            return true
+        }
+        return false
     }
 
     init {

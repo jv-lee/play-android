@@ -149,7 +149,11 @@ class TodoListFragment : BaseFragment(R.layout.fragment_todo_list),
     }
 
     override fun notifyAction(type: Int) {
-        viewModel.updateRequestType(type)
+        if (viewModel.checkResetRequestType(type)) {
+            mAdapter.initStatusView()
+            mAdapter.pageLoading()
+            viewModel.requestTodoData(LoadStatus.REFRESH)
+        }
     }
 
     /**
