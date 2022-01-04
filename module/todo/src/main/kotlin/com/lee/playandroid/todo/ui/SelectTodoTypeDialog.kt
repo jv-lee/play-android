@@ -16,7 +16,7 @@ import com.lee.playandroid.todo.model.entity.TodoTypeData
 import com.lee.playandroid.todo.model.entity.TodoTypeWheelData
 import com.lee.playandroid.todo.ui.TodoFragment.Companion.REQUEST_KEY_TYPE
 import com.lee.playandroid.todo.ui.TodoFragment.Companion.REQUEST_VALUE_TYPE
-import com.lee.playandroid.todo.viewmodel.TodoViewModel
+import com.lee.playandroid.todo.viewmodel.SelectTodoTypeViewModel
 
 /**
  * @author jv.lee
@@ -28,7 +28,7 @@ class SelectTodoTypeDialog :
 
     private val binding by binding(DialogSelectTodoBinding::bind)
 
-    private val viewModel by viewModels<TodoViewModel>()
+    private val viewModel by viewModels<SelectTodoTypeViewModel>()
 
     private var type = TodoType.DEFAULT
 

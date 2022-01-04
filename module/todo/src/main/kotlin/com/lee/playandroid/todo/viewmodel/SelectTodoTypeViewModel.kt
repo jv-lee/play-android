@@ -16,7 +16,7 @@ import kotlinx.coroutines.flow.collect
  * @date 2022/1/2
  * @description
  */
-class TodoViewModel : CoroutineViewModel() {
+class SelectTodoTypeViewModel : CoroutineViewModel() {
 
     private val _todoTypesLive = UiStateMutableLiveData()
     val todoTypes: UiStateLiveData = _todoTypesLive
