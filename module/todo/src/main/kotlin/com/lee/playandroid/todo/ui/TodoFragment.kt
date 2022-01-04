@@ -6,10 +6,13 @@ import androidx.navigation.fragment.findNavController
 import com.lee.library.adapter.core.UiPager2Adapter
 import com.lee.library.base.BaseFragment
 import com.lee.library.extensions.binding
+import com.lee.library.tools.PreferencesTools
 import com.lee.library.widget.toolbar.TitleToolbar
 import com.lee.playandroid.library.common.entity.TodoData
 import com.lee.playandroid.todo.R
+import com.lee.playandroid.todo.constants.Constants.SP_KEY_TODO_TYPE
 import com.lee.playandroid.todo.databinding.FragmentTodoBinding
+import com.lee.playandroid.todo.model.entity.TodoType
 import com.lee.playandroid.todo.ui.CreateTodoFragment.Companion.ARG_PARAMS_TYPE
 import com.lee.playandroid.todo.ui.CreateTodoFragment.Companion.ARG_TYPE_CREATE
 import com.lee.playandroid.todo.ui.TodoListFragment.Companion.ARG_STATUS_COMPLETE
@@ -35,6 +38,8 @@ class TodoFragment : BaseFragment(R.layout.fragment_todo) {
     private val binding by binding(FragmentTodoBinding::bind)
 
     override fun bindView() {
+        initTodoTitle()
+
         binding.vpContainer.isUserInputEnabled = false
         binding.vpContainer.adapter = UiPager2Adapter(
             this,
@@ -66,7 +71,10 @@ class TodoFragment : BaseFragment(R.layout.fragment_todo) {
                 when (requestKey) {
                     REQUEST_KEY_SAVE -> actionListener?.addAction(todo)
                     REQUEST_KEY_UPDATE -> actionListener?.updateAction(todo)
-                    REQUEST_KEY_TYPE -> actionListener?.notifyAction(type)
+                    REQUEST_KEY_TYPE -> {
+                        initTodoTitle(type)
+                        actionListener?.notifyAction(type)
+                    }
                 }
             }
         }
@@ -84,6 +92,22 @@ class TodoFragment : BaseFragment(R.layout.fragment_todo) {
             putInt(ARG_PARAMS_TYPE, ARG_TYPE_CREATE)
         }
         findNavController().navigate(R.id.action_todo_fragment_to_create_todo_fragment, bundle)
+    }
+
+    /**
+     * 根据type设置todo标题
+     * @param type 当前todo类型
+     */
+    private fun initTodoTitle(
+        type: Int = PreferencesTools.get(SP_KEY_TODO_TYPE, TodoType.DEFAULT)
+    ) {
+        val textResId = when (type) {
+            TodoType.WORK -> R.string.todo_title_work
+            TodoType.LIFE -> R.string.todo_title_life
+            TodoType.PLAY -> R.string.todo_title_play
+            else -> R.string.todo_title_default
+        }
+        binding.toolbar.setTitleText(getString(textResId))
     }
 
     /**

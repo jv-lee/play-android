@@ -1,5 +1,8 @@
 package com.lee.playandroid.todo.model.entity
 
+import com.lee.library.base.ApplicationExtensions.app
+import com.lee.playandroid.todo.R
+
 /**
  * @author jv.lee
  * @date 2022/1/2
@@ -9,10 +12,10 @@ data class TodoTypeData(val type: Int, val name: String) {
     companion object {
         fun getTodoTypes(): MutableList<TodoTypeData> {
             return arrayListOf<TodoTypeData>().apply {
-                add(TodoTypeData(TodoType.DEFAULT, "只用这一个"))
-                add(TodoTypeData(TodoType.WORK, "工作"))
-                add(TodoTypeData(TodoType.LIFE, "生活"))
-                add(TodoTypeData(TodoType.ENTERTAINMENT, "娱乐"))
+                add(TodoTypeData(TodoType.DEFAULT, app.getString(R.string.todo_title_default)))
+                add(TodoTypeData(TodoType.WORK, app.getString(R.string.todo_title_work)))
+                add(TodoTypeData(TodoType.LIFE, app.getString(R.string.todo_title_life)))
+                add(TodoTypeData(TodoType.PLAY, app.getString(R.string.todo_title_play)))
             }
         }
     }
@@ -23,7 +26,7 @@ annotation class TodoType {
         const val DEFAULT = 0
         const val WORK = 1
         const val LIFE = 2
-        const val ENTERTAINMENT = 3
+        const val PLAY = 3
     }
 }
 

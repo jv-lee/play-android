@@ -5,6 +5,12 @@
 
     <string name="title_create_todo">新增</string>
     <string name="title_edit_todo">编辑</string>
+
+    <string name="todo_title_default">只用这一个</string>
+    <string name="todo_title_work">工作</string>
+    <string name="todo_title_life">生活</string>
+    <string name="todo_title_play">娱乐</string>
+
     <string name="todo_create_title_label">标题：</string>
     <string name="todo_create_title_hint">必填</string>
     <string name="todo_create_content_label">详情：</string>
