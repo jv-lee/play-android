@@ -18,6 +18,9 @@
             app:exitAnim="@anim/zoom_exit"
             app:popEnterAnim="@anim/zoom_out"
             app:popExitAnim="@anim/alpha_default_hide" />
+        <action
+            android:id="@+id/action_todo_fragment_to_select_todo_type_dialog"
+            app:destination="@id/select_todo_type_dialog" />
     </fragment>
 
     <fragment
@@ -25,5 +28,11 @@
         android:name="com.lee.playandroid.todo.ui.CreateTodoFragment"
         android:label="createTodo"
         tools:layout="@layout/fragment_create_todo" />
+
+    <dialog
+        android:id="@+id/select_todo_type_dialog"
+        android:name="com.lee.playandroid.todo.ui.SelectTodoTypeDialog"
+        android:label="selectTodoType"
+        tools:layout="@layout/dialog_select_todo" />
 
 </navigation>

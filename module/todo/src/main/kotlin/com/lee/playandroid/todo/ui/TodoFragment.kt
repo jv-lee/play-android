@@ -6,7 +6,6 @@ import androidx.navigation.fragment.findNavController
 import com.lee.library.adapter.core.UiPager2Adapter
 import com.lee.library.base.BaseFragment
 import com.lee.library.extensions.binding
-import com.lee.library.extensions.show
 import com.lee.library.widget.toolbar.TitleToolbar
 import com.lee.playandroid.library.common.entity.TodoData
 import com.lee.playandroid.todo.R
@@ -27,7 +26,10 @@ class TodoFragment : BaseFragment(R.layout.fragment_todo) {
     companion object {
         const val REQUEST_KEY_SAVE = "requestKey:save"
         const val REQUEST_KEY_UPDATE = "requestKey:update"
+        const val REQUEST_KEY_TYPE = "requestKey:type"
+
         const val REQUEST_VALUE_TODO = "requestValue:todo"
+        const val REQUEST_VALUE_TYPE = "requestValue:type"
     }
 
     private val binding by binding(FragmentTodoBinding::bind)
@@ -49,7 +51,7 @@ class TodoFragment : BaseFragment(R.layout.fragment_todo) {
         }
         binding.toolbar.setClickListener(object : TitleToolbar.ClickListener() {
             override fun moreClick() {
-                show(SelectTodoTypeDialog())
+                findNavController().navigate(R.id.action_todo_fragment_to_select_todo_type_dialog)
             }
         })
     }
@@ -57,17 +59,19 @@ class TodoFragment : BaseFragment(R.layout.fragment_todo) {
 
     override fun bindData() {
         val listener = fun(requestKey: String, bundle: Bundle) {
-            bundle.getParcelable<TodoData>(REQUEST_VALUE_TODO)?.let { todo ->
-                childFragmentManager.fragments.forEach {
-                    when (requestKey) {
-                        REQUEST_KEY_SAVE -> (it as? TodoActionListener)?.addAction(todo)
-                        REQUEST_KEY_UPDATE -> (it as? TodoActionListener)?.updateAction(todo)
-                    }
+            val todo = bundle.getParcelable<TodoData>(REQUEST_VALUE_TODO)
+            val type = bundle.getInt(REQUEST_VALUE_TYPE)
+            childFragmentManager.fragments.forEach {
+                when (requestKey) {
+                    REQUEST_KEY_SAVE -> (it as? TodoActionListener)?.addAction(todo)
+                    REQUEST_KEY_UPDATE -> (it as? TodoActionListener)?.updateAction(todo)
+                    REQUEST_KEY_TYPE -> (it as? TodoActionListener)?.notifyAction(type)
                 }
             }
         }
         setFragmentResultListener(REQUEST_KEY_SAVE, listener)
         setFragmentResultListener(REQUEST_KEY_UPDATE, listener)
+        setFragmentResultListener(REQUEST_KEY_TYPE, listener)
     }
 
     /**

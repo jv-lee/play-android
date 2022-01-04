@@ -4,6 +4,9 @@ import com.lee.library.mvvm.ui.UiStateLiveData
 import com.lee.library.mvvm.ui.UiStateMutableLiveData
 import com.lee.library.mvvm.ui.stateFlow
 import com.lee.library.mvvm.viewmodel.CoroutineViewModel
+import com.lee.library.tools.PreferencesTools
+import com.lee.playandroid.todo.constants.Constants.SP_KEY_TODO_TYPE
+import com.lee.playandroid.todo.model.entity.TodoType
 import com.lee.playandroid.todo.model.entity.TodoTypeData
 import com.lee.playandroid.todo.model.entity.TodoTypeWheelData
 import kotlinx.coroutines.flow.collect
@@ -21,8 +24,9 @@ class TodoViewModel : CoroutineViewModel() {
     private fun requestTodoTypes() {
         launchIO {
             stateFlow {
+                val type = PreferencesTools.get(SP_KEY_TODO_TYPE, TodoType.DEFAULT)
                 val data = TodoTypeData.getTodoTypes()
-                TodoTypeWheelData(0, data)
+                TodoTypeWheelData(type, data)
             }.collect {
                 _todoTypesLive.postValue(it)
             }

@@ -127,14 +127,16 @@ class TodoListFragment : BaseFragment(R.layout.fragment_todo_list),
         }
     }
 
-    override fun addAction(todo: TodoData) {
+    override fun addAction(todo: TodoData?) {
+        todo ?: return
         if (status == ARG_STATUS_UPCOMING) {
             mAdapter.openLoadMore()
             viewModel.requestTodoData(LoadStatus.REFRESH)
         }
     }
 
-    override fun updateAction(todo: TodoData) {
+    override fun updateAction(todo: TodoData?) {
+        todo ?: return
         mAdapter.openLoadMore()
         viewModel.requestTodoData(LoadStatus.REFRESH)
     }
@@ -144,6 +146,10 @@ class TodoListFragment : BaseFragment(R.layout.fragment_todo_list),
             mAdapter.openLoadMore()
             viewModel.requestTodoData(LoadStatus.REFRESH)
         }
+    }
+
+    override fun notifyAction(type: Int) {
+        viewModel.updateRequestType(type)
     }
 
     /**

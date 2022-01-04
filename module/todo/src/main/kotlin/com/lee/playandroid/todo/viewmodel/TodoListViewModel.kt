@@ -11,11 +11,14 @@ import com.lee.library.mvvm.ui.UiStateMutableLiveData
 import com.lee.library.mvvm.ui.UiStatePageLiveData
 import com.lee.library.mvvm.ui.stateFlow
 import com.lee.library.mvvm.viewmodel.CoroutineViewModel
+import com.lee.library.tools.PreferencesTools
 import com.lee.playandroid.library.common.constants.ApiConstants
 import com.lee.playandroid.library.common.entity.PageData
 import com.lee.playandroid.library.common.entity.TodoData
 import com.lee.playandroid.library.common.extensions.checkData
 import com.lee.playandroid.todo.constants.Constants
+import com.lee.playandroid.todo.constants.Constants.SP_KEY_TODO_TYPE
+import com.lee.playandroid.todo.model.entity.TodoType
 import com.lee.playandroid.todo.model.repository.ApiRepository
 import com.lee.playandroid.todo.ui.TodoListFragment.Companion.ARG_PARAMS_STATUS
 import com.lee.playandroid.todo.ui.TodoListFragment.Companion.ARG_STATUS_COMPLETE
@@ -32,7 +35,9 @@ class TodoListViewModel(handle: SavedStateHandle) : CoroutineViewModel() {
 
     private val requestStatus = handle[ARG_PARAMS_STATUS] ?: 0
 
-    private val cacheKey = Constants.CACHE_KEY_TODO_CONTENT + requestStatus
+    private var requestType = PreferencesTools.get(SP_KEY_TODO_TYPE, TodoType.DEFAULT)
+
+    private var cacheKey = Constants.CACHE_KEY_TODO_CONTENT + requestStatus + requestType
 
     private val cacheManager = CacheManager.getDefault()
 
@@ -53,7 +58,8 @@ class TodoListViewModel(handle: SavedStateHandle) : CoroutineViewModel() {
         launchIO {
             todoDataLive.pageLaunch(status, { page ->
                 applyData {
-                    apiRepository.api.postTodoDataAsync(page, requestStatus).checkData()
+                    apiRepository.api.postTodoDataAsync(page, requestStatus, requestType)
+                        .checkData()
                 }
             }, {
                 cacheManager.getCache(cacheKey)
@@ -126,6 +132,15 @@ class TodoListViewModel(handle: SavedStateHandle) : CoroutineViewModel() {
                     cacheManager.putCache(cacheKey, this)
                 }
             }
+    }
+
+    fun updateRequestType(@TodoType type: Int) {
+        if (requestType == type) return
+
+        PreferencesTools.put(SP_KEY_TODO_TYPE, type)
+        requestType = type
+        cacheKey = Constants.CACHE_KEY_TODO_CONTENT + requestStatus + requestType
+        requestTodoData(LoadStatus.REFRESH)
     }
 
     init {
