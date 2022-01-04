@@ -135,7 +135,6 @@ open class TitleToolbar : CustomToolbarLayout {
                     bottomToBottom = 0
                     gravity = Gravity.CENTER
                 }
-            setTextColor(ContextCompat.getColor(context, R.color.colorThemeAccent))
             text = titleText
             setTextColor(titleColor)
             maxLines = 1
