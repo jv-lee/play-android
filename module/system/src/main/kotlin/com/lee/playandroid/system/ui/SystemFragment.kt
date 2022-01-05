@@ -23,6 +23,9 @@ class SystemFragment : BaseFragment(R.layout.fragment_system) {
 
     override fun bindView() {
         delayBackEvent()
+
+        binding.radioSystem.setButtonDrawable(android.R.color.transparent)
+        binding.radioNavigation.setButtonDrawable(android.R.color.transparent)
         binding.vpContainer.bindRadioGroup(binding.radioTabLayout)
     }
 
