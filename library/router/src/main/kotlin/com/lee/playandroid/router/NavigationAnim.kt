@@ -1,21 +1,12 @@
-package com.lee.playandroid.router.extensions
+package com.lee.playandroid.router
 
-import android.net.Uri
-import androidx.navigation.NavController
-import androidx.navigation.NavDeepLinkRequest
 import androidx.navigation.NavOptions
-import com.lee.playandroid.router.R
 
 /**
  * @author jv.lee
- * @date 2021/9/15
+ * @date 2022/1/4
  * @description
  */
-
-fun NavController.navigateDeepLink(uri: Uri, anim: NavigationAnim = NavigationAnim.SlideIn) {
-    navigate(NavDeepLinkRequest.Builder.fromUri(uri).build(), anim.options())
-}
-
 sealed class NavigationAnim {
     object Bottom : NavigationAnim()
     object SlideIn : NavigationAnim()

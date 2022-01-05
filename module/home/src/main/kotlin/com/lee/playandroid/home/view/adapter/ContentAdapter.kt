@@ -20,8 +20,8 @@ import com.lee.playandroid.home.databinding.ItemContentCategoryBinding
 import com.lee.playandroid.home.databinding.ItemContentTextBinding
 import com.lee.playandroid.library.common.entity.Banner
 import com.lee.playandroid.library.common.tools.GlideTools
-import com.lee.playandroid.router.extensions.NavigationAnim
-import com.lee.playandroid.router.extensions.navigateDeepLink
+import com.lee.playandroid.router.NavigationAnim
+import com.lee.playandroid.router.navigateDeepLink
 import com.lee.playandroid.router.navigateDetails
 
 /**
