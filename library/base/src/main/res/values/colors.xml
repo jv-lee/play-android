@@ -12,6 +12,7 @@
     <!--  主题颜色  -->
     <color name="colorThemeWindow">#FFFFFF</color>
     <color name="colorThemeBackground">#F9F5FF</color>
+    <color name="colorThemeBackgroundTransparent">#1AF9F5FF</color>
     <color name="colorThemeItem">#FFFFFF</color>
     <color name="colorThemeSearch">#F0F0F0</color>
     <color name="colorThemePlaceholder">#F9F9F9</color>

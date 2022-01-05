@@ -13,7 +13,8 @@ import com.lee.playandroid.library.common.R
 
 fun View.setThemeGradientBackground() {
     val color = ContextCompat.getColor(context, R.color.colorThemeBackground)
-    val transparent = ContextCompat.getColor(context, android.R.color.transparent)
+    val transparent = ContextCompat.getColor(context, R.color.colorThemeBackgroundTransparent)
+
     val backgroundDrawable = GradientDrawable(
         GradientDrawable.Orientation.TOP_BOTTOM,
         intArrayOf(color, color, color, color, color, transparent)
