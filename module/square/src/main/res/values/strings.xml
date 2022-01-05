@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="square_title">Recently shared</string>
     <string name="square_my_share_title">我的分享</string>
     <string name="square_create_share_title">创建分享</string>
     <string name="share_success">分享成功</string>

@@ -27,13 +27,12 @@
                 android:id="@+id/tv_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingTop="@dimen/large_offset"
                 android:paddingEnd="@dimen/large_offset"
-                android:paddingBottom="@dimen/large_offset"
                 android:text="@string/home_header_text"
                 android:textColor="@color/colorThemeAccent"
                 android:textSize="@dimen/font_size_large_xx"
                 android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
