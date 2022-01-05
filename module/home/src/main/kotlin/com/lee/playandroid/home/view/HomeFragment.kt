@@ -22,6 +22,7 @@ import com.lee.playandroid.home.viewmodel.HomeViewModel
 import com.lee.playandroid.library.common.entity.NavigationSelectEvent
 import com.lee.playandroid.library.common.entity.PageUiData
 import com.lee.playandroid.library.common.extensions.actionFailed
+import com.lee.playandroid.library.common.ui.extensions.setThemeGradientBackground
 import com.lee.playandroid.library.common.ui.widget.OffsetItemDecoration
 import com.lee.playandroid.router.navigateDetails
 import com.lee.playandroid.router.navigateSearch
@@ -42,6 +43,7 @@ class HomeFragment : BaseFragment(R.layout.fragment_home) {
     override fun bindView() {
         delayBackEvent()
 
+        binding.toolbar.setThemeGradientBackground()
         binding.ivSearch.setOnClickListener {
             findNavController().navigateSearch()
         }

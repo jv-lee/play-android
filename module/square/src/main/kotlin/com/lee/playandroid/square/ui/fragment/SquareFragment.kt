@@ -16,6 +16,7 @@ import com.lee.playandroid.library.common.entity.Content
 import com.lee.playandroid.library.common.entity.NavigationSelectEvent
 import com.lee.playandroid.library.common.entity.PageData
 import com.lee.playandroid.library.common.extensions.actionFailed
+import com.lee.playandroid.library.common.ui.extensions.setThemeGradientBackground
 import com.lee.playandroid.library.common.ui.widget.OffsetItemDecoration
 import com.lee.playandroid.router.navigateDetails
 import com.lee.playandroid.square.R
@@ -39,6 +40,7 @@ class SquareFragment : BaseFragment(R.layout.fragment_square) {
     override fun bindView() {
         delayBackEvent()
 
+        binding.toolbar.setThemeGradientBackground()
         binding.ivCreate.setOnClickListener {
             findNavController().navigate(R.id.action_square_fragment_to_create_share_fragment)
         }

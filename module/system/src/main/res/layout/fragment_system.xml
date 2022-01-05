@@ -16,7 +16,6 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/shape_gradient_toolbar_bg"
         app:layout_constraintTop_toTopOf="parent">
 
         <RadioGroup
