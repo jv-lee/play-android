@@ -20,10 +20,14 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:elevation="1dp"
         app:layout_constraintTop_toTopOf="parent"
         app:menuRes="@menu/menu_details"
-        app:moreEnable="visible"
-        tools:ignore="UnusedAttribute" />
+        app:moreEnable="visible" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#ebebeb"
+        app:layout_constraintTop_toBottomOf="@id/toolbar" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
