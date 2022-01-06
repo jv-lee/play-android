@@ -45,11 +45,6 @@ class SquareFragment : BaseFragment(R.layout.fragment_square) {
             findNavController().navigate(R.id.action_square_fragment_to_create_share_fragment)
         }
 
-        binding.refreshView.setOnRefreshListener {
-            mAdapter.openLoadMore()
-            viewModel.requestSquareData(LoadStatus.REFRESH)
-        }
-
         binding.rvContainer.addItemDecoration(OffsetItemDecoration(binding.toolbar.getToolbarLayoutHeight()))
         binding.rvContainer.adapter = SquareAdapter(requireContext(), arrayListOf()).apply {
             mAdapter = this
@@ -75,6 +70,11 @@ class SquareFragment : BaseFragment(R.layout.fragment_square) {
             }
 
         }.proxy
+
+        binding.refreshView.setOnRefreshListener {
+            mAdapter.openLoadMore()
+            viewModel.requestSquareData(LoadStatus.REFRESH)
+        }
     }
 
     override fun bindData() {

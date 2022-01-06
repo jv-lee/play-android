@@ -38,15 +38,8 @@ abstract class BaseListFragment : BaseNavigationFragment(R.layout.fragment_base_
     open fun findBinding() = binding
 
     override fun bindView() {
-        mAdapter = createAdapter()
-        binding.rvContainer.adapter = mAdapter.proxy
-
-        binding.refreshLayout.setOnRefreshListener {
-            mAdapter.openLoadMore()
-            requestContentList(LoadStatus.REFRESH)
-        }
-
-        mAdapter.apply {
+        binding.rvContainer.adapter = createAdapter().apply {
+            mAdapter = this
             initStatusView()
             pageLoading()
             setAutoLoadMoreListener {
@@ -66,6 +59,11 @@ abstract class BaseListFragment : BaseNavigationFragment(R.layout.fragment_base_
             setOnItemClickListener { _, entity, _ ->
                 navigationDetails(entity)
             }
+        }.proxy
+
+        binding.refreshLayout.setOnRefreshListener {
+            mAdapter.openLoadMore()
+            requestContentList(LoadStatus.REFRESH)
         }
     }
 

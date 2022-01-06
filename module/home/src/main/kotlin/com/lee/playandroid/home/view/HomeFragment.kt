@@ -48,11 +48,6 @@ class HomeFragment : BaseFragment(R.layout.fragment_home) {
             findNavController().navigateSearch()
         }
 
-        binding.refreshView.setOnRefreshListener {
-            mAdapter.openLoadMore()
-            viewModel.requestHomeData(LoadStatus.REFRESH)
-        }
-
         binding.rvContainer.addSaveStateViewType(BannerView::class.java)
         binding.rvContainer.addItemDecoration(OffsetItemDecoration(binding.toolbar.getToolbarLayoutHeight()))
         binding.rvContainer.adapter = ContentAdapter(requireContext(), arrayListOf()).apply {
@@ -77,6 +72,11 @@ class HomeFragment : BaseFragment(R.layout.fragment_home) {
                 }
             }
         }.proxy
+
+        binding.refreshView.setOnRefreshListener {
+            mAdapter.openLoadMore()
+            viewModel.requestHomeData(LoadStatus.REFRESH)
+        }
     }
 
     override fun bindData() {
