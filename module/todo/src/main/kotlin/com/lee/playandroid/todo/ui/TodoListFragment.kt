@@ -12,6 +12,7 @@ import com.lee.library.adapter.page.submitFailed
 import com.lee.library.base.BaseFragment
 import com.lee.library.extensions.arguments
 import com.lee.library.extensions.binding
+import com.lee.library.extensions.findParentFragment
 import com.lee.library.extensions.toast
 import com.lee.library.mvvm.livedata.LoadStatus
 import com.lee.library.mvvm.ui.observeState
@@ -112,7 +113,7 @@ class TodoListFragment : BaseFragment(R.layout.fragment_todo_list),
 
         viewModel.todoUpdateLive.observeState<TodoData>(this, success = {
             toast(getString(R.string.todo_move_success))
-            (parentFragment as? TodoFragment)?.moveTodoItem(it)
+            findParentFragment<TodoFragment>()?.moveTodoItem(it)
         }, error = {
             SwipeItemLayout.closeAllItems(binding.rvContainer)
             actionFailed(it)
