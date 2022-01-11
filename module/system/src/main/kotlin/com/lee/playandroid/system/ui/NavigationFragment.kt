@@ -10,6 +10,7 @@ import com.lee.library.extensions.setMargin
 import com.lee.library.extensions.smoothScrollToTop
 import com.lee.library.livedatabus.InjectBus
 import com.lee.library.livedatabus.LiveDataBus
+import com.lee.library.mvvm.livedata.LoadStatus
 import com.lee.library.mvvm.ui.observeState
 import com.lee.library.widget.StatusLayout
 import com.lee.playandroid.library.common.entity.NavigationItem
@@ -87,11 +88,11 @@ class NavigationFragment : BaseFragment(R.layout.fragment_navigation),
 
     override fun lazyLoad() {
         super.lazyLoad()
-        viewModel.requestNavigationData()
+        viewModel.requestNavigationData(LoadStatus.INIT)
     }
 
     override fun onReload() {
-        viewModel.requestNavigationData()
+        viewModel.requestNavigationData(LoadStatus.RELOAD)
     }
 
     @InjectBus(NavigationSelectEvent.key, isActive = true)

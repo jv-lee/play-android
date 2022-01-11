@@ -4,6 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import com.lee.library.cache.CacheManager
 import com.lee.library.extensions.getCache
 import com.lee.library.extensions.putCache
+import com.lee.library.mvvm.livedata.LoadStatus
 import com.lee.library.mvvm.ui.UiStateLiveData
 import com.lee.library.mvvm.ui.UiStateMutableLiveData
 import com.lee.library.mvvm.ui.stateCacheFlow
@@ -30,10 +31,16 @@ class NavigationViewModel : CoroutineViewModel() {
     private val _selectTabLive = MutableLiveData(0)
     val selectTabLive = _selectTabLive
 
-    fun requestNavigationData() {
+    fun requestNavigationData(@LoadStatus status: Int) {
+        // 过滤navigation fragment 重复创建导致重复初始化请求
+        if (status == LoadStatus.INIT && navigationLive.value != null) {
+            return
+        }
+
         launchIO {
             stateCacheFlow({
-                repository.api.getNavigationDataAsync().checkData().filter { it.articles.isNotEmpty() }
+                repository.api.getNavigationDataAsync().checkData()
+                    .filter { it.articles.isNotEmpty() }
             }, {
                 cacheManager.getCache(Constants.CACHE_KEY_NAVIGATION_CONTENT)
             }, {
