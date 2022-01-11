@@ -41,14 +41,11 @@ class NavigationFragment : BaseFragment(R.layout.fragment_navigation),
 
     override fun bindView() {
         findParentFragment<SystemFragment>()?.parentBindingAction {
-            binding.rvTab.setMargin(
-                top = it.toolbar.getToolbarLayoutHeight(),
-                bottom = resources.getDimension(R.dimen.navigation_bar_height).toInt()
-            )
-            binding.rvContainer.setMargin(
-                top = it.toolbar.getToolbarLayoutHeight(),
-                bottom = resources.getDimension(R.dimen.navigation_bar_height).toInt()
-            )
+            val topOffset = (it.toolbar.getToolbarLayoutHeight() * 0.9).toInt()
+            val bottomOffset = resources.getDimension(R.dimen.navigation_bar_height).toInt()
+
+            binding.rvTab.setMargin(top = topOffset, bottom = bottomOffset)
+            binding.rvContainer.setMargin(top = topOffset, bottom = bottomOffset)
         }
 
         mNavigationTabAdapter = NavigationTabAdapter(arrayListOf())
