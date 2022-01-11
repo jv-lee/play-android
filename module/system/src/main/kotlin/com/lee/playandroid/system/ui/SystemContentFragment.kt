@@ -34,7 +34,6 @@ import com.lee.playandroid.system.viewmodel.SystemContentViewModel
  */
 class SystemContentFragment : BaseFragment(R.layout.fragment_system_content),
     BaseViewAdapter.OnItemClickListener<ParentTab>,
-    BaseViewAdapter.AutoLoadMoreListener,
     BaseViewAdapter.LoadErrorListener {
 
     private val viewModel by viewModels<SystemContentViewModel>()
@@ -70,10 +69,6 @@ class SystemContentFragment : BaseFragment(R.layout.fragment_system_content),
 
     override fun onItemClick(view: View, entity: ParentTab, position: Int) {
         navigationToContentTab(entity)
-    }
-
-    override fun autoLoadMore() {
-        viewModel.requestParentTab()
     }
 
     override fun pageReload() {
