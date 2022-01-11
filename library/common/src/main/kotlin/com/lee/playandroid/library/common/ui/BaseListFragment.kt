@@ -2,7 +2,6 @@ package com.lee.playandroid.library.common.ui
 
 import androidx.lifecycle.LiveData
 import com.lee.library.adapter.base.BaseViewAdapter
-import com.lee.library.adapter.listener.LoadErrorListener
 import com.lee.library.adapter.page.submitData
 import com.lee.library.adapter.page.submitFailed
 import com.lee.library.base.BaseNavigationFragment
@@ -46,7 +45,7 @@ abstract class BaseListFragment : BaseNavigationFragment(R.layout.fragment_base_
                 requestContentList(LoadStatus.LOAD_MORE)
             }
 
-            setLoadErrorListener(object : LoadErrorListener {
+            setLoadErrorListener(object : BaseViewAdapter.LoadErrorListener {
                 override fun pageReload() {
                     requestContentList(LoadStatus.REFRESH)
                 }

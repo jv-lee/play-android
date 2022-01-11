@@ -4,7 +4,6 @@ import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.lee.library.adapter.base.BaseViewAdapter
-import com.lee.library.adapter.listener.LoadErrorListener
 import com.lee.library.adapter.page.submitData
 import com.lee.library.adapter.page.submitFailed
 import com.lee.library.base.BaseFragment
@@ -53,7 +52,7 @@ class CollectFragment : BaseFragment(R.layout.fragment_collect),
                 viewModel.requestCollect(LoadStatus.LOAD_MORE)
             }
 
-            setLoadErrorListener(object : LoadErrorListener {
+            setLoadErrorListener(object : BaseViewAdapter.LoadErrorListener {
                 override fun pageReload() {
                     viewModel.requestCollect(LoadStatus.REFRESH)
                 }

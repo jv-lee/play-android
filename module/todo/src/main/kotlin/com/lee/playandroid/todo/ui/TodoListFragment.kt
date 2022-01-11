@@ -6,7 +6,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.lee.library.adapter.base.BaseViewAdapter
-import com.lee.library.adapter.listener.LoadErrorListener
 import com.lee.library.adapter.page.submitData
 import com.lee.library.adapter.page.submitFailed
 import com.lee.library.base.BaseFragment
@@ -81,7 +80,7 @@ class TodoListFragment : BaseFragment(R.layout.fragment_todo_list),
                     viewModel.requestTodoData(LoadStatus.LOAD_MORE)
                 }
 
-                setLoadErrorListener(object : LoadErrorListener {
+                setLoadErrorListener(object : BaseViewAdapter.LoadErrorListener {
                     override fun pageReload() {
                         viewModel.requestTodoData(LoadStatus.REFRESH)
                     }

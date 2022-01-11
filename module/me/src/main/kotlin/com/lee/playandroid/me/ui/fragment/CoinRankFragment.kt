@@ -3,7 +3,7 @@ package com.lee.playandroid.me.ui.fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
-import com.lee.library.adapter.listener.LoadErrorListener
+import com.lee.library.adapter.base.BaseViewAdapter
 import com.lee.library.adapter.page.submitData
 import com.lee.library.adapter.page.submitFailed
 import com.lee.library.base.BaseFragment
@@ -48,7 +48,7 @@ class CoinRankFragment : BaseFragment(R.layout.fragment_coin_rank) {
                 viewModel.requestCoinRank(LoadStatus.LOAD_MORE)
             }
 
-            setLoadErrorListener(object : LoadErrorListener {
+            setLoadErrorListener(object : BaseViewAdapter.LoadErrorListener {
                 override fun pageReload() {
                     viewModel.requestCoinRank(LoadStatus.REFRESH)
                 }

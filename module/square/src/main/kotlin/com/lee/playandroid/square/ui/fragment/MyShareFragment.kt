@@ -4,7 +4,6 @@ import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.lee.library.adapter.base.BaseViewAdapter
-import com.lee.library.adapter.listener.LoadErrorListener
 import com.lee.library.adapter.page.submitData
 import com.lee.library.adapter.page.submitFailed
 import com.lee.library.base.BaseFragment
@@ -60,7 +59,7 @@ class MyShareFragment : BaseFragment(R.layout.fragment_my_share),
             setAutoLoadMoreListener {
                 viewModel.requestMyShareData(LoadStatus.LOAD_MORE)
             }
-            setLoadErrorListener(object : LoadErrorListener {
+            setLoadErrorListener(object : BaseViewAdapter.LoadErrorListener {
                 override fun pageReload() {
                     viewModel.requestMyShareData(LoadStatus.REFRESH)
                 }

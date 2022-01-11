@@ -2,7 +2,7 @@ package com.lee.playandroid.square.ui.fragment
 
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import com.lee.library.adapter.listener.LoadErrorListener
+import com.lee.library.adapter.base.BaseViewAdapter
 import com.lee.library.adapter.page.submitData
 import com.lee.library.base.BaseFragment
 import com.lee.library.extensions.binding
@@ -53,7 +53,7 @@ class SquareFragment : BaseFragment(R.layout.fragment_square) {
             setAutoLoadMoreListener {
                 viewModel.requestSquareData(LoadStatus.LOAD_MORE)
             }
-            setLoadErrorListener(object : LoadErrorListener {
+            setLoadErrorListener(object : BaseViewAdapter.LoadErrorListener {
                 override fun pageReload() {
                     viewModel.requestSquareData(LoadStatus.REFRESH)
                 }

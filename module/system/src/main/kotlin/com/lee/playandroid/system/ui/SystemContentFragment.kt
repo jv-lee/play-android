@@ -3,7 +3,7 @@ package com.lee.playandroid.system.ui
 import android.os.Bundle
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import com.lee.library.adapter.listener.LoadErrorListener
+import com.lee.library.adapter.base.BaseViewAdapter
 import com.lee.library.adapter.page.submitFailed
 import com.lee.library.adapter.page.submitSinglePage
 import com.lee.library.base.BaseFragment
@@ -55,7 +55,7 @@ class SystemContentFragment : BaseFragment(R.layout.fragment_system_content) {
                 viewModel.requestParentTab()
             }
 
-            setLoadErrorListener(object : LoadErrorListener {
+            setLoadErrorListener(object : BaseViewAdapter.LoadErrorListener {
                 override fun pageReload() {
                     viewModel.requestParentTab()
                 }

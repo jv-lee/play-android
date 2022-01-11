@@ -1,7 +1,7 @@
 package com.lee.playandroid.search.ui
 
 import androidx.navigation.fragment.findNavController
-import com.lee.library.adapter.listener.LoadErrorListener
+import com.lee.library.adapter.base.BaseViewAdapter
 import com.lee.library.adapter.page.submitData
 import com.lee.library.adapter.page.submitFailed
 import com.lee.library.base.BaseFragment
@@ -46,7 +46,7 @@ class SearchResultFragment : BaseFragment(R.layout.fragment_search_result) {
             setAutoLoadMoreListener {
                 viewModel.requestSearch(LoadStatus.LOAD_MORE)
             }
-            setLoadErrorListener(object : LoadErrorListener {
+            setLoadErrorListener(object : BaseViewAdapter.LoadErrorListener {
                 override fun pageReload() {
                     viewModel.requestSearch(LoadStatus.REFRESH)
                 }
