@@ -1,8 +1,11 @@
 package com.lee.playandroid.home.view
 
+import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import com.lee.library.adapter.listener.LoadErrorListener
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import com.lee.library.adapter.base.BaseViewAdapter
+import com.lee.library.adapter.extensions.bindAllListener
 import com.lee.library.adapter.page.submitData
 import com.lee.library.adapter.page.submitFailed
 import com.lee.library.base.BaseFragment
@@ -32,7 +35,11 @@ import com.lee.playandroid.router.navigateSearch
  * @date 2021/11/2
  * @description 首页第一个Tab 主页
  */
-class HomeFragment : BaseFragment(R.layout.fragment_home) {
+class HomeFragment : BaseFragment(R.layout.fragment_home),
+    View.OnClickListener, SwipeRefreshLayout.OnRefreshListener,
+    BaseViewAdapter.OnItemClickListener<HomeContent>,
+    BaseViewAdapter.AutoLoadMoreListener,
+    BaseViewAdapter.LoadErrorListener {
 
     private val viewModel by viewModels<HomeViewModel>()
 
@@ -44,9 +51,6 @@ class HomeFragment : BaseFragment(R.layout.fragment_home) {
         delayBackEvent()
 
         binding.toolbar.setThemeGradientBackground()
-        binding.ivSearch.setOnClickListener {
-            findNavController().navigateSearch()
-        }
 
         binding.rvContainer.addSaveStateViewType(BannerView::class.java)
         binding.rvContainer.addItemDecoration(OffsetItemDecoration(binding.toolbar.getToolbarLayoutHeight()))
@@ -54,29 +58,11 @@ class HomeFragment : BaseFragment(R.layout.fragment_home) {
             mAdapter = this
             initStatusView()
             pageLoading()
-            setAutoLoadMoreListener {
-                viewModel.requestHomeData(LoadStatus.LOAD_MORE)
-            }
-            setLoadErrorListener(object : LoadErrorListener {
-                override fun pageReload() {
-                    viewModel.requestHomeData(LoadStatus.REFRESH)
-                }
-
-                override fun itemReload() {
-                    viewModel.requestHomeData(LoadStatus.RELOAD)
-                }
-            })
-            setOnItemClickListener { _, entity, _ ->
-                entity?.content?.apply {
-                    findNavController().navigateDetails(title, link, id, collect)
-                }
-            }
+            bindAllListener(this@HomeFragment)
         }.proxy
 
-        binding.refreshView.setOnRefreshListener {
-            mAdapter.openLoadMore()
-            viewModel.requestHomeData(LoadStatus.REFRESH)
-        }
+        binding.ivSearch.setOnClickListener(this)
+        binding.refreshView.setOnRefreshListener(this)
     }
 
     override fun bindData() {
@@ -90,6 +76,35 @@ class HomeFragment : BaseFragment(R.layout.fragment_home) {
             mAdapter.submitFailed()
             actionFailed(it)
         })
+    }
+
+    override fun onClick(v: View?) {
+        when (v) {
+            binding.ivSearch -> findNavController().navigateSearch()
+        }
+    }
+
+    override fun onItemClick(view: View?, entity: HomeContent?, position: Int) {
+        entity?.content?.apply {
+            findNavController().navigateDetails(title, link, id, collect)
+        }
+    }
+
+    override fun onRefresh() {
+        mAdapter.openLoadMore()
+        viewModel.requestHomeData(LoadStatus.REFRESH)
+    }
+
+    override fun autoLoadMore() {
+        viewModel.requestHomeData(LoadStatus.LOAD_MORE)
+    }
+
+    override fun pageReload() {
+        viewModel.requestHomeData(LoadStatus.REFRESH)
+    }
+
+    override fun itemReload() {
+        viewModel.requestHomeData(LoadStatus.RELOAD)
     }
 
     @InjectBus(NavigationSelectEvent.key, isActive = true)

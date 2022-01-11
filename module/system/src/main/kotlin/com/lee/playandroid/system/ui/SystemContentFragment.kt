@@ -1,9 +1,11 @@
 package com.lee.playandroid.system.ui
 
 import android.os.Bundle
+import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.lee.library.adapter.base.BaseViewAdapter
+import com.lee.library.adapter.extensions.bindAllListener
 import com.lee.library.adapter.page.submitFailed
 import com.lee.library.adapter.page.submitSinglePage
 import com.lee.library.base.BaseFragment
@@ -30,7 +32,10 @@ import com.lee.playandroid.system.viewmodel.SystemContentViewModel
  * @description  体系列表Fragment
  * @see SystemFragment 体系Fragment下第一个Tab
  */
-class SystemContentFragment : BaseFragment(R.layout.fragment_system_content) {
+class SystemContentFragment : BaseFragment(R.layout.fragment_system_content),
+    BaseViewAdapter.OnItemClickListener<ParentTab>,
+    BaseViewAdapter.AutoLoadMoreListener,
+    BaseViewAdapter.LoadErrorListener {
 
     private val viewModel by viewModels<SystemContentViewModel>()
 
@@ -39,33 +44,17 @@ class SystemContentFragment : BaseFragment(R.layout.fragment_system_content) {
     private lateinit var mAdapter: SystemContentAdapter
 
     override fun bindView() {
-        mAdapter = SystemContentAdapter(requireContext(), arrayListOf())
-        binding.rvContainer.adapter = mAdapter.proxy
-
         //根据父Fragment toolbar高度设置ItemDecoration来控制显示间隔
         findParentFragment<SystemFragment>()?.parentBindingAction {
             binding.rvContainer.addItemDecoration(OffsetItemDecoration(it.toolbar.getToolbarLayoutHeight()))
         }
 
-        mAdapter.apply {
-            mAdapter.initStatusView()
-            mAdapter.pageLoading()
-
-            setAutoLoadMoreListener {
-                viewModel.requestParentTab()
-            }
-
-            setLoadErrorListener(object : BaseViewAdapter.LoadErrorListener {
-                override fun pageReload() {
-                    viewModel.requestParentTab()
-                }
-
-                override fun itemReload() {}
-            })
-            setOnItemClickListener { _, entity, _ ->
-                navigationToContentTab(entity)
-            }
-        }
+        binding.rvContainer.adapter = SystemContentAdapter(requireContext(), arrayListOf()).apply {
+            mAdapter = this
+            initStatusView()
+            pageLoading()
+            bindAllListener(this@SystemContentFragment)
+        }.proxy
     }
 
     override fun bindData() {
@@ -78,6 +67,20 @@ class SystemContentFragment : BaseFragment(R.layout.fragment_system_content) {
             actionFailed(it)
         })
     }
+
+    override fun onItemClick(view: View, entity: ParentTab, position: Int) {
+        navigationToContentTab(entity)
+    }
+
+    override fun autoLoadMore() {
+        viewModel.requestParentTab()
+    }
+
+    override fun pageReload() {
+        viewModel.requestParentTab()
+    }
+
+    override fun itemReload() {}
 
     /**
      * 导航至目标页面

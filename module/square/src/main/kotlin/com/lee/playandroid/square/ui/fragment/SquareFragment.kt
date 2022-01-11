@@ -1,8 +1,11 @@
 package com.lee.playandroid.square.ui.fragment
 
+import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.lee.library.adapter.base.BaseViewAdapter
+import com.lee.library.adapter.extensions.bindAllListener
 import com.lee.library.adapter.page.submitData
 import com.lee.library.base.BaseFragment
 import com.lee.library.extensions.binding
@@ -29,7 +32,11 @@ import com.lee.playandroid.square.viewmodel.SquareViewModel
  * @date 2021/12/13
  * @description 首页第二个Tab 广场页面
  */
-class SquareFragment : BaseFragment(R.layout.fragment_square) {
+class SquareFragment : BaseFragment(R.layout.fragment_square),
+    View.OnClickListener, SwipeRefreshLayout.OnRefreshListener,
+    BaseViewAdapter.OnItemClickListener<Content>,
+    BaseViewAdapter.AutoLoadMoreListener,
+    BaseViewAdapter.LoadErrorListener {
 
     private val viewModel by viewModels<SquareViewModel>()
 
@@ -41,40 +48,17 @@ class SquareFragment : BaseFragment(R.layout.fragment_square) {
         delayBackEvent()
 
         binding.toolbar.setThemeGradientBackground()
-        binding.ivCreate.setOnClickListener {
-            findNavController().navigate(R.id.action_square_fragment_to_create_share_fragment)
-        }
 
         binding.rvContainer.addItemDecoration(OffsetItemDecoration(binding.toolbar.getToolbarLayoutHeight()))
         binding.rvContainer.adapter = SquareAdapter(requireContext(), arrayListOf()).apply {
             mAdapter = this
             initStatusView()
             pageLoading()
-            setAutoLoadMoreListener {
-                viewModel.requestSquareData(LoadStatus.LOAD_MORE)
-            }
-            setLoadErrorListener(object : BaseViewAdapter.LoadErrorListener {
-                override fun pageReload() {
-                    viewModel.requestSquareData(LoadStatus.REFRESH)
-                }
-
-                override fun itemReload() {
-                    viewModel.requestSquareData(LoadStatus.RELOAD)
-                }
-            })
-
-            setOnItemClickListener { _, entity, _ ->
-                entity?.apply {
-                    findNavController().navigateDetails(title, link, id, collect)
-                }
-            }
-
+            bindAllListener(this@SquareFragment)
         }.proxy
 
-        binding.refreshView.setOnRefreshListener {
-            mAdapter.openLoadMore()
-            viewModel.requestSquareData(LoadStatus.REFRESH)
-        }
+        binding.ivCreate.setOnClickListener(this)
+        binding.refreshView.setOnRefreshListener(this)
     }
 
     override fun bindData() {
@@ -88,6 +72,36 @@ class SquareFragment : BaseFragment(R.layout.fragment_square) {
             mAdapter.loadFailed()
             actionFailed(it)
         })
+    }
+
+    override fun onClick(v: View?) {
+        when (v) {
+            binding.ivCreate -> findNavController()
+                .navigate(R.id.action_square_fragment_to_create_share_fragment)
+        }
+    }
+
+    override fun onRefresh() {
+        mAdapter.openLoadMore()
+        viewModel.requestSquareData(LoadStatus.REFRESH)
+    }
+
+    override fun onItemClick(view: View?, entity: Content?, position: Int) {
+        entity?.apply {
+            findNavController().navigateDetails(title, link, id, collect)
+        }
+    }
+
+    override fun autoLoadMore() {
+        viewModel.requestSquareData(LoadStatus.LOAD_MORE)
+    }
+
+    override fun pageReload() {
+        viewModel.requestSquareData(LoadStatus.REFRESH)
+    }
+
+    override fun itemReload() {
+        viewModel.requestSquareData(LoadStatus.RELOAD)
     }
 
     @InjectBus(NavigationSelectEvent.key, isActive = true)
