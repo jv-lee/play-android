@@ -11,9 +11,11 @@ import com.lee.library.adapter.page.submitSinglePage
 import com.lee.library.base.BaseFragment
 import com.lee.library.extensions.binding
 import com.lee.library.extensions.findParentFragment
+import com.lee.library.extensions.launchAndRepeatWithViewLifecycle
 import com.lee.library.extensions.smoothScrollToTop
 import com.lee.library.livedatabus.InjectBus
 import com.lee.library.livedatabus.LiveDataBus
+import com.lee.library.mvvm.ui.collectState
 import com.lee.library.mvvm.ui.observeState
 import com.lee.playandroid.library.common.entity.NavigationSelectEvent
 import com.lee.playandroid.library.common.entity.ParentTab
@@ -65,6 +67,15 @@ class SystemContentFragment : BaseFragment(R.layout.fragment_system_content),
             mAdapter.submitFailed()
             actionFailed(it)
         })
+
+//        launchAndRepeatWithViewLifecycle {
+//            viewModel.parentTabFlow.collectState<List<ParentTab>>(success = { data ->
+//                mAdapter.submitSinglePage(data)
+//            }, error = {
+//                mAdapter.submitFailed()
+//                actionFailed(it)
+//            })
+//        }
     }
 
     override fun onItemClick(view: View, entity: ParentTab, position: Int) {
