@@ -1,13 +1,12 @@
 package com.lee.playandroid.library.common.ui
 
-import androidx.lifecycle.LiveData
 import com.lee.library.adapter.base.BaseViewAdapter
 import com.lee.library.adapter.page.submitData
 import com.lee.library.adapter.page.submitFailed
 import com.lee.library.base.BaseNavigationFragment
 import com.lee.library.extensions.binding
 import com.lee.library.mvvm.livedata.LoadStatus
-import com.lee.library.mvvm.ui.UiState
+import com.lee.library.mvvm.ui.UiStateLiveData
 import com.lee.library.mvvm.ui.observeState
 import com.lee.playandroid.library.common.R
 import com.lee.playandroid.library.common.databinding.FragmentBaseListBinding
@@ -32,7 +31,7 @@ abstract class BaseListFragment : BaseNavigationFragment(R.layout.fragment_base_
 
     abstract fun navigationDetails(content: Content)
 
-    abstract fun dataObserveState(): LiveData<UiState>
+    abstract fun dataObserveState(): UiStateLiveData
 
     open fun findBinding() = binding
 

@@ -1,13 +1,12 @@
 package com.lee.playandroid.library.common.ui
 
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.LiveData
 import com.google.android.material.tabs.TabLayoutMediator
 import com.lee.library.adapter.core.UiPager2Adapter
 import com.lee.library.base.BaseNavigationFragment
 import com.lee.library.extensions.binding
 import com.lee.library.extensions.increaseOffscreenPageLimit
-import com.lee.library.mvvm.ui.UiState
+import com.lee.library.mvvm.ui.UiStateLiveData
 import com.lee.library.mvvm.ui.observeState
 import com.lee.library.widget.StatusLayout
 import com.lee.playandroid.library.common.R
@@ -32,7 +31,7 @@ abstract class BaseTabFragment : BaseNavigationFragment(R.layout.fragment_base_t
 
     abstract fun createChildFragment(id: Long): Fragment
 
-    abstract fun dataObserveState(): LiveData<UiState>
+    abstract fun dataObserveState(): UiStateLiveData
 
     open fun findBinding() = binding
 

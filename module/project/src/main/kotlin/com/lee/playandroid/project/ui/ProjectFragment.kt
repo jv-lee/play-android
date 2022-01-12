@@ -2,8 +2,7 @@ package com.lee.playandroid.project.ui
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.LiveData
-import com.lee.library.mvvm.ui.UiState
+import com.lee.library.mvvm.ui.UiStateLiveData
 import com.lee.playandroid.library.common.ui.BaseTabFragment
 import com.lee.playandroid.project.R
 import com.lee.playandroid.project.viewmodel.ProjectViewModel
@@ -30,7 +29,7 @@ class ProjectFragment : BaseTabFragment() {
         return ProjectListFragment.newInstance(id)
     }
 
-    override fun dataObserveState(): LiveData<UiState> {
+    override fun dataObserveState(): UiStateLiveData {
         return viewModel.tabsLive
     }
 }

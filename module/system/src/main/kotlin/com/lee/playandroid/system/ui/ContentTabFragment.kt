@@ -1,10 +1,9 @@
 package com.lee.playandroid.system.ui
 
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.LiveData
 import com.lee.library.extensions.arguments
 import com.lee.library.extensions.argumentsList
-import com.lee.library.mvvm.ui.UiState
+import com.lee.library.mvvm.ui.UiStateLiveData
 import com.lee.library.mvvm.ui.stateLive
 import com.lee.playandroid.library.common.entity.Tab
 import com.lee.playandroid.library.common.ui.BaseTabFragment
@@ -33,7 +32,7 @@ class ContentTabFragment : BaseTabFragment() {
         return ContentListFragment.newInstance(id)
     }
 
-    override fun dataObserveState(): LiveData<UiState> {
+    override fun dataObserveState(): UiStateLiveData {
         return stateLive { tabData }
     }
 }
