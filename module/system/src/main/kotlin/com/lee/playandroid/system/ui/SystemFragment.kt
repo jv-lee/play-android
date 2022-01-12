@@ -1,7 +1,7 @@
 package com.lee.playandroid.system.ui
 
 import androidx.fragment.app.viewModels
-import com.lee.library.adapter.core.UiPager2Adapter
+import com.lee.library.adapter.core.UiPagerAdapter2
 import com.lee.library.base.BaseFragment
 import com.lee.library.extensions.bindRadioGroup
 import com.lee.library.extensions.binding
@@ -33,7 +33,7 @@ class SystemFragment : BaseFragment(R.layout.fragment_system) {
 
     override fun bindData() {
         viewModel.fragmentsLive.observe(this, {
-            binding.vpContainer.adapter = UiPager2Adapter(this, it)
+            binding.vpContainer.adapter = UiPagerAdapter2(this, it)
         })
     }
 

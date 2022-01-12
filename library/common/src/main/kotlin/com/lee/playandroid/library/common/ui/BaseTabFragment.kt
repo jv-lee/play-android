@@ -2,7 +2,7 @@ package com.lee.playandroid.library.common.ui
 
 import androidx.fragment.app.Fragment
 import com.google.android.material.tabs.TabLayoutMediator
-import com.lee.library.adapter.core.UiPager2Adapter
+import com.lee.library.adapter.core.UiPagerAdapter2
 import com.lee.library.base.BaseNavigationFragment
 import com.lee.library.extensions.binding
 import com.lee.library.extensions.increaseOffscreenPageLimit
@@ -24,7 +24,7 @@ abstract class BaseTabFragment : BaseNavigationFragment(R.layout.fragment_base_t
 
     private val binding by binding(FragmentBaseTabBinding::bind)
 
-    private var adapter: UiPager2Adapter? = null
+    private var adapter: UiPagerAdapter2? = null
     private var mediator: TabLayoutMediator? = null
 
     abstract fun requestTabs()
@@ -77,7 +77,7 @@ abstract class BaseTabFragment : BaseNavigationFragment(R.layout.fragment_base_t
 
         binding.vpContainer.increaseOffscreenPageLimit()
         binding.vpContainer.isSaveEnabled = false
-        binding.vpContainer.adapter = UiPager2Adapter(this, fragments).also {
+        binding.vpContainer.adapter = UiPagerAdapter2(this, fragments).also {
             adapter = it
         }
 

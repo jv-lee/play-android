@@ -3,7 +3,7 @@ package com.lee.playandroid.todo.ui
 import android.os.Bundle
 import androidx.fragment.app.setFragmentResultListener
 import androidx.navigation.fragment.findNavController
-import com.lee.library.adapter.core.UiPager2Adapter
+import com.lee.library.adapter.core.UiPagerAdapter2
 import com.lee.library.base.BaseFragment
 import com.lee.library.extensions.binding
 import com.lee.library.tools.PreferencesTools
@@ -41,7 +41,7 @@ class TodoFragment : BaseFragment(R.layout.fragment_todo) {
         initTodoTitle()
 
         binding.vpContainer.isUserInputEnabled = false
-        binding.vpContainer.adapter = UiPager2Adapter(
+        binding.vpContainer.adapter = UiPagerAdapter2(
             this,
             arrayListOf(
                 TodoListFragment.newInstance(ARG_STATUS_UPCOMING),
