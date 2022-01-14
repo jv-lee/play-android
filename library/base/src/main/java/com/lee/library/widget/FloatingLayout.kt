@@ -33,7 +33,7 @@ class FloatingLayout : FrameLayout {
     //实时移动时间戳
     private var mMoveMillis = 0L
 
-    private var isDarg = false
+    private var isDrag = false
 
     private var mCallback: EventCallback? = null
 
@@ -105,7 +105,7 @@ class FloatingLayout : FrameLayout {
         val y = event.rawY.toInt()
         when (event.action) {
             MotionEvent.ACTION_DOWN -> {
-                isDarg = false
+                isDrag = false
                 mStartY = event.y
                 mStartX = event.x
             }
@@ -116,7 +116,7 @@ class FloatingLayout : FrameLayout {
                 if (canScrollHorizontally(distanceX.toInt()) || canScrollHorizontally(distanceY.toInt())) {
                     return true
                 }
-                isDarg = true
+                isDrag = true
                 mCallback?.onDargStart()
 
                 //当前view拖动时拦截父容器处理事件
@@ -137,8 +137,8 @@ class FloatingLayout : FrameLayout {
             }
             MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL -> {
                 isClickable = true
-                if (isDarg) {
-                    isDarg = false
+                if (isDrag) {
+                    isDrag = false
                     mCallback?.onDargEnd()
                 } else {
                     mCallback?.onClicked()
