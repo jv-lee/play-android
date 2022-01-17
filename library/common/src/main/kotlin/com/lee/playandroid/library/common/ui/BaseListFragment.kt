@@ -1,6 +1,8 @@
 package com.lee.playandroid.library.common.ui
 
+import android.view.View
 import com.lee.library.adapter.base.BaseViewAdapter
+import com.lee.library.adapter.extensions.bindAllListener
 import com.lee.library.adapter.page.submitData
 import com.lee.library.adapter.page.submitFailed
 import com.lee.library.base.BaseNavigationFragment
@@ -19,7 +21,10 @@ import com.lee.playandroid.library.common.extensions.actionFailed
  * @date 2021/11/8
  * @description
  */
-abstract class BaseListFragment : BaseNavigationFragment(R.layout.fragment_base_list) {
+abstract class BaseListFragment : BaseNavigationFragment(R.layout.fragment_base_list),
+    BaseViewAdapter.AutoLoadMoreListener,
+    BaseViewAdapter.LoadErrorListener,
+    BaseViewAdapter.OnItemClickListener<Content> {
 
     private val binding by binding(FragmentBaseListBinding::bind)
 
@@ -40,23 +45,7 @@ abstract class BaseListFragment : BaseNavigationFragment(R.layout.fragment_base_
             mAdapter = this
             initStatusView()
             pageLoading()
-            setAutoLoadMoreListener {
-                requestContentList(LoadStatus.LOAD_MORE)
-            }
-
-            setLoadErrorListener(object : BaseViewAdapter.LoadErrorListener {
-                override fun pageReload() {
-                    requestContentList(LoadStatus.REFRESH)
-                }
-
-                override fun itemReload() {
-                    requestContentList(LoadStatus.RELOAD)
-                }
-            })
-
-            setOnItemClickListener { _, entity, _ ->
-                navigationDetails(entity)
-            }
+            bindAllListener(this@BaseListFragment)
         }.proxy
 
         binding.refreshLayout.setOnRefreshListener {
@@ -82,6 +71,22 @@ abstract class BaseListFragment : BaseNavigationFragment(R.layout.fragment_base_
     override fun lazyLoad() {
         super.lazyLoad()
         requestContentList(LoadStatus.INIT)
+    }
+
+    override fun autoLoadMore() {
+        requestContentList(LoadStatus.LOAD_MORE)
+    }
+
+    override fun pageReload() {
+        requestContentList(LoadStatus.REFRESH)
+    }
+
+    override fun itemReload() {
+        requestContentList(LoadStatus.RELOAD)
+    }
+
+    override fun onItemClick(view: View, entity: Content, position: Int) {
+        navigationDetails(entity)
     }
 
 }
