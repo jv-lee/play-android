@@ -10,6 +10,7 @@ import com.lee.library.base.BaseFragment
 import com.lee.library.extensions.binding
 import com.lee.library.mvvm.ui.observeState
 import com.lee.library.tools.KeyboardTools.hideSoftInput
+import com.lee.library.tools.KeyboardTools.parentTouchHideSoftInput
 import com.lee.playandroid.library.common.entity.SearchHistory
 import com.lee.playandroid.library.common.extensions.actionFailed
 import com.lee.playandroid.search.R
@@ -35,6 +36,9 @@ class SearchFragment : BaseFragment(R.layout.fragment_search) {
     private lateinit var mHistoryAdapter: SearchHistoryAdapter
 
     override fun bindView() {
+        // 设置点击空白区域隐藏软键盘
+        requireActivity().parentTouchHideSoftInput(binding.root)
+
         binding.rvHotContainer.adapter =
             SearchHotAdapter(requireContext(), arrayListOf()).apply {
                 mHotAdapter = this

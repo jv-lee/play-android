@@ -15,7 +15,6 @@ import com.lee.library.extensions.keyboardObserver
 import com.lee.library.extensions.show
 import com.lee.library.interadp.TextWatcherAdapter
 import com.lee.library.mvvm.ui.observeState
-import com.lee.library.tools.KeyboardTools
 import com.lee.library.tools.KeyboardTools.hideSoftInput
 import com.lee.library.tools.KeyboardTools.keyboardIsShow
 import com.lee.library.tools.KeyboardTools.parentTouchHideSoftInput
@@ -46,7 +45,7 @@ class RegisterFragment : BaseFragment(R.layout.fragment_register), View.OnClickL
 
     override fun bindView() {
         // 设置点击空白区域隐藏软键盘
-        requireActivity().parentTouchHideSoftInput( binding.root)
+        requireActivity().parentTouchHideSoftInput(binding.root)
 
         // 监听键盘弹起
         binding.root.keyboardObserver { diff ->
