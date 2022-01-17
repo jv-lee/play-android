@@ -1,7 +1,9 @@
 package com.lee.playandroid.search.ui
 
+import android.view.View
 import androidx.navigation.fragment.findNavController
 import com.lee.library.adapter.base.BaseViewAdapter
+import com.lee.library.adapter.extensions.bindAllListener
 import com.lee.library.adapter.page.submitData
 import com.lee.library.adapter.page.submitFailed
 import com.lee.library.base.BaseFragment
@@ -25,7 +27,10 @@ import com.lee.playandroid.search.viewmodel.SearchResultViewModel
  * @date 2021/11/22
  * @description
  */
-class SearchResultFragment : BaseFragment(R.layout.fragment_search_result) {
+class SearchResultFragment : BaseFragment(R.layout.fragment_search_result),
+    BaseViewAdapter.AutoLoadMoreListener,
+    BaseViewAdapter.LoadErrorListener,
+    BaseViewAdapter.OnItemClickListener<Content> {
 
     private val searchKey by arguments<String>(Constants.ARG_PARAMS_SEARCH_KEY)
 
@@ -43,23 +48,7 @@ class SearchResultFragment : BaseFragment(R.layout.fragment_search_result) {
 
             initStatusView()
             pageLoading()
-            setAutoLoadMoreListener {
-                viewModel.requestSearch(LoadStatus.LOAD_MORE)
-            }
-            setLoadErrorListener(object : BaseViewAdapter.LoadErrorListener {
-                override fun pageReload() {
-                    viewModel.requestSearch(LoadStatus.REFRESH)
-                }
-
-                override fun itemReload() {
-                    viewModel.requestSearch(LoadStatus.RELOAD)
-                }
-            })
-            setOnItemClickListener { _, entity, _ ->
-                entity?.apply {
-                    findNavController().navigateDetails(title, link, id, collect)
-                }
-            }
+            bindAllListener(this@SearchResultFragment)
         }.proxy
 
     }
@@ -71,5 +60,23 @@ class SearchResultFragment : BaseFragment(R.layout.fragment_search_result) {
             mAdapter.submitFailed()
             actionFailed(it)
         })
+    }
+
+    override fun onItemClick(view: View?, entity: Content?, position: Int) {
+        entity?.apply {
+            findNavController().navigateDetails(title, link, id, collect)
+        }
+    }
+
+    override fun autoLoadMore() {
+        viewModel.requestSearch(LoadStatus.LOAD_MORE)
+    }
+
+    override fun pageReload() {
+        viewModel.requestSearch(LoadStatus.REFRESH)
+    }
+
+    override fun itemReload() {
+        viewModel.requestSearch(LoadStatus.RELOAD)
     }
 }
