@@ -6,6 +6,7 @@ import androidx.fragment.app.FragmentActivity
 import com.lee.library.extensions.toast
 import com.lee.library.net.HttpManager
 import com.lee.library.utils.NetworkUtil
+import com.lee.library.widget.SnackBarEx
 import com.lee.playandroid.library.common.R
 
 /**
@@ -41,7 +42,10 @@ fun FragmentActivity.actionFailed(throwable: Throwable) {
             toast(HttpManager.getInstance().getServerMessage(throwable, "errorMsg"))
         }
     } else {
-        toast(getString(R.string.network_not_access))
+        SnackBarEx.Builder(findViewById(android.R.id.content))
+            .setMessage(getString(R.string.network_not_access))
+            .build()
+            .show()
     }
 }
 
@@ -54,6 +58,9 @@ fun Fragment.actionFailed(throwable: Throwable) {
             toast(HttpManager.getInstance().getServerMessage(throwable, "errorMsg"))
         }
     } else {
-        toast(getString(R.string.network_not_access))
+        SnackBarEx.Builder(requireActivity().findViewById(android.R.id.content))
+            .setMessage(getString(R.string.network_not_access))
+            .build()
+            .show()
     }
 }
