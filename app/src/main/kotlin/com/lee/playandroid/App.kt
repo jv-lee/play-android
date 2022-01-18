@@ -5,6 +5,7 @@ import android.graphics.Color
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
+import com.lee.library.adapter.manager.ViewLoadManager
 import com.lee.library.base.BaseApplication
 import com.lee.library.cache.CacheManager
 import com.lee.library.extensions.bindFragmentLifecycle
@@ -18,6 +19,7 @@ import com.lee.library.tools.StatusTools.setDarkStatusIcon
 import com.lee.library.tools.StatusTools.setLightStatusIcon
 import com.lee.library.tools.StatusTools.setNavigationBarColor
 import com.lee.playandroid.library.common.extensions.setCommonInterceptor
+import com.lee.playandroid.library.common.ui.widget.AppLoadResource
 import com.lee.playandroid.library.service.hepler.ApplicationModuleService
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -77,9 +79,17 @@ class App : BaseApplication() {
 
         //初始化工具类
         CoroutineScope(Dispatchers.IO).launch {
+            // 初始化网络拦截器
             HttpManager.getInstance().setCommonInterceptor()
+
+            // 初始化缓存管理器
             CacheManager.init(this@App, BuildConfig.VERSION_CODE)
+
+            // 子模块统一初始化
             ApplicationModuleService.init(this@App)
+
+            // 全局统一loadPage资源样式设置
+            ViewLoadManager.getInstance().setLoadResource(AppLoadResource())
         }
 
         //注册Activity生命周期监听
