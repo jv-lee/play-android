@@ -19,9 +19,7 @@ import android.view.ViewGroup
 import android.view.animation.Animation
 import android.view.animation.Transformation
 import android.widget.FrameLayout
-import androidx.core.content.ContextCompat
 import com.lee.library.R
-import com.lee.library.extensions.dp2px
 import kotlin.math.abs
 
 
@@ -86,11 +84,11 @@ class FloatingLayout : FrameLayout {
             recycle()
         }
         mAnimation = ReIndexAnimation(reindexType)
-        initForground()
+        initForeground()
     }
 
 
-    private fun initForground() {
+    private fun initForeground() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && foregroundColor != Color.TRANSPARENT) {
             foreground = RippleDrawable(
                 ColorStateList.valueOf(foregroundColor),
@@ -107,17 +105,12 @@ class FloatingLayout : FrameLayout {
     private fun getShape(): Drawable {
         return ShapeDrawable(object : RectShape() {
             override fun draw(canvas: Canvas, paint: Paint) {
-//                val mL = context.dp2px(13)
-//                val mT = context.dp2px(10)
-//                val mR = context.dp2px(13)
-//                val mB = context.dp2px(13)
                 val rect = RectF(
                     0F + foregroundMarginLeft,
                     0F + foregroundMarginTop,
                     width - foregroundMarginRight,
                     height - foregroundMarginBottom
                 )
-//                val radius = context.dp2px(23)
                 canvas.drawRoundRect(rect, foregroundRadius, foregroundRadius, paint)
             }
         })
