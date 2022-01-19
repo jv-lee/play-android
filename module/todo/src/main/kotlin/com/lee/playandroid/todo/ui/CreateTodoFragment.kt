@@ -11,6 +11,7 @@ import com.lee.library.base.BaseFragment
 import com.lee.library.dialog.LoadingDialog
 import com.lee.library.extensions.*
 import com.lee.library.mvvm.ui.observeState
+import com.lee.library.tools.KeyboardTools.keyboardObserver
 import com.lee.library.tools.KeyboardTools.parentTouchHideSoftInput
 import com.lee.playandroid.library.common.entity.TodoData
 import com.lee.playandroid.library.common.entity.TodoData.Companion.PRIORITY_HEIGHT

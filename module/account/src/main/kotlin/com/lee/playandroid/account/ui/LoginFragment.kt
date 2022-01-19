@@ -11,12 +11,12 @@ import com.lee.library.base.BaseFragment
 import com.lee.library.dialog.LoadingDialog
 import com.lee.library.extensions.binding
 import com.lee.library.extensions.dismiss
-import com.lee.library.extensions.keyboardObserver
 import com.lee.library.extensions.show
 import com.lee.library.interadp.TextWatcherAdapter
 import com.lee.library.mvvm.ui.observeState
 import com.lee.library.tools.KeyboardTools.hideSoftInput
 import com.lee.library.tools.KeyboardTools.keyboardIsShow
+import com.lee.library.tools.KeyboardTools.keyboardObserver
 import com.lee.library.tools.KeyboardTools.parentTouchHideSoftInput
 import com.lee.library.tools.PreferencesTools
 import com.lee.playandroid.account.R
