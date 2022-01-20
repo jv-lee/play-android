@@ -36,6 +36,9 @@
 -dontwarn androidx.appcompat.app.**
 -dontwarn androidx.core.app.**
 -dontwarn androidx.legacy.**
+-keep class com.google.android.** {*;}
+-keep class androidx.core.** {*;}
+-keep class androidx.appcompat.** {*;}
 
 #DataStore Preferences
 -keepclassmembers class * extends androidx.datastore.preferences.protobuf.GeneratedMessageLite {
