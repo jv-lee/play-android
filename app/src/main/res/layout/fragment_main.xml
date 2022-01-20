@@ -30,4 +30,13 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:menu="@menu/menu_main" />
 
+    <ViewStub
+        android:id="@+id/view_stub_floating"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:layout_marginBottom="@dimen/navigation_bar_height"
+        android:layout="@layout/layout_stub_floating"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

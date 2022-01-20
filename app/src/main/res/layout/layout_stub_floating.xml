@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.lee.library.widget.FloatingLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:translationZ="10dp"
+    app:foregroundColor="#1A000000"
+    app:foregroundMargin="2dp"
+    app:foregroundRadius="28dp"
+    app:reindex_type="reindex_x"
+    tools:ignore="UnusedAttribute">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@mipmap/ic_launcher_round" />
+
+</com.lee.library.widget.FloatingLayout>

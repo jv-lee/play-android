@@ -1,6 +1,7 @@
 package com.lee.playandroid
 
 import android.annotation.SuppressLint
+import android.view.ViewStub
 import androidx.core.content.ContextCompat
 import androidx.navigation.findNavController
 import com.lee.library.base.BaseFragment
@@ -10,7 +11,10 @@ import com.lee.library.extensions.toast
 import com.lee.library.livedatabus.InjectBus
 import com.lee.library.livedatabus.LiveDataBus
 import com.lee.library.tools.DarkViewUpdateTools
+import com.lee.library.utils.LogUtil
+import com.lee.library.widget.FloatingLayout
 import com.lee.playandroid.databinding.FragmentMainBinding
+import com.lee.playandroid.databinding.LayoutStubFloatingBinding
 import com.lee.playandroid.library.common.entity.LoginEvent
 import com.lee.playandroid.library.common.entity.NavigationSelectEvent
 import com.lee.playandroid.library.common.ui.extensions.bindNavigationAction
@@ -26,6 +30,12 @@ class MainFragment : BaseFragment(R.layout.fragment_main),
 
     private val binding by binding(FragmentMainBinding::bind)
 
+    private val floatingBinding by lazy {
+        LayoutStubFloatingBinding.bind(
+            binding.root.findViewById<ViewStub>(R.id.view_stub_floating).inflate()
+        )
+    }
+
     private val labels by lazy {
         arrayListOf(
             getString(R.string.nav_home),
@@ -39,8 +49,12 @@ class MainFragment : BaseFragment(R.layout.fragment_main),
         //设置深色主题控制器监听
         DarkViewUpdateTools.bindViewCallback(viewLifecycleOwner, this)
 
+        // 加载stub悬浮按钮view
+//        showFloatingStubView()
+
         //fragment容器与navigationBar绑定
         binding.navigationBar.bindNavigationAction(binding.container, labels) { menuItem, _ ->
+            LogUtil.i("${menuItem.title}")
             LiveDataBus.getInstance().getChannel(NavigationSelectEvent.key)
                 .postValue(NavigationSelectEvent(menuItem.title.toString()))
         }
@@ -63,6 +77,14 @@ class MainFragment : BaseFragment(R.layout.fragment_main),
     fun loginEvent(event: LoginEvent) {
         toast(getString(R.string.login_token_failed))
         binding.container.findNavController().navigateLogin()
+    }
+
+    private fun showFloatingStubView() {
+        floatingBinding.root.setEventCallback(object : FloatingLayout.EventCallback() {
+            override fun onClicked() {
+                toast("welcome to play android ~")
+            }
+        })
     }
 
 }
