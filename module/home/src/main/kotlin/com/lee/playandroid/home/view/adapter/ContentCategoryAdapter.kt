@@ -3,6 +3,7 @@ package com.lee.playandroid.home.view.adapter
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.viewbinding.ViewBinding
 import com.lee.library.adapter.binding.ViewBindingAdapter
 import com.lee.library.adapter.binding.ViewBindingHolder
@@ -29,12 +30,17 @@ class ContentCategoryAdapter(context: Context, data: List<HomeCategory>) :
     inner class ContentCategoryChildItem : ViewBindingItem<HomeCategory>() {
 
         override fun getItemViewBinding(context: Context, parent: ViewGroup): ViewBinding {
-            return ItemContentCategoryChildBinding.inflate(LayoutInflater.from(context), parent, false)
+            return ItemContentCategoryChildBinding.inflate(
+                LayoutInflater.from(context),
+                parent,
+                false
+            )
         }
 
         override fun convert(holder: ViewBindingHolder, entity: HomeCategory, position: Int) {
             holder.getViewBinding<ItemContentCategoryChildBinding>().apply {
-                ivCategoryIcon.setImageResource(entity.iconResId)
+                val icon = ContextCompat.getDrawable(ivCategoryIcon.context, entity.iconResId)
+                ivCategoryIcon.setImageDrawable(icon)
                 tvCategoryName.text = entity.name
             }
         }

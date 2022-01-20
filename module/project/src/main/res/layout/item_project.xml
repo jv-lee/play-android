@@ -12,6 +12,7 @@
 
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/iv_image"
+        style="@style/Theme.MaterialComponents"
         android:layout_width="86dp"
         android:layout_height="146dp"
         android:scaleType="centerCrop"
