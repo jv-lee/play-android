@@ -11,7 +11,6 @@ import com.lee.library.extensions.toast
 import com.lee.library.livedatabus.InjectBus
 import com.lee.library.livedatabus.LiveDataBus
 import com.lee.library.tools.DarkViewUpdateTools
-import com.lee.library.utils.LogUtil
 import com.lee.library.widget.FloatingLayout
 import com.lee.playandroid.databinding.FragmentMainBinding
 import com.lee.playandroid.databinding.LayoutStubFloatingBinding
@@ -36,28 +35,21 @@ class MainFragment : BaseFragment(R.layout.fragment_main),
         )
     }
 
-    private val labels by lazy {
-        arrayListOf(
-            getString(R.string.nav_home),
-            getString(R.string.nav_square),
-            getString(R.string.nav_system),
-            getString(R.string.nav_me)
-        )
-    }
-
     override fun bindView() {
         //设置深色主题控制器监听
         DarkViewUpdateTools.bindViewCallback(viewLifecycleOwner, this)
 
-        // 加载stub悬浮按钮view
-//        showFloatingStubView()
-
         //fragment容器与navigationBar绑定
-        binding.navigationBar.bindNavigationAction(binding.container, labels) { menuItem, _ ->
-            LogUtil.i("${menuItem.title}")
+        binding.navigationBar.bindNavigationAction(
+            binding.container,
+            resources.getStringArray(R.array.main_labels)
+        ) { menuItem, _ ->
             LiveDataBus.getInstance().getChannel(NavigationSelectEvent.key)
                 .postValue(NavigationSelectEvent(menuItem.title.toString()))
         }
+
+        // 加载stub悬浮按钮view
+//        showFloatingStubView()
     }
 
     override fun bindData() {

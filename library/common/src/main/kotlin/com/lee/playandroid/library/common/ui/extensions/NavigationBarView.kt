@@ -25,10 +25,10 @@ import java.lang.ref.WeakReference
  * @description 首页BottomNavView -> Navigation扩展方法及动画修改
  */
 
-fun BottomNavView.bindNavigationAction(
+inline fun BottomNavView.bindNavigationAction(
     container: FragmentContainerView,
-    labels: List<String>,
-    itemPositionListener: (MenuItem, Int) -> Unit
+    labels: Array<String>,
+    crossinline itemPositionListener: (MenuItem, Int) -> Unit
 ) {
     val navigationInAnim =
         AnimationUtils.loadAnimation(context, R.anim.slide_bottom_in).apply {
@@ -117,9 +117,7 @@ fun BottomNavView.setupWithNavController2(
                 }
             }
         })
-
 }
-
 
 private fun NavDestination.matchDestination(@IdRes destId: Int): Boolean =
     hierarchy.any { it.id == destId }

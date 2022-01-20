@@ -1,4 +1,11 @@
 <resources>
     <string name="app_name">Play\nAndroid</string>
     <string name="login_token_failed">登陆过期，请重新登陆！</string>
+
+    <string-array name="main_labels">
+        <item>@string/nav_home</item>
+        <item>@string/nav_square</item>
+        <item>@string/nav_system</item>
+        <item>@string/nav_me</item>
+    </string-array>
 </resources>
