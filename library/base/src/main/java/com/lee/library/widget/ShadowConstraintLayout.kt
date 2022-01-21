@@ -70,12 +70,12 @@ class ShadowConstraintLayout(context: Context, attributeSet: AttributeSet) :
     init {
         context.obtainStyledAttributes(attributeSet, R.styleable.ShadowConstraintLayout).run {
             outLineWidth = getDimension(R.styleable.ShadowConstraintLayout_outLineWidth, 0f)
-            outLineColor = getColor(R.styleable.ShadowConstraintLayout_outLineColor, Color.BLACK)
+            outLineColor = getColor(R.styleable.ShadowConstraintLayout_outLineColor, Color.TRANSPARENT)
             shadowRound = getDimension(R.styleable.ShadowConstraintLayout_shadowRound, 10F)
             shadowBlur = getDimension(R.styleable.ShadowConstraintLayout_shadowBlur, 10F)
-            shadowColor = getColor(R.styleable.ShadowConstraintLayout_shadowColor, Color.BLACK)
+            shadowColor = getColor(R.styleable.ShadowConstraintLayout_shadowColor, Color.TRANSPARENT)
             shadowFillColor =
-                getColor(R.styleable.ShadowConstraintLayout_shadowFillColor, Color.WHITE)
+                getColor(R.styleable.ShadowConstraintLayout_shadowFillColor, Color.TRANSPARENT)
             shadowOffsetX = getDimension(R.styleable.ShadowConstraintLayout_shadowOffsetX, 0F)
             shadowOffsetY = getDimension(R.styleable.ShadowConstraintLayout_shadowOffsetY, 0F)
             rippleEnable = getBoolean(R.styleable.ShadowConstraintLayout_rippleEnable, false)
