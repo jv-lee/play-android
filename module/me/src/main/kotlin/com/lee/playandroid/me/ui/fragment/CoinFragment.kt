@@ -18,13 +18,13 @@ import com.lee.playandroid.library.common.constants.ApiConstants
 import com.lee.playandroid.library.common.entity.CoinRecord
 import com.lee.playandroid.library.common.entity.PageData
 import com.lee.playandroid.library.common.extensions.actionFailed
-import com.lee.playandroid.library.common.ui.widget.SimpleLoadResource
 import com.lee.playandroid.library.service.AccountService
 import com.lee.playandroid.library.service.hepler.ModuleService
 import com.lee.playandroid.me.R
 import com.lee.playandroid.me.databinding.FragmentCoinBinding
 import com.lee.playandroid.me.databinding.LayoutCoinHeaderBinding
 import com.lee.playandroid.me.ui.adapter.CoinRecordAdapter
+import com.lee.playandroid.me.ui.widget.CoinLoadResource
 import com.lee.playandroid.me.viewmodel.CoinViewModel
 import com.lee.playandroid.router.navigateDetails
 
@@ -52,7 +52,7 @@ class CoinFragment : BaseFragment(R.layout.fragment_coin) {
 
         binding.rvContainer.adapter = CoinRecordAdapter(requireContext(), arrayListOf()).apply {
             mAdapter = this
-            setLoadResource(SimpleLoadResource())
+            setLoadResource(CoinLoadResource())
             initStatusView()
             addHeader(headerBinding.root)
             pageLoading()

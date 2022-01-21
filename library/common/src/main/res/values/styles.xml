@@ -6,7 +6,8 @@
         <item name="colorPrimary">@color/colorThemePrimary</item>
         <item name="colorPrimaryDark">@color/colorThemePrimaryDark</item>
         <item name="colorAccent">@color/colorThemeAccent</item>
-        <item name="android:statusBarColor" tools:targetApi="lollipop">@android:color/transparent</item>
+        <item name="android:statusBarColor" tools:targetApi="lollipop">@android:color/transparent
+        </item>
         <item name="android:windowAnimationStyle">@style/AppTheme.Animation</item>
         <item name="android:windowBackground">@drawable/splash_bg</item>
         <item name="android:overScrollMode">never</item>
@@ -43,15 +44,22 @@
         <item name="colorControlActivated">@color/colorThemeFocus</item>
         <item name="colorControlNormal">@color/colorThemeFocusLight</item>
         <!-- Inactive thumb color switch关闭时的拇指按钮的颜色 -->
-<!--        <item name="colorSwitchThumbNormal">#ff0000</item>-->
+        <!--        <item name="colorSwitchThumbNormal">#ff0000</item>-->
 
         <!-- Inactive track color(30% transparency) switch关闭时的轨迹的颜色 30%这个颜色 -->
-<!--        <item name="android:colorForeground">#ff0000</item>-->
+        <!--        <item name="android:colorForeground">#ff0000</item>-->
     </style>
 
     <style name="ImageCircleStyle">
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">50%</item>
+    </style>
+
+    <style name="StatusLayout">
+        <item name="layout_loading">@layout/layout_app_status_loading</item>
+        <item name="layout_empty">@layout/layout_app_status_empty</item>
+        <item name="layout_error">@layout/layout_app_status_error</item>
+        <item name="layout_network">@layout/layout_app_status_not_network</item>
     </style>
 
 </resources>
