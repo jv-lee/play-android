@@ -124,7 +124,7 @@ class MainActivity : BaseActivity(),
 
             override fun onAnimationEnd(animation: Animator?) {
                 binding.root.removeView(binding.splashContainer)
-                window.decorView.background = null
+                window.decorView.setBackgroundColorCompat(R.color.colorThemeBackground)
             }
         })
         anim.start()

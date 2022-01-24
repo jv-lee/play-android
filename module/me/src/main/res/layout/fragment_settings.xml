@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/const_root"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/colorThemeBackground">
+    android:layout_height="match_parent">
 
     <com.lee.library.widget.toolbar.TitleToolbar
         android:id="@+id/toolbar"

@@ -3,8 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/const_root"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/colorThemeBackground">
+    android:layout_height="match_parent">
 
     <com.lee.library.widget.toolbar.CustomToolbarLayout
         android:id="@+id/toolbar_layout"
