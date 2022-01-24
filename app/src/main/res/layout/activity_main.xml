@@ -13,22 +13,16 @@
         android:layout_height="match_parent"
         android:visibility="invisible">
 
-        <fragment
-            android:id="@+id/nav_main_fragment"
-            android:name="androidx.navigation.fragment.NavHostFragment"
+        <ViewStub
+            android:id="@+id/view_stub_main"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:defaultNavHost="true"
-            app:navGraph="@navigation/main" />
+            android:layout="@layout/layout_stub_main" />
 
     </FrameLayout>
 
-    <FrameLayout
-        android:id="@+id/splash_container"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginBottom="240dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <include
+        android:id="@+id/splash"
+        layout="@layout/layout_splash" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
