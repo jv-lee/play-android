@@ -102,7 +102,7 @@ class MainActivity : BaseActivity(),
                     AnimationUtils.loadAnimation(this@MainActivity, R.anim.alpha_in).apply {
                         startListener {
                             binding.splash.tvTime.visibility = View.VISIBLE
-                            binding.splash.container.setBackgroundDrawableCompat(R.mipmap.splash_ad)
+                            binding.splash.ivPicture.setImageResource(R.mipmap.splash_ad)
                         }
                     }
 
@@ -140,11 +140,11 @@ class MainActivity : BaseActivity(),
         anim.addListener(object : AnimatorListenerAdapter() {
             override fun onAnimationStart(animation: Animator?) {
                 binding.mainContainer.visibility = View.VISIBLE
-                window.decorView.background = null
             }
 
             override fun onAnimationEnd(animation: Animator?) {
                 binding.root.removeView(binding.splash.container)
+                window.decorView.background = null
             }
         })
         anim.start()
