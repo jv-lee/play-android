@@ -140,7 +140,7 @@ class MainActivity : BaseActivity(),
         anim.addListener(object : AnimatorListenerAdapter() {
             override fun onAnimationStart(animation: Animator?) {
                 binding.mainContainer.visibility = View.VISIBLE
-                window.decorView.setBackgroundColorCompat(R.color.colorThemeBackground)
+                window.decorView.background = null
             }
 
             override fun onAnimationEnd(animation: Animator?) {

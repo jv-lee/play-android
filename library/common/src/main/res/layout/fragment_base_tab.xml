@@ -2,7 +2,8 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/colorThemeBackground">
 
     <com.lee.library.widget.toolbar.TitleToolbar
         android:id="@+id/toolbar"
@@ -12,9 +13,9 @@
 
     <com.lee.library.widget.StatusLayout
         android:id="@+id/status_layout"
+        style="@style/StatusLayout"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        style="@style/StatusLayout"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
