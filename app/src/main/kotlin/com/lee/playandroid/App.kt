@@ -94,11 +94,6 @@ class App : BaseApplication() {
 
         //注册Activity生命周期监听
         registerActivityLifecycleCallbacks(activityLifecycleCallbacks)
-
-        //初始化内存检测工具
-//        if (!LeakCanary.isInAnalyzerProcess(this)) {
-//            LeakCanary.install(this)
-//        }
     }
 
     override fun unInit() {

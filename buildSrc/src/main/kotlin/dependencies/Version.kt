@@ -27,5 +27,5 @@ object Version {
     const val junit = "4.13.2"
     const val junitAndroid = "1.1.2"
     const val espressoAndroid = "3.3.0"
-    const val leakcanary = "1.6.2"
+    const val leakcanary = "2.3"
 }
