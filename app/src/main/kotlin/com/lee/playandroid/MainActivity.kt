@@ -8,11 +8,10 @@ import android.content.res.Configuration
 import android.graphics.Color
 import android.os.Bundle
 import android.view.View
+import android.view.animation.AnimationUtils
 import android.view.animation.LinearInterpolator
 import com.lee.library.base.BaseActivity
-import com.lee.library.extensions.banBackEvent
-import com.lee.library.extensions.binding
-import com.lee.library.extensions.setBackgroundDrawableCompat
+import com.lee.library.extensions.*
 import com.lee.library.tools.DarkModeTools
 import com.lee.library.tools.ScreenDensityUtil
 import com.lee.library.tools.StatusTools.setDarkStatusIcon
@@ -90,7 +89,12 @@ class MainActivity : BaseActivity(),
      */
     private suspend fun requestSplashAd() {
         if (BuildConfig.DEBUG) {
-            binding.splashContainer.setBackgroundDrawableCompat(R.mipmap.splash_ad)
+            val splashAnimation = AnimationUtils.loadAnimation(this, R.anim.alpha_in).apply {
+                startListener {
+                    binding.splashContainer.setBackgroundDrawableCompat(R.mipmap.splash_ad)
+                }
+            }
+            binding.splashContainer.startAnimation(splashAnimation)
             delay(2000)
         }
         animVisibleUi(300)
