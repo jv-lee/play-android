@@ -12,6 +12,7 @@ import android.view.animation.LinearInterpolator
 import com.lee.library.base.BaseActivity
 import com.lee.library.extensions.banBackEvent
 import com.lee.library.extensions.binding
+import com.lee.library.extensions.setBackgroundDrawableCompat
 import com.lee.library.tools.DarkModeTools
 import com.lee.library.tools.ScreenDensityUtil
 import com.lee.library.tools.StatusTools.setDarkStatusIcon
@@ -88,8 +89,10 @@ class MainActivity : BaseActivity(),
      * 闪屏广告逻辑
      */
     private suspend fun requestSplashAd() {
-//        binding.splashContainer.setBackgroundDrawableCompat(R.mipmap.splash_ad)
-//        delay(2000)
+        if (BuildConfig.DEBUG) {
+            binding.splashContainer.setBackgroundDrawableCompat(R.mipmap.splash_ad)
+            delay(2000)
+        }
         animVisibleUi(300)
     }
 

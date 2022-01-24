@@ -29,12 +29,6 @@ class MainFragment : BaseFragment(R.layout.fragment_main),
 
     private val binding by binding(FragmentMainBinding::bind)
 
-    private val floatingBinding by lazy {
-        LayoutStubFloatingBinding.bind(
-            binding.root.findViewById<ViewStub>(R.id.view_stub_floating).inflate()
-        )
-    }
-
     override fun bindView() {
         //设置深色主题控制器监听
         DarkViewUpdateTools.bindViewCallback(viewLifecycleOwner, this)
@@ -49,7 +43,7 @@ class MainFragment : BaseFragment(R.layout.fragment_main),
         }
 
         // 加载stub悬浮按钮view
-//        showFloatingStubView()
+        showFloatingStubView()
     }
 
     override fun bindData() {
@@ -72,7 +66,11 @@ class MainFragment : BaseFragment(R.layout.fragment_main),
     }
 
     private fun showFloatingStubView() {
-        floatingBinding.root.setEventCallback(object : FloatingLayout.EventCallback() {
+        if (!BuildConfig.DEBUG) return
+
+        val floatingLayout = binding.root.findViewById<ViewStub>(R.id.view_stub_floating).inflate()
+        LayoutStubFloatingBinding.bind(floatingLayout).root.setEventCallback(object :
+            FloatingLayout.EventCallback() {
             override fun onClicked() {
                 toast("welcome to play android ~")
             }
