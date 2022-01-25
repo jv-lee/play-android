@@ -111,11 +111,11 @@ inline fun Fragment.delayBackEvent(
         requireActivity().onBackPressedDispatcher.addCallback(this@delayBackEvent, this)
 
         // 生命周期解绑
-        lifecycle.addObserver(object : LifecycleEventObserver {
+        viewLifecycleOwner.lifecycle.addObserver(object : LifecycleEventObserver {
             override fun onStateChanged(source: LifecycleOwner, event: Lifecycle.Event) {
                 if (event == Lifecycle.Event.ON_DESTROY) {
                     remove()
-                    lifecycle.removeObserver(this)
+                    viewLifecycleOwner.lifecycle.removeObserver(this)
                 }
             }
         })
