@@ -2,7 +2,6 @@ package com.lee.playandroid.account.ui
 
 import android.os.Bundle
 import android.view.View
-import androidx.core.view.updatePadding
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.viewModels
@@ -16,7 +15,7 @@ import com.lee.library.interadp.TextWatcherAdapter
 import com.lee.library.mvvm.ui.observeState
 import com.lee.library.tools.KeyboardTools.hideSoftInput
 import com.lee.library.tools.KeyboardTools.keyboardIsShow
-import com.lee.library.tools.KeyboardTools.keyboardObserver
+import com.lee.library.tools.KeyboardTools.keyboardPaddingBottom
 import com.lee.library.tools.KeyboardTools.parentTouchHideSoftInput
 import com.lee.library.tools.PreferencesTools
 import com.lee.playandroid.account.R
@@ -48,11 +47,7 @@ class RegisterFragment : BaseFragment(R.layout.fragment_register), View.OnClickL
         requireActivity().parentTouchHideSoftInput(binding.root)
 
         // 监听键盘弹起
-        binding.root.keyboardObserver({ diff ->
-            if (isResumed) {
-                binding.root.updatePadding(bottom = diff)
-            }
-        }, viewLifecycleOwner.lifecycle)
+        requireActivity().window.decorView.keyboardPaddingBottom(viewLifecycleOwner)
 
         // 设置监听
         binding.root.setOnClickListener(this)

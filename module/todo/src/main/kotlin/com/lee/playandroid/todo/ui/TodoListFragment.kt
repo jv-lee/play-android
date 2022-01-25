@@ -158,6 +158,11 @@ class TodoListFragment : BaseFragment(R.layout.fragment_todo_list),
         }
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        binding.rvContainer.adapter = null
+    }
+
     /**
      * 移动TODO状态
      */

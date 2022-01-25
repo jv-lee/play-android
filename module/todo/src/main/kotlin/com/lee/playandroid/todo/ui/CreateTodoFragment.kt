@@ -3,7 +3,6 @@ package com.lee.playandroid.todo.ui
 import android.app.DatePickerDialog
 import android.os.Bundle
 import android.widget.DatePicker
-import androidx.core.view.updatePadding
 import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -11,7 +10,7 @@ import com.lee.library.base.BaseFragment
 import com.lee.library.dialog.LoadingDialog
 import com.lee.library.extensions.*
 import com.lee.library.mvvm.ui.observeState
-import com.lee.library.tools.KeyboardTools.keyboardObserver
+import com.lee.library.tools.KeyboardTools.keyboardPaddingBottom
 import com.lee.library.tools.KeyboardTools.parentTouchHideSoftInput
 import com.lee.playandroid.library.common.entity.TodoData
 import com.lee.playandroid.library.common.entity.TodoData.Companion.PRIORITY_HEIGHT
@@ -62,12 +61,7 @@ class CreateTodoFragment : BaseFragment(R.layout.fragment_create_todo),
         // 设置键盘点击空白区取消
         requireActivity().parentTouchHideSoftInput(binding.root)
 
-        // 监听键盘弹起
-        binding.root.keyboardObserver({ diff ->
-            if (isResumed) {
-                binding.root.updatePadding(bottom = diff)
-            }
-        }, viewLifecycleOwner.lifecycle)
+        requireActivity().window.decorView.keyboardPaddingBottom(viewLifecycleOwner)
 
         binding.tvDateContent.setOnClickListener {
             show(datePickerDialog)
