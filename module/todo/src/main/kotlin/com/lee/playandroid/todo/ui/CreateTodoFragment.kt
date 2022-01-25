@@ -60,14 +60,14 @@ class CreateTodoFragment : BaseFragment(R.layout.fragment_create_todo),
         initDatePickerDialog()
 
         // 设置键盘点击空白区取消
-        requireActivity().parentTouchHideSoftInput( binding.root)
+        requireActivity().parentTouchHideSoftInput(binding.root)
 
         // 监听键盘弹起
-        binding.root.keyboardObserver { diff ->
+        binding.root.keyboardObserver({ diff ->
             if (isResumed) {
                 binding.root.updatePadding(bottom = diff)
             }
-        }
+        }, viewLifecycleOwner.lifecycle)
 
         binding.tvDateContent.setOnClickListener {
             show(datePickerDialog)

@@ -1,5 +1,6 @@
 package com.lee.playandroid.library.common.ui
 
+import android.annotation.SuppressLint
 import androidx.fragment.app.Fragment
 import com.google.android.material.tabs.TabLayoutMediator
 import com.lee.library.adapter.core.UiPagerAdapter2
@@ -37,6 +38,9 @@ abstract class BaseTabFragment : BaseNavigationFragment(R.layout.fragment_base_t
 
     override fun bindView() {
         binding.statusLayout.setOnReloadListener(this)
+
+        binding.vpContainer.isSaveEnabled = false
+        binding.vpContainer.increaseOffscreenPageLimit()
     }
 
     override fun bindData() {
@@ -66,6 +70,7 @@ abstract class BaseTabFragment : BaseNavigationFragment(R.layout.fragment_base_t
      * 根据分类数据构建分页tab及page
      * @param tabsData 分类page数据
      */
+    @SuppressLint("NotifyDataSetChanged")
     private fun bindAdapter(tabsData: List<Tab>) {
         val fragments = arrayListOf<Fragment>()
         val titles = arrayListOf<String>()
@@ -75,10 +80,13 @@ abstract class BaseTabFragment : BaseNavigationFragment(R.layout.fragment_base_t
             fragments.add(createChildFragment(it.id))
         }
 
-        binding.vpContainer.increaseOffscreenPageLimit()
-        binding.vpContainer.isSaveEnabled = false
-        binding.vpContainer.adapter = UiPagerAdapter2(this, fragments).also {
-            adapter = it
+        if (binding.vpContainer.adapter == null) {
+            adapter = UiPagerAdapter2(childFragmentManager, viewLifecycleOwner.lifecycle)
+            adapter?.addAll(fragments)
+            binding.vpContainer.adapter = adapter
+        } else {
+            adapter?.addAll(fragments)
+            adapter?.notifyDataSetChanged()
         }
 
         TabLayoutMediator(binding.tabLayout, binding.vpContainer) { tab, position ->

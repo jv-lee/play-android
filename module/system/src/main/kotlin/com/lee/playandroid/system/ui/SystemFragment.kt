@@ -1,5 +1,6 @@
 package com.lee.playandroid.system.ui
 
+import android.annotation.SuppressLint
 import androidx.fragment.app.viewModels
 import com.lee.library.adapter.core.UiPagerAdapter2
 import com.lee.library.base.BaseFragment
@@ -22,6 +23,8 @@ class SystemFragment : BaseFragment(R.layout.fragment_system) {
 
     private val binding by binding(FragmentSystemBinding::bind)
 
+    private var mAdapter: UiPagerAdapter2? = null
+
     override fun bindView() {
         delayBackEvent()
 
@@ -31,9 +34,17 @@ class SystemFragment : BaseFragment(R.layout.fragment_system) {
         binding.vpContainer.bindRadioGroup(binding.radioTabLayout)
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     override fun bindData() {
         viewModel.fragmentsLive.observe(this, {
-            binding.vpContainer.adapter = UiPagerAdapter2(this, it)
+            if (binding.vpContainer.adapter == null) {
+                mAdapter = UiPagerAdapter2(childFragmentManager, viewLifecycleOwner.lifecycle)
+                mAdapter?.addAll(it)
+                binding.vpContainer.adapter = mAdapter
+            } else {
+                mAdapter?.addAll(it)
+                mAdapter?.notifyDataSetChanged()
+            }
         })
     }
 

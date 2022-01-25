@@ -48,11 +48,11 @@ class RegisterFragment : BaseFragment(R.layout.fragment_register), View.OnClickL
         requireActivity().parentTouchHideSoftInput(binding.root)
 
         // 监听键盘弹起
-        binding.root.keyboardObserver { diff ->
+        binding.root.keyboardObserver({ diff ->
             if (isResumed) {
                 binding.root.updatePadding(bottom = diff)
             }
-        }
+        }, viewLifecycleOwner.lifecycle)
 
         // 设置监听
         binding.root.setOnClickListener(this)

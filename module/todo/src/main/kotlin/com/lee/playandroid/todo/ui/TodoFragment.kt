@@ -1,6 +1,8 @@
 package com.lee.playandroid.todo.ui
 
+import android.annotation.SuppressLint
 import android.os.Bundle
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResultListener
 import androidx.navigation.fragment.findNavController
 import com.lee.library.adapter.core.UiPagerAdapter2
@@ -37,17 +39,10 @@ class TodoFragment : BaseFragment(R.layout.fragment_todo) {
 
     private val binding by binding(FragmentTodoBinding::bind)
 
+    private var mAdapter: UiPagerAdapter2? = null
+
     override fun bindView() {
         initTodoTitle()
-
-        binding.vpContainer.isUserInputEnabled = false
-        binding.vpContainer.adapter = UiPagerAdapter2(
-            this,
-            arrayListOf(
-                TodoListFragment.newInstance(ARG_STATUS_UPCOMING),
-                TodoListFragment.newInstance(ARG_STATUS_COMPLETE)
-            )
-        )
 
         binding.navigationBar.bindViewPager(binding.vpContainer)
 
@@ -62,7 +57,10 @@ class TodoFragment : BaseFragment(R.layout.fragment_todo) {
     }
 
 
+    @SuppressLint("NotifyDataSetChanged")
     override fun bindData() {
+        createTodoPages()
+
         val listener = fun(requestKey: String, bundle: Bundle) {
             val todo = bundle.getParcelable<TodoData>(REQUEST_VALUE_TODO)
             val type = bundle.getInt(REQUEST_VALUE_TYPE)
@@ -82,6 +80,24 @@ class TodoFragment : BaseFragment(R.layout.fragment_todo) {
         setFragmentResultListener(REQUEST_KEY_SAVE, listener)
         setFragmentResultListener(REQUEST_KEY_UPDATE, listener)
         setFragmentResultListener(REQUEST_KEY_TYPE, listener)
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    private fun createTodoPages() {
+        val fragments = arrayListOf<Fragment>().apply {
+            add(TodoListFragment.newInstance(ARG_STATUS_UPCOMING))
+            add(TodoListFragment.newInstance(ARG_STATUS_COMPLETE))
+        }
+
+        if (binding.vpContainer.adapter == null) {
+            mAdapter = UiPagerAdapter2(childFragmentManager, viewLifecycleOwner.lifecycle)
+            mAdapter?.addAll(fragments)
+            binding.vpContainer.adapter = mAdapter
+            binding.vpContainer.isUserInputEnabled = false
+        } else {
+            mAdapter?.addAll(fragments)
+            mAdapter?.notifyDataSetChanged()
+        }
     }
 
     /**

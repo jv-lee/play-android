@@ -55,11 +55,11 @@ class LoginFragment : BaseFragment(R.layout.fragment_login), View.OnClickListene
         binding.editUsername.setText(PreferencesTools.get<String>(SP_KEY_SAVE_INPUT_USERNAME))
 
         // 监听键盘弹起
-        binding.root.keyboardObserver { diff ->
+        binding.root.keyboardObserver({ diff ->
             if (isResumed) {
                 binding.root.updatePadding(bottom = diff)
             }
-        }
+        }, viewLifecycleOwner.lifecycle)
 
         // 设置监听
         binding.tvLogin.setOnClickListener(this)
