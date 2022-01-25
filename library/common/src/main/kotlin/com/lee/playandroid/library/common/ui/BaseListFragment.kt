@@ -1,6 +1,7 @@
 package com.lee.playandroid.library.common.ui
 
 import android.view.View
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.lee.library.adapter.base.BaseViewAdapter
 import com.lee.library.adapter.extensions.bindAllListener
 import com.lee.library.adapter.page.submitData
@@ -22,6 +23,7 @@ import com.lee.playandroid.library.common.extensions.actionFailed
  * @description
  */
 abstract class BaseListFragment : BaseNavigationFragment(R.layout.fragment_base_list),
+    SwipeRefreshLayout.OnRefreshListener,
     BaseViewAdapter.AutoLoadMoreListener,
     BaseViewAdapter.LoadErrorListener,
     BaseViewAdapter.OnItemClickListener<Content> {
@@ -41,17 +43,14 @@ abstract class BaseListFragment : BaseNavigationFragment(R.layout.fragment_base_
     open fun findBinding() = binding
 
     override fun bindView() {
+        binding.refreshLayout.setOnRefreshListener(this)
+
         binding.rvContainer.adapter = createAdapter().apply {
             mAdapter = this
             initStatusView()
             pageLoading()
             bindAllListener(this@BaseListFragment)
         }.proxy
-
-        binding.refreshLayout.setOnRefreshListener {
-            mAdapter.openLoadMore()
-            requestContentList(LoadStatus.REFRESH)
-        }
     }
 
     override fun bindData() {
@@ -71,6 +70,11 @@ abstract class BaseListFragment : BaseNavigationFragment(R.layout.fragment_base_
     override fun lazyLoad() {
         super.lazyLoad()
         requestContentList(LoadStatus.INIT)
+    }
+
+    override fun onRefresh() {
+        mAdapter.openLoadMore()
+        requestContentList(LoadStatus.REFRESH)
     }
 
     override fun autoLoadMore() {
