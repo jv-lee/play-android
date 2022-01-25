@@ -45,7 +45,7 @@ class HomeFragment : BaseFragment(R.layout.fragment_home),
 
     private val binding by binding(FragmentHomeBinding::bind)
 
-    private lateinit var mAdapter: ContentAdapter
+    private var mAdapter: ContentAdapter? = null
 
     override fun bindView() {
         delayBackEvent()
@@ -73,11 +73,11 @@ class HomeFragment : BaseFragment(R.layout.fragment_home),
             viewLifecycleOwner,
             success = {
                 binding.refreshView.isRefreshing = false
-                mAdapter.submitData(it, diff = true)
+                mAdapter?.submitData(it, diff = true)
             },
             error = {
                 binding.refreshView.isRefreshing = false
-                mAdapter.submitFailed()
+                mAdapter?.submitFailed()
                 actionFailed(it)
             })
     }
@@ -95,7 +95,7 @@ class HomeFragment : BaseFragment(R.layout.fragment_home),
     }
 
     override fun onRefresh() {
-        mAdapter.openLoadMore()
+        mAdapter?.openLoadMore()
         viewModel.requestHomeData(LoadStatus.REFRESH)
     }
 
@@ -114,6 +114,7 @@ class HomeFragment : BaseFragment(R.layout.fragment_home),
     override fun onDestroyView() {
         super.onDestroyView()
         binding.rvContainer.adapter = null
+        mAdapter = null
     }
 
     @InjectBus(NavigationSelectEvent.key, isActive = true)
