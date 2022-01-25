@@ -82,6 +82,11 @@ class TodoFragment : BaseFragment(R.layout.fragment_todo) {
         setFragmentResultListener(REQUEST_KEY_TYPE, listener)
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        binding.vpContainer.adapter = null
+    }
+
     @SuppressLint("NotifyDataSetChanged")
     private fun createTodoPages() {
         val fragments = arrayListOf<Fragment>().apply {
