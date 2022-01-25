@@ -49,17 +49,18 @@ class HomeFragment : BaseFragment(R.layout.fragment_home),
 
     override fun bindView() {
         delayBackEvent()
-
         binding.toolbar.setThemeGradientBackground()
 
         binding.rvContainer.addSaveStateViewType(BannerView::class.java)
         binding.rvContainer.addItemDecoration(OffsetItemDecoration(binding.toolbar.getToolbarLayoutHeight()))
-        binding.rvContainer.adapter = ContentAdapter(requireContext(), arrayListOf()).apply {
-            mAdapter = this
-            initStatusView()
-            pageLoading()
-            bindAllListener(this@HomeFragment)
-        }.proxy
+        if (binding.rvContainer.adapter == null) {
+            binding.rvContainer.adapter = ContentAdapter(requireContext(), arrayListOf()).apply {
+                mAdapter = this
+                initStatusView()
+                pageLoading()
+                bindAllListener(this@HomeFragment)
+            }.proxy
+        }
 
         binding.ivSearch.setOnClickListener(this)
         binding.refreshView.setOnRefreshListener(this)
@@ -68,14 +69,17 @@ class HomeFragment : BaseFragment(R.layout.fragment_home),
     override fun bindData() {
         LiveDataBus.getInstance().injectBus(this)
 
-        viewModel.contentListLive.observeState<PageUiData<HomeContent>>(this, success = {
-            binding.refreshView.isRefreshing = false
-            mAdapter.submitData(it, diff = true)
-        }, error = {
-            binding.refreshView.isRefreshing = false
-            mAdapter.submitFailed()
-            actionFailed(it)
-        })
+        viewModel.contentListLive.observeState<PageUiData<HomeContent>>(
+            viewLifecycleOwner,
+            success = {
+                binding.refreshView.isRefreshing = false
+                mAdapter.submitData(it, diff = true)
+            },
+            error = {
+                binding.refreshView.isRefreshing = false
+                mAdapter.submitFailed()
+                actionFailed(it)
+            })
     }
 
     override fun onClick(v: View?) {
@@ -105,6 +109,11 @@ class HomeFragment : BaseFragment(R.layout.fragment_home),
 
     override fun itemReload() {
         viewModel.requestHomeData(LoadStatus.RELOAD)
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        binding.rvContainer.adapter = null
     }
 
     @InjectBus(NavigationSelectEvent.key, isActive = true)

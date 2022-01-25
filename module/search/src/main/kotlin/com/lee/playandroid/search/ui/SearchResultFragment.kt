@@ -43,14 +43,16 @@ class SearchResultFragment : BaseFragment(R.layout.fragment_search_result),
     override fun bindView() {
         binding.toolbar.setTitleText(searchKey)
 
-        binding.rvContainer.adapter = SearchResultAdapter(requireContext(), arrayListOf()).apply {
-            mAdapter = this
+        if (binding.rvContainer.adapter == null) {
+            binding.rvContainer.adapter =
+                SearchResultAdapter(requireContext(), arrayListOf()).apply {
+                    mAdapter = this
 
-            initStatusView()
-            pageLoading()
-            bindAllListener(this@SearchResultFragment)
-        }.proxy
-
+                    initStatusView()
+                    pageLoading()
+                    bindAllListener(this@SearchResultFragment)
+                }.proxy
+        }
     }
 
     override fun bindData() {
@@ -78,5 +80,10 @@ class SearchResultFragment : BaseFragment(R.layout.fragment_search_result),
 
     override fun itemReload() {
         viewModel.requestSearch(LoadStatus.RELOAD)
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        binding.rvContainer.adapter = null
     }
 }

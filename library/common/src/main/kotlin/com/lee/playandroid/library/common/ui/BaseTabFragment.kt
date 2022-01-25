@@ -4,7 +4,7 @@ import android.annotation.SuppressLint
 import androidx.fragment.app.Fragment
 import com.google.android.material.tabs.TabLayoutMediator
 import com.lee.library.adapter.core.UiPagerAdapter2
-import com.lee.library.base.BaseNavigationFragment
+import com.lee.library.base.BaseFragment
 import com.lee.library.extensions.binding
 import com.lee.library.extensions.increaseOffscreenPageLimit
 import com.lee.library.mvvm.ui.UiStateLiveData
@@ -20,7 +20,7 @@ import com.lee.playandroid.library.common.extensions.actionFailed
  * @date 2021/11/9
  * @description 基础tabFragment类
  */
-abstract class BaseTabFragment : BaseNavigationFragment(R.layout.fragment_base_tab),
+abstract class BaseTabFragment : BaseFragment(R.layout.fragment_base_tab),
     StatusLayout.OnReloadListener {
 
     private val binding by binding(FragmentBaseTabBinding::bind)
@@ -38,8 +38,6 @@ abstract class BaseTabFragment : BaseNavigationFragment(R.layout.fragment_base_t
 
     override fun bindView() {
         binding.statusLayout.setOnReloadListener(this)
-
-        binding.vpContainer.isSaveEnabled = false
         binding.vpContainer.increaseOffscreenPageLimit()
     }
 
@@ -61,8 +59,9 @@ abstract class BaseTabFragment : BaseNavigationFragment(R.layout.fragment_base_t
         requestTabs()
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
+    override fun onDestroyView() {
+        super.onDestroyView()
+        binding.vpContainer.adapter = null
         mediator?.detach()
     }
 

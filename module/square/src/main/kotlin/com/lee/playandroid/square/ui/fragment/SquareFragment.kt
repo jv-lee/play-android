@@ -50,12 +50,14 @@ class SquareFragment : BaseFragment(R.layout.fragment_square),
         binding.toolbar.setThemeGradientBackground()
 
         binding.rvContainer.addItemDecoration(OffsetItemDecoration(binding.toolbar.getToolbarLayoutHeight()))
-        binding.rvContainer.adapter = SquareAdapter(requireContext(), arrayListOf()).apply {
-            mAdapter = this
-            initStatusView()
-            pageLoading()
-            bindAllListener(this@SquareFragment)
-        }.proxy
+        if (binding.rvContainer.adapter == null) {
+            binding.rvContainer.adapter = SquareAdapter(requireContext(), arrayListOf()).apply {
+                mAdapter = this
+                initStatusView()
+                pageLoading()
+                bindAllListener(this@SquareFragment)
+            }.proxy
+        }
 
         binding.ivCreate.setOnClickListener(this)
         binding.refreshView.setOnRefreshListener(this)
@@ -102,6 +104,11 @@ class SquareFragment : BaseFragment(R.layout.fragment_square),
 
     override fun itemReload() {
         viewModel.requestSquareData(LoadStatus.RELOAD)
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        binding.rvContainer.adapter = null
     }
 
     @InjectBus(NavigationSelectEvent.key, isActive = true)

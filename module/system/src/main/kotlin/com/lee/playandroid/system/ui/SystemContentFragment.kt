@@ -11,11 +11,9 @@ import com.lee.library.adapter.page.submitSinglePage
 import com.lee.library.base.BaseFragment
 import com.lee.library.extensions.binding
 import com.lee.library.extensions.findParentFragment
-import com.lee.library.extensions.launchAndRepeatWithViewLifecycle
 import com.lee.library.extensions.smoothScrollToTop
 import com.lee.library.livedatabus.InjectBus
 import com.lee.library.livedatabus.LiveDataBus
-import com.lee.library.mvvm.ui.collectState
 import com.lee.library.mvvm.ui.observeState
 import com.lee.playandroid.library.common.entity.NavigationSelectEvent
 import com.lee.playandroid.library.common.entity.ParentTab
@@ -50,12 +48,15 @@ class SystemContentFragment : BaseFragment(R.layout.fragment_system_content),
             binding.rvContainer.addItemDecoration(OffsetItemDecoration(it.toolbar.getToolbarLayoutHeight()))
         }
 
-        binding.rvContainer.adapter = SystemContentAdapter(requireContext(), arrayListOf()).apply {
-            mAdapter = this
-            initStatusView()
-            pageLoading()
-            bindAllListener(this@SystemContentFragment)
-        }.proxy
+        if (binding.rvContainer.adapter == null) {
+            binding.rvContainer.adapter =
+                SystemContentAdapter(requireContext(), arrayListOf()).apply {
+                    mAdapter = this
+                    initStatusView()
+                    pageLoading()
+                    bindAllListener(this@SystemContentFragment)
+                }.proxy
+        }
     }
 
     override fun bindData() {
@@ -87,6 +88,11 @@ class SystemContentFragment : BaseFragment(R.layout.fragment_system_content),
     }
 
     override fun itemReload() {}
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        binding.rvContainer.adapter = null
+    }
 
     /**
      * 导航至目标页面

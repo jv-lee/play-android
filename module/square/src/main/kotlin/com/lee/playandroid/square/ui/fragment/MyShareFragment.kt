@@ -4,6 +4,7 @@ import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.lee.library.adapter.base.BaseViewAdapter
+import com.lee.library.adapter.extensions.bindAllListener
 import com.lee.library.adapter.page.submitData
 import com.lee.library.adapter.page.submitFailed
 import com.lee.library.base.BaseFragment
@@ -30,6 +31,8 @@ import com.lee.playandroid.library.common.R as CR
  * @description 我的分享页面
  */
 class MyShareFragment : BaseFragment(R.layout.fragment_my_share),
+    BaseViewAdapter.LoadErrorListener,
+    BaseViewAdapter.AutoLoadMoreListener,
     BaseViewAdapter.OnItemChildView<Content> {
 
     private val viewModel by viewModels<MyShareViewModel>()
@@ -51,27 +54,14 @@ class MyShareFragment : BaseFragment(R.layout.fragment_my_share),
             )
         )
 
-        binding.rvContainer.adapter = SimpleTextAdapter(requireContext(), arrayListOf()).apply {
-            mAdapter = this
-            initStatusView()
-            pageLoading()
-
-            setAutoLoadMoreListener {
-                viewModel.requestMyShareData(LoadStatus.LOAD_MORE)
-            }
-            setLoadErrorListener(object : BaseViewAdapter.LoadErrorListener {
-                override fun pageReload() {
-                    viewModel.requestMyShareData(LoadStatus.REFRESH)
-                }
-
-                override fun itemReload() {
-                    viewModel.requestMyShareData(LoadStatus.RELOAD)
-                }
-
-            })
-
-            setOnItemChildClickListener(this@MyShareFragment)
-        }.proxy
+        if (binding.rvContainer.adapter == null) {
+            binding.rvContainer.adapter = SimpleTextAdapter(requireContext(), arrayListOf()).apply {
+                mAdapter = this
+                initStatusView()
+                pageLoading()
+                bindAllListener(this@MyShareFragment)
+            }.proxy
+        }
     }
 
     override fun bindData() {
@@ -90,6 +80,18 @@ class MyShareFragment : BaseFragment(R.layout.fragment_my_share),
         })
     }
 
+    override fun autoLoadMore() {
+        viewModel.requestMyShareData(LoadStatus.LOAD_MORE)
+    }
+
+    override fun pageReload() {
+        viewModel.requestMyShareData(LoadStatus.REFRESH)
+    }
+
+    override fun itemReload() {
+        viewModel.requestMyShareData(LoadStatus.RELOAD)
+    }
+
     override fun onItemChild(view: View, entity: Content, position: Int) {
         when (view.id) {
             CR.id.frame_container -> {
@@ -100,6 +102,11 @@ class MyShareFragment : BaseFragment(R.layout.fragment_my_share),
                 deleteShareAction(position)
             }
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        binding.rvContainer.adapter = null
     }
 
     private fun deleteShareAction(position: Int) {

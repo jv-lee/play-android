@@ -6,7 +6,7 @@ import com.lee.library.adapter.base.BaseViewAdapter
 import com.lee.library.adapter.extensions.bindAllListener
 import com.lee.library.adapter.page.submitData
 import com.lee.library.adapter.page.submitFailed
-import com.lee.library.base.BaseNavigationFragment
+import com.lee.library.base.BaseFragment
 import com.lee.library.extensions.binding
 import com.lee.library.mvvm.livedata.LoadStatus
 import com.lee.library.mvvm.ui.UiStateLiveData
@@ -22,7 +22,7 @@ import com.lee.playandroid.library.common.extensions.actionFailed
  * @date 2021/11/8
  * @description
  */
-abstract class BaseListFragment : BaseNavigationFragment(R.layout.fragment_base_list),
+abstract class BaseListFragment : BaseFragment(R.layout.fragment_base_list),
     SwipeRefreshLayout.OnRefreshListener,
     BaseViewAdapter.AutoLoadMoreListener,
     BaseViewAdapter.LoadErrorListener,
@@ -45,12 +45,14 @@ abstract class BaseListFragment : BaseNavigationFragment(R.layout.fragment_base_
     override fun bindView() {
         binding.refreshLayout.setOnRefreshListener(this)
 
-        binding.rvContainer.adapter = createAdapter().apply {
-            mAdapter = this
-            initStatusView()
-            pageLoading()
-            bindAllListener(this@BaseListFragment)
-        }.proxy
+        if (binding.rvContainer.adapter == null) {
+            binding.rvContainer.adapter = createAdapter().apply {
+                mAdapter = this
+                initStatusView()
+                pageLoading()
+                bindAllListener(this@BaseListFragment)
+            }.proxy
+        }
     }
 
     override fun bindData() {
@@ -91,6 +93,11 @@ abstract class BaseListFragment : BaseNavigationFragment(R.layout.fragment_base_
 
     override fun onItemClick(view: View, entity: Content, position: Int) {
         navigationDetails(entity)
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        binding.rvContainer.adapter = null
     }
 
 }

@@ -4,6 +4,7 @@ import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.lee.library.adapter.base.BaseViewAdapter
+import com.lee.library.adapter.extensions.bindAllListener
 import com.lee.library.adapter.page.submitData
 import com.lee.library.adapter.page.submitFailed
 import com.lee.library.base.BaseFragment
@@ -29,6 +30,8 @@ import java.util.*
  * @description 收藏列表页
  */
 class CollectFragment : BaseFragment(R.layout.fragment_collect),
+    BaseViewAdapter.LoadErrorListener,
+    BaseViewAdapter.AutoLoadMoreListener,
     BaseViewAdapter.OnItemChildView<Content> {
 
     private val viewModel by viewModels<CollectViewModel>()
@@ -43,27 +46,14 @@ class CollectFragment : BaseFragment(R.layout.fragment_collect),
                 requireContext()
             )
         )
-        binding.rvContainer.adapter = SimpleTextAdapter(requireContext(), arrayListOf()).apply {
-            mAdapter = this
-            initStatusView()
-            pageLoading()
-
-            setAutoLoadMoreListener {
-                viewModel.requestCollect(LoadStatus.LOAD_MORE)
-            }
-
-            setLoadErrorListener(object : BaseViewAdapter.LoadErrorListener {
-                override fun pageReload() {
-                    viewModel.requestCollect(LoadStatus.REFRESH)
-                }
-
-                override fun itemReload() {
-                    viewModel.requestCollect(LoadStatus.RELOAD)
-                }
-            })
-
-            setOnItemChildClickListener(this@CollectFragment)
-        }.proxy
+        if (binding.rvContainer.adapter == null) {
+            binding.rvContainer.adapter = SimpleTextAdapter(requireContext(), arrayListOf()).apply {
+                mAdapter = this
+                initStatusView()
+                pageLoading()
+                bindAllListener(this@CollectFragment)
+            }.proxy
+        }
     }
 
     override fun bindData() {
@@ -82,6 +72,18 @@ class CollectFragment : BaseFragment(R.layout.fragment_collect),
         })
     }
 
+    override fun autoLoadMore() {
+        viewModel.requestCollect(LoadStatus.LOAD_MORE)
+    }
+
+    override fun pageReload() {
+        viewModel.requestCollect(LoadStatus.REFRESH)
+    }
+
+    override fun itemReload() {
+        viewModel.requestCollect(LoadStatus.RELOAD)
+    }
+
     override fun onItemChild(view: View, entity: Content, position: Int) {
         when (view.id) {
             R.id.frame_container -> {
@@ -92,6 +94,11 @@ class CollectFragment : BaseFragment(R.layout.fragment_collect),
                 unCollectAction(position)
             }
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        binding.rvContainer.adapter = null
     }
 
     private fun unCollectAction(position: Int) {

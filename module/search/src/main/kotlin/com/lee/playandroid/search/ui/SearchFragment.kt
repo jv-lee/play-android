@@ -39,24 +39,28 @@ class SearchFragment : BaseFragment(R.layout.fragment_search) {
         // 设置点击空白区域隐藏软键盘
         requireActivity().parentTouchHideSoftInput(binding.root)
 
-        binding.rvHotContainer.adapter =
-            SearchHotAdapter(requireContext(), arrayListOf()).apply {
-                mHotAdapter = this
-                setOnItemClickListener { _, entity, _ ->
-                    navigationResult(entity.key)
-                }
-            }.proxy
+        if (binding.rvHotContainer.adapter == null) {
+            binding.rvHotContainer.adapter =
+                SearchHotAdapter(requireContext(), arrayListOf()).apply {
+                    mHotAdapter = this
+                    setOnItemClickListener { _, entity, _ ->
+                        navigationResult(entity.key)
+                    }
+                }.proxy
+        }
 
-        binding.rvHistoryContainer.adapter =
-            SearchHistoryAdapter(requireContext(), arrayListOf()).apply {
-                mHistoryAdapter = this
-                setOnItemClickListener { _, entity, _ ->
-                    navigationResult(entity.key)
-                }
-                setOnItemChildClickListener({ _, entity, _ ->
-                    viewModel.deleteSearchHistory(entity.key)
-                }, R.id.iv_delete)
-            }.proxy
+        if (binding.rvHistoryContainer.adapter == null) {
+            binding.rvHistoryContainer.adapter =
+                SearchHistoryAdapter(requireContext(), arrayListOf()).apply {
+                    mHistoryAdapter = this
+                    setOnItemClickListener { _, entity, _ ->
+                        navigationResult(entity.key)
+                    }
+                    setOnItemChildClickListener({ _, entity, _ ->
+                        viewModel.deleteSearchHistory(entity.key)
+                    }, R.id.iv_delete)
+                }.proxy
+        }
 
         binding.editQuery.setOnEditorActionListener { textView, actionId, _ ->
             val text = textView.text
@@ -85,6 +89,12 @@ class SearchFragment : BaseFragment(R.layout.fragment_search) {
         }, error = {
             actionFailed(it)
         })
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        binding.rvHotContainer.adapter = null
+        binding.rvHistoryContainer.adapter = null
     }
 
     /**

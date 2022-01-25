@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.lee.library.adapter.base.BaseViewAdapter
+import com.lee.library.adapter.extensions.bindAllListener
 import com.lee.library.adapter.page.submitData
 import com.lee.library.adapter.page.submitFailed
 import com.lee.library.base.BaseFragment
@@ -33,7 +34,10 @@ import com.lee.playandroid.todo.viewmodel.TodoListViewModel
  * @description TODO列表数据页 (待完成/已完成)
  */
 class TodoListFragment : BaseFragment(R.layout.fragment_todo_list),
-    BaseViewAdapter.OnItemChildView<TodoData>, TodoActionListener {
+    BaseViewAdapter.OnItemChildView<TodoData>,
+    BaseViewAdapter.LoadErrorListener,
+    BaseViewAdapter.AutoLoadMoreListener,
+    TodoActionListener {
 
     companion object {
         // 1:已完成 0:待完成
@@ -69,29 +73,15 @@ class TodoListFragment : BaseFragment(R.layout.fragment_todo_list),
                 requireContext()
             )
         )
-        binding.rvContainer.adapter =
-            TodoListAdapter(requireContext(), status, arrayListOf()).apply {
-                mAdapter = this
-
-                initStatusView()
-                pageLoading()
-
-                setAutoLoadMoreListener {
-                    viewModel.requestTodoData(LoadStatus.LOAD_MORE)
-                }
-
-                setLoadErrorListener(object : BaseViewAdapter.LoadErrorListener {
-                    override fun pageReload() {
-                        viewModel.requestTodoData(LoadStatus.REFRESH)
-                    }
-
-                    override fun itemReload() {
-                        viewModel.requestTodoData(LoadStatus.RELOAD)
-                    }
-                })
-
-                setOnItemChildClickListener(this@TodoListFragment)
-            }.proxy
+        if (binding.rvContainer.adapter == null) {
+            binding.rvContainer.adapter =
+                TodoListAdapter(requireContext(), status, arrayListOf()).apply {
+                    mAdapter = this
+                    initStatusView()
+                    pageLoading()
+                    bindAllListener(this@TodoListFragment)
+                }.proxy
+        }
         binding.rvContainer.addItemDecoration(StickyDateItemDecoration(requireContext(), mAdapter))
     }
 
@@ -125,6 +115,18 @@ class TodoListFragment : BaseFragment(R.layout.fragment_todo_list),
             R.id.btn_done -> moveTodoAction(position)
             R.id.btn_delete -> deleteTodoAction(position)
         }
+    }
+
+    override fun autoLoadMore() {
+        viewModel.requestTodoData(LoadStatus.LOAD_MORE)
+    }
+
+    override fun pageReload() {
+        viewModel.requestTodoData(LoadStatus.REFRESH)
+    }
+
+    override fun itemReload() {
+        viewModel.requestTodoData(LoadStatus.RELOAD)
     }
 
     override fun addAction(todo: TodoData?) {
@@ -197,5 +199,4 @@ class TodoListFragment : BaseFragment(R.layout.fragment_todo_list),
             bundle
         )
     }
-
 }

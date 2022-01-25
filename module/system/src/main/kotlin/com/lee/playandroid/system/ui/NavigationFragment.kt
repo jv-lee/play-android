@@ -40,6 +40,9 @@ class NavigationFragment : BaseFragment(R.layout.fragment_navigation),
     private lateinit var mNavigationContentAdapter: NavigationContentAdapter
 
     override fun bindView() {
+        binding.statusLayout.setStatus(StatusLayout.STATUS_LOADING)
+        binding.statusLayout.setOnReloadListener(this)
+
         findParentFragment<SystemFragment>()?.parentBindingAction {
             val topOffset = (it.toolbar.getToolbarLayoutHeight() * 0.9).toInt()
             val bottomOffset = resources.getDimension(R.dimen.navigation_bar_height).toInt()
@@ -48,15 +51,19 @@ class NavigationFragment : BaseFragment(R.layout.fragment_navigation),
             binding.rvContainer.setMargin(top = topOffset, bottom = bottomOffset)
         }
 
-        mNavigationTabAdapter = NavigationTabAdapter(arrayListOf())
-        binding.rvTab.adapter = mNavigationTabAdapter
-        binding.rvTab.itemAnimator = null
+        if (binding.rvTab.adapter == null) {
+            binding.rvTab.itemAnimator = null
+            binding.rvTab.adapter = NavigationTabAdapter(arrayListOf()).apply {
+                mNavigationTabAdapter = this
+            }
+        }
 
-        mNavigationContentAdapter = NavigationContentAdapter(requireContext(), arrayListOf())
-        binding.rvContainer.adapter = mNavigationContentAdapter.proxy
-
-        binding.statusLayout.setStatus(StatusLayout.STATUS_LOADING)
-        binding.statusLayout.setOnReloadListener(this)
+        if (binding.rvContainer.adapter == null) {
+            binding.rvContainer.adapter =
+                NavigationContentAdapter(requireContext(), arrayListOf()).apply {
+                    mNavigationContentAdapter = this
+                }.proxy
+        }
 
         mNavigationTabAdapter.bindTabLinkage(binding.rvTab, binding.rvContainer) { position ->
             viewModel.selectTabIndex(position)
