@@ -39,7 +39,7 @@ class MyShareFragment : BaseFragment(R.layout.fragment_my_share),
 
     private val binding by binding(FragmentMyShareBinding::bind)
 
-    private lateinit var mAdapter: SimpleTextAdapter
+    private var mAdapter: SimpleTextAdapter? = null
 
     override fun bindView() {
         binding.toolbar.setClickListener(object : TitleToolbar.ClickListener() {
@@ -66,9 +66,9 @@ class MyShareFragment : BaseFragment(R.layout.fragment_my_share),
 
     override fun bindData() {
         viewModel.myShareLive.observeState<PageData<Content>>(this, success = {
-            mAdapter.submitData(it, diff = true)
+            mAdapter?.submitData(it, diff = true)
         }, error = {
-            mAdapter.submitFailed()
+            mAdapter?.submitFailed()
             actionFailed(it)
         })
 
@@ -107,12 +107,13 @@ class MyShareFragment : BaseFragment(R.layout.fragment_my_share),
     override fun onDestroyView() {
         super.onDestroyView()
         binding.rvContainer.adapter = null
+        mAdapter = null
     }
 
     private fun deleteShareAction(position: Int) {
         if (NetworkUtil.isNetworkConnected(requireContext())) {
-            mAdapter.data.removeAt(position)
-            mAdapter.notifyItemRemoved(position)
+            mAdapter?.data?.removeAt(position)
+            mAdapter?.notifyItemRemoved(position)
             viewModel.requestDeleteShare(position)
         } else {
             SwipeItemLayout.closeAllItems(binding.rvContainer)

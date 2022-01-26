@@ -40,7 +40,7 @@ class SystemContentFragment : BaseFragment(R.layout.fragment_system_content),
 
     private val binding by binding(FragmentSystemContentBinding::bind)
 
-    private lateinit var mAdapter: SystemContentAdapter
+    private var mAdapter: SystemContentAdapter? = null
 
     override fun bindView() {
         //根据父Fragment toolbar高度设置ItemDecoration来控制显示间隔
@@ -63,9 +63,9 @@ class SystemContentFragment : BaseFragment(R.layout.fragment_system_content),
         LiveDataBus.getInstance().injectBus(this)
 
         viewModel.parentTabLive.observeState<List<ParentTab>>(this, success = { data ->
-            mAdapter.submitSinglePage(data)
+            mAdapter?.submitSinglePage(data)
         }, error = {
-            mAdapter.submitFailed()
+            mAdapter?.submitFailed()
             actionFailed(it)
         })
 
@@ -92,6 +92,7 @@ class SystemContentFragment : BaseFragment(R.layout.fragment_system_content),
     override fun onDestroyView() {
         super.onDestroyView()
         binding.rvContainer.adapter = null
+        mAdapter = null
     }
 
     /**

@@ -51,6 +51,7 @@ class SystemFragment : BaseFragment(R.layout.fragment_system) {
     override fun onDestroyView() {
         super.onDestroyView()
         binding.vpContainer.adapter = null
+        mAdapter = null
     }
 
     /**

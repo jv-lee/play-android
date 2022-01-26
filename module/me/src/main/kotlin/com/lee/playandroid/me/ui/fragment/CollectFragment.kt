@@ -38,7 +38,7 @@ class CollectFragment : BaseFragment(R.layout.fragment_collect),
 
     private val binding by binding(FragmentCollectBinding::bind)
 
-    private lateinit var mAdapter: SimpleTextAdapter
+    private var mAdapter: SimpleTextAdapter? = null
 
     override fun bindView() {
         binding.rvContainer.addOnItemTouchListener(
@@ -58,9 +58,9 @@ class CollectFragment : BaseFragment(R.layout.fragment_collect),
 
     override fun bindData() {
         viewModel.collectLive.observeState<PageData<Content>>(this, success = {
-            mAdapter.submitData(it, diff = true)
+            mAdapter?.submitData(it, diff = true)
         }, error = {
-            mAdapter.submitFailed()
+            mAdapter?.submitFailed()
             actionFailed(it)
         })
 
@@ -99,12 +99,13 @@ class CollectFragment : BaseFragment(R.layout.fragment_collect),
     override fun onDestroyView() {
         super.onDestroyView()
         binding.rvContainer.adapter = null
+        mAdapter = null
     }
 
     private fun unCollectAction(position: Int) {
         if (NetworkUtil.isNetworkConnected(requireContext())) {
-            mAdapter.data.removeAt(position)
-            mAdapter.notifyItemRemoved(position)
+            mAdapter?.data?.removeAt(position)
+            mAdapter?.notifyItemRemoved(position)
             viewModel.requestUnCollect(position)
         } else {
             SwipeItemLayout.closeAllItems(binding.rvContainer)

@@ -64,7 +64,7 @@ class TodoListFragment : BaseFragment(R.layout.fragment_todo_list),
 
     private val viewModel by viewModels<TodoListViewModel>()
 
-    private lateinit var mAdapter: TodoListAdapter
+    private var mAdapter: TodoListAdapter? = null
 
     override fun bindView() {
         binding.rvContainer.itemAnimator = null
@@ -87,9 +87,9 @@ class TodoListFragment : BaseFragment(R.layout.fragment_todo_list),
 
     override fun bindData() {
         viewModel.todoDataLive.observeState<PageData<TodoData>>(this, success = {
-            mAdapter.submitData(it, diff = true)
+            mAdapter?.submitData(it, diff = true)
         }, error = {
-            mAdapter.submitFailed()
+            mAdapter?.submitFailed()
             actionFailed(it)
         })
 
@@ -132,28 +132,28 @@ class TodoListFragment : BaseFragment(R.layout.fragment_todo_list),
     override fun addAction(todo: TodoData?) {
         todo ?: return
         if (status == ARG_STATUS_UPCOMING) {
-            mAdapter.openLoadMore()
+            mAdapter?.openLoadMore()
             viewModel.requestTodoData(LoadStatus.REFRESH)
         }
     }
 
     override fun updateAction(todo: TodoData?) {
         todo ?: return
-        mAdapter.openLoadMore()
+        mAdapter?.openLoadMore()
         viewModel.requestTodoData(LoadStatus.REFRESH)
     }
 
     override fun moveAction(todo: TodoData) {
         if (todo.status == status) {
-            mAdapter.openLoadMore()
+            mAdapter?.openLoadMore()
             viewModel.requestTodoData(LoadStatus.REFRESH)
         }
     }
 
     override fun notifyAction(type: Int) {
         if (viewModel.checkResetRequestType(type)) {
-            mAdapter.initStatusView()
-            mAdapter.pageLoading()
+            mAdapter?.initStatusView()
+            mAdapter?.pageLoading()
             viewModel.requestTodoData(LoadStatus.REFRESH)
         }
     }
@@ -161,6 +161,7 @@ class TodoListFragment : BaseFragment(R.layout.fragment_todo_list),
     override fun onDestroyView() {
         super.onDestroyView()
         binding.rvContainer.adapter = null
+        mAdapter = null
     }
 
     /**
@@ -168,8 +169,8 @@ class TodoListFragment : BaseFragment(R.layout.fragment_todo_list),
      */
     private fun moveTodoAction(position: Int) {
         if (NetworkUtil.isNetworkConnected(requireContext())) {
-            mAdapter.data.removeAt(position)
-            mAdapter.notifyItemRemoved(position)
+            mAdapter?.data?.removeAt(position)
+            mAdapter?.notifyItemRemoved(position)
             viewModel.requestUpdateTodoStatus(position)
         } else {
             SwipeItemLayout.closeAllItems(binding.rvContainer)
@@ -182,8 +183,8 @@ class TodoListFragment : BaseFragment(R.layout.fragment_todo_list),
      */
     private fun deleteTodoAction(position: Int) {
         if (NetworkUtil.isNetworkConnected(requireContext())) {
-            mAdapter.data.removeAt(position)
-            mAdapter.notifyItemRemoved(position)
+            mAdapter?.data?.removeAt(position)
+            mAdapter?.notifyItemRemoved(position)
             viewModel.requestDeleteTodo(position)
         } else {
             SwipeItemLayout.closeAllItems(binding.rvContainer)

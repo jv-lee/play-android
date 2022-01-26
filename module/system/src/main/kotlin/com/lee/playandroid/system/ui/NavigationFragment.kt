@@ -36,8 +36,8 @@ class NavigationFragment : BaseFragment(R.layout.fragment_navigation),
 
     private val binding by binding(FragmentNavigationBinding::bind)
 
-    private lateinit var mNavigationTabAdapter: NavigationTabAdapter
-    private lateinit var mNavigationContentAdapter: NavigationContentAdapter
+    private var mNavigationTabAdapter: NavigationTabAdapter? = null
+    private var mNavigationContentAdapter: NavigationContentAdapter? = null
 
     override fun bindView() {
         binding.statusLayout.setStatus(StatusLayout.STATUS_LOADING)
@@ -65,7 +65,7 @@ class NavigationFragment : BaseFragment(R.layout.fragment_navigation),
                 }.proxy
         }
 
-        mNavigationTabAdapter.bindTabLinkage(binding.rvTab, binding.rvContainer) { position ->
+        mNavigationTabAdapter?.bindTabLinkage(binding.rvTab, binding.rvContainer) { position ->
             viewModel.selectTabIndex(position)
         }
     }
@@ -76,17 +76,17 @@ class NavigationFragment : BaseFragment(R.layout.fragment_navigation),
 
         viewModel.navigationLive.observeState<List<NavigationItem>>(this, success = {
             binding.statusLayout.setStatus(StatusLayout.STATUS_DATA)
-            mNavigationTabAdapter.updateNotify(it)
-            mNavigationContentAdapter.submitSinglePage(it)
+            mNavigationTabAdapter?.updateNotify(it)
+            mNavigationContentAdapter?.submitSinglePage(it)
         }, error = {
-            if (mNavigationTabAdapter.data.isNullOrEmpty()) {
+            if (mNavigationTabAdapter?.data.isNullOrEmpty()) {
                 binding.statusLayout.setStatus(StatusLayout.STATUS_DATA_ERROR)
             }
             actionFailed(it)
         })
 
         viewModel.selectTabLive.observe(this, {
-            mNavigationTabAdapter.selectItem(it)
+            mNavigationTabAdapter?.selectItem(it)
         })
     }
 

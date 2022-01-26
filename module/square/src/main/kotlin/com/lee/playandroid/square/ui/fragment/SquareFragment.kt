@@ -42,7 +42,7 @@ class SquareFragment : BaseFragment(R.layout.fragment_square),
 
     private val binding by binding(FragmentSquareBinding::bind)
 
-    private lateinit var mAdapter: SquareAdapter
+    private var mAdapter: SquareAdapter? = null
 
     override fun bindView() {
         delayBackEvent()
@@ -68,10 +68,10 @@ class SquareFragment : BaseFragment(R.layout.fragment_square),
 
         viewModel.squareLive.observeState<PageData<Content>>(this, success = {
             binding.refreshView.isRefreshing = false
-            mAdapter.submitData(it)
+            mAdapter?.submitData(it)
         }, error = {
             binding.refreshView.isRefreshing = false
-            mAdapter.loadFailed()
+            mAdapter?.loadFailed()
             actionFailed(it)
         })
     }
@@ -84,7 +84,7 @@ class SquareFragment : BaseFragment(R.layout.fragment_square),
     }
 
     override fun onRefresh() {
-        mAdapter.openLoadMore()
+        mAdapter?.openLoadMore()
         viewModel.requestSquareData(LoadStatus.REFRESH)
     }
 
@@ -109,6 +109,7 @@ class SquareFragment : BaseFragment(R.layout.fragment_square),
     override fun onDestroyView() {
         super.onDestroyView()
         binding.rvContainer.adapter = null
+        mAdapter = null
     }
 
     @InjectBus(NavigationSelectEvent.key, isActive = true)

@@ -32,8 +32,8 @@ class SearchFragment : BaseFragment(R.layout.fragment_search) {
 
     private val binding by binding(FragmentSearchBinding::bind)
 
-    private lateinit var mHotAdapter: SearchHotAdapter
-    private lateinit var mHistoryAdapter: SearchHistoryAdapter
+    private var mHotAdapter: SearchHotAdapter? = null
+    private var mHistoryAdapter: SearchHistoryAdapter? = null
 
     override fun bindView() {
         // 设置点击空白区域隐藏软键盘
@@ -77,7 +77,7 @@ class SearchFragment : BaseFragment(R.layout.fragment_search) {
 
     override fun bindData() {
         viewModel.searchHotLive.observeState<List<SearchHot>>(this, success = {
-            mHotAdapter.submitSinglePage(it)
+            mHotAdapter?.submitSinglePage(it)
         }, error = {
             actionFailed(it)
         })
@@ -85,7 +85,7 @@ class SearchFragment : BaseFragment(R.layout.fragment_search) {
         viewModel.searchHistoryLive.observeState<List<SearchHistory>>(this, success = {
             binding.rvHistoryContainer.visibility = if (it.isEmpty()) View.GONE else View.VISIBLE
             binding.tvHistoryEmpty.visibility = if (it.isEmpty()) View.VISIBLE else View.GONE
-            mHistoryAdapter.submitSinglePage(it)
+            mHistoryAdapter?.submitSinglePage(it)
         }, error = {
             actionFailed(it)
         })
@@ -95,6 +95,8 @@ class SearchFragment : BaseFragment(R.layout.fragment_search) {
         super.onDestroyView()
         binding.rvHotContainer.adapter = null
         binding.rvHistoryContainer.adapter = null
+        mHistoryAdapter = null
+        mHistoryAdapter = null
     }
 
     /**

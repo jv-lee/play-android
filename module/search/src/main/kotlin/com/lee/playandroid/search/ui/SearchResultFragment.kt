@@ -38,7 +38,7 @@ class SearchResultFragment : BaseFragment(R.layout.fragment_search_result),
 
     private val binding by binding(FragmentSearchResultBinding::bind)
 
-    private lateinit var mAdapter: SearchResultAdapter
+    private var mAdapter: SearchResultAdapter? = null
 
     override fun bindView() {
         binding.toolbar.setTitleText(searchKey)
@@ -57,9 +57,9 @@ class SearchResultFragment : BaseFragment(R.layout.fragment_search_result),
 
     override fun bindData() {
         viewModel.searchResultLive.observeState<PageData<Content>>(this, success = {
-            mAdapter.submitData(it, diff = true)
+            mAdapter?.submitData(it, diff = true)
         }, error = {
-            mAdapter.submitFailed()
+            mAdapter?.submitFailed()
             actionFailed(it)
         })
     }
@@ -85,5 +85,6 @@ class SearchResultFragment : BaseFragment(R.layout.fragment_search_result),
     override fun onDestroyView() {
         super.onDestroyView()
         binding.rvContainer.adapter = null
+        mAdapter = null
     }
 }
