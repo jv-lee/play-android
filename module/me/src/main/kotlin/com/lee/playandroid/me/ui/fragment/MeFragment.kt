@@ -4,7 +4,6 @@ import android.view.View
 import androidx.navigation.fragment.findNavController
 import com.lee.library.base.BaseFragment
 import com.lee.library.extensions.binding
-import com.lee.library.extensions.delayBackEvent
 import com.lee.library.extensions.toast
 import com.lee.library.mvvm.ui.observeState
 import com.lee.playandroid.library.common.entity.AccountData
@@ -28,8 +27,6 @@ class MeFragment : BaseFragment(R.layout.fragment_me), View.OnClickListener {
     private val binding by binding(FragmentMeBinding::bind)
 
     override fun bindView() {
-        delayBackEvent()
-
         binding.toolbarLayout.setOnClickListener(this)
         binding.lineIntegral.setOnClickListener(this)
         binding.lineCollect.setOnClickListener(this)
