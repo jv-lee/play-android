@@ -29,20 +29,9 @@ import androidx.fragment.app.FragmentManager
 import androidx.navigation.*
 import androidx.navigation.fragment.R
 import com.lee.playandroid.widget.FragmentNavigator.Destination
-import kotlin.collections.ArrayList
-import kotlin.collections.LinkedHashMap
-import kotlin.collections.List
-import kotlin.collections.Map
 import kotlin.collections.component1
 import kotlin.collections.component2
-import kotlin.collections.first
-import kotlin.collections.iterator
-import kotlin.collections.last
-import kotlin.collections.mutableSetOf
-import kotlin.collections.plusAssign
-import kotlin.collections.reversed
 import kotlin.collections.set
-import kotlin.collections.toMap
 
 /**
  * Navigator that navigates through [fragment transactions][FragmentTransaction]. Every
@@ -219,6 +208,7 @@ public open class FragmentNavigator(
         } else {
             ft.replace(containerId, frag)
         }
+
         ft.setPrimaryNavigationFragment(frag)
         @IdRes val destId = destination.id
         // TODO Build first class singleTop behavior for fragments
