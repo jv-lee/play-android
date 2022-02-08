@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.lee.playandroid.widget
+package com.lee.playandroid.navigation
 
 import android.content.Context
 import android.os.Bundle
@@ -28,7 +28,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.navigation.*
 import androidx.navigation.fragment.R
-import com.lee.playandroid.widget.FragmentNavigator.Destination
+import com.lee.playandroid.navigation.FragmentNavigator.Destination
 import kotlin.collections.component1
 import kotlin.collections.component2
 import kotlin.collections.set
