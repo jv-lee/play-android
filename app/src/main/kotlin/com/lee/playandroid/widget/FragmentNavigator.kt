@@ -53,6 +53,8 @@ public open class FragmentNavigator(
     private val containerId: Int
 ) : Navigator<Destination>() {
     private val savedIds = mutableSetOf<String>()
+    private val mainLabel =
+        context.resources.getStringArray(com.lee.playandroid.R.array.main_labels)
 
     /**
      * {@inheritDoc}
@@ -204,7 +206,10 @@ public open class FragmentNavigator(
 
         // TODO 修改replace方式为add
         if (fragmentManager.fragments.size > 0) {
-            ft.add(containerId,frag)
+            if (!mainLabel.contains(destination.label)) {
+                ft.hide(fragmentManager.fragments.last())
+            }
+            ft.add(containerId, frag)
         } else {
             ft.replace(containerId, frag)
         }
@@ -314,6 +319,7 @@ public open class FragmentNavigator(
         }
 
         private var _className: String? = null
+
         /**
          * The Fragment's class name associated with this destination
          *

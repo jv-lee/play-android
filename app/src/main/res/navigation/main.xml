@@ -13,13 +13,6 @@
             app:destination="@id/splash" />
     </fragment>
 
-    <fragment
-        android:id="@+id/splash"
-        android:name="com.lee.playandroid.SplashFragment"
-        tools:layout="@layout/fragment_splash" >
-
-    </fragment>
-
     <include app:graph="@navigation/navigation_main" />
 
 </navigation>
