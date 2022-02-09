@@ -14,7 +14,7 @@ object Version {
     const val swipeRefreshLayout = "1.1.0"
     const val activity = "1.4.0"
     const val fragment = "1.4.0"
-    const val navigation = "2.4.0-beta01"
+    const val navigation = "2.4.0"
     const val lifecycle = "2.4.0"
     const val room = "2.4.0"
     const val glide = "4.11.0"
