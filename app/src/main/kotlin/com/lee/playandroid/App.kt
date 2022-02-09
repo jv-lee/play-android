@@ -40,6 +40,7 @@ class App : BaseApplication() {
             f: Fragment,
             savedInstanceState: Bundle?
         ) {
+            // fragment屏幕适配处理
             ScreenDensityUtil.init(f.requireActivity())
             super.onFragmentCreated(fm, f, savedInstanceState)
         }
@@ -52,6 +53,7 @@ class App : BaseApplication() {
             ScreenDensityUtil.init(activity)
             activity.bindFragmentLifecycle(fragmentLifecycleCallbacks)
 
+            // 夜间模式主题适配
             if (DarkModeTools.get().isDarkTheme()) {
                 activity.setNavigationBarColor(Color.BLACK)
                 activity.setLightStatusIcon()
