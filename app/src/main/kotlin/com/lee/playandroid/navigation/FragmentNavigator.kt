@@ -15,6 +15,7 @@
  */
 package com.lee.playandroid.navigation
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
 import android.util.AttributeSet
@@ -208,8 +209,10 @@ public open class FragmentNavigator(
         if (fragmentManager.fragments.size > 0) {
             if (!mainLabel.contains(destination.label)) {
                 ft.hide(fragmentManager.fragments.last())
+                ft.add(containerId, frag)
+            } else {
+                ft.replace(containerId, frag)
             }
-            ft.add(containerId, frag)
         } else {
             ft.replace(containerId, frag)
         }
@@ -298,6 +301,7 @@ public open class FragmentNavigator(
         public constructor(navigatorProvider: NavigatorProvider) :
                 this(navigatorProvider.getNavigator(FragmentNavigator::class.java))
 
+        @SuppressLint("MissingSuperCall")
         @CallSuper
         public override fun onInflate(context: Context, attrs: AttributeSet) {
             super.onInflate(context, attrs)
