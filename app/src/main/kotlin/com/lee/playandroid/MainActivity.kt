@@ -20,6 +20,7 @@ import com.lee.library.tools.StatusTools.setLightStatusIcon
 import com.lee.library.tools.StatusTools.setNavigationBarColor
 import com.lee.playandroid.databinding.ActivityMainBinding
 import com.lee.playandroid.databinding.LayoutStubMainBinding
+import com.lee.playandroid.databinding.LayoutStubSplashBinding
 import com.lee.playandroid.library.service.AccountService
 import com.lee.playandroid.library.service.hepler.ModuleService
 import kotlinx.coroutines.*
@@ -95,24 +96,27 @@ class MainActivity : BaseActivity(),
      * 闪屏广告逻辑
      */
     private suspend fun requestSplashAd() {
+        val splash = binding.root.findViewById<ViewStub>(R.id.view_stub_splash).inflate()
+        val splashBinding = LayoutStubSplashBinding.bind(splash)
+
         coroutineScope {
             if (BuildConfig.DEBUG) {
                 // 闪屏图片加载动画
                 val splashAnimation =
                     AnimationUtils.loadAnimation(this@MainActivity, R.anim.alpha_in).apply {
                         startListener {
-                            binding.splash.tvTime.visibility = View.VISIBLE
-                            binding.splash.ivPicture.setImageResource(R.mipmap.splash_ad)
+                            splashBinding.tvTime.visibility = View.VISIBLE
+                            splashBinding.ivPicture.setImageResource(R.mipmap.splash_ad)
                         }
                     }
 
                 // 启动动画及取消处理
-                binding.splash.container.startAnimation(splashAnimation)
-                binding.splash.tvTime.setOnClickListener { cancel() }
+                splashBinding.container.startAnimation(splashAnimation)
+                splashBinding.tvTime.setOnClickListener { cancel() }
 
                 // 倒计时更改view显示
                 flowOf(5, 4, 3, 2, 1).collect {
-                    binding.splash.tvTime.text = getString(R.string.splash_time_text, it)
+                    splashBinding.tvTime.text = getString(R.string.splash_time_text, it)
                     delay(1000)
                 }
             }
@@ -135,7 +139,7 @@ class MainActivity : BaseActivity(),
         anim.interpolator = LinearInterpolator()
         anim.addUpdateListener {
             binding.mainContainer.alpha = it.animatedValue as Float
-            binding.splash.container.alpha = 1F - (it.animatedValue as Float)
+            binding.splashContainer.alpha = 1F - (it.animatedValue as Float)
         }
         anim.addListener(object : AnimatorListenerAdapter() {
             override fun onAnimationStart(animation: Animator?) {
@@ -143,7 +147,7 @@ class MainActivity : BaseActivity(),
             }
 
             override fun onAnimationEnd(animation: Animator?) {
-                binding.root.removeView(binding.splash.container)
+                binding.root.removeView(binding.splashContainer)
                 window.decorView.background = null
             }
         })
