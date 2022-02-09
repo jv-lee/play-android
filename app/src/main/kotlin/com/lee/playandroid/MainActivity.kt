@@ -92,13 +92,15 @@ class MainActivity : BaseActivity(),
         ModuleService.find<AccountService>().requestAccountInfo(this)
     }
 
+    private val splashBinding by lazy {
+        val splash = binding.root.findViewById<ViewStub>(R.id.view_stub_splash).inflate()
+        LayoutStubSplashBinding.bind(splash)
+    }
+
     /**
      * 闪屏广告逻辑
      */
     private suspend fun requestSplashAd() {
-        val splash = binding.root.findViewById<ViewStub>(R.id.view_stub_splash).inflate()
-        val splashBinding = LayoutStubSplashBinding.bind(splash)
-
         coroutineScope {
             if (BuildConfig.DEBUG) {
                 // 闪屏图片加载动画
@@ -139,7 +141,7 @@ class MainActivity : BaseActivity(),
         anim.interpolator = LinearInterpolator()
         anim.addUpdateListener {
             binding.mainContainer.alpha = it.animatedValue as Float
-            binding.splashContainer.alpha = 1F - (it.animatedValue as Float)
+            splashBinding.root.alpha = 1F - (it.animatedValue as Float)
         }
         anim.addListener(object : AnimatorListenerAdapter() {
             override fun onAnimationStart(animation: Animator?) {
@@ -147,7 +149,7 @@ class MainActivity : BaseActivity(),
             }
 
             override fun onAnimationEnd(animation: Animator?) {
-                binding.root.removeView(binding.splashContainer)
+                binding.root.removeView(splashBinding.root)
                 window.decorView.background = null
             }
         })

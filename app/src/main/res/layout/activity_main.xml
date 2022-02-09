@@ -20,19 +20,11 @@
 
     </FrameLayout>
 
-
-    <FrameLayout
-        android:id="@+id/splash_container"
+    <ViewStub
+        android:id="@+id/view_stub_splash"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="140dp">
-
-        <ViewStub
-            android:id="@+id/view_stub_splash"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout="@layout/layout_stub_splash" />
-
-    </FrameLayout>
+        android:layout_marginBottom="140dp"
+        android:layout="@layout/layout_stub_splash" />
 
 </FrameLayout>
