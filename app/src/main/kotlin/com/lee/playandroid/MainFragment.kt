@@ -64,15 +64,17 @@ class MainFragment : BaseFragment(R.layout.fragment_main),
     }
 
     private fun showFloatingStubView() {
-        if (!BuildConfig.DEBUG) return
+        if (BuildConfig.DEBUG) {
+            val floatingLayout =
+                binding.root.findViewById<ViewStub>(R.id.view_stub_floating).inflate()
+            val floatingBinding = LayoutStubFloatingBinding.bind(floatingLayout)
 
-        val floatingLayout = binding.root.findViewById<ViewStub>(R.id.view_stub_floating).inflate()
-        LayoutStubFloatingBinding.bind(floatingLayout).root.setEventCallback(object :
-            FloatingLayout.EventCallback() {
-            override fun onClicked() {
-                toast("welcome to play android ~")
-            }
-        })
+            floatingBinding.root.setEventCallback(object : FloatingLayout.EventCallback() {
+                override fun onClicked() {
+                    toast("welcome to play android ~")
+                }
+            })
+        }
     }
 
     @InjectBus(LoginEvent.key, isActive = true)
