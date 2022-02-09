@@ -14,7 +14,9 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:selected_text_color="@color/baseDarkColor"
+        app:unSelected_text_color="@color/baseLightColor" />
 
     <View
         android:layout_width="220dp"
