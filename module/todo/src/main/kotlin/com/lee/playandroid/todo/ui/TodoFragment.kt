@@ -6,7 +6,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResultListener
 import androidx.navigation.fragment.findNavController
 import com.lee.library.adapter.core.UiPagerAdapter2
-import com.lee.library.base.BaseFragment
+import com.lee.library.base.BaseNavigationFragment
 import com.lee.library.extensions.binding
 import com.lee.library.tools.PreferencesTools
 import com.lee.library.widget.toolbar.TitleToolbar
@@ -26,7 +26,7 @@ import com.lee.playandroid.todo.ui.listener.TodoActionListener
  * @date 2021/12/23
  * @description TODO页面
  */
-class TodoFragment : BaseFragment(R.layout.fragment_todo) {
+class TodoFragment : BaseNavigationFragment(R.layout.fragment_todo) {
 
     companion object {
         const val REQUEST_KEY_SAVE = "requestKey:save"

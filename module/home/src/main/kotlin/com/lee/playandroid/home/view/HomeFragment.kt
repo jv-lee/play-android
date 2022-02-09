@@ -8,7 +8,7 @@ import com.lee.library.adapter.base.BaseViewAdapter
 import com.lee.library.adapter.extensions.bindAllListener
 import com.lee.library.adapter.page.submitData
 import com.lee.library.adapter.page.submitFailed
-import com.lee.library.base.BaseFragment
+import com.lee.library.base.BaseNavigationFragment
 import com.lee.library.extensions.binding
 import com.lee.library.extensions.smoothScrollToTop
 import com.lee.library.livedatabus.InjectBus
@@ -34,7 +34,7 @@ import com.lee.playandroid.router.navigateSearch
  * @date 2021/11/2
  * @description 首页第一个Tab 主页
  */
-class HomeFragment : BaseFragment(R.layout.fragment_home),
+class HomeFragment : BaseNavigationFragment(R.layout.fragment_home),
     View.OnClickListener, SwipeRefreshLayout.OnRefreshListener,
     BaseViewAdapter.OnItemClickListener<HomeContent>,
     BaseViewAdapter.AutoLoadMoreListener,

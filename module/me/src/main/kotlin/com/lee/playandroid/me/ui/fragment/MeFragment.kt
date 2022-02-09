@@ -2,7 +2,7 @@ package com.lee.playandroid.me.ui.fragment
 
 import android.view.View
 import androidx.navigation.fragment.findNavController
-import com.lee.library.base.BaseFragment
+import com.lee.library.base.BaseNavigationFragment
 import com.lee.library.extensions.binding
 import com.lee.library.extensions.toast
 import com.lee.library.mvvm.ui.observeState
@@ -20,7 +20,7 @@ import com.lee.playandroid.router.navigateTodo
  * @date 2021/11/2
  * @description 首页第四个Tab 我的页面
  */
-class MeFragment : BaseFragment(R.layout.fragment_me), View.OnClickListener {
+class MeFragment : BaseNavigationFragment(R.layout.fragment_me), View.OnClickListener {
 
     private val accountService = ModuleService.find<AccountService>()
 

@@ -2,7 +2,7 @@ package com.lee.playandroid.system.ui
 
 import android.annotation.SuppressLint
 import com.lee.library.adapter.core.UiPagerAdapter2
-import com.lee.library.base.BaseFragment
+import com.lee.library.base.BaseNavigationFragment
 import com.lee.library.extensions.bindRadioGroup
 import com.lee.library.extensions.binding
 import com.lee.playandroid.library.common.ui.extensions.setThemeGradientBackground
@@ -14,7 +14,7 @@ import com.lee.playandroid.system.databinding.FragmentSystemBinding
  * @date 2021/11/2
  * @description 首页第三个Tab 体系页面
  */
-class SystemFragment : BaseFragment(R.layout.fragment_system) {
+class SystemFragment : BaseNavigationFragment(R.layout.fragment_system) {
 
     private val binding by binding(FragmentSystemBinding::bind)
 

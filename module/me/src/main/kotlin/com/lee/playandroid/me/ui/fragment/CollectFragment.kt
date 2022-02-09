@@ -7,7 +7,7 @@ import com.lee.library.adapter.base.BaseViewAdapter
 import com.lee.library.adapter.extensions.bindAllListener
 import com.lee.library.adapter.page.submitData
 import com.lee.library.adapter.page.submitFailed
-import com.lee.library.base.BaseFragment
+import com.lee.library.base.BaseNavigationFragment
 import com.lee.library.extensions.binding
 import com.lee.library.extensions.toast
 import com.lee.library.mvvm.livedata.LoadStatus
@@ -29,7 +29,7 @@ import java.util.*
  * @date 2021/11/25
  * @description 收藏列表页
  */
-class CollectFragment : BaseFragment(R.layout.fragment_collect),
+class CollectFragment : BaseNavigationFragment(R.layout.fragment_collect),
     BaseViewAdapter.LoadErrorListener,
     BaseViewAdapter.AutoLoadMoreListener,
     BaseViewAdapter.OnItemChildView<Content> {

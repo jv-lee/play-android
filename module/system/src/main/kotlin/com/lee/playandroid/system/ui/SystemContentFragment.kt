@@ -8,7 +8,7 @@ import com.lee.library.adapter.base.BaseViewAdapter
 import com.lee.library.adapter.extensions.bindAllListener
 import com.lee.library.adapter.page.submitFailed
 import com.lee.library.adapter.page.submitSinglePage
-import com.lee.library.base.BaseFragment
+import com.lee.library.base.BaseNavigationFragment
 import com.lee.library.extensions.binding
 import com.lee.library.extensions.findParentFragment
 import com.lee.library.extensions.smoothScrollToTop
@@ -32,7 +32,7 @@ import com.lee.playandroid.system.viewmodel.SystemContentViewModel
  * @description  体系列表Fragment
  * @see SystemFragment 体系Fragment下第一个Tab
  */
-class SystemContentFragment : BaseFragment(R.layout.fragment_system_content),
+class SystemContentFragment : BaseNavigationFragment(R.layout.fragment_system_content),
     BaseViewAdapter.OnItemClickListener<ParentTab>,
     BaseViewAdapter.LoadErrorListener {
 

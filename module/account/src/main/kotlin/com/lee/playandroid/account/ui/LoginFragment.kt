@@ -6,7 +6,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import com.lee.library.base.BaseFragment
+import com.lee.library.base.BaseNavigationFragment
 import com.lee.library.dialog.LoadingDialog
 import com.lee.library.extensions.binding
 import com.lee.library.extensions.dismiss
@@ -31,7 +31,7 @@ import com.lee.playandroid.library.common.extensions.actionFailed
  * @date 2021/11/24
  * @description 登陆页面
  */
-class LoginFragment : BaseFragment(R.layout.fragment_login), View.OnClickListener,
+class LoginFragment : BaseNavigationFragment(R.layout.fragment_login), View.OnClickListener,
     TextWatcherAdapter {
 
     companion object {

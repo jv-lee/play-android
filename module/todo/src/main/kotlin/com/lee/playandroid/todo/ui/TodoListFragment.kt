@@ -9,7 +9,7 @@ import com.lee.library.adapter.base.BaseViewAdapter
 import com.lee.library.adapter.extensions.bindAllListener
 import com.lee.library.adapter.page.submitData
 import com.lee.library.adapter.page.submitFailed
-import com.lee.library.base.BaseFragment
+import com.lee.library.base.BaseNavigationFragment
 import com.lee.library.extensions.arguments
 import com.lee.library.extensions.binding
 import com.lee.library.extensions.findParentFragment
@@ -33,7 +33,7 @@ import com.lee.playandroid.todo.viewmodel.TodoListViewModel
  * @date 2021/12/23
  * @description TODO列表数据页 (待完成/已完成)
  */
-class TodoListFragment : BaseFragment(R.layout.fragment_todo_list),
+class TodoListFragment : BaseNavigationFragment(R.layout.fragment_todo_list),
     BaseViewAdapter.OnItemChildView<TodoData>,
     BaseViewAdapter.LoadErrorListener,
     BaseViewAdapter.AutoLoadMoreListener,

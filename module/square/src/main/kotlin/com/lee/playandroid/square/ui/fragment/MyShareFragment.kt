@@ -7,7 +7,7 @@ import com.lee.library.adapter.base.BaseViewAdapter
 import com.lee.library.adapter.extensions.bindAllListener
 import com.lee.library.adapter.page.submitData
 import com.lee.library.adapter.page.submitFailed
-import com.lee.library.base.BaseFragment
+import com.lee.library.base.BaseNavigationFragment
 import com.lee.library.extensions.binding
 import com.lee.library.extensions.toast
 import com.lee.library.mvvm.livedata.LoadStatus
@@ -30,7 +30,7 @@ import com.lee.playandroid.library.common.R as CR
  * @date 2021/12/13
  * @description 我的分享页面
  */
-class MyShareFragment : BaseFragment(R.layout.fragment_my_share),
+class MyShareFragment : BaseNavigationFragment(R.layout.fragment_my_share),
     BaseViewAdapter.LoadErrorListener,
     BaseViewAdapter.AutoLoadMoreListener,
     BaseViewAdapter.OnItemChildView<Content> {

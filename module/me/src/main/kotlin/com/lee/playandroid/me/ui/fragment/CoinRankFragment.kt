@@ -7,7 +7,7 @@ import com.lee.library.adapter.base.BaseViewAdapter
 import com.lee.library.adapter.extensions.bindAllListener
 import com.lee.library.adapter.page.submitData
 import com.lee.library.adapter.page.submitFailed
-import com.lee.library.base.BaseFragment
+import com.lee.library.base.BaseNavigationFragment
 import com.lee.library.extensions.binding
 import com.lee.library.mvvm.livedata.LoadStatus
 import com.lee.library.mvvm.ui.observeState
@@ -28,7 +28,7 @@ import com.lee.playandroid.router.navigateDetails
  * @date 2021/12/8
  * @description 积分排行榜页面
  */
-class CoinRankFragment : BaseFragment(R.layout.fragment_coin_rank),
+class CoinRankFragment : BaseNavigationFragment(R.layout.fragment_coin_rank),
     BaseViewAdapter.LoadErrorListener,
     BaseViewAdapter.AutoLoadMoreListener {
 

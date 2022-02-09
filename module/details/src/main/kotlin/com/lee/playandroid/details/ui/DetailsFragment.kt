@@ -3,7 +3,7 @@ package com.lee.playandroid.details.ui
 import android.view.View
 import android.widget.FrameLayout
 import com.just.agentweb.AgentWeb
-import com.lee.library.base.BaseFragment
+import com.lee.library.base.BaseNavigationFragment
 import com.lee.library.extensions.*
 import com.lee.library.utils.ShareUtil
 import com.lee.library.widget.toolbar.TitleToolbar
@@ -17,7 +17,7 @@ import com.lee.playandroid.library.common.extensions.bindLifecycle
  * @date 2020/3/24
  * @description 内容详情页
  */
-class DetailsFragment : BaseFragment(R.layout.fragment_details) {
+class DetailsFragment : BaseNavigationFragment(R.layout.fragment_details) {
 
     companion object {
         const val ARG_PARAMS_ID = "id"

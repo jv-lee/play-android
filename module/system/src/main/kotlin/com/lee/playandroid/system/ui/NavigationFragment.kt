@@ -3,7 +3,7 @@ package com.lee.playandroid.system.ui
 import android.annotation.SuppressLint
 import androidx.fragment.app.viewModels
 import com.lee.library.adapter.page.submitSinglePage
-import com.lee.library.base.BaseFragment
+import com.lee.library.base.BaseNavigationFragment
 import com.lee.library.extensions.binding
 import com.lee.library.extensions.findParentFragment
 import com.lee.library.extensions.setMargin
@@ -29,7 +29,7 @@ import com.lee.playandroid.system.viewmodel.NavigationViewModel
  * @description  导航Fragment
  * @see SystemFragment 体系Fragment下第二个Tab
  */
-class NavigationFragment : BaseFragment(R.layout.fragment_navigation),
+class NavigationFragment : BaseNavigationFragment(R.layout.fragment_navigation),
     StatusLayout.OnReloadListener {
 
     private val viewModel by viewModels<NavigationViewModel>()

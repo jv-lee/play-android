@@ -6,7 +6,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import com.lee.library.base.BaseFragment
+import com.lee.library.base.BaseNavigationFragment
 import com.lee.library.dialog.LoadingDialog
 import com.lee.library.extensions.binding
 import com.lee.library.extensions.dismiss
@@ -32,7 +32,7 @@ import com.lee.playandroid.library.common.extensions.actionFailed
  * @date 2021/11/24
  * @description 注册页面
  */
-class RegisterFragment : BaseFragment(R.layout.fragment_register), View.OnClickListener,
+class RegisterFragment : BaseNavigationFragment(R.layout.fragment_register), View.OnClickListener,
     TextWatcherAdapter {
 
     private val viewModel by viewModels<LoginRegisterViewModel>()

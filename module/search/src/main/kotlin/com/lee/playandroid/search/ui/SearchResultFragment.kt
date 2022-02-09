@@ -6,7 +6,7 @@ import com.lee.library.adapter.base.BaseViewAdapter
 import com.lee.library.adapter.extensions.bindAllListener
 import com.lee.library.adapter.page.submitData
 import com.lee.library.adapter.page.submitFailed
-import com.lee.library.base.BaseFragment
+import com.lee.library.base.BaseNavigationFragment
 import com.lee.library.extensions.arguments
 import com.lee.library.extensions.binding
 import com.lee.library.extensions.viewModelByFactory
@@ -27,7 +27,7 @@ import com.lee.playandroid.search.viewmodel.SearchResultViewModel
  * @date 2021/11/22
  * @description
  */
-class SearchResultFragment : BaseFragment(R.layout.fragment_search_result),
+class SearchResultFragment : BaseNavigationFragment(R.layout.fragment_search_result),
     BaseViewAdapter.AutoLoadMoreListener,
     BaseViewAdapter.LoadErrorListener,
     BaseViewAdapter.OnItemClickListener<Content> {

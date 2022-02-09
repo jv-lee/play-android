@@ -7,7 +7,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.lee.library.adapter.base.BaseViewAdapter
 import com.lee.library.adapter.extensions.bindAllListener
 import com.lee.library.adapter.page.submitData
-import com.lee.library.base.BaseFragment
+import com.lee.library.base.BaseNavigationFragment
 import com.lee.library.extensions.binding
 import com.lee.library.extensions.smoothScrollToTop
 import com.lee.library.livedatabus.InjectBus
@@ -31,7 +31,7 @@ import com.lee.playandroid.square.viewmodel.SquareViewModel
  * @date 2021/12/13
  * @description 首页第二个Tab 广场页面
  */
-class SquareFragment : BaseFragment(R.layout.fragment_square),
+class SquareFragment : BaseNavigationFragment(R.layout.fragment_square),
     View.OnClickListener, SwipeRefreshLayout.OnRefreshListener,
     BaseViewAdapter.OnItemClickListener<Content>,
     BaseViewAdapter.AutoLoadMoreListener,

@@ -6,7 +6,7 @@ import android.widget.DatePicker
 import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import com.lee.library.base.BaseFragment
+import com.lee.library.base.BaseNavigationFragment
 import com.lee.library.dialog.LoadingDialog
 import com.lee.library.extensions.*
 import com.lee.library.mvvm.ui.observeState
@@ -31,7 +31,7 @@ import java.util.*
  * @date 2021/12/28
  * @description 创建TODO页面
  */
-class CreateTodoFragment : BaseFragment(R.layout.fragment_create_todo),
+class CreateTodoFragment : BaseNavigationFragment(R.layout.fragment_create_todo),
     DatePickerDialog.OnDateSetListener {
 
     companion object {

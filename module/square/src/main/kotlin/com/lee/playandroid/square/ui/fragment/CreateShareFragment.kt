@@ -3,7 +3,7 @@ package com.lee.playandroid.square.ui.fragment
 import android.view.inputmethod.EditorInfo
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import com.lee.library.base.BaseFragment
+import com.lee.library.base.BaseNavigationFragment
 import com.lee.library.dialog.LoadingDialog
 import com.lee.library.extensions.binding
 import com.lee.library.extensions.dismiss
@@ -20,7 +20,7 @@ import com.lee.playandroid.square.viewmodel.CreateShareViewModel
  * @date 2021/12/13
  * @description 创建分享页面
  */
-class CreateShareFragment : BaseFragment(R.layout.fragment_create_share) {
+class CreateShareFragment : BaseNavigationFragment(R.layout.fragment_create_share) {
 
     private val viewModel by viewModels<CreateShareViewModel>()
 

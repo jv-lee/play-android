@@ -3,7 +3,7 @@ package com.lee.playandroid.me.ui.fragment
 import android.app.Dialog
 import android.view.View
 import android.widget.CompoundButton
-import com.lee.library.base.BaseFragment
+import com.lee.library.base.BaseNavigationFragment
 import com.lee.library.dialog.ChoiceDialog
 import com.lee.library.dialog.LoadingDialog
 import com.lee.library.dialog.core.ConfirmListener
@@ -21,7 +21,7 @@ import com.lee.playandroid.me.databinding.FragmentSettingsBinding
  * @date 2021/11/25
  * @description 应用设置页
  */
-class SettingsFragment : BaseFragment(R.layout.fragment_settings),
+class SettingsFragment : BaseNavigationFragment(R.layout.fragment_settings),
     View.OnClickListener, CompoundButton.OnCheckedChangeListener, DarkViewUpdateTools.ViewCallback {
 
     private val accountService = ModuleService.find<AccountService>()

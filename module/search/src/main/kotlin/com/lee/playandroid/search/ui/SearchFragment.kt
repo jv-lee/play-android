@@ -6,7 +6,7 @@ import android.view.inputmethod.EditorInfo.IME_ACTION_SEARCH
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.lee.library.adapter.page.submitSinglePage
-import com.lee.library.base.BaseFragment
+import com.lee.library.base.BaseNavigationFragment
 import com.lee.library.extensions.binding
 import com.lee.library.mvvm.ui.observeState
 import com.lee.library.tools.KeyboardTools.hideSoftInput
@@ -26,7 +26,7 @@ import com.lee.playandroid.search.viewmodel.SearchViewModel
  * @date 2021/11/19
  * @description 搜索页面
  */
-class SearchFragment : BaseFragment(R.layout.fragment_search) {
+class SearchFragment : BaseNavigationFragment(R.layout.fragment_search) {
 
     private val viewModel by viewModels<SearchViewModel>()
 
