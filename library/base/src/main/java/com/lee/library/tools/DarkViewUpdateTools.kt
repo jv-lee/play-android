@@ -3,8 +3,6 @@ package com.lee.library.tools
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.LifecycleOwner
-import kotlin.collections.HashMap
-import kotlin.collections.iterator
 import kotlin.collections.set
 
 /**
@@ -33,7 +31,7 @@ object DarkViewUpdateTools {
         val isDark = DarkModeTools.get().isDarkTheme()
         if (mIsDark == isDark) return
         for (entry in viewCallbackMap) {
-            if (entry.key.lifecycle.currentState == Lifecycle.State.RESUMED) {
+            if (entry.key.lifecycle.currentState != Lifecycle.State.DESTROYED) {
                 entry.value.updateDarkView()
             }
         }

@@ -4,8 +4,11 @@ import android.view.View
 import androidx.navigation.fragment.findNavController
 import com.lee.library.base.BaseNavigationFragment
 import com.lee.library.extensions.binding
+import com.lee.library.extensions.setBackgroundColorCompat
+import com.lee.library.extensions.setTextColorCompat
 import com.lee.library.extensions.toast
 import com.lee.library.mvvm.ui.observeState
+import com.lee.library.tools.DarkViewUpdateTools
 import com.lee.playandroid.library.common.entity.AccountData
 import com.lee.playandroid.library.service.AccountService
 import com.lee.playandroid.library.service.hepler.ModuleService
@@ -20,13 +23,16 @@ import com.lee.playandroid.router.navigateTodo
  * @date 2021/11/2
  * @description 首页第四个Tab 我的页面
  */
-class MeFragment : BaseNavigationFragment(R.layout.fragment_me), View.OnClickListener {
+class MeFragment : BaseNavigationFragment(R.layout.fragment_me),
+    View.OnClickListener, DarkViewUpdateTools.ViewCallback {
 
     private val accountService = ModuleService.find<AccountService>()
 
     private val binding by binding(FragmentMeBinding::bind)
 
     override fun bindView() {
+        DarkViewUpdateTools.bindViewCallback(viewLifecycleOwner, this)
+
         binding.toolbarLayout.setOnClickListener(this)
         binding.lineIntegral.setOnClickListener(this)
         binding.lineCollect.setOnClickListener(this)
@@ -71,6 +77,27 @@ class MeFragment : BaseNavigationFragment(R.layout.fragment_me), View.OnClickLis
             toast(getString(R.string.me_login_message))
             findNavController().navigateLogin()
         }
+    }
+
+    override fun updateDarkView() {
+        binding.constRoot.setBackgroundColorCompat(R.color.colorThemeBackground)
+        binding.toolbarLayout.setBackgroundColorCompat(R.color.colorThemeItem)
+        binding.tvAccountName.setTextColorCompat(R.color.colorThemeAccent)
+
+        binding.lineIntegral.setBackgroundColorCompat(R.color.colorThemeItem)
+        binding.lineIntegral.getLeftTextView().setTextColorCompat(R.color.colorThemeAccent)
+
+        binding.lineCollect.setBackgroundColorCompat(R.color.colorThemeItem)
+        binding.lineCollect.getLeftTextView().setTextColorCompat(R.color.colorThemeAccent)
+
+        binding.lineShare.setBackgroundColorCompat(R.color.colorThemeItem)
+        binding.lineShare.getLeftTextView().setTextColorCompat(R.color.colorThemeAccent)
+
+        binding.lineTodo.setBackgroundColorCompat(R.color.colorThemeItem)
+        binding.lineTodo.getLeftTextView().setTextColorCompat(R.color.colorThemeAccent)
+
+        binding.lineSettings.setBackgroundColorCompat(R.color.colorThemeItem)
+        binding.lineSettings.getLeftTextView().setTextColorCompat(R.color.colorThemeAccent)
     }
 
     /**
