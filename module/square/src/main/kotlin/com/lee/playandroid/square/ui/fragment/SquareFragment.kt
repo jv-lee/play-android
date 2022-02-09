@@ -63,7 +63,7 @@ class SquareFragment : BaseNavigationFragment(R.layout.fragment_square),
     override fun bindData() {
         LiveDataBus.getInstance().injectBus(this)
 
-        viewModel.squareLive.observeState<PageData<Content>>(this, success = {
+        viewModel.squareLive.observeState<PageData<Content>>(viewLifecycleOwner, success = {
             binding.refreshView.isRefreshing = false
             mAdapter?.submitData(it)
         }, error = {

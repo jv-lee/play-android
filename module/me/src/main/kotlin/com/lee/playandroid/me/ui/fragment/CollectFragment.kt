@@ -57,7 +57,7 @@ class CollectFragment : BaseNavigationFragment(R.layout.fragment_collect),
     }
 
     override fun bindData() {
-        viewModel.collectLive.observeState<PageData<Content>>(this, success = {
+        viewModel.collectLive.observeState<PageData<Content>>(viewLifecycleOwner, success = {
             mAdapter?.submitData(it, diff = true)
         }, error = {
             mAdapter?.submitFailed()

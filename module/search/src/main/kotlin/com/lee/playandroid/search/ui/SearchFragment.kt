@@ -76,7 +76,7 @@ class SearchFragment : BaseNavigationFragment(R.layout.fragment_search) {
     }
 
     override fun bindData() {
-        viewModel.searchHotLive.observeState<List<SearchHot>>(this, success = {
+        viewModel.searchHotLive.observeState<List<SearchHot>>(viewLifecycleOwner, success = {
             mHotAdapter?.submitSinglePage(it)
         }, error = {
             actionFailed(it)

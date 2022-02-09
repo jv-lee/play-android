@@ -56,7 +56,7 @@ class SearchResultFragment : BaseNavigationFragment(R.layout.fragment_search_res
     }
 
     override fun bindData() {
-        viewModel.searchResultLive.observeState<PageData<Content>>(this, success = {
+        viewModel.searchResultLive.observeState<PageData<Content>>(viewLifecycleOwner, success = {
             mAdapter?.submitData(it, diff = true)
         }, error = {
             mAdapter?.submitFailed()

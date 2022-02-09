@@ -74,7 +74,7 @@ class CreateTodoFragment : BaseNavigationFragment(R.layout.fragment_create_todo)
     }
 
     override fun bindData() {
-        viewModel.todoLive.observeState<TodoData>(this, success = {
+        viewModel.todoLive.observeState<TodoData>(viewLifecycleOwner, success = {
             responseTodo(it)
             dismiss(loadingDialog)
             findNavController().popBackStack()

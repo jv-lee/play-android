@@ -86,21 +86,21 @@ class TodoListFragment : BaseNavigationFragment(R.layout.fragment_todo_list),
     }
 
     override fun bindData() {
-        viewModel.todoDataLive.observeState<PageData<TodoData>>(this, success = {
+        viewModel.todoDataLive.observeState<PageData<TodoData>>(viewLifecycleOwner, success = {
             mAdapter?.submitData(it, diff = true)
         }, error = {
             mAdapter?.submitFailed()
             actionFailed(it)
         })
 
-        viewModel.todoDeleteLive.observeState<Int>(this, success = {
+        viewModel.todoDeleteLive.observeState<Int>(viewLifecycleOwner, success = {
             toast(getString(R.string.todo_delete_success))
         }, error = {
             SwipeItemLayout.closeAllItems(binding.rvContainer)
             actionFailed(it)
         })
 
-        viewModel.todoUpdateLive.observeState<TodoData>(this, success = {
+        viewModel.todoUpdateLive.observeState<TodoData>(viewLifecycleOwner, success = {
             toast(getString(R.string.todo_move_success))
             findParentFragment<TodoFragment>()?.moveTodoItem(it)
         }, error = {

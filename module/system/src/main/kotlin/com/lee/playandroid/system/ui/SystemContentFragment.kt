@@ -62,7 +62,7 @@ class SystemContentFragment : BaseNavigationFragment(R.layout.fragment_system_co
     override fun bindData() {
         LiveDataBus.getInstance().injectBus(this)
 
-        viewModel.parentTabLive.observeState<List<ParentTab>>(this, success = { data ->
+        viewModel.parentTabLive.observeState<List<ParentTab>>(viewLifecycleOwner, success = { data ->
             mAdapter?.submitSinglePage(data)
         }, error = {
             mAdapter?.submitFailed()

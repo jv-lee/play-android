@@ -74,7 +74,7 @@ class NavigationFragment : BaseNavigationFragment(R.layout.fragment_navigation),
     override fun bindData() {
         LiveDataBus.getInstance().injectBus(this)
 
-        viewModel.navigationLive.observeState<List<NavigationItem>>(this, success = {
+        viewModel.navigationLive.observeState<List<NavigationItem>>(viewLifecycleOwner, success = {
             binding.statusLayout.setStatus(StatusLayout.STATUS_DATA)
             mNavigationTabAdapter?.updateNotify(it)
             mNavigationContentAdapter?.submitSinglePage(it)

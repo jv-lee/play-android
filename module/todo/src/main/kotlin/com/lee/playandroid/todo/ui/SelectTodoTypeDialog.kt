@@ -37,7 +37,7 @@ class SelectTodoTypeDialog :
     }
 
     override fun bindData() {
-        viewModel.todoTypes.observeState<TodoTypeWheelData>(this, success = {
+        viewModel.todoTypes.observeState<TodoTypeWheelData>(viewLifecycleOwner, success = {
             binding.wheelView.bindData(it.todoTypes, object : WheelView.DataFormat<TodoTypeData> {
                 override fun format(item: TodoTypeData) = item.name
             }, object : WheelView.SelectedListener<TodoTypeData> {

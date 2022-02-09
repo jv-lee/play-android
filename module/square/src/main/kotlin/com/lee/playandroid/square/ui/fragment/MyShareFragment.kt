@@ -65,14 +65,14 @@ class MyShareFragment : BaseNavigationFragment(R.layout.fragment_my_share),
     }
 
     override fun bindData() {
-        viewModel.myShareLive.observeState<PageData<Content>>(this, success = {
+        viewModel.myShareLive.observeState<PageData<Content>>(viewLifecycleOwner, success = {
             mAdapter?.submitData(it, diff = true)
         }, error = {
             mAdapter?.submitFailed()
             actionFailed(it)
         })
 
-        viewModel.deleteShareLive.observeState<Int>(this, success = { position ->
+        viewModel.deleteShareLive.observeState<Int>(viewLifecycleOwner, success = { position ->
             toast(getString(R.string.share_delete_success))
         }, error = {
             SwipeItemLayout.closeAllItems(binding.rvContainer)

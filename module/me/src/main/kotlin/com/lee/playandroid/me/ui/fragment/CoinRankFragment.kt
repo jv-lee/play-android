@@ -63,7 +63,7 @@ class CoinRankFragment : BaseNavigationFragment(R.layout.fragment_coin_rank),
     }
 
     override fun bindData() {
-        viewModel.coinRankLive.observeState<PageData<CoinRank>>(this, success = {
+        viewModel.coinRankLive.observeState<PageData<CoinRank>>(viewLifecycleOwner, success = {
             mAdapter.submitData(it, diff = true)
         }, error = {
             mAdapter.submitFailed()
