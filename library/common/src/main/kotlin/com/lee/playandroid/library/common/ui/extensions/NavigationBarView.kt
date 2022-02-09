@@ -15,7 +15,7 @@ import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavOptions
 import androidx.navigation.findNavController
 import com.lee.library.extensions.endListener
-import com.lee.library.widget.nav.BottomNavView
+import com.lee.library.widget.nav.ExpandBottomNavigationView
 import com.lee.playandroid.library.common.R
 import java.lang.ref.WeakReference
 
@@ -25,7 +25,7 @@ import java.lang.ref.WeakReference
  * @description 首页BottomNavView -> Navigation扩展方法及动画修改
  */
 
-inline fun BottomNavView.bindNavigationAction(
+inline fun ExpandBottomNavigationView.bindNavigationAction(
     container: FragmentContainerView,
     labels: Array<String>,
     crossinline itemPositionListener: (MenuItem, Int) -> Unit
@@ -79,12 +79,12 @@ inline fun BottomNavView.bindNavigationAction(
     }
 }
 
-fun BottomNavView.setupWithNavController2(
+fun ExpandBottomNavigationView.setupWithNavController2(
     navController: NavController,
     isNavigationAnimation: Boolean = false,
     itemPositionListener: (MenuItem, Int) -> Unit
 ) {
-    setItemPositionListener(object : BottomNavView.ItemPositionListener {
+    setItemPositionListener(object : ExpandBottomNavigationView.ItemPositionListener {
         override fun onPosition(menuItem: MenuItem, position: Int) {
             //navigation使用动画效果时不可以被点击触发
             if (animation != null && isNavigationAnimation) {
