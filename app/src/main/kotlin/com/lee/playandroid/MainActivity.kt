@@ -34,9 +34,14 @@ import kotlinx.coroutines.flow.*
 class MainActivity : BaseActivity(),
     CoroutineScope by CoroutineScope(Dispatchers.Main) {
 
+    private val backCallback = banBackEvent()
+
     private val binding by binding(ActivityMainBinding::inflate)
 
-    private val backCallback = banBackEvent()
+    private val splashBinding by lazy {
+        val splash = binding.root.findViewById<ViewStub>(R.id.view_stub_splash).inflate()
+        LayoutStubSplashBinding.bind(splash)
+    }
 
     override fun initSavedState(intent: Intent, savedInstanceState: Bundle?) {
         super.initSavedState(intent, savedInstanceState)
@@ -90,11 +95,6 @@ class MainActivity : BaseActivity(),
      */
     private suspend fun requestConfig() {
         ModuleService.find<AccountService>().requestAccountInfo(this)
-    }
-
-    private val splashBinding by lazy {
-        val splash = binding.root.findViewById<ViewStub>(R.id.view_stub_splash).inflate()
-        LayoutStubSplashBinding.bind(splash)
     }
 
     /**
