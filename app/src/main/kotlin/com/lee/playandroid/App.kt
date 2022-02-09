@@ -5,6 +5,7 @@ import android.graphics.Color
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
+import com.github.moduth.blockcanary.BlockCanary
 import com.lee.library.adapter.manager.ViewLoadManager
 import com.lee.library.base.BaseApplication
 import com.lee.library.cache.CacheManager
@@ -18,6 +19,7 @@ import com.lee.library.tools.ScreenDensityUtil
 import com.lee.library.tools.StatusTools.setDarkStatusIcon
 import com.lee.library.tools.StatusTools.setLightStatusIcon
 import com.lee.library.tools.StatusTools.setNavigationBarColor
+import com.lee.playandroid.block.AppBlockCanaryContext
 import com.lee.playandroid.library.common.extensions.setCommonInterceptor
 import com.lee.playandroid.library.common.ui.widget.AppLoadResource
 import com.lee.playandroid.library.service.hepler.ApplicationModuleService
@@ -92,9 +94,14 @@ class App : BaseApplication() {
 
             // 全局统一loadPage资源样式设置
             ViewLoadManager.getInstance().setLoadResource(AppLoadResource())
+
+            // 卡顿检测
+            if (BuildConfig.DEBUG) {
+                BlockCanary.install(this@App, AppBlockCanaryContext()).start()
+            }
         }
 
-        //注册Activity生命周期监听
+        // 注册Activity生命周期监听
         registerActivityLifecycleCallbacks(activityLifecycleCallbacks)
     }
 

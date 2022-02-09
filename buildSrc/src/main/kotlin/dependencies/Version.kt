@@ -28,4 +28,5 @@ object Version {
     const val junitAndroid = "1.1.2"
     const val espressoAndroid = "3.3.0"
     const val leakcanary = "2.3"
+    const val blockCanary = "1.5.0"
 }
