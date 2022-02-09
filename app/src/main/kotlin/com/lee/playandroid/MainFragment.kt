@@ -34,13 +34,7 @@ class MainFragment : BaseFragment(R.layout.fragment_main),
         DarkViewUpdateTools.bindViewCallback(viewLifecycleOwner, this)
 
         //fragment容器与navigationBar绑定
-        binding.navigationBar.bindNavigationAction(
-            binding.container,
-            resources.getStringArray(R.array.main_labels)
-        ) { menuItem, _ ->
-            LiveDataBus.getInstance().getChannel(NavigationSelectEvent.key)
-                .postValue(NavigationSelectEvent(menuItem.title.toString()))
-        }
+        initNavigation()
 
         // 加载stub悬浮按钮view
         showFloatingStubView()
@@ -59,10 +53,14 @@ class MainFragment : BaseFragment(R.layout.fragment_main),
         binding.navigationBar.setBackgroundColorCompat(R.color.colorThemeItem)
     }
 
-    @InjectBus(LoginEvent.key, isActive = true)
-    fun loginEvent(event: LoginEvent) {
-        toast(getString(R.string.login_token_failed))
-        binding.container.findNavController().navigateLogin()
+    private fun initNavigation() {
+        binding.navigationBar.bindNavigationAction(
+            binding.container,
+            resources.getStringArray(R.array.main_labels)
+        ) { menuItem, _ ->
+            LiveDataBus.getInstance().getChannel(NavigationSelectEvent.key)
+                .postValue(NavigationSelectEvent(menuItem.title.toString()))
+        }
     }
 
     private fun showFloatingStubView() {
@@ -75,6 +73,12 @@ class MainFragment : BaseFragment(R.layout.fragment_main),
                 toast("welcome to play android ~")
             }
         })
+    }
+
+    @InjectBus(LoginEvent.key, isActive = true)
+    fun loginEvent(event: LoginEvent) {
+        toast(getString(R.string.login_token_failed))
+        binding.container.findNavController().navigateLogin()
     }
 
 }
