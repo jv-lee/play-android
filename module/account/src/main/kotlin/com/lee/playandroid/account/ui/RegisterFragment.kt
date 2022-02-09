@@ -32,8 +32,8 @@ import com.lee.playandroid.library.common.extensions.actionFailed
  * @date 2021/11/24
  * @description 注册页面
  */
-class RegisterFragment : BaseNavigationFragment(R.layout.fragment_register), View.OnClickListener,
-    TextWatcherAdapter {
+class RegisterFragment : BaseNavigationFragment(R.layout.fragment_register),
+    View.OnClickListener, TextWatcherAdapter {
 
     private val viewModel by viewModels<LoginRegisterViewModel>()
     private val accountViewModel by activityViewModels<AccountViewModel>()

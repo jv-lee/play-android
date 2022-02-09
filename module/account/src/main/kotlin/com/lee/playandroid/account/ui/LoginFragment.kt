@@ -31,8 +31,8 @@ import com.lee.playandroid.library.common.extensions.actionFailed
  * @date 2021/11/24
  * @description 登陆页面
  */
-class LoginFragment : BaseNavigationFragment(R.layout.fragment_login), View.OnClickListener,
-    TextWatcherAdapter {
+class LoginFragment : BaseNavigationFragment(R.layout.fragment_login),
+    View.OnClickListener, TextWatcherAdapter {
 
     companion object {
         // login/register 页面回传注册key
