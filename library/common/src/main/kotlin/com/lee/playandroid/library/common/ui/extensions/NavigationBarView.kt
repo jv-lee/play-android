@@ -7,13 +7,11 @@ import android.view.View
 import android.view.animation.AnimationUtils
 import androidx.annotation.IdRes
 import androidx.core.view.forEach
-import androidx.fragment.app.FragmentContainerView
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavOptions
-import androidx.navigation.findNavController
 import com.lee.library.extensions.endListener
 import com.lee.library.widget.nav.ExpandBottomNavigationView
 import com.lee.playandroid.library.common.R
@@ -26,7 +24,7 @@ import java.lang.ref.WeakReference
  */
 
 inline fun ExpandBottomNavigationView.bindNavigationAction(
-    container: FragmentContainerView,
+    controller : NavController,
     labels: Array<String>,
     crossinline itemPositionListener: (MenuItem, Int) -> Unit
 ) {
@@ -47,7 +45,6 @@ inline fun ExpandBottomNavigationView.bindNavigationAction(
         }
 
     post {
-        val controller = container.findNavController()
         setupWithNavController2(controller, true) { menuItem, position ->
             itemPositionListener(menuItem, position)
         }
