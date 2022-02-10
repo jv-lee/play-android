@@ -54,9 +54,8 @@ class MainFragment : BaseFragment(R.layout.fragment_main),
     }
 
     private fun initNavigation() {
-        val controller = binding.container.findNavController()
         val mainLabels = resources.getStringArray(R.array.main_labels)
-        binding.navigationBar.bindNavigationAction(controller, mainLabels) { menuItem, _ ->
+        binding.navigationBar.bindNavigationAction(binding.container, mainLabels) { menuItem, _ ->
             LiveDataBus.getInstance().getChannel(NavigationSelectEvent.key)
                 .postValue(NavigationSelectEvent(menuItem.title.toString()))
         }
