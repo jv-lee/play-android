@@ -10,6 +10,8 @@ import com.lee.playandroid.library.common.extensions.checkData
 import com.lee.playandroid.search.constants.Constants
 import com.lee.playandroid.search.model.repository.ApiRepository
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 
 /**
  * @author jv.lee
@@ -22,11 +24,12 @@ class SearchResultViewModel(handle: SavedStateHandle) : CoroutineViewModel() {
 
     private val repository = ApiRepository()
 
-    val searchResultFlow = MutableStateFlow<PageUiState>(PageUiState.Default(0))
+    private val _searchResultFlow = MutableStateFlow<PageUiState>(PageUiState.Default(0))
+    val searchResultFlow: StateFlow<PageUiState> = _searchResultFlow.asStateFlow()
 
     fun requestSearch(@LoadStatus status: Int) {
         launchIO {
-            searchResultFlow.pageLaunch(status, { page ->
+            _searchResultFlow.pageLaunch(status, { page ->
                 applyData { repository.api.postSearchAsync(page, key).checkData() }
             })
         }
