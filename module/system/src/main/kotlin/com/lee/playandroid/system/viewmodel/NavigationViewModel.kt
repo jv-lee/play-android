@@ -7,7 +7,7 @@ import com.lee.library.extensions.putCache
 import com.lee.library.mvvm.livedata.LoadStatus
 import com.lee.library.mvvm.ui.UiStateLiveData
 import com.lee.library.mvvm.ui.UiStateMutableLiveData
-import com.lee.library.mvvm.ui.stateCacheFlow
+import com.lee.library.mvvm.ui.stateFlow
 import com.lee.library.mvvm.viewmodel.CoroutineViewModel
 import com.lee.playandroid.library.common.extensions.checkData
 import com.lee.playandroid.system.constants.Constants
@@ -38,7 +38,7 @@ class NavigationViewModel : CoroutineViewModel() {
         }
 
         launchIO {
-            stateCacheFlow({
+            stateFlow({
                 repository.api.getNavigationDataAsync().checkData()
                     .filter { it.articles.isNotEmpty() }
             }, {
