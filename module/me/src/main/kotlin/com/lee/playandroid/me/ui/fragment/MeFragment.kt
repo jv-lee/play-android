@@ -7,7 +7,7 @@ import com.lee.library.extensions.binding
 import com.lee.library.extensions.setBackgroundColorCompat
 import com.lee.library.extensions.setTextColorCompat
 import com.lee.library.extensions.toast
-import com.lee.library.mvvm.ui.observeState
+import com.lee.library.mvvm.ui.stateObserve
 import com.lee.library.tools.DarkViewUpdateTools
 import com.lee.playandroid.library.common.entity.AccountData
 import com.lee.playandroid.library.service.AccountService
@@ -43,7 +43,7 @@ class MeFragment : BaseNavigationFragment(R.layout.fragment_me),
 
     override fun bindData() {
         accountService.getAccountLive(requireActivity())
-            .observeState<AccountData>(viewLifecycleOwner, success = {
+            .stateObserve<AccountData>(viewLifecycleOwner, success = {
                 setLoginAccountUi(it)
             }, default = {
                 setUnLoginAccountUi()

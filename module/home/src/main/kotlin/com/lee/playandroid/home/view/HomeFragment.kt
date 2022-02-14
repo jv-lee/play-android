@@ -14,7 +14,7 @@ import com.lee.library.extensions.smoothScrollToTop
 import com.lee.library.livedatabus.InjectBus
 import com.lee.library.livedatabus.LiveDataBus
 import com.lee.library.mvvm.livedata.LoadStatus
-import com.lee.library.mvvm.ui.observeState
+import com.lee.library.mvvm.ui.stateObserve
 import com.lee.library.widget.banner.BannerView
 import com.lee.playandroid.home.R
 import com.lee.playandroid.home.bean.HomeContent
@@ -67,7 +67,7 @@ class HomeFragment : BaseNavigationFragment(R.layout.fragment_home),
     override fun bindData() {
         LiveDataBus.getInstance().injectBus(this)
 
-        viewModel.contentListLive.observeState<PageUiData<HomeContent>>(
+        viewModel.contentListLive.stateObserve<PageUiData<HomeContent>>(
             viewLifecycleOwner,
             success = {
                 binding.refreshView.isRefreshing = false

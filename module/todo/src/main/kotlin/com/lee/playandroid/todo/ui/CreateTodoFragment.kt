@@ -9,7 +9,7 @@ import androidx.navigation.fragment.findNavController
 import com.lee.library.base.BaseNavigationFragment
 import com.lee.library.dialog.LoadingDialog
 import com.lee.library.extensions.*
-import com.lee.library.mvvm.ui.observeState
+import com.lee.library.mvvm.ui.stateObserve
 import com.lee.library.tools.KeyboardTools.keyboardPaddingBottom
 import com.lee.library.tools.KeyboardTools.parentTouchHideSoftInput
 import com.lee.playandroid.library.common.entity.TodoData
@@ -74,7 +74,7 @@ class CreateTodoFragment : BaseNavigationFragment(R.layout.fragment_create_todo)
     }
 
     override fun bindData() {
-        viewModel.todoLive.observeState<TodoData>(viewLifecycleOwner, success = {
+        viewModel.todoLive.stateObserve<TodoData>(viewLifecycleOwner, success = {
             responseTodo(it)
             dismiss(loadingDialog)
             findNavController().popBackStack()

@@ -10,7 +10,7 @@ import com.lee.library.adapter.page.submitFailed
 import com.lee.library.base.BaseNavigationFragment
 import com.lee.library.extensions.binding
 import com.lee.library.mvvm.livedata.LoadStatus
-import com.lee.library.mvvm.ui.observeState
+import com.lee.library.mvvm.ui.stateObserve
 import com.lee.library.widget.toolbar.TitleToolbar
 import com.lee.playandroid.library.common.constants.ApiConstants
 import com.lee.playandroid.library.common.entity.CoinRank
@@ -63,7 +63,7 @@ class CoinRankFragment : BaseNavigationFragment(R.layout.fragment_coin_rank),
     }
 
     override fun bindData() {
-        viewModel.coinRankLive.observeState<PageData<CoinRank>>(viewLifecycleOwner, success = {
+        viewModel.coinRankLive.stateObserve<PageData<CoinRank>>(viewLifecycleOwner, success = {
             mAdapter.submitData(it, diff = true)
         }, error = {
             mAdapter.submitFailed()

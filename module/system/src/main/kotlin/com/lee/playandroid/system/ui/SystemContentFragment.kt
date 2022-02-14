@@ -14,7 +14,7 @@ import com.lee.library.extensions.findParentFragment
 import com.lee.library.extensions.smoothScrollToTop
 import com.lee.library.livedatabus.InjectBus
 import com.lee.library.livedatabus.LiveDataBus
-import com.lee.library.mvvm.ui.observeState
+import com.lee.library.mvvm.ui.stateObserve
 import com.lee.playandroid.library.common.entity.NavigationSelectEvent
 import com.lee.playandroid.library.common.entity.ParentTab
 import com.lee.playandroid.library.common.entity.Tab
@@ -62,7 +62,7 @@ class SystemContentFragment : BaseNavigationFragment(R.layout.fragment_system_co
     override fun bindData() {
         LiveDataBus.getInstance().injectBus(this)
 
-        viewModel.parentTabLive.observeState<List<ParentTab>>(viewLifecycleOwner, success = { data ->
+        viewModel.parentTabLive.stateObserve<List<ParentTab>>(viewLifecycleOwner, success = { data ->
             mAdapter?.submitSinglePage(data)
         }, error = {
             mAdapter?.submitFailed()

@@ -9,7 +9,7 @@ import com.lee.library.extensions.binding
 import com.lee.library.extensions.dismiss
 import com.lee.library.extensions.show
 import com.lee.library.extensions.toast
-import com.lee.library.mvvm.ui.observeState
+import com.lee.library.mvvm.ui.stateObserve
 import com.lee.library.tools.KeyboardTools.parentTouchHideSoftInput
 import com.lee.playandroid.square.R
 import com.lee.playandroid.square.databinding.FragmentCreateShareBinding
@@ -43,7 +43,7 @@ class CreateShareFragment : BaseNavigationFragment(R.layout.fragment_create_shar
     }
 
     override fun bindData() {
-        viewModel.sendLive.observeState<String>(viewLifecycleOwner, success = {
+        viewModel.sendLive.stateObserve<String>(viewLifecycleOwner, success = {
             toast(it)
             dismiss(loadingDialog)
             findNavController().popBackStack()

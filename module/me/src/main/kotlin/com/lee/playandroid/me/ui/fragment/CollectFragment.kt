@@ -11,7 +11,7 @@ import com.lee.library.base.BaseNavigationFragment
 import com.lee.library.extensions.binding
 import com.lee.library.extensions.toast
 import com.lee.library.mvvm.livedata.LoadStatus
-import com.lee.library.mvvm.ui.observeState
+import com.lee.library.mvvm.ui.stateObserve
 import com.lee.library.utils.NetworkUtil
 import com.lee.library.widget.SwipeItemLayout
 import com.lee.playandroid.library.common.entity.Content
@@ -57,14 +57,14 @@ class CollectFragment : BaseNavigationFragment(R.layout.fragment_collect),
     }
 
     override fun bindData() {
-        viewModel.collectLive.observeState<PageData<Content>>(viewLifecycleOwner, success = {
+        viewModel.collectLive.stateObserve<PageData<Content>>(viewLifecycleOwner, success = {
             mAdapter?.submitData(it, diff = true)
         }, error = {
             mAdapter?.submitFailed()
             actionFailed(it)
         })
 
-        viewModel.unCollectLive.observeState<Int>(this, success = {
+        viewModel.unCollectLive.stateObserve<Int>(this, success = {
             toast(getString(R.string.collect_remove_item_success))
         }, error = {
             SwipeItemLayout.closeAllItems(binding.rvContainer)

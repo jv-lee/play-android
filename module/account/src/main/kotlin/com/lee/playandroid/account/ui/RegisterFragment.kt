@@ -12,7 +12,7 @@ import com.lee.library.extensions.binding
 import com.lee.library.extensions.dismiss
 import com.lee.library.extensions.show
 import com.lee.library.interadp.TextWatcherAdapter
-import com.lee.library.mvvm.ui.observeState
+import com.lee.library.mvvm.ui.stateObserve
 import com.lee.library.tools.KeyboardTools.hideSoftInput
 import com.lee.library.tools.KeyboardTools.keyboardIsShow
 import com.lee.library.tools.KeyboardTools.keyboardPaddingBottom
@@ -60,7 +60,7 @@ class RegisterFragment : BaseNavigationFragment(R.layout.fragment_register),
 
     override fun bindData() {
         // 监听注册成功后获取的账户信息
-        viewModel.accountLive.observeState<AccountData>(viewLifecycleOwner, success = {
+        viewModel.accountLive.stateObserve<AccountData>(viewLifecycleOwner, success = {
             dismiss(loadingDialog)
             PreferencesTools.put(Constants.SP_KEY_SAVE_INPUT_USERNAME, it.userInfo.username)
             accountViewModel.updateAccountInfo(it)

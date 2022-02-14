@@ -13,7 +13,7 @@ import com.lee.library.extensions.smoothScrollToTop
 import com.lee.library.livedatabus.InjectBus
 import com.lee.library.livedatabus.LiveDataBus
 import com.lee.library.mvvm.livedata.LoadStatus
-import com.lee.library.mvvm.ui.observeState
+import com.lee.library.mvvm.ui.stateObserve
 import com.lee.library.utils.LogUtil
 import com.lee.playandroid.library.common.entity.Content
 import com.lee.playandroid.library.common.entity.NavigationSelectEvent
@@ -64,7 +64,7 @@ class SquareFragment : BaseNavigationFragment(R.layout.fragment_square),
     override fun bindData() {
         LiveDataBus.getInstance().injectBus(this)
 
-        viewModel.squareLive.observeState<PageData<Content>>(viewLifecycleOwner, success = {
+        viewModel.squareLive.stateObserve<PageData<Content>>(viewLifecycleOwner, success = {
             binding.refreshView.isRefreshing = false
             mAdapter?.submitData(it)
         }, error = {

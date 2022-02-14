@@ -7,7 +7,7 @@ import androidx.fragment.app.viewModels
 import com.lee.library.base.BaseAlertFragment
 import com.lee.library.extensions.binding
 import com.lee.library.extensions.toast
-import com.lee.library.mvvm.ui.observeState
+import com.lee.library.mvvm.ui.stateObserve
 import com.lee.library.widget.WheelView
 import com.lee.playandroid.todo.R
 import com.lee.playandroid.todo.databinding.DialogSelectTodoBinding
@@ -37,7 +37,7 @@ class SelectTodoTypeDialog :
     }
 
     override fun bindData() {
-        viewModel.todoTypes.observeState<TodoTypeWheelData>(viewLifecycleOwner, success = {
+        viewModel.todoTypes.stateObserve<TodoTypeWheelData>(viewLifecycleOwner, success = {
             binding.wheelView.bindData(it.todoTypes, object : WheelView.DataFormat<TodoTypeData> {
                 override fun format(item: TodoTypeData) = item.name
             }, object : WheelView.SelectedListener<TodoTypeData> {
