@@ -7,7 +7,7 @@ import com.lee.library.extensions.putCache
 import com.lee.library.mvvm.ui.UiState
 import com.lee.library.mvvm.ui.UiStateLiveData
 import com.lee.library.mvvm.ui.UiStateMutableLiveData
-import com.lee.library.mvvm.ui.stateFlow
+import com.lee.library.mvvm.ui.stateCacheFlow
 import com.lee.library.mvvm.viewmodel.CoroutineViewModel
 import com.lee.library.tools.PreferencesTools
 import com.lee.library.utils.LogUtil
@@ -38,7 +38,7 @@ class AccountViewModel : CoroutineViewModel() {
      * 请求账户数据
      */
     suspend fun requestAccountInfo() {
-        stateFlow({
+        stateCacheFlow({
             repository.api.getAccountInfoAsync().checkData().apply {
                 updateAccountStatus(this, true)
             }
