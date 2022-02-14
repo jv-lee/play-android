@@ -9,9 +9,10 @@ import com.lee.library.adapter.page.submitFailed
 import com.lee.library.base.BaseNavigationFragment
 import com.lee.library.extensions.arguments
 import com.lee.library.extensions.binding
+import com.lee.library.extensions.launchAndRepeatWithViewLifecycle
 import com.lee.library.extensions.viewModelByFactory
 import com.lee.library.mvvm.livedata.LoadStatus
-import com.lee.library.mvvm.ui.observeState
+import com.lee.library.mvvm.ui.stateCollect
 import com.lee.playandroid.library.common.entity.Content
 import com.lee.playandroid.library.common.entity.PageData
 import com.lee.playandroid.library.common.extensions.actionFailed
@@ -56,12 +57,14 @@ class SearchResultFragment : BaseNavigationFragment(R.layout.fragment_search_res
     }
 
     override fun bindData() {
-        viewModel.searchResultLive.observeState<PageData<Content>>(viewLifecycleOwner, success = {
-            mAdapter?.submitData(it, diff = true)
-        }, error = {
-            mAdapter?.submitFailed()
-            actionFailed(it)
-        })
+        launchAndRepeatWithViewLifecycle {
+            viewModel.searchResultFlow.stateCollect<PageData<Content>>(success = {
+                mAdapter?.submitData(it, diff = true)
+            }, error = {
+                mAdapter?.submitFailed()
+                actionFailed(it)
+            })
+        }
     }
 
     override fun onItemClick(view: View?, entity: Content?, position: Int) {

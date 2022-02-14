@@ -7,15 +7,13 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.lee.library.adapter.base.BaseViewAdapter
 import com.lee.library.adapter.extensions.bindAllListener
 import com.lee.library.adapter.page.submitData
-import com.lee.library.adapter.page.submitFailed
 import com.lee.library.base.BaseNavigationFragment
 import com.lee.library.extensions.binding
-import com.lee.library.extensions.launchAndRepeatWithViewLifecycle
 import com.lee.library.extensions.smoothScrollToTop
 import com.lee.library.livedatabus.InjectBus
 import com.lee.library.livedatabus.LiveDataBus
 import com.lee.library.mvvm.livedata.LoadStatus
-import com.lee.library.mvvm.ui.stateCollect
+import com.lee.library.mvvm.ui.observeState
 import com.lee.library.utils.LogUtil
 import com.lee.playandroid.library.common.entity.Content
 import com.lee.playandroid.library.common.entity.NavigationSelectEvent
@@ -66,16 +64,14 @@ class SquareFragment : BaseNavigationFragment(R.layout.fragment_square),
     override fun bindData() {
         LiveDataBus.getInstance().injectBus(this)
 
-        launchAndRepeatWithViewLifecycle {
-            viewModel.squareFlow.stateCollect<PageData<Content>>(success = {
-                binding.refreshView.isRefreshing = false
-                mAdapter?.submitData(it, diff = true)
-            }, error = {
-                binding.refreshView.isRefreshing = false
-                mAdapter?.submitFailed()
-                actionFailed(it)
-            })
-        }
+        viewModel.squareLive.observeState<PageData<Content>>(viewLifecycleOwner, success = {
+            binding.refreshView.isRefreshing = false
+            mAdapter?.submitData(it)
+        }, error = {
+            binding.refreshView.isRefreshing = false
+            mAdapter?.loadFailed()
+            actionFailed(it)
+        })
     }
 
     override fun onClick(v: View?) {
