@@ -49,10 +49,17 @@ fun <T> BaseViewAdapter<T>.submitData(
 
         //分页加载逻辑
     } else {
+
+        // 数据相同不处理
+        if (data == pageData.getDataSource()) {
+            return
+        }
+
         //防止view重构后在分页加载时 pageCompleted状态重置
         if (!isPageCompleted) {
             pageCompleted()
         }
+
         if (diff) {
             //防止activity重建在viewModel中填充历史数据 做差分填充
             val oldData = data
@@ -86,6 +93,8 @@ fun <T> BaseViewAdapter<T>.submitData(
         if (data == pageData.getDataSource()) {
             // 重复数据空数据校验
             if (pageData.getDataSource().isNullOrEmpty()) {
+                if (isPageCompleted) initStatusView()
+                clearData()
                 pageEmpty()
                 emptyBlock()
             }
@@ -94,6 +103,8 @@ fun <T> BaseViewAdapter<T>.submitData(
 
         //设置空页面
         if (pageData.getDataSource().isNullOrEmpty()) {
+            if (isPageCompleted) initStatusView()
+            clearData()
             pageEmpty()
             emptyBlock()
             return
@@ -109,10 +120,17 @@ fun <T> BaseViewAdapter<T>.submitData(
 
         //分页加载逻辑
     } else {
+
+        // 数据相同不处理
+        if (data == pageData.getDataSource()) {
+            return
+        }
+
         //防止view重构后在分页加载时 pageCompleted状态重置
         if (!isPageCompleted) {
             pageCompleted()
         }
+
         if (diff) {
             //防止activity重建在viewModel中填充历史数据 做差分填充
             val oldData = data
