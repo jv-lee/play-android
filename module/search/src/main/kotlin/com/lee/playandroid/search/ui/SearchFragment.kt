@@ -5,12 +5,16 @@ import android.view.View
 import android.view.inputmethod.EditorInfo.IME_ACTION_SEARCH
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.lee.library.adapter.page.submitFailed
 import com.lee.library.adapter.page.submitSinglePage
 import com.lee.library.base.BaseNavigationFragment
 import com.lee.library.extensions.binding
+import com.lee.library.extensions.launchAndRepeatWithViewLifecycle
 import com.lee.library.mvvm.ui.observeState
+import com.lee.library.mvvm.ui.stateCollect
 import com.lee.library.tools.KeyboardTools.hideSoftInput
 import com.lee.library.tools.KeyboardTools.parentTouchHideSoftInput
+import com.lee.playandroid.library.common.entity.ParentTab
 import com.lee.playandroid.library.common.entity.SearchHistory
 import com.lee.playandroid.library.common.extensions.actionFailed
 import com.lee.playandroid.search.R
@@ -76,19 +80,25 @@ class SearchFragment : BaseNavigationFragment(R.layout.fragment_search) {
     }
 
     override fun bindData() {
-        viewModel.searchHotLive.observeState<List<SearchHot>>(viewLifecycleOwner, success = {
-            mHotAdapter?.submitSinglePage(it)
-        }, error = {
-            actionFailed(it)
-        })
+        launchAndRepeatWithViewLifecycle {
+            viewModel.searchHotFlow.stateCollect<List<SearchHot>>(success = { data ->
+                mHotAdapter?.submitSinglePage(data)
+            }, error = {
+                actionFailed(it)
+            })
+        }
 
-        viewModel.searchHistoryLive.observeState<List<SearchHistory>>(this, success = {
-            binding.rvHistoryContainer.visibility = if (it.isEmpty()) View.GONE else View.VISIBLE
-            binding.tvHistoryEmpty.visibility = if (it.isEmpty()) View.VISIBLE else View.GONE
-            mHistoryAdapter?.submitSinglePage(it)
-        }, error = {
-            actionFailed(it)
-        })
+        launchAndRepeatWithViewLifecycle {
+            viewModel.searchHistoryFlow.stateCollect<List<SearchHistory>>(success = { data ->
+                binding.rvHistoryContainer.visibility =
+                    if (data.isEmpty()) View.GONE else View.VISIBLE
+                binding.tvHistoryEmpty.visibility =
+                    if (data.isEmpty()) View.VISIBLE else View.GONE
+                mHistoryAdapter?.submitSinglePage(data)
+            }, error = {
+                actionFailed(it)
+            })
+        }
     }
 
     override fun onDestroyView() {

@@ -1,13 +1,14 @@
 package com.lee.playandroid.search.viewmodel
 
-import com.lee.library.mvvm.ui.UiStateLiveData
-import com.lee.library.mvvm.ui.UiStateMutableLiveData
-import com.lee.library.mvvm.ui.stateFlow
+import com.lee.library.mvvm.ui.UiState
+import com.lee.library.mvvm.ui.stateUpdate
 import com.lee.library.mvvm.viewmodel.CoroutineViewModel
 import com.lee.playandroid.library.common.entity.SearchHistory
 import com.lee.playandroid.search.db.SearchHistoryDatabase
 import com.lee.playandroid.search.helper.SearchHelper
-import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 
 /**
  * @author jv.lee
@@ -16,22 +17,18 @@ import kotlinx.coroutines.flow.collect
  */
 class SearchViewModel : CoroutineViewModel() {
 
-    private val _searchHotLive = UiStateMutableLiveData()
-    val searchHotLive: UiStateLiveData = _searchHotLive
+    private val _searchHotFlow = MutableStateFlow<UiState>(UiState.Default)
+    val searchHotFlow: StateFlow<UiState> = _searchHotFlow.asStateFlow()
 
-    private val _searchHistoryLive = UiStateMutableLiveData()
-    val searchHistoryLive: UiStateLiveData = _searchHistoryLive
+    private val _searchHistoryFlow = MutableStateFlow<UiState>(UiState.Default)
+    val searchHistoryFlow: StateFlow<UiState> = _searchHistoryFlow.asStateFlow()
 
     /**
      * 获取搜索热门标签
      */
     private fun requestSearchHotData() {
         launchIO {
-            stateFlow {
-                SearchHelper.getHotCategory()
-            }.collect {
-                _searchHotLive.postValue(it)
-            }
+            _searchHotFlow.stateUpdate { SearchHelper.getHotCategory() }
         }
     }
 
@@ -40,10 +37,8 @@ class SearchViewModel : CoroutineViewModel() {
      */
     private fun requestSearchHistoryData() {
         launchIO {
-            stateFlow {
+            _searchHistoryFlow.stateUpdate {
                 SearchHistoryDatabase.get().searchHistoryDao().querySearchHistory()
-            }.collect {
-                _searchHistoryLive.postValue(it)
             }
         }
     }

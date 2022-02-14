@@ -1,7 +1,6 @@
 package com.lee.playandroid.system.model.api
 
 import com.lee.playandroid.library.common.entity.*
-import kotlinx.coroutines.flow.Flow
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
@@ -15,9 +14,6 @@ interface ApiService {
 
     @GET("tree/json")
     suspend fun getParentTabAsync(): Data<List<ParentTab>>
-
-    @GET("tree/json")
-    fun getParentTabFlow(): Flow<Data<List<ParentTab>>>
 
     /**
      * @param page 分页页面 取值[0-40]

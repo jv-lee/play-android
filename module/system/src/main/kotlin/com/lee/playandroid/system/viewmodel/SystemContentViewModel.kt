@@ -1,19 +1,21 @@
 package com.lee.playandroid.system.viewmodel
 
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.lee.library.cache.CacheManager
 import com.lee.library.extensions.getCache
 import com.lee.library.extensions.putCache
 import com.lee.library.mvvm.ui.UiState
-import com.lee.library.mvvm.ui.uiState
+import com.lee.library.mvvm.ui.stateCacheFlow
 import com.lee.library.mvvm.ui.stateCacheUpdate
 import com.lee.library.mvvm.viewmodel.CoroutineViewModel
-import com.lee.playandroid.library.common.entity.ParentTab
 import com.lee.playandroid.library.common.extensions.checkData
 import com.lee.playandroid.system.constants.Constants.CACHE_KEY_SYSTEM_CONTENT
 import com.lee.playandroid.system.model.repository.ApiRepository
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.collect
 
 /**
  * @author jv.lee
@@ -26,12 +28,12 @@ class SystemContentViewModel : CoroutineViewModel() {
 
     private val repository = ApiRepository()
 
-    private val _parentTabFlow = MutableStateFlow<UiState>(UiState.Default)
-    val parentTabFlow: StateFlow<UiState> = _parentTabFlow.asStateFlow()
+    private val _parentTabLive = MutableLiveData<UiState>()
+    val parentTabLive: LiveData<UiState> = _parentTabLive
 
-    fun requestParentTabFlow() {
+    fun requestParentTab() {
         launchIO {
-            _parentTabFlow.stateCacheUpdate({
+            stateCacheFlow({
                 repository.api.getParentTabAsync().checkData().filter {
                     it.children.isNotEmpty()
                 }
@@ -39,60 +41,14 @@ class SystemContentViewModel : CoroutineViewModel() {
                 cacheManager.getCache(CACHE_KEY_SYSTEM_CONTENT)
             }, {
                 cacheManager.putCache(CACHE_KEY_SYSTEM_CONTENT, it)
-            })
-        }
-    }
-
-    // init时获取导航parentTab数据 flow方式
-    val parentTabFlow2 = repository.api.getParentTabFlow()
-        // 请求响应数据校验
-        .map { response ->
-            response.checkData().filter { it.children.isNotEmpty() }
-        }
-        // 校验完毕后数据缓存处理
-        .map { response ->
-            response.also {
-                cacheManager.putCache(CACHE_KEY_SYSTEM_CONTENT, it)
+            }).collect {
+                _parentTabLive.postValue(it)
             }
-        }
-        // 请求开始时先获取缓存数据填充
-        .onStart {
-            cacheManager.getCache<List<ParentTab>>(CACHE_KEY_SYSTEM_CONTENT)?.let {
-                emit(it)
-            }
-        }
-        .uiState()
-        .flowOn(Dispatchers.IO)
-        .stateIn(viewModelScope, SharingStarted.Eagerly, UiState.Default)
-
-    fun requestParentTab() {
-        launchIO {
-            repository.api.getParentTabFlow()
-                // 请求响应数据校验
-                .map { response ->
-                    response.checkData().filter { it.children.isNotEmpty() }
-                }
-                // 校验完毕后数据缓存处理
-                .map { response ->
-                    response.also {
-                        cacheManager.putCache(CACHE_KEY_SYSTEM_CONTENT, it)
-                    }
-                }
-                // 请求开始时先获取缓存数据填充
-                .onStart {
-                    cacheManager.getCache<List<ParentTab>>(CACHE_KEY_SYSTEM_CONTENT)?.let {
-                        emit(it)
-                    }
-                }
-                .uiState()
-                .collect { response ->
-                    _parentTabFlow.update { response }
-                }
         }
     }
 
     init {
-        requestParentTabFlow()
+        requestParentTab()
     }
 
 }
