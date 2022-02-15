@@ -4,7 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import com.lee.library.cache.CacheManager
 import com.lee.library.extensions.getCache
 import com.lee.library.extensions.putCache
-import com.lee.library.mvvm.livedata.LoadStatus
+import com.lee.library.mvvm.annotation.LoadStatus
 import com.lee.library.mvvm.ui.UiStateLiveData
 import com.lee.library.mvvm.ui.UiStateMutableLiveData
 import com.lee.library.mvvm.ui.stateCacheFlow

@@ -10,7 +10,7 @@ import com.lee.library.extensions.setMargin
 import com.lee.library.extensions.smoothScrollToTop
 import com.lee.library.livedatabus.InjectBus
 import com.lee.library.livedatabus.LiveDataBus
-import com.lee.library.mvvm.livedata.LoadStatus
+import com.lee.library.mvvm.annotation.LoadStatus
 import com.lee.library.mvvm.ui.stateObserve
 import com.lee.library.widget.StatusLayout
 import com.lee.playandroid.library.common.entity.NavigationItem

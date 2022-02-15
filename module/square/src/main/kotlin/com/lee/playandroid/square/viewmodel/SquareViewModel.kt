@@ -3,9 +3,9 @@ package com.lee.playandroid.square.viewmodel
 import com.lee.library.cache.CacheManager
 import com.lee.library.extensions.getCache
 import com.lee.library.extensions.putPageCache
-import com.lee.library.mvvm.livedata.LoadStatus
-import com.lee.library.mvvm.ui.*
+import com.lee.library.mvvm.annotation.LoadStatus
 import com.lee.library.mvvm.base.CoroutineViewModel
+import com.lee.library.mvvm.ui.*
 import com.lee.playandroid.library.common.extensions.checkData
 import com.lee.playandroid.square.constants.Constants.CACHE_KEY_SQUARE_CONTENT
 import com.lee.playandroid.square.model.repository.ApiRepository

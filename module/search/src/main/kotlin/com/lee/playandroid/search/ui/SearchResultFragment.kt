@@ -11,7 +11,7 @@ import com.lee.library.extensions.arguments
 import com.lee.library.extensions.binding
 import com.lee.library.extensions.launchAndRepeatWithViewLifecycle
 import com.lee.library.extensions.viewModelByFactory
-import com.lee.library.mvvm.livedata.LoadStatus
+import com.lee.library.mvvm.annotation.LoadStatus
 import com.lee.library.mvvm.ui.stateCollect
 import com.lee.playandroid.library.common.entity.Content
 import com.lee.playandroid.library.common.entity.PageData

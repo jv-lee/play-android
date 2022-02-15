@@ -13,7 +13,7 @@ import com.lee.library.extensions.binding
 import com.lee.library.extensions.smoothScrollToTop
 import com.lee.library.livedatabus.InjectBus
 import com.lee.library.livedatabus.LiveDataBus
-import com.lee.library.mvvm.livedata.LoadStatus
+import com.lee.library.mvvm.annotation.LoadStatus
 import com.lee.library.mvvm.ui.stateObserve
 import com.lee.library.widget.banner.BannerView
 import com.lee.playandroid.home.R
