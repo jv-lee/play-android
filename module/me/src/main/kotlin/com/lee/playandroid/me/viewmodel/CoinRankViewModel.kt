@@ -1,7 +1,5 @@
 package com.lee.playandroid.me.viewmodel
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import com.lee.library.cache.CacheManager
 import com.lee.library.extensions.getCache
 import com.lee.library.extensions.putPageCache
@@ -24,8 +22,8 @@ class CoinRankViewModel : CoroutineViewModel() {
 
     private val repository = ApiRepository()
 
-    private val _coinRankLive = MutableLiveData<UiStatePage>(UiStatePage.Loading(1))
-    val coinRankLive: LiveData<UiStatePage> = _coinRankLive
+    private val _coinRankLive = UiStatePageMutableLiveData(UiStatePage.Loading(1))
+    val coinRankLive: UiStatePageLiveData = _coinRankLive
 
     fun requestCoinRank(@LoadStatus status: Int) {
         launchIO {

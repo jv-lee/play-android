@@ -1,14 +1,10 @@
 package com.lee.playandroid.square.viewmodel
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import com.lee.library.cache.CacheManager
 import com.lee.library.extensions.getCache
 import com.lee.library.extensions.putPageCache
 import com.lee.library.mvvm.livedata.LoadStatus
-import com.lee.library.mvvm.ui.UiStatePage
-import com.lee.library.mvvm.ui.applyData
-import com.lee.library.mvvm.ui.pageLaunch
+import com.lee.library.mvvm.ui.*
 import com.lee.library.mvvm.viewmodel.CoroutineViewModel
 import com.lee.playandroid.library.common.extensions.checkData
 import com.lee.playandroid.square.constants.Constants.CACHE_KEY_SQUARE_CONTENT
@@ -25,8 +21,8 @@ class SquareViewModel : CoroutineViewModel() {
 
     private val repository = ApiRepository()
 
-    private val _squareLive = MutableLiveData<UiStatePage>(UiStatePage.Loading(0))
-    val squareLive: LiveData<UiStatePage> = _squareLive
+    private val _squareLive = UiStatePageMutableLiveData(UiStatePage.Loading(0))
+    val squareLive: UiStatePageLiveData = _squareLive
 
     fun requestSquareData(@LoadStatus status: Int) {
         launchIO {

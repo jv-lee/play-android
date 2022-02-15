@@ -1,7 +1,5 @@
 package com.lee.playandroid.me.viewmodel
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import com.lee.library.cache.CacheManager
 import com.lee.library.extensions.getCache
 import com.lee.library.extensions.putCache
@@ -34,8 +32,8 @@ class CollectViewModel : CoroutineViewModel() {
     private val _unCollectLive = UiStateMutableLiveData()
     val unCollectLive: UiStateLiveData = _unCollectLive
 
-    private val _collectLive = MutableLiveData<UiStatePage>(UiStatePage.Loading(0))
-    val collectLive: LiveData<UiStatePage> = _collectLive
+    private val _collectLive = UiStatePageMutableLiveData(UiStatePage.Loading(0))
+    val collectLive: UiStatePageLiveData = _collectLive
 
     /**
      * 请求收藏内容

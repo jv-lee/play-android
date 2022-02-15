@@ -1,7 +1,6 @@
 package com.lee.playandroid.home.viewmodel
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import com.lee.library.cache.CacheManager
 import com.lee.library.extensions.getCache
 import com.lee.library.extensions.putPageCache
@@ -26,8 +25,8 @@ class HomeViewModel : CoroutineViewModel() {
 
     private val repository = ApiRepository()
 
-    private val _contentListLive = MutableLiveData<UiStatePage>(UiStatePage.Loading(0))
-    val contentListLive: LiveData<UiStatePage> = _contentListLive
+    private val _contentListLive = UiStatePageMutableLiveData(UiStatePage.Loading(0))
+    val contentListLive: UiStatePageLiveData = _contentListLive
 
     /**
      * 获取contentList列表
