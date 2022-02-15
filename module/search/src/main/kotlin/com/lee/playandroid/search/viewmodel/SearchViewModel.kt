@@ -1,13 +1,14 @@
 package com.lee.playandroid.search.viewmodel
 
 import com.lee.library.mvvm.ui.UiState
+import com.lee.library.mvvm.ui.UiStateMutableStateFlow
+import com.lee.library.mvvm.ui.UiStateStateFlow
 import com.lee.library.mvvm.ui.stateUpdate
 import com.lee.library.mvvm.viewmodel.CoroutineViewModel
 import com.lee.playandroid.library.common.entity.SearchHistory
 import com.lee.playandroid.search.db.SearchHistoryDatabase
 import com.lee.playandroid.search.helper.SearchHelper
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 
 /**
@@ -17,11 +18,11 @@ import kotlinx.coroutines.flow.asStateFlow
  */
 class SearchViewModel : CoroutineViewModel() {
 
-    private val _searchHotFlow = MutableStateFlow<UiState>(UiState.Default)
-    val searchHotFlow: StateFlow<UiState> = _searchHotFlow.asStateFlow()
+    private val _searchHotFlow: UiStateMutableStateFlow = MutableStateFlow(UiState.Default)
+    val searchHotFlow: UiStateStateFlow = _searchHotFlow.asStateFlow()
 
-    private val _searchHistoryFlow = MutableStateFlow<UiState>(UiState.Default)
-    val searchHistoryFlow: StateFlow<UiState> = _searchHistoryFlow.asStateFlow()
+    private val _searchHistoryFlow: UiStateMutableStateFlow = MutableStateFlow(UiState.Default)
+    val searchHistoryFlow: UiStateStateFlow = _searchHistoryFlow.asStateFlow()
 
     /**
      * 获取搜索热门标签
