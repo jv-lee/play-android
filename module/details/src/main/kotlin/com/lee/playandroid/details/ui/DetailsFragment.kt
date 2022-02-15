@@ -5,6 +5,7 @@ import android.widget.FrameLayout
 import com.just.agentweb.AgentWeb
 import com.lee.library.base.BaseNavigationFragment
 import com.lee.library.extensions.*
+import com.lee.library.mvvm.ui.stateObserve
 import com.lee.library.utils.ShareUtil
 import com.lee.library.widget.toolbar.TitleToolbar
 import com.lee.playandroid.details.R
@@ -69,13 +70,16 @@ class DetailsFragment : BaseNavigationFragment(R.layout.fragment_details) {
     }
 
     override fun bindData() {
-        viewModel.collectLive.observe(this, { isCollect ->
-            toast(getString(if (isCollect) R.string.menu_collect_complete else R.string.menu_collect_completed))
-        })
-
-        viewModel.failedEvent.observe(this) { error ->
+        viewModel.collectLive.stateObserve<Boolean>(viewLifecycleOwner, { isCollect ->
+            val message = if (isCollect) {
+                getString(R.string.menu_collect_complete)
+            } else {
+                getString(R.string.menu_collect_completed)
+            }
+            toast(message)
+        }, { error ->
             toast(error.message)
-        }
+        })
     }
 
 }

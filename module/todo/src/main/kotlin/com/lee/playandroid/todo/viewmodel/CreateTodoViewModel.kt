@@ -3,7 +3,7 @@ package com.lee.playandroid.todo.viewmodel
 import com.lee.library.mvvm.ui.UiStateLiveData
 import com.lee.library.mvvm.ui.UiStateMutableLiveData
 import com.lee.library.mvvm.ui.stateFlow
-import com.lee.library.mvvm.viewmodel.CoroutineViewModel
+import com.lee.library.mvvm.base.CoroutineViewModel
 import com.lee.library.tools.PreferencesTools
 import com.lee.playandroid.library.common.entity.TodoData
 import com.lee.playandroid.library.common.extensions.checkData

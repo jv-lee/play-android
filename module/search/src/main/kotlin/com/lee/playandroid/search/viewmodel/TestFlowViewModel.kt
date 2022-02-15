@@ -6,7 +6,7 @@ import com.lee.library.extensions.getCache
 import com.lee.library.extensions.putCache
 import com.lee.library.mvvm.ui.UiState
 import com.lee.library.mvvm.ui.uiState
-import com.lee.library.mvvm.viewmodel.CoroutineViewModel
+import com.lee.library.mvvm.base.CoroutineViewModel
 import com.lee.playandroid.library.common.entity.Data
 import com.lee.playandroid.library.common.entity.ParentTab
 import com.lee.playandroid.library.common.extensions.checkData

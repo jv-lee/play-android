@@ -1,13 +1,16 @@
 package com.lee.playandroid.details.viewmodel
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
-import com.lee.library.mvvm.viewmodel.CoroutineViewModel
+import com.lee.library.mvvm.ui.UiState
+import com.lee.library.mvvm.ui.UiStateLiveData
+import com.lee.library.mvvm.ui.UiStateMutableLiveData
+import com.lee.library.mvvm.ui.stateFlow
+import com.lee.library.mvvm.base.CoroutineViewModel
 import com.lee.playandroid.details.ui.DetailsFragment
 import com.lee.playandroid.library.common.constants.ApiConstants
 import com.lee.playandroid.library.service.MeService
 import com.lee.playandroid.library.service.hepler.ModuleService
+import kotlinx.coroutines.flow.collect
 
 /**
  * @author jv.lee
@@ -25,22 +28,26 @@ class DetailsViewModel(savedStateHandle: SavedStateHandle) : CoroutineViewModel(
 
     private val meService = ModuleService.find<MeService>()
 
-    private val _collectLive = MutableLiveData<Boolean>()
-    val collectLive: LiveData<Boolean> = _collectLive
+    private val _collectLive = UiStateMutableLiveData()
+    val collectLive: UiStateLiveData = _collectLive
 
     fun requestCollect() {
         //已收藏直接返回结果
         if (isCollect) {
-            _collectLive.postValue(false)
+            _collectLive.postValue(UiState.Success(false))
             return
         }
         launchIO {
-            val response = meService.requestCollectAsync(id)
-            if (response.errorCode == ApiConstants.REQUEST_OK) {
-                isCollect = true
-                _collectLive.postValue(true)
-            } else {
-                throw RuntimeException(response.errorMsg)
+            stateFlow {
+                val response = meService.requestCollectAsync(id)
+                if (response.errorCode == ApiConstants.REQUEST_OK) {
+                    isCollect = true
+                    true
+                } else {
+                    throw RuntimeException(response.errorMsg)
+                }
+            }.collect {
+                _collectLive.postValue(it)
             }
         }
     }

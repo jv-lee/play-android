@@ -6,7 +6,7 @@ import com.lee.library.extensions.putCache
 import com.lee.library.mvvm.ui.UiStateLiveData
 import com.lee.library.mvvm.ui.UiStateMutableLiveData
 import com.lee.library.mvvm.ui.stateCacheFlow
-import com.lee.library.mvvm.viewmodel.CoroutineViewModel
+import com.lee.library.mvvm.base.CoroutineViewModel
 import com.lee.playandroid.library.common.extensions.checkData
 import com.lee.playandroid.project.constants.Constants
 import com.lee.playandroid.project.model.repository.ApiRepository

@@ -5,7 +5,7 @@ import com.lee.library.extensions.getCache
 import com.lee.library.extensions.putPageCache
 import com.lee.library.mvvm.livedata.LoadStatus
 import com.lee.library.mvvm.ui.*
-import com.lee.library.mvvm.viewmodel.CoroutineViewModel
+import com.lee.library.mvvm.base.CoroutineViewModel
 import com.lee.playandroid.library.common.extensions.checkData
 import com.lee.playandroid.square.constants.Constants.CACHE_KEY_SQUARE_CONTENT
 import com.lee.playandroid.square.model.repository.ApiRepository

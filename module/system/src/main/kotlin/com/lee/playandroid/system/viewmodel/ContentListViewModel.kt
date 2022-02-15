@@ -3,7 +3,7 @@ package com.lee.playandroid.system.viewmodel
 import androidx.lifecycle.SavedStateHandle
 import com.lee.library.mvvm.livedata.LoadStatus
 import com.lee.library.mvvm.ui.*
-import com.lee.library.mvvm.viewmodel.CoroutineViewModel
+import com.lee.library.mvvm.base.CoroutineViewModel
 import com.lee.playandroid.library.common.extensions.checkData
 import com.lee.playandroid.system.model.repository.ApiRepository
 import com.lee.playandroid.system.ui.ContentListFragment

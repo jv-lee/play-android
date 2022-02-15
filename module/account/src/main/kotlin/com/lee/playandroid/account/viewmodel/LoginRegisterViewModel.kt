@@ -3,7 +3,7 @@ package com.lee.playandroid.account.viewmodel
 import com.lee.library.mvvm.ui.UiStateLiveData
 import com.lee.library.mvvm.ui.UiStateMutableLiveData
 import com.lee.library.mvvm.ui.stateFlow
-import com.lee.library.mvvm.viewmodel.CoroutineViewModel
+import com.lee.library.mvvm.base.CoroutineViewModel
 import com.lee.playandroid.account.model.repository.ApiRepository
 import com.lee.playandroid.library.common.extensions.checkData
 import kotlinx.coroutines.flow.collect
