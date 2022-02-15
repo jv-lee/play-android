@@ -22,7 +22,7 @@ class CoinRankViewModel : CoroutineViewModel() {
 
     private val repository = ApiRepository()
 
-    private val _coinRankLive = UiStatePageMutableLiveData(UiStatePage.Loading(1))
+    private val _coinRankLive = UiStatePageMutableLiveData(UiStatePage.Default(1))
     val coinRankLive: UiStatePageLiveData = _coinRankLive
 
     fun requestCoinRank(@LoadStatus status: Int) {

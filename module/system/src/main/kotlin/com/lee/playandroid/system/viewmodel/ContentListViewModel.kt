@@ -1,6 +1,5 @@
 package com.lee.playandroid.system.viewmodel
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.SavedStateHandle
 import com.lee.library.mvvm.livedata.LoadStatus
 import com.lee.library.mvvm.ui.*
@@ -20,7 +19,7 @@ class ContentListViewModel(handle: SavedStateHandle) : CoroutineViewModel() {
 
     private val repository = ApiRepository()
 
-    private val _contentListLive = UiStatePageMutableLiveData(UiStatePage.Loading(0))
+    private val _contentListLive = UiStatePageMutableLiveData(UiStatePage.Default(0))
     val contentListLive: UiStatePageLiveData = _contentListLive
 
     fun requestContentList(@LoadStatus status: Int) {

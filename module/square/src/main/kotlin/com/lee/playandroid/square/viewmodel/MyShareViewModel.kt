@@ -34,7 +34,7 @@ class MyShareViewModel : CoroutineViewModel() {
     private val _deleteShareLive = UiStateMutableLiveData()
     val deleteShareLive: UiStateLiveData = _deleteShareLive
 
-    private val _myShareLive = MutableLiveData<UiStatePage>(UiStatePage.Loading(1))
+    private val _myShareLive = MutableLiveData<UiStatePage>(UiStatePage.Default(1))
     val myShareLive: LiveData<UiStatePage> = _myShareLive
 
     fun requestMyShareData(@LoadStatus status: Int) {

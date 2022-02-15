@@ -21,7 +21,7 @@ class SquareViewModel : CoroutineViewModel() {
 
     private val repository = ApiRepository()
 
-    private val _squareLive = UiStatePageMutableLiveData(UiStatePage.Loading(0))
+    private val _squareLive = UiStatePageMutableLiveData(UiStatePage.Default(0))
     val squareLive: UiStatePageLiveData = _squareLive
 
     fun requestSquareData(@LoadStatus status: Int) {

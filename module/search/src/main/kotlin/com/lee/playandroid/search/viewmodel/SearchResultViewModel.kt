@@ -24,7 +24,7 @@ class SearchResultViewModel(handle: SavedStateHandle) : CoroutineViewModel() {
 
     private val repository = ApiRepository()
 
-    private val _searchResultFlow = MutableStateFlow<UiStatePage>(UiStatePage.Loading(0))
+    private val _searchResultFlow = MutableStateFlow<UiStatePage>(UiStatePage.Default(0))
     val searchResultFlow: StateFlow<UiStatePage> = _searchResultFlow.asStateFlow()
 
     fun requestSearch(@LoadStatus status: Int) {

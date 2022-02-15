@@ -32,7 +32,7 @@ class CollectViewModel : CoroutineViewModel() {
     private val _unCollectLive = UiStateMutableLiveData()
     val unCollectLive: UiStateLiveData = _unCollectLive
 
-    private val _collectLive = UiStatePageMutableLiveData(UiStatePage.Loading(0))
+    private val _collectLive = UiStatePageMutableLiveData(UiStatePage.Default(0))
     val collectLive: UiStatePageLiveData = _collectLive
 
     /**

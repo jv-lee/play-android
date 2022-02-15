@@ -21,7 +21,7 @@ class CoinViewModel : CoroutineViewModel() {
 
     private val repository = ApiRepository()
 
-    private val _coinRecordLive = UiStatePageMutableLiveData(UiStatePage.Loading(1))
+    private val _coinRecordLive = UiStatePageMutableLiveData(UiStatePage.Default(1))
     val coinRecordLive: UiStatePageLiveData = _coinRecordLive
 
     fun requestCoinRecord(@LoadStatus status: Int) {

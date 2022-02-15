@@ -25,7 +25,7 @@ class OfficialListViewModel(handle: SavedStateHandle) : CoroutineViewModel() {
 
     private val repository = ApiRepository()
 
-    private val _contentListLive = UiStatePageMutableLiveData(UiStatePage.Loading(1))
+    private val _contentListLive = UiStatePageMutableLiveData(UiStatePage.Default(1))
     val contentListLive: UiStatePageLiveData = _contentListLive
 
     fun requestContentList(@LoadStatus status: Int) {

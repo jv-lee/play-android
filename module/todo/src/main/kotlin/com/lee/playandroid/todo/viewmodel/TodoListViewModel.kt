@@ -51,7 +51,7 @@ class TodoListViewModel(handle: SavedStateHandle) : CoroutineViewModel() {
     private val _todoUpdateLive = UiStateMutableLiveData()
     val todoUpdateLive: UiStateLiveData = _todoUpdateLive
 
-    private val _todoDataLive = MutableLiveData<UiStatePage>(UiStatePage.Loading(1))
+    private val _todoDataLive = MutableLiveData<UiStatePage>(UiStatePage.Default(1))
     val todoDataLive: LiveData<UiStatePage> = _todoDataLive
 
     fun requestTodoData(@LoadStatus status: Int) {
