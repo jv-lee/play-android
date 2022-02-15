@@ -1,10 +1,11 @@
 package com.lee.playandroid.project.ui
 
 import android.os.Bundle
+import androidx.lifecycle.LiveData
 import androidx.navigation.fragment.findNavController
 import com.lee.library.adapter.base.BaseViewAdapter
 import com.lee.library.extensions.viewModelByFactory
-import com.lee.library.mvvm.ui.UiStateLiveData
+import com.lee.library.mvvm.ui.UiStatePage
 import com.lee.playandroid.library.common.entity.Content
 import com.lee.playandroid.library.common.ui.BaseListFragment
 import com.lee.playandroid.project.ui.adapter.ProjectListAdapter
@@ -42,7 +43,7 @@ class ProjectListFragment : BaseListFragment() {
         )
     }
 
-    override fun dataObserveState(): UiStateLiveData {
+    override fun dataObserveState(): LiveData<UiStatePage> {
         return viewModel.contentListLive
     }
 

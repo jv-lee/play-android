@@ -1,14 +1,13 @@
 package com.lee.playandroid.me.viewmodel
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.lee.library.cache.CacheManager
 import com.lee.library.extensions.getCache
 import com.lee.library.extensions.putCache
 import com.lee.library.extensions.putPageCache
 import com.lee.library.mvvm.livedata.LoadStatus
-import com.lee.library.mvvm.ui.UiStateLiveData
-import com.lee.library.mvvm.ui.UiStateMutableLiveData
-import com.lee.library.mvvm.ui.UiStatePageLiveData
-import com.lee.library.mvvm.ui.stateFlow
+import com.lee.library.mvvm.ui.*
 import com.lee.library.mvvm.viewmodel.CoroutineViewModel
 import com.lee.playandroid.library.common.constants.ApiConstants
 import com.lee.playandroid.library.common.entity.Content
@@ -35,7 +34,8 @@ class CollectViewModel : CoroutineViewModel() {
     private val _unCollectLive = UiStateMutableLiveData()
     val unCollectLive: UiStateLiveData = _unCollectLive
 
-    val collectLive = UiStatePageLiveData(0)
+    private val _collectLive = MutableLiveData<UiStatePage>(UiStatePage.Loading(0))
+    val collectLive: LiveData<UiStatePage> = _collectLive
 
     /**
      * 请求收藏内容
@@ -43,7 +43,7 @@ class CollectViewModel : CoroutineViewModel() {
      */
     fun requestCollect(@LoadStatus status: Int) {
         launchIO {
-            collectLive.pageLaunch(status, { page ->
+            _collectLive.pageLaunch(status, { page ->
                 applyData { repository.api.getCollectListAsync(page).checkData() }
             }, {
                 cacheManager.getCache(Constants.CACHE_KEY_COLLECT)

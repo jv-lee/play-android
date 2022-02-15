@@ -1,14 +1,13 @@
 package com.lee.playandroid.square.viewmodel
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.lee.library.cache.CacheManager
 import com.lee.library.extensions.getCache
 import com.lee.library.extensions.putCache
 import com.lee.library.extensions.putPageCache
 import com.lee.library.mvvm.livedata.LoadStatus
-import com.lee.library.mvvm.ui.UiStateLiveData
-import com.lee.library.mvvm.ui.UiStateMutableLiveData
-import com.lee.library.mvvm.ui.UiStatePageLiveData
-import com.lee.library.mvvm.ui.stateFlow
+import com.lee.library.mvvm.ui.*
 import com.lee.library.mvvm.viewmodel.CoroutineViewModel
 import com.lee.playandroid.library.common.constants.ApiConstants
 import com.lee.playandroid.library.common.entity.Content
@@ -35,11 +34,12 @@ class MyShareViewModel : CoroutineViewModel() {
     private val _deleteShareLive = UiStateMutableLiveData()
     val deleteShareLive: UiStateLiveData = _deleteShareLive
 
-    val myShareLive = UiStatePageLiveData(1)
+    private val _myShareLive = MutableLiveData<UiStatePage>(UiStatePage.Loading(1))
+    val myShareLive: LiveData<UiStatePage> = _myShareLive
 
     fun requestMyShareData(@LoadStatus status: Int) {
         launchIO {
-            myShareLive.pageLaunch(status, { page ->
+            _myShareLive.pageLaunch(status, { page ->
                 repository.api.getMyShareDataSync(page)
                     .checkData().shareArticles.also { newData ->
                         applyData(getValueData(), newData)

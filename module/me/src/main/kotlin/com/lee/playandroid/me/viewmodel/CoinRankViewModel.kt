@@ -1,10 +1,12 @@
 package com.lee.playandroid.me.viewmodel
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.lee.library.cache.CacheManager
 import com.lee.library.extensions.getCache
 import com.lee.library.extensions.putPageCache
 import com.lee.library.mvvm.livedata.LoadStatus
-import com.lee.library.mvvm.ui.UiStatePageLiveData
+import com.lee.library.mvvm.ui.*
 import com.lee.library.mvvm.viewmodel.CoroutineViewModel
 import com.lee.playandroid.library.common.extensions.checkData
 import com.lee.playandroid.me.constants.Constants.CACHE_KEY_COIN_RANK
@@ -22,14 +24,15 @@ class CoinRankViewModel : CoroutineViewModel() {
 
     private val repository = ApiRepository()
 
-    val coinRankLive = UiStatePageLiveData(1)
+    private val _coinRankLive = MutableLiveData<UiStatePage>(UiStatePage.Loading(1))
+    val coinRankLive: LiveData<UiStatePage> = _coinRankLive
 
     fun requestCoinRank(@LoadStatus status: Int) {
         launchIO {
-            coinRankLive.pageLaunch(status, { page ->
+            _coinRankLive.pageLaunch(status, { page ->
                 repository.api.getCoinRankAsync(page).checkData().also { newData ->
                     //排行榜UI显示 0 —><- 1 位置数据对掉
-                    if (page == coinRankLive.getInitPage() && newData.size >= 2) {
+                    if (page == _coinRankLive.requestFirstPage() && newData.size >= 2) {
                         Collections.swap(newData.data, 0, 1)
                     }
                     //内存存储每页数据至LiveData
