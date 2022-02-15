@@ -1,10 +1,12 @@
 package com.lee.playandroid.home.viewmodel
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.lee.library.cache.CacheManager
 import com.lee.library.extensions.getCache
 import com.lee.library.extensions.putPageCache
 import com.lee.library.mvvm.livedata.LoadStatus
-import com.lee.library.mvvm.ui.UiStatePageLiveData
+import com.lee.library.mvvm.ui.*
 import com.lee.library.mvvm.viewmodel.CoroutineViewModel
 import com.lee.playandroid.home.bean.HomeContent
 import com.lee.playandroid.home.constants.Constants
@@ -24,14 +26,15 @@ class HomeViewModel : CoroutineViewModel() {
 
     private val repository = ApiRepository()
 
-    val contentListLive = UiStatePageLiveData(0)
+    private val _contentListLive = MutableLiveData<UiStatePage>(UiStatePage.Loading(0))
+    val contentListLive: LiveData<UiStatePage> = _contentListLive
 
     /**
      * 获取contentList列表
      */
     fun requestHomeData(@LoadStatus status: Int) {
         launchIO {
-            contentListLive.pageLaunch(status, { page: Int ->
+            _contentListLive.pageLaunch(status, { page: Int ->
                 buildHomePageData(page)
             }, {
                 //缓存数据
@@ -46,11 +49,11 @@ class HomeViewModel : CoroutineViewModel() {
     /**
      * 根据页码构建首页数据
      */
-    private suspend fun UiStatePageLiveData.buildHomePageData(page: Int): PageUiData<HomeContent> {
+    private suspend fun LiveData<UiStatePage>.buildHomePageData(page: Int): PageUiData<HomeContent> {
         val dataList = mutableListOf<HomeContent>()
 
         //首页添加header数据
-        if (page == getInitPage()) {
+        if (page == requestFirstPage()) {
             val banner = repository.api.getBannerDataAsync().checkData()
             dataList.add(HomeContent(bannerList = banner))
 
