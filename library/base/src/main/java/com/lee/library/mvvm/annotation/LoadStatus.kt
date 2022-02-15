@@ -8,9 +8,8 @@ import com.lee.library.mvvm.annotation.LoadStatus.Companion.RELOAD
 /**
  * @author jv.lee
  * @date 2022/2/15
- * @description
+ * @description 分页加载状态注解
  */
-
 @IntDef(REFRESH, LOAD_MORE, RELOAD)
 @Target(AnnotationTarget.FIELD, AnnotationTarget.VALUE_PARAMETER)
 @Retention(AnnotationRetention.SOURCE)

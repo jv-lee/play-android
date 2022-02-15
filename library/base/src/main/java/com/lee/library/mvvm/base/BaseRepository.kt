@@ -9,7 +9,7 @@ import retrofit2.Response
 /**
  * @author jv.lee
  * @date 2019/9/26.
- * @description
+ * @description repository基类 提供retrofit请求结果响应解析
  */
 open class BaseRepository {
 

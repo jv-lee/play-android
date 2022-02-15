@@ -8,7 +8,7 @@ import java.util.concurrent.CancellationException
 /**
  * @author jv.lee
  * @date 2021/9/22
- * @description
+ * @description 协程ViewModel
  */
 open class CoroutineViewModel : ViewModel() {
 
