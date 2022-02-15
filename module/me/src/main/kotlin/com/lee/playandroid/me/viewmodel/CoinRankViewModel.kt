@@ -32,7 +32,7 @@ class CoinRankViewModel : CoroutineViewModel() {
             _coinRankLive.pageLaunch(status, { page ->
                 repository.api.getCoinRankAsync(page).checkData().also { newData ->
                     //排行榜UI显示 0 —><- 1 位置数据对掉
-                    if (page == _coinRankLive.requestFirstPage() && newData.size >= 2) {
+                    if (page == _coinRankLive.requestFirstPage && newData.size >= 2) {
                         Collections.swap(newData.data, 0, 1)
                     }
                     //内存存储每页数据至LiveData

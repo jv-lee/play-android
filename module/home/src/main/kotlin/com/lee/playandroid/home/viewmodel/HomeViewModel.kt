@@ -53,7 +53,7 @@ class HomeViewModel : CoroutineViewModel() {
         val dataList = mutableListOf<HomeContent>()
 
         //首页添加header数据
-        if (page == requestFirstPage()) {
+        if (page == requestFirstPage) {
             val banner = repository.api.getBannerDataAsync().checkData()
             dataList.add(HomeContent(bannerList = banner))
 
