@@ -87,10 +87,7 @@ class SearchFragment : BaseNavigationFragment(R.layout.fragment_search) {
 
         launchAndRepeatWithViewLifecycle {
             viewModel.searchHistoryFlow.stateCollect<List<SearchHistory>>(success = { data ->
-                binding.rvHistoryContainer.visibility =
-                    if (data.isEmpty()) View.GONE else View.VISIBLE
-                binding.tvHistoryEmpty.visibility =
-                    if (data.isEmpty()) View.VISIBLE else View.GONE
+                viewEmptyVisible(data.isEmpty())
                 mHistoryAdapter?.submitSinglePage(data)
             }, error = {
                 actionFailed(it)
@@ -120,6 +117,16 @@ class SearchFragment : BaseNavigationFragment(R.layout.fragment_search) {
         val bundle = Bundle()
         bundle.putString(Constants.ARG_PARAMS_SEARCH_KEY, key)
         findNavController().navigate(R.id.action_search_fragment_to_search_result_fragment, bundle)
+    }
+
+    /**
+     * empty布局显示隐藏
+     */
+    private fun viewEmptyVisible(visible: Boolean) {
+        binding.rvHistoryContainer.visibility =
+            if (visible) View.GONE else View.VISIBLE
+        binding.tvHistoryEmpty.visibility =
+            if (visible) View.VISIBLE else View.GONE
     }
 
 }
