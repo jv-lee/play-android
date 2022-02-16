@@ -122,6 +122,10 @@ fun ExpandBottomNavigationView.setupWithNavController2(
 private fun NavDestination.matchDestination(@IdRes destId: Int): Boolean =
     hierarchy.any { it.id == destId }
 
+/**
+ * @see NavigationUI.onNavDestinationSelected 该方法使用动画效果切换
+ * 重写该方法只使用切换功能取消动画切换逻辑
+ */
 private fun onNavDestinationSelected(item: MenuItem, navController: NavController): Boolean {
     val builder = NavOptions.Builder().setLaunchSingleTop(true).setRestoreState(true)
     if (item.order and Menu.CATEGORY_SECONDARY == 0) {
