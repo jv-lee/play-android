@@ -14,7 +14,6 @@ import com.lee.library.livedatabus.InjectBus
 import com.lee.library.livedatabus.LiveDataBus
 import com.lee.library.mvvm.annotation.LoadStatus
 import com.lee.library.mvvm.ui.stateObserve
-import com.lee.library.utils.LogUtil
 import com.lee.playandroid.library.common.entity.Content
 import com.lee.playandroid.library.common.entity.NavigationSelectEvent
 import com.lee.playandroid.library.common.entity.PageData
@@ -81,19 +80,18 @@ class SquareFragment : BaseNavigationFragment(R.layout.fragment_square),
         }
     }
 
-    override fun onRefresh() {
-        mAdapter?.openLoadMore()
-        viewModel.requestSquareData(LoadStatus.REFRESH)
-    }
-
     override fun onItemClick(view: View?, entity: Content?, position: Int) {
         entity?.apply {
             findNavController().navigateDetails(title, link, id, collect)
         }
     }
 
+    override fun onRefresh() {
+        mAdapter?.openLoadMore()
+        viewModel.requestSquareData(LoadStatus.REFRESH)
+    }
+
     override fun autoLoadMore() {
-        LogUtil.i("autoLoadMore")
         viewModel.requestSquareData(LoadStatus.LOAD_MORE)
     }
 
