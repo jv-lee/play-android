@@ -3,9 +3,10 @@ package com.lee.playandroid.account.viewmodel
 import com.lee.library.mvvm.ui.UiStateLiveData
 import com.lee.library.mvvm.ui.UiStateMutableLiveData
 import com.lee.library.mvvm.ui.stateFlow
-import com.lee.library.mvvm.base.CoroutineViewModel
-import com.lee.playandroid.account.model.repository.ApiRepository
+import com.lee.library.mvvm.vm.CoroutineViewModel
+import com.lee.playandroid.account.model.api.ApiService
 import com.lee.playandroid.library.common.extensions.checkData
+import com.lee.playandroid.library.common.extensions.createApi
 import kotlinx.coroutines.flow.collect
 
 /**
@@ -15,7 +16,7 @@ import kotlinx.coroutines.flow.collect
  */
 class LoginRegisterViewModel : CoroutineViewModel() {
 
-    private val repository = ApiRepository()
+    private val api = createApi<ApiService>()
 
     private val _accountLive = UiStateMutableLiveData()
     val accountLive: UiStateLiveData = _accountLive
@@ -23,8 +24,8 @@ class LoginRegisterViewModel : CoroutineViewModel() {
     fun requestLogin(userName: String, password: String) {
         launchIO {
             stateFlow {
-                repository.api.postLoginAsync(userName, password).checkData()
-                repository.api.getAccountInfoAsync().checkData()
+                api.postLoginAsync(userName, password).checkData()
+                api.getAccountInfoAsync().checkData()
             }.collect {
                 _accountLive.postValue(it)
             }
@@ -34,8 +35,8 @@ class LoginRegisterViewModel : CoroutineViewModel() {
     fun requestRegister(userName: String, password: String, rePassword: String) {
         launchIO {
             stateFlow {
-                repository.api.postRegisterAsync(userName, password, rePassword).checkData()
-                repository.api.getAccountInfoAsync().checkData()
+                api.postRegisterAsync(userName, password, rePassword).checkData()
+                api.getAccountInfoAsync().checkData()
             }.collect {
                 _accountLive.postValue(it)
             }

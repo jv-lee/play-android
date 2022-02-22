@@ -5,14 +5,15 @@ import com.lee.library.cache.CacheManager
 import com.lee.library.extensions.getCache
 import com.lee.library.extensions.putPageCache
 import com.lee.library.mvvm.annotation.LoadStatus
-import com.lee.library.mvvm.base.CoroutineViewModel
 import com.lee.library.mvvm.ui.*
+import com.lee.library.mvvm.vm.CoroutineViewModel
 import com.lee.playandroid.home.bean.HomeContent
 import com.lee.playandroid.home.constants.Constants
+import com.lee.playandroid.home.model.api.ApiService
 import com.lee.playandroid.home.model.entity.HomeCategory
-import com.lee.playandroid.home.model.repository.ApiRepository
 import com.lee.playandroid.library.common.entity.PageUiData
 import com.lee.playandroid.library.common.extensions.checkData
+import com.lee.playandroid.library.common.extensions.createApi
 
 /**
  * @author jv.lee
@@ -23,7 +24,7 @@ class HomeViewModel : CoroutineViewModel() {
 
     private val cacheManager = CacheManager.getDefault()
 
-    private val repository = ApiRepository()
+    private val api = createApi<ApiService>()
 
     private val _contentListLive = UiStatePageMutableLiveData(UiStatePage.Default(0))
     val contentListLive: UiStatePageLiveData = _contentListLive
@@ -53,7 +54,7 @@ class HomeViewModel : CoroutineViewModel() {
 
         //首页添加header数据
         if (page == requestFirstPage) {
-            val banner = repository.api.getBannerDataAsync().checkData()
+            val banner = api.getBannerDataAsync().checkData()
             dataList.add(HomeContent(bannerList = banner))
 
             val category = HomeCategory.getHomeCategory()
@@ -61,7 +62,7 @@ class HomeViewModel : CoroutineViewModel() {
         }
 
         //获取网络item数据
-        val textItemData = repository.api.getContentDataAsync(page).checkData().apply {
+        val textItemData = api.getContentDataAsync(page).checkData().apply {
             data.forEach {
                 dataList.add(HomeContent(content = it))
             }

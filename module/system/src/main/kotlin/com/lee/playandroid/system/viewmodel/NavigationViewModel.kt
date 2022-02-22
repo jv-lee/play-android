@@ -8,10 +8,11 @@ import com.lee.library.mvvm.annotation.LoadStatus
 import com.lee.library.mvvm.ui.UiStateLiveData
 import com.lee.library.mvvm.ui.UiStateMutableLiveData
 import com.lee.library.mvvm.ui.stateCacheFlow
-import com.lee.library.mvvm.base.CoroutineViewModel
+import com.lee.library.mvvm.vm.CoroutineViewModel
 import com.lee.playandroid.library.common.extensions.checkData
+import com.lee.playandroid.library.common.extensions.createApi
 import com.lee.playandroid.system.constants.Constants
-import com.lee.playandroid.system.model.repository.ApiRepository
+import com.lee.playandroid.system.model.api.ApiService
 import kotlinx.coroutines.flow.collect
 
 /**
@@ -23,7 +24,7 @@ class NavigationViewModel : CoroutineViewModel() {
 
     private val cacheManager = CacheManager.getDefault()
 
-    private val repository = ApiRepository()
+    private val api = createApi<ApiService>()
 
     private val _navigationLive = UiStateMutableLiveData()
     val navigationLive: UiStateLiveData = _navigationLive
@@ -42,7 +43,7 @@ class NavigationViewModel : CoroutineViewModel() {
 
         launchIO {
             stateCacheFlow({
-                repository.api.getNavigationDataAsync().checkData()
+                api.getNavigationDataAsync().checkData()
                     .filter { it.articles.isNotEmpty() }
             }, {
                 cacheManager.getCache(Constants.CACHE_KEY_NAVIGATION_CONTENT)

@@ -2,8 +2,9 @@ package com.lee.playandroid.me
 
 import com.google.auto.service.AutoService
 import com.lee.playandroid.library.common.entity.Data
+import com.lee.playandroid.library.common.extensions.createApi
 import com.lee.playandroid.library.service.MeService
-import com.lee.playandroid.me.model.repository.ApiRepository
+import com.lee.playandroid.me.model.api.ApiService
 
 /**
  * @author jv.lee
@@ -14,7 +15,7 @@ import com.lee.playandroid.me.model.repository.ApiRepository
 class MeServiceImpl : MeService {
 
     override suspend fun requestCollectAsync(id: Long): Data<String> {
-        return ApiRepository().api.postCollectAsync(id)
+        return createApi<ApiService>().postCollectAsync(id)
     }
 
 }

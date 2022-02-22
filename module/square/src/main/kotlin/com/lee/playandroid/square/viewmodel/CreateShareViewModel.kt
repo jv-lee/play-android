@@ -6,10 +6,11 @@ import com.lee.library.mvvm.ui.UiState
 import com.lee.library.mvvm.ui.UiStateLiveData
 import com.lee.library.mvvm.ui.UiStateMutableLiveData
 import com.lee.library.mvvm.ui.stateFlow
-import com.lee.library.mvvm.base.CoroutineViewModel
+import com.lee.library.mvvm.vm.CoroutineViewModel
 import com.lee.playandroid.library.common.constants.ApiConstants
+import com.lee.playandroid.library.common.extensions.createApi
 import com.lee.playandroid.square.R
-import com.lee.playandroid.square.model.repository.ApiRepository
+import com.lee.playandroid.square.model.api.ApiService
 import kotlinx.coroutines.flow.collect
 
 /**
@@ -19,7 +20,7 @@ import kotlinx.coroutines.flow.collect
  */
 class CreateShareViewModel : CoroutineViewModel() {
 
-    private val apiRepository = ApiRepository()
+    private val api = createApi<ApiService>()
 
     private val _sendLive = UiStateMutableLiveData()
     val sendLive: UiStateLiveData = _sendLive
@@ -32,7 +33,7 @@ class CreateShareViewModel : CoroutineViewModel() {
         }
         launchIO {
             stateFlow {
-                val response = apiRepository.api.postShareDataSync(title, content)
+                val response = api.postShareDataSync(title, content)
                 if (response.errorCode == ApiConstants.REQUEST_OK) {
                     app.getString(R.string.share_success)
                 } else {

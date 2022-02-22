@@ -8,15 +8,16 @@ import com.lee.library.mvvm.ui.UiState
 import com.lee.library.mvvm.ui.UiStateLiveData
 import com.lee.library.mvvm.ui.UiStateMutableLiveData
 import com.lee.library.mvvm.ui.stateCacheFlow
-import com.lee.library.mvvm.base.CoroutineViewModel
+import com.lee.library.mvvm.vm.CoroutineViewModel
 import com.lee.library.tools.PreferencesTools
 import com.lee.library.utils.LogUtil
 import com.lee.playandroid.account.constants.Constants
-import com.lee.playandroid.account.model.repository.ApiRepository
+import com.lee.playandroid.account.model.api.ApiService
 import com.lee.playandroid.library.common.BuildConfig
 import com.lee.playandroid.library.common.constants.ApiConstants
 import com.lee.playandroid.library.common.entity.AccountData
 import com.lee.playandroid.library.common.extensions.checkData
+import com.lee.playandroid.library.common.extensions.createApi
 import kotlinx.coroutines.flow.collect
 
 /**
@@ -29,7 +30,7 @@ class AccountViewModel : CoroutineViewModel() {
 
     private val cacheManager = CacheManager.getDefault()
 
-    private val repository = ApiRepository()
+    private val api = createApi<ApiService>()
 
     private val _accountLive = UiStateMutableLiveData()
     val accountLive: UiStateLiveData = _accountLive
@@ -39,7 +40,7 @@ class AccountViewModel : CoroutineViewModel() {
      */
     suspend fun requestAccountInfo() {
         stateCacheFlow({
-            repository.api.getAccountInfoAsync().checkData().apply {
+            api.getAccountInfoAsync().checkData().apply {
                 updateAccountStatus(this, true)
             }
         }, {
@@ -59,7 +60,7 @@ class AccountViewModel : CoroutineViewModel() {
     ) {
         launchMain {
             showLoading()
-            val response = withIO { repository.api.getLogoutAsync() }
+            val response = withIO { api.getLogoutAsync() }
             if (response.errorCode == ApiConstants.REQUEST_OK) {
                 updateAccountStatus(null, false)
                 _accountLive.postValue(UiState.Default)

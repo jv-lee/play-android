@@ -6,10 +6,11 @@ import com.lee.library.extensions.putCache
 import com.lee.library.mvvm.ui.UiStateLiveData
 import com.lee.library.mvvm.ui.UiStateMutableLiveData
 import com.lee.library.mvvm.ui.stateCacheFlow
-import com.lee.library.mvvm.base.CoroutineViewModel
+import com.lee.library.mvvm.vm.CoroutineViewModel
 import com.lee.playandroid.library.common.extensions.checkData
+import com.lee.playandroid.library.common.extensions.createApi
 import com.lee.playandroid.official.constants.Constants
-import com.lee.playandroid.official.model.repository.ApiRepository
+import com.lee.playandroid.official.model.api.ApiService
 import kotlinx.coroutines.flow.collect
 
 /**
@@ -21,7 +22,7 @@ class OfficialViewModel : CoroutineViewModel() {
 
     private val cacheManager = CacheManager.getDefault()
 
-    private val repository = ApiRepository()
+    private val api = createApi<ApiService>()
 
     private val _tabsLive = UiStateMutableLiveData()
     val tabsLive: UiStateLiveData = _tabsLive
@@ -29,7 +30,7 @@ class OfficialViewModel : CoroutineViewModel() {
     fun requestTabs() {
         launchIO {
             stateCacheFlow({
-                repository.api.getOfficialTabsAsync().checkData()
+                api.getOfficialTabsAsync().checkData()
             }, {
                 cacheManager.getCache(Constants.CACHE_KEY_OFFICIAL_TAB)
             }, {

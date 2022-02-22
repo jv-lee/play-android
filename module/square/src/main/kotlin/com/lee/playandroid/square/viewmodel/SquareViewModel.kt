@@ -4,11 +4,12 @@ import com.lee.library.cache.CacheManager
 import com.lee.library.extensions.getCache
 import com.lee.library.extensions.putPageCache
 import com.lee.library.mvvm.annotation.LoadStatus
-import com.lee.library.mvvm.base.CoroutineViewModel
 import com.lee.library.mvvm.ui.*
+import com.lee.library.mvvm.vm.CoroutineViewModel
 import com.lee.playandroid.library.common.extensions.checkData
+import com.lee.playandroid.library.common.extensions.createApi
 import com.lee.playandroid.square.constants.Constants.CACHE_KEY_SQUARE_CONTENT
-import com.lee.playandroid.square.model.repository.ApiRepository
+import com.lee.playandroid.square.model.api.ApiService
 
 /**
  * @author jv.lee
@@ -19,7 +20,7 @@ class SquareViewModel : CoroutineViewModel() {
 
     private val cacheManager = CacheManager.getDefault()
 
-    private val repository = ApiRepository()
+    private val api = createApi<ApiService>()
 
     private val _squareLive = UiStatePageMutableLiveData(UiStatePage.Default(0))
     val squareLive: UiStatePageLiveData = _squareLive
@@ -27,7 +28,7 @@ class SquareViewModel : CoroutineViewModel() {
     fun requestSquareData(@LoadStatus status: Int) {
         launchIO {
             _squareLive.pageLaunch(status, { page ->
-                applyData { repository.api.getSquareDataSync(page).checkData() }
+                applyData { api.getSquareDataSync(page).checkData() }
             }, {
                 cacheManager.getCache(CACHE_KEY_SQUARE_CONTENT)
             }, {

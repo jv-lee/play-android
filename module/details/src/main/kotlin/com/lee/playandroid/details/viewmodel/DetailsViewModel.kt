@@ -5,7 +5,7 @@ import com.lee.library.mvvm.ui.UiState
 import com.lee.library.mvvm.ui.UiStateLiveData
 import com.lee.library.mvvm.ui.UiStateMutableLiveData
 import com.lee.library.mvvm.ui.stateFlow
-import com.lee.library.mvvm.base.CoroutineViewModel
+import com.lee.library.mvvm.vm.CoroutineViewModel
 import com.lee.playandroid.details.ui.DetailsFragment
 import com.lee.playandroid.library.common.constants.ApiConstants
 import com.lee.playandroid.library.service.MeService

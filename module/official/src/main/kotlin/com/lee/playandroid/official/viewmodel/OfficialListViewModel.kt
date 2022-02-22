@@ -6,10 +6,11 @@ import com.lee.library.extensions.getCache
 import com.lee.library.extensions.putPageCache
 import com.lee.library.mvvm.annotation.LoadStatus
 import com.lee.library.mvvm.ui.*
-import com.lee.library.mvvm.base.CoroutineViewModel
+import com.lee.library.mvvm.vm.CoroutineViewModel
 import com.lee.playandroid.library.common.extensions.checkData
+import com.lee.playandroid.library.common.extensions.createApi
 import com.lee.playandroid.official.constants.Constants
-import com.lee.playandroid.official.model.repository.ApiRepository
+import com.lee.playandroid.official.model.api.ApiService
 import com.lee.playandroid.official.ui.OfficialListFragment
 
 /**
@@ -23,7 +24,7 @@ class OfficialListViewModel(handle: SavedStateHandle) : CoroutineViewModel() {
 
     private val cacheManager = CacheManager.getDefault()
 
-    private val repository = ApiRepository()
+    private val api = createApi<ApiService>()
 
     private val _contentListLive = UiStatePageMutableLiveData(UiStatePage.Default(1))
     val contentListLive: UiStatePageLiveData = _contentListLive
@@ -31,7 +32,7 @@ class OfficialListViewModel(handle: SavedStateHandle) : CoroutineViewModel() {
     fun requestContentList(@LoadStatus status: Int) {
         launchIO {
             _contentListLive.pageLaunch(status, { page ->
-                applyData { repository.api.getOfficialDataAsync(id, page).checkData() }
+                applyData { api.getOfficialDataAsync(id, page).checkData() }
             }, {
                 cacheManager.getCache(Constants.CACHE_KEY_OFFICIAL_DATA + id)
             }, {

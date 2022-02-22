@@ -6,11 +6,12 @@ import com.lee.library.extensions.getCache
 import com.lee.library.extensions.putCache
 import com.lee.library.mvvm.ui.UiState
 import com.lee.library.mvvm.ui.uiState
-import com.lee.library.mvvm.base.CoroutineViewModel
+import com.lee.library.mvvm.vm.CoroutineViewModel
 import com.lee.playandroid.library.common.entity.Data
 import com.lee.playandroid.library.common.entity.ParentTab
 import com.lee.playandroid.library.common.extensions.checkData
-import com.lee.playandroid.search.model.repository.ApiRepository
+import com.lee.playandroid.library.common.extensions.createApi
+import com.lee.playandroid.search.model.api.ApiService
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
 import retrofit2.http.GET
@@ -23,7 +24,7 @@ import retrofit2.http.GET
 @Deprecated("不好用")
 class TestFlowViewModel : CoroutineViewModel() {
 
-    private val repository = ApiRepository()
+    private val api = createApi<ApiService>()
 
     private val cacheManager = CacheManager.getDefault()
 

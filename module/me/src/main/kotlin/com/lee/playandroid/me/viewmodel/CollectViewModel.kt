@@ -6,13 +6,14 @@ import com.lee.library.extensions.putCache
 import com.lee.library.extensions.putPageCache
 import com.lee.library.mvvm.annotation.LoadStatus
 import com.lee.library.mvvm.ui.*
-import com.lee.library.mvvm.base.CoroutineViewModel
+import com.lee.library.mvvm.vm.CoroutineViewModel
 import com.lee.playandroid.library.common.constants.ApiConstants
 import com.lee.playandroid.library.common.entity.Content
 import com.lee.playandroid.library.common.entity.PageData
 import com.lee.playandroid.library.common.extensions.checkData
+import com.lee.playandroid.library.common.extensions.createApi
 import com.lee.playandroid.me.constants.Constants
-import com.lee.playandroid.me.model.repository.ApiRepository
+import com.lee.playandroid.me.model.api.ApiService
 import kotlinx.coroutines.flow.collect
 import java.util.concurrent.atomic.AtomicBoolean
 
@@ -25,7 +26,7 @@ class CollectViewModel : CoroutineViewModel() {
 
     private val cacheManager = CacheManager.getDefault()
 
-    private val repository = ApiRepository()
+    private val api = createApi<ApiService>()
 
     private val deleteLock = AtomicBoolean(false)
 
@@ -42,7 +43,7 @@ class CollectViewModel : CoroutineViewModel() {
     fun requestCollect(@LoadStatus status: Int) {
         launchIO {
             _collectLive.pageLaunch(status, { page ->
-                applyData { repository.api.getCollectListAsync(page).checkData() }
+                applyData { api.getCollectListAsync(page).checkData() }
             }, {
                 cacheManager.getCache(Constants.CACHE_KEY_COLLECT)
             }, {
@@ -64,7 +65,7 @@ class CollectViewModel : CoroutineViewModel() {
                 val data = collectLive.getValueData<PageData<Content>>()!!
                 val item = data.data[position]
 
-                val response = repository.api.postUnCollectAsync(item.id, item.originId)
+                val response = api.postUnCollectAsync(item.id, item.originId)
                 if (response.errorCode == ApiConstants.REQUEST_OK) {
                     removeCacheItem(item)
                     position

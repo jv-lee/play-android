@@ -3,13 +3,14 @@ package com.lee.playandroid.todo.viewmodel
 import com.lee.library.mvvm.ui.UiStateLiveData
 import com.lee.library.mvvm.ui.UiStateMutableLiveData
 import com.lee.library.mvvm.ui.stateFlow
-import com.lee.library.mvvm.base.CoroutineViewModel
+import com.lee.library.mvvm.vm.CoroutineViewModel
 import com.lee.library.tools.PreferencesTools
 import com.lee.playandroid.library.common.entity.TodoData
 import com.lee.playandroid.library.common.extensions.checkData
+import com.lee.playandroid.library.common.extensions.createApi
 import com.lee.playandroid.todo.constants.Constants.SP_KEY_TODO_TYPE
+import com.lee.playandroid.todo.model.api.ApiService
 import com.lee.playandroid.todo.model.entity.TodoType
-import com.lee.playandroid.todo.model.repository.ApiRepository
 import kotlinx.coroutines.flow.collect
 
 /**
@@ -19,7 +20,7 @@ import kotlinx.coroutines.flow.collect
  */
 class CreateTodoViewModel : CoroutineViewModel() {
 
-    private val apiRepository = ApiRepository()
+    private val api = createApi<ApiService>()
 
     private val _todoLive = UiStateMutableLiveData()
     val todoLive: UiStateLiveData = _todoLive
@@ -31,7 +32,7 @@ class CreateTodoViewModel : CoroutineViewModel() {
                     throw RuntimeException("title or content is not empty.")
                 }
                 val type = PreferencesTools.get(SP_KEY_TODO_TYPE, TodoType.DEFAULT)
-                apiRepository.api.postAddTodoAsync(
+                api.postAddTodoAsync(
                     title,
                     content,
                     date,
@@ -51,7 +52,7 @@ class CreateTodoViewModel : CoroutineViewModel() {
                     if (title.isEmpty() || content.isEmpty()) {
                         throw RuntimeException("title or content is not empty.")
                     }
-                    apiRepository.api.postUpdateTodoAsync(
+                    api.postUpdateTodoAsync(
                         id, title, content, dateStr, type, priority, status
                     ).checkData()
                 }.collect {

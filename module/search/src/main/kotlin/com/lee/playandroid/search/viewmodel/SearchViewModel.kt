@@ -4,7 +4,7 @@ import com.lee.library.mvvm.ui.UiState
 import com.lee.library.mvvm.ui.UiStateMutableStateFlow
 import com.lee.library.mvvm.ui.UiStateStateFlow
 import com.lee.library.mvvm.ui.stateUpdate
-import com.lee.library.mvvm.base.CoroutineViewModel
+import com.lee.library.mvvm.vm.CoroutineViewModel
 import com.lee.playandroid.library.common.entity.SearchHistory
 import com.lee.playandroid.search.db.SearchHistoryDatabase
 import com.lee.playandroid.search.helper.SearchHelper

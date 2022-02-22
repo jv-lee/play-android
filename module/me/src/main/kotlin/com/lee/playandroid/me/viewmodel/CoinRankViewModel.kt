@@ -4,11 +4,12 @@ import com.lee.library.cache.CacheManager
 import com.lee.library.extensions.getCache
 import com.lee.library.extensions.putPageCache
 import com.lee.library.mvvm.annotation.LoadStatus
-import com.lee.library.mvvm.base.CoroutineViewModel
 import com.lee.library.mvvm.ui.*
+import com.lee.library.mvvm.vm.CoroutineViewModel
 import com.lee.playandroid.library.common.extensions.checkData
+import com.lee.playandroid.library.common.extensions.createApi
 import com.lee.playandroid.me.constants.Constants.CACHE_KEY_COIN_RANK
-import com.lee.playandroid.me.model.repository.ApiRepository
+import com.lee.playandroid.me.model.api.ApiService
 import java.util.*
 
 /**
@@ -20,7 +21,7 @@ class CoinRankViewModel : CoroutineViewModel() {
 
     private val cacheManager = CacheManager.getDefault()
 
-    private val repository = ApiRepository()
+    private val api = createApi<ApiService>()
 
     private val _coinRankLive = UiStatePageMutableLiveData(UiStatePage.Default(1))
     val coinRankLive: UiStatePageLiveData = _coinRankLive
@@ -28,7 +29,7 @@ class CoinRankViewModel : CoroutineViewModel() {
     fun requestCoinRank(@LoadStatus status: Int) {
         launchIO {
             _coinRankLive.pageLaunch(status, { page ->
-                repository.api.getCoinRankAsync(page).checkData().also { newData ->
+                api.getCoinRankAsync(page).checkData().also { newData ->
                     //排行榜UI显示 0 —><- 1 位置数据对掉
                     if (page == _coinRankLive.requestFirstPage && newData.size >= 2) {
                         Collections.swap(newData.data, 0, 1)

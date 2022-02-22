@@ -8,17 +8,18 @@ import com.lee.library.extensions.getCache
 import com.lee.library.extensions.putCache
 import com.lee.library.extensions.putPageCache
 import com.lee.library.mvvm.annotation.LoadStatus
-import com.lee.library.mvvm.base.CoroutineViewModel
 import com.lee.library.mvvm.ui.*
+import com.lee.library.mvvm.vm.CoroutineViewModel
 import com.lee.library.tools.PreferencesTools
 import com.lee.playandroid.library.common.constants.ApiConstants
 import com.lee.playandroid.library.common.entity.PageData
 import com.lee.playandroid.library.common.entity.TodoData
 import com.lee.playandroid.library.common.extensions.checkData
+import com.lee.playandroid.library.common.extensions.createApi
 import com.lee.playandroid.todo.constants.Constants
 import com.lee.playandroid.todo.constants.Constants.SP_KEY_TODO_TYPE
+import com.lee.playandroid.todo.model.api.ApiService
 import com.lee.playandroid.todo.model.entity.TodoType
-import com.lee.playandroid.todo.model.repository.ApiRepository
 import com.lee.playandroid.todo.ui.TodoListFragment.Companion.ARG_PARAMS_STATUS
 import com.lee.playandroid.todo.ui.TodoListFragment.Companion.ARG_STATUS_COMPLETE
 import com.lee.playandroid.todo.ui.TodoListFragment.Companion.ARG_STATUS_UPCOMING
@@ -40,7 +41,7 @@ class TodoListViewModel(handle: SavedStateHandle) : CoroutineViewModel() {
 
     private val cacheManager = CacheManager.getDefault()
 
-    private val apiRepository = ApiRepository()
+    private val api = createApi<ApiService>()
 
     private val deleteLock = AtomicBoolean(false)
     private val updateLock = AtomicBoolean(false)
@@ -58,7 +59,7 @@ class TodoListViewModel(handle: SavedStateHandle) : CoroutineViewModel() {
         launchIO {
             _todoDataLive.pageLaunch(status, { page ->
                 applyData {
-                    apiRepository.api.postTodoDataAsync(page, requestStatus, requestType)
+                    api.postTodoDataAsync(page, requestStatus, requestType)
                         .checkData()
                 }
             }, {
@@ -78,7 +79,7 @@ class TodoListViewModel(handle: SavedStateHandle) : CoroutineViewModel() {
                 val data = todoDataLive.getValueData<PageData<TodoData>>()!!
                 val item = data.data[position]
 
-                val response = apiRepository.api.postDeleteTodoAsync(item.id)
+                val response = api.postDeleteTodoAsync(item.id)
                 if (response.errorCode == ApiConstants.REQUEST_OK) {
                     removeCacheItem(item)
                     position
@@ -103,7 +104,7 @@ class TodoListViewModel(handle: SavedStateHandle) : CoroutineViewModel() {
 
                 val newItem =
                     item.copy(status = if (requestStatus == ARG_STATUS_UPCOMING) ARG_STATUS_COMPLETE else ARG_STATUS_UPCOMING)
-                val response = apiRepository.api.postUpdateTodoStatusAsync(item.id, newItem.status)
+                val response = api.postUpdateTodoStatusAsync(item.id, newItem.status)
                 if (response.errorCode == ApiConstants.REQUEST_OK) {
                     // 根据数据源删除item
                     removeCacheItem(item)
