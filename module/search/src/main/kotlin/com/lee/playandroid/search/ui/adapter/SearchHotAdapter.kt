@@ -1,6 +1,7 @@
 package com.lee.playandroid.search.ui.adapter
 
 import android.content.Context
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.viewbinding.ViewBinding
@@ -8,8 +9,8 @@ import com.lee.library.adapter.binding.ViewBindingAdapter
 import com.lee.library.adapter.binding.ViewBindingHolder
 import com.lee.library.adapter.item.ViewBindingItem
 import com.lee.playandroid.search.databinding.ItemSearchHotBinding
-import com.lee.playandroid.search.extensions.getRandomColor
-import com.lee.playandroid.search.helper.SearchHot
+import com.lee.playandroid.search.model.local.SearchHot
+import java.util.*
 
 /**
  * @author jv.lee
@@ -36,5 +37,14 @@ class SearchHotAdapter(context: Context, data: List<SearchHot>) :
             }
         }
 
+    }
+
+    private fun getRandomColor(): Int {
+        val random = Random()
+        return Color.rgb(
+            random.nextInt(256),
+            random.nextInt(256),
+            random.nextInt(256)
+        )
     }
 }

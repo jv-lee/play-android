@@ -1,11 +1,10 @@
-package com.lee.playandroid.search.db
+package com.lee.playandroid.search.model.db
 
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.lee.playandroid.library.common.entity.SearchHistory
-import com.lee.playandroid.search.db.dao.SearchHistoryDao
 
 /**
  * @author jv.lee

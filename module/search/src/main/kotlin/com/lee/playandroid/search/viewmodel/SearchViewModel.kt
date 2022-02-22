@@ -6,8 +6,8 @@ import com.lee.library.mvvm.ui.UiStateStateFlow
 import com.lee.library.mvvm.ui.stateUpdate
 import com.lee.library.mvvm.vm.CoroutineViewModel
 import com.lee.playandroid.library.common.entity.SearchHistory
-import com.lee.playandroid.search.db.SearchHistoryDatabase
-import com.lee.playandroid.search.helper.SearchHelper
+import com.lee.playandroid.search.model.db.SearchHistoryDatabase
+import com.lee.playandroid.search.model.local.LocalSearch
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 
@@ -29,7 +29,7 @@ class SearchViewModel : CoroutineViewModel() {
      */
     private fun requestSearchHotData() {
         launchIO {
-            _searchHotFlow.stateUpdate { SearchHelper.getHotCategory() }
+            _searchHotFlow.stateUpdate { LocalSearch.getHotCategory() }
         }
     }
 

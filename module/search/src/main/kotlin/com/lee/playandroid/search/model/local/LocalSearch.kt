@@ -1,11 +1,11 @@
-package com.lee.playandroid.search.helper
+package com.lee.playandroid.search.model.local
 
 /**
  * @author jv.lee
  * @date 2021/11/4
  * @description 热门搜索词条数据帮助类
  */
-object SearchHelper {
+object LocalSearch {
 
     /**
      * 提供热门搜索词条
