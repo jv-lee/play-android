@@ -24,9 +24,9 @@ import java.util.concurrent.atomic.AtomicBoolean
  */
 class CollectViewModel : CoroutineViewModel() {
 
-    private val cacheManager = CacheManager.getDefault()
-
     private val api = createApi<ApiService>()
+
+    private val cacheManager = CacheManager.getDefault()
 
     private val deleteLock = AtomicBoolean(false)
 

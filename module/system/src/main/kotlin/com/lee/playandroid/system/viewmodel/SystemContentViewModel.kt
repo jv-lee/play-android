@@ -20,9 +20,9 @@ import kotlinx.coroutines.flow.collect
  */
 class SystemContentViewModel : CoroutineViewModel() {
 
-    private val cacheManager = CacheManager.getDefault()
-
     private val api = createApi<ApiService>()
+
+    private val cacheManager = CacheManager.getDefault()
 
     private val _parentTabLive = UiStateMutableLiveData()
     val parentTabLive: UiStateLiveData = _parentTabLive

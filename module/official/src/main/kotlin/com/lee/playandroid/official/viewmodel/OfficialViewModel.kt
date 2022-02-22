@@ -20,9 +20,9 @@ import kotlinx.coroutines.flow.collect
  */
 class OfficialViewModel : CoroutineViewModel() {
 
-    private val cacheManager = CacheManager.getDefault()
-
     private val api = createApi<ApiService>()
+
+    private val cacheManager = CacheManager.getDefault()
 
     private val _tabsLive = UiStateMutableLiveData()
     val tabsLive: UiStateLiveData = _tabsLive

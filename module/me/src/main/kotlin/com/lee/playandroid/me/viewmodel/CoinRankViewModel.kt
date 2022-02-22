@@ -19,9 +19,9 @@ import java.util.*
  */
 class CoinRankViewModel : CoroutineViewModel() {
 
-    private val cacheManager = CacheManager.getDefault()
-
     private val api = createApi<ApiService>()
+
+    private val cacheManager = CacheManager.getDefault()
 
     private val _coinRankLive = UiStatePageMutableLiveData(UiStatePage.Default(1))
     val coinRankLive: UiStatePageLiveData = _coinRankLive

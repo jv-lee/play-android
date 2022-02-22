@@ -22,9 +22,9 @@ import kotlinx.coroutines.flow.collect
  */
 class NavigationViewModel : CoroutineViewModel() {
 
-    private val cacheManager = CacheManager.getDefault()
-
     private val api = createApi<ApiService>()
+
+    private val cacheManager = CacheManager.getDefault()
 
     private val _navigationLive = UiStateMutableLiveData()
     val navigationLive: UiStateLiveData = _navigationLive

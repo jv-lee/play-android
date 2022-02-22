@@ -1,7 +1,5 @@
 package com.lee.playandroid.todo.viewmodel
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import com.lee.library.cache.CacheManager
 import com.lee.library.extensions.getCache
@@ -39,9 +37,9 @@ class TodoListViewModel(handle: SavedStateHandle) : CoroutineViewModel() {
 
     private var cacheKey = Constants.CACHE_KEY_TODO_CONTENT + requestStatus + requestType
 
-    private val cacheManager = CacheManager.getDefault()
-
     private val api = createApi<ApiService>()
+
+    private val cacheManager = CacheManager.getDefault()
 
     private val deleteLock = AtomicBoolean(false)
     private val updateLock = AtomicBoolean(false)
@@ -52,8 +50,8 @@ class TodoListViewModel(handle: SavedStateHandle) : CoroutineViewModel() {
     private val _todoUpdateLive = UiStateMutableLiveData()
     val todoUpdateLive: UiStateLiveData = _todoUpdateLive
 
-    private val _todoDataLive = MutableLiveData<UiStatePage>(UiStatePage.Default(1))
-    val todoDataLive: LiveData<UiStatePage> = _todoDataLive
+    private val _todoDataLive = UiStatePageMutableLiveData(UiStatePage.Default(1))
+    val todoDataLive: UiStatePageLiveData = _todoDataLive
 
     fun requestTodoData(@LoadStatus status: Int) {
         launchIO {

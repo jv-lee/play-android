@@ -18,9 +18,9 @@ import com.lee.playandroid.me.model.api.ApiService
  */
 class CoinViewModel : CoroutineViewModel() {
 
-    private val cacheManager = CacheManager.getDefault()
-
     private val api = createApi<ApiService>()
+
+    private val cacheManager = CacheManager.getDefault()
 
     private val _coinRecordLive = UiStatePageMutableLiveData(UiStatePage.Default(1))
     val coinRecordLive: UiStatePageLiveData = _coinRecordLive

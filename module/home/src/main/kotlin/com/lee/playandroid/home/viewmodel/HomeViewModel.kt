@@ -22,9 +22,9 @@ import com.lee.playandroid.library.common.extensions.createApi
  */
 class HomeViewModel : CoroutineViewModel() {
 
-    private val cacheManager = CacheManager.getDefault()
-
     private val api = createApi<ApiService>()
+
+    private val cacheManager = CacheManager.getDefault()
 
     private val _contentListLive = UiStatePageMutableLiveData(UiStatePage.Default(0))
     val contentListLive: UiStatePageLiveData = _contentListLive

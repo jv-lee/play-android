@@ -18,9 +18,9 @@ import com.lee.playandroid.square.model.api.ApiService
  */
 class SquareViewModel : CoroutineViewModel() {
 
-    private val cacheManager = CacheManager.getDefault()
-
     private val api = createApi<ApiService>()
+
+    private val cacheManager = CacheManager.getDefault()
 
     private val _squareLive = UiStatePageMutableLiveData(UiStatePage.Default(0))
     val squareLive: UiStatePageLiveData = _squareLive

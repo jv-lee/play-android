@@ -22,9 +22,9 @@ class OfficialListViewModel(handle: SavedStateHandle) : CoroutineViewModel() {
 
     private val id: Long by lazy { handle[OfficialListFragment.ARG_PARAMS_ID] ?: 0 }
 
-    private val cacheManager = CacheManager.getDefault()
-
     private val api = createApi<ApiService>()
+
+    private val cacheManager = CacheManager.getDefault()
 
     private val _contentListLive = UiStatePageMutableLiveData(UiStatePage.Default(1))
     val contentListLive: UiStatePageLiveData = _contentListLive
