@@ -68,7 +68,7 @@ fun Project.appConfigure(
         buildTypes {
             getByName(BuildTypes.DEBUG) {
                 applicationIdSuffix = ".debug"
-                manifestPlaceholders["app_name"] = "Play\nDebug"
+                manifestPlaceholders["app_name"] = "Debug\nAndroid"
                 isMinifyEnabled = BuildDebug.isMinifyEnabled //混淆模式
                 isZipAlignEnabled = BuildDebug.zipAlignEnabled
                 proguardFiles("proguard-android-optimize.txt", "proguard-rules.pro")
