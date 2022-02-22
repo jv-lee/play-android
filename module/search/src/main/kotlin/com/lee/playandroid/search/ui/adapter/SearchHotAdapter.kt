@@ -9,7 +9,7 @@ import com.lee.library.adapter.binding.ViewBindingAdapter
 import com.lee.library.adapter.binding.ViewBindingHolder
 import com.lee.library.adapter.item.ViewBindingItem
 import com.lee.playandroid.search.databinding.ItemSearchHotBinding
-import com.lee.playandroid.search.model.local.SearchHot
+import com.lee.playandroid.search.model.entity.SearchHot
 import java.util.*
 
 /**

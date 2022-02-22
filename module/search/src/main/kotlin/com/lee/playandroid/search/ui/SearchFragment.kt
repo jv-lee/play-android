@@ -17,7 +17,7 @@ import com.lee.playandroid.library.common.extensions.actionFailed
 import com.lee.playandroid.search.R
 import com.lee.playandroid.search.constants.Constants
 import com.lee.playandroid.search.databinding.FragmentSearchBinding
-import com.lee.playandroid.search.model.local.SearchHot
+import com.lee.playandroid.search.model.entity.SearchHot
 import com.lee.playandroid.search.ui.adapter.SearchHistoryAdapter
 import com.lee.playandroid.search.ui.adapter.SearchHotAdapter
 import com.lee.playandroid.search.viewmodel.SearchViewModel
