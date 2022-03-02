@@ -70,7 +70,6 @@ class DarkModeTools(val context: Context) {
      */
     @SuppressLint("CommitPrefEdits")
     fun updateSystemTheme(enable: Boolean) {
-        nightEnable = !enable
         if (enable) {
             preferences.edit().putInt(modeKey, AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM).apply()
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
@@ -84,7 +83,6 @@ class DarkModeTools(val context: Context) {
      */
     @SuppressLint("CommitPrefEdits")
     fun updateNightTheme(enable: Boolean) {
-        if (!nightEnable) return
         if (enable) {
             preferences.edit().putInt(modeKey, AppCompatDelegate.MODE_NIGHT_YES).apply()
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
