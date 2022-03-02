@@ -10,6 +10,10 @@ import com.lee.library.adapter.binding.ViewBindingHolder
 import com.lee.library.adapter.item.ViewBindingItem
 import com.lee.library.utils.TimeUtil
 import com.lee.playandroid.library.common.entity.Content
+import com.lee.playandroid.library.common.extensions.getAuthor
+import com.lee.playandroid.library.common.extensions.getCategory
+import com.lee.playandroid.library.common.extensions.getDateFormat
+import com.lee.playandroid.library.common.extensions.getTitle
 import com.lee.playandroid.square.databinding.ItemSquareBinding
 
 /**
@@ -33,16 +37,10 @@ class SquareAdapter(context: Context, data: List<Content>) :
         override fun convert(holder: ViewBindingHolder, entity: Content, position: Int) {
             holder.getViewBinding<ItemSquareBinding>().apply {
                 entity.apply {
-                    tvTitle.text = HtmlCompat.fromHtml(title, HtmlCompat.FROM_HTML_MODE_LEGACY)
-                    tvAuthor.text = if (author.isEmpty()) shareUser else author
-                    tvTime.text = TimeUtil.getChineseTimeMill(publishTime)
-
-                    tvCategory.text = when {
-                        superChapterName.isNotEmpty() and chapterName.isNotEmpty() -> "$superChapterName / $chapterName"
-                        superChapterName.isNotEmpty() -> superChapterName
-                        chapterName.isNotEmpty() -> chapterName
-                        else -> ""
-                    }
+                    tvTitle.text = getTitle()
+                    tvAuthor.text = getAuthor()
+                    tvTime.text = getDateFormat()
+                    tvCategory.text = getCategory()
                 }
 
             }

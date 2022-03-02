@@ -12,6 +12,9 @@ import com.lee.library.adapter.item.ViewBindingItem
 import com.lee.library.base.ApplicationExtensions.app
 import com.lee.library.utils.TimeUtil
 import com.lee.playandroid.library.common.entity.Content
+import com.lee.playandroid.library.common.extensions.getAuthor
+import com.lee.playandroid.library.common.extensions.getDateFormat
+import com.lee.playandroid.library.common.extensions.getTitle
 import com.lee.playandroid.library.common.tools.GlideTools
 import com.lee.playandroid.project.R
 import com.lee.playandroid.project.databinding.ItemProjectBinding
@@ -42,10 +45,10 @@ class ProjectListAdapter(context: Context, data: List<Content>) :
                         .build()
                     GlideTools.get().loadImage(envelopePic, ivImage)
 
-                    tvTitle.text = HtmlCompat.fromHtml(title, HtmlCompat.FROM_HTML_MODE_LEGACY)
+                    tvTitle.text = getTitle()
                     tvDescription.text = desc
-                    tvAuthor.text = if (author.isEmpty()) shareUser else author
-                    tvTime.text = TimeUtil.getChineseTimeMill(publishTime)
+                    tvAuthor.text = getAuthor()
+                    tvTime.text = getDateFormat()
                 }
             }
         }

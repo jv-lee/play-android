@@ -7,10 +7,11 @@ import androidx.viewbinding.ViewBinding
 import com.lee.library.adapter.binding.ViewBindingAdapter
 import com.lee.library.adapter.binding.ViewBindingHolder
 import com.lee.library.adapter.item.ViewBindingItem
-import com.lee.library.utils.TimeUtil
 import com.lee.playandroid.library.common.R
 import com.lee.playandroid.library.common.databinding.ItemSimpleTextBinding
 import com.lee.playandroid.library.common.entity.Content
+import com.lee.playandroid.library.common.extensions.getDateFormat
+import com.lee.playandroid.library.common.extensions.getTitle
 
 /**
  * @author jv.lee
@@ -32,8 +33,8 @@ class SimpleTextAdapter(context: Context, data: List<Content>) :
 
         override fun convert(holder: ViewBindingHolder, entity: Content, position: Int) {
             holder.getViewBinding<ItemSimpleTextBinding>().apply {
-                tvTitle.text = entity.title
-                tvTime.text = TimeUtil.getChineseTimeMill(entity.publishTime)
+                tvTitle.text = entity.getTitle()
+                tvTime.text = entity.getDateFormat()
             }
         }
 

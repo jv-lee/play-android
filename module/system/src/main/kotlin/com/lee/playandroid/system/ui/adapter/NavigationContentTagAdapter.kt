@@ -8,6 +8,7 @@ import com.lee.library.adapter.binding.ViewBindingAdapter
 import com.lee.library.adapter.binding.ViewBindingHolder
 import com.lee.library.adapter.item.ViewBindingItem
 import com.lee.playandroid.library.common.entity.Content
+import com.lee.playandroid.library.common.extensions.getTitle
 import com.lee.playandroid.system.databinding.ItemNavigationContentTagBinding
 
 /**
@@ -33,7 +34,7 @@ class NavigationContentTagAdapter(context: Context, data: List<Content>) :
 
         override fun convert(holder: ViewBindingHolder, entity: Content, position: Int) {
             holder.getViewBinding<ItemNavigationContentTagBinding>().apply {
-                tvTag.text = entity.title
+                tvTag.text = entity.getTitle()
             }
         }
     }

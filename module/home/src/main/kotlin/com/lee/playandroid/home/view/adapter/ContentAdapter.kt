@@ -5,20 +5,22 @@ import android.net.Uri
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
-import androidx.core.text.HtmlCompat
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewbinding.ViewBinding
 import com.lee.library.adapter.binding.ViewBindingAdapter
 import com.lee.library.adapter.binding.ViewBindingHolder
 import com.lee.library.adapter.item.ViewBindingItem
-import com.lee.library.utils.TimeUtil
 import com.lee.library.widget.banner.holder.CardImageCreateHolder
 import com.lee.playandroid.home.bean.HomeContent
 import com.lee.playandroid.home.databinding.ItemContentBannerBinding
 import com.lee.playandroid.home.databinding.ItemContentCategoryBinding
 import com.lee.playandroid.home.databinding.ItemContentTextBinding
 import com.lee.playandroid.library.common.entity.Banner
+import com.lee.playandroid.library.common.extensions.getAuthor
+import com.lee.playandroid.library.common.extensions.getCategory
+import com.lee.playandroid.library.common.extensions.getDateFormat
+import com.lee.playandroid.library.common.extensions.getTitle
 import com.lee.playandroid.library.common.tools.GlideTools
 import com.lee.playandroid.router.NavigationAnim
 import com.lee.playandroid.router.navigateDeepLink
@@ -135,20 +137,12 @@ class ContentAdapter(context: Context, data: List<HomeContent>) :
 
         override fun convert(holder: ViewBindingHolder, entity: HomeContent, position: Int) {
             holder.getViewBinding<ItemContentTextBinding>().apply {
-
                 entity.content?.apply {
-                    tvTitle.text = HtmlCompat.fromHtml(title, HtmlCompat.FROM_HTML_MODE_LEGACY)
-                    tvAuthor.text = if (author.isEmpty()) shareUser else author
-                    tvTime.text = TimeUtil.getChineseTimeMill(publishTime)
-
-                    tvCategory.text = when {
-                        superChapterName.isNotEmpty() and chapterName.isNotEmpty() -> "$superChapterName / $chapterName"
-                        superChapterName.isNotEmpty() -> superChapterName
-                        chapterName.isNotEmpty() -> chapterName
-                        else -> ""
-                    }
+                    tvTitle.text = getTitle()
+                    tvAuthor.text = getAuthor()
+                    tvTime.text = getDateFormat()
+                    tvCategory.text = getCategory()
                 }
-
             }
         }
 
