@@ -32,7 +32,6 @@ class DarkModeTools(val context: Context) {
         }
     }
 
-    private var nightEnable = true
     private val modeKey = "dark_mode"
     private val preferences =
         context.applicationContext.getSharedPreferences(modeKey, Context.MODE_PRIVATE)
