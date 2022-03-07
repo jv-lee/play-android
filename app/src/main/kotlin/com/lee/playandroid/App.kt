@@ -43,7 +43,6 @@ class App : BaseApplication() {
             f: Fragment,
             savedInstanceState: Bundle?
         ) {
-            // fragment屏幕适配处理
             ScreenDensityUtil.init(f.requireActivity())
             super.onFragmentCreated(fm, f, savedInstanceState)
         }
@@ -65,9 +64,8 @@ class App : BaseApplication() {
         }
 
         override fun onActivityResumed(activity: Activity) {
-            super.onActivityResumed(activity)
-            // 屏幕适配
             ScreenDensityUtil.init(activity)
+            super.onActivityResumed(activity)
         }
 
     }
