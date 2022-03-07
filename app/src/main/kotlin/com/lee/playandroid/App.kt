@@ -64,6 +64,12 @@ class App : BaseApplication() {
             super.onActivityDestroyed(activity)
         }
 
+        override fun onActivityResumed(activity: Activity) {
+            super.onActivityResumed(activity)
+            // 屏幕适配
+            ScreenDensityUtil.init(activity)
+        }
+
     }
 
     override fun init() {

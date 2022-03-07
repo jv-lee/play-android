@@ -15,8 +15,6 @@ import com.lee.library.tools.StatusTools.setNavigationBarColor
  */
 
 fun Activity.appThemeSet() {
-    // 屏幕适配
-    ScreenDensityUtil.init(this)
     // 主题icon适配
     if (DarkModeTools.get().isDarkTheme()) {
         setNavigationBarColor(Color.BLACK)

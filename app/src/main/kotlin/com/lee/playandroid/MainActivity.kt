@@ -16,6 +16,7 @@ import com.lee.library.extensions.binding
 import com.lee.library.extensions.startListener
 import com.lee.library.extensions.toast
 import com.lee.library.tools.DarkModeTools
+import com.lee.library.tools.ScreenDensityUtil
 import com.lee.library.utils.LogUtil
 import com.lee.playandroid.databinding.ActivityMainBinding
 import com.lee.playandroid.databinding.LayoutStubMainBinding
@@ -74,6 +75,8 @@ class MainActivity : BaseActivity(),
         if (BuildConfig.DEBUG) {
             toast("onConfigurationChanged")
         }
+        // 屏幕适配
+        ScreenDensityUtil.init(this)
         // 深色主题适配
         DarkModeTools.init(applicationContext)
         appThemeSet()
