@@ -77,9 +77,7 @@ class App : BaseApplication() {
     override fun init() {
         ScreenDensityUtil.init(this)
         //深色主题适配
-        if (!DarkModeTools.get(applicationContext).isSystemTheme()) {
-            DarkModeTools.get().updateNightTheme(DarkModeTools.get().isDarkTheme())
-        }
+        DarkModeTools.init(applicationContext)
 
         //初始化工具类
         CoroutineScope(Dispatchers.IO).launch {
