@@ -5,28 +5,27 @@ import android.animation.AnimatorListenerAdapter
 import android.animation.ObjectAnimator
 import android.content.Intent
 import android.content.res.Configuration
-import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.view.ViewStub
 import android.view.animation.AnimationUtils
 import android.view.animation.LinearInterpolator
 import com.lee.library.base.BaseActivity
-import com.lee.library.extensions.*
+import com.lee.library.extensions.banBackEvent
+import com.lee.library.extensions.binding
+import com.lee.library.extensions.startListener
+import com.lee.library.extensions.toast
 import com.lee.library.tools.DarkModeTools
-import com.lee.library.tools.ScreenDensityUtil
-import com.lee.library.tools.StatusTools.setDarkStatusIcon
-import com.lee.library.tools.StatusTools.setLightStatusIcon
-import com.lee.library.tools.StatusTools.setNavigationBarColor
 import com.lee.library.utils.LogUtil
 import com.lee.playandroid.databinding.ActivityMainBinding
 import com.lee.playandroid.databinding.LayoutStubMainBinding
 import com.lee.playandroid.databinding.LayoutStubSplashBinding
+import com.lee.playandroid.library.common.extensions.appThemeSet
 import com.lee.playandroid.library.service.AccountService
 import com.lee.playandroid.library.service.hepler.ModuleService
 import kotlinx.coroutines.*
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.flowOf
 
 /**
  * @author jv.lee
@@ -75,16 +74,10 @@ class MainActivity : BaseActivity(),
         if (BuildConfig.DEBUG) {
             toast("onConfigurationChanged")
         }
-        ScreenDensityUtil.init(this)
+        // 深色主题适配
+        DarkModeTools.init(applicationContext)
+        appThemeSet()
         super.onConfigurationChanged(newConfig)
-
-        if (DarkModeTools.get().isDarkTheme()) {
-            setNavigationBarColor(Color.BLACK)
-            setLightStatusIcon()
-        } else {
-            setNavigationBarColor(Color.WHITE)
-            setDarkStatusIcon()
-        }
     }
 
     override fun onResume() {

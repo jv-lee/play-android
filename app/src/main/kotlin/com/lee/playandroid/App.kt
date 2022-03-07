@@ -20,6 +20,7 @@ import com.lee.library.tools.StatusTools.setDarkStatusIcon
 import com.lee.library.tools.StatusTools.setLightStatusIcon
 import com.lee.library.tools.StatusTools.setNavigationBarColor
 import com.lee.playandroid.block.AppBlockCanaryContext
+import com.lee.playandroid.library.common.extensions.appThemeSet
 import com.lee.playandroid.library.common.extensions.setCommonInterceptor
 import com.lee.playandroid.library.common.ui.widget.AppLoadResource
 import com.lee.playandroid.library.service.hepler.ApplicationModuleService
@@ -52,17 +53,8 @@ class App : BaseApplication() {
     private val activityLifecycleCallbacks = object : SimpleActivityLifecycleCallbacks() {
 
         override fun onActivityCreated(activity: Activity, bundle: Bundle?) {
-            ScreenDensityUtil.init(activity)
+            activity.appThemeSet()
             activity.bindFragmentLifecycle(fragmentLifecycleCallbacks)
-
-            // 夜间模式主题适配
-            if (DarkModeTools.get().isDarkTheme()) {
-                activity.setNavigationBarColor(Color.BLACK)
-                activity.setLightStatusIcon()
-            } else {
-                activity.setNavigationBarColor(Color.WHITE)
-                activity.setDarkStatusIcon()
-            }
             super.onActivityCreated(activity, bundle)
         }
 
@@ -75,9 +67,10 @@ class App : BaseApplication() {
     }
 
     override fun init() {
-        ScreenDensityUtil.init(this)
-        //深色主题适配
+        // 深色主题适配
         DarkModeTools.init(applicationContext)
+        // 屏幕适配
+        ScreenDensityUtil.init(this)
 
         //初始化工具类
         CoroutineScope(Dispatchers.IO).launch {
