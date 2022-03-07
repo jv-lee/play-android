@@ -7,6 +7,7 @@ import android.content.Intent
 import android.content.res.Configuration
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.view.ViewStub
 import android.view.animation.AnimationUtils
@@ -18,6 +19,7 @@ import com.lee.library.tools.ScreenDensityUtil
 import com.lee.library.tools.StatusTools.setDarkStatusIcon
 import com.lee.library.tools.StatusTools.setLightStatusIcon
 import com.lee.library.tools.StatusTools.setNavigationBarColor
+import com.lee.library.utils.LogUtil
 import com.lee.playandroid.databinding.ActivityMainBinding
 import com.lee.playandroid.databinding.LayoutStubMainBinding
 import com.lee.playandroid.databinding.LayoutStubSplashBinding
@@ -61,12 +63,18 @@ class MainActivity : BaseActivity(),
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
         launch {
+            if (BuildConfig.DEBUG) {
+                toast("onRestoreInstance")
+            }
             //程序以外重启 或重新创建MainActivity 无需获取配置，直接显示view
             animVisibleUi()
         }
     }
 
     override fun onConfigurationChanged(newConfig: Configuration) {
+        if (BuildConfig.DEBUG) {
+            toast("onConfigurationChanged")
+        }
         ScreenDensityUtil.init(this)
         super.onConfigurationChanged(newConfig)
 
@@ -76,6 +84,15 @@ class MainActivity : BaseActivity(),
         } else {
             setNavigationBarColor(Color.WHITE)
             setDarkStatusIcon()
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if (BuildConfig.DEBUG) {
+            val isSystem = DarkModeTools.get().isSystemTheme()
+            val isDark = DarkModeTools.get().isDarkTheme()
+            LogUtil.i("isSystem:$isSystem,isDark:$isDark")
         }
     }
 
