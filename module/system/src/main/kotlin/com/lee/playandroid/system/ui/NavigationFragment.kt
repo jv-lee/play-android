@@ -85,9 +85,9 @@ class NavigationFragment : BaseNavigationFragment(R.layout.fragment_navigation),
             actionFailed(it)
         })
 
-        viewModel.selectTabLive.observe(this, {
+        viewModel.selectTabLive.observe(viewLifecycleOwner) {
             mNavigationTabAdapter?.selectItem(it)
-        })
+        }
     }
 
     override fun lazyLoad() {
