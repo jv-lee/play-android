@@ -10,7 +10,7 @@ import com.lee.playandroid.library.common.entity.Content
 import com.lee.playandroid.library.common.ui.BaseListFragment
 import com.lee.playandroid.router.navigateDetails
 import com.lee.playandroid.system.ui.adapter.SystemContentListAdapter
-import com.lee.playandroid.system.viewmodel.ContentListViewModel
+import com.lee.playandroid.system.viewmodel.SystemContentListViewModel
 
 /**
  * @author jv.lee
@@ -28,7 +28,7 @@ class SystemContentListFragment : BaseListFragment() {
         }
     }
 
-    private val viewModel by viewModelByFactory<ContentListViewModel>()
+    private val viewModel by viewModelByFactory<SystemContentListViewModel>()
 
     override fun createAdapter(): BaseViewAdapter<Content> {
         return SystemContentListAdapter(requireContext(), arrayListOf())

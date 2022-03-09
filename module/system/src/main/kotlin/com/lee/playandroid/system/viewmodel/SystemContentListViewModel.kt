@@ -14,7 +14,7 @@ import com.lee.playandroid.system.ui.SystemContentListFragment
  * @date 2021/11/10
  * @description 体系内容 子内容列表 ViewModel
  */
-class ContentListViewModel(handle: SavedStateHandle) : CoroutineViewModel() {
+class SystemContentListViewModel(handle: SavedStateHandle) : CoroutineViewModel() {
 
     private val id: Long by lazy { handle[SystemContentListFragment.ARG_PARAMS_ID] ?: 0 }
 

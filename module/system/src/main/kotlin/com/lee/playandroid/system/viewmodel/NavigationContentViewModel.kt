@@ -18,9 +18,9 @@ import kotlinx.coroutines.flow.collect
 /**
  * @author jv.lee
  * @date 2021/11/12
- * @description
+ * @description 体系第二个tab 导航页面 ViewModel
  */
-class NavigationViewModel : CoroutineViewModel() {
+class NavigationContentViewModel : CoroutineViewModel() {
 
     private val api = createApi<ApiService>()
 

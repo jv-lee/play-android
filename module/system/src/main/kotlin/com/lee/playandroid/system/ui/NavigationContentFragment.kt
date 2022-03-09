@@ -21,7 +21,7 @@ import com.lee.playandroid.system.R
 import com.lee.playandroid.system.databinding.FragmentNavigationContentBinding
 import com.lee.playandroid.system.ui.adapter.NavigationContentAdapter
 import com.lee.playandroid.system.ui.adapter.NavigationContentTabAdapter
-import com.lee.playandroid.system.viewmodel.NavigationViewModel
+import com.lee.playandroid.system.viewmodel.NavigationContentViewModel
 
 /**
  * @author jv.lee
@@ -32,7 +32,7 @@ import com.lee.playandroid.system.viewmodel.NavigationViewModel
 class NavigationContentFragment : BaseNavigationFragment(R.layout.fragment_navigation_content),
     StatusLayout.OnReloadListener {
 
-    private val viewModel by viewModels<NavigationViewModel>()
+    private val viewModel by viewModels<NavigationContentViewModel>()
 
     private val binding by binding(FragmentNavigationContentBinding::bind)
 
