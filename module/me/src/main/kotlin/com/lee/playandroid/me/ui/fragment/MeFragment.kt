@@ -3,10 +3,7 @@ package com.lee.playandroid.me.ui.fragment
 import android.view.View
 import androidx.navigation.fragment.findNavController
 import com.lee.library.base.BaseNavigationFragment
-import com.lee.library.extensions.binding
-import com.lee.library.extensions.setBackgroundColorCompat
-import com.lee.library.extensions.setTextColorCompat
-import com.lee.library.extensions.toast
+import com.lee.library.extensions.*
 import com.lee.library.mvvm.ui.stateObserve
 import com.lee.library.tools.DarkViewUpdateTools
 import com.lee.playandroid.library.common.entity.AccountData
@@ -83,6 +80,8 @@ class MeFragment : BaseNavigationFragment(R.layout.fragment_me),
         binding.constRoot.setBackgroundColorCompat(R.color.colorThemeBackground)
         binding.toolbarLayout.setBackgroundColorCompat(R.color.colorThemeItem)
         binding.tvAccountName.setTextColorCompat(R.color.colorThemeAccent)
+        binding.ivHeader.strokeColor =
+            requireContext().getColorStateListCompat(R.color.colorThemeFocus)
 
         binding.lineIntegral.setBackgroundColorCompat(R.color.colorThemeItem)
         binding.lineIntegral.getLeftTextView().setTextColorCompat(R.color.colorThemeAccent)
