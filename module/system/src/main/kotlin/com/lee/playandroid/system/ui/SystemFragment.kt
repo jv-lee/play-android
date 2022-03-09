@@ -30,7 +30,7 @@ class SystemFragment : BaseNavigationFragment(R.layout.fragment_system) {
     @SuppressLint("NotifyDataSetChanged")
     override fun bindData() {
         mAdapter = UiPagerAdapter2(childFragmentManager, viewLifecycleOwner.lifecycle)
-        mAdapter?.addAll(mutableListOf(SystemContentFragment(), NavigationFragment()))
+        mAdapter?.addAll(mutableListOf(SystemContentFragment(), NavigationContentFragment()))
         binding.vpContainer.adapter = mAdapter
     }
 

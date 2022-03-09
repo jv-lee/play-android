@@ -16,7 +16,7 @@ import com.lee.playandroid.system.databinding.ItemNavigationTabBinding
  * @date 2021/11/12
  * @description
  */
-class NavigationTabAdapter(data: MutableList<NavigationItem>) :
+class NavigationContentTabAdapter(data: MutableList<NavigationItem>) :
     VerticalTabAdapter<NavigationItem>(data) {
 
     override fun createViewBinding(context: Context, parent: ViewGroup): ViewBinding {

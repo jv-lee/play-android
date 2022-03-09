@@ -7,7 +7,7 @@ import com.lee.library.mvvm.vm.CoroutineViewModel
 import com.lee.playandroid.library.common.extensions.checkData
 import com.lee.playandroid.library.common.extensions.createApi
 import com.lee.playandroid.system.model.api.ApiService
-import com.lee.playandroid.system.ui.ContentListFragment
+import com.lee.playandroid.system.ui.SystemContentListFragment
 
 /**
  * @author jv.lee
@@ -16,7 +16,7 @@ import com.lee.playandroid.system.ui.ContentListFragment
  */
 class ContentListViewModel(handle: SavedStateHandle) : CoroutineViewModel() {
 
-    private val id: Long by lazy { handle[ContentListFragment.ARG_PARAMS_ID] ?: 0 }
+    private val id: Long by lazy { handle[SystemContentListFragment.ARG_PARAMS_ID] ?: 0 }
 
     private val api = createApi<ApiService>()
 

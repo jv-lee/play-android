@@ -62,12 +62,15 @@ class SystemContentFragment : BaseNavigationFragment(R.layout.fragment_system_co
     override fun bindData() {
         LiveDataBus.getInstance().injectBus(this)
 
-        viewModel.parentTabLive.stateObserve<List<ParentTab>>(viewLifecycleOwner, success = { data ->
-            mAdapter?.submitSinglePage(data)
-        }, error = {
-            mAdapter?.submitFailed()
-            actionFailed(it)
-        })
+        viewModel.parentTabLive.stateObserve<List<ParentTab>>(
+            viewLifecycleOwner,
+            success = { data ->
+                mAdapter?.submitSinglePage(data)
+            },
+            error = {
+                mAdapter?.submitFailed()
+                actionFailed(it)
+            })
     }
 
     override fun onItemClick(view: View, entity: ParentTab, position: Int) {
@@ -89,7 +92,7 @@ class SystemContentFragment : BaseNavigationFragment(R.layout.fragment_system_co
     /**
      * 导航至目标页面
      * @param item 数据item title:item.name ,data:item.children
-     * @see ContentTabFragment
+     * @see SystemContentTabFragment
      */
     private fun navigationToContentTab(item: ParentTab) {
         val data = arrayListOf<Tab>().apply { addAll(item.children) }
@@ -98,7 +101,10 @@ class SystemContentFragment : BaseNavigationFragment(R.layout.fragment_system_co
         bundle.putString(Constants.ARG_PARAMS_CONTENT_TAB_TITLE, item.name)
         bundle.putParcelableArrayList(Constants.ARG_PARAMS_CONTENT_TAB_DATA, data)
 
-        findNavController().navigate(R.id.action_system_fragment_to_content_tab_fragment, bundle)
+        findNavController().navigate(
+            R.id.action_system_fragment_to_system_content_tab_fragment,
+            bundle
+        )
     }
 
     @InjectBus(NavigationSelectEvent.key, isActive = true)

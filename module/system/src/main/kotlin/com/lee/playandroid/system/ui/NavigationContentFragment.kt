@@ -18,9 +18,9 @@ import com.lee.playandroid.library.common.entity.NavigationSelectEvent
 import com.lee.playandroid.library.common.extensions.actionFailed
 import com.lee.playandroid.library.common.ui.extensions.bindTabLinkage
 import com.lee.playandroid.system.R
-import com.lee.playandroid.system.databinding.FragmentNavigationBinding
+import com.lee.playandroid.system.databinding.FragmentNavigationContentBinding
 import com.lee.playandroid.system.ui.adapter.NavigationContentAdapter
-import com.lee.playandroid.system.ui.adapter.NavigationTabAdapter
+import com.lee.playandroid.system.ui.adapter.NavigationContentTabAdapter
 import com.lee.playandroid.system.viewmodel.NavigationViewModel
 
 /**
@@ -29,14 +29,14 @@ import com.lee.playandroid.system.viewmodel.NavigationViewModel
  * @description  导航Fragment
  * @see SystemFragment 体系Fragment下第二个Tab
  */
-class NavigationFragment : BaseNavigationFragment(R.layout.fragment_navigation),
+class NavigationContentFragment : BaseNavigationFragment(R.layout.fragment_navigation_content),
     StatusLayout.OnReloadListener {
 
     private val viewModel by viewModels<NavigationViewModel>()
 
-    private val binding by binding(FragmentNavigationBinding::bind)
+    private val binding by binding(FragmentNavigationContentBinding::bind)
 
-    private var mNavigationTabAdapter: NavigationTabAdapter? = null
+    private var mNavigationTabAdapter: NavigationContentTabAdapter? = null
     private var mNavigationContentAdapter: NavigationContentAdapter? = null
 
     override fun bindView() {
@@ -53,7 +53,7 @@ class NavigationFragment : BaseNavigationFragment(R.layout.fragment_navigation),
 
         if (binding.rvTab.adapter == null) {
             binding.rvTab.itemAnimator = null
-            binding.rvTab.adapter = NavigationTabAdapter(arrayListOf()).apply {
+            binding.rvTab.adapter = NavigationContentTabAdapter(arrayListOf()).apply {
                 mNavigationTabAdapter = this
             }
         }

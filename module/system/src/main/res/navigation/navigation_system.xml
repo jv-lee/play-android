@@ -12,8 +12,8 @@
         tools:layout="@layout/fragment_system">
 
         <action
-            android:id="@+id/action_system_fragment_to_content_tab_fragment"
-            app:destination="@id/content_tab_fragment"
+            android:id="@+id/action_system_fragment_to_system_content_tab_fragment"
+            app:destination="@id/system_content_tab_fragment"
             app:enterAnim="@anim/zoom_in"
             app:exitAnim="@anim/zoom_exit"
             app:popEnterAnim="@anim/zoom_out"
@@ -22,9 +22,9 @@
     </fragment>
 
     <fragment
-        android:id="@+id/content_tab_fragment"
-        android:name="com.lee.playandroid.system.ui.ContentTabFragment"
-        android:label="contentTabFragment"
+        android:id="@+id/system_content_tab_fragment"
+        android:name="com.lee.playandroid.system.ui.SystemContentTabFragment"
+        android:label="systemContentTabFragment"
         tools:layout="@layout/fragment_base_tab" />
 
 </navigation>

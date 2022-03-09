@@ -5,26 +5,25 @@ import androidx.lifecycle.LiveData
 import androidx.navigation.fragment.findNavController
 import com.lee.library.adapter.base.BaseViewAdapter
 import com.lee.library.extensions.viewModelByFactory
-import com.lee.library.mvvm.ui.UiStateLiveData
 import com.lee.library.mvvm.ui.UiStatePage
 import com.lee.playandroid.library.common.entity.Content
 import com.lee.playandroid.library.common.ui.BaseListFragment
 import com.lee.playandroid.router.navigateDetails
-import com.lee.playandroid.system.ui.adapter.ContentListAdapter
+import com.lee.playandroid.system.ui.adapter.SystemContentListAdapter
 import com.lee.playandroid.system.viewmodel.ContentListViewModel
 
 /**
  * @author jv.lee
  * @date 2021/11/10
- * @description 数据列表类
- * @see ContentTabFragment 子列表Fragment
+ * @description 体系内容数据列表类
+ * @see SystemContentTabFragment 子列表Fragment
  */
-class ContentListFragment : BaseListFragment() {
+class SystemContentListFragment : BaseListFragment() {
 
     companion object {
         const val ARG_PARAMS_ID = "arg_params_id"
 
-        fun newInstance(id: Long) = ContentListFragment().apply {
+        fun newInstance(id: Long) = SystemContentListFragment().apply {
             arguments = Bundle().apply { putLong(ARG_PARAMS_ID, id) }
         }
     }
@@ -32,7 +31,7 @@ class ContentListFragment : BaseListFragment() {
     private val viewModel by viewModelByFactory<ContentListViewModel>()
 
     override fun createAdapter(): BaseViewAdapter<Content> {
-        return ContentListAdapter(requireContext(), arrayListOf())
+        return SystemContentListAdapter(requireContext(), arrayListOf())
     }
 
     override fun requestContentList(status: Int) {

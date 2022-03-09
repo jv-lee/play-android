@@ -15,7 +15,7 @@ import com.lee.playandroid.system.constants.Constants
  * @description 体系内容Tab页
  * @see SystemContentFragment 体系列表跳转至当前该体系tab页面
  */
-class ContentTabFragment : BaseTabFragment() {
+class SystemContentTabFragment : BaseTabFragment() {
 
     private val title by arguments<String>(Constants.ARG_PARAMS_CONTENT_TAB_TITLE)
     private val tabData by argumentsList<Tab>(Constants.ARG_PARAMS_CONTENT_TAB_DATA)
@@ -29,7 +29,7 @@ class ContentTabFragment : BaseTabFragment() {
     }
 
     override fun createChildFragment(id: Long): Fragment {
-        return ContentListFragment.newInstance(id)
+        return SystemContentListFragment.newInstance(id)
     }
 
     override fun dataObserveState(): UiStateLiveData {
