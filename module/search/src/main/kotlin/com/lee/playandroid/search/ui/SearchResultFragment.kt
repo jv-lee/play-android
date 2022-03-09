@@ -18,7 +18,6 @@ import com.lee.playandroid.library.common.entity.PageData
 import com.lee.playandroid.library.common.extensions.actionFailed
 import com.lee.playandroid.router.navigateDetails
 import com.lee.playandroid.search.R
-import com.lee.playandroid.search.constants.Constants
 import com.lee.playandroid.search.databinding.FragmentSearchResultBinding
 import com.lee.playandroid.search.ui.adapter.SearchResultAdapter
 import com.lee.playandroid.search.viewmodel.SearchResultViewModel
@@ -33,7 +32,11 @@ class SearchResultFragment : BaseNavigationFragment(R.layout.fragment_search_res
     BaseViewAdapter.LoadErrorListener,
     BaseViewAdapter.OnItemClickListener<Content> {
 
-    private val searchKey by arguments<String>(Constants.ARG_PARAMS_SEARCH_KEY)
+    companion object {
+        const val ARG_PARAMS_SEARCH_KEY = "searchKey"
+    }
+
+    private val searchKey by arguments<String>(ARG_PARAMS_SEARCH_KEY)
 
     private val viewModel by viewModelByFactory<SearchResultViewModel>()
 

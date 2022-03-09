@@ -21,7 +21,6 @@ import com.lee.playandroid.library.common.entity.Tab
 import com.lee.playandroid.library.common.extensions.actionFailed
 import com.lee.playandroid.library.common.ui.widget.OffsetItemDecoration
 import com.lee.playandroid.system.R
-import com.lee.playandroid.system.constants.Constants
 import com.lee.playandroid.system.databinding.FragmentSystemContentBinding
 import com.lee.playandroid.system.ui.adapter.SystemContentAdapter
 import com.lee.playandroid.system.viewmodel.SystemContentViewModel
@@ -98,8 +97,8 @@ class SystemContentFragment : BaseNavigationFragment(R.layout.fragment_system_co
         val data = arrayListOf<Tab>().apply { addAll(item.children) }
 
         val bundle = Bundle()
-        bundle.putString(Constants.ARG_PARAMS_CONTENT_TAB_TITLE, item.name)
-        bundle.putParcelableArrayList(Constants.ARG_PARAMS_CONTENT_TAB_DATA, data)
+        bundle.putString(SystemContentTabFragment.ARG_PARAMS_TAB_TITLE, item.name)
+        bundle.putParcelableArrayList(SystemContentTabFragment.ARG_PARAMS_TAB_DATA, data)
 
         findNavController().navigate(
             R.id.action_system_fragment_to_system_content_tab_fragment,

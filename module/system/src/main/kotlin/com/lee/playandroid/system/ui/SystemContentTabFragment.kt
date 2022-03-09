@@ -7,7 +7,6 @@ import com.lee.library.mvvm.ui.UiStateLiveData
 import com.lee.library.mvvm.ui.stateLive
 import com.lee.playandroid.library.common.entity.Tab
 import com.lee.playandroid.library.common.ui.BaseTabFragment
-import com.lee.playandroid.system.constants.Constants
 
 /**
  * @author jv.lee
@@ -17,8 +16,13 @@ import com.lee.playandroid.system.constants.Constants
  */
 class SystemContentTabFragment : BaseTabFragment() {
 
-    private val title by arguments<String>(Constants.ARG_PARAMS_CONTENT_TAB_TITLE)
-    private val tabData by argumentsList<Tab>(Constants.ARG_PARAMS_CONTENT_TAB_DATA)
+    companion object {
+        const val ARG_PARAMS_TAB_TITLE = "tabTitle"
+        const val ARG_PARAMS_TAB_DATA = "tabData"
+    }
+
+    private val title by arguments<String>(ARG_PARAMS_TAB_TITLE)
+    private val tabData by argumentsList<Tab>(ARG_PARAMS_TAB_DATA)
 
     override fun bindView() {
         super.bindView()

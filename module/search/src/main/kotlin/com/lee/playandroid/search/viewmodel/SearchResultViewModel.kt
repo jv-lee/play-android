@@ -6,8 +6,8 @@ import com.lee.library.mvvm.ui.*
 import com.lee.library.mvvm.vm.CoroutineViewModel
 import com.lee.playandroid.library.common.extensions.checkData
 import com.lee.playandroid.library.common.extensions.createApi
-import com.lee.playandroid.search.constants.Constants
 import com.lee.playandroid.search.model.api.ApiService
+import com.lee.playandroid.search.ui.SearchResultFragment
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 
@@ -18,7 +18,7 @@ import kotlinx.coroutines.flow.asStateFlow
  */
 class SearchResultViewModel(handle: SavedStateHandle) : CoroutineViewModel() {
 
-    private val key = handle[Constants.ARG_PARAMS_SEARCH_KEY] ?: ""
+    private val key = handle[SearchResultFragment.ARG_PARAMS_SEARCH_KEY] ?: ""
 
     private val api = createApi<ApiService>()
 

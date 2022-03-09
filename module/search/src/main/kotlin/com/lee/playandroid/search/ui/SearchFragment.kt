@@ -15,7 +15,6 @@ import com.lee.library.tools.KeyboardTools.parentTouchHideSoftInput
 import com.lee.playandroid.library.common.entity.SearchHistory
 import com.lee.playandroid.library.common.extensions.actionFailed
 import com.lee.playandroid.search.R
-import com.lee.playandroid.search.constants.Constants
 import com.lee.playandroid.search.databinding.FragmentSearchBinding
 import com.lee.playandroid.search.model.entity.SearchHot
 import com.lee.playandroid.search.ui.adapter.SearchHistoryAdapter
@@ -115,7 +114,7 @@ class SearchFragment : BaseNavigationFragment(R.layout.fragment_search) {
         viewModel.addSearchHistory(key)
 
         val bundle = Bundle()
-        bundle.putString(Constants.ARG_PARAMS_SEARCH_KEY, key)
+        bundle.putString(SearchResultFragment.ARG_PARAMS_SEARCH_KEY, key)
         findNavController().navigate(R.id.action_search_fragment_to_search_result_fragment, bundle)
     }
 

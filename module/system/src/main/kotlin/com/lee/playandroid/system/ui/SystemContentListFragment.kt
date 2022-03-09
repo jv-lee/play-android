@@ -21,7 +21,7 @@ import com.lee.playandroid.system.viewmodel.SystemContentListViewModel
 class SystemContentListFragment : BaseListFragment() {
 
     companion object {
-        const val ARG_PARAMS_ID = "arg_params_id"
+        const val ARG_PARAMS_ID = "id"
 
         fun newInstance(id: Long) = SystemContentListFragment().apply {
             arguments = Bundle().apply { putLong(ARG_PARAMS_ID, id) }
