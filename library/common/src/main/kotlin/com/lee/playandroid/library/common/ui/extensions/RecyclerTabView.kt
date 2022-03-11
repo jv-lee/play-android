@@ -37,8 +37,10 @@ fun VerticalTabAdapter<*>.bindTabLinkage(
                     val layoutManager = recyclerView.layoutManager as LinearLayoutManager
                     val position = layoutManager.findFirstVisibleItemPosition()
 
-                    tabRecyclerView.scrollToPosition(position)
-                    selectCallback(position)
+                    recyclerView.post {
+                        tabRecyclerView.scrollToPosition(position)
+                        selectCallback(position)
+                    }
                 }
                 isLock = false
             }
