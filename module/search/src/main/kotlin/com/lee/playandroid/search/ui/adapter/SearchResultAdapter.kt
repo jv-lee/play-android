@@ -78,10 +78,10 @@ class SearchResultAdapter(context: Context, data: List<Content>) :
                         .build()
                     GlideTools.get().loadImage(envelopePic, ivImage)
 
-                    tvTitle.text = HtmlCompat.fromHtml(title, HtmlCompat.FROM_HTML_MODE_LEGACY)
+                    tvTitle.text = entity.getTitle()
                     tvDescription.text = desc
-                    tvAuthor.text = if (author.isEmpty()) shareUser else author
-                    tvTime.text = TimeUtil.getChineseTimeMill(publishTime)
+                    tvAuthor.text = entity.getAuthor()
+                    tvTime.text = entity.getDateFormat()
                 }
             }
         }
