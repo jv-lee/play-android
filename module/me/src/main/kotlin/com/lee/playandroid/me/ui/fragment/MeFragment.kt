@@ -14,6 +14,7 @@ import com.lee.playandroid.me.databinding.FragmentMeBinding
 import com.lee.playandroid.router.navigateLogin
 import com.lee.playandroid.router.navigateMyShare
 import com.lee.playandroid.router.navigateTodo
+import com.lee.playandroid.library.common.R as CR
 
 /**
  * @author jv.lee
@@ -52,13 +53,13 @@ class MeFragment : BaseNavigationFragment(R.layout.fragment_me),
     }
 
     override fun onClick(view: View) {
-        //无需校验登陆状态
+        // 无需校验登陆状态
         if (view == binding.lineSettings) {
             findNavController().navigate(R.id.action_me_fragment_to_settings_fragment)
             return
         }
 
-        //需要校验登陆状态
+        // 需要校验登陆状态
         if (accountService.isLogin()) {
             when (view) {
                 binding.lineIntegral ->
@@ -71,7 +72,7 @@ class MeFragment : BaseNavigationFragment(R.layout.fragment_me),
                     findNavController().navigateTodo()
             }
         } else {
-            toast(getString(R.string.me_login_message))
+            toast(getString(CR.string.login_message))
             findNavController().navigateLogin()
         }
     }

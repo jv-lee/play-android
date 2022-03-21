@@ -10,6 +10,7 @@ import com.lee.library.adapter.page.submitData
 import com.lee.library.base.BaseNavigationFragment
 import com.lee.library.extensions.binding
 import com.lee.library.extensions.smoothScrollToTop
+import com.lee.library.extensions.toast
 import com.lee.library.livedatabus.InjectBus
 import com.lee.library.livedatabus.LiveDataBus
 import com.lee.library.mvvm.annotation.LoadStatus
@@ -20,11 +21,15 @@ import com.lee.playandroid.library.common.entity.PageData
 import com.lee.playandroid.library.common.extensions.actionFailed
 import com.lee.playandroid.library.common.ui.extensions.setThemeGradientBackground
 import com.lee.playandroid.library.common.ui.widget.OffsetItemDecoration
+import com.lee.playandroid.library.service.AccountService
+import com.lee.playandroid.library.service.hepler.ModuleService
 import com.lee.playandroid.router.navigateDetails
+import com.lee.playandroid.router.navigateLogin
 import com.lee.playandroid.square.R
 import com.lee.playandroid.square.databinding.FragmentSquareBinding
 import com.lee.playandroid.square.ui.adapter.SquareAdapter
 import com.lee.playandroid.square.viewmodel.SquareViewModel
+import com.lee.playandroid.library.common.R as CR
 
 /**
  * @author jv.lee
@@ -36,6 +41,8 @@ class SquareFragment : BaseNavigationFragment(R.layout.fragment_square),
     BaseViewAdapter.OnItemClickListener<Content>,
     BaseViewAdapter.AutoLoadMoreListener,
     BaseViewAdapter.LoadErrorListener {
+
+    private val accountService = ModuleService.find<AccountService>()
 
     private val viewModel by viewModels<SquareViewModel>()
 
@@ -74,9 +81,15 @@ class SquareFragment : BaseNavigationFragment(R.layout.fragment_square),
     }
 
     override fun onClick(v: View?) {
-        when (v) {
-            binding.ivCreate -> findNavController()
-                .navigate(R.id.action_square_fragment_to_create_share_fragment)
+        // 需要校验登陆状态
+        if (accountService.isLogin()) {
+            when (v) {
+                binding.ivCreate -> findNavController()
+                    .navigate(R.id.action_square_fragment_to_create_share_fragment)
+            }
+        } else {
+            toast(getString(CR.string.login_message))
+            findNavController().navigateLogin()
         }
     }
 
