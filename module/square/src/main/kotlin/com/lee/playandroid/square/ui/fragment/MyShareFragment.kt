@@ -1,6 +1,8 @@
 package com.lee.playandroid.square.ui.fragment
 
+import android.os.Bundle
 import android.view.View
+import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.lee.library.adapter.base.BaseViewAdapter
@@ -35,6 +37,11 @@ class MyShareFragment : BaseNavigationFragment(R.layout.fragment_my_share),
     BaseViewAdapter.AutoLoadMoreListener,
     BaseViewAdapter.OnItemChildView<Content> {
 
+    companion object {
+        // 页面回传刷新数据
+        const val REQUEST_KEY_REFRESH = "requestKey:refresh"
+    }
+
     private val viewModel by viewModels<MyShareViewModel>()
 
     private val binding by binding(FragmentMyShareBinding::bind)
@@ -65,6 +72,11 @@ class MyShareFragment : BaseNavigationFragment(R.layout.fragment_my_share),
     }
 
     override fun bindData() {
+        // 监听登陆页面回调时是否已经发布成功，刷新数据列表
+        setFragmentResultListener(REQUEST_KEY_REFRESH) { _: String, _: Bundle ->
+            viewModel.requestMyShareData(LoadStatus.INIT)
+        }
+
         viewModel.myShareLive.stateObserve<PageData<Content>>(viewLifecycleOwner, success = {
             mAdapter?.submitData(it, diff = true)
         }, error = {
@@ -102,11 +114,6 @@ class MyShareFragment : BaseNavigationFragment(R.layout.fragment_my_share),
                 deleteShareAction(position)
             }
         }
-    }
-
-    override fun onFragmentResume() {
-        super.onFragmentResume()
-        viewModel.requestMyShareData(LoadStatus.INIT)
     }
 
     override fun onDestroyView() {

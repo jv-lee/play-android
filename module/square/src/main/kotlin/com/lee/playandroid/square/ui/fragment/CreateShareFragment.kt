@@ -1,6 +1,8 @@
 package com.lee.playandroid.square.ui.fragment
 
+import android.os.Bundle
 import android.view.inputmethod.EditorInfo
+import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.lee.library.base.BaseNavigationFragment
@@ -46,6 +48,7 @@ class CreateShareFragment : BaseNavigationFragment(R.layout.fragment_create_shar
         viewModel.sendLive.stateObserve<String>(viewLifecycleOwner, success = {
             toast(it)
             dismiss(loadingDialog)
+            setFragmentResult(MyShareFragment.REQUEST_KEY_REFRESH, Bundle.EMPTY)
             findNavController().popBackStack()
         }, error = {
             toast(it.message)
