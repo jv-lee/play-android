@@ -98,15 +98,15 @@ class CoinFragment : BaseNavigationFragment(R.layout.fragment_coin),
         viewModel.requestCoinRecord(LoadStatus.RELOAD)
     }
 
-    override fun onResume() {
-        super.onResume()
+    override fun onFragmentResume() {
+        super.onFragmentResume()
         if (!DarkModeTools.get().isDarkTheme()) {
             requireActivity().setLightStatusIcon()
         }
     }
 
-    override fun onStop() {
-        super.onStop()
+    override fun onFragmentStop() {
+        super.onFragmentStop()
         if (!DarkModeTools.get().isDarkTheme()) {
             requireActivity().setDarkStatusIcon()
         }
