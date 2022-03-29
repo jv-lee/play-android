@@ -104,6 +104,11 @@ class MyShareFragment : BaseNavigationFragment(R.layout.fragment_my_share),
         }
     }
 
+    override fun onFragmentResume() {
+        super.onFragmentResume()
+        viewModel.requestMyShareData(LoadStatus.INIT)
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
         binding.rvContainer.adapter = null

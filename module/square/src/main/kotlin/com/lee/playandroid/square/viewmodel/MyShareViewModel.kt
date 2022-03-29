@@ -94,9 +94,4 @@ class MyShareViewModel : CoroutineViewModel() {
         }
     }
 
-    init {
-        requestMyShareData(LoadStatus.INIT)
-    }
-
-
 }
