@@ -111,6 +111,11 @@ public boolean *(android.webkit.WebView, java.lang.String);
 public void *(android.webkit.webView, jav.lang.String);
 }
 
+# 不混淆继承viewModel的构造函数，防止ViewModelFactory反射构造错误
+-keepclassmembers class * extends androidx.lifecycle.ViewModel {
+    <init>(...);
+}
+
 #Gson
 -keep class com.google.gson.** {*;}
 -keep class com.google.**{*;}
