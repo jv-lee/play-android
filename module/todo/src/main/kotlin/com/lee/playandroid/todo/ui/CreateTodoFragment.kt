@@ -1,6 +1,7 @@
 package com.lee.playandroid.todo.ui
 
 import android.app.DatePickerDialog
+import android.os.Build
 import android.os.Bundle
 import android.widget.DatePicker
 import androidx.fragment.app.setFragmentResult
@@ -84,6 +85,20 @@ class CreateTodoFragment : BaseNavigationFragment(R.layout.fragment_create_todo)
         }, loading = {
             show(loadingDialog)
         })
+    }
+
+    override fun onFragmentResume() {
+        super.onFragmentResume()
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            datePickerDialog.setOnDateSetListener(this)
+        }
+    }
+
+    override fun onFragmentStop() {
+        super.onFragmentStop()
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            datePickerDialog.setOnDateSetListener(null)
+        }
     }
 
     override fun onDateSet(view: DatePicker?, year: Int, month: Int, dayOfMonth: Int) {
@@ -180,5 +195,4 @@ class CreateTodoFragment : BaseNavigationFragment(R.layout.fragment_create_todo)
         else getString(R.string.todo_update_success)
         toast(message)
     }
-
 }
