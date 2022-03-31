@@ -27,6 +27,8 @@ object Dependencies {
     const val viewpager2 = "androidx.viewpager2:viewpager2:${Version.viewpager2}"
     const val swipeRefreshLayout =
         "androidx.swiperefreshlayout:swiperefreshlayout:${Version.swipeRefreshLayout}"
+    const val slidingpanelayout =
+        "androidx.slidingpanelayout:slidingpanelayout:${Version.slidingpanelayout}"
 
     //fragment导航
     const val navigationFragment =
