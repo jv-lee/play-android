@@ -15,7 +15,8 @@ import com.lee.library.extensions.toast
 import com.lee.library.mvvm.annotation.LoadStatus
 import com.lee.library.mvvm.ui.stateObserve
 import com.lee.library.utils.NetworkUtil
-import com.lee.library.widget.SwipeItemLayout
+import com.lee.library.widget.SlidingPaneItemTouchListener
+import com.lee.library.widget.closeAllItems
 import com.lee.library.widget.toolbar.TitleToolbar
 import com.lee.playandroid.library.common.entity.Content
 import com.lee.playandroid.library.common.entity.PageData
@@ -55,12 +56,7 @@ class MyShareFragment : BaseNavigationFragment(R.layout.fragment_my_share),
             }
         })
 
-        binding.rvContainer.addOnItemTouchListener(
-            SwipeItemLayout.OnSwipeItemTouchListener(
-                requireContext()
-            )
-        )
-
+        binding.rvContainer.addOnItemTouchListener(SlidingPaneItemTouchListener(requireContext()))
         if (binding.rvContainer.adapter == null) {
             binding.rvContainer.adapter = SimpleTextAdapter(requireContext(), arrayListOf()).apply {
                 mAdapter = this
@@ -87,7 +83,7 @@ class MyShareFragment : BaseNavigationFragment(R.layout.fragment_my_share),
         viewModel.deleteShareLive.stateObserve<Int>(viewLifecycleOwner, success = { position ->
             toast(getString(R.string.share_delete_success))
         }, error = {
-            SwipeItemLayout.closeAllItems(binding.rvContainer)
+            binding.rvContainer.closeAllItems()
             actionFailed(it)
         })
     }
@@ -128,7 +124,7 @@ class MyShareFragment : BaseNavigationFragment(R.layout.fragment_my_share),
             mAdapter?.notifyItemRemoved(position)
             viewModel.requestDeleteShare(position)
         } else {
-            SwipeItemLayout.closeAllItems(binding.rvContainer)
+            binding.rvContainer.closeAllItems()
             toast(getString(R.string.network_not_access))
         }
 

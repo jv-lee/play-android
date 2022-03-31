@@ -1,16 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.lee.library.widget.SwipeItemLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.slidingpanelayout.widget.SlidingPaneLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="52dp"
+    android:layoutDirection="rtl">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btn_done"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:background="@android:color/holo_blue_dark"
+            android:text="DONE"
+            android:textColor="@color/white"
+            android:textSize="12sp" />
+
+        <Button
+            android:id="@+id/btn_delete"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:background="@android:color/holo_red_dark"
+            android:text="@string/item_delete"
+            android:textColor="@color/white"
+            android:textSize="12sp" />
+
+    </LinearLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/const_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorThemeItem"
-        android:paddingBottom="@dimen/medium_offset">
+        android:paddingBottom="@dimen/medium_offset"
+        android:layoutDirection="ltr">
 
         <TextView
             android:id="@+id/tv_level"
@@ -60,29 +87,4 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:orientation="horizontal">
-
-        <Button
-            android:id="@+id/btn_done"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:background="@android:color/holo_blue_dark"
-            android:text="DONE"
-            android:textColor="@color/white"
-            android:textSize="12sp" />
-
-        <Button
-            android:id="@+id/btn_delete"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:background="@android:color/holo_red_dark"
-            android:text="@string/item_delete"
-            android:textColor="@color/white"
-            android:textSize="12sp" />
-
-    </LinearLayout>
-
-</com.lee.library.widget.SwipeItemLayout>
+</androidx.slidingpanelayout.widget.SlidingPaneLayout>

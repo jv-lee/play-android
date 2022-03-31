@@ -13,7 +13,8 @@ import com.lee.library.extensions.toast
 import com.lee.library.mvvm.annotation.LoadStatus
 import com.lee.library.mvvm.ui.stateObserve
 import com.lee.library.utils.NetworkUtil
-import com.lee.library.widget.SwipeItemLayout
+import com.lee.library.widget.SlidingPaneItemTouchListener
+import com.lee.library.widget.closeAllItems
 import com.lee.playandroid.library.common.entity.Content
 import com.lee.playandroid.library.common.entity.PageData
 import com.lee.playandroid.library.common.extensions.actionFailed
@@ -22,7 +23,6 @@ import com.lee.playandroid.me.R
 import com.lee.playandroid.me.databinding.FragmentCollectBinding
 import com.lee.playandroid.me.viewmodel.CollectViewModel
 import com.lee.playandroid.router.navigateDetails
-import java.util.*
 
 /**
  * @author jv.lee
@@ -41,11 +41,7 @@ class CollectFragment : BaseNavigationFragment(R.layout.fragment_collect),
     private var mAdapter: SimpleTextAdapter? = null
 
     override fun bindView() {
-        binding.rvContainer.addOnItemTouchListener(
-            SwipeItemLayout.OnSwipeItemTouchListener(
-                requireContext()
-            )
-        )
+        binding.rvContainer.addOnItemTouchListener(SlidingPaneItemTouchListener(requireContext()))
         if (binding.rvContainer.adapter == null) {
             binding.rvContainer.adapter = SimpleTextAdapter(requireContext(), arrayListOf()).apply {
                 mAdapter = this
@@ -67,7 +63,7 @@ class CollectFragment : BaseNavigationFragment(R.layout.fragment_collect),
         viewModel.unCollectLive.stateObserve<Int>(this, success = {
             toast(getString(R.string.collect_remove_item_success))
         }, error = {
-            SwipeItemLayout.closeAllItems(binding.rvContainer)
+            binding.rvContainer.closeAllItems()
             actionFailed(it)
         })
     }
@@ -108,7 +104,7 @@ class CollectFragment : BaseNavigationFragment(R.layout.fragment_collect),
             mAdapter?.notifyItemRemoved(position)
             viewModel.requestUnCollect(position)
         } else {
-            SwipeItemLayout.closeAllItems(binding.rvContainer)
+            binding.rvContainer.closeAllItems()
             toast(getString(R.string.network_not_access))
         }
 

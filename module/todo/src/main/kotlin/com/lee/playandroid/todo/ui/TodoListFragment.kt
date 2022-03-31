@@ -17,7 +17,8 @@ import com.lee.library.extensions.toast
 import com.lee.library.mvvm.annotation.LoadStatus
 import com.lee.library.mvvm.ui.stateObserve
 import com.lee.library.utils.NetworkUtil
-import com.lee.library.widget.SwipeItemLayout
+import com.lee.library.widget.SlidingPaneItemTouchListener
+import com.lee.library.widget.closeAllItems
 import com.lee.playandroid.library.common.entity.PageData
 import com.lee.playandroid.library.common.entity.TodoData
 import com.lee.playandroid.library.common.extensions.actionFailed
@@ -68,11 +69,7 @@ class TodoListFragment : BaseNavigationFragment(R.layout.fragment_todo_list),
 
     override fun bindView() {
         binding.rvContainer.itemAnimator = null
-        binding.rvContainer.addOnItemTouchListener(
-            SwipeItemLayout.OnSwipeItemTouchListener(
-                requireContext()
-            )
-        )
+        binding.rvContainer.addOnItemTouchListener(SlidingPaneItemTouchListener(requireContext()))
         if (binding.rvContainer.adapter == null) {
             binding.rvContainer.adapter =
                 TodoListAdapter(requireContext(), status, arrayListOf()).apply {
@@ -96,7 +93,7 @@ class TodoListFragment : BaseNavigationFragment(R.layout.fragment_todo_list),
         viewModel.todoDeleteLive.stateObserve<Int>(viewLifecycleOwner, success = {
             toast(getString(R.string.todo_delete_success))
         }, error = {
-            SwipeItemLayout.closeAllItems(binding.rvContainer)
+            binding.rvContainer.closeAllItems()
             actionFailed(it)
         })
 
@@ -104,7 +101,7 @@ class TodoListFragment : BaseNavigationFragment(R.layout.fragment_todo_list),
             toast(getString(R.string.todo_move_success))
             findParentFragment<TodoFragment>()?.moveTodoItem(it)
         }, error = {
-            SwipeItemLayout.closeAllItems(binding.rvContainer)
+            binding.rvContainer.closeAllItems()
             actionFailed(it)
         })
     }
@@ -173,7 +170,7 @@ class TodoListFragment : BaseNavigationFragment(R.layout.fragment_todo_list),
             mAdapter?.notifyItemRemoved(position)
             viewModel.requestUpdateTodoStatus(position)
         } else {
-            SwipeItemLayout.closeAllItems(binding.rvContainer)
+            binding.rvContainer.closeAllItems()
             toast(getString(R.string.network_not_access))
         }
     }
@@ -187,7 +184,7 @@ class TodoListFragment : BaseNavigationFragment(R.layout.fragment_todo_list),
             mAdapter?.notifyItemRemoved(position)
             viewModel.requestDeleteTodo(position)
         } else {
-            SwipeItemLayout.closeAllItems(binding.rvContainer)
+            binding.rvContainer.closeAllItems()
             toast(getString(R.string.network_not_access))
         }
     }
