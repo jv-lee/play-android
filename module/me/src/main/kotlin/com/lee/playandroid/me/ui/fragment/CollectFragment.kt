@@ -38,10 +38,12 @@ class CollectFragment : BaseNavigationFragment(R.layout.fragment_collect),
 
     private val binding by binding(FragmentCollectBinding::bind)
 
+    private val slidingPaneItemTouchListener by lazy { SlidingPaneItemTouchListener(requireContext()) }
+
     private var mAdapter: SimpleTextAdapter? = null
 
     override fun bindView() {
-        binding.rvContainer.addOnItemTouchListener(SlidingPaneItemTouchListener(requireContext()))
+        binding.rvContainer.addOnItemTouchListener(slidingPaneItemTouchListener)
         if (binding.rvContainer.adapter == null) {
             binding.rvContainer.adapter = SimpleTextAdapter(requireContext(), arrayListOf()).apply {
                 mAdapter = this
@@ -60,7 +62,7 @@ class CollectFragment : BaseNavigationFragment(R.layout.fragment_collect),
             actionFailed(it)
         })
 
-        viewModel.unCollectLive.stateObserve<Int>(this, success = {
+        viewModel.unCollectLive.stateObserve<Int>(viewLifecycleOwner, success = {
             toast(getString(R.string.collect_remove_item_success))
         }, error = {
             binding.rvContainer.closeAllItems()
@@ -94,6 +96,7 @@ class CollectFragment : BaseNavigationFragment(R.layout.fragment_collect),
 
     override fun onDestroyView() {
         super.onDestroyView()
+        binding.rvContainer.removeOnItemTouchListener(slidingPaneItemTouchListener)
         binding.rvContainer.adapter = null
         mAdapter = null
     }

@@ -47,6 +47,8 @@ class MyShareFragment : BaseNavigationFragment(R.layout.fragment_my_share),
 
     private val binding by binding(FragmentMyShareBinding::bind)
 
+    private val slidingPaneItemTouchListener by lazy { SlidingPaneItemTouchListener(requireContext()) }
+
     private var mAdapter: SimpleTextAdapter? = null
 
     override fun bindView() {
@@ -56,7 +58,7 @@ class MyShareFragment : BaseNavigationFragment(R.layout.fragment_my_share),
             }
         })
 
-        binding.rvContainer.addOnItemTouchListener(SlidingPaneItemTouchListener(requireContext()))
+        binding.rvContainer.addOnItemTouchListener(slidingPaneItemTouchListener)
         if (binding.rvContainer.adapter == null) {
             binding.rvContainer.adapter = SimpleTextAdapter(requireContext(), arrayListOf()).apply {
                 mAdapter = this
@@ -114,6 +116,7 @@ class MyShareFragment : BaseNavigationFragment(R.layout.fragment_my_share),
 
     override fun onDestroyView() {
         super.onDestroyView()
+        binding.rvContainer.removeOnItemTouchListener(slidingPaneItemTouchListener)
         binding.rvContainer.adapter = null
         mAdapter = null
     }

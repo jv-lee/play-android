@@ -65,11 +65,13 @@ class TodoListFragment : BaseNavigationFragment(R.layout.fragment_todo_list),
 
     private val viewModel by viewModels<TodoListViewModel>()
 
+    private val slidingPaneItemTouchListener by lazy { SlidingPaneItemTouchListener(requireContext()) }
+
     private var mAdapter: TodoListAdapter? = null
 
     override fun bindView() {
         binding.rvContainer.itemAnimator = null
-        binding.rvContainer.addOnItemTouchListener(SlidingPaneItemTouchListener(requireContext()))
+        binding.rvContainer.addOnItemTouchListener(slidingPaneItemTouchListener)
         if (binding.rvContainer.adapter == null) {
             binding.rvContainer.adapter =
                 TodoListAdapter(requireContext(), status, arrayListOf()).apply {
@@ -157,6 +159,7 @@ class TodoListFragment : BaseNavigationFragment(R.layout.fragment_todo_list),
 
     override fun onDestroyView() {
         super.onDestroyView()
+        binding.rvContainer.removeOnItemTouchListener(slidingPaneItemTouchListener)
         binding.rvContainer.adapter = null
         mAdapter = null
     }
