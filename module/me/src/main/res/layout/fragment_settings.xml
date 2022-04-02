@@ -51,7 +51,7 @@
                 android:layout_marginTop="@dimen/medium_offset"
                 android:visibility="gone"
                 app:leftDrawable="@drawable/vector_logout"
-                app:leftText="@string/me_item_logout"
+                app:leftText="@string/settings_logout"
                 tools:visibility="visible" />
 
         </LinearLayout>
