@@ -138,8 +138,10 @@ class TodoListFragment : BaseNavigationFragment(R.layout.fragment_todo_list),
 
     override fun updateAction(todo: TodoData?) {
         todo ?: return
-        mAdapter?.openLoadMore()
-        viewModel.requestTodoData(LoadStatus.REFRESH)
+        if (todo.status == status) {
+            mAdapter?.openLoadMore()
+            viewModel.requestTodoData(LoadStatus.REFRESH)
+        }
     }
 
     override fun moveAction(todo: TodoData) {

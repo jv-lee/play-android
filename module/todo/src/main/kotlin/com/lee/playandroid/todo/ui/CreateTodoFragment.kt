@@ -111,12 +111,9 @@ class CreateTodoFragment : BaseNavigationFragment(R.layout.fragment_create_todo)
      */
     private fun initViewData() {
         // 设置Toolbar标题
-        val title = getString(
-            if (type == ARG_TYPE_CREATE)
-                R.string.title_create_todo
-            else R.string.title_edit_todo
-        )
-        binding.toolbar.setTitleText(title)
+        val toolbarTitle =
+            getString(if (type == ARG_TYPE_CREATE) R.string.title_create_todo else R.string.title_edit_todo)
+        binding.toolbar.setTitleText(toolbarTitle)
 
         // 根据数据设置
         todoData?.apply {
@@ -173,11 +170,13 @@ class CreateTodoFragment : BaseNavigationFragment(R.layout.fragment_create_todo)
      */
     private fun requestUpdateContent() {
         todoData?.apply {
-            title = binding.editTitle.text.toString()
-            content = binding.editContent.text.toString()
-            dateStr = binding.tvDateContent.text.toString()
-            priority = if (binding.radioButtonLow.isChecked) PRIORITY_LOW else PRIORITY_HEIGHT
-            viewModel.requestUpdateTodo(this)
+            val updateTodoData = copy(
+                title = binding.editTitle.text.toString(),
+                content = binding.editContent.text.toString(),
+                dateStr = binding.tvDateContent.text.toString(),
+                priority = if (binding.radioButtonLow.isChecked) PRIORITY_LOW else PRIORITY_HEIGHT
+            )
+            viewModel.requestUpdateTodo(updateTodoData)
         }
     }
 
