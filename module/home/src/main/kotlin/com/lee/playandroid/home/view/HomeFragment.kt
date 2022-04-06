@@ -10,6 +10,7 @@ import com.lee.library.adapter.page.submitData
 import com.lee.library.adapter.page.submitFailed
 import com.lee.library.base.BaseNavigationFragment
 import com.lee.library.extensions.binding
+import com.lee.library.extensions.delayBackEvent
 import com.lee.library.extensions.smoothScrollToTop
 import com.lee.library.livedatabus.InjectBus
 import com.lee.library.livedatabus.LiveDataBus
@@ -47,6 +48,9 @@ class HomeFragment : BaseNavigationFragment(R.layout.fragment_home),
     private var mAdapter: ContentAdapter? = null
 
     override fun bindView() {
+        // 拦截back处理
+        delayBackEvent()
+        // 设置toolbar主题渐变色背景
         binding.toolbar.setThemeGradientBackground()
 
         binding.rvContainer.addSaveStateViewType(BannerView::class.java)

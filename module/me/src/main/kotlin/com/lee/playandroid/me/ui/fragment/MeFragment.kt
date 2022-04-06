@@ -29,6 +29,9 @@ class MeFragment : BaseNavigationFragment(R.layout.fragment_me),
     private val binding by binding(FragmentMeBinding::bind)
 
     override fun bindView() {
+        // 拦截back处理
+        delayBackEvent()
+        // 监听当前深色主题变化
         DarkViewUpdateTools.bindViewCallback(viewLifecycleOwner, this)
 
         binding.toolbarLayout.setOnClickListener(this)

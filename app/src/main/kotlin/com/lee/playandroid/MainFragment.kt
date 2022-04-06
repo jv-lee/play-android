@@ -6,7 +6,6 @@ import androidx.core.content.ContextCompat
 import androidx.navigation.findNavController
 import com.lee.library.base.BaseFragment
 import com.lee.library.extensions.binding
-import com.lee.library.extensions.delayBackEvent
 import com.lee.library.extensions.setBackgroundColorCompat
 import com.lee.library.extensions.toast
 import com.lee.library.livedatabus.InjectBus
@@ -36,9 +35,6 @@ class MainFragment : BaseFragment(R.layout.fragment_main),
         //设置深色主题控制器监听
         DarkViewUpdateTools.bindViewCallback(viewLifecycleOwner, this)
 
-        // 拦截back处理
-        initBackPressedDispatcher()
-
         //fragment容器与navigationBar绑定
         initNavigation()
 
@@ -57,17 +53,6 @@ class MainFragment : BaseFragment(R.layout.fragment_main),
         binding.navigationBar.itemIconTintList =
             ContextCompat.getColorStateList(requireContext(), R.drawable.selector_main)
         binding.navigationBar.setBackgroundColorCompat(R.color.colorThemeItem)
-    }
-
-    private fun initBackPressedDispatcher() {
-        delayBackEvent(hasBack = {
-            val controller = binding.container.findNavController()
-            val label = controller.currentDestination?.label ?: ""
-
-            if (mainLabels.contains(label)) return@delayBackEvent true
-            controller.popBackStack()
-            false
-        })
     }
 
     private fun initNavigation() {

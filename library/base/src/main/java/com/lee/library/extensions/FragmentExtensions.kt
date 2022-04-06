@@ -108,7 +108,7 @@ inline fun Fragment.delayBackEvent(
             }
         }
     }.apply {
-        requireActivity().onBackPressedDispatcher.addCallback(this@delayBackEvent, this)
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, this)
 
         // 生命周期解绑
         viewLifecycleOwner.lifecycle.addObserver(object : LifecycleEventObserver {
@@ -150,7 +150,7 @@ inline fun Fragment.delayBackEvent(
             }
         }
     }.apply {
-        requireActivity().onBackPressedDispatcher.addCallback(this@delayBackEvent, this)
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, this)
 
         // 生命周期解绑
         viewLifecycleOwner.lifecycle.addObserver(object : LifecycleEventObserver {

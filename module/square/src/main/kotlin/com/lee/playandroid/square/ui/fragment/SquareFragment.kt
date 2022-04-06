@@ -9,6 +9,7 @@ import com.lee.library.adapter.extensions.bindAllListener
 import com.lee.library.adapter.page.submitData
 import com.lee.library.base.BaseNavigationFragment
 import com.lee.library.extensions.binding
+import com.lee.library.extensions.delayBackEvent
 import com.lee.library.extensions.smoothScrollToTop
 import com.lee.library.extensions.toast
 import com.lee.library.livedatabus.InjectBus
@@ -51,6 +52,9 @@ class SquareFragment : BaseNavigationFragment(R.layout.fragment_square),
     private var mAdapter: SquareAdapter? = null
 
     override fun bindView() {
+        // 拦截back处理
+        delayBackEvent()
+        // 设置toolbar主题渐变色背景
         binding.toolbar.setThemeGradientBackground()
 
         binding.rvContainer.addItemDecoration(OffsetItemDecoration(binding.toolbar.getToolbarLayoutHeight()))
