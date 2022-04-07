@@ -46,7 +46,7 @@ abstract class BaseNavigationFragment(val layoutId: Int) : BaseFragment(layoutId
         if (destination.contains(currentClass) || destination.contains(parentClass)) {
             handleFragmentResume()
         } else {
-            handleFragmentStop()
+            postFragmentStop()
         }
     }
 
@@ -82,12 +82,25 @@ abstract class BaseNavigationFragment(val layoutId: Int) : BaseFragment(layoutId
         }
     }
 
+    private fun postFragmentStop() {
+        postViewLifecycleEvent(Lifecycle.Event.ON_PAUSE)
+        postViewLifecycleEvent(Lifecycle.Event.ON_STOP)
+        if (!isStop) {
+            onFragmentStop()
+        }
+    }
+
     private fun getViewLifecycleRegistry(): LifecycleRegistry? {
         return viewLifecycleOwner.lifecycle as? LifecycleRegistry
     }
 
     private fun handleViewLifecycleEvent(@NonNull event: Lifecycle.Event) {
         getViewLifecycleRegistry()?.handleLifecycleEvent(event)
+    }
+
+    private fun postViewLifecycleEvent(@NonNull event: Lifecycle.Event) {
+        val lifecycle = getViewLifecycleRegistry()
+        view?.post { lifecycle?.handleLifecycleEvent(event) }
     }
 
 }
