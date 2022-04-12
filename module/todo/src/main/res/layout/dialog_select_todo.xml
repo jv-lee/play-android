@@ -7,33 +7,17 @@
     <com.lee.library.widget.WheelView
         android:id="@+id/wheel_view"
         android:layout_width="220dp"
-        android:layout_height="120dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/large_offset"
         android:layout_marginEnd="@dimen/large_offset"
         android:background="@drawable/shape_todo_wheel_bg"
+        app:select_item_style="line"
+        app:select_item_background="@color/colorThemeFocusLight"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:selected_text_color="@color/baseDarkColor"
         app:unSelected_text_color="@color/baseLightColor" />
-
-    <View
-        android:layout_width="220dp"
-        android:layout_height="1dp"
-        android:layout_marginTop="40dp"
-        android:background="@color/colorThemeFocusLight"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/wheel_view" />
-
-    <View
-        android:layout_width="220dp"
-        android:layout_height="1dp"
-        android:layout_marginBottom="40dp"
-        android:background="@color/colorThemeFocusLight"
-        app:layout_constraintBottom_toBottomOf="@id/wheel_view"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
