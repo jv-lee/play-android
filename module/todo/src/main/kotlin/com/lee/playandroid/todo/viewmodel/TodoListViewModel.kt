@@ -149,7 +149,7 @@ class TodoListViewModel(handle: SavedStateHandle) : CoroutineViewModel() {
         if (requestType != type) {
             PreferencesTools.put(SP_KEY_TODO_TYPE, type)
             requestType = type
-            cacheKey = Constants.CACHE_KEY_TODO_CONTENT.plus(requestStatus).plus(requestType)
+            cacheKey = CACHE_KEY_TODO_CONTENT.plus(requestStatus).plus(requestType)
                 .plus(accountService.getUserId())
             return true
         }
