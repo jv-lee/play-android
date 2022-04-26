@@ -12,7 +12,9 @@ import com.lee.playandroid.library.common.entity.Content
 import com.lee.playandroid.library.common.entity.PageData
 import com.lee.playandroid.library.common.extensions.checkData
 import com.lee.playandroid.library.common.extensions.createApi
-import com.lee.playandroid.me.constants.Constants
+import com.lee.playandroid.library.service.AccountService
+import com.lee.playandroid.library.service.hepler.ModuleService
+import com.lee.playandroid.me.constants.Constants.CACHE_KEY_COLLECT
 import com.lee.playandroid.me.model.api.ApiService
 import kotlinx.coroutines.flow.collect
 import java.util.concurrent.atomic.AtomicBoolean
@@ -25,9 +27,10 @@ import java.util.concurrent.atomic.AtomicBoolean
 class CollectViewModel : CoroutineViewModel() {
 
     private val api = createApi<ApiService>()
-
     private val cacheManager = CacheManager.getDefault()
+    private val accountService: AccountService = ModuleService.find()
 
+    private val cacheKey = CACHE_KEY_COLLECT.plus(accountService.getUserId())
     private val deleteLock = AtomicBoolean(false)
 
     private val _unCollectLive = UiStateMutableLiveData()
@@ -45,9 +48,9 @@ class CollectViewModel : CoroutineViewModel() {
             _collectLive.pageLaunch(status, { page ->
                 applyData { api.getCollectListAsync(page).checkData() }
             }, {
-                cacheManager.getCache(Constants.CACHE_KEY_COLLECT)
+                cacheManager.getCache(cacheKey)
             }, {
-                cacheManager.putPageCache(Constants.CACHE_KEY_COLLECT, it)
+                cacheManager.putPageCache(cacheKey, it)
             })
         }
     }
@@ -89,9 +92,9 @@ class CollectViewModel : CoroutineViewModel() {
         }
 
         // 缓存移除
-        cacheManager.getCache<PageData<Content>>(Constants.CACHE_KEY_COLLECT)?.apply {
+        cacheManager.getCache<PageData<Content>>(cacheKey)?.apply {
             if (data.remove(content)) {
-                cacheManager.putCache(Constants.CACHE_KEY_COLLECT, this)
+                cacheManager.putCache(cacheKey, this)
             }
         }
     }

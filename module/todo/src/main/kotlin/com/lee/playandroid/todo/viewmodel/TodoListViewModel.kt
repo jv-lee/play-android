@@ -14,6 +14,8 @@ import com.lee.playandroid.library.common.entity.PageData
 import com.lee.playandroid.library.common.entity.TodoData
 import com.lee.playandroid.library.common.extensions.checkData
 import com.lee.playandroid.library.common.extensions.createApi
+import com.lee.playandroid.library.service.AccountService
+import com.lee.playandroid.library.service.hepler.ModuleService
 import com.lee.playandroid.todo.constants.Constants
 import com.lee.playandroid.todo.constants.Constants.SP_KEY_TODO_TYPE
 import com.lee.playandroid.todo.model.api.ApiService
@@ -31,15 +33,19 @@ import java.util.concurrent.atomic.AtomicBoolean
  */
 class TodoListViewModel(handle: SavedStateHandle) : CoroutineViewModel() {
 
+    private val api = createApi<ApiService>()
+    private val cacheManager = CacheManager.getDefault()
+    private val accountService: AccountService = ModuleService.find()
+
+    // 请求状态 1-完成；0未完成; 默认全部展示
     private val requestStatus = handle[ARG_PARAMS_STATUS] ?: 0
 
+    // 请求类型
     private var requestType = PreferencesTools.get(SP_KEY_TODO_TYPE, TodoType.DEFAULT)
 
-    private var cacheKey = Constants.CACHE_KEY_TODO_CONTENT + requestStatus + requestType
-
-    private val api = createApi<ApiService>()
-
-    private val cacheManager = CacheManager.getDefault()
+    // 缓存key 根据todo状态、todo类型、用户id
+    private var cacheKey = Constants.CACHE_KEY_TODO_CONTENT.plus(requestStatus).plus(requestType)
+        .plus(accountService.getUserId())
 
     private val deleteLock = AtomicBoolean(false)
     private val updateLock = AtomicBoolean(false)
@@ -52,6 +58,10 @@ class TodoListViewModel(handle: SavedStateHandle) : CoroutineViewModel() {
 
     private val _todoDataLive = UiStatePageMutableLiveData(UiStatePage.Default(1))
     val todoDataLive: UiStatePageLiveData = _todoDataLive
+
+    init {
+        requestTodoData(LoadStatus.INIT)
+    }
 
     fun requestTodoData(@LoadStatus status: Int) {
         launchIO {
@@ -131,18 +141,18 @@ class TodoListViewModel(handle: SavedStateHandle) : CoroutineViewModel() {
             }
     }
 
+    /**
+     * 切换todo类型
+     */
     fun checkResetRequestType(@TodoType type: Int): Boolean {
         if (requestType != type) {
             PreferencesTools.put(SP_KEY_TODO_TYPE, type)
             requestType = type
-            cacheKey = Constants.CACHE_KEY_TODO_CONTENT + requestStatus + requestType
+            cacheKey = Constants.CACHE_KEY_TODO_CONTENT.plus(requestStatus).plus(requestType)
+                .plus(accountService.getUserId())
             return true
         }
         return false
-    }
-
-    init {
-        requestTodoData(LoadStatus.INIT)
     }
 
 }

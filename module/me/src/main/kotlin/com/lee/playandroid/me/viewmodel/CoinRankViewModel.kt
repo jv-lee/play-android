@@ -8,6 +8,8 @@ import com.lee.library.mvvm.ui.*
 import com.lee.library.mvvm.vm.CoroutineViewModel
 import com.lee.playandroid.library.common.extensions.checkData
 import com.lee.playandroid.library.common.extensions.createApi
+import com.lee.playandroid.library.service.AccountService
+import com.lee.playandroid.library.service.hepler.ModuleService
 import com.lee.playandroid.me.constants.Constants.CACHE_KEY_COIN_RANK
 import com.lee.playandroid.me.model.api.ApiService
 import java.util.*
@@ -20,11 +22,17 @@ import java.util.*
 class CoinRankViewModel : CoroutineViewModel() {
 
     private val api = createApi<ApiService>()
-
     private val cacheManager = CacheManager.getDefault()
+    private val accountService: AccountService = ModuleService.find()
+
+    private val cacheKey = CACHE_KEY_COIN_RANK.plus(accountService.getUserId())
 
     private val _coinRankLive = UiStatePageMutableLiveData(UiStatePage.Default(1))
     val coinRankLive: UiStatePageLiveData = _coinRankLive
+
+    init {
+        requestCoinRank(LoadStatus.INIT)
+    }
 
     fun requestCoinRank(@LoadStatus status: Int) {
         launchIO {
@@ -38,15 +46,11 @@ class CoinRankViewModel : CoroutineViewModel() {
                     applyData(getValueData(), newData)
                 }
             }, {
-                cacheManager.getCache(CACHE_KEY_COIN_RANK)
+                cacheManager.getCache(cacheKey)
             }, {
-                cacheManager.putPageCache(CACHE_KEY_COIN_RANK, it)
+                cacheManager.putPageCache(cacheKey, it)
             })
         }
-    }
-
-    init {
-        requestCoinRank(LoadStatus.INIT)
     }
 
 }

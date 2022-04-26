@@ -4,6 +4,8 @@ import androidx.activity.viewModels
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.LiveData
 import com.google.auto.service.AutoService
+import com.lee.library.cache.CacheManager
+import com.lee.library.extensions.getCache
 import com.lee.library.mvvm.ui.UiState
 import com.lee.library.tools.PreferencesTools
 import com.lee.playandroid.account.constants.Constants
@@ -42,6 +44,14 @@ class AccountServiceImpl : AccountService {
             hideLoading,
             failedCall
         )
+    }
+
+    override fun getAccountInfo(): AccountData? {
+        return CacheManager.getDefault().getCache(Constants.CACHE_KEY_ACCOUNT_DATA)
+    }
+
+    override fun getUserId(): Long {
+        return getAccountInfo()?.run { userInfo.id } ?: kotlin.run { 0 }
     }
 
     override fun isLogin(): Boolean {

@@ -8,6 +8,8 @@ import com.lee.library.mvvm.ui.*
 import com.lee.library.mvvm.vm.CoroutineViewModel
 import com.lee.playandroid.library.common.extensions.checkData
 import com.lee.playandroid.library.common.extensions.createApi
+import com.lee.playandroid.library.service.AccountService
+import com.lee.playandroid.library.service.hepler.ModuleService
 import com.lee.playandroid.me.constants.Constants.CACHE_KEY_COIN_RECORD
 import com.lee.playandroid.me.model.api.ApiService
 
@@ -19,8 +21,10 @@ import com.lee.playandroid.me.model.api.ApiService
 class CoinViewModel : CoroutineViewModel() {
 
     private val api = createApi<ApiService>()
-
     private val cacheManager = CacheManager.getDefault()
+    private val accountService: AccountService = ModuleService.find()
+
+    private val cacheKey = CACHE_KEY_COIN_RECORD.plus(accountService.getUserId())
 
     private val _coinRecordLive = UiStatePageMutableLiveData(UiStatePage.Default(1))
     val coinRecordLive: UiStatePageLiveData = _coinRecordLive
@@ -30,9 +34,9 @@ class CoinViewModel : CoroutineViewModel() {
             _coinRecordLive.pageLaunch(status, { page ->
                 applyData { api.getCoinRecordAsync(page).checkData() }
             }, {
-                cacheManager.getCache(CACHE_KEY_COIN_RECORD)
+                cacheManager.getCache(cacheKey)
             }, {
-                cacheManager.putPageCache(CACHE_KEY_COIN_RECORD, it)
+                cacheManager.putPageCache(cacheKey, it)
             })
         }
     }

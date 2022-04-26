@@ -25,6 +25,10 @@ interface AccountService {
         failedCall: (String) -> Unit = {}
     )
 
+    fun getAccountInfo(): AccountData?
+
+    fun getUserId(): Long
+
     fun isLogin(): Boolean
 
 }
