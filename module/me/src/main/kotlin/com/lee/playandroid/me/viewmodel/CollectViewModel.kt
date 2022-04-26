@@ -57,24 +57,23 @@ class CollectViewModel : CoroutineViewModel() {
      * @param position 收藏内容下标
      */
     fun requestUnCollect(position: Int) {
-        if (deleteLock.get()) return
-        deleteLock.set(true)
+        if (deleteLock.compareAndSet(false, true)) {
+            launchIO {
+                stateFlow {
+                    val data = collectLive.getValueData<PageData<Content>>()!!
+                    val item = data.data[position]
 
-        launchIO {
-            stateFlow {
-                val data = collectLive.getValueData<PageData<Content>>()!!
-                val item = data.data[position]
-
-                val response = api.postUnCollectAsync(item.id, item.originId)
-                if (response.errorCode == ApiConstants.REQUEST_OK) {
-                    removeCacheItem(item)
-                    position
-                } else {
-                    throw RuntimeException(response.errorMsg)
+                    val response = api.postUnCollectAsync(item.id, item.originId)
+                    if (response.errorCode == ApiConstants.REQUEST_OK) {
+                        removeCacheItem(item)
+                        position
+                    } else {
+                        throw RuntimeException(response.errorMsg)
+                    }
+                }.collect {
+                    deleteLock.set(false)
+                    _unCollectLive.postValue(it)
                 }
-            }.collect {
-                deleteLock.set(false)
-                _unCollectLive.postValue(it)
             }
         }
     }

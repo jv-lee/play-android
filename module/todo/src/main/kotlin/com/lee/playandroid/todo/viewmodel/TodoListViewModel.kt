@@ -69,51 +69,49 @@ class TodoListViewModel(handle: SavedStateHandle) : CoroutineViewModel() {
     }
 
     fun requestDeleteTodo(position: Int) {
-        if (deleteLock.get()) return
-        deleteLock.set(true)
+        if (deleteLock.compareAndSet(false, true)) {
+            launchIO {
+                stateFlow {
+                    val data = todoDataLive.getValueData<PageData<TodoData>>()!!
+                    val item = data.data[position]
 
-        launchIO {
-            stateFlow {
-                val data = todoDataLive.getValueData<PageData<TodoData>>()!!
-                val item = data.data[position]
-
-                val response = api.postDeleteTodoAsync(item.id)
-                if (response.errorCode == ApiConstants.REQUEST_OK) {
-                    removeCacheItem(item)
-                    position
-                } else {
-                    throw RuntimeException(response.errorMsg)
+                    val response = api.postDeleteTodoAsync(item.id)
+                    if (response.errorCode == ApiConstants.REQUEST_OK) {
+                        removeCacheItem(item)
+                        position
+                    } else {
+                        throw RuntimeException(response.errorMsg)
+                    }
+                }.collect {
+                    deleteLock.set(false)
+                    _todoDeleteLive.postValue(it)
                 }
-            }.collect {
-                deleteLock.set(false)
-                _todoDeleteLive.postValue(it)
             }
         }
     }
 
     fun requestUpdateTodoStatus(position: Int) {
-        if (updateLock.get()) return
-        updateLock.set(true)
+        if (updateLock.compareAndSet(false, true)) {
+            launchIO {
+                stateFlow {
+                    val data = todoDataLive.getValueData<PageData<TodoData>>()!!
+                    val item = data.data[position]
 
-        launchIO {
-            stateFlow {
-                val data = todoDataLive.getValueData<PageData<TodoData>>()!!
-                val item = data.data[position]
-
-                val newItem =
-                    item.copy(status = if (requestStatus == ARG_STATUS_UPCOMING) ARG_STATUS_COMPLETE else ARG_STATUS_UPCOMING)
-                val response = api.postUpdateTodoStatusAsync(item.id, newItem.status)
-                if (response.errorCode == ApiConstants.REQUEST_OK) {
-                    // 根据数据源删除item
-                    removeCacheItem(item)
-                    // 返回copy数据源，因为返回的数据源要根据新的status做数据拉取处理
-                    newItem
-                } else {
-                    throw RuntimeException(response.errorMsg)
+                    val newItem =
+                        item.copy(status = if (requestStatus == ARG_STATUS_UPCOMING) ARG_STATUS_COMPLETE else ARG_STATUS_UPCOMING)
+                    val response = api.postUpdateTodoStatusAsync(item.id, newItem.status)
+                    if (response.errorCode == ApiConstants.REQUEST_OK) {
+                        // 根据数据源删除item
+                        removeCacheItem(item)
+                        // 返回copy数据源，因为返回的数据源要根据新的status做数据拉取处理
+                        newItem
+                    } else {
+                        throw RuntimeException(response.errorMsg)
+                    }
+                }.collect {
+                    updateLock.set(false)
+                    _todoUpdateLive.postValue(it)
                 }
-            }.collect {
-                updateLock.set(false)
-                _todoUpdateLive.postValue(it)
             }
         }
     }

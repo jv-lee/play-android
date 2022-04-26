@@ -54,24 +54,23 @@ class MyShareViewModel : CoroutineViewModel() {
     }
 
     fun requestDeleteShare(position: Int) {
-        if (deleteLock.get()) return
-        deleteLock.set(true)
+        if (deleteLock.compareAndSet(false, true)) {
+            launchIO {
+                stateFlow {
+                    val data = myShareLive.getValueData<PageData<Content>>()!!
+                    val item = data.data[position]
 
-        launchIO {
-            stateFlow {
-                val data = myShareLive.getValueData<PageData<Content>>()!!
-                val item = data.data[position]
-
-                val response = api.postDeleteShareAsync(item.id)
-                if (response.errorCode == ApiConstants.REQUEST_OK) {
-                    removeCacheItem(item)
-                    position
-                } else {
-                    throw RuntimeException(response.errorMsg)
+                    val response = api.postDeleteShareAsync(item.id)
+                    if (response.errorCode == ApiConstants.REQUEST_OK) {
+                        removeCacheItem(item)
+                        position
+                    } else {
+                        throw RuntimeException(response.errorMsg)
+                    }
+                }.collect {
+                    deleteLock.set(false)
+                    _deleteShareLive.postValue(it)
                 }
-            }.collect {
-                deleteLock.set(false)
-                _deleteShareLive.postValue(it)
             }
         }
     }
