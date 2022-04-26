@@ -17,6 +17,7 @@ import com.lee.playandroid.library.common.extensions.createApi
 import com.lee.playandroid.library.service.AccountService
 import com.lee.playandroid.library.service.hepler.ModuleService
 import com.lee.playandroid.todo.constants.Constants
+import com.lee.playandroid.todo.constants.Constants.CACHE_KEY_TODO_CONTENT
 import com.lee.playandroid.todo.constants.Constants.SP_KEY_TODO_TYPE
 import com.lee.playandroid.todo.model.api.ApiService
 import com.lee.playandroid.todo.model.entity.TodoType
@@ -44,7 +45,7 @@ class TodoListViewModel(handle: SavedStateHandle) : CoroutineViewModel() {
     private var requestType = PreferencesTools.get(SP_KEY_TODO_TYPE, TodoType.DEFAULT)
 
     // 缓存key 根据todo状态、todo类型、用户id
-    private var cacheKey = Constants.CACHE_KEY_TODO_CONTENT.plus(requestStatus).plus(requestType)
+    private var cacheKey = CACHE_KEY_TODO_CONTENT.plus(requestStatus).plus(requestType)
         .plus(accountService.getUserId())
 
     private val deleteLock = AtomicBoolean(false)
