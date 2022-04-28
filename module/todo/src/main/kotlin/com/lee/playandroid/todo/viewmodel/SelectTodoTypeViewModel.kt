@@ -1,9 +1,9 @@
 package com.lee.playandroid.todo.viewmodel
 
-import com.lee.library.mvvm.ui.UiStateLiveData
-import com.lee.library.mvvm.ui.UiStateMutableLiveData
-import com.lee.library.mvvm.ui.stateFlow
-import com.lee.library.mvvm.vm.CoroutineViewModel
+import com.lee.library.viewstate.UiStateLiveData
+import com.lee.library.viewstate.UiStateMutableLiveData
+import com.lee.library.viewstate.stateFlow
+import com.lee.library.viewmodel.CoroutineViewModel
 import com.lee.library.tools.PreferencesTools
 import com.lee.playandroid.todo.constants.Constants.SP_KEY_TODO_TYPE
 import com.lee.playandroid.todo.model.entity.TodoType

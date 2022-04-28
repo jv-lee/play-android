@@ -12,7 +12,7 @@ import com.lee.library.extensions.binding
 import com.lee.library.extensions.dismiss
 import com.lee.library.extensions.show
 import com.lee.library.interadp.TextWatcherAdapter
-import com.lee.library.mvvm.ui.stateObserve
+import com.lee.library.viewstate.stateObserve
 import com.lee.library.tools.KeyboardTools.hideSoftInput
 import com.lee.library.tools.KeyboardTools.keyboardIsShow
 import com.lee.library.tools.KeyboardTools.keyboardPaddingBottom

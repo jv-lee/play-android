@@ -5,10 +5,10 @@ import com.lee.library.cache.CacheManager
 import com.lee.library.extensions.getCache
 import com.lee.library.extensions.putCache
 import com.lee.library.extensions.putPageCache
-import com.lee.library.mvvm.annotation.LoadStatus
 import com.lee.library.mvvm.ui.*
-import com.lee.library.mvvm.vm.CoroutineViewModel
+import com.lee.library.viewmodel.CoroutineViewModel
 import com.lee.library.tools.PreferencesTools
+import com.lee.library.viewstate.*
 import com.lee.playandroid.library.common.constants.ApiConstants
 import com.lee.playandroid.library.common.entity.PageData
 import com.lee.playandroid.library.common.entity.TodoData
@@ -16,7 +16,6 @@ import com.lee.playandroid.library.common.extensions.checkData
 import com.lee.playandroid.library.common.extensions.createApi
 import com.lee.playandroid.library.service.AccountService
 import com.lee.playandroid.library.service.hepler.ModuleService
-import com.lee.playandroid.todo.constants.Constants
 import com.lee.playandroid.todo.constants.Constants.CACHE_KEY_TODO_CONTENT
 import com.lee.playandroid.todo.constants.Constants.SP_KEY_TODO_TYPE
 import com.lee.playandroid.todo.model.api.ApiService
@@ -61,10 +60,10 @@ class TodoListViewModel(handle: SavedStateHandle) : CoroutineViewModel() {
     val todoDataLive: UiStatePageLiveData = _todoDataLive
 
     init {
-        requestTodoData(LoadStatus.INIT)
+        requestTodoData(_root_ide_package_.com.lee.library.viewstate.LoadStatus.INIT)
     }
 
-    fun requestTodoData(@LoadStatus status: Int) {
+    fun requestTodoData(@_root_ide_package_.com.lee.library.viewstate.LoadStatus status: Int) {
         launchIO {
             _todoDataLive.pageLaunch(status, { page ->
                 applyData {

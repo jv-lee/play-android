@@ -4,9 +4,8 @@ import com.lee.library.cache.CacheManager
 import com.lee.library.extensions.getCache
 import com.lee.library.extensions.putCache
 import com.lee.library.extensions.putPageCache
-import com.lee.library.mvvm.annotation.LoadStatus
-import com.lee.library.mvvm.ui.*
-import com.lee.library.mvvm.vm.CoroutineViewModel
+import com.lee.library.viewmodel.CoroutineViewModel
+import com.lee.library.viewstate.*
 import com.lee.playandroid.library.common.constants.ApiConstants
 import com.lee.playandroid.library.common.entity.Content
 import com.lee.playandroid.library.common.entity.PageData

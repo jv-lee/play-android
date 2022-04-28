@@ -10,8 +10,8 @@ import com.lee.library.adapter.page.submitFailed
 import com.lee.library.base.BaseNavigationFragment
 import com.lee.library.extensions.binding
 import com.lee.library.extensions.toast
-import com.lee.library.mvvm.annotation.LoadStatus
-import com.lee.library.mvvm.ui.stateObserve
+import com.lee.library.viewstate.LoadStatus
+import com.lee.library.viewstate.stateObserve
 import com.lee.library.utils.NetworkUtil
 import com.lee.library.widget.SlidingPaneItemTouchListener
 import com.lee.library.widget.closeAllItems

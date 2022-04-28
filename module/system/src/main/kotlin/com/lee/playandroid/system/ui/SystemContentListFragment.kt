@@ -5,7 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.navigation.fragment.findNavController
 import com.lee.library.adapter.base.BaseViewAdapter
 import com.lee.library.extensions.viewModelByFactory
-import com.lee.library.mvvm.ui.UiStatePage
+import com.lee.library.viewstate.UiStatePage
 import com.lee.playandroid.library.common.entity.Content
 import com.lee.playandroid.library.common.ui.BaseListFragment
 import com.lee.playandroid.router.navigateDetails
@@ -44,7 +44,7 @@ class SystemContentListFragment : BaseListFragment() {
         )
     }
 
-    override fun dataObserveState(): LiveData<UiStatePage> {
+    override fun dataObserveState(): LiveData<_root_ide_package_.com.lee.library.viewstate.UiStatePage> {
         return viewModel.contentListLive
     }
 }

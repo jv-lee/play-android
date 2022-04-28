@@ -14,8 +14,8 @@ import com.lee.library.extensions.delayBackEvent
 import com.lee.library.extensions.smoothScrollToTop
 import com.lee.library.livedatabus.InjectBus
 import com.lee.library.livedatabus.LiveDataBus
-import com.lee.library.mvvm.annotation.LoadStatus
-import com.lee.library.mvvm.ui.stateObserve
+import com.lee.library.viewstate.LoadStatus
+import com.lee.library.viewstate.stateObserve
 import com.lee.library.widget.banner.BannerView
 import com.lee.playandroid.home.R
 import com.lee.playandroid.home.bean.HomeContent

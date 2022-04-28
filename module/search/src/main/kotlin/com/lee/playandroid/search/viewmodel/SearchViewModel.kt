@@ -1,7 +1,7 @@
 package com.lee.playandroid.search.viewmodel
 
 import androidx.lifecycle.viewModelScope
-import com.lee.library.mvvm.vm.CoroutineViewModel
+import com.lee.library.viewmodel.CoroutineViewModel
 import com.lee.playandroid.library.common.entity.SearchHistory
 import com.lee.playandroid.search.model.db.SearchHistoryDatabase
 import com.lee.playandroid.search.model.entity.SearchHot

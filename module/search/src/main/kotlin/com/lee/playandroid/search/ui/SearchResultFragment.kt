@@ -11,8 +11,8 @@ import com.lee.library.extensions.arguments
 import com.lee.library.extensions.binding
 import com.lee.library.extensions.launchAndRepeatWithViewLifecycle
 import com.lee.library.extensions.viewModelByFactory
-import com.lee.library.mvvm.annotation.LoadStatus
-import com.lee.library.mvvm.ui.stateCollect
+import com.lee.library.viewstate.LoadStatus
+import com.lee.library.viewstate.stateCollect
 import com.lee.playandroid.library.common.entity.Content
 import com.lee.playandroid.library.common.entity.PageData
 import com.lee.playandroid.library.common.extensions.actionFailed
@@ -20,6 +20,7 @@ import com.lee.playandroid.router.navigateDetails
 import com.lee.playandroid.search.R
 import com.lee.playandroid.search.databinding.FragmentSearchResultBinding
 import com.lee.playandroid.search.ui.adapter.SearchResultAdapter
+import com.lee.playandroid.search.viewmodel.SearchResultViewAction
 import com.lee.playandroid.search.viewmodel.SearchResultViewModel
 
 /**
@@ -77,15 +78,15 @@ class SearchResultFragment : BaseNavigationFragment(R.layout.fragment_search_res
     }
 
     override fun autoLoadMore() {
-        viewModel.requestSearch(LoadStatus.LOAD_MORE)
+        viewModel.dispatch(SearchResultViewAction.RequestPage(_root_ide_package_.com.lee.library.viewstate.LoadStatus.LOAD_MORE))
     }
 
     override fun pageReload() {
-        viewModel.requestSearch(LoadStatus.REFRESH)
+        viewModel.dispatch(SearchResultViewAction.RequestPage(_root_ide_package_.com.lee.library.viewstate.LoadStatus.REFRESH))
     }
 
     override fun itemReload() {
-        viewModel.requestSearch(LoadStatus.RELOAD)
+        viewModel.dispatch(SearchResultViewAction.RequestPage(_root_ide_package_.com.lee.library.viewstate.LoadStatus.RELOAD))
     }
 
     override fun onDestroyView() {

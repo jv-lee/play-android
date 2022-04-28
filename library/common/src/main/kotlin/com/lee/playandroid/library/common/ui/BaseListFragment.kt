@@ -9,9 +9,9 @@ import com.lee.library.adapter.page.submitData
 import com.lee.library.adapter.page.submitFailed
 import com.lee.library.base.BaseNavigationFragment
 import com.lee.library.extensions.binding
-import com.lee.library.mvvm.annotation.LoadStatus
-import com.lee.library.mvvm.ui.UiStatePage
-import com.lee.library.mvvm.ui.stateObserve
+import com.lee.library.viewstate.LoadStatus
+import com.lee.library.viewstate.UiStatePage
+import com.lee.library.viewstate.stateObserve
 import com.lee.playandroid.library.common.R
 import com.lee.playandroid.library.common.databinding.FragmentBaseListBinding
 import com.lee.playandroid.library.common.entity.Content
