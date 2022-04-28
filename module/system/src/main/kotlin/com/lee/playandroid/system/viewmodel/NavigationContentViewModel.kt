@@ -35,9 +35,9 @@ class NavigationContentViewModel : CoroutineViewModel() {
     /**
      * 该方法不再init调用，因为直接加载会导致页面卡顿，采用fragment懒加载方式
      */
-    fun requestNavigationData(@_root_ide_package_.com.lee.library.viewstate.LoadStatus status: Int) {
+    fun requestNavigationData(@LoadStatus status: Int) {
         // 过滤navigation fragment 重复创建导致重复初始化请求
-        if (status == _root_ide_package_.com.lee.library.viewstate.LoadStatus.INIT && navigationLive.value != null) {
+        if (status == LoadStatus.INIT && navigationLive.value != null) {
             return
         }
 

@@ -43,7 +43,7 @@ class OfficialListFragment : BaseListFragment() {
         )
     }
 
-    override fun dataObserveState(): LiveData<_root_ide_package_.com.lee.library.viewstate.UiStatePage> {
+    override fun dataObserveState(): LiveData<UiStatePage> {
         return viewModel.contentListLive
     }
 

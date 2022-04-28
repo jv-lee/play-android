@@ -14,6 +14,7 @@ import com.lee.library.extensions.smoothScrollToTop
 import com.lee.library.extensions.toast
 import com.lee.library.livedatabus.InjectBus
 import com.lee.library.livedatabus.LiveDataBus
+import com.lee.library.viewstate.LoadStatus
 import com.lee.library.viewstate.stateObserve
 import com.lee.playandroid.library.common.entity.Content
 import com.lee.playandroid.library.common.entity.NavigationSelectEvent
@@ -104,19 +105,19 @@ class SquareFragment : BaseNavigationFragment(R.layout.fragment_square),
 
     override fun onRefresh() {
         mAdapter?.openLoadMore()
-        viewModel.requestSquareData(_root_ide_package_.com.lee.library.viewstate.LoadStatus.REFRESH)
+        viewModel.requestSquareData(LoadStatus.REFRESH)
     }
 
     override fun autoLoadMore() {
-        viewModel.requestSquareData(_root_ide_package_.com.lee.library.viewstate.LoadStatus.LOAD_MORE)
+        viewModel.requestSquareData(LoadStatus.LOAD_MORE)
     }
 
     override fun pageReload() {
-        viewModel.requestSquareData(_root_ide_package_.com.lee.library.viewstate.LoadStatus.REFRESH)
+        viewModel.requestSquareData(LoadStatus.REFRESH)
     }
 
     override fun itemReload() {
-        viewModel.requestSquareData(_root_ide_package_.com.lee.library.viewstate.LoadStatus.RELOAD)
+        viewModel.requestSquareData(LoadStatus.RELOAD)
     }
 
     override fun onDestroyView() {

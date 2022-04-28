@@ -16,6 +16,7 @@ import com.lee.library.extensions.findParentFragment
 import com.lee.library.extensions.toast
 import com.lee.library.viewstate.stateObserve
 import com.lee.library.utils.NetworkUtil
+import com.lee.library.viewstate.LoadStatus
 import com.lee.library.widget.SlidingPaneItemTouchListener
 import com.lee.library.widget.closeAllItems
 import com.lee.playandroid.library.common.entity.PageData
@@ -116,22 +117,22 @@ class TodoListFragment : BaseNavigationFragment(R.layout.fragment_todo_list),
     }
 
     override fun autoLoadMore() {
-        viewModel.requestTodoData(_root_ide_package_.com.lee.library.viewstate.LoadStatus.LOAD_MORE)
+        viewModel.requestTodoData(LoadStatus.LOAD_MORE)
     }
 
     override fun pageReload() {
-        viewModel.requestTodoData(_root_ide_package_.com.lee.library.viewstate.LoadStatus.REFRESH)
+        viewModel.requestTodoData(LoadStatus.REFRESH)
     }
 
     override fun itemReload() {
-        viewModel.requestTodoData(_root_ide_package_.com.lee.library.viewstate.LoadStatus.RELOAD)
+        viewModel.requestTodoData(LoadStatus.RELOAD)
     }
 
     override fun addAction(todo: TodoData?) {
         todo ?: return
         if (status == ARG_STATUS_UPCOMING) {
             mAdapter?.openLoadMore()
-            viewModel.requestTodoData(_root_ide_package_.com.lee.library.viewstate.LoadStatus.REFRESH)
+            viewModel.requestTodoData(LoadStatus.REFRESH)
         }
     }
 
@@ -139,14 +140,14 @@ class TodoListFragment : BaseNavigationFragment(R.layout.fragment_todo_list),
         todo ?: return
         if (todo.status == status) {
             mAdapter?.openLoadMore()
-            viewModel.requestTodoData(_root_ide_package_.com.lee.library.viewstate.LoadStatus.REFRESH)
+            viewModel.requestTodoData(LoadStatus.REFRESH)
         }
     }
 
     override fun moveAction(todo: TodoData) {
         if (todo.status == status) {
             mAdapter?.openLoadMore()
-            viewModel.requestTodoData(_root_ide_package_.com.lee.library.viewstate.LoadStatus.REFRESH)
+            viewModel.requestTodoData(LoadStatus.REFRESH)
         }
     }
 
@@ -154,7 +155,7 @@ class TodoListFragment : BaseNavigationFragment(R.layout.fragment_todo_list),
         if (viewModel.checkResetRequestType(type)) {
             mAdapter?.initStatusView()
             mAdapter?.pageLoading()
-            viewModel.requestTodoData(_root_ide_package_.com.lee.library.viewstate.LoadStatus.REFRESH)
+            viewModel.requestTodoData(LoadStatus.REFRESH)
         }
     }
 

@@ -6,8 +6,8 @@ import androidx.lifecycle.LiveData
 import com.google.auto.service.AutoService
 import com.lee.library.cache.CacheManager
 import com.lee.library.extensions.getCache
-import com.lee.library.mvvm.ui.UiState
 import com.lee.library.tools.PreferencesTools
+import com.lee.library.viewstate.UiState
 import com.lee.playandroid.account.constants.Constants
 import com.lee.playandroid.account.viewmodel.AccountViewModel
 import com.lee.playandroid.library.common.entity.AccountData

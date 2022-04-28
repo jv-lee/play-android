@@ -14,6 +14,7 @@ import com.lee.library.extensions.binding
 import com.lee.library.extensions.toast
 import com.lee.library.viewstate.stateObserve
 import com.lee.library.utils.NetworkUtil
+import com.lee.library.viewstate.LoadStatus
 import com.lee.library.widget.SlidingPaneItemTouchListener
 import com.lee.library.widget.closeAllItems
 import com.lee.library.widget.toolbar.TitleToolbar
@@ -71,7 +72,7 @@ class MyShareFragment : BaseNavigationFragment(R.layout.fragment_my_share),
     override fun bindData() {
         // 监听登陆页面回调时是否已经发布成功，刷新数据列表
         setFragmentResultListener(REQUEST_KEY_REFRESH) { _: String, _: Bundle ->
-            viewModel.requestMyShareData(_root_ide_package_.com.lee.library.viewstate.LoadStatus.INIT)
+            viewModel.requestMyShareData(LoadStatus.INIT)
         }
 
         viewModel.myShareLive.stateObserve<PageData<Content>>(viewLifecycleOwner, success = {
@@ -90,15 +91,15 @@ class MyShareFragment : BaseNavigationFragment(R.layout.fragment_my_share),
     }
 
     override fun autoLoadMore() {
-        viewModel.requestMyShareData(_root_ide_package_.com.lee.library.viewstate.LoadStatus.LOAD_MORE)
+        viewModel.requestMyShareData(LoadStatus.LOAD_MORE)
     }
 
     override fun pageReload() {
-        viewModel.requestMyShareData(_root_ide_package_.com.lee.library.viewstate.LoadStatus.REFRESH)
+        viewModel.requestMyShareData(LoadStatus.REFRESH)
     }
 
     override fun itemReload() {
-        viewModel.requestMyShareData(_root_ide_package_.com.lee.library.viewstate.LoadStatus.RELOAD)
+        viewModel.requestMyShareData(LoadStatus.RELOAD)
     }
 
     override fun onItemChild(view: View, entity: Content, position: Int) {
