@@ -5,7 +5,6 @@ import com.lee.library.cache.CacheManager
 import com.lee.library.extensions.getCache
 import com.lee.library.extensions.putCache
 import com.lee.library.extensions.putPageCache
-import com.lee.library.mvvm.ui.*
 import com.lee.library.viewmodel.CoroutineViewModel
 import com.lee.library.tools.PreferencesTools
 import com.lee.library.viewstate.*
@@ -60,10 +59,10 @@ class TodoListViewModel(handle: SavedStateHandle) : CoroutineViewModel() {
     val todoDataLive: UiStatePageLiveData = _todoDataLive
 
     init {
-        requestTodoData(_root_ide_package_.com.lee.library.viewstate.LoadStatus.INIT)
+        requestTodoData(LoadStatus.INIT)
     }
 
-    fun requestTodoData(@_root_ide_package_.com.lee.library.viewstate.LoadStatus status: Int) {
+    fun requestTodoData(@LoadStatus status: Int) {
         launchIO {
             _todoDataLive.pageLaunch(status, { page ->
                 applyData {

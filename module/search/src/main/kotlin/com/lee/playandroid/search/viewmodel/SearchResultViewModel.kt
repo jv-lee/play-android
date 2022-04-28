@@ -1,7 +1,6 @@
 package com.lee.playandroid.search.viewmodel
 
 import androidx.lifecycle.SavedStateHandle
-import com.lee.library.mvvm.ui.*
 import com.lee.library.viewmodel.CoroutineViewModel
 import com.lee.library.viewstate.*
 import com.lee.playandroid.library.common.extensions.checkData
@@ -23,10 +22,10 @@ class SearchResultViewModel(handle: SavedStateHandle) : CoroutineViewModel() {
     private val api = createApi<ApiService>()
 
     private val _searchResultFlow: UiStatePageMutableStateFlow =
-        MutableStateFlow(_root_ide_package_.com.lee.library.viewstate.UiStatePage.Default(0))
+        MutableStateFlow(UiStatePage.Default(0))
     val searchResultFlow: UiStatePageStateFlow = _searchResultFlow.asStateFlow()
 
-    fun requestSearch(@_root_ide_package_.com.lee.library.viewstate.LoadStatus status: Int) {
+    fun requestSearch(@LoadStatus status: Int) {
         launchIO {
             _searchResultFlow.pageLaunch(status, { page ->
                 applyData { api.postSearchAsync(page, key).checkData() }
@@ -35,7 +34,7 @@ class SearchResultViewModel(handle: SavedStateHandle) : CoroutineViewModel() {
     }
 
     init {
-        requestSearch(_root_ide_package_.com.lee.library.viewstate.LoadStatus.INIT)
+        requestSearch(LoadStatus.INIT)
     }
 
 }

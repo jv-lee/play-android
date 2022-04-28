@@ -92,11 +92,11 @@ class NavigationContentFragment : BaseNavigationFragment(R.layout.fragment_navig
 
     override fun lazyLoad() {
         super.lazyLoad()
-        viewModel.requestNavigationData(_root_ide_package_.com.lee.library.viewstate.LoadStatus.INIT)
+        viewModel.requestNavigationData(LoadStatus.INIT)
     }
 
     override fun onReload() {
-        viewModel.requestNavigationData(_root_ide_package_.com.lee.library.viewstate.LoadStatus.RELOAD)
+        viewModel.requestNavigationData(LoadStatus.RELOAD)
     }
 
     @InjectBus(NavigationSelectEvent.key, isActive = true)

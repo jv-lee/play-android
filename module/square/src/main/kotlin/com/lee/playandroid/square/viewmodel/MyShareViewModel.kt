@@ -6,7 +6,6 @@ import com.lee.library.cache.CacheManager
 import com.lee.library.extensions.getCache
 import com.lee.library.extensions.putCache
 import com.lee.library.extensions.putPageCache
-import com.lee.library.mvvm.ui.*
 import com.lee.library.viewmodel.CoroutineViewModel
 import com.lee.library.viewstate.*
 import com.lee.playandroid.library.common.constants.ApiConstants
@@ -38,15 +37,15 @@ class MyShareViewModel : CoroutineViewModel() {
     private val _deleteShareLive = UiStateMutableLiveData()
     val deleteShareLive: UiStateLiveData = _deleteShareLive
 
-    private val _myShareLive = MutableLiveData<_root_ide_package_.com.lee.library.viewstate.UiStatePage>(
-        _root_ide_package_.com.lee.library.viewstate.UiStatePage.Default(1))
-    val myShareLive: LiveData<_root_ide_package_.com.lee.library.viewstate.UiStatePage> = _myShareLive
+    private val _myShareLive = MutableLiveData<UiStatePage>(
+        UiStatePage.Default(1))
+    val myShareLive: LiveData<UiStatePage> = _myShareLive
 
     init {
-        requestMyShareData(_root_ide_package_.com.lee.library.viewstate.LoadStatus.INIT)
+        requestMyShareData(LoadStatus.INIT)
     }
 
-    fun requestMyShareData(@_root_ide_package_.com.lee.library.viewstate.LoadStatus status: Int) {
+    fun requestMyShareData(@LoadStatus status: Int) {
         launchIO {
             _myShareLive.pageLaunch(status, { page ->
                 api.getMyShareDataSync(page)

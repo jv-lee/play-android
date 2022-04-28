@@ -1,10 +1,10 @@
 package com.lee.playandroid.search.viewmodel
 
-import com.lee.library.mvvm.ui.UiState
 import com.lee.library.viewstate.UiStateMutableStateFlow
 import com.lee.library.viewstate.UiStateStateFlow
 import com.lee.library.viewstate.stateUpdate
 import com.lee.library.viewmodel.CoroutineViewModel
+import com.lee.library.viewstate.UiState
 import com.lee.playandroid.library.common.entity.SearchHistory
 import com.lee.playandroid.search.model.db.SearchHistoryDatabase
 import com.lee.playandroid.search.model.entity.SearchHot

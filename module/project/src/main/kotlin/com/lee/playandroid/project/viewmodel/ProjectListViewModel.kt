@@ -4,7 +4,6 @@ import androidx.lifecycle.SavedStateHandle
 import com.lee.library.cache.CacheManager
 import com.lee.library.extensions.getCache
 import com.lee.library.extensions.putPageCache
-import com.lee.library.mvvm.ui.*
 import com.lee.library.viewmodel.CoroutineViewModel
 import com.lee.library.viewstate.*
 import com.lee.playandroid.library.common.extensions.checkData
@@ -29,7 +28,7 @@ class ProjectListViewModel(handle: SavedStateHandle) : CoroutineViewModel() {
     private val _contentListLive = UiStatePageMutableLiveData(UiStatePage.Default(1))
     val contentListLive: UiStatePageLiveData = _contentListLive
 
-    fun requestContentList(@_root_ide_package_.com.lee.library.viewstate.LoadStatus status: Int) {
+    fun requestContentList(@LoadStatus status: Int) {
         launchIO {
             _contentListLive.pageLaunch(status, { page ->
                 api.getProjectDataAsync(page, id).checkData().also { newData ->
