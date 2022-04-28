@@ -72,7 +72,7 @@ class MyShareFragment : BaseNavigationFragment(R.layout.fragment_my_share),
     override fun bindData() {
         // 监听登陆页面回调时是否已经发布成功，刷新数据列表
         setFragmentResultListener(REQUEST_KEY_REFRESH) { _: String, _: Bundle ->
-            viewModel.requestMyShareData(LoadStatus.INIT)
+            viewModel.requestMyShareData(_root_ide_package_.com.lee.library.viewstate.LoadStatus.INIT)
         }
 
         viewModel.myShareLive.stateObserve<PageData<Content>>(viewLifecycleOwner, success = {
@@ -91,15 +91,15 @@ class MyShareFragment : BaseNavigationFragment(R.layout.fragment_my_share),
     }
 
     override fun autoLoadMore() {
-        viewModel.requestMyShareData(LoadStatus.LOAD_MORE)
+        viewModel.requestMyShareData(_root_ide_package_.com.lee.library.viewstate.LoadStatus.LOAD_MORE)
     }
 
     override fun pageReload() {
-        viewModel.requestMyShareData(LoadStatus.REFRESH)
+        viewModel.requestMyShareData(_root_ide_package_.com.lee.library.viewstate.LoadStatus.REFRESH)
     }
 
     override fun itemReload() {
-        viewModel.requestMyShareData(LoadStatus.RELOAD)
+        viewModel.requestMyShareData(_root_ide_package_.com.lee.library.viewstate.LoadStatus.RELOAD)
     }
 
     override fun onItemChild(view: View, entity: Content, position: Int) {
