@@ -2,10 +2,10 @@ package com.lee.playandroid.details.viewmodel
 
 import androidx.lifecycle.SavedStateHandle
 import com.lee.library.mvvm.ui.UiState
-import com.lee.library.mvvm.ui.UiStateLiveData
-import com.lee.library.mvvm.ui.UiStateMutableLiveData
-import com.lee.library.mvvm.ui.stateFlow
-import com.lee.library.mvvm.vm.CoroutineViewModel
+import com.lee.library.viewstate.UiStateLiveData
+import com.lee.library.viewstate.UiStateMutableLiveData
+import com.lee.library.viewstate.stateFlow
+import com.lee.library.viewmodel.CoroutineViewModel
 import com.lee.playandroid.details.ui.DetailsFragment
 import com.lee.playandroid.library.common.constants.ApiConstants
 import com.lee.playandroid.library.service.MeService

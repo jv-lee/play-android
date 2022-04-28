@@ -4,7 +4,7 @@ import android.view.View
 import androidx.navigation.fragment.findNavController
 import com.lee.library.base.BaseNavigationFragment
 import com.lee.library.extensions.*
-import com.lee.library.mvvm.ui.stateObserve
+import com.lee.library.viewstate.stateObserve
 import com.lee.library.tools.DarkViewUpdateTools
 import com.lee.playandroid.library.common.entity.AccountData
 import com.lee.playandroid.library.service.AccountService

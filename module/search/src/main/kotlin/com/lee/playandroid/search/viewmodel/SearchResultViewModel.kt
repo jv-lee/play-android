@@ -1,9 +1,9 @@
 package com.lee.playandroid.search.viewmodel
 
 import androidx.lifecycle.SavedStateHandle
-import com.lee.library.mvvm.annotation.LoadStatus
 import com.lee.library.mvvm.ui.*
-import com.lee.library.mvvm.vm.CoroutineViewModel
+import com.lee.library.viewmodel.CoroutineViewModel
+import com.lee.library.viewstate.*
 import com.lee.playandroid.library.common.extensions.checkData
 import com.lee.playandroid.library.common.extensions.createApi
 import com.lee.playandroid.search.model.api.ApiService
@@ -23,10 +23,10 @@ class SearchResultViewModel(handle: SavedStateHandle) : CoroutineViewModel() {
     private val api = createApi<ApiService>()
 
     private val _searchResultFlow: UiStatePageMutableStateFlow =
-        MutableStateFlow(UiStatePage.Default(0))
+        MutableStateFlow(_root_ide_package_.com.lee.library.viewstate.UiStatePage.Default(0))
     val searchResultFlow: UiStatePageStateFlow = _searchResultFlow.asStateFlow()
 
-    fun requestSearch(@LoadStatus status: Int) {
+    fun requestSearch(@_root_ide_package_.com.lee.library.viewstate.LoadStatus status: Int) {
         launchIO {
             _searchResultFlow.pageLaunch(status, { page ->
                 applyData { api.postSearchAsync(page, key).checkData() }
@@ -35,7 +35,7 @@ class SearchResultViewModel(handle: SavedStateHandle) : CoroutineViewModel() {
     }
 
     init {
-        requestSearch(LoadStatus.INIT)
+        requestSearch(_root_ide_package_.com.lee.library.viewstate.LoadStatus.INIT)
     }
 
 }

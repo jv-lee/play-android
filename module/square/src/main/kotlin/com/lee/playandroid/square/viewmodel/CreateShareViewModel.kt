@@ -3,10 +3,10 @@ package com.lee.playandroid.square.viewmodel
 import android.text.TextUtils
 import com.lee.library.base.ApplicationExtensions.app
 import com.lee.library.mvvm.ui.UiState
-import com.lee.library.mvvm.ui.UiStateLiveData
-import com.lee.library.mvvm.ui.UiStateMutableLiveData
-import com.lee.library.mvvm.ui.stateFlow
-import com.lee.library.mvvm.vm.CoroutineViewModel
+import com.lee.library.viewstate.UiStateLiveData
+import com.lee.library.viewstate.UiStateMutableLiveData
+import com.lee.library.viewstate.stateFlow
+import com.lee.library.viewmodel.CoroutineViewModel
 import com.lee.playandroid.library.common.constants.ApiConstants
 import com.lee.playandroid.library.common.extensions.createApi
 import com.lee.playandroid.square.R

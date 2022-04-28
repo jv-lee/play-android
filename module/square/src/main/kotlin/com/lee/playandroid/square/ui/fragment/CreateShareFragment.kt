@@ -11,7 +11,7 @@ import com.lee.library.extensions.binding
 import com.lee.library.extensions.dismiss
 import com.lee.library.extensions.show
 import com.lee.library.extensions.toast
-import com.lee.library.mvvm.ui.stateObserve
+import com.lee.library.viewstate.stateObserve
 import com.lee.library.tools.KeyboardTools.parentTouchHideSoftInput
 import com.lee.playandroid.square.R
 import com.lee.playandroid.square.databinding.FragmentCreateShareBinding

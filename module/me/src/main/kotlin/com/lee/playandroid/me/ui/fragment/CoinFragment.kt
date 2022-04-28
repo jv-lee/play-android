@@ -9,8 +9,8 @@ import com.lee.library.adapter.page.submitFailed
 import com.lee.library.base.BaseNavigationFragment
 import com.lee.library.extensions.binding
 import com.lee.library.extensions.inflate
-import com.lee.library.mvvm.annotation.LoadStatus
-import com.lee.library.mvvm.ui.stateObserve
+import com.lee.library.viewstate.LoadStatus
+import com.lee.library.viewstate.stateObserve
 import com.lee.library.tools.DarkModeTools
 import com.lee.library.tools.StatusTools.setDarkStatusIcon
 import com.lee.library.tools.StatusTools.setLightStatusIcon

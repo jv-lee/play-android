@@ -7,8 +7,8 @@ import com.lee.library.adapter.core.UiPagerAdapter2
 import com.lee.library.base.BaseNavigationFragment
 import com.lee.library.extensions.binding
 import com.lee.library.extensions.increaseOffscreenPageLimit
-import com.lee.library.mvvm.ui.UiStateLiveData
-import com.lee.library.mvvm.ui.stateObserve
+import com.lee.library.viewstate.UiStateLiveData
+import com.lee.library.viewstate.stateObserve
 import com.lee.library.widget.StatusLayout
 import com.lee.playandroid.library.common.R
 import com.lee.playandroid.library.common.databinding.FragmentBaseTabBinding

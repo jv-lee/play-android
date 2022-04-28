@@ -2,7 +2,7 @@ package com.lee.playandroid.project.ui
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import com.lee.library.mvvm.ui.UiStateLiveData
+import com.lee.library.viewstate.UiStateLiveData
 import com.lee.playandroid.library.common.ui.BaseTabFragment
 import com.lee.playandroid.project.R
 import com.lee.playandroid.project.viewmodel.ProjectViewModel

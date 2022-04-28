@@ -9,7 +9,7 @@ import com.lee.library.adapter.page.submitSinglePage
 import com.lee.library.base.BaseNavigationFragment
 import com.lee.library.extensions.binding
 import com.lee.library.extensions.launchAndRepeatWithViewLifecycle
-import com.lee.library.mvvm.ui.stateCollect
+import com.lee.library.viewstate.stateCollect
 import com.lee.library.tools.KeyboardTools.hideSoftInput
 import com.lee.library.tools.KeyboardTools.parentTouchHideSoftInput
 import com.lee.playandroid.library.common.entity.SearchHistory

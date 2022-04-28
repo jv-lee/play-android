@@ -4,11 +4,11 @@ import androidx.lifecycle.MutableLiveData
 import com.lee.library.cache.CacheManager
 import com.lee.library.extensions.getCache
 import com.lee.library.extensions.putCache
-import com.lee.library.mvvm.annotation.LoadStatus
-import com.lee.library.mvvm.ui.UiStateLiveData
-import com.lee.library.mvvm.ui.UiStateMutableLiveData
-import com.lee.library.mvvm.ui.stateCacheFlow
-import com.lee.library.mvvm.vm.CoroutineViewModel
+import com.lee.library.viewstate.LoadStatus
+import com.lee.library.viewstate.UiStateLiveData
+import com.lee.library.viewstate.UiStateMutableLiveData
+import com.lee.library.viewstate.stateCacheFlow
+import com.lee.library.viewmodel.CoroutineViewModel
 import com.lee.playandroid.library.common.extensions.checkData
 import com.lee.playandroid.library.common.extensions.createApi
 import com.lee.playandroid.system.constants.Constants
@@ -35,9 +35,9 @@ class NavigationContentViewModel : CoroutineViewModel() {
     /**
      * 该方法不再init调用，因为直接加载会导致页面卡顿，采用fragment懒加载方式
      */
-    fun requestNavigationData(@LoadStatus status: Int) {
+    fun requestNavigationData(@_root_ide_package_.com.lee.library.viewstate.LoadStatus status: Int) {
         // 过滤navigation fragment 重复创建导致重复初始化请求
-        if (status == LoadStatus.INIT && navigationLive.value != null) {
+        if (status == _root_ide_package_.com.lee.library.viewstate.LoadStatus.INIT && navigationLive.value != null) {
             return
         }
 

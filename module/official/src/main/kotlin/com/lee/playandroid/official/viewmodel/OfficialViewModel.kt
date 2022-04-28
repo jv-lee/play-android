@@ -3,10 +3,10 @@ package com.lee.playandroid.official.viewmodel
 import com.lee.library.cache.CacheManager
 import com.lee.library.extensions.getCache
 import com.lee.library.extensions.putCache
-import com.lee.library.mvvm.ui.UiStateLiveData
-import com.lee.library.mvvm.ui.UiStateMutableLiveData
-import com.lee.library.mvvm.ui.stateCacheFlow
-import com.lee.library.mvvm.vm.CoroutineViewModel
+import com.lee.library.viewstate.UiStateLiveData
+import com.lee.library.viewstate.UiStateMutableLiveData
+import com.lee.library.viewstate.stateCacheFlow
+import com.lee.library.viewmodel.CoroutineViewModel
 import com.lee.playandroid.library.common.extensions.checkData
 import com.lee.playandroid.library.common.extensions.createApi
 import com.lee.playandroid.official.constants.Constants

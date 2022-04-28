@@ -5,7 +5,7 @@ import android.widget.FrameLayout
 import com.just.agentweb.AgentWeb
 import com.lee.library.base.BaseNavigationFragment
 import com.lee.library.extensions.*
-import com.lee.library.mvvm.ui.stateObserve
+import com.lee.library.viewstate.stateObserve
 import com.lee.library.utils.ShareUtil
 import com.lee.library.widget.toolbar.TitleToolbar
 import com.lee.playandroid.details.R

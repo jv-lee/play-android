@@ -4,9 +4,8 @@ import androidx.lifecycle.LiveData
 import com.lee.library.cache.CacheManager
 import com.lee.library.extensions.getCache
 import com.lee.library.extensions.putPageCache
-import com.lee.library.mvvm.annotation.LoadStatus
-import com.lee.library.mvvm.ui.*
-import com.lee.library.mvvm.vm.CoroutineViewModel
+import com.lee.library.viewmodel.CoroutineViewModel
+import com.lee.library.viewstate.*
 import com.lee.playandroid.home.bean.HomeContent
 import com.lee.playandroid.home.constants.Constants
 import com.lee.playandroid.home.model.api.ApiService
