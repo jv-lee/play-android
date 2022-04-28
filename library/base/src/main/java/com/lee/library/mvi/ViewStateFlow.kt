@@ -13,37 +13,6 @@ import kotlin.reflect.KProperty1
  * @description
  */
 
-/**
- * 监听一个属性
- */
-fun <T, A> LiveData<T>.observeState(
-    lifecycleOwner: LifecycleOwner,
-    prop1: KProperty1<T, A>,
-    action: (A) -> Unit
-) {
-    this.map {
-        StateTuple1(prop1.get(it))
-    }.distinctUntilChanged().observe(lifecycleOwner, Observer { (a) ->
-        action(a)
-    })
-}
-
-/**
- * 监听两个属性
- */
-fun <T, A, B> LiveData<T>.observeState(
-    lifecycleOwner: LifecycleOwner,
-    prop1: KProperty1<T, A>,
-    prop2: KProperty1<T, B>,
-    action: (A, B) -> Unit
-) {
-    this.map {
-        StateTuple2(prop1.get(it), prop2.get(it))
-    }.distinctUntilChanged().observe(lifecycleOwner, Observer { (a, b) ->
-        action(a, b)
-    })
-}
-
 suspend fun <T, A> Flow<T>.collectState(
     prop1: KProperty1<T, A>,
     action: (A) -> Unit
@@ -65,13 +34,6 @@ suspend fun <T, A, B> Flow<T>.collectState(
     }.distinctUntilChanged().collect { (a, b) ->
         action(a, b)
     }
-}
-
-/**
- * 更新State
- */
-fun <T> MutableLiveData<T>.setState(reducer: T.() -> T) {
-    this.value = this.value?.reducer()
 }
 
 internal data class StateTuple1<A>(val a: A)
