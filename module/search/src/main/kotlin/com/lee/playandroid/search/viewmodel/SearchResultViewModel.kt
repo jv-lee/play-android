@@ -26,7 +26,7 @@ class SearchResultViewModel(handle: SavedStateHandle) : CoroutineViewModel() {
     val searchResultFlow: UiStatePageStateFlow = _searchResultFlow.asStateFlow()
 
     init {
-        dispatch(SearchResultViewAction.RequestPage(_root_ide_package_.com.lee.library.viewstate.LoadStatus.INIT))
+        dispatch(SearchResultViewAction.RequestPage(LoadStatus.INIT))
     }
 
     fun dispatch(action: SearchResultViewAction) {

@@ -78,15 +78,15 @@ class SearchResultFragment : BaseNavigationFragment(R.layout.fragment_search_res
     }
 
     override fun autoLoadMore() {
-        viewModel.dispatch(SearchResultViewAction.RequestPage(_root_ide_package_.com.lee.library.viewstate.LoadStatus.LOAD_MORE))
+        viewModel.dispatch(SearchResultViewAction.RequestPage(LoadStatus.LOAD_MORE))
     }
 
     override fun pageReload() {
-        viewModel.dispatch(SearchResultViewAction.RequestPage(_root_ide_package_.com.lee.library.viewstate.LoadStatus.REFRESH))
+        viewModel.dispatch(SearchResultViewAction.RequestPage(LoadStatus.REFRESH))
     }
 
     override fun itemReload() {
-        viewModel.dispatch(SearchResultViewAction.RequestPage(_root_ide_package_.com.lee.library.viewstate.LoadStatus.RELOAD))
+        viewModel.dispatch(SearchResultViewAction.RequestPage(LoadStatus.RELOAD))
     }
 
     override fun onDestroyView() {
