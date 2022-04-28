@@ -24,6 +24,18 @@ import retrofit2.http.GET
 @Deprecated("不好用")
 class TestFlowViewModel : CoroutineViewModel() {
 
+//    private val _viewStates = MutableLiveData(SearchViewState())
+//    val viewStates: LiveData<SearchViewState> = _viewStates
+//
+//    _viewStates.setState { copy(searchHistoryList = data) }
+//
+//        viewModel.viewStates.run {
+//            observeState(viewLifecycleOwner, SearchViewState::searchHistoryList) {
+//                viewEmptyVisible(it.isEmpty())
+//                mHistoryAdapter?.submitSinglePage(it)
+//            }
+//        }
+
     private val api = createApi<ApiService>()
 
     private val cacheManager = CacheManager.getDefault()
