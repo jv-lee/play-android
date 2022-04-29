@@ -123,6 +123,7 @@ object KeyboardTools {
 
     /**
      * 监听键盘弹起更该viewPaddingBottom值
+     * 使用activity.window.decorView 绑定该事件更好的防止内存泄漏
      */
     fun View.keyboardPaddingBottom(
         lifecycleOwner: LifecycleOwner? = findViewTreeLifecycleOwner()

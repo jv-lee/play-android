@@ -67,7 +67,7 @@ class CreateTodoFragment : BaseNavigationFragment(R.layout.fragment_create_todo)
         // 设置键盘点击空白区取消
         requireContext().parentTouchHideSoftInput(binding.root)
 
-        binding.root.keyboardPaddingBottom(viewLifecycleOwner)
+        requireActivity().window.decorView.keyboardPaddingBottom(viewLifecycleOwner)
 
         binding.tvDateContent.setOnClickListener {
             datePickerDialog?.let(this::show)

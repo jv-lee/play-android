@@ -53,7 +53,7 @@ class LoginFragment : BaseNavigationFragment(R.layout.fragment_login), View.OnCl
         binding.editUsername.setText(PreferencesTools.get<String>(SP_KEY_SAVE_INPUT_USERNAME))
 
         // 监听键盘弹起
-        binding.root.keyboardPaddingBottom(viewLifecycleOwner)
+        requireActivity().window.decorView.keyboardPaddingBottom(viewLifecycleOwner)
 
         // 设置监听
         binding.tvLogin.setOnClickListener(this)
