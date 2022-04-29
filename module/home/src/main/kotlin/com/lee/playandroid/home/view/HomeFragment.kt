@@ -11,16 +11,18 @@ import com.lee.library.adapter.page.submitFailed
 import com.lee.library.base.BaseNavigationFragment
 import com.lee.library.extensions.binding
 import com.lee.library.extensions.delayBackEvent
+import com.lee.library.extensions.launchAndRepeatWithViewLifecycle
 import com.lee.library.extensions.smoothScrollToTop
 import com.lee.library.livedatabus.InjectBus
 import com.lee.library.livedatabus.LiveDataBus
 import com.lee.library.viewstate.LoadStatus
-import com.lee.library.viewstate.stateObserve
+import com.lee.library.viewstate.stateCollect
 import com.lee.library.widget.banner.BannerView
 import com.lee.playandroid.home.R
 import com.lee.playandroid.home.bean.HomeContent
 import com.lee.playandroid.home.databinding.FragmentHomeBinding
 import com.lee.playandroid.home.view.adapter.ContentAdapter
+import com.lee.playandroid.home.viewmodel.HomeViewAction
 import com.lee.playandroid.home.viewmodel.HomeViewModel
 import com.lee.playandroid.library.common.entity.NavigationSelectEvent
 import com.lee.playandroid.library.common.entity.PageUiData
@@ -71,17 +73,16 @@ class HomeFragment : BaseNavigationFragment(R.layout.fragment_home),
     override fun bindData() {
         LiveDataBus.getInstance().injectBus(this)
 
-        viewModel.contentListLive.stateObserve<PageUiData<HomeContent>>(
-            viewLifecycleOwner,
-            success = {
+        launchAndRepeatWithViewLifecycle {
+            viewModel.contentListFlow.stateCollect<PageUiData<HomeContent>>(success = {
                 binding.refreshView.isRefreshing = false
                 mAdapter?.submitData(it, diff = true)
-            },
-            error = {
+            }, error = {
                 binding.refreshView.isRefreshing = false
                 mAdapter?.submitFailed()
                 actionFailed(it)
             })
+        }
     }
 
     override fun onClick(v: View?) {
@@ -98,19 +99,19 @@ class HomeFragment : BaseNavigationFragment(R.layout.fragment_home),
 
     override fun onRefresh() {
         mAdapter?.openLoadMore()
-        viewModel.requestHomeData(LoadStatus.REFRESH)
+        viewModel.dispatch(HomeViewAction.RequestPage(LoadStatus.REFRESH))
     }
 
     override fun autoLoadMore() {
-        viewModel.requestHomeData(LoadStatus.LOAD_MORE)
+        viewModel.dispatch(HomeViewAction.RequestPage(LoadStatus.LOAD_MORE))
     }
 
     override fun pageReload() {
-        viewModel.requestHomeData(LoadStatus.REFRESH)
+        viewModel.dispatch(HomeViewAction.RequestPage(LoadStatus.REFRESH))
     }
 
     override fun itemReload() {
-        viewModel.requestHomeData(LoadStatus.RELOAD)
+        viewModel.dispatch(HomeViewAction.RequestPage(LoadStatus.RELOAD))
     }
 
     override fun onDestroyView() {

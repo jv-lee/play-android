@@ -1,13 +1,15 @@
 package com.lee.playandroid.account.viewmodel
 
+import androidx.lifecycle.viewModelScope
+import com.lee.library.viewmodel.CoroutineViewModel
 import com.lee.library.viewstate.UiStateLiveData
 import com.lee.library.viewstate.UiStateMutableLiveData
 import com.lee.library.viewstate.stateFlow
-import com.lee.library.viewmodel.CoroutineViewModel
 import com.lee.playandroid.account.model.api.ApiService
 import com.lee.playandroid.library.common.extensions.checkData
 import com.lee.playandroid.library.common.extensions.createApi
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 
 /**
  * @author jv.lee
@@ -22,7 +24,7 @@ class LoginRegisterViewModel : CoroutineViewModel() {
     val accountLive: UiStateLiveData = _accountLive
 
     fun requestLogin(userName: String, password: String) {
-        launchIO {
+        viewModelScope.launch {
             stateFlow {
                 api.postLoginAsync(userName, password).checkData()
                 api.getAccountInfoAsync().checkData()
@@ -33,7 +35,7 @@ class LoginRegisterViewModel : CoroutineViewModel() {
     }
 
     fun requestRegister(userName: String, password: String, rePassword: String) {
-        launchIO {
+        viewModelScope.launch {
             stateFlow {
                 api.postRegisterAsync(userName, password, rePassword).checkData()
                 api.getAccountInfoAsync().checkData()

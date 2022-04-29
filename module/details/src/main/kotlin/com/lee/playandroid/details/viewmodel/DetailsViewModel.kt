@@ -1,16 +1,18 @@
 package com.lee.playandroid.details.viewmodel
 
 import androidx.lifecycle.SavedStateHandle
+import androidx.lifecycle.viewModelScope
+import com.lee.library.viewmodel.CoroutineViewModel
+import com.lee.library.viewstate.UiState
 import com.lee.library.viewstate.UiStateLiveData
 import com.lee.library.viewstate.UiStateMutableLiveData
 import com.lee.library.viewstate.stateFlow
-import com.lee.library.viewmodel.CoroutineViewModel
-import com.lee.library.viewstate.UiState
 import com.lee.playandroid.details.ui.DetailsFragment
 import com.lee.playandroid.library.common.constants.ApiConstants
 import com.lee.playandroid.library.service.MeService
 import com.lee.playandroid.library.service.hepler.ModuleService
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 
 /**
  * @author jv.lee
@@ -37,7 +39,7 @@ class DetailsViewModel(savedStateHandle: SavedStateHandle) : CoroutineViewModel(
             _collectLive.postValue(UiState.Success(false))
             return
         }
-        launchIO {
+        viewModelScope.launch {
             stateFlow {
                 val response = meService.requestCollectAsync(id)
                 if (response.errorCode == ApiConstants.REQUEST_OK) {

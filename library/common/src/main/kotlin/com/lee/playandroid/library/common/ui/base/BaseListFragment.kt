@@ -1,7 +1,6 @@
-package com.lee.playandroid.library.common.ui
+package com.lee.playandroid.library.common.ui.base
 
 import android.view.View
-import androidx.lifecycle.LiveData
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.lee.library.adapter.base.BaseViewAdapter
 import com.lee.library.adapter.extensions.bindAllListener
@@ -9,14 +8,16 @@ import com.lee.library.adapter.page.submitData
 import com.lee.library.adapter.page.submitFailed
 import com.lee.library.base.BaseNavigationFragment
 import com.lee.library.extensions.binding
+import com.lee.library.extensions.launchAndRepeatWithViewLifecycle
 import com.lee.library.viewstate.LoadStatus
 import com.lee.library.viewstate.UiStatePage
-import com.lee.library.viewstate.stateObserve
+import com.lee.library.viewstate.stateCollect
 import com.lee.playandroid.library.common.R
 import com.lee.playandroid.library.common.databinding.FragmentBaseListBinding
 import com.lee.playandroid.library.common.entity.Content
 import com.lee.playandroid.library.common.entity.PageData
 import com.lee.playandroid.library.common.extensions.actionFailed
+import kotlinx.coroutines.flow.StateFlow
 
 /**
  * @author jv.lee
@@ -39,7 +40,7 @@ abstract class BaseListFragment : BaseNavigationFragment(R.layout.fragment_base_
 
     abstract fun navigationDetails(content: Content)
 
-    abstract fun dataObserveState(): LiveData<UiStatePage>
+    abstract fun dataFlow(): StateFlow<UiStatePage>
 
     open fun findBinding() = binding
 
@@ -58,16 +59,17 @@ abstract class BaseListFragment : BaseNavigationFragment(R.layout.fragment_base_
 
     override fun bindData() {
         //列表数据更新
-        dataObserveState().stateObserve<PageData<Content>>(viewLifecycleOwner,
-            success = {
+        launchAndRepeatWithViewLifecycle {
+            dataFlow().stateCollect<PageData<Content>>(success = {
                 binding.refreshLayout.isRefreshing = false
                 mAdapter.submitData(it, diff = true)
             },
-            error = {
-                binding.refreshLayout.isRefreshing = false
-                mAdapter.submitFailed()
-                actionFailed(it)
-            })
+                error = {
+                    binding.refreshLayout.isRefreshing = false
+                    mAdapter.submitFailed()
+                    actionFailed(it)
+                })
+        }
     }
 
     override fun lazyLoad() {

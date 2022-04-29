@@ -1,4 +1,4 @@
-package com.lee.playandroid.library.common.ui
+package com.lee.playandroid.library.common.ui.base
 
 import android.annotation.SuppressLint
 import androidx.fragment.app.Fragment
@@ -7,13 +7,16 @@ import com.lee.library.adapter.core.UiPagerAdapter2
 import com.lee.library.base.BaseNavigationFragment
 import com.lee.library.extensions.binding
 import com.lee.library.extensions.increaseOffscreenPageLimit
-import com.lee.library.viewstate.UiStateLiveData
-import com.lee.library.viewstate.stateObserve
+import com.lee.library.extensions.launchAndRepeatWithViewLifecycle
+import com.lee.library.viewstate.collectState
 import com.lee.library.widget.StatusLayout
 import com.lee.playandroid.library.common.R
 import com.lee.playandroid.library.common.databinding.FragmentBaseTabBinding
 import com.lee.playandroid.library.common.entity.Tab
 import com.lee.playandroid.library.common.extensions.actionFailed
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.collect
 
 /**
  * @author jv.lee
@@ -28,11 +31,13 @@ abstract class BaseTabFragment : BaseNavigationFragment(R.layout.fragment_base_t
     private var adapter: UiPagerAdapter2? = null
     private var mediator: TabLayoutMediator? = null
 
-    abstract fun requestTabs()
-
     abstract fun createChildFragment(id: Long): Fragment
 
-    abstract fun dataObserveState(): UiStateLiveData
+    abstract fun requestData()
+
+    abstract fun viewEvents(): Flow<BaseTabViewEvent>
+
+    abstract fun viewStates(): StateFlow<BaseTabViewState>
 
     open fun findBinding() = binding
 
@@ -42,21 +47,37 @@ abstract class BaseTabFragment : BaseNavigationFragment(R.layout.fragment_base_t
     }
 
     override fun bindData() {
-        dataObserveState().stateObserve<List<Tab>>(viewLifecycleOwner, success = {
-            binding.statusLayout.setStatus(StatusLayout.STATUS_DATA)
-            bindAdapter(it)
-        }, error = {
-            adapter?.getFragments()?.isNullOrEmpty() ?: kotlin.run {
-                binding.statusLayout.setStatus(StatusLayout.STATUS_DATA_ERROR)
+        launchAndRepeatWithViewLifecycle {
+            viewEvents().collect { event ->
+                when (event) {
+                    is BaseTabViewEvent.RequestFailed -> {
+                        actionFailed(event.error)
+                        adapter?.getFragments()?.isNullOrEmpty() ?: kotlin.run {
+                            binding.statusLayout.setStatus(StatusLayout.STATUS_DATA_ERROR)
+                        }
+                    }
+                }
             }
-            actionFailed(it)
-        }, loading = {
-            binding.statusLayout.postLoading()
-        })
+        }
+
+        viewStates().run {
+            launchAndRepeatWithViewLifecycle {
+                collectState(BaseTabViewState::loading) {
+                    if (it) binding.statusLayout.postLoading()
+                }
+            }
+
+            launchAndRepeatWithViewLifecycle {
+                collectState(BaseTabViewState::tabList) {
+                    binding.statusLayout.setStatus(StatusLayout.STATUS_DATA)
+                    bindAdapter(it)
+                }
+            }
+        }
     }
 
     override fun onReload() {
-        requestTabs()
+        requestData()
     }
 
     override fun onDestroy() {

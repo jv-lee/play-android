@@ -1,5 +1,6 @@
 package com.lee.playandroid.square.viewmodel
 
+import androidx.lifecycle.viewModelScope
 import com.lee.library.cache.CacheManager
 import com.lee.library.extensions.getCache
 import com.lee.library.extensions.putPageCache
@@ -9,6 +10,8 @@ import com.lee.playandroid.library.common.extensions.checkData
 import com.lee.playandroid.library.common.extensions.createApi
 import com.lee.playandroid.square.constants.Constants.CACHE_KEY_SQUARE_CONTENT
 import com.lee.playandroid.square.model.api.ApiService
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.launch
 
 /**
  * @author jv.lee
@@ -18,15 +21,27 @@ import com.lee.playandroid.square.model.api.ApiService
 class SquareViewModel : CoroutineViewModel() {
 
     private val api = createApi<ApiService>()
-
     private val cacheManager = CacheManager.getDefault()
 
-    private val _squareLive = UiStatePageMutableLiveData(UiStatePage.Default(0))
-    val squareLive: UiStatePageLiveData = _squareLive
+    private val _squareFlow: UiStatePageMutableStateFlow =
+        MutableStateFlow(UiStatePage.Default(0))
+    val squareFlow: UiStatePageStateFlow = _squareFlow
 
-    fun requestSquareData(@LoadStatus status: Int) {
-        launchIO {
-            _squareLive.pageLaunch(status, { page ->
+    init {
+        requestSquareData(LoadStatus.INIT)
+    }
+
+    fun dispatch(action: SquareViewAction) {
+        when (action) {
+            is SquareViewAction.RequestPage -> {
+                requestSquareData(action.status)
+            }
+        }
+    }
+
+    private fun requestSquareData(@LoadStatus status: Int) {
+        viewModelScope.launch {
+            _squareFlow.pageLaunch(status, { page ->
                 applyData { api.getSquareDataSync(page).checkData() }
             }, {
                 cacheManager.getCache(CACHE_KEY_SQUARE_CONTENT)
@@ -36,8 +51,8 @@ class SquareViewModel : CoroutineViewModel() {
         }
     }
 
-    init {
-        requestSquareData(LoadStatus.INIT)
-    }
+}
 
+sealed class SquareViewAction {
+    data class RequestPage(@LoadStatus val status: Int) : SquareViewAction()
 }

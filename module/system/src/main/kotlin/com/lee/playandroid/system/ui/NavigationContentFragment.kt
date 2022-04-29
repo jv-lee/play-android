@@ -4,16 +4,12 @@ import android.annotation.SuppressLint
 import androidx.fragment.app.viewModels
 import com.lee.library.adapter.page.submitSinglePage
 import com.lee.library.base.BaseNavigationFragment
-import com.lee.library.extensions.binding
-import com.lee.library.extensions.findParentFragment
-import com.lee.library.extensions.setMargin
-import com.lee.library.extensions.smoothScrollToTop
+import com.lee.library.extensions.*
 import com.lee.library.livedatabus.InjectBus
 import com.lee.library.livedatabus.LiveDataBus
 import com.lee.library.viewstate.LoadStatus
-import com.lee.library.viewstate.stateObserve
+import com.lee.library.viewstate.collectState
 import com.lee.library.widget.StatusLayout
-import com.lee.playandroid.library.common.entity.NavigationItem
 import com.lee.playandroid.library.common.entity.NavigationSelectEvent
 import com.lee.playandroid.library.common.extensions.actionFailed
 import com.lee.playandroid.library.common.ui.extensions.bindTabLinkage
@@ -21,7 +17,11 @@ import com.lee.playandroid.system.R
 import com.lee.playandroid.system.databinding.FragmentNavigationContentBinding
 import com.lee.playandroid.system.ui.adapter.NavigationContentAdapter
 import com.lee.playandroid.system.ui.adapter.NavigationContentTabAdapter
+import com.lee.playandroid.system.viewmodel.NavigationContentViewAction
+import com.lee.playandroid.system.viewmodel.NavigationContentViewEvent
 import com.lee.playandroid.system.viewmodel.NavigationContentViewModel
+import com.lee.playandroid.system.viewmodel.NavigationContentViewState
+import kotlinx.coroutines.flow.collect
 
 /**
  * @author jv.lee
@@ -66,7 +66,7 @@ class NavigationContentFragment : BaseNavigationFragment(R.layout.fragment_navig
         }
 
         mNavigationTabAdapter?.bindTabLinkage(binding.rvTab, binding.rvContainer) { position ->
-            viewModel.selectTabIndex(position)
+            viewModel.dispatch(NavigationContentViewAction.SelectTabIndex(position))
         }
     }
 
@@ -74,35 +74,48 @@ class NavigationContentFragment : BaseNavigationFragment(R.layout.fragment_navig
     override fun bindData() {
         LiveDataBus.getInstance().injectBus(this)
 
-        viewModel.navigationLive.stateObserve<List<NavigationItem>>(viewLifecycleOwner, success = {
-            binding.statusLayout.setStatus(StatusLayout.STATUS_DATA)
-            mNavigationTabAdapter?.updateNotify(it)
-            mNavigationContentAdapter?.submitSinglePage(it)
-        }, error = {
-            if (mNavigationTabAdapter?.data.isNullOrEmpty()) {
-                binding.statusLayout.setStatus(StatusLayout.STATUS_DATA_ERROR)
+        launchAndRepeatWithViewLifecycle {
+            viewModel.viewEvents.collect { event ->
+                when (event) {
+                    is NavigationContentViewEvent.RequestFailed -> {
+                        actionFailed(event.error)
+                        if (mNavigationTabAdapter?.data.isNullOrEmpty()) {
+                            binding.statusLayout.setStatus(StatusLayout.STATUS_DATA_ERROR)
+                        }
+                    }
+                }
             }
-            actionFailed(it)
-        })
+        }
 
-        viewModel.selectTabLive.observe(viewLifecycleOwner) {
-            mNavigationTabAdapter?.selectItem(it)
+        viewModel.viewStates.run {
+            launchAndRepeatWithViewLifecycle {
+                collectState(NavigationContentViewState::navigationItemList) {
+                    binding.statusLayout.setStatus(StatusLayout.STATUS_DATA)
+                    mNavigationTabAdapter?.updateNotify(it)
+                    mNavigationContentAdapter?.submitSinglePage(it)
+                }
+            }
+            launchAndRepeatWithViewLifecycle {
+                collectState(NavigationContentViewState::selectedTabIndex) {
+                    mNavigationTabAdapter?.selectItem(it)
+                }
+            }
         }
     }
 
     override fun lazyLoad() {
         super.lazyLoad()
-        viewModel.requestNavigationData(LoadStatus.INIT)
+        viewModel.dispatch(NavigationContentViewAction.RequestData(LoadStatus.INIT))
     }
 
     override fun onReload() {
-        viewModel.requestNavigationData(LoadStatus.RELOAD)
+        viewModel.dispatch(NavigationContentViewAction.RequestData(LoadStatus.RELOAD))
     }
 
     @InjectBus(NavigationSelectEvent.key, isActive = true)
     fun navigationEvent(event: NavigationSelectEvent) {
         if (event.title == getString(R.string.nav_system) && isResumed) {
-            viewModel.selectTabIndex(0)
+            viewModel.dispatch(NavigationContentViewAction.SelectTabIndex(0))
             binding.rvTab.smoothScrollToTop()
             binding.rvContainer.smoothScrollToTop()
         }

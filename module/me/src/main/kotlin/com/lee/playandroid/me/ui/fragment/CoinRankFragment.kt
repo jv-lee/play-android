@@ -9,8 +9,9 @@ import com.lee.library.adapter.page.submitData
 import com.lee.library.adapter.page.submitFailed
 import com.lee.library.base.BaseNavigationFragment
 import com.lee.library.extensions.binding
+import com.lee.library.extensions.launchAndRepeatWithViewLifecycle
 import com.lee.library.viewstate.LoadStatus
-import com.lee.library.viewstate.stateObserve
+import com.lee.library.viewstate.stateCollect
 import com.lee.library.widget.toolbar.TitleToolbar
 import com.lee.playandroid.library.common.constants.ApiConstants
 import com.lee.playandroid.library.common.entity.CoinRank
@@ -20,6 +21,7 @@ import com.lee.playandroid.me.R
 import com.lee.playandroid.me.databinding.FragmentCoinRankBinding
 import com.lee.playandroid.me.ui.adapter.CoinRankAdapter
 import com.lee.playandroid.me.ui.widget.RankSpanSizeLookup
+import com.lee.playandroid.me.viewmodel.CoinRankViewAction
 import com.lee.playandroid.me.viewmodel.CoinRankViewModel
 import com.lee.playandroid.router.navigateDetails
 
@@ -63,24 +65,26 @@ class CoinRankFragment : BaseNavigationFragment(R.layout.fragment_coin_rank),
     }
 
     override fun bindData() {
-        viewModel.coinRankLive.stateObserve<PageData<CoinRank>>(viewLifecycleOwner, success = {
-            mAdapter.submitData(it, diff = true)
-        }, error = {
-            mAdapter.submitFailed()
-            actionFailed(it)
-        })
+        launchAndRepeatWithViewLifecycle {
+            viewModel.coinRankFlow.stateCollect<PageData<CoinRank>>(success = {
+                mAdapter.submitData(it, diff = true)
+            }, error = {
+                mAdapter.submitFailed()
+                actionFailed(it)
+            })
+        }
     }
 
     override fun autoLoadMore() {
-        viewModel.requestCoinRank(LoadStatus.LOAD_MORE)
+        viewModel.dispatch(CoinRankViewAction.RequestPage(LoadStatus.LOAD_MORE))
     }
 
     override fun pageReload() {
-        viewModel.requestCoinRank(LoadStatus.REFRESH)
+        viewModel.dispatch(CoinRankViewAction.RequestPage(LoadStatus.REFRESH))
     }
 
     override fun itemReload() {
-        viewModel.requestCoinRank(LoadStatus.RELOAD)
+        viewModel.dispatch(CoinRankViewAction.RequestPage(LoadStatus.RELOAD))
     }
 
     override fun onDestroyView() {

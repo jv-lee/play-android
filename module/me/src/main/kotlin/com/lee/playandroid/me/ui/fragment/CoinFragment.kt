@@ -9,11 +9,12 @@ import com.lee.library.adapter.page.submitFailed
 import com.lee.library.base.BaseNavigationFragment
 import com.lee.library.extensions.binding
 import com.lee.library.extensions.inflate
-import com.lee.library.viewstate.LoadStatus
-import com.lee.library.viewstate.stateObserve
+import com.lee.library.extensions.launchAndRepeatWithViewLifecycle
 import com.lee.library.tools.DarkModeTools
 import com.lee.library.tools.StatusTools.setDarkStatusIcon
 import com.lee.library.tools.StatusTools.setLightStatusIcon
+import com.lee.library.viewstate.LoadStatus
+import com.lee.library.viewstate.stateCollect
 import com.lee.library.widget.toolbar.TitleToolbar
 import com.lee.playandroid.library.common.constants.ApiConstants
 import com.lee.playandroid.library.common.entity.CoinRecord
@@ -26,6 +27,7 @@ import com.lee.playandroid.me.databinding.FragmentCoinBinding
 import com.lee.playandroid.me.databinding.LayoutCoinHeaderBinding
 import com.lee.playandroid.me.ui.adapter.CoinRecordAdapter
 import com.lee.playandroid.me.ui.widget.CoinLoadResource
+import com.lee.playandroid.me.viewmodel.CoinViewAction
 import com.lee.playandroid.me.viewmodel.CoinViewModel
 import com.lee.playandroid.router.navigateDetails
 
@@ -78,24 +80,26 @@ class CoinFragment : BaseNavigationFragment(R.layout.fragment_coin),
     }
 
     override fun bindData() {
-        viewModel.coinRecordLive.stateObserve<PageData<CoinRecord>>(viewLifecycleOwner, success = {
-            mAdapter.submitData(it, diff = true)
-        }, error = {
-            mAdapter.submitFailed()
-            actionFailed(it)
-        })
+        launchAndRepeatWithViewLifecycle {
+            viewModel.coinRecordFlow.stateCollect<PageData<CoinRecord>>(success = {
+                mAdapter.submitData(it, diff = true)
+            }, error = {
+                mAdapter.submitFailed()
+                actionFailed(it)
+            })
+        }
     }
 
     override fun autoLoadMore() {
-        viewModel.requestCoinRecord(LoadStatus.LOAD_MORE)
+        viewModel.dispatch(CoinViewAction.RequestPage(LoadStatus.LOAD_MORE))
     }
 
     override fun pageReload() {
-        viewModel.requestCoinRecord(LoadStatus.REFRESH)
+        viewModel.dispatch(CoinViewAction.RequestPage(LoadStatus.REFRESH))
     }
 
     override fun itemReload() {
-        viewModel.requestCoinRecord(LoadStatus.RELOAD)
+        viewModel.dispatch(CoinViewAction.RequestPage(LoadStatus.RELOAD))
     }
 
     override fun onFragmentResume() {

@@ -1,6 +1,7 @@
 package com.lee.playandroid.search.viewmodel
 
 import androidx.lifecycle.SavedStateHandle
+import androidx.lifecycle.viewModelScope
 import com.lee.library.viewmodel.CoroutineViewModel
 import com.lee.library.viewstate.*
 import com.lee.playandroid.library.common.extensions.checkData
@@ -9,6 +10,7 @@ import com.lee.playandroid.search.model.api.ApiService
 import com.lee.playandroid.search.ui.SearchResultFragment
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
 
 /**
  * @author jv.lee
@@ -38,7 +40,7 @@ class SearchResultViewModel(handle: SavedStateHandle) : CoroutineViewModel() {
     }
 
     private fun requestSearch(@LoadStatus status: Int) {
-        launchIO {
+        viewModelScope.launch {
             _searchResultFlow.pageLaunch(status, { page ->
                 applyData { api.postSearchAsync(page, key).checkData() }
             })

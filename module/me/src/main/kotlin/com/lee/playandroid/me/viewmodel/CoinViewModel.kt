@@ -1,5 +1,6 @@
 package com.lee.playandroid.me.viewmodel
 
+import androidx.lifecycle.viewModelScope
 import com.lee.library.cache.CacheManager
 import com.lee.library.extensions.getCache
 import com.lee.library.extensions.putPageCache
@@ -11,6 +12,8 @@ import com.lee.playandroid.library.service.AccountService
 import com.lee.playandroid.library.service.hepler.ModuleService
 import com.lee.playandroid.me.constants.Constants.CACHE_KEY_COIN_RECORD
 import com.lee.playandroid.me.model.api.ApiService
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.launch
 
 /**
  * @author jv.lee
@@ -25,12 +28,25 @@ class CoinViewModel : CoroutineViewModel() {
 
     private val cacheKey = CACHE_KEY_COIN_RECORD.plus(accountService.getUserId())
 
-    private val _coinRecordLive = UiStatePageMutableLiveData(UiStatePage.Default(1))
-    val coinRecordLive: UiStatePageLiveData = _coinRecordLive
+    private val _coinRecordFlow: UiStatePageMutableStateFlow =
+        MutableStateFlow(UiStatePage.Default(1))
+    val coinRecordFlow: UiStatePageStateFlow = _coinRecordFlow
 
-    fun requestCoinRecord(@LoadStatus status: Int) {
-        launchIO {
-            _coinRecordLive.pageLaunch(status, { page ->
+    init {
+        dispatch(CoinViewAction.RequestPage(LoadStatus.INIT))
+    }
+
+    fun dispatch(action: CoinViewAction) {
+        when (action) {
+            is CoinViewAction.RequestPage -> {
+                requestCoinRecord(action.status)
+            }
+        }
+    }
+
+    private fun requestCoinRecord(@LoadStatus status: Int) {
+        viewModelScope.launch {
+            _coinRecordFlow.pageLaunch(status, { page ->
                 applyData { api.getCoinRecordAsync(page).checkData() }
             }, {
                 cacheManager.getCache(cacheKey)
@@ -40,8 +56,8 @@ class CoinViewModel : CoroutineViewModel() {
         }
     }
 
-    init {
-        requestCoinRecord(LoadStatus.INIT)
-    }
+}
 
+sealed class CoinViewAction {
+    data class RequestPage(@LoadStatus val status: Int) : CoinViewAction()
 }

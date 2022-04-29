@@ -3,10 +3,14 @@ package com.lee.playandroid.system.ui
 import androidx.fragment.app.Fragment
 import com.lee.library.extensions.arguments
 import com.lee.library.extensions.argumentsList
-import com.lee.library.viewstate.UiStateLiveData
-import com.lee.library.viewstate.stateLive
 import com.lee.playandroid.library.common.entity.Tab
-import com.lee.playandroid.library.common.ui.BaseTabFragment
+import com.lee.playandroid.library.common.ui.base.BaseTabFragment
+import com.lee.playandroid.library.common.ui.base.BaseTabViewEvent
+import com.lee.playandroid.library.common.ui.base.BaseTabViewState
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.flow
 
 /**
  * @author jv.lee
@@ -29,14 +33,20 @@ class SystemContentTabFragment : BaseTabFragment() {
         findBinding().toolbar.setTitleText(title)
     }
 
-    override fun requestTabs() {
-    }
-
     override fun createChildFragment(id: Long): Fragment {
         return SystemContentListFragment.newInstance(id)
     }
 
-    override fun dataObserveState(): UiStateLiveData {
-        return stateLive { tabData }
+    override fun requestData() {
     }
+
+    override fun viewEvents(): Flow<BaseTabViewEvent> {
+        return flow { }
+    }
+
+    override fun viewStates(): StateFlow<BaseTabViewState> {
+        return MutableStateFlow(BaseTabViewState(tabList = tabData))
+    }
+
+
 }

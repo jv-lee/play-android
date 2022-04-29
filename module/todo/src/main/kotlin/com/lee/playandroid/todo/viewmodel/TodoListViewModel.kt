@@ -1,12 +1,13 @@
 package com.lee.playandroid.todo.viewmodel
 
 import androidx.lifecycle.SavedStateHandle
+import androidx.lifecycle.viewModelScope
 import com.lee.library.cache.CacheManager
 import com.lee.library.extensions.getCache
 import com.lee.library.extensions.putCache
 import com.lee.library.extensions.putPageCache
-import com.lee.library.viewmodel.CoroutineViewModel
 import com.lee.library.tools.PreferencesTools
+import com.lee.library.viewmodel.CoroutineViewModel
 import com.lee.library.viewstate.*
 import com.lee.playandroid.library.common.constants.ApiConstants
 import com.lee.playandroid.library.common.entity.PageData
@@ -23,6 +24,7 @@ import com.lee.playandroid.todo.ui.TodoListFragment.Companion.ARG_PARAMS_STATUS
 import com.lee.playandroid.todo.ui.TodoListFragment.Companion.ARG_STATUS_COMPLETE
 import com.lee.playandroid.todo.ui.TodoListFragment.Companion.ARG_STATUS_UPCOMING
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 import java.util.concurrent.atomic.AtomicBoolean
 
 /**
@@ -63,7 +65,7 @@ class TodoListViewModel(handle: SavedStateHandle) : CoroutineViewModel() {
     }
 
     fun requestTodoData(@LoadStatus status: Int) {
-        launchIO {
+        viewModelScope.launch {
             _todoDataLive.pageLaunch(status, { page ->
                 applyData {
                     api.postTodoDataAsync(page, requestStatus, requestType)
@@ -79,7 +81,7 @@ class TodoListViewModel(handle: SavedStateHandle) : CoroutineViewModel() {
 
     fun requestDeleteTodo(position: Int) {
         if (deleteLock.compareAndSet(false, true)) {
-            launchIO {
+            viewModelScope.launch {
                 stateFlow {
                     val data = todoDataLive.getValueData<PageData<TodoData>>()!!
                     val item = data.data[position]
@@ -101,7 +103,7 @@ class TodoListViewModel(handle: SavedStateHandle) : CoroutineViewModel() {
 
     fun requestUpdateTodoStatus(position: Int) {
         if (updateLock.compareAndSet(false, true)) {
-            launchIO {
+            viewModelScope.launch {
                 stateFlow {
                     val data = todoDataLive.getValueData<PageData<TodoData>>()!!
                     val item = data.data[position]

@@ -1,10 +1,11 @@
 package com.lee.playandroid.todo.viewmodel
 
+import androidx.lifecycle.viewModelScope
+import com.lee.library.tools.PreferencesTools
+import com.lee.library.viewmodel.CoroutineViewModel
 import com.lee.library.viewstate.UiStateLiveData
 import com.lee.library.viewstate.UiStateMutableLiveData
 import com.lee.library.viewstate.stateFlow
-import com.lee.library.viewmodel.CoroutineViewModel
-import com.lee.library.tools.PreferencesTools
 import com.lee.playandroid.library.common.entity.TodoData
 import com.lee.playandroid.library.common.extensions.checkData
 import com.lee.playandroid.library.common.extensions.createApi
@@ -12,6 +13,7 @@ import com.lee.playandroid.todo.constants.Constants.SP_KEY_TODO_TYPE
 import com.lee.playandroid.todo.model.api.ApiService
 import com.lee.playandroid.todo.model.entity.TodoType
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 
 /**
  * @author jv.lee
@@ -26,7 +28,7 @@ class CreateTodoViewModel : CoroutineViewModel() {
     val todoLive: UiStateLiveData = _todoLive
 
     fun requestAddTodo(title: String, content: String, date: String, priority: Int) {
-        launchIO {
+        viewModelScope.launch {
             stateFlow {
                 if (title.isEmpty() || content.isEmpty()) {
                     throw RuntimeException("title or content is not empty.")
@@ -46,7 +48,7 @@ class CreateTodoViewModel : CoroutineViewModel() {
     }
 
     fun requestUpdateTodo(todoData: TodoData) {
-        launchIO {
+        viewModelScope.launch {
             todoData.apply {
                 stateFlow {
                     if (title.isEmpty() || content.isEmpty()) {
