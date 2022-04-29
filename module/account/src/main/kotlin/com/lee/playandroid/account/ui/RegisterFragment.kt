@@ -44,10 +44,10 @@ class RegisterFragment : BaseNavigationFragment(R.layout.fragment_register),
 
     override fun bindView() {
         // 设置点击空白区域隐藏软键盘
-        requireActivity().parentTouchHideSoftInput(binding.root)
+        requireContext().parentTouchHideSoftInput(binding.root)
 
         // 监听键盘弹起
-        requireActivity().window.decorView.keyboardPaddingBottom(viewLifecycleOwner)
+        binding.root.keyboardPaddingBottom(viewLifecycleOwner)
 
         // 设置监听
         binding.root.setOnClickListener(this)
@@ -70,6 +70,11 @@ class RegisterFragment : BaseNavigationFragment(R.layout.fragment_register),
             dismiss(loadingDialog)
             actionFailed(it)
         })
+    }
+
+    override fun onFragmentStop() {
+        super.onFragmentStop()
+        requireContext().hideSoftInput()
     }
 
     override fun onClick(view: View) {

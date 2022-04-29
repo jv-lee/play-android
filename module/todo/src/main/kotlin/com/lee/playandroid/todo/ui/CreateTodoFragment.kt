@@ -11,6 +11,7 @@ import com.lee.library.base.BaseNavigationFragment
 import com.lee.library.dialog.LoadingDialog
 import com.lee.library.extensions.*
 import com.lee.library.interadp.TextWatcherAdapter
+import com.lee.library.tools.KeyboardTools.hideSoftInput
 import com.lee.library.tools.KeyboardTools.keyboardPaddingBottom
 import com.lee.library.tools.KeyboardTools.parentTouchHideSoftInput
 import com.lee.library.viewstate.collectState
@@ -64,9 +65,9 @@ class CreateTodoFragment : BaseNavigationFragment(R.layout.fragment_create_todo)
 
     override fun bindView() {
         // 设置键盘点击空白区取消
-        requireActivity().parentTouchHideSoftInput(binding.root)
+        requireContext().parentTouchHideSoftInput(binding.root)
 
-        requireActivity().window.decorView.keyboardPaddingBottom(viewLifecycleOwner)
+        binding.root.keyboardPaddingBottom(viewLifecycleOwner)
 
         binding.tvDateContent.setOnClickListener {
             datePickerDialog?.let(this::show)
@@ -164,6 +165,7 @@ class CreateTodoFragment : BaseNavigationFragment(R.layout.fragment_create_todo)
 
     override fun onFragmentStop() {
         super.onFragmentStop()
+        requireContext().hideSoftInput()
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             datePickerDialog?.setOnDateSetListener(null)
         }

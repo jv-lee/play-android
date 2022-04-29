@@ -12,12 +12,12 @@ import com.lee.library.extensions.binding
 import com.lee.library.extensions.dismiss
 import com.lee.library.extensions.show
 import com.lee.library.interadp.TextWatcherAdapter
-import com.lee.library.viewstate.stateObserve
 import com.lee.library.tools.KeyboardTools.hideSoftInput
 import com.lee.library.tools.KeyboardTools.keyboardIsShow
 import com.lee.library.tools.KeyboardTools.keyboardPaddingBottom
 import com.lee.library.tools.KeyboardTools.parentTouchHideSoftInput
 import com.lee.library.tools.PreferencesTools
+import com.lee.library.viewstate.stateObserve
 import com.lee.playandroid.account.R
 import com.lee.playandroid.account.constants.Constants.SP_KEY_SAVE_INPUT_USERNAME
 import com.lee.playandroid.account.databinding.FragmentLoginBinding
@@ -48,13 +48,13 @@ class LoginFragment : BaseNavigationFragment(R.layout.fragment_login),
 
     override fun bindView() {
         // 设置点击空白区域隐藏软键盘
-        requireActivity().parentTouchHideSoftInput(binding.root)
+        requireContext().parentTouchHideSoftInput(binding.root)
 
         // 设置登陆过的账户名
         binding.editUsername.setText(PreferencesTools.get<String>(SP_KEY_SAVE_INPUT_USERNAME))
 
         // 监听键盘弹起
-        requireActivity().window.decorView.keyboardPaddingBottom(viewLifecycleOwner)
+        binding.root.keyboardPaddingBottom(viewLifecycleOwner)
 
         // 设置监听
         binding.tvLogin.setOnClickListener(this)
@@ -79,6 +79,11 @@ class LoginFragment : BaseNavigationFragment(R.layout.fragment_login),
             dismiss(loadingDialog)
             actionFailed(it)
         })
+    }
+
+    override fun onFragmentStop() {
+        super.onFragmentStop()
+        requireContext().hideSoftInput()
     }
 
     override fun onClick(view: View) {
