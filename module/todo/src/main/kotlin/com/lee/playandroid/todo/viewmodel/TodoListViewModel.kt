@@ -23,7 +23,8 @@ import com.lee.playandroid.todo.model.entity.TodoType
 import com.lee.playandroid.todo.ui.TodoListFragment.Companion.ARG_PARAMS_STATUS
 import com.lee.playandroid.todo.ui.TodoListFragment.Companion.ARG_STATUS_COMPLETE
 import com.lee.playandroid.todo.ui.TodoListFragment.Companion.ARG_STATUS_UPCOMING
-import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import java.util.concurrent.atomic.AtomicBoolean
 
@@ -51,22 +52,37 @@ class TodoListViewModel(handle: SavedStateHandle) : CoroutineViewModel() {
     private val deleteLock = AtomicBoolean(false)
     private val updateLock = AtomicBoolean(false)
 
-    private val _todoDeleteLive = UiStateMutableLiveData()
-    val todoDeleteLive: UiStateLiveData = _todoDeleteLive
+    private val _viewEvents = Channel<TodoListViewEvent>(Channel.BUFFERED)
+    val viewEvents = _viewEvents.receiveAsFlow()
 
-    private val _todoUpdateLive = UiStateMutableLiveData()
-    val todoUpdateLive: UiStateLiveData = _todoUpdateLive
-
-    private val _todoDataLive = UiStatePageMutableLiveData(UiStatePage.Default(1))
-    val todoDataLive: UiStatePageLiveData = _todoDataLive
+    private val _todoDataFlow: UiStatePageMutableStateFlow =
+        MutableStateFlow(UiStatePage.Default(1))
+    val todoDataFlow: UiStatePageStateFlow = _todoDataFlow
 
     init {
-        requestTodoData(LoadStatus.INIT)
+        dispatch(TodoListViewAction.RequestPage(LoadStatus.INIT))
     }
 
-    fun requestTodoData(@LoadStatus status: Int) {
+    fun dispatch(action: TodoListViewAction) {
+        when (action) {
+            is TodoListViewAction.RequestPage -> {
+                requestTodoData(action.status)
+            }
+            is TodoListViewAction.RequestDelete -> {
+                requestDeleteTodo(action.position)
+            }
+            is TodoListViewAction.RequestUpdate -> {
+                requestUpdateTodoStatus(action.position)
+            }
+            is TodoListViewAction.CheckResetRequestType -> {
+                checkResetRequestType(action.type)
+            }
+        }
+    }
+
+    private fun requestTodoData(@LoadStatus status: Int) {
         viewModelScope.launch {
-            _todoDataLive.pageLaunch(status, { page ->
+            _todoDataFlow.pageLaunch(status, { page ->
                 applyData {
                     api.postTodoDataAsync(page, requestStatus, requestType)
                         .checkData()
@@ -79,33 +95,36 @@ class TodoListViewModel(handle: SavedStateHandle) : CoroutineViewModel() {
         }
     }
 
-    fun requestDeleteTodo(position: Int) {
+    private fun requestDeleteTodo(position: Int) {
         if (deleteLock.compareAndSet(false, true)) {
             viewModelScope.launch {
-                stateFlow {
-                    val data = todoDataLive.getValueData<PageData<TodoData>>()!!
+                flow {
+                    val data = _todoDataFlow.getValueData<PageData<TodoData>>()!!
                     val item = data.data[position]
 
                     val response = api.postDeleteTodoAsync(item.id)
                     if (response.errorCode == ApiConstants.REQUEST_OK) {
                         removeCacheItem(item)
-                        position
+                        emit(item)
                     } else {
                         throw RuntimeException(response.errorMsg)
                     }
+                }.catch { error ->
+                    deleteLock.set(false)
+                    _viewEvents.send(TodoListViewEvent.ActionFailed(error = error))
                 }.collect {
                     deleteLock.set(false)
-                    _todoDeleteLive.postValue(it)
+                    _viewEvents.send(TodoListViewEvent.DeleteTodoActionSuccess(it))
                 }
             }
         }
     }
 
-    fun requestUpdateTodoStatus(position: Int) {
+    private fun requestUpdateTodoStatus(position: Int) {
         if (updateLock.compareAndSet(false, true)) {
             viewModelScope.launch {
-                stateFlow {
-                    val data = todoDataLive.getValueData<PageData<TodoData>>()!!
+                flow {
+                    val data = _todoDataFlow.getValueData<PageData<TodoData>>()!!
                     val item = data.data[position]
 
                     val newItem =
@@ -115,21 +134,39 @@ class TodoListViewModel(handle: SavedStateHandle) : CoroutineViewModel() {
                         // 根据数据源删除item
                         removeCacheItem(item)
                         // 返回copy数据源，因为返回的数据源要根据新的status做数据拉取处理
-                        newItem
+                        emit(newItem)
                     } else {
                         throw RuntimeException(response.errorMsg)
                     }
-                }.collect {
+                }.catch { error ->
                     updateLock.set(false)
-                    _todoUpdateLive.postValue(it)
+                    _viewEvents.send(TodoListViewEvent.ActionFailed(error = error))
+                }.collect { data ->
+                    updateLock.set(false)
+                    _viewEvents.send(TodoListViewEvent.UpdateTodoActionSuccess(todo = data))
                 }
+            }
+        }
+    }
+
+    /**
+     * 切换todo类型
+     */
+    private fun checkResetRequestType(@TodoType type: Int) {
+        viewModelScope.launch {
+            if (requestType != type) {
+                PreferencesTools.put(SP_KEY_TODO_TYPE, type)
+                requestType = type
+                cacheKey = CACHE_KEY_TODO_CONTENT.plus(requestStatus).plus(requestType)
+                    .plus(accountService.getUserId())
+                _viewEvents.send(TodoListViewEvent.ResetRequestType)
             }
         }
     }
 
     private fun removeCacheItem(todo: TodoData) {
         // 内存移除
-        todoDataLive.getValueData<PageData<TodoData>>()?.apply {
+        _todoDataFlow.getValueData<PageData<TodoData>>()?.apply {
             this.data.remove(todo)
         }
 
@@ -142,18 +179,18 @@ class TodoListViewModel(handle: SavedStateHandle) : CoroutineViewModel() {
             }
     }
 
-    /**
-     * 切换todo类型
-     */
-    fun checkResetRequestType(@TodoType type: Int): Boolean {
-        if (requestType != type) {
-            PreferencesTools.put(SP_KEY_TODO_TYPE, type)
-            requestType = type
-            cacheKey = CACHE_KEY_TODO_CONTENT.plus(requestStatus).plus(requestType)
-                .plus(accountService.getUserId())
-            return true
-        }
-        return false
-    }
+}
 
+sealed class TodoListViewEvent {
+    data class DeleteTodoActionSuccess(val todo: TodoData) : TodoListViewEvent()
+    data class UpdateTodoActionSuccess(val todo: TodoData) : TodoListViewEvent()
+    data class ActionFailed(val error: Throwable) : TodoListViewEvent()
+    object ResetRequestType : TodoListViewEvent()
+}
+
+sealed class TodoListViewAction {
+    data class RequestPage(@LoadStatus val status: Int) : TodoListViewAction()
+    data class RequestDelete(val position: Int) : TodoListViewAction()
+    data class RequestUpdate(val position: Int) : TodoListViewAction()
+    data class CheckResetRequestType(@TodoType val type: Int) : TodoListViewAction()
 }

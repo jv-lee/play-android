@@ -103,6 +103,7 @@
                 app:layout_constraintTop_toBottomOf="@id/line2" />
 
             <RadioGroup
+                android:id="@+id/radio_group"
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 android:gravity="center_vertical"

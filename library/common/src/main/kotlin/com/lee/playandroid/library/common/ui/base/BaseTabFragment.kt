@@ -109,7 +109,9 @@ abstract class BaseTabFragment : BaseNavigationFragment(R.layout.fragment_base_t
         }
 
         TabLayoutMediator(binding.tabLayout, binding.vpContainer) { tab, position ->
-            tab.text = titles[position]
+            if (titles.size > position) {
+                tab.text = titles[position]
+            }
         }.also {
             mediator = it
         }.attach()
