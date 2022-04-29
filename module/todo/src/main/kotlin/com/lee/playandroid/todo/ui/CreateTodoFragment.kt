@@ -125,11 +125,13 @@ class CreateTodoFragment : BaseNavigationFragment(R.layout.fragment_create_todo)
             launchAndRepeatWithViewLifecycle {
                 collectState(CreateTodoViewState::title) {
                     binding.editTitle.setText(it)
+                    binding.editTitle.setSelection(it.length)
                 }
             }
             launchAndRepeatWithViewLifecycle {
                 collectState(CreateTodoViewState::content) {
                     binding.editContent.setText(it)
+                    binding.editContent.setSelection(it.length)
                 }
             }
             launchAndRepeatWithViewLifecycle {
