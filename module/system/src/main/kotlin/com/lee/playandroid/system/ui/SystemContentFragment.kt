@@ -78,8 +78,11 @@ class SystemContentFragment : BaseNavigationFragment(R.layout.fragment_system_co
         }
 
         launchAndRepeatWithViewLifecycle {
-            viewModel.viewStates.collectState(SystemContentViewState::parentTabList) {
-                mAdapter?.submitSinglePage(it)
+            viewModel.viewStates.collectState(
+                SystemContentViewState::isLoading,
+                SystemContentViewState::parentTabList
+            ) { isLoading, data ->
+                if (!isLoading) mAdapter?.submitSinglePage(data)
             }
         }
     }

@@ -50,7 +50,7 @@ class SystemContentViewModel : CoroutineViewModel() {
             }.catch { error ->
                 _viewEvents.send(SystemContentViewEvent.RequestFailed(error = error))
             }.collect { data ->
-                _viewStates.update { it.copy(parentTabList = data) }
+                _viewStates.update { it.copy(isLoading = false, parentTabList = data) }
             }
         }
     }
@@ -58,6 +58,7 @@ class SystemContentViewModel : CoroutineViewModel() {
 }
 
 data class SystemContentViewState(
+    val isLoading: Boolean = true,
     val parentTabList: List<ParentTab> = emptyList()
 )
 
