@@ -10,21 +10,28 @@ import android.view.View
 import android.view.ViewStub
 import android.view.animation.AnimationUtils
 import android.view.animation.LinearInterpolator
+import androidx.activity.viewModels
 import com.lee.library.base.BaseActivity
 import com.lee.library.extensions.banBackEvent
 import com.lee.library.extensions.binding
+import com.lee.library.extensions.launchAndRepeatWithViewLifecycle
 import com.lee.library.extensions.startListener
 import com.lee.library.tools.DarkModeTools
 import com.lee.library.tools.ScreenDensityUtil
+import com.lee.library.viewstate.collectState
 import com.lee.playandroid.databinding.ActivityMainBinding
 import com.lee.playandroid.databinding.LayoutStubMainBinding
 import com.lee.playandroid.databinding.LayoutStubSplashBinding
 import com.lee.playandroid.library.common.extensions.appThemeSet
-import com.lee.playandroid.library.service.AccountService
-import com.lee.playandroid.library.service.hepler.ModuleService
-import kotlinx.coroutines.*
+import com.lee.playandroid.viewmodel.SplashViewAction
+import com.lee.playandroid.viewmodel.SplashViewEvent
+import com.lee.playandroid.viewmodel.SplashViewModel
+import com.lee.playandroid.viewmodel.SplashViewState
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.launch
 
 /**
  * @author jv.lee
@@ -35,6 +42,8 @@ class MainActivity : BaseActivity(),
     CoroutineScope by CoroutineScope(Dispatchers.Main) {
 
     private val backCallback = banBackEvent()
+
+    private val viewModel by viewModels<SplashViewModel>()
 
     private val binding by binding(ActivityMainBinding::inflate)
 
@@ -48,12 +57,10 @@ class MainActivity : BaseActivity(),
         if (savedInstanceState == null) {
             launch {
                 // 进程初始化启动 请求配置
-                requestConfig()
+                viewModel.accountService.requestAccountInfo(this@MainActivity)
 
                 // 发起闪屏广告逻辑
-                val splashResult = async { requestSplashAd() }
-                splashResult.invokeOnCompletion { animVisibleUi(300) }
-                splashResult.await()
+                viewModel.dispatch(SplashViewAction.RequestSplashAd)
             }
         }
     }
@@ -62,7 +69,7 @@ class MainActivity : BaseActivity(),
         super.onRestoreInstanceState(savedInstanceState)
         launch {
             //程序以外重启 或重新创建MainActivity 无需获取配置，直接显示view
-            animVisibleUi()
+            viewModel.dispatch(SplashViewAction.NavigationMain())
         }
     }
 
@@ -78,6 +85,30 @@ class MainActivity : BaseActivity(),
     }
 
     override fun bindData() {
+        launchAndRepeatWithViewLifecycle {
+            viewModel.viewEvents.collect { event ->
+                when (event) {
+                    is SplashViewEvent.NavigationMainEvent -> {
+                        animVisibleUi(event.duration)
+                    }
+                }
+            }
+        }
+
+        viewModel.viewStates.run {
+            launchAndRepeatWithViewLifecycle {
+                collectState(SplashViewState::splashAdVisible) { visible ->
+                    if (visible) {
+                        animVisibleSplash()
+                    }
+                }
+            }
+            launchAndRepeatWithViewLifecycle {
+                collectState(SplashViewState::timeText) {
+                    splashBinding.tvTime.text = it
+                }
+            }
+        }
     }
 
     override fun onDestroy() {
@@ -86,37 +117,19 @@ class MainActivity : BaseActivity(),
     }
 
     /**
-     * 客户端入口读取APP配置
+     * 动画显示splash页面
      */
-    private suspend fun requestConfig() {
-        ModuleService.find<AccountService>().requestAccountInfo(this)
-    }
-
-    /**
-     * 闪屏广告逻辑
-     */
-    private suspend fun requestSplashAd() {
-        coroutineScope {
-            if (BuildConfig.DEBUG) {
-                // 闪屏图片加载动画
-                val splashAnimation =
-                    AnimationUtils.loadAnimation(this@MainActivity, R.anim.alpha_in).apply {
-                        startListener {
-                            splashBinding.tvTime.visibility = View.VISIBLE
-                            splashBinding.ivPicture.setImageResource(R.mipmap.splash_ad)
-                        }
-                    }
-
-                // 启动动画及取消处理
-                splashBinding.container.startAnimation(splashAnimation)
-                splashBinding.tvTime.setOnClickListener { cancel() }
-
-                // 倒计时更改view显示
-                flowOf(5, 4, 3, 2, 1).collect {
-                    splashBinding.tvTime.text = getString(R.string.splash_time_text, it)
-                    delay(1000)
+    private fun animVisibleSplash() {
+        val splashAnimation =
+            AnimationUtils.loadAnimation(this@MainActivity, R.anim.alpha_in).apply {
+                startListener {
+                    splashBinding.tvTime.visibility = View.VISIBLE
+                    splashBinding.ivPicture.setImageResource(R.mipmap.splash_ad)
                 }
             }
+        splashBinding.container.startAnimation(splashAnimation)
+        splashBinding.tvTime.setOnClickListener {
+            viewModel.dispatch(SplashViewAction.NavigationMain(300))
         }
     }
 
