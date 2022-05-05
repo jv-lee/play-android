@@ -14,14 +14,14 @@ import com.lee.library.tools.DarkModeTools
 import com.lee.library.tools.StatusTools.setDarkStatusIcon
 import com.lee.library.tools.StatusTools.setLightStatusIcon
 import com.lee.library.viewstate.LoadStatus
+import com.lee.library.viewstate.collectState
 import com.lee.library.viewstate.stateCollect
 import com.lee.library.widget.toolbar.TitleToolbar
 import com.lee.playandroid.library.common.constants.ApiConstants
+import com.lee.playandroid.library.common.entity.AccountViewState
 import com.lee.playandroid.library.common.entity.CoinRecord
 import com.lee.playandroid.library.common.entity.PageData
 import com.lee.playandroid.library.common.extensions.actionFailed
-import com.lee.playandroid.library.service.AccountService
-import com.lee.playandroid.library.service.hepler.ModuleService
 import com.lee.playandroid.me.R
 import com.lee.playandroid.me.databinding.FragmentCoinBinding
 import com.lee.playandroid.me.databinding.LayoutCoinHeaderBinding
@@ -40,8 +40,6 @@ class CoinFragment : BaseNavigationFragment(R.layout.fragment_coin),
     BaseViewAdapter.LoadErrorListener,
     BaseViewAdapter.AutoLoadMoreListener {
 
-    private val accountService = ModuleService.find<AccountService>()
-
     private val viewModel by viewModels<CoinViewModel>()
 
     private val binding by binding(FragmentCoinBinding::bind)
@@ -51,10 +49,6 @@ class CoinFragment : BaseNavigationFragment(R.layout.fragment_coin),
     private lateinit var mAdapter: CoinRecordAdapter
 
     override fun bindView() {
-        accountService.getAccountInfo(requireActivity())?.apply {
-            headerBinding.tvIntegralCount.text = coinInfo.coinCount.toString()
-        }
-
         binding.toolbar.setClickListener(object : TitleToolbar.ClickListener() {
             override fun moreClick() {
                 findNavController().navigateDetails(
@@ -87,6 +81,13 @@ class CoinFragment : BaseNavigationFragment(R.layout.fragment_coin),
                 mAdapter.submitFailed()
                 actionFailed(it)
             })
+        }
+
+        launchAndRepeatWithViewLifecycle {
+            viewModel.accountService.getAccountViewStates(requireActivity())
+                .collectState(AccountViewState::accountData) {
+                    headerBinding.tvIntegralCount.text = it?.coinInfo?.coinCount.toString()
+                }
         }
     }
 

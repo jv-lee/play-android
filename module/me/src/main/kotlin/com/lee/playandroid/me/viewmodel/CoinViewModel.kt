@@ -24,7 +24,7 @@ class CoinViewModel : CoroutineViewModel() {
 
     private val api = createApi<ApiService>()
     private val cacheManager = CacheManager.getDefault()
-    private val accountService: AccountService = ModuleService.find()
+    val accountService: AccountService = ModuleService.find()
 
     private val cacheKey = CACHE_KEY_COIN_RECORD.plus(accountService.getUserId())
 

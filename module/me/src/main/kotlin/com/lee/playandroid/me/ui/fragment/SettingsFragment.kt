@@ -3,6 +3,8 @@ package com.lee.playandroid.me.ui.fragment
 import android.app.Dialog
 import android.view.View
 import android.widget.CompoundButton
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.viewModelScope
 import com.lee.library.base.BaseNavigationFragment
 import com.lee.library.dialog.ChoiceDialog
 import com.lee.library.dialog.LoadingDialog
@@ -11,10 +13,14 @@ import com.lee.library.extensions.*
 import com.lee.library.tools.DarkModeTools
 import com.lee.library.tools.DarkViewUpdateTools
 import com.lee.library.utils.CacheUtil
-import com.lee.playandroid.library.service.AccountService
-import com.lee.playandroid.library.service.hepler.ModuleService
+import com.lee.library.viewstate.collectState
+import com.lee.playandroid.library.common.entity.AccountViewEvent
+import com.lee.playandroid.library.common.entity.AccountViewState
 import com.lee.playandroid.me.R
 import com.lee.playandroid.me.databinding.FragmentSettingsBinding
+import com.lee.playandroid.me.viewmodel.SettingsViewModel
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 
 /**
  * @author jv.lee
@@ -24,7 +30,7 @@ import com.lee.playandroid.me.databinding.FragmentSettingsBinding
 class SettingsFragment : BaseNavigationFragment(R.layout.fragment_settings),
     View.OnClickListener, CompoundButton.OnCheckedChangeListener, DarkViewUpdateTools.ViewCallback {
 
-    private val accountService = ModuleService.find<AccountService>()
+    private val viewModel by viewModels<SettingsViewModel>()
 
     private val binding by binding(FragmentSettingsBinding::bind)
 
@@ -47,11 +53,37 @@ class SettingsFragment : BaseNavigationFragment(R.layout.fragment_settings),
         binding.lineLogout.setOnClickListener(this)
 
         createAlertDialog()
-        changeLogoutLine()
     }
 
     override fun bindData() {
         binding.lineClearCache.getRightTextView().text = CacheUtil.getTotalCacheSize(activity)
+
+        launchAndRepeatWithViewLifecycle {
+            viewModel.accountService.getAccountViewEvents(requireActivity()).collect { event ->
+                when (event) {
+                    is AccountViewEvent.LogoutSuccess -> {
+                        toast(event.message)
+                    }
+                    is AccountViewEvent.LogoutFailed -> {
+                        toast(event.message)
+                    }
+                }
+            }
+        }
+
+        viewModel.accountService.getAccountViewStates(requireActivity()).run {
+            launchAndRepeatWithViewLifecycle {
+                collectState(AccountViewState::isLoading) {
+                    if (it) show(loadingDialog) else dismiss(loadingDialog)
+                }
+            }
+            launchAndRepeatWithViewLifecycle {
+                collectState(AccountViewState::isLogin) {
+                    binding.lineLogout.visibility = if (it) View.VISIBLE else View.GONE
+                }
+            }
+        }
+
     }
 
     override fun onClick(v: View) {
@@ -108,13 +140,6 @@ class SettingsFragment : BaseNavigationFragment(R.layout.fragment_settings),
     }
 
     /**
-     * 获取登陆状态设置退出登陆item显示状态
-     */
-    private fun changeLogoutLine() {
-        binding.lineLogout.visibility = if (accountService.isLogin()) View.VISIBLE else View.GONE
-    }
-
-    /**
      * 创建设置页Dialog提示弹窗
      */
     private fun createAlertDialog() {
@@ -139,14 +164,9 @@ class SettingsFragment : BaseNavigationFragment(R.layout.fragment_settings),
             setTitle(getString(R.string.settings_logout_title))
             setCancelable(true)
             confirmListener = ConfirmListener {
-                accountService.requestLogout(requireActivity(), {
-                    show(loadingDialog)
-                }, {
-                    dismiss(loadingDialog)
-                    changeLogoutLine()
-                }, {
-                    toast(it)
-                })
+                viewModel.viewModelScope.launch {
+                    viewModel.accountService.requestLogout(requireActivity())
+                }
                 dismiss()
             }
         }

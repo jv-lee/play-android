@@ -1,16 +1,17 @@
 package com.lee.playandroid.me.ui.fragment
 
 import android.view.View
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.lee.library.base.BaseNavigationFragment
 import com.lee.library.extensions.*
-import com.lee.library.viewstate.stateObserve
 import com.lee.library.tools.DarkViewUpdateTools
+import com.lee.library.viewstate.collectState
 import com.lee.playandroid.library.common.entity.AccountData
-import com.lee.playandroid.library.service.AccountService
-import com.lee.playandroid.library.service.hepler.ModuleService
+import com.lee.playandroid.library.common.entity.AccountViewState
 import com.lee.playandroid.me.R
 import com.lee.playandroid.me.databinding.FragmentMeBinding
+import com.lee.playandroid.me.viewmodel.MeViewModel
 import com.lee.playandroid.router.navigateLogin
 import com.lee.playandroid.router.navigateMyShare
 import com.lee.playandroid.router.navigateTodo
@@ -24,7 +25,7 @@ import com.lee.playandroid.library.common.R as CR
 class MeFragment : BaseNavigationFragment(R.layout.fragment_me),
     View.OnClickListener, DarkViewUpdateTools.ViewCallback {
 
-    private val accountService = ModuleService.find<AccountService>()
+    private val viewModel by viewModels<MeViewModel>()
 
     private val binding by binding(FragmentMeBinding::bind)
 
@@ -43,16 +44,15 @@ class MeFragment : BaseNavigationFragment(R.layout.fragment_me),
     }
 
     override fun bindData() {
-        accountService.getAccountLive(requireActivity())
-            .stateObserve<AccountData>(viewLifecycleOwner, success = {
-                setLoginAccountUi(it)
-            }, default = {
-                setUnLoginAccountUi()
-            }, error = {
-                if (!accountService.isLogin()) {
-                    setUnLoginAccountUi()
-                }
-            })
+        launchAndRepeatWithViewLifecycle {
+            viewModel.accountService.getAccountViewStates(requireActivity()).collectState(
+                AccountViewState::isLogin,
+                AccountViewState::accountData
+            ) { isLogin, accountData ->
+                if (isLogin) accountData?.let(this@MeFragment::setLoginAccountUi)
+                else setUnLoginAccountUi()
+            }
+        }
     }
 
     override fun onClick(view: View) {
@@ -63,7 +63,7 @@ class MeFragment : BaseNavigationFragment(R.layout.fragment_me),
         }
 
         // 需要校验登陆状态
-        if (accountService.isLogin()) {
+        if (viewModel.accountService.isLogin()) {
             when (view) {
                 binding.lineIntegral ->
                     findNavController().navigate(R.id.action_me_fragment_to_coin_fragment)

@@ -22,6 +22,7 @@ import com.lee.playandroid.account.R
 import com.lee.playandroid.account.databinding.FragmentRegisterBinding
 import com.lee.playandroid.account.ui.LoginFragment.Companion.REQUEST_KEY_LOGIN
 import com.lee.playandroid.account.viewmodel.*
+import com.lee.playandroid.library.common.entity.AccountViewAction
 import com.lee.playandroid.library.common.extensions.actionFailed
 import kotlinx.coroutines.flow.collect
 
@@ -74,7 +75,9 @@ class RegisterFragment : BaseNavigationFragment(R.layout.fragment_register),
             viewModel.viewEvents.collect { event ->
                 when (event) {
                     is RegisterViewEvent.RegisterSuccess -> {
-                        accountViewModel.updateAccountInfo(event.accountData)
+                        accountViewModel.dispatch(
+                            AccountViewAction.UpdateAccountStatus(event.accountData, true)
+                        )
                         setFragmentResult(REQUEST_KEY_LOGIN, Bundle.EMPTY)
                         findNavController().popBackStack()
                     }

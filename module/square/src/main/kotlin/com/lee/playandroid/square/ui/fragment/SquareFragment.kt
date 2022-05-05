@@ -19,8 +19,6 @@ import com.lee.playandroid.library.common.entity.PageData
 import com.lee.playandroid.library.common.extensions.actionFailed
 import com.lee.playandroid.library.common.ui.extensions.setThemeGradientBackground
 import com.lee.playandroid.library.common.ui.widget.OffsetItemDecoration
-import com.lee.playandroid.library.service.AccountService
-import com.lee.playandroid.library.service.hepler.ModuleService
 import com.lee.playandroid.router.navigateDetails
 import com.lee.playandroid.router.navigateLogin
 import com.lee.playandroid.square.R
@@ -40,8 +38,6 @@ class SquareFragment : BaseNavigationFragment(R.layout.fragment_square),
     BaseViewAdapter.OnItemClickListener<Content>,
     BaseViewAdapter.AutoLoadMoreListener,
     BaseViewAdapter.LoadErrorListener {
-
-    private val accountService = ModuleService.find<AccountService>()
 
     private val viewModel by viewModels<SquareViewModel>()
 
@@ -86,7 +82,7 @@ class SquareFragment : BaseNavigationFragment(R.layout.fragment_square),
 
     override fun onClick(v: View?) {
         // 需要校验登陆状态
-        if (accountService.isLogin()) {
+        if (viewModel.accountService.isLogin()) {
             when (v) {
                 binding.ivCreate -> findNavController()
                     .navigate(R.id.action_square_fragment_to_create_share_fragment)

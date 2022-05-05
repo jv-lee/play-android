@@ -8,6 +8,8 @@ import com.lee.library.viewmodel.CoroutineViewModel
 import com.lee.library.viewstate.*
 import com.lee.playandroid.library.common.extensions.checkData
 import com.lee.playandroid.library.common.extensions.createApi
+import com.lee.playandroid.library.service.AccountService
+import com.lee.playandroid.library.service.hepler.ModuleService
 import com.lee.playandroid.square.constants.Constants.CACHE_KEY_SQUARE_CONTENT
 import com.lee.playandroid.square.model.api.ApiService
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -22,6 +24,7 @@ class SquareViewModel : CoroutineViewModel() {
 
     private val api = createApi<ApiService>()
     private val cacheManager = CacheManager.getDefault()
+    val accountService = ModuleService.find<AccountService>()
 
     private val _squareFlow: UiStatePageMutableStateFlow =
         MutableStateFlow(UiStatePage.Default(0))
