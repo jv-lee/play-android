@@ -14,10 +14,8 @@ import com.lee.library.base.BaseActivity
 import com.lee.library.extensions.banBackEvent
 import com.lee.library.extensions.binding
 import com.lee.library.extensions.startListener
-import com.lee.library.extensions.toast
 import com.lee.library.tools.DarkModeTools
 import com.lee.library.tools.ScreenDensityUtil
-import com.lee.library.utils.LogUtil
 import com.lee.playandroid.databinding.ActivityMainBinding
 import com.lee.playandroid.databinding.LayoutStubMainBinding
 import com.lee.playandroid.databinding.LayoutStubSplashBinding
@@ -63,33 +61,17 @@ class MainActivity : BaseActivity(),
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
         launch {
-            if (BuildConfig.DEBUG) {
-                toast("onRestoreInstance")
-            }
             //程序以外重启 或重新创建MainActivity 无需获取配置，直接显示view
             animVisibleUi()
         }
     }
 
     override fun onConfigurationChanged(newConfig: Configuration) {
-        if (BuildConfig.DEBUG) {
-            toast("onConfigurationChanged")
-        }
-        // 屏幕适配
+        // 屏幕适配 / 深色主题适配
         ScreenDensityUtil.init(this)
-        // 深色主题适配
         DarkModeTools.init(applicationContext)
         appThemeSet()
         super.onConfigurationChanged(newConfig)
-    }
-
-    override fun onResume() {
-        super.onResume()
-        if (BuildConfig.DEBUG) {
-            val isSystem = DarkModeTools.get().isSystemTheme()
-            val isDark = DarkModeTools.get().isDarkTheme()
-            LogUtil.i("isSystem:$isSystem,isDark:$isDark")
-        }
     }
 
     override fun bindView() {
