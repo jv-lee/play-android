@@ -29,7 +29,7 @@ class SplashViewModel : ViewModel() {
     fun dispatch(action: SplashViewAction) {
         when (action) {
             is SplashViewAction.RequestSplashAd -> {
-                playTime()
+                requestSplashAd()
             }
             is SplashViewAction.NavigationMain -> {
                 navigationMain(action.duration)
@@ -37,10 +37,12 @@ class SplashViewModel : ViewModel() {
         }
     }
 
-    private fun playTime() {
+    private fun requestSplashAd() {
         viewModelScope.launch {
+            // 此处可加入splash广告资源获取逻辑
+            val splashAdRes = R.mipmap.splash_ad
             flowOf(5, 4, 3, 2, 1)
-                .onStart { _viewStates.update { it.copy(splashAdVisible = true) } }
+                .onStart { _viewEvents.send(SplashViewEvent.VisibleSplashEvent(splashAdRes)) }
                 .onCompletion { navigationMain(300) }
                 .collect { time ->
                     val timeText = app.getString(R.string.splash_time_text, time)
@@ -58,13 +60,11 @@ class SplashViewModel : ViewModel() {
 
 }
 
-data class SplashViewState(
-    val splashAdVisible: Boolean = false,
-    val timeText: String = "",
-)
+data class SplashViewState(val timeText: String = "")
 
 sealed class SplashViewEvent {
     data class NavigationMainEvent(val duration: Long) : SplashViewEvent()
+    data class VisibleSplashEvent(val splashAdRes: Int) : SplashViewEvent()
 }
 
 sealed class SplashViewAction {

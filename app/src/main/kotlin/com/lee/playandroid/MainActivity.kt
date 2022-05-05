@@ -11,6 +11,7 @@ import android.view.ViewStub
 import android.view.animation.AnimationUtils
 import android.view.animation.LinearInterpolator
 import androidx.activity.viewModels
+import androidx.annotation.DrawableRes
 import androidx.lifecycle.viewModelScope
 import com.lee.library.base.BaseActivity
 import com.lee.library.extensions.banBackEvent
@@ -89,26 +90,23 @@ class MainActivity : BaseActivity(),
         launchAndRepeatWithViewLifecycle {
             viewModel.viewEvents.collect { event ->
                 when (event) {
+                    // 取消携程任务通过动画显示主页内容
                     is SplashViewEvent.NavigationMainEvent -> {
                         viewModel.viewModelScope.cancel()
                         animVisibleUi(event.duration)
+                    }
+                    // 通过动画显示闪屏广告内容
+                    is SplashViewEvent.VisibleSplashEvent -> {
+                        animVisibleSplash(event.splashAdRes)
                     }
                 }
             }
         }
 
-        viewModel.viewStates.run {
-            launchAndRepeatWithViewLifecycle {
-                collectState(SplashViewState::splashAdVisible) { visible ->
-                    if (visible) {
-                        animVisibleSplash()
-                    }
-                }
-            }
-            launchAndRepeatWithViewLifecycle {
-                collectState(SplashViewState::timeText) {
-                    splashBinding.tvTime.text = it
-                }
+        launchAndRepeatWithViewLifecycle {
+            // 监听闪屏广告倒计时数值更改
+            viewModel.viewStates.collectState(SplashViewState::timeText) {
+                splashBinding.tvTime.text = it
             }
         }
     }
@@ -120,13 +118,14 @@ class MainActivity : BaseActivity(),
 
     /**
      * 动画显示splash页面
+     * @param splashAdRes 闪屏广告资源
      */
-    private fun animVisibleSplash() {
+    private fun animVisibleSplash(@DrawableRes splashAdRes: Int) {
         val splashAnimation =
             AnimationUtils.loadAnimation(this@MainActivity, R.anim.alpha_in).apply {
                 startListener {
                     splashBinding.tvTime.visibility = View.VISIBLE
-                    splashBinding.ivPicture.setImageResource(R.mipmap.splash_ad)
+                    splashBinding.ivPicture.setImageResource(splashAdRes)
                 }
             }
         splashBinding.container.startAnimation(splashAnimation)
@@ -137,6 +136,7 @@ class MainActivity : BaseActivity(),
 
     /**
      * 动画显示UI页面
+     * @param duration 显示主页面ui时间 0则立即显示 其他时间为渐变显示
      */
     private fun animVisibleUi(duration: Long = 0) {
         val main = binding.root.findViewById<ViewStub>(R.id.view_stub_main).inflate()
