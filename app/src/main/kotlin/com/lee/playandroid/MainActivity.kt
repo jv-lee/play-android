@@ -11,6 +11,7 @@ import android.view.ViewStub
 import android.view.animation.AnimationUtils
 import android.view.animation.LinearInterpolator
 import androidx.activity.viewModels
+import androidx.lifecycle.viewModelScope
 import com.lee.library.base.BaseActivity
 import com.lee.library.extensions.banBackEvent
 import com.lee.library.extensions.binding
@@ -89,6 +90,7 @@ class MainActivity : BaseActivity(),
             viewModel.viewEvents.collect { event ->
                 when (event) {
                     is SplashViewEvent.NavigationMainEvent -> {
+                        viewModel.viewModelScope.cancel()
                         animVisibleUi(event.duration)
                     }
                 }
