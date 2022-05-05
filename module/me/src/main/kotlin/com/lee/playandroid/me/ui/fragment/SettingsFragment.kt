@@ -12,13 +12,15 @@ import com.lee.library.dialog.core.ConfirmListener
 import com.lee.library.extensions.*
 import com.lee.library.tools.DarkModeTools
 import com.lee.library.tools.DarkViewUpdateTools
-import com.lee.library.utils.CacheUtil
 import com.lee.library.viewstate.collectState
 import com.lee.playandroid.library.common.entity.AccountViewEvent
 import com.lee.playandroid.library.common.entity.AccountViewState
 import com.lee.playandroid.me.R
 import com.lee.playandroid.me.databinding.FragmentSettingsBinding
+import com.lee.playandroid.me.viewmodel.SettingsViewAction
+import com.lee.playandroid.me.viewmodel.SettingsViewEvent
 import com.lee.playandroid.me.viewmodel.SettingsViewModel
+import com.lee.playandroid.me.viewmodel.SettingsViewState
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
@@ -56,7 +58,15 @@ class SettingsFragment : BaseNavigationFragment(R.layout.fragment_settings),
     }
 
     override fun bindData() {
-        binding.lineClearCache.getRightTextView().text = CacheUtil.getTotalCacheSize(activity)
+        launchAndRepeatWithViewLifecycle {
+            viewModel.viewEvents.collect { event ->
+                when (event) {
+                    is SettingsViewEvent.ClearCacheResult -> {
+                        toast(event.message)
+                    }
+                }
+            }
+        }
 
         launchAndRepeatWithViewLifecycle {
             viewModel.accountService.getAccountViewEvents(requireActivity()).collect { event ->
@@ -84,15 +94,38 @@ class SettingsFragment : BaseNavigationFragment(R.layout.fragment_settings),
             }
         }
 
+        viewModel.viewStates.run {
+            launchAndRepeatWithViewLifecycle {
+                collectState(SettingsViewState::isLoading) {
+                    if (it) show(loadingDialog) else dismiss(loadingDialog)
+                }
+            }
+            launchAndRepeatWithViewLifecycle {
+                collectState(SettingsViewState::isCacheConfirm) {
+                    if (it) show(clearDialog) else dismiss(clearDialog)
+                }
+            }
+            launchAndRepeatWithViewLifecycle {
+                collectState(SettingsViewState::isLogoutConfirm) {
+                    if (it) show(logoutDialog) else dismiss(logoutDialog)
+                }
+            }
+            launchAndRepeatWithViewLifecycle {
+                collectState(SettingsViewState::totalCacheSize) {
+                    binding.lineClearCache.getRightTextView().text = it
+                }
+            }
+        }
+
     }
 
     override fun onClick(v: View) {
         when (v) {
             binding.lineLogout -> {
-                show(logoutDialog)
+                viewModel.dispatch(SettingsViewAction.VisibleLogoutDialog(visibility = true))
             }
             binding.lineClearCache -> {
-                show(clearDialog)
+                viewModel.dispatch(SettingsViewAction.VisibleCacheDialog(visibility = true))
             }
         }
     }
@@ -148,14 +181,7 @@ class SettingsFragment : BaseNavigationFragment(R.layout.fragment_settings),
             setTitle(getString(R.string.settings_clear_title))
             setCancelable(true)
             confirmListener = ConfirmListener {
-                if (CacheUtil.clearAllCache(activity)) {
-                    binding.lineClearCache.getRightTextView().text =
-                        CacheUtil.getTotalCacheSize(activity)
-                    toast(getString(R.string.settings_clear_success))
-                } else {
-                    toast(getString(R.string.settings_clear_failed))
-                }
-                dismiss()
+                viewModel.dispatch(SettingsViewAction.RequestClearCache)
             }
         }
 
@@ -166,8 +192,8 @@ class SettingsFragment : BaseNavigationFragment(R.layout.fragment_settings),
             confirmListener = ConfirmListener {
                 viewModel.viewModelScope.launch {
                     viewModel.accountService.requestLogout(requireActivity())
+                    viewModel.dispatch(SettingsViewAction.VisibleLogoutDialog(visibility = false))
                 }
-                dismiss()
             }
         }
     }
