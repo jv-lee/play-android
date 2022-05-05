@@ -1,13 +1,13 @@
 package com.lee.playandroid.todo.viewmodel
 
 import androidx.lifecycle.SavedStateHandle
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.lee.library.cache.CacheManager
 import com.lee.library.extensions.getCache
 import com.lee.library.extensions.putCache
 import com.lee.library.extensions.putPageCache
 import com.lee.library.tools.PreferencesTools
-import com.lee.library.viewmodel.CoroutineViewModel
 import com.lee.library.viewstate.*
 import com.lee.playandroid.library.common.constants.ApiConstants
 import com.lee.playandroid.library.common.entity.PageData
@@ -33,7 +33,7 @@ import java.util.concurrent.atomic.AtomicBoolean
  * @date 2021/12/27
  * @description TodoViewModel TodoList页面使用，删改查处理
  */
-class TodoListViewModel(handle: SavedStateHandle) : CoroutineViewModel() {
+class TodoListViewModel(handle: SavedStateHandle) : ViewModel() {
 
     private val api = createApi<ApiService>()
     private val cacheManager = CacheManager.getDefault()

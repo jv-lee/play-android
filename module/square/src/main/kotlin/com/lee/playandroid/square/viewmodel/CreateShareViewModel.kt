@@ -1,9 +1,9 @@
 package com.lee.playandroid.square.viewmodel
 
 import android.text.TextUtils
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.lee.library.base.ApplicationExtensions.app
-import com.lee.library.viewmodel.CoroutineViewModel
 import com.lee.playandroid.library.common.constants.ApiConstants
 import com.lee.playandroid.library.common.extensions.createApi
 import com.lee.playandroid.square.R
@@ -17,7 +17,7 @@ import kotlinx.coroutines.launch
  * @date 2021/12/21
  * @description
  */
-class CreateShareViewModel : CoroutineViewModel() {
+class CreateShareViewModel : ViewModel() {
 
     private val api = createApi<ApiService>()
 

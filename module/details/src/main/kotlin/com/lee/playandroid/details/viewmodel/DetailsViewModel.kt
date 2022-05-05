@@ -1,8 +1,8 @@
 package com.lee.playandroid.details.viewmodel
 
 import androidx.lifecycle.SavedStateHandle
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.lee.library.viewmodel.CoroutineViewModel
 import com.lee.playandroid.details.R
 import com.lee.playandroid.details.ui.DetailsFragment.Companion.ARG_PARAMS_COLLECT
 import com.lee.playandroid.details.ui.DetailsFragment.Companion.ARG_PARAMS_ID
@@ -20,7 +20,7 @@ import kotlinx.coroutines.launch
  * @date 2021/12/3
  * @description
  */
-class DetailsViewModel(savedStateHandle: SavedStateHandle) : CoroutineViewModel() {
+class DetailsViewModel(savedStateHandle: SavedStateHandle) : ViewModel() {
 
     private var title = savedStateHandle.get<String>(ARG_PARAMS_TITLE) ?: ""
     private val detailsUrl = savedStateHandle.get<String>(ARG_PARAMS_URL) ?: ""

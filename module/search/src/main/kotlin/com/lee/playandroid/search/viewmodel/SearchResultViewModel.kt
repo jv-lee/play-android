@@ -1,8 +1,8 @@
 package com.lee.playandroid.search.viewmodel
 
 import androidx.lifecycle.SavedStateHandle
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.lee.library.viewmodel.CoroutineViewModel
 import com.lee.library.viewstate.*
 import com.lee.playandroid.library.common.extensions.checkData
 import com.lee.playandroid.library.common.extensions.createApi
@@ -17,7 +17,7 @@ import kotlinx.coroutines.launch
  * @date 2021/11/22
  * @description
  */
-class SearchResultViewModel(handle: SavedStateHandle) : CoroutineViewModel() {
+class SearchResultViewModel(handle: SavedStateHandle) : ViewModel() {
 
     private val key = handle[SearchResultFragment.ARG_PARAMS_SEARCH_KEY] ?: ""
 

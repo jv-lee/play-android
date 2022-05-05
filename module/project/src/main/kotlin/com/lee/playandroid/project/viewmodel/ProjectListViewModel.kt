@@ -1,11 +1,11 @@
 package com.lee.playandroid.project.viewmodel
 
 import androidx.lifecycle.SavedStateHandle
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.lee.library.cache.CacheManager
 import com.lee.library.extensions.getCache
 import com.lee.library.extensions.putPageCache
-import com.lee.library.viewmodel.CoroutineViewModel
 import com.lee.library.viewstate.*
 import com.lee.playandroid.library.common.extensions.checkData
 import com.lee.playandroid.library.common.extensions.createApi
@@ -20,7 +20,7 @@ import kotlinx.coroutines.launch
  * @date 2021/11/9
  * @description 项目列表ViewModel
  */
-class ProjectListViewModel(handle: SavedStateHandle) : CoroutineViewModel() {
+class ProjectListViewModel(handle: SavedStateHandle) : ViewModel() {
 
     private val id: Long by lazy { handle[ProjectListFragment.ARG_PARAMS_ID] ?: 0 }
 

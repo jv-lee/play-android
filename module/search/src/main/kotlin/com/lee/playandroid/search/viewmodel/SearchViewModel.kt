@@ -1,7 +1,7 @@
 package com.lee.playandroid.search.viewmodel
 
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.lee.library.viewmodel.CoroutineViewModel
 import com.lee.playandroid.library.common.entity.SearchHistory
 import com.lee.playandroid.search.model.db.SearchHistoryDatabase
 import com.lee.playandroid.search.model.entity.SearchHot
@@ -14,7 +14,7 @@ import kotlinx.coroutines.launch
  * @date 2021/11/19
  * @description
  */
-class SearchViewModel : CoroutineViewModel() {
+class SearchViewModel : ViewModel() {
 
     private val _viewStates = MutableStateFlow(SearchViewState())
     val viewStates: Flow<SearchViewState> = _viewStates

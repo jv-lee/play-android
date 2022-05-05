@@ -1,9 +1,9 @@
 package com.lee.playandroid.official.viewmodel
 
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.lee.library.cache.CacheManager
 import com.lee.library.extensions.cacheFlow
-import com.lee.library.viewmodel.CoroutineViewModel
 import com.lee.playandroid.library.common.extensions.checkData
 import com.lee.playandroid.library.common.extensions.createApi
 import com.lee.playandroid.library.common.ui.base.BaseTabViewAction
@@ -20,7 +20,7 @@ import kotlinx.coroutines.launch
  * @date 2021/11/8
  * @description 公众号Tab ViewModel
  */
-class OfficialViewModel : CoroutineViewModel() {
+class OfficialViewModel : ViewModel() {
 
     private val api = createApi<ApiService>()
     private val cacheManager = CacheManager.getDefault()

@@ -1,11 +1,11 @@
 package com.lee.playandroid.me.viewmodel
 
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.lee.library.cache.CacheManager
 import com.lee.library.extensions.getCache
 import com.lee.library.extensions.putCache
 import com.lee.library.extensions.putPageCache
-import com.lee.library.viewmodel.CoroutineViewModel
 import com.lee.library.viewstate.*
 import com.lee.playandroid.library.common.constants.ApiConstants
 import com.lee.playandroid.library.common.entity.Content
@@ -26,7 +26,7 @@ import java.util.concurrent.atomic.AtomicBoolean
  * @date 2021/12/2
  * @description 收藏页面ViewModel
  */
-class CollectViewModel : CoroutineViewModel() {
+class CollectViewModel : ViewModel() {
 
     private val api = createApi<ApiService>()
     private val cacheManager = CacheManager.getDefault()

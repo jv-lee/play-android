@@ -1,8 +1,8 @@
 package com.lee.playandroid.todo.viewmodel
 
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.lee.library.tools.PreferencesTools
-import com.lee.library.viewmodel.CoroutineViewModel
 import com.lee.playandroid.todo.constants.Constants.SP_KEY_TODO_TYPE
 import com.lee.playandroid.todo.model.entity.TodoType
 import com.lee.playandroid.todo.model.entity.TodoTypeData
@@ -15,7 +15,7 @@ import kotlinx.coroutines.launch
  * @date 2022/1/2
  * @description
  */
-class SelectTodoTypeViewModel : CoroutineViewModel() {
+class SelectTodoTypeViewModel : ViewModel() {
 
     private val _viewStates = MutableStateFlow(SelectTodoTypeViewState())
     val viewStates: StateFlow<SelectTodoTypeViewState> = _viewStates

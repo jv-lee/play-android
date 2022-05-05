@@ -1,15 +1,14 @@
 package com.lee.playandroid.official.viewmodel
 
 import androidx.lifecycle.SavedStateHandle
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.lee.library.cache.CacheManager
 import com.lee.library.extensions.getCache
 import com.lee.library.extensions.putPageCache
-import com.lee.library.viewmodel.CoroutineViewModel
 import com.lee.library.viewstate.*
 import com.lee.playandroid.library.common.extensions.checkData
 import com.lee.playandroid.library.common.extensions.createApi
-import com.lee.playandroid.official.constants.Constants
 import com.lee.playandroid.official.constants.Constants.CACHE_KEY_OFFICIAL_DATA
 import com.lee.playandroid.official.model.api.ApiService
 import com.lee.playandroid.official.ui.OfficialListFragment
@@ -21,7 +20,7 @@ import kotlinx.coroutines.launch
  * @date 2021/11/8
  * @description 公众号列表 ViewModel
  */
-class OfficialListViewModel(handle: SavedStateHandle) : CoroutineViewModel() {
+class OfficialListViewModel(handle: SavedStateHandle) : ViewModel() {
 
     private val id: Long by lazy { handle[OfficialListFragment.ARG_PARAMS_ID] ?: 0 }
 

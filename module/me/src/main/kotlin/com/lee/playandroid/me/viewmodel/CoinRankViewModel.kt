@@ -1,10 +1,10 @@
 package com.lee.playandroid.me.viewmodel
 
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.lee.library.cache.CacheManager
 import com.lee.library.extensions.getCache
 import com.lee.library.extensions.putPageCache
-import com.lee.library.viewmodel.CoroutineViewModel
 import com.lee.library.viewstate.*
 import com.lee.playandroid.library.common.extensions.checkData
 import com.lee.playandroid.library.common.extensions.createApi
@@ -21,7 +21,7 @@ import java.util.*
  * @date 2021/11/30
  * @description 积分排行榜ViewModel
  */
-class CoinRankViewModel : CoroutineViewModel() {
+class CoinRankViewModel : ViewModel() {
 
     private val api = createApi<ApiService>()
     private val cacheManager = CacheManager.getDefault()

@@ -1,9 +1,9 @@
 package com.lee.playandroid.system.viewmodel
 
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.lee.library.cache.CacheManager
 import com.lee.library.extensions.cacheFlow
-import com.lee.library.viewmodel.CoroutineViewModel
 import com.lee.library.viewstate.LoadStatus
 import com.lee.playandroid.library.common.entity.NavigationItem
 import com.lee.playandroid.library.common.extensions.checkData
@@ -19,7 +19,7 @@ import kotlinx.coroutines.launch
  * @date 2021/11/12
  * @description 体系第二个tab 导航页面 ViewModel
  */
-class NavigationContentViewModel : CoroutineViewModel() {
+class NavigationContentViewModel : ViewModel() {
 
     private val api = createApi<ApiService>()
     private val cacheManager = CacheManager.getDefault()
