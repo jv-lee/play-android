@@ -13,7 +13,7 @@ import com.lee.library.base.BaseNavigationFragment
 import com.lee.library.extensions.*
 import com.lee.library.utils.NetworkUtil
 import com.lee.library.viewstate.LoadStatus
-import com.lee.library.viewstate.stateCollect
+import com.lee.library.viewstate.collectState
 import com.lee.library.widget.SlidingPaneItemTouchListener
 import com.lee.library.widget.closeAllItems
 import com.lee.playandroid.library.common.entity.PageData
@@ -109,7 +109,7 @@ class TodoListFragment : BaseNavigationFragment(R.layout.fragment_todo_list),
         }
 
         launchAndRepeatWithViewLifecycle {
-            viewModel.todoDataFlow.stateCollect<PageData<TodoData>>(success = {
+            viewModel.todoDataFlow.collectState<PageData<TodoData>>(success = {
                 mAdapter?.submitData(it, diff = true)
             }, error = {
                 mAdapter?.submitFailed()

@@ -15,7 +15,6 @@ import com.lee.library.tools.StatusTools.setDarkStatusIcon
 import com.lee.library.tools.StatusTools.setLightStatusIcon
 import com.lee.library.viewstate.LoadStatus
 import com.lee.library.viewstate.collectState
-import com.lee.library.viewstate.stateCollect
 import com.lee.library.widget.toolbar.TitleToolbar
 import com.lee.playandroid.library.common.constants.ApiConstants
 import com.lee.playandroid.library.common.entity.AccountViewState
@@ -75,7 +74,7 @@ class CoinFragment : BaseNavigationFragment(R.layout.fragment_coin),
 
     override fun bindData() {
         launchAndRepeatWithViewLifecycle {
-            viewModel.coinRecordFlow.stateCollect<PageData<CoinRecord>>(success = {
+            viewModel.coinRecordFlow.collectState<PageData<CoinRecord>>(success = {
                 mAdapter.submitData(it, diff = true)
             }, error = {
                 mAdapter.submitFailed()

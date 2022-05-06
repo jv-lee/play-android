@@ -13,7 +13,7 @@ import com.lee.library.extensions.launchAndRepeatWithViewLifecycle
 import com.lee.library.extensions.toast
 import com.lee.library.utils.NetworkUtil
 import com.lee.library.viewstate.LoadStatus
-import com.lee.library.viewstate.stateCollect
+import com.lee.library.viewstate.collectState
 import com.lee.library.widget.SlidingPaneItemTouchListener
 import com.lee.library.widget.closeAllItems
 import com.lee.playandroid.library.common.entity.Content
@@ -73,7 +73,7 @@ class CollectFragment : BaseNavigationFragment(R.layout.fragment_collect),
             }
         }
         launchAndRepeatWithViewLifecycle {
-            viewModel.collectFlow.stateCollect<PageData<Content>>(success = {
+            viewModel.collectFlow.collectState<PageData<Content>>(success = {
                 mAdapter?.submitData(it, diff = true)
             }, error = {
                 mAdapter?.submitFailed()

@@ -12,7 +12,7 @@ import com.lee.library.extensions.*
 import com.lee.library.livedatabus.InjectBus
 import com.lee.library.livedatabus.LiveDataBus
 import com.lee.library.viewstate.LoadStatus
-import com.lee.library.viewstate.stateCollect
+import com.lee.library.viewstate.collectState
 import com.lee.playandroid.library.common.entity.Content
 import com.lee.playandroid.library.common.entity.NavigationSelectEvent
 import com.lee.playandroid.library.common.entity.PageData
@@ -69,7 +69,7 @@ class SquareFragment : BaseNavigationFragment(R.layout.fragment_square),
         LiveDataBus.getInstance().injectBus(this)
 
         launchAndRepeatWithViewLifecycle {
-            viewModel.squareFlow.stateCollect<PageData<Content>>(success = {
+            viewModel.squareFlow.collectState<PageData<Content>>(success = {
                 binding.refreshView.isRefreshing = false
                 mAdapter?.submitData(it)
             }, error = {

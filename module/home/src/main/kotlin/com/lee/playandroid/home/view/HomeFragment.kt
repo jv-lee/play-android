@@ -16,7 +16,7 @@ import com.lee.library.extensions.smoothScrollToTop
 import com.lee.library.livedatabus.InjectBus
 import com.lee.library.livedatabus.LiveDataBus
 import com.lee.library.viewstate.LoadStatus
-import com.lee.library.viewstate.stateCollect
+import com.lee.library.viewstate.collectState
 import com.lee.library.widget.banner.BannerView
 import com.lee.playandroid.home.R
 import com.lee.playandroid.home.bean.HomeContent
@@ -74,7 +74,7 @@ class HomeFragment : BaseNavigationFragment(R.layout.fragment_home),
         LiveDataBus.getInstance().injectBus(this)
 
         launchAndRepeatWithViewLifecycle {
-            viewModel.contentListFlow.stateCollect<PageUiData<HomeContent>>(success = {
+            viewModel.contentListFlow.collectState<PageUiData<HomeContent>>(success = {
                 binding.refreshView.isRefreshing = false
                 mAdapter?.submitData(it, diff = true)
             }, error = {
