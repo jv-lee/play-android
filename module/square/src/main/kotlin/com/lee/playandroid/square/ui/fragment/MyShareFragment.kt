@@ -15,7 +15,7 @@ import com.lee.library.extensions.launchAndRepeatWithViewLifecycle
 import com.lee.library.extensions.toast
 import com.lee.library.utils.NetworkUtil
 import com.lee.library.viewstate.LoadStatus
-import com.lee.library.viewstate.stateCollect
+import com.lee.library.viewstate.collectState
 import com.lee.library.widget.SlidingPaneItemTouchListener
 import com.lee.library.widget.closeAllItems
 import com.lee.library.widget.toolbar.TitleToolbar
@@ -94,7 +94,7 @@ class MyShareFragment : BaseNavigationFragment(R.layout.fragment_my_share),
         }
 
         launchAndRepeatWithViewLifecycle {
-            viewModel.myShareFlow.stateCollect<PageData<Content>>(success = {
+            viewModel.myShareFlow.collectState<PageData<Content>>(success = {
                 mAdapter?.submitData(it, diff = true)
             }, error = {
                 mAdapter?.submitFailed()

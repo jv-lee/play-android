@@ -11,7 +11,7 @@ import com.lee.library.base.BaseNavigationFragment
 import com.lee.library.extensions.binding
 import com.lee.library.extensions.launchAndRepeatWithViewLifecycle
 import com.lee.library.viewstate.LoadStatus
-import com.lee.library.viewstate.stateCollect
+import com.lee.library.viewstate.collectState
 import com.lee.library.widget.toolbar.TitleToolbar
 import com.lee.playandroid.library.common.constants.ApiConstants
 import com.lee.playandroid.library.common.entity.CoinRank
@@ -66,7 +66,7 @@ class CoinRankFragment : BaseNavigationFragment(R.layout.fragment_coin_rank),
 
     override fun bindData() {
         launchAndRepeatWithViewLifecycle {
-            viewModel.coinRankFlow.stateCollect<PageData<CoinRank>>(success = {
+            viewModel.coinRankFlow.collectState<PageData<CoinRank>>(success = {
                 mAdapter.submitData(it, diff = true)
             }, error = {
                 mAdapter.submitFailed()
