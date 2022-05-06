@@ -11,7 +11,7 @@ import com.lee.library.base.BaseNavigationFragment
 import com.lee.library.extensions.binding
 import com.lee.library.extensions.toast
 import com.lee.library.viewstate.LoadStatus
-import com.lee.library.viewstate.stateObserve
+import com.lee.library.viewstate.observeState
 import com.lee.library.utils.NetworkUtil
 import com.lee.library.widget.SlidingPaneItemTouchListener
 import com.lee.library.widget.closeAllItems
@@ -55,14 +55,14 @@ class CollectFragment : BaseNavigationFragment(R.layout.fragment_collect),
     }
 
     override fun bindData() {
-        viewModel.collectLive.stateObserve<PageData<Content>>(viewLifecycleOwner, success = {
+        viewModel.collectLive.observeState<PageData<Content>>(viewLifecycleOwner, success = {
             mAdapter?.submitData(it, diff = true)
         }, error = {
             mAdapter?.submitFailed()
             actionFailed(it)
         })
 
-        viewModel.unCollectLive.stateObserve<Int>(viewLifecycleOwner, success = {
+        viewModel.unCollectLive.observeState<Int>(viewLifecycleOwner, success = {
             toast(getString(R.string.collect_remove_item_success))
         }, error = {
             binding.rvContainer.closeAllItems()

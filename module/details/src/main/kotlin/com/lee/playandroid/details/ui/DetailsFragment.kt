@@ -5,7 +5,7 @@ import android.widget.FrameLayout
 import com.just.agentweb.AgentWeb
 import com.lee.library.base.BaseNavigationFragment
 import com.lee.library.extensions.*
-import com.lee.library.viewstate.stateObserve
+import com.lee.library.viewstate.observeState
 import com.lee.library.utils.ShareUtil
 import com.lee.library.widget.toolbar.TitleToolbar
 import com.lee.playandroid.details.R
@@ -70,7 +70,7 @@ class DetailsFragment : BaseNavigationFragment(R.layout.fragment_details) {
     }
 
     override fun bindData() {
-        viewModel.collectLive.stateObserve<Boolean>(viewLifecycleOwner, { isCollect ->
+        viewModel.collectLive.observeState<Boolean>(viewLifecycleOwner, { isCollect ->
             val message = if (isCollect) {
                 getString(R.string.menu_collect_complete)
             } else {

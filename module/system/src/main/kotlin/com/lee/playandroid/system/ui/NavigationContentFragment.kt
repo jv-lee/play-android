@@ -11,7 +11,7 @@ import com.lee.library.extensions.smoothScrollToTop
 import com.lee.library.livedatabus.InjectBus
 import com.lee.library.livedatabus.LiveDataBus
 import com.lee.library.viewstate.LoadStatus
-import com.lee.library.viewstate.stateObserve
+import com.lee.library.viewstate.observeState
 import com.lee.library.widget.StatusLayout
 import com.lee.playandroid.library.common.entity.NavigationItem
 import com.lee.playandroid.library.common.entity.NavigationSelectEvent
@@ -74,7 +74,7 @@ class NavigationContentFragment : BaseNavigationFragment(R.layout.fragment_navig
     override fun bindData() {
         LiveDataBus.getInstance().injectBus(this)
 
-        viewModel.navigationLive.stateObserve<List<NavigationItem>>(viewLifecycleOwner, success = {
+        viewModel.navigationLive.observeState<List<NavigationItem>>(viewLifecycleOwner, success = {
             binding.statusLayout.setStatus(StatusLayout.STATUS_DATA)
             mNavigationTabAdapter?.updateNotify(it)
             mNavigationContentAdapter?.submitSinglePage(it)

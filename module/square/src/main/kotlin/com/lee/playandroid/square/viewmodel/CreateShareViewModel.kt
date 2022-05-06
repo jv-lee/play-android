@@ -4,7 +4,7 @@ import android.text.TextUtils
 import com.lee.library.base.ApplicationExtensions.app
 import com.lee.library.viewstate.UiStateLiveData
 import com.lee.library.viewstate.UiStateMutableLiveData
-import com.lee.library.viewstate.stateFlow
+import com.lee.library.viewstate.flowState
 import com.lee.library.viewmodel.CoroutineViewModel
 import com.lee.library.viewstate.UiState
 import com.lee.playandroid.library.common.constants.ApiConstants
@@ -32,7 +32,7 @@ class CreateShareViewModel : CoroutineViewModel() {
             return
         }
         launchIO {
-            stateFlow {
+            flowState {
                 val response = api.postShareDataSync(title, content)
                 if (response.errorCode == ApiConstants.REQUEST_OK) {
                     app.getString(R.string.share_success)

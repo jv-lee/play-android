@@ -11,7 +11,7 @@ import com.lee.library.base.BaseNavigationFragment
 import com.lee.library.extensions.binding
 import com.lee.library.viewstate.LoadStatus
 import com.lee.library.viewstate.UiStatePage
-import com.lee.library.viewstate.stateObserve
+import com.lee.library.viewstate.observeState
 import com.lee.playandroid.library.common.R
 import com.lee.playandroid.library.common.databinding.FragmentBaseListBinding
 import com.lee.playandroid.library.common.entity.Content
@@ -58,7 +58,7 @@ abstract class BaseListFragment : BaseNavigationFragment(R.layout.fragment_base_
 
     override fun bindData() {
         //列表数据更新
-        dataObserveState().stateObserve<PageData<Content>>(viewLifecycleOwner,
+        dataObserveState().observeState<PageData<Content>>(viewLifecycleOwner,
             success = {
                 binding.refreshLayout.isRefreshing = false
                 mAdapter.submitData(it, diff = true)

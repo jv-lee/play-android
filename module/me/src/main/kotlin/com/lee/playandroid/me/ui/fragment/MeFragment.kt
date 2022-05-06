@@ -4,7 +4,7 @@ import android.view.View
 import androidx.navigation.fragment.findNavController
 import com.lee.library.base.BaseNavigationFragment
 import com.lee.library.extensions.*
-import com.lee.library.viewstate.stateObserve
+import com.lee.library.viewstate.observeState
 import com.lee.library.tools.DarkViewUpdateTools
 import com.lee.playandroid.library.common.entity.AccountData
 import com.lee.playandroid.library.service.AccountService
@@ -44,7 +44,7 @@ class MeFragment : BaseNavigationFragment(R.layout.fragment_me),
 
     override fun bindData() {
         accountService.getAccountLive(requireActivity())
-            .stateObserve<AccountData>(viewLifecycleOwner, success = {
+            .observeState<AccountData>(viewLifecycleOwner, success = {
                 setLoginAccountUi(it)
             }, default = {
                 setUnLoginAccountUi()

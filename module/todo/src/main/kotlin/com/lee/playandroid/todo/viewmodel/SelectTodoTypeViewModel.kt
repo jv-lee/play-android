@@ -2,7 +2,7 @@ package com.lee.playandroid.todo.viewmodel
 
 import com.lee.library.viewstate.UiStateLiveData
 import com.lee.library.viewstate.UiStateMutableLiveData
-import com.lee.library.viewstate.stateFlow
+import com.lee.library.viewstate.flowState
 import com.lee.library.viewmodel.CoroutineViewModel
 import com.lee.library.tools.PreferencesTools
 import com.lee.playandroid.todo.constants.Constants.SP_KEY_TODO_TYPE
@@ -23,7 +23,7 @@ class SelectTodoTypeViewModel : CoroutineViewModel() {
 
     private fun requestTodoTypes() {
         launchIO {
-            stateFlow {
+            flowState {
                 val type = PreferencesTools.get(SP_KEY_TODO_TYPE, TodoType.DEFAULT)
                 val data = TodoTypeData.getTodoTypes()
                 TodoTypeWheelData(type, data)

@@ -11,7 +11,7 @@ import com.lee.library.extensions.binding
 import com.lee.library.extensions.dismiss
 import com.lee.library.extensions.show
 import com.lee.library.extensions.toast
-import com.lee.library.viewstate.stateObserve
+import com.lee.library.viewstate.observeState
 import com.lee.library.tools.KeyboardTools.parentTouchHideSoftInput
 import com.lee.playandroid.square.R
 import com.lee.playandroid.square.databinding.FragmentCreateShareBinding
@@ -45,7 +45,7 @@ class CreateShareFragment : BaseNavigationFragment(R.layout.fragment_create_shar
     }
 
     override fun bindData() {
-        viewModel.sendLive.stateObserve<String>(viewLifecycleOwner, success = {
+        viewModel.sendLive.observeState<String>(viewLifecycleOwner, success = {
             toast(it)
             dismiss(loadingDialog)
             setFragmentResult(MyShareFragment.REQUEST_KEY_REFRESH, Bundle.EMPTY)

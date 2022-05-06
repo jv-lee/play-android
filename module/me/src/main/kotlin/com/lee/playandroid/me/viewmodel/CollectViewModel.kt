@@ -61,7 +61,7 @@ class CollectViewModel : CoroutineViewModel() {
     fun requestUnCollect(position: Int) {
         if (deleteLock.compareAndSet(false, true)) {
             launchIO {
-                stateFlow {
+                flowState {
                     val data = collectLive.getValueData<PageData<Content>>()!!
                     val item = data.data[position]
 

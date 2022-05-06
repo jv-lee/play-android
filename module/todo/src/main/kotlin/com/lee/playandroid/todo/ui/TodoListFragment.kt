@@ -14,7 +14,7 @@ import com.lee.library.extensions.arguments
 import com.lee.library.extensions.binding
 import com.lee.library.extensions.findParentFragment
 import com.lee.library.extensions.toast
-import com.lee.library.viewstate.stateObserve
+import com.lee.library.viewstate.observeState
 import com.lee.library.utils.NetworkUtil
 import com.lee.library.viewstate.LoadStatus
 import com.lee.library.widget.SlidingPaneItemTouchListener
@@ -85,21 +85,21 @@ class TodoListFragment : BaseNavigationFragment(R.layout.fragment_todo_list),
     }
 
     override fun bindData() {
-        viewModel.todoDataLive.stateObserve<PageData<TodoData>>(viewLifecycleOwner, success = {
+        viewModel.todoDataLive.observeState<PageData<TodoData>>(viewLifecycleOwner, success = {
             mAdapter?.submitData(it, diff = true)
         }, error = {
             mAdapter?.submitFailed()
             actionFailed(it)
         })
 
-        viewModel.todoDeleteLive.stateObserve<Int>(viewLifecycleOwner, success = {
+        viewModel.todoDeleteLive.observeState<Int>(viewLifecycleOwner, success = {
             toast(getString(R.string.todo_delete_success))
         }, error = {
             binding.rvContainer.closeAllItems()
             actionFailed(it)
         })
 
-        viewModel.todoUpdateLive.stateObserve<TodoData>(viewLifecycleOwner, success = {
+        viewModel.todoUpdateLive.observeState<TodoData>(viewLifecycleOwner, success = {
             toast(getString(R.string.todo_move_success))
             findParentFragment<TodoFragment>()?.moveTodoItem(it)
         }, error = {

@@ -8,7 +8,7 @@ import com.lee.library.base.BaseNavigationFragment
 import com.lee.library.extensions.binding
 import com.lee.library.extensions.increaseOffscreenPageLimit
 import com.lee.library.viewstate.UiStateLiveData
-import com.lee.library.viewstate.stateObserve
+import com.lee.library.viewstate.observeState
 import com.lee.library.widget.StatusLayout
 import com.lee.playandroid.library.common.R
 import com.lee.playandroid.library.common.databinding.FragmentBaseTabBinding
@@ -42,7 +42,7 @@ abstract class BaseTabFragment : BaseNavigationFragment(R.layout.fragment_base_t
     }
 
     override fun bindData() {
-        dataObserveState().stateObserve<List<Tab>>(viewLifecycleOwner, success = {
+        dataObserveState().observeState<List<Tab>>(viewLifecycleOwner, success = {
             binding.statusLayout.setStatus(StatusLayout.STATUS_DATA)
             bindAdapter(it)
         }, error = {

@@ -2,7 +2,7 @@ package com.lee.playandroid.search.viewmodel
 
 import com.lee.library.viewstate.UiStateMutableStateFlow
 import com.lee.library.viewstate.UiStateStateFlow
-import com.lee.library.viewstate.stateUpdate
+import com.lee.library.viewstate.updateState
 import com.lee.library.viewmodel.CoroutineViewModel
 import com.lee.library.viewstate.UiState
 import com.lee.playandroid.library.common.entity.SearchHistory
@@ -29,7 +29,7 @@ class SearchViewModel : CoroutineViewModel() {
      */
     private fun requestSearchHotData() {
         launchIO {
-            _searchHotFlow.stateUpdate { SearchHot.getHotCategory() }
+            _searchHotFlow.updateState { SearchHot.getHotCategory() }
         }
     }
 
@@ -38,7 +38,7 @@ class SearchViewModel : CoroutineViewModel() {
      */
     private fun requestSearchHistoryData() {
         launchIO {
-            _searchHistoryFlow.stateUpdate {
+            _searchHistoryFlow.updateState {
                 SearchHistoryDatabase.get().searchHistoryDao().querySearchHistory()
             }
         }

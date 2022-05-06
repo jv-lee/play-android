@@ -80,7 +80,7 @@ class TodoListViewModel(handle: SavedStateHandle) : CoroutineViewModel() {
     fun requestDeleteTodo(position: Int) {
         if (deleteLock.compareAndSet(false, true)) {
             launchIO {
-                stateFlow {
+                flowState {
                     val data = todoDataLive.getValueData<PageData<TodoData>>()!!
                     val item = data.data[position]
 
@@ -102,7 +102,7 @@ class TodoListViewModel(handle: SavedStateHandle) : CoroutineViewModel() {
     fun requestUpdateTodoStatus(position: Int) {
         if (updateLock.compareAndSet(false, true)) {
             launchIO {
-                stateFlow {
+                flowState {
                     val data = todoDataLive.getValueData<PageData<TodoData>>()!!
                     val item = data.data[position]
 

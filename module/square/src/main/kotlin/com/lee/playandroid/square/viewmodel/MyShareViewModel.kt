@@ -63,7 +63,7 @@ class MyShareViewModel : CoroutineViewModel() {
     fun requestDeleteShare(position: Int) {
         if (deleteLock.compareAndSet(false, true)) {
             launchIO {
-                stateFlow {
+                flowState {
                     val data = myShareLive.getValueData<PageData<Content>>()!!
                     val item = data.data[position]
 

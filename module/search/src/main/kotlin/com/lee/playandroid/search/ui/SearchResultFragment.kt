@@ -12,7 +12,7 @@ import com.lee.library.extensions.binding
 import com.lee.library.extensions.launchAndRepeatWithViewLifecycle
 import com.lee.library.extensions.viewModelByFactory
 import com.lee.library.viewstate.LoadStatus
-import com.lee.library.viewstate.stateCollect
+import com.lee.library.viewstate.collectState
 import com.lee.playandroid.library.common.entity.Content
 import com.lee.playandroid.library.common.entity.PageData
 import com.lee.playandroid.library.common.extensions.actionFailed
@@ -61,7 +61,7 @@ class SearchResultFragment : BaseNavigationFragment(R.layout.fragment_search_res
 
     override fun bindData() {
         launchAndRepeatWithViewLifecycle {
-            viewModel.searchResultFlow.stateCollect<PageData<Content>>(success = {
+            viewModel.searchResultFlow.collectState<PageData<Content>>(success = {
                 mAdapter?.submitData(it, diff = true)
             }, error = {
                 mAdapter?.submitFailed()

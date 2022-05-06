@@ -12,7 +12,7 @@ import com.lee.library.extensions.binding
 import com.lee.library.extensions.dismiss
 import com.lee.library.extensions.show
 import com.lee.library.interadp.TextWatcherAdapter
-import com.lee.library.viewstate.stateObserve
+import com.lee.library.viewstate.observeState
 import com.lee.library.tools.KeyboardTools.hideSoftInput
 import com.lee.library.tools.KeyboardTools.keyboardIsShow
 import com.lee.library.tools.KeyboardTools.keyboardPaddingBottom
@@ -70,7 +70,7 @@ class LoginFragment : BaseNavigationFragment(R.layout.fragment_login),
         }
 
         // 监听登陆成功后获取的账户信息
-        viewModel.accountLive.stateObserve<AccountData>(viewLifecycleOwner, success = {
+        viewModel.accountLive.observeState<AccountData>(viewLifecycleOwner, success = {
             dismiss(loadingDialog)
             PreferencesTools.put(SP_KEY_SAVE_INPUT_USERNAME, it.userInfo.username)
             accountViewModel.updateAccountInfo(it)

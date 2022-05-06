@@ -4,7 +4,7 @@ import androidx.fragment.app.Fragment
 import com.lee.library.extensions.arguments
 import com.lee.library.extensions.argumentsList
 import com.lee.library.viewstate.UiStateLiveData
-import com.lee.library.viewstate.stateLive
+import com.lee.library.viewstate.liveState
 import com.lee.playandroid.library.common.entity.Tab
 import com.lee.playandroid.library.common.ui.BaseTabFragment
 
@@ -37,6 +37,6 @@ class SystemContentTabFragment : BaseTabFragment() {
     }
 
     override fun dataObserveState(): UiStateLiveData {
-        return stateLive { tabData }
+        return liveState { tabData }
     }
 }

@@ -2,7 +2,7 @@ package com.lee.playandroid.account.viewmodel
 
 import com.lee.library.viewstate.UiStateLiveData
 import com.lee.library.viewstate.UiStateMutableLiveData
-import com.lee.library.viewstate.stateFlow
+import com.lee.library.viewstate.flowState
 import com.lee.library.viewmodel.CoroutineViewModel
 import com.lee.playandroid.account.model.api.ApiService
 import com.lee.playandroid.library.common.extensions.checkData
@@ -23,7 +23,7 @@ class LoginRegisterViewModel : CoroutineViewModel() {
 
     fun requestLogin(userName: String, password: String) {
         launchIO {
-            stateFlow {
+            flowState {
                 api.postLoginAsync(userName, password).checkData()
                 api.getAccountInfoAsync().checkData()
             }.collect {
@@ -34,7 +34,7 @@ class LoginRegisterViewModel : CoroutineViewModel() {
 
     fun requestRegister(userName: String, password: String, rePassword: String) {
         launchIO {
-            stateFlow {
+            flowState {
                 api.postRegisterAsync(userName, password, rePassword).checkData()
                 api.getAccountInfoAsync().checkData()
             }.collect {

@@ -15,7 +15,7 @@ import com.lee.library.extensions.toast
 import com.lee.library.livedatabus.InjectBus
 import com.lee.library.livedatabus.LiveDataBus
 import com.lee.library.viewstate.LoadStatus
-import com.lee.library.viewstate.stateObserve
+import com.lee.library.viewstate.observeState
 import com.lee.playandroid.library.common.entity.Content
 import com.lee.playandroid.library.common.entity.NavigationSelectEvent
 import com.lee.playandroid.library.common.entity.PageData
@@ -74,7 +74,7 @@ class SquareFragment : BaseNavigationFragment(R.layout.fragment_square),
     override fun bindData() {
         LiveDataBus.getInstance().injectBus(this)
 
-        viewModel.squareLive.stateObserve<PageData<Content>>(viewLifecycleOwner, success = {
+        viewModel.squareLive.observeState<PageData<Content>>(viewLifecycleOwner, success = {
             binding.refreshView.isRefreshing = false
             mAdapter?.submitData(it)
         }, error = {

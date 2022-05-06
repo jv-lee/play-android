@@ -10,7 +10,7 @@ import com.lee.library.base.BaseNavigationFragment
 import com.lee.library.extensions.binding
 import com.lee.library.extensions.inflate
 import com.lee.library.viewstate.LoadStatus
-import com.lee.library.viewstate.stateObserve
+import com.lee.library.viewstate.observeState
 import com.lee.library.tools.DarkModeTools
 import com.lee.library.tools.StatusTools.setDarkStatusIcon
 import com.lee.library.tools.StatusTools.setLightStatusIcon
@@ -78,7 +78,7 @@ class CoinFragment : BaseNavigationFragment(R.layout.fragment_coin),
     }
 
     override fun bindData() {
-        viewModel.coinRecordLive.stateObserve<PageData<CoinRecord>>(viewLifecycleOwner, success = {
+        viewModel.coinRecordLive.observeState<PageData<CoinRecord>>(viewLifecycleOwner, success = {
             mAdapter.submitData(it, diff = true)
         }, error = {
             mAdapter.submitFailed()

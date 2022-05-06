@@ -9,7 +9,7 @@ import com.lee.library.adapter.page.submitSinglePage
 import com.lee.library.base.BaseNavigationFragment
 import com.lee.library.extensions.binding
 import com.lee.library.extensions.launchAndRepeatWithViewLifecycle
-import com.lee.library.viewstate.stateCollect
+import com.lee.library.viewstate.collectState
 import com.lee.library.tools.KeyboardTools.hideSoftInput
 import com.lee.library.tools.KeyboardTools.parentTouchHideSoftInput
 import com.lee.playandroid.library.common.entity.SearchHistory
@@ -77,7 +77,7 @@ class SearchFragment : BaseNavigationFragment(R.layout.fragment_search) {
 
     override fun bindData() {
         launchAndRepeatWithViewLifecycle {
-            viewModel.searchHotFlow.stateCollect<List<SearchHot>>(success = { data ->
+            viewModel.searchHotFlow.collectState<List<SearchHot>>(success = { data ->
                 mHotAdapter?.submitSinglePage(data)
             }, error = {
                 actionFailed(it)
@@ -85,7 +85,7 @@ class SearchFragment : BaseNavigationFragment(R.layout.fragment_search) {
         }
 
         launchAndRepeatWithViewLifecycle {
-            viewModel.searchHistoryFlow.stateCollect<List<SearchHistory>>(success = { data ->
+            viewModel.searchHistoryFlow.collectState<List<SearchHistory>>(success = { data ->
                 viewEmptyVisible(data.isEmpty())
                 mHistoryAdapter?.submitSinglePage(data)
             }, error = {

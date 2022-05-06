@@ -2,7 +2,7 @@ package com.lee.playandroid.todo.viewmodel
 
 import com.lee.library.viewstate.UiStateLiveData
 import com.lee.library.viewstate.UiStateMutableLiveData
-import com.lee.library.viewstate.stateFlow
+import com.lee.library.viewstate.flowState
 import com.lee.library.viewmodel.CoroutineViewModel
 import com.lee.library.tools.PreferencesTools
 import com.lee.playandroid.library.common.entity.TodoData
@@ -27,7 +27,7 @@ class CreateTodoViewModel : CoroutineViewModel() {
 
     fun requestAddTodo(title: String, content: String, date: String, priority: Int) {
         launchIO {
-            stateFlow {
+            flowState {
                 if (title.isEmpty() || content.isEmpty()) {
                     throw RuntimeException("title or content is not empty.")
                 }
@@ -48,7 +48,7 @@ class CreateTodoViewModel : CoroutineViewModel() {
     fun requestUpdateTodo(todoData: TodoData) {
         launchIO {
             todoData.apply {
-                stateFlow {
+                flowState {
                     if (title.isEmpty() || content.isEmpty()) {
                         throw RuntimeException("title or content is not empty.")
                     }

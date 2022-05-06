@@ -3,7 +3,7 @@ package com.lee.playandroid.details.viewmodel
 import androidx.lifecycle.SavedStateHandle
 import com.lee.library.viewstate.UiStateLiveData
 import com.lee.library.viewstate.UiStateMutableLiveData
-import com.lee.library.viewstate.stateFlow
+import com.lee.library.viewstate.flowState
 import com.lee.library.viewmodel.CoroutineViewModel
 import com.lee.library.viewstate.UiState
 import com.lee.playandroid.details.ui.DetailsFragment
@@ -38,7 +38,7 @@ class DetailsViewModel(savedStateHandle: SavedStateHandle) : CoroutineViewModel(
             return
         }
         launchIO {
-            stateFlow {
+            flowState {
                 val response = meService.requestCollectAsync(id)
                 if (response.errorCode == ApiConstants.REQUEST_OK) {
                     isCollect = true

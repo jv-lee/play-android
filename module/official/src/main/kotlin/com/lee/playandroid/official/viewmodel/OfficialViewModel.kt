@@ -5,7 +5,7 @@ import com.lee.library.extensions.getCache
 import com.lee.library.extensions.putCache
 import com.lee.library.viewstate.UiStateLiveData
 import com.lee.library.viewstate.UiStateMutableLiveData
-import com.lee.library.viewstate.stateCacheFlow
+import com.lee.library.viewstate.flowStateCache
 import com.lee.library.viewmodel.CoroutineViewModel
 import com.lee.playandroid.library.common.extensions.checkData
 import com.lee.playandroid.library.common.extensions.createApi
@@ -29,7 +29,7 @@ class OfficialViewModel : CoroutineViewModel() {
 
     fun requestTabs() {
         launchIO {
-            stateCacheFlow({
+            flowStateCache({
                 api.getOfficialTabsAsync().checkData()
             }, {
                 cacheManager.getCache(Constants.CACHE_KEY_OFFICIAL_TAB)
