@@ -29,8 +29,6 @@ import com.lee.playandroid.viewmodel.SplashViewAction
 import com.lee.playandroid.viewmodel.SplashViewEvent
 import com.lee.playandroid.viewmodel.SplashViewModel
 import com.lee.playandroid.viewmodel.SplashViewState
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
@@ -40,8 +38,7 @@ import kotlinx.coroutines.launch
  * @date 2021/11/2
  * @description 程序主窗口 单Activity架构
  */
-class MainActivity : BaseActivity(),
-    CoroutineScope by CoroutineScope(Dispatchers.Main) {
+class MainActivity : BaseActivity() {
 
     private val backCallback = banBackEvent()
 
