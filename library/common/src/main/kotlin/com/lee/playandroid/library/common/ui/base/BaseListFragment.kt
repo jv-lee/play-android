@@ -63,12 +63,11 @@ abstract class BaseListFragment : BaseNavigationFragment(R.layout.fragment_base_
             dataFlow().stateCollect<PageData<Content>>(success = {
                 binding.refreshLayout.isRefreshing = false
                 mAdapter.submitData(it, diff = true)
-            },
-                error = {
-                    binding.refreshLayout.isRefreshing = false
-                    mAdapter.submitFailed()
-                    actionFailed(it)
-                })
+            }, error = {
+                binding.refreshLayout.isRefreshing = false
+                mAdapter.submitFailed()
+                actionFailed(it)
+            })
         }
     }
 

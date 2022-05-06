@@ -57,7 +57,7 @@ class MainActivity : BaseActivity(),
     override fun initSavedState(intent: Intent, savedInstanceState: Bundle?) {
         super.initSavedState(intent, savedInstanceState)
         if (savedInstanceState == null) {
-            launch {
+            viewModel.viewModelScope.launch {
                 // 进程初始化启动 请求配置
                 viewModel.accountService.requestAccountInfo(this@MainActivity)
 
@@ -69,7 +69,7 @@ class MainActivity : BaseActivity(),
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
-        launch {
+        viewModel.viewModelScope.launch {
             //程序以外重启 或重新创建MainActivity 无需获取配置，直接显示view
             viewModel.dispatch(SplashViewAction.NavigationMain())
         }
@@ -109,11 +109,6 @@ class MainActivity : BaseActivity(),
                 splashBinding.tvTime.text = it
             }
         }
-    }
-
-    override fun onDestroy() {
-        cancel()
-        super.onDestroy()
     }
 
     /**

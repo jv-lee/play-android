@@ -28,7 +28,7 @@ class OfficialListViewModel(handle: SavedStateHandle) : ViewModel() {
     private val cacheManager = CacheManager.getDefault()
 
     private val _contentListFlow: UiStatePageMutableStateFlow =
-        MutableStateFlow(UiStatePage.Default(0))
+        MutableStateFlow(UiStatePage.Default(1))
     val contentListFlow: UiStatePageStateFlow = _contentListFlow
 
     fun dispatch(action: OfficialListViewAction) {
