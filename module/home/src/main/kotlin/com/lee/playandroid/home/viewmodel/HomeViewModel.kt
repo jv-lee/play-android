@@ -1,10 +1,10 @@
 package com.lee.playandroid.home.viewmodel
 
-import androidx.lifecycle.LiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.lee.library.cache.CacheManager
 import com.lee.library.extensions.getCache
 import com.lee.library.extensions.putPageCache
-import com.lee.library.viewmodel.CoroutineViewModel
 import com.lee.library.viewstate.*
 import com.lee.playandroid.home.bean.HomeContent
 import com.lee.playandroid.home.constants.Constants
@@ -13,27 +13,41 @@ import com.lee.playandroid.home.model.entity.HomeCategory
 import com.lee.playandroid.library.common.entity.PageUiData
 import com.lee.playandroid.library.common.extensions.checkData
 import com.lee.playandroid.library.common.extensions.createApi
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.launch
 
 /**
  * @author jv.lee
  * @date 2021/11/2
  * @description 首页viewModel
  */
-class HomeViewModel : CoroutineViewModel() {
+class HomeViewModel : ViewModel() {
 
     private val api = createApi<ApiService>()
-
     private val cacheManager = CacheManager.getDefault()
 
-    private val _contentListLive = UiStatePageMutableLiveData(UiStatePage.Default(0))
-    val contentListLive: UiStatePageLiveData = _contentListLive
+    private val _contentListFlow: UiStatePageMutableStateFlow =
+        MutableStateFlow(UiStatePage.Default(0))
+    val contentListFlow: UiStatePageStateFlow = _contentListFlow
+
+    init {
+        dispatch(HomeViewAction.RequestPage(LoadStatus.INIT))
+    }
+
+    fun dispatch(action: HomeViewAction) {
+        when (action) {
+            is HomeViewAction.RequestPage -> {
+                requestHomeData(action.status)
+            }
+        }
+    }
 
     /**
      * 获取contentList列表
      */
-    fun requestHomeData(@LoadStatus status: Int) {
-        launchIO {
-            _contentListLive.pageLaunch(status, { page: Int ->
+    private fun requestHomeData(@LoadStatus status: Int) {
+        viewModelScope.launch {
+            _contentListFlow.pageLaunch(status, { page: Int ->
                 buildHomePageData(page)
             }, {
                 //缓存数据
@@ -48,7 +62,7 @@ class HomeViewModel : CoroutineViewModel() {
     /**
      * 根据页码构建首页数据
      */
-    private suspend fun LiveData<UiStatePage>.buildHomePageData(page: Int): PageUiData<HomeContent> {
+    private suspend fun MutableStateFlow<UiStatePage>.buildHomePageData(page: Int): PageUiData<HomeContent> {
         val dataList = mutableListOf<HomeContent>()
 
         //首页添加header数据
@@ -76,9 +90,8 @@ class HomeViewModel : CoroutineViewModel() {
             applyData(getValueData(), newData)
         }
     }
+}
 
-    init {
-        requestHomeData(LoadStatus.INIT)
-    }
-
+sealed class HomeViewAction {
+    data class RequestPage(@LoadStatus val status: Int) : HomeViewAction()
 }

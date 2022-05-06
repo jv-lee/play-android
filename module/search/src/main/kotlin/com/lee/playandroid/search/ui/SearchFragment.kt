@@ -9,17 +9,19 @@ import com.lee.library.adapter.page.submitSinglePage
 import com.lee.library.base.BaseNavigationFragment
 import com.lee.library.extensions.binding
 import com.lee.library.extensions.launchAndRepeatWithViewLifecycle
-import com.lee.library.viewstate.stateCollect
+import com.lee.library.viewstate.collectState
 import com.lee.library.tools.KeyboardTools.hideSoftInput
 import com.lee.library.tools.KeyboardTools.parentTouchHideSoftInput
-import com.lee.playandroid.library.common.entity.SearchHistory
 import com.lee.playandroid.library.common.extensions.actionFailed
 import com.lee.playandroid.search.R
 import com.lee.playandroid.search.databinding.FragmentSearchBinding
-import com.lee.playandroid.search.model.entity.SearchHot
 import com.lee.playandroid.search.ui.adapter.SearchHistoryAdapter
 import com.lee.playandroid.search.ui.adapter.SearchHotAdapter
+import com.lee.playandroid.search.viewmodel.SearchViewAction
+import com.lee.playandroid.search.viewmodel.SearchViewEvent
 import com.lee.playandroid.search.viewmodel.SearchViewModel
+import com.lee.playandroid.search.viewmodel.SearchViewState
+import kotlinx.coroutines.flow.collect
 
 /**
  * @author jv.lee
@@ -44,7 +46,7 @@ class SearchFragment : BaseNavigationFragment(R.layout.fragment_search) {
                 SearchHotAdapter(requireContext(), arrayListOf()).apply {
                     mHotAdapter = this
                     setOnItemClickListener { _, entity, _ ->
-                        navigationResult(entity.key)
+                        viewModel.dispatch(SearchViewAction.NavigationSearch(entity.key))
                     }
                 }.proxy
         }
@@ -54,10 +56,10 @@ class SearchFragment : BaseNavigationFragment(R.layout.fragment_search) {
                 SearchHistoryAdapter(requireContext(), arrayListOf()).apply {
                     mHistoryAdapter = this
                     setOnItemClickListener { _, entity, _ ->
-                        navigationResult(entity.key)
+                        viewModel.dispatch(SearchViewAction.NavigationSearch(entity.key))
                     }
                     setOnItemChildClickListener({ _, entity, _ ->
-                        viewModel.deleteSearchHistory(entity.key)
+                        viewModel.dispatch(SearchViewAction.DeleteHistory(entity.key))
                     }, R.id.iv_delete)
                 }.proxy
         }
@@ -65,32 +67,42 @@ class SearchFragment : BaseNavigationFragment(R.layout.fragment_search) {
         binding.editQuery.setOnEditorActionListener { textView, actionId, _ ->
             val text = textView.text
             if (actionId == IME_ACTION_SEARCH && text.isNotEmpty()) {
-                navigationResult(text.toString())
+                viewModel.dispatch(SearchViewAction.NavigationSearch(text.toString()))
             }
             return@setOnEditorActionListener false
         }
 
         binding.tvHistoryClear.setOnClickListener {
-            viewModel.clearSearchHistory()
+            viewModel.dispatch(SearchViewAction.ClearHistory)
         }
     }
 
     override fun bindData() {
         launchAndRepeatWithViewLifecycle {
-            viewModel.searchHotFlow.stateCollect<List<SearchHot>>(success = { data ->
-                mHotAdapter?.submitSinglePage(data)
-            }, error = {
-                actionFailed(it)
-            })
+            viewModel.viewEvents.collect { event ->
+                when (event) {
+                    is SearchViewEvent.Navigation -> {
+                        navigationResult(event.key)
+                    }
+                    is SearchViewEvent.FailedEvent -> {
+                        actionFailed(event.error)
+                    }
+                }
+            }
         }
 
-        launchAndRepeatWithViewLifecycle {
-            viewModel.searchHistoryFlow.stateCollect<List<SearchHistory>>(success = { data ->
-                viewEmptyVisible(data.isEmpty())
-                mHistoryAdapter?.submitSinglePage(data)
-            }, error = {
-                actionFailed(it)
-            })
+        viewModel.viewStates.run {
+            launchAndRepeatWithViewLifecycle {
+                collectState(SearchViewState::searchHotList) {
+                    mHotAdapter?.submitSinglePage(it)
+                }
+            }
+            launchAndRepeatWithViewLifecycle {
+                collectState(SearchViewState::searchHistoryList) {
+                    viewEmptyVisible(it.isEmpty())
+                    mHistoryAdapter?.submitSinglePage(it)
+                }
+            }
         }
     }
 
@@ -109,9 +121,6 @@ class SearchFragment : BaseNavigationFragment(R.layout.fragment_search) {
     private fun navigationResult(key: String) {
         //隐藏键盘
         requireActivity().hideSoftInput()
-
-        //存储搜索记录
-        viewModel.addSearchHistory(key)
 
         val bundle = Bundle()
         bundle.putString(SearchResultFragment.ARG_PARAMS_SEARCH_KEY, key)

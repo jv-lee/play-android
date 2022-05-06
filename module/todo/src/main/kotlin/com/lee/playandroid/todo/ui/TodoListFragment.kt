@@ -10,13 +10,10 @@ import com.lee.library.adapter.extensions.bindAllListener
 import com.lee.library.adapter.page.submitData
 import com.lee.library.adapter.page.submitFailed
 import com.lee.library.base.BaseNavigationFragment
-import com.lee.library.extensions.arguments
-import com.lee.library.extensions.binding
-import com.lee.library.extensions.findParentFragment
-import com.lee.library.extensions.toast
-import com.lee.library.viewstate.stateObserve
+import com.lee.library.extensions.*
 import com.lee.library.utils.NetworkUtil
 import com.lee.library.viewstate.LoadStatus
+import com.lee.library.viewstate.stateCollect
 import com.lee.library.widget.SlidingPaneItemTouchListener
 import com.lee.library.widget.closeAllItems
 import com.lee.playandroid.library.common.entity.PageData
@@ -27,7 +24,10 @@ import com.lee.playandroid.todo.databinding.FragmentTodoListBinding
 import com.lee.playandroid.todo.ui.adapter.TodoListAdapter
 import com.lee.playandroid.todo.ui.listener.TodoActionListener
 import com.lee.playandroid.todo.ui.widget.StickyDateItemDecoration
+import com.lee.playandroid.todo.viewmodel.TodoListViewAction
+import com.lee.playandroid.todo.viewmodel.TodoListViewEvent
 import com.lee.playandroid.todo.viewmodel.TodoListViewModel
+import kotlinx.coroutines.flow.collect
 
 /**
  * @author jv.lee
@@ -85,27 +85,37 @@ class TodoListFragment : BaseNavigationFragment(R.layout.fragment_todo_list),
     }
 
     override fun bindData() {
-        viewModel.todoDataLive.stateObserve<PageData<TodoData>>(viewLifecycleOwner, success = {
-            mAdapter?.submitData(it, diff = true)
-        }, error = {
-            mAdapter?.submitFailed()
-            actionFailed(it)
-        })
+        launchAndRepeatWithViewLifecycle {
+            viewModel.viewEvents.collect { event ->
+                when (event) {
+                    is TodoListViewEvent.ActionFailed -> {
+                        binding.rvContainer.closeAllItems()
+                        actionFailed(event.error)
+                    }
+                    is TodoListViewEvent.UpdateTodoActionSuccess -> {
+                        toast(getString(R.string.todo_move_success))
+                        findParentFragment<TodoFragment>()?.moveTodoItem(event.todo)
+                    }
+                    is TodoListViewEvent.DeleteTodoActionSuccess -> {
+                        toast(getString(R.string.todo_delete_success))
+                    }
+                    is TodoListViewEvent.ResetRequestType -> {
+                        mAdapter?.initStatusView()
+                        mAdapter?.pageLoading()
+                        viewModel.dispatch(TodoListViewAction.RequestPage(LoadStatus.REFRESH))
+                    }
+                }
+            }
+        }
 
-        viewModel.todoDeleteLive.stateObserve<Int>(viewLifecycleOwner, success = {
-            toast(getString(R.string.todo_delete_success))
-        }, error = {
-            binding.rvContainer.closeAllItems()
-            actionFailed(it)
-        })
-
-        viewModel.todoUpdateLive.stateObserve<TodoData>(viewLifecycleOwner, success = {
-            toast(getString(R.string.todo_move_success))
-            findParentFragment<TodoFragment>()?.moveTodoItem(it)
-        }, error = {
-            binding.rvContainer.closeAllItems()
-            actionFailed(it)
-        })
+        launchAndRepeatWithViewLifecycle {
+            viewModel.todoDataFlow.stateCollect<PageData<TodoData>>(success = {
+                mAdapter?.submitData(it, diff = true)
+            }, error = {
+                mAdapter?.submitFailed()
+                actionFailed(it)
+            })
+        }
     }
 
     override fun onItemChild(view: View, entity: TodoData, position: Int) {
@@ -117,22 +127,22 @@ class TodoListFragment : BaseNavigationFragment(R.layout.fragment_todo_list),
     }
 
     override fun autoLoadMore() {
-        viewModel.requestTodoData(_root_ide_package_.com.lee.library.viewstate.LoadStatus.LOAD_MORE)
+        viewModel.dispatch(TodoListViewAction.RequestPage(LoadStatus.LOAD_MORE))
     }
 
     override fun pageReload() {
-        viewModel.requestTodoData(_root_ide_package_.com.lee.library.viewstate.LoadStatus.REFRESH)
+        viewModel.dispatch(TodoListViewAction.RequestPage(LoadStatus.REFRESH))
     }
 
     override fun itemReload() {
-        viewModel.requestTodoData(_root_ide_package_.com.lee.library.viewstate.LoadStatus.RELOAD)
+        viewModel.dispatch(TodoListViewAction.RequestPage(LoadStatus.RELOAD))
     }
 
     override fun addAction(todo: TodoData?) {
         todo ?: return
         if (status == ARG_STATUS_UPCOMING) {
             mAdapter?.openLoadMore()
-            viewModel.requestTodoData(_root_ide_package_.com.lee.library.viewstate.LoadStatus.REFRESH)
+            viewModel.dispatch(TodoListViewAction.RequestPage(LoadStatus.REFRESH))
         }
     }
 
@@ -140,23 +150,19 @@ class TodoListFragment : BaseNavigationFragment(R.layout.fragment_todo_list),
         todo ?: return
         if (todo.status == status) {
             mAdapter?.openLoadMore()
-            viewModel.requestTodoData(_root_ide_package_.com.lee.library.viewstate.LoadStatus.REFRESH)
+            viewModel.dispatch(TodoListViewAction.RequestPage(LoadStatus.REFRESH))
         }
     }
 
     override fun moveAction(todo: TodoData) {
         if (todo.status == status) {
             mAdapter?.openLoadMore()
-            viewModel.requestTodoData(_root_ide_package_.com.lee.library.viewstate.LoadStatus.REFRESH)
+            viewModel.dispatch(TodoListViewAction.RequestPage(LoadStatus.REFRESH))
         }
     }
 
     override fun notifyAction(type: Int) {
-        if (viewModel.checkResetRequestType(type)) {
-            mAdapter?.initStatusView()
-            mAdapter?.pageLoading()
-            viewModel.requestTodoData(_root_ide_package_.com.lee.library.viewstate.LoadStatus.REFRESH)
-        }
+        viewModel.dispatch(TodoListViewAction.CheckResetRequestType(type = type))
     }
 
     override fun onDestroyView() {
@@ -173,7 +179,7 @@ class TodoListFragment : BaseNavigationFragment(R.layout.fragment_todo_list),
         if (NetworkUtil.isNetworkConnected(requireContext())) {
             mAdapter?.data?.removeAt(position)
             mAdapter?.notifyItemRemoved(position)
-            viewModel.requestUpdateTodoStatus(position)
+            viewModel.dispatch(TodoListViewAction.RequestUpdate(position))
         } else {
             binding.rvContainer.closeAllItems()
             toast(getString(R.string.network_not_access))
@@ -187,7 +193,7 @@ class TodoListFragment : BaseNavigationFragment(R.layout.fragment_todo_list),
         if (NetworkUtil.isNetworkConnected(requireContext())) {
             mAdapter?.data?.removeAt(position)
             mAdapter?.notifyItemRemoved(position)
-            viewModel.requestDeleteTodo(position)
+            viewModel.dispatch(TodoListViewAction.RequestDelete(position))
         } else {
             binding.rvContainer.closeAllItems()
             toast(getString(R.string.network_not_access))

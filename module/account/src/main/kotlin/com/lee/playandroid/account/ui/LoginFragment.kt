@@ -10,36 +10,36 @@ import com.lee.library.base.BaseNavigationFragment
 import com.lee.library.dialog.LoadingDialog
 import com.lee.library.extensions.binding
 import com.lee.library.extensions.dismiss
+import com.lee.library.extensions.launchAndRepeatWithViewLifecycle
 import com.lee.library.extensions.show
 import com.lee.library.interadp.TextWatcherAdapter
-import com.lee.library.viewstate.stateObserve
 import com.lee.library.tools.KeyboardTools.hideSoftInput
 import com.lee.library.tools.KeyboardTools.keyboardIsShow
 import com.lee.library.tools.KeyboardTools.keyboardPaddingBottom
 import com.lee.library.tools.KeyboardTools.parentTouchHideSoftInput
 import com.lee.library.tools.PreferencesTools
+import com.lee.library.viewstate.collectState
 import com.lee.playandroid.account.R
 import com.lee.playandroid.account.constants.Constants.SP_KEY_SAVE_INPUT_USERNAME
 import com.lee.playandroid.account.databinding.FragmentLoginBinding
-import com.lee.playandroid.account.viewmodel.AccountViewModel
-import com.lee.playandroid.account.viewmodel.LoginRegisterViewModel
-import com.lee.playandroid.library.common.entity.AccountData
+import com.lee.playandroid.account.viewmodel.*
+import com.lee.playandroid.library.common.entity.AccountViewAction
 import com.lee.playandroid.library.common.extensions.actionFailed
+import kotlinx.coroutines.flow.collect
 
 /**
  * @author jv.lee
  * @date 2021/11/24
  * @description 登陆页面
  */
-class LoginFragment : BaseNavigationFragment(R.layout.fragment_login),
-    View.OnClickListener, TextWatcherAdapter {
+class LoginFragment : BaseNavigationFragment(R.layout.fragment_login), View.OnClickListener {
 
     companion object {
         // login/register 页面回传注册key
         const val REQUEST_KEY_LOGIN = "requestKey:login"
     }
 
-    private val viewModel by viewModels<LoginRegisterViewModel>()
+    private val viewModel by viewModels<LoginViewModel>()
     private val accountViewModel by activityViewModels<AccountViewModel>()
 
     private val binding by binding(FragmentLoginBinding::bind)
@@ -48,7 +48,7 @@ class LoginFragment : BaseNavigationFragment(R.layout.fragment_login),
 
     override fun bindView() {
         // 设置点击空白区域隐藏软键盘
-        requireActivity().parentTouchHideSoftInput(binding.root)
+        requireContext().parentTouchHideSoftInput(binding.root)
 
         // 设置登陆过的账户名
         binding.editUsername.setText(PreferencesTools.get<String>(SP_KEY_SAVE_INPUT_USERNAME))
@@ -59,8 +59,16 @@ class LoginFragment : BaseNavigationFragment(R.layout.fragment_login),
         // 设置监听
         binding.tvLogin.setOnClickListener(this)
         binding.tvRegister.setOnClickListener(this)
-        binding.editUsername.addTextChangedListener(this)
-        binding.editPassword.addTextChangedListener(this)
+        binding.editUsername.addTextChangedListener(object : TextWatcherAdapter {
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                viewModel.dispatch(LoginViewAction.ChangeUsername(s?.toString() ?: ""))
+            }
+        })
+        binding.editPassword.addTextChangedListener(object : TextWatcherAdapter {
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                viewModel.dispatch(LoginViewAction.ChangePassword(s?.toString() ?: ""))
+            }
+        })
     }
 
     override fun bindData() {
@@ -69,16 +77,51 @@ class LoginFragment : BaseNavigationFragment(R.layout.fragment_login),
             findNavController().popBackStack()
         }
 
-        // 监听登陆成功后获取的账户信息
-        viewModel.accountLive.stateObserve<AccountData>(viewLifecycleOwner, success = {
-            dismiss(loadingDialog)
-            PreferencesTools.put(SP_KEY_SAVE_INPUT_USERNAME, it.userInfo.username)
-            accountViewModel.updateAccountInfo(it)
-            findNavController().popBackStack()
-        }, error = {
-            dismiss(loadingDialog)
-            actionFailed(it)
-        })
+        launchAndRepeatWithViewLifecycle {
+            viewModel.viewEvents.collect { event ->
+                when (event) {
+                    is LoginViewEvent.LoginSuccess -> {
+                        accountViewModel.dispatch(
+                            AccountViewAction.UpdateAccountStatus(event.accountData, true)
+                        )
+                        findNavController().popBackStack()
+                    }
+                    is LoginViewEvent.LoginFailed -> {
+                        actionFailed(event.error)
+                    }
+                }
+            }
+        }
+
+        viewModel.viewStates.run {
+            launchAndRepeatWithViewLifecycle {
+                collectState(LoginViewState::isLoading) {
+                    if (it) show(loadingDialog) else dismiss(loadingDialog)
+                }
+            }
+            launchAndRepeatWithViewLifecycle {
+                collectState(LoginViewState::isLoginEnable) {
+                    binding.tvLogin.setButtonDisable(!it)
+                }
+            }
+            launchAndRepeatWithViewLifecycle {
+                collectState(LoginViewState::username) {
+                    binding.editUsername.setText(it)
+                    binding.editUsername.setSelection(it.length)
+                }
+            }
+            launchAndRepeatWithViewLifecycle {
+                collectState(LoginViewState::password) {
+                    binding.editPassword.setText(it)
+                    binding.editPassword.setSelection(it.length)
+                }
+            }
+        }
+    }
+
+    override fun onFragmentStop() {
+        super.onFragmentStop()
+        requireContext().hideSoftInput()
     }
 
     override fun onClick(view: View) {
@@ -89,16 +132,6 @@ class LoginFragment : BaseNavigationFragment(R.layout.fragment_login),
             binding.tvLogin -> {
                 requestLogin()
             }
-        }
-    }
-
-    override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-        if (binding.editUsername.text.toString().isEmpty() ||
-            binding.editPassword.text.toString().isEmpty()
-        ) {
-            binding.tvLogin.setButtonDisable(true)
-        } else {
-            binding.tvLogin.setButtonDisable(false)
         }
     }
 
@@ -121,11 +154,7 @@ class LoginFragment : BaseNavigationFragment(R.layout.fragment_login),
     private fun requestLogin() {
         requireActivity().hideSoftInput()
         binding.tvLogin.postDelayed({
-            show(loadingDialog)
-            viewModel.requestLogin(
-                binding.editUsername.text.toString(),
-                binding.editPassword.text.toString()
-            )
+            viewModel.dispatch(LoginViewAction.RequestLogin)
         }, 300)
     }
 

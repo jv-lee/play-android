@@ -1,9 +1,11 @@
 package com.lee.playandroid.library.service
 
 import androidx.fragment.app.FragmentActivity
-import androidx.lifecycle.LiveData
-import com.lee.library.viewstate.UiState
 import com.lee.playandroid.library.common.entity.AccountData
+import com.lee.playandroid.library.common.entity.AccountViewEvent
+import com.lee.playandroid.library.common.entity.AccountViewState
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.StateFlow
 
 /**
  * @author jv.lee
@@ -12,18 +14,13 @@ import com.lee.playandroid.library.common.entity.AccountData
  */
 interface AccountService {
 
-    fun getAccountLive(activity: FragmentActivity): LiveData<UiState>
+    fun getAccountViewStates(activity: FragmentActivity): StateFlow<AccountViewState>
 
-    fun getAccountInfo(activity: FragmentActivity): AccountData?
+    fun getAccountViewEvents(activity: FragmentActivity): Flow<AccountViewEvent>
 
     suspend fun requestAccountInfo(activity: FragmentActivity)
 
-    fun requestLogout(
-        activity: FragmentActivity,
-        showLoading: () -> Unit = {},
-        hideLoading: () -> Unit = {},
-        failedCall: (String) -> Unit = {}
-    )
+    suspend fun requestLogout(activity: FragmentActivity)
 
     fun getAccountInfo(): AccountData?
 

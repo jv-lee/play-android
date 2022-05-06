@@ -11,10 +11,11 @@ import com.lee.library.adapter.page.submitData
 import com.lee.library.adapter.page.submitFailed
 import com.lee.library.base.BaseNavigationFragment
 import com.lee.library.extensions.binding
+import com.lee.library.extensions.launchAndRepeatWithViewLifecycle
 import com.lee.library.extensions.toast
-import com.lee.library.viewstate.stateObserve
 import com.lee.library.utils.NetworkUtil
 import com.lee.library.viewstate.LoadStatus
+import com.lee.library.viewstate.stateCollect
 import com.lee.library.widget.SlidingPaneItemTouchListener
 import com.lee.library.widget.closeAllItems
 import com.lee.library.widget.toolbar.TitleToolbar
@@ -25,7 +26,10 @@ import com.lee.playandroid.library.common.ui.adapter.SimpleTextAdapter
 import com.lee.playandroid.router.navigateDetails
 import com.lee.playandroid.square.R
 import com.lee.playandroid.square.databinding.FragmentMyShareBinding
+import com.lee.playandroid.square.viewmodel.MyShareViewAction
+import com.lee.playandroid.square.viewmodel.MyShareViewEvent
 import com.lee.playandroid.square.viewmodel.MyShareViewModel
+import kotlinx.coroutines.flow.collect
 import com.lee.playandroid.library.common.R as CR
 
 /**
@@ -72,34 +76,43 @@ class MyShareFragment : BaseNavigationFragment(R.layout.fragment_my_share),
     override fun bindData() {
         // 监听登陆页面回调时是否已经发布成功，刷新数据列表
         setFragmentResultListener(REQUEST_KEY_REFRESH) { _: String, _: Bundle ->
-            viewModel.requestMyShareData(_root_ide_package_.com.lee.library.viewstate.LoadStatus.INIT)
+            viewModel.dispatch(MyShareViewAction.RequestPage(LoadStatus.INIT))
         }
 
-        viewModel.myShareLive.stateObserve<PageData<Content>>(viewLifecycleOwner, success = {
-            mAdapter?.submitData(it, diff = true)
-        }, error = {
-            mAdapter?.submitFailed()
-            actionFailed(it)
-        })
+        launchAndRepeatWithViewLifecycle {
+            viewModel.viewEvents.collect { event ->
+                when (event) {
+                    is MyShareViewEvent.DeleteShareSuccess -> {
+                        toast(getString(R.string.share_delete_success))
+                    }
+                    is MyShareViewEvent.DeleteShareFailed -> {
+                        actionFailed(event.error)
+                        binding.rvContainer.closeAllItems()
+                    }
+                }
+            }
+        }
 
-        viewModel.deleteShareLive.stateObserve<Int>(viewLifecycleOwner, success = { position ->
-            toast(getString(R.string.share_delete_success))
-        }, error = {
-            binding.rvContainer.closeAllItems()
-            actionFailed(it)
-        })
+        launchAndRepeatWithViewLifecycle {
+            viewModel.myShareFlow.stateCollect<PageData<Content>>(success = {
+                mAdapter?.submitData(it, diff = true)
+            }, error = {
+                mAdapter?.submitFailed()
+                actionFailed(it)
+            })
+        }
     }
 
     override fun autoLoadMore() {
-        viewModel.requestMyShareData(_root_ide_package_.com.lee.library.viewstate.LoadStatus.LOAD_MORE)
+        viewModel.dispatch(MyShareViewAction.RequestPage(LoadStatus.LOAD_MORE))
     }
 
     override fun pageReload() {
-        viewModel.requestMyShareData(_root_ide_package_.com.lee.library.viewstate.LoadStatus.REFRESH)
+        viewModel.dispatch(MyShareViewAction.RequestPage(LoadStatus.REFRESH))
     }
 
     override fun itemReload() {
-        viewModel.requestMyShareData(_root_ide_package_.com.lee.library.viewstate.LoadStatus.RELOAD)
+        viewModel.dispatch(MyShareViewAction.RequestPage(LoadStatus.RELOAD))
     }
 
     override fun onItemChild(view: View, entity: Content, position: Int) {
@@ -125,7 +138,7 @@ class MyShareFragment : BaseNavigationFragment(R.layout.fragment_my_share),
         if (NetworkUtil.isNetworkConnected(requireContext())) {
             mAdapter?.data?.removeAt(position)
             mAdapter?.notifyItemRemoved(position)
-            viewModel.requestDeleteShare(position)
+            viewModel.dispatch(MyShareViewAction.DeleteShare(position))
         } else {
             binding.rvContainer.closeAllItems()
             toast(getString(R.string.network_not_access))

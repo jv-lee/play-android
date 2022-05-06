@@ -1,48 +1,75 @@
 package com.lee.playandroid.square.viewmodel
 
 import android.text.TextUtils
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.lee.library.base.ApplicationExtensions.app
-import com.lee.library.viewstate.UiStateLiveData
-import com.lee.library.viewstate.UiStateMutableLiveData
-import com.lee.library.viewstate.stateFlow
-import com.lee.library.viewmodel.CoroutineViewModel
-import com.lee.library.viewstate.UiState
 import com.lee.playandroid.library.common.constants.ApiConstants
 import com.lee.playandroid.library.common.extensions.createApi
 import com.lee.playandroid.square.R
 import com.lee.playandroid.square.model.api.ApiService
-import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.launch
 
 /**
  * @author jv.lee
  * @date 2021/12/21
  * @description
  */
-class CreateShareViewModel : CoroutineViewModel() {
+class CreateShareViewModel : ViewModel() {
 
     private val api = createApi<ApiService>()
 
-    private val _sendLive = UiStateMutableLiveData()
-    val sendLive: UiStateLiveData = _sendLive
+    private val _viewStates = MutableStateFlow(CreateShareViewState())
+    val viewStates: StateFlow<CreateShareViewState> = _viewStates
 
-    fun requestSendShare(title: String, content: String) {
-        // 校验输入格式
-        if (TextUtils.isEmpty(title) || TextUtils.isEmpty(content)) {
-            _sendLive.postValue(UiState.Error(Throwable("title || content is empty.")))
-            return
-        }
-        launchIO {
-            stateFlow {
-                val response = api.postShareDataSync(title, content)
-                if (response.errorCode == ApiConstants.REQUEST_OK) {
-                    app.getString(R.string.share_success)
-                } else {
-                    throw RuntimeException(response.errorMsg)
-                }
-            }.collect {
-                _sendLive.postValue(it)
+    private val _viewEvents = Channel<CreateShareViewEvent>(Channel.BUFFERED)
+    val viewEvents = _viewEvents.receiveAsFlow()
+
+    fun dispatch(action: CreateShareViewAction) {
+        when (action) {
+            is CreateShareViewAction.RequestSend -> {
+                requestSendShare(action.title, action.content)
             }
         }
     }
 
+    private fun requestSendShare(title: String, content: String) {
+        viewModelScope.launch {
+            // 校验输入格式
+            if (TextUtils.isEmpty(title) || TextUtils.isEmpty(content)) {
+                _viewEvents.send(CreateShareViewEvent.SendFailed(Throwable("title || content is empty.")))
+            } else {
+                flow {
+                    val response = api.postShareDataSync(title, content)
+                    if (response.errorCode == ApiConstants.REQUEST_OK) {
+                        emit(app.getString(R.string.share_success))
+                    } else {
+                        throw RuntimeException(response.errorMsg)
+                    }
+                }.onStart {
+                    _viewStates.update { it.copy(loading = true) }
+                }.catch { error ->
+                    _viewStates.update { it.copy(loading = false) }
+                    _viewEvents.send(CreateShareViewEvent.SendFailed(error))
+                }.collect { data ->
+                    _viewStates.update { it.copy(loading = false) }
+                    _viewEvents.send(CreateShareViewEvent.SendSuccess(message = data))
+                }
+            }
+        }
+    }
+
+}
+
+data class CreateShareViewState(val loading: Boolean = false)
+
+sealed class CreateShareViewEvent {
+    data class SendSuccess(val message: String) : CreateShareViewEvent()
+    data class SendFailed(val error: Throwable) : CreateShareViewEvent()
+}
+
+sealed class CreateShareViewAction {
+    data class RequestSend(val title: String, val content: String) : CreateShareViewAction()
 }

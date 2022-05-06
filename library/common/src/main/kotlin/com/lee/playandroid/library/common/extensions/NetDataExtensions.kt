@@ -11,6 +11,8 @@ import com.lee.playandroid.library.common.entity.Data
 fun <T> Data<T>.checkData(): T {
     if (errorCode == ApiConstants.REQUEST_OK) {
         return data
+    }else if (errorCode == ApiConstants.REQUEST_TOKEN_ERROR) {
+        throw RuntimeException(ApiConstants.REQUEST_TOKEN_ERROR_MESSAGE)
     }
     throw RuntimeException(errorMsg)
 }

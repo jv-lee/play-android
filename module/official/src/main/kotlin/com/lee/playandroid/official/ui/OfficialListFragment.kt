@@ -1,16 +1,17 @@
 package com.lee.playandroid.official.ui
 
 import android.os.Bundle
-import androidx.lifecycle.LiveData
 import androidx.navigation.fragment.findNavController
 import com.lee.library.adapter.base.BaseViewAdapter
 import com.lee.library.extensions.viewModelByFactory
 import com.lee.library.viewstate.UiStatePage
 import com.lee.playandroid.library.common.entity.Content
-import com.lee.playandroid.library.common.ui.BaseListFragment
+import com.lee.playandroid.library.common.ui.base.BaseListFragment
 import com.lee.playandroid.official.ui.adapter.OfficialListAdapter
+import com.lee.playandroid.official.viewmodel.OfficialListViewAction
 import com.lee.playandroid.official.viewmodel.OfficialListViewModel
 import com.lee.playandroid.router.navigateDetails
+import kotlinx.coroutines.flow.StateFlow
 
 /**
  * @author jv.lee
@@ -34,7 +35,7 @@ class OfficialListFragment : BaseListFragment() {
     }
 
     override fun requestContentList(status: Int) {
-        viewModel.requestContentList(status)
+        viewModel.dispatch(OfficialListViewAction.RequestPage(status))
     }
 
     override fun navigationDetails(content: Content) {
@@ -43,9 +44,8 @@ class OfficialListFragment : BaseListFragment() {
         )
     }
 
-    override fun dataObserveState(): LiveData<_root_ide_package_.com.lee.library.viewstate.UiStatePage> {
-        return viewModel.contentListLive
+    override fun dataFlow(): StateFlow<UiStatePage> {
+        return viewModel.contentListFlow
     }
-
 
 }

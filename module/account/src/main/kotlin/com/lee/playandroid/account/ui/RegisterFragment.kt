@@ -10,22 +10,21 @@ import com.lee.library.base.BaseNavigationFragment
 import com.lee.library.dialog.LoadingDialog
 import com.lee.library.extensions.binding
 import com.lee.library.extensions.dismiss
+import com.lee.library.extensions.launchAndRepeatWithViewLifecycle
 import com.lee.library.extensions.show
 import com.lee.library.interadp.TextWatcherAdapter
-import com.lee.library.viewstate.stateObserve
 import com.lee.library.tools.KeyboardTools.hideSoftInput
 import com.lee.library.tools.KeyboardTools.keyboardIsShow
 import com.lee.library.tools.KeyboardTools.keyboardPaddingBottom
 import com.lee.library.tools.KeyboardTools.parentTouchHideSoftInput
-import com.lee.library.tools.PreferencesTools
+import com.lee.library.viewstate.collectState
 import com.lee.playandroid.account.R
-import com.lee.playandroid.account.constants.Constants
 import com.lee.playandroid.account.databinding.FragmentRegisterBinding
 import com.lee.playandroid.account.ui.LoginFragment.Companion.REQUEST_KEY_LOGIN
-import com.lee.playandroid.account.viewmodel.AccountViewModel
-import com.lee.playandroid.account.viewmodel.LoginRegisterViewModel
-import com.lee.playandroid.library.common.entity.AccountData
+import com.lee.playandroid.account.viewmodel.*
+import com.lee.playandroid.library.common.entity.AccountViewAction
 import com.lee.playandroid.library.common.extensions.actionFailed
+import kotlinx.coroutines.flow.collect
 
 /**
  * @author jv.lee
@@ -33,9 +32,9 @@ import com.lee.playandroid.library.common.extensions.actionFailed
  * @description 注册页面
  */
 class RegisterFragment : BaseNavigationFragment(R.layout.fragment_register),
-    View.OnClickListener, TextWatcherAdapter {
+    View.OnClickListener {
 
-    private val viewModel by viewModels<LoginRegisterViewModel>()
+    private val viewModel by viewModels<RegisterViewModel>()
     private val accountViewModel by activityViewModels<AccountViewModel>()
 
     private val binding by binding(FragmentRegisterBinding::bind)
@@ -44,7 +43,7 @@ class RegisterFragment : BaseNavigationFragment(R.layout.fragment_register),
 
     override fun bindView() {
         // 设置点击空白区域隐藏软键盘
-        requireActivity().parentTouchHideSoftInput(binding.root)
+        requireContext().parentTouchHideSoftInput(binding.root)
 
         // 监听键盘弹起
         requireActivity().window.decorView.keyboardPaddingBottom(viewLifecycleOwner)
@@ -53,23 +52,77 @@ class RegisterFragment : BaseNavigationFragment(R.layout.fragment_register),
         binding.root.setOnClickListener(this)
         binding.tvLogin.setOnClickListener(this)
         binding.tvRegister.setOnClickListener(this)
-        binding.editUsername.addTextChangedListener(this)
-        binding.editPassword.addTextChangedListener(this)
-        binding.editRePassword.addTextChangedListener(this)
+        binding.editUsername.addTextChangedListener(object : TextWatcherAdapter {
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                viewModel.dispatch(RegisterViewAction.ChangeUsername(s?.toString() ?: ""))
+            }
+        })
+        binding.editPassword.addTextChangedListener(object : TextWatcherAdapter {
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                viewModel.dispatch(RegisterViewAction.ChangePassword(s?.toString() ?: ""))
+            }
+        })
+        binding.editRePassword.addTextChangedListener(object : TextWatcherAdapter {
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                viewModel.dispatch(RegisterViewAction.ChangeRePassword(s?.toString() ?: ""))
+            }
+        })
     }
 
     override fun bindData() {
-        // 监听注册成功后获取的账户信息
-        viewModel.accountLive.stateObserve<AccountData>(viewLifecycleOwner, success = {
-            dismiss(loadingDialog)
-            PreferencesTools.put(Constants.SP_KEY_SAVE_INPUT_USERNAME, it.userInfo.username)
-            accountViewModel.updateAccountInfo(it)
-            setFragmentResult(REQUEST_KEY_LOGIN, Bundle.EMPTY)
-            findNavController().popBackStack()
-        }, error = {
-            dismiss(loadingDialog)
-            actionFailed(it)
-        })
+        launchAndRepeatWithViewLifecycle {
+            // 监听注册成功后获取的账户信息
+            viewModel.viewEvents.collect { event ->
+                when (event) {
+                    is RegisterViewEvent.RegisterSuccess -> {
+                        accountViewModel.dispatch(
+                            AccountViewAction.UpdateAccountStatus(event.accountData, true)
+                        )
+                        setFragmentResult(REQUEST_KEY_LOGIN, Bundle.EMPTY)
+                        findNavController().popBackStack()
+                    }
+                    is RegisterViewEvent.RegisterFailed -> {
+                        actionFailed(event.error)
+                    }
+                }
+            }
+        }
+
+        viewModel.viewStates.run {
+            launchAndRepeatWithViewLifecycle {
+                collectState(RegisterViewState::isLoading) {
+                    if (it) show(loadingDialog) else dismiss(loadingDialog)
+                }
+            }
+            launchAndRepeatWithViewLifecycle {
+                collectState(RegisterViewState::isRegisterEnable) {
+                    binding.tvRegister.setButtonDisable(!it)
+                }
+            }
+            launchAndRepeatWithViewLifecycle {
+                collectState(RegisterViewState::username) {
+                    binding.editUsername.setText(it)
+                    binding.editUsername.setSelection(it.length)
+                }
+            }
+            launchAndRepeatWithViewLifecycle {
+                collectState(RegisterViewState::password) {
+                    binding.editPassword.setText(it)
+                    binding.editPassword.setSelection(it.length)
+                }
+            }
+            launchAndRepeatWithViewLifecycle {
+                collectState(RegisterViewState::rePassword) {
+                    binding.editRePassword.setText(it)
+                    binding.editRePassword.setSelection(it.length)
+                }
+            }
+        }
+    }
+
+    override fun onFragmentStop() {
+        super.onFragmentStop()
+        requireContext().hideSoftInput()
     }
 
     override fun onClick(view: View) {
@@ -83,17 +136,6 @@ class RegisterFragment : BaseNavigationFragment(R.layout.fragment_register),
             binding.root -> {
                 requireActivity().hideSoftInput()
             }
-        }
-    }
-
-    override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-        if (binding.editUsername.text.toString().isEmpty() ||
-            binding.editPassword.text.toString().isEmpty() ||
-            binding.editRePassword.text.toString().isEmpty()
-        ) {
-            binding.tvRegister.setButtonDisable(true)
-        } else {
-            binding.tvRegister.setButtonDisable(false)
         }
     }
 
@@ -116,12 +158,7 @@ class RegisterFragment : BaseNavigationFragment(R.layout.fragment_register),
     private fun requestRegister() {
         requireActivity().hideSoftInput()
         binding.tvRegister.postDelayed({
-            show(loadingDialog)
-            viewModel.requestRegister(
-                binding.editUsername.text.toString(),
-                binding.editPassword.text.toString(),
-                binding.editRePassword.text.toString()
-            )
+            viewModel.dispatch(RegisterViewAction.RequestRegister)
         }, 300)
     }
 

@@ -5,13 +5,17 @@ import android.widget.FrameLayout
 import com.just.agentweb.AgentWeb
 import com.lee.library.base.BaseNavigationFragment
 import com.lee.library.extensions.*
-import com.lee.library.viewstate.stateObserve
 import com.lee.library.utils.ShareUtil
+import com.lee.library.viewstate.collectState
 import com.lee.library.widget.toolbar.TitleToolbar
 import com.lee.playandroid.details.R
 import com.lee.playandroid.details.databinding.FragmentDetailsBinding
+import com.lee.playandroid.details.viewmodel.DetailsViewAction
+import com.lee.playandroid.details.viewmodel.DetailsViewEvent
 import com.lee.playandroid.details.viewmodel.DetailsViewModel
+import com.lee.playandroid.details.viewmodel.DetailsViewState
 import com.lee.playandroid.library.common.extensions.bindLifecycle
+import kotlinx.coroutines.flow.collect
 
 /**
  * @author jv.lee
@@ -27,8 +31,6 @@ class DetailsFragment : BaseNavigationFragment(R.layout.fragment_details) {
         const val ARG_PARAMS_COLLECT = "isCollect"
     }
 
-    private val id by arguments<String>(ARG_PARAMS_ID)
-    private val title by arguments<String>(ARG_PARAMS_TITLE)
     private val detailsUrl by arguments<String>(ARG_PARAMS_URL)
 
     private val viewModel by viewModelByFactory<DetailsViewModel>()
@@ -45,19 +47,17 @@ class DetailsFragment : BaseNavigationFragment(R.layout.fragment_details) {
         override fun menuItemClick(view: View) {
             when (view.id) {
                 R.id.collect -> {
-                    viewModel.requestCollect()
+                    viewModel.dispatch(DetailsViewAction.UpdateCollectStatus)
                 }
                 R.id.share -> {
-                    ShareUtil.shareText(context, "$title:$detailsUrl")
+                    viewModel.dispatch(DetailsViewAction.RequestShareDetails)
                 }
             }
         }
     }
 
     override fun bindView() {
-        binding.toolbar.setTitleText(title)
         binding.toolbar.setClickListener(toolbarClickListener)
-        binding.toolbar.setMoreEnable(id != "0")
 
         web = AgentWeb.with(this)
             .setAgentWebParent(binding.frameContainer, FrameLayout.LayoutParams(-1, -1))
@@ -70,16 +70,31 @@ class DetailsFragment : BaseNavigationFragment(R.layout.fragment_details) {
     }
 
     override fun bindData() {
-        viewModel.collectLive.stateObserve<Boolean>(viewLifecycleOwner, { isCollect ->
-            val message = if (isCollect) {
-                getString(R.string.menu_collect_complete)
-            } else {
-                getString(R.string.menu_collect_completed)
+        launchAndRepeatWithViewLifecycle {
+            viewModel.viewEvents.collect { event ->
+                when (event) {
+                    is DetailsViewEvent.ShareDetailsEvent -> {
+                        ShareUtil.shareText(context, event.shareContent)
+                    }
+                    is DetailsViewEvent.CollectEvent -> {
+                        toast(getString(event.messageRes))
+                    }
+                    is DetailsViewEvent.CollectFailed -> {
+                        toast(event.error.message)
+                    }
+                }
             }
-            toast(message)
-        }, { error ->
-            toast(error.message)
-        })
+        }
+
+        launchAndRepeatWithViewLifecycle {
+            viewModel.viewStates.collectState(
+                DetailsViewState::title,
+                DetailsViewState::actionEnable
+            ) { title, enable ->
+                binding.toolbar.setTitleText(title)
+                binding.toolbar.setMoreEnable(enable)
+            }
+        }
     }
 
 }

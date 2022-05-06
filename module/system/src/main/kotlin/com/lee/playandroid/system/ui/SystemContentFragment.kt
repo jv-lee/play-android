@@ -11,10 +11,11 @@ import com.lee.library.adapter.page.submitSinglePage
 import com.lee.library.base.BaseNavigationFragment
 import com.lee.library.extensions.binding
 import com.lee.library.extensions.findParentFragment
+import com.lee.library.extensions.launchAndRepeatWithViewLifecycle
 import com.lee.library.extensions.smoothScrollToTop
 import com.lee.library.livedatabus.InjectBus
 import com.lee.library.livedatabus.LiveDataBus
-import com.lee.library.viewstate.stateObserve
+import com.lee.library.viewstate.collectState
 import com.lee.playandroid.library.common.entity.NavigationSelectEvent
 import com.lee.playandroid.library.common.entity.ParentTab
 import com.lee.playandroid.library.common.entity.Tab
@@ -23,7 +24,11 @@ import com.lee.playandroid.library.common.ui.widget.OffsetItemDecoration
 import com.lee.playandroid.system.R
 import com.lee.playandroid.system.databinding.FragmentSystemContentBinding
 import com.lee.playandroid.system.ui.adapter.SystemContentAdapter
+import com.lee.playandroid.system.viewmodel.SystemContentViewAction
+import com.lee.playandroid.system.viewmodel.SystemContentViewEvent
 import com.lee.playandroid.system.viewmodel.SystemContentViewModel
+import com.lee.playandroid.system.viewmodel.SystemContentViewState
+import kotlinx.coroutines.flow.collect
 
 /**
  * @author jv.lee
@@ -61,15 +66,25 @@ class SystemContentFragment : BaseNavigationFragment(R.layout.fragment_system_co
     override fun bindData() {
         LiveDataBus.getInstance().injectBus(this)
 
-        viewModel.parentTabLive.stateObserve<List<ParentTab>>(
-            viewLifecycleOwner,
-            success = { data ->
-                mAdapter?.submitSinglePage(data)
-            },
-            error = {
-                mAdapter?.submitFailed()
-                actionFailed(it)
-            })
+        launchAndRepeatWithViewLifecycle {
+            viewModel.viewEvents.collect { event ->
+                when (event) {
+                    is SystemContentViewEvent.RequestFailed -> {
+                        actionFailed(event.error)
+                        mAdapter?.submitFailed()
+                    }
+                }
+            }
+        }
+
+        launchAndRepeatWithViewLifecycle {
+            viewModel.viewStates.collectState(
+                SystemContentViewState::isLoading,
+                SystemContentViewState::parentTabList
+            ) { isLoading, data ->
+                if (!isLoading) mAdapter?.submitSinglePage(data)
+            }
+        }
     }
 
     override fun onItemClick(view: View, entity: ParentTab, position: Int) {
@@ -77,7 +92,7 @@ class SystemContentFragment : BaseNavigationFragment(R.layout.fragment_system_co
     }
 
     override fun pageReload() {
-        viewModel.requestParentTab()
+        viewModel.dispatch(SystemContentViewAction.RequestData)
     }
 
     override fun itemReload() {}

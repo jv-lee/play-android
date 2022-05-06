@@ -6,17 +6,17 @@ import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.viewModels
 import com.lee.library.base.BaseAlertFragment
 import com.lee.library.extensions.binding
-import com.lee.library.extensions.toast
-import com.lee.library.viewstate.stateObserve
+import com.lee.library.extensions.launchAndRepeatWithViewLifecycle
+import com.lee.library.viewstate.collectState
 import com.lee.library.widget.WheelView
 import com.lee.playandroid.todo.R
 import com.lee.playandroid.todo.databinding.DialogSelectTodoBinding
 import com.lee.playandroid.todo.model.entity.TodoType
 import com.lee.playandroid.todo.model.entity.TodoTypeData
-import com.lee.playandroid.todo.model.entity.TodoTypeWheelData
 import com.lee.playandroid.todo.ui.TodoFragment.Companion.REQUEST_KEY_TYPE
 import com.lee.playandroid.todo.ui.TodoFragment.Companion.REQUEST_VALUE_TYPE
 import com.lee.playandroid.todo.viewmodel.SelectTodoTypeViewModel
+import com.lee.playandroid.todo.viewmodel.SelectTodoTypeViewState
 
 /**
  * @author jv.lee
@@ -37,17 +37,21 @@ class SelectTodoTypeDialog :
     }
 
     override fun bindData() {
-        viewModel.todoTypes.stateObserve<TodoTypeWheelData>(viewLifecycleOwner, success = {
-            binding.wheelView.bindData(it.todoTypes, object : WheelView.DataFormat<TodoTypeData> {
-                override fun format(item: TodoTypeData) = item.name
-            }, object : WheelView.SelectedListener<TodoTypeData> {
-                override fun selected(item: TodoTypeData) {
-                    type = item.type
-                }
-            }, startPosition = it.startIndex)
-        }, error = {
-            toast(it.message)
-        })
+        launchAndRepeatWithViewLifecycle {
+            viewModel.viewStates.collectState(SelectTodoTypeViewState::todoTypeWheelData) {
+                binding.wheelView.bindData(
+                    it.todoTypes, object : WheelView.DataFormat<TodoTypeData> {
+                        override fun format(item: TodoTypeData) = item.name
+                    },
+                    object : WheelView.SelectedListener<TodoTypeData> {
+                        override fun selected(item: TodoTypeData) {
+                            type = item.type
+                        }
+                    },
+                    startPosition = it.startIndex
+                )
+            }
+        }
     }
 
     override fun onDismiss(dialog: DialogInterface) {

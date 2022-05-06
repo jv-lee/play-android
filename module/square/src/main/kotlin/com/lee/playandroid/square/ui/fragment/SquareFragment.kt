@@ -8,27 +8,23 @@ import com.lee.library.adapter.base.BaseViewAdapter
 import com.lee.library.adapter.extensions.bindAllListener
 import com.lee.library.adapter.page.submitData
 import com.lee.library.base.BaseNavigationFragment
-import com.lee.library.extensions.binding
-import com.lee.library.extensions.delayBackEvent
-import com.lee.library.extensions.smoothScrollToTop
-import com.lee.library.extensions.toast
+import com.lee.library.extensions.*
 import com.lee.library.livedatabus.InjectBus
 import com.lee.library.livedatabus.LiveDataBus
 import com.lee.library.viewstate.LoadStatus
-import com.lee.library.viewstate.stateObserve
+import com.lee.library.viewstate.stateCollect
 import com.lee.playandroid.library.common.entity.Content
 import com.lee.playandroid.library.common.entity.NavigationSelectEvent
 import com.lee.playandroid.library.common.entity.PageData
 import com.lee.playandroid.library.common.extensions.actionFailed
 import com.lee.playandroid.library.common.ui.extensions.setThemeGradientBackground
 import com.lee.playandroid.library.common.ui.widget.OffsetItemDecoration
-import com.lee.playandroid.library.service.AccountService
-import com.lee.playandroid.library.service.hepler.ModuleService
 import com.lee.playandroid.router.navigateDetails
 import com.lee.playandroid.router.navigateLogin
 import com.lee.playandroid.square.R
 import com.lee.playandroid.square.databinding.FragmentSquareBinding
 import com.lee.playandroid.square.ui.adapter.SquareAdapter
+import com.lee.playandroid.square.viewmodel.SquareViewAction
 import com.lee.playandroid.square.viewmodel.SquareViewModel
 import com.lee.playandroid.library.common.R as CR
 
@@ -42,8 +38,6 @@ class SquareFragment : BaseNavigationFragment(R.layout.fragment_square),
     BaseViewAdapter.OnItemClickListener<Content>,
     BaseViewAdapter.AutoLoadMoreListener,
     BaseViewAdapter.LoadErrorListener {
-
-    private val accountService = ModuleService.find<AccountService>()
 
     private val viewModel by viewModels<SquareViewModel>()
 
@@ -74,19 +68,21 @@ class SquareFragment : BaseNavigationFragment(R.layout.fragment_square),
     override fun bindData() {
         LiveDataBus.getInstance().injectBus(this)
 
-        viewModel.squareLive.stateObserve<PageData<Content>>(viewLifecycleOwner, success = {
-            binding.refreshView.isRefreshing = false
-            mAdapter?.submitData(it)
-        }, error = {
-            binding.refreshView.isRefreshing = false
-            mAdapter?.loadFailed()
-            actionFailed(it)
-        })
+        launchAndRepeatWithViewLifecycle {
+            viewModel.squareFlow.stateCollect<PageData<Content>>(success = {
+                binding.refreshView.isRefreshing = false
+                mAdapter?.submitData(it)
+            }, error = {
+                binding.refreshView.isRefreshing = false
+                mAdapter?.loadFailed()
+                actionFailed(it)
+            })
+        }
     }
 
     override fun onClick(v: View?) {
         // 需要校验登陆状态
-        if (accountService.isLogin()) {
+        if (viewModel.accountService.isLogin()) {
             when (v) {
                 binding.ivCreate -> findNavController()
                     .navigate(R.id.action_square_fragment_to_create_share_fragment)
@@ -105,19 +101,19 @@ class SquareFragment : BaseNavigationFragment(R.layout.fragment_square),
 
     override fun onRefresh() {
         mAdapter?.openLoadMore()
-        viewModel.requestSquareData(LoadStatus.REFRESH)
+        viewModel.dispatch(SquareViewAction.RequestPage(LoadStatus.REFRESH))
     }
 
     override fun autoLoadMore() {
-        viewModel.requestSquareData(LoadStatus.LOAD_MORE)
+        viewModel.dispatch(SquareViewAction.RequestPage(LoadStatus.LOAD_MORE))
     }
 
     override fun pageReload() {
-        viewModel.requestSquareData(LoadStatus.REFRESH)
+        viewModel.dispatch(SquareViewAction.RequestPage(LoadStatus.REFRESH))
     }
 
     override fun itemReload() {
-        viewModel.requestSquareData(LoadStatus.RELOAD)
+        viewModel.dispatch(SquareViewAction.RequestPage(LoadStatus.RELOAD))
     }
 
     override fun onDestroyView() {

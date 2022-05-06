@@ -1,35 +1,61 @@
 package com.lee.playandroid.search.viewmodel
 
-import com.lee.library.viewstate.UiStateMutableStateFlow
-import com.lee.library.viewstate.UiStateStateFlow
-import com.lee.library.viewstate.stateUpdate
-import com.lee.library.viewmodel.CoroutineViewModel
-import com.lee.library.viewstate.UiState
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.lee.playandroid.library.common.entity.SearchHistory
 import com.lee.playandroid.search.model.db.SearchHistoryDatabase
 import com.lee.playandroid.search.model.entity.SearchHot
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.launch
 
 /**
  * @author jv.lee
  * @date 2021/11/19
  * @description
  */
-class SearchViewModel : CoroutineViewModel() {
+class SearchViewModel : ViewModel() {
 
-    private val _searchHotFlow: UiStateMutableStateFlow = MutableStateFlow(UiState.Default)
-    val searchHotFlow: UiStateStateFlow = _searchHotFlow.asStateFlow()
+    private val _viewStates = MutableStateFlow(SearchViewState())
+    val viewStates: Flow<SearchViewState> = _viewStates
 
-    private val _searchHistoryFlow: UiStateMutableStateFlow = MutableStateFlow(UiState.Default)
-    val searchHistoryFlow: UiStateStateFlow = _searchHistoryFlow.asStateFlow()
+    private val _viewEvents = Channel<SearchViewEvent>(Channel.BUFFERED)
+    val viewEvents = _viewEvents.receiveAsFlow()
+
+    init {
+        requestSearchHotData()
+        requestSearchHistoryData()
+    }
+
+    fun dispatch(action: SearchViewAction) {
+        when (action) {
+            is SearchViewAction.NavigationSearch -> {
+                navigationSearchKey(action.key)
+            }
+            is SearchViewAction.AddHistory -> {
+                addSearchHistory(action.key)
+            }
+            is SearchViewAction.DeleteHistory -> {
+                deleteSearchHistory(action.key)
+            }
+            is SearchViewAction.ClearHistory -> {
+                clearSearchHistory()
+            }
+        }
+    }
 
     /**
      * 获取搜索热门标签
      */
     private fun requestSearchHotData() {
-        launchIO {
-            _searchHotFlow.stateUpdate { SearchHot.getHotCategory() }
+        viewModelScope.launch {
+            flow {
+                emit(SearchHot.getHotCategory())
+            }.catch { error ->
+                _viewEvents.send(SearchViewEvent.FailedEvent(error = error))
+            }.collect { data ->
+                _viewStates.update { it.copy(searchHotList = data) }
+            }
         }
     }
 
@@ -37,10 +63,21 @@ class SearchViewModel : CoroutineViewModel() {
      * 获取搜索历史数据
      */
     private fun requestSearchHistoryData() {
-        launchIO {
-            _searchHistoryFlow.stateUpdate {
-                SearchHistoryDatabase.get().searchHistoryDao().querySearchHistory()
+        viewModelScope.launch {
+            flow {
+                emit(SearchHistoryDatabase.get().searchHistoryDao().querySearchHistory())
+            }.catch { error ->
+                _viewEvents.send(SearchViewEvent.FailedEvent(error = error))
+            }.collect { data ->
+                _viewStates.update { it.copy(searchHistoryList = data) }
             }
+        }
+    }
+
+    private fun navigationSearchKey(key: String) {
+        viewModelScope.launch {
+            addSearchHistory(key)
+            _viewEvents.send(SearchViewEvent.Navigation(key))
         }
     }
 
@@ -48,8 +85,8 @@ class SearchViewModel : CoroutineViewModel() {
      * 添加搜索记录
      * @param key 被搜索的key
      */
-    fun addSearchHistory(key: String) {
-        launchIO {
+    private fun addSearchHistory(key: String) {
+        viewModelScope.launch {
             SearchHistoryDatabase.get().searchHistoryDao().insert(SearchHistory(key = key))
             requestSearchHistoryData()
         }
@@ -59,8 +96,8 @@ class SearchViewModel : CoroutineViewModel() {
      * 删除搜索记录
      * @param key 被搜索的key
      */
-    fun deleteSearchHistory(key: String) {
-        launchIO {
+    private fun deleteSearchHistory(key: String) {
+        viewModelScope.launch {
             SearchHistoryDatabase.get().searchHistoryDao().delete(SearchHistory(key = key))
             requestSearchHistoryData()
         }
@@ -69,16 +106,28 @@ class SearchViewModel : CoroutineViewModel() {
     /**
      * 清空所有搜索记录
      */
-    fun clearSearchHistory() {
-        launchIO {
+    private fun clearSearchHistory() {
+        viewModelScope.launch {
             SearchHistoryDatabase.get().searchHistoryDao().clearSearchHistory()
             requestSearchHistoryData()
         }
     }
 
-    init {
-        requestSearchHotData()
-        requestSearchHistoryData()
-    }
+}
 
+data class SearchViewState(
+    val searchHotList: List<SearchHot> = emptyList(),
+    val searchHistoryList: List<SearchHistory> = emptyList(),
+)
+
+sealed class SearchViewEvent {
+    data class Navigation(val key: String) : SearchViewEvent()
+    data class FailedEvent(val error: Throwable) : SearchViewEvent()
+}
+
+sealed class SearchViewAction {
+    data class NavigationSearch(val key: String) : SearchViewAction()
+    data class AddHistory(val key: String) : SearchViewAction()
+    data class DeleteHistory(val key: String) : SearchViewAction()
+    object ClearHistory : SearchViewAction()
 }

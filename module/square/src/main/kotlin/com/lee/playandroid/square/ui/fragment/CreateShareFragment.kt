@@ -7,15 +7,16 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.lee.library.base.BaseNavigationFragment
 import com.lee.library.dialog.LoadingDialog
-import com.lee.library.extensions.binding
-import com.lee.library.extensions.dismiss
-import com.lee.library.extensions.show
-import com.lee.library.extensions.toast
-import com.lee.library.viewstate.stateObserve
+import com.lee.library.extensions.*
 import com.lee.library.tools.KeyboardTools.parentTouchHideSoftInput
+import com.lee.library.viewstate.collectState
 import com.lee.playandroid.square.R
 import com.lee.playandroid.square.databinding.FragmentCreateShareBinding
+import com.lee.playandroid.square.viewmodel.CreateShareViewAction
+import com.lee.playandroid.square.viewmodel.CreateShareViewEvent
 import com.lee.playandroid.square.viewmodel.CreateShareViewModel
+import com.lee.playandroid.square.viewmodel.CreateShareViewState
+import kotlinx.coroutines.flow.collect
 
 /**
  * @author jv.lee
@@ -35,26 +36,36 @@ class CreateShareFragment : BaseNavigationFragment(R.layout.fragment_create_shar
 
         binding.editShareContent.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_SEND) {
-                viewModel.requestSendShare(
-                    binding.editShareTitle.text.toString(),
-                    binding.editShareContent.text.toString()
-                )
+                val title = binding.editShareTitle.text.toString()
+                val content = binding.editShareContent.text.toString()
+                viewModel.dispatch(CreateShareViewAction.RequestSend(title, content))
             }
             return@setOnEditorActionListener false
         }
     }
 
     override fun bindData() {
-        viewModel.sendLive.stateObserve<String>(viewLifecycleOwner, success = {
-            toast(it)
-            dismiss(loadingDialog)
-            setFragmentResult(MyShareFragment.REQUEST_KEY_REFRESH, Bundle.EMPTY)
-            findNavController().popBackStack()
-        }, error = {
-            toast(it.message)
-            dismiss(loadingDialog)
-        }, loading = {
-            show(loadingDialog)
-        })
+        launchAndRepeatWithViewLifecycle {
+            viewModel.viewEvents.collect { event ->
+                when (event) {
+                    is CreateShareViewEvent.SendSuccess -> {
+                        toast(event.message)
+                        dismiss(loadingDialog)
+                        setFragmentResult(MyShareFragment.REQUEST_KEY_REFRESH, Bundle.EMPTY)
+                        findNavController().popBackStack()
+                    }
+                    is CreateShareViewEvent.SendFailed -> {
+                        toast(event.error.message)
+                        dismiss(loadingDialog)
+                    }
+                }
+            }
+        }
+
+        launchAndRepeatWithViewLifecycle {
+            viewModel.viewStates.collectState(CreateShareViewState::loading) {
+                if (it) show(loadingDialog)
+            }
+        }
     }
 }
