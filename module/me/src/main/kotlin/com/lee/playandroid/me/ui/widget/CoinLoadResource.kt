@@ -30,7 +30,7 @@ class CoinLoadResource : LoadResource {
     }
 
     override fun itemLayoutId(): Int {
-        return R.layout.layout_main_item_load
+        return R.layout.layout_item_load
     }
 
     override fun itemLoadMoreId(): Int {
