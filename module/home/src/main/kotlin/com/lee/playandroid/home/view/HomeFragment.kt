@@ -28,6 +28,7 @@ import com.lee.playandroid.library.common.entity.NavigationSelectEvent
 import com.lee.playandroid.library.common.entity.PageUiData
 import com.lee.playandroid.library.common.extensions.actionFailed
 import com.lee.playandroid.library.common.ui.extensions.setThemeGradientBackground
+import com.lee.playandroid.library.common.ui.widget.MainLoadResource
 import com.lee.playandroid.library.common.ui.widget.OffsetItemDecoration
 import com.lee.playandroid.router.navigateDetails
 import com.lee.playandroid.router.navigateSearch
@@ -60,6 +61,7 @@ class HomeFragment : BaseNavigationFragment(R.layout.fragment_home),
         if (binding.rvContainer.adapter == null) {
             binding.rvContainer.adapter = ContentAdapter(requireContext(), arrayListOf()).apply {
                 mAdapter = this
+                setLoadResource(MainLoadResource())
                 initStatusView()
                 pageLoading()
                 bindAllListener(this@HomeFragment)

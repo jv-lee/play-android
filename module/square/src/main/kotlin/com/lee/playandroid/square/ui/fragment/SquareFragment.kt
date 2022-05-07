@@ -18,6 +18,7 @@ import com.lee.playandroid.library.common.entity.NavigationSelectEvent
 import com.lee.playandroid.library.common.entity.PageData
 import com.lee.playandroid.library.common.extensions.actionFailed
 import com.lee.playandroid.library.common.ui.extensions.setThemeGradientBackground
+import com.lee.playandroid.library.common.ui.widget.MainLoadResource
 import com.lee.playandroid.library.common.ui.widget.OffsetItemDecoration
 import com.lee.playandroid.router.navigateDetails
 import com.lee.playandroid.router.navigateLogin
@@ -55,6 +56,7 @@ class SquareFragment : BaseNavigationFragment(R.layout.fragment_square),
         if (binding.rvContainer.adapter == null) {
             binding.rvContainer.adapter = SquareAdapter(requireContext(), arrayListOf()).apply {
                 mAdapter = this
+                setLoadResource(MainLoadResource())
                 initStatusView()
                 pageLoading()
                 bindAllListener(this@SquareFragment)

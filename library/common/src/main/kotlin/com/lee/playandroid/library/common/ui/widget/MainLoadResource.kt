@@ -1,16 +1,16 @@
-package com.lee.playandroid.me.ui.widget
+package com.lee.playandroid.library.common.ui.widget
 
 import com.lee.library.adapter.listener.LoadResource
-import com.lee.playandroid.me.R
+import com.lee.playandroid.library.common.R
 
 /**
  * @author jv.lee
  * @date 2021/11/30
  * @description
  */
-class CoinLoadResource : LoadResource {
+class MainLoadResource : LoadResource {
     override fun pageLayoutId(): Int {
-        return R.layout.layout_coin_page_load
+        return R.layout.layout_app_page_load
     }
 
     override fun pageLoadingId(): Int {

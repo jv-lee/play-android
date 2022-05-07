@@ -20,6 +20,7 @@ import com.lee.playandroid.library.common.entity.NavigationSelectEvent
 import com.lee.playandroid.library.common.entity.ParentTab
 import com.lee.playandroid.library.common.entity.Tab
 import com.lee.playandroid.library.common.extensions.actionFailed
+import com.lee.playandroid.library.common.ui.widget.MainLoadResource
 import com.lee.playandroid.library.common.ui.widget.OffsetItemDecoration
 import com.lee.playandroid.system.R
 import com.lee.playandroid.system.databinding.FragmentSystemContentBinding
@@ -56,6 +57,7 @@ class SystemContentFragment : BaseNavigationFragment(R.layout.fragment_system_co
             binding.rvContainer.adapter =
                 SystemContentAdapter(requireContext(), arrayListOf()).apply {
                     mAdapter = this
+                    setLoadResource(MainLoadResource())
                     initStatusView()
                     pageLoading()
                     bindAllListener(this@SystemContentFragment)

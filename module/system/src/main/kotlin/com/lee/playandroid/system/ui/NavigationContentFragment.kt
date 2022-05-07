@@ -13,6 +13,7 @@ import com.lee.library.widget.StatusLayout
 import com.lee.playandroid.library.common.entity.NavigationSelectEvent
 import com.lee.playandroid.library.common.extensions.actionFailed
 import com.lee.playandroid.library.common.ui.extensions.bindTabLinkage
+import com.lee.playandroid.library.common.ui.widget.MainLoadResource
 import com.lee.playandroid.system.R
 import com.lee.playandroid.system.databinding.FragmentNavigationContentBinding
 import com.lee.playandroid.system.ui.adapter.NavigationContentAdapter
@@ -62,6 +63,7 @@ class NavigationContentFragment : BaseNavigationFragment(R.layout.fragment_navig
             binding.rvContainer.adapter =
                 NavigationContentAdapter(requireContext(), arrayListOf()).apply {
                     mNavigationContentAdapter = this
+                    setLoadResource(MainLoadResource())
                 }.proxy
         }
 
