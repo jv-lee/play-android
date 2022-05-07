@@ -1,7 +1,6 @@
 package com.lee.playandroid
 
 import android.app.Activity
-import android.graphics.Color
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
@@ -16,9 +15,6 @@ import com.lee.library.interadp.SimpleFragmentLifecycleCallbacks
 import com.lee.library.net.HttpManager
 import com.lee.library.tools.DarkModeTools
 import com.lee.library.tools.ScreenDensityUtil
-import com.lee.library.tools.StatusTools.setDarkStatusIcon
-import com.lee.library.tools.StatusTools.setLightStatusIcon
-import com.lee.library.tools.StatusTools.setNavigationBarColor
 import com.lee.playandroid.block.AppBlockCanaryContext
 import com.lee.playandroid.library.common.extensions.appThemeSet
 import com.lee.playandroid.library.common.extensions.setCommonInterceptor

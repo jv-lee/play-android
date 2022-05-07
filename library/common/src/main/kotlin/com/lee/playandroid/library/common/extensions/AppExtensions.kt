@@ -3,7 +3,6 @@ package com.lee.playandroid.library.common.extensions
 import android.app.Activity
 import android.graphics.Color
 import com.lee.library.tools.DarkModeTools
-import com.lee.library.tools.ScreenDensityUtil
 import com.lee.library.tools.StatusTools.setDarkStatusIcon
 import com.lee.library.tools.StatusTools.setLightStatusIcon
 import com.lee.library.tools.StatusTools.setNavigationBarColor
