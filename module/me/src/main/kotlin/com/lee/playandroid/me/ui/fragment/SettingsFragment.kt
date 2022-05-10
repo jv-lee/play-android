@@ -1,7 +1,6 @@
 package com.lee.playandroid.me.ui.fragment
 
 import android.app.Dialog
-import android.util.Log
 import android.view.View
 import android.widget.CompoundButton
 import androidx.fragment.app.viewModels
@@ -104,13 +103,11 @@ class SettingsFragment : BaseNavigationFragment(R.layout.fragment_settings),
             }
             launchAndRepeatWithViewLifecycle {
                 collectState(SettingsViewState::isCacheConfirm) {
-                    Log.i("jv.lee", "response:isCacheConfirm:$it")
                     if (it) show(clearDialog) else dismiss(clearDialog)
                 }
             }
             launchAndRepeatWithViewLifecycle {
                 collectState(SettingsViewState::isLogoutConfirm) {
-                    Log.i("jv.lee", "response:isLogoutConfirm:$it")
                     if (it) show(logoutDialog) else dismiss(logoutDialog)
                 }
             }
