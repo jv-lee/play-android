@@ -6,6 +6,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.lee.library.adapter.base.BaseViewAdapter
 import com.lee.library.adapter.extensions.bindAllListener
+import com.lee.library.adapter.extensions.unbindAllListener
 import com.lee.library.adapter.page.submitData
 import com.lee.library.base.BaseNavigationFragment
 import com.lee.library.extensions.*
@@ -59,12 +60,8 @@ class SquareFragment : BaseNavigationFragment(R.layout.fragment_square),
                 setLoadResource(MainLoadResource())
                 initStatusView()
                 pageLoading()
-                bindAllListener(this@SquareFragment)
             }.proxy
         }
-
-        binding.ivCreate.setOnClickListener(this)
-        binding.refreshView.setOnRefreshListener(this)
     }
 
     override fun bindData() {
@@ -116,6 +113,20 @@ class SquareFragment : BaseNavigationFragment(R.layout.fragment_square),
 
     override fun itemReload() {
         viewModel.dispatch(SquareViewAction.RequestPage(LoadStatus.RELOAD))
+    }
+
+    override fun onFragmentResume() {
+        super.onFragmentResume()
+        mAdapter?.bindAllListener(this)
+        binding.ivCreate.setOnClickListener(this)
+        binding.refreshView.setOnRefreshListener(this)
+    }
+
+    override fun onFragmentStop() {
+        super.onFragmentStop()
+        mAdapter?.unbindAllListener()
+        binding.ivCreate.setOnClickListener(null)
+        binding.refreshView.setOnRefreshListener(null)
     }
 
     override fun onDestroyView() {

@@ -6,6 +6,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.lee.library.adapter.base.BaseViewAdapter
 import com.lee.library.adapter.extensions.bindAllListener
+import com.lee.library.adapter.extensions.unbindAllListener
 import com.lee.library.adapter.page.submitData
 import com.lee.library.adapter.page.submitFailed
 import com.lee.library.base.BaseNavigationFragment
@@ -64,12 +65,9 @@ class HomeFragment : BaseNavigationFragment(R.layout.fragment_home),
                 setLoadResource(MainLoadResource())
                 initStatusView()
                 pageLoading()
-                bindAllListener(this@HomeFragment)
+
             }.proxy
         }
-
-        binding.ivSearch.setOnClickListener(this)
-        binding.refreshView.setOnRefreshListener(this)
     }
 
     override fun bindData() {
@@ -114,6 +112,20 @@ class HomeFragment : BaseNavigationFragment(R.layout.fragment_home),
 
     override fun itemReload() {
         viewModel.dispatch(HomeViewAction.RequestPage(LoadStatus.RELOAD))
+    }
+
+    override fun onFragmentResume() {
+        super.onFragmentResume()
+        mAdapter?.bindAllListener(this)
+        binding.ivSearch.setOnClickListener(this)
+        binding.refreshView.setOnRefreshListener(this)
+    }
+
+    override fun onFragmentStop() {
+        super.onFragmentStop()
+        mAdapter?.unbindAllListener()
+        binding.ivSearch.setOnClickListener(null)
+        binding.refreshView.setOnRefreshListener(null)
     }
 
     override fun onDestroyView() {

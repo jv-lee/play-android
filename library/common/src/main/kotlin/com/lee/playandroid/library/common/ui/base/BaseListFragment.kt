@@ -4,6 +4,7 @@ import android.view.View
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.lee.library.adapter.base.BaseViewAdapter
 import com.lee.library.adapter.extensions.bindAllListener
+import com.lee.library.adapter.extensions.unbindAllListener
 import com.lee.library.adapter.page.submitData
 import com.lee.library.adapter.page.submitFailed
 import com.lee.library.base.BaseNavigationFragment
@@ -45,14 +46,11 @@ abstract class BaseListFragment : BaseNavigationFragment(R.layout.fragment_base_
     open fun findBinding() = binding
 
     override fun bindView() {
-        binding.refreshLayout.setOnRefreshListener(this)
-
         if (binding.rvContainer.adapter == null) {
             binding.rvContainer.adapter = createAdapter().apply {
                 mAdapter = this
                 initStatusView()
                 pageLoading()
-                bindAllListener(this@BaseListFragment)
             }.proxy
         }
     }
@@ -95,6 +93,18 @@ abstract class BaseListFragment : BaseNavigationFragment(R.layout.fragment_base_
 
     override fun onItemClick(view: View, entity: Content, position: Int) {
         navigationDetails(entity)
+    }
+
+    override fun onFragmentResume() {
+        super.onFragmentResume()
+        mAdapter.bindAllListener(this@BaseListFragment)
+        binding.refreshLayout.setOnRefreshListener(this)
+    }
+
+    override fun onFragmentStop() {
+        super.onFragmentStop()
+        mAdapter.unbindAllListener()
+        binding.refreshLayout.setOnRefreshListener(null)
     }
 
 }
