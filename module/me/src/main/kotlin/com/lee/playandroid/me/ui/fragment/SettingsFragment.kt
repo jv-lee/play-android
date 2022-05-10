@@ -1,6 +1,7 @@
 package com.lee.playandroid.me.ui.fragment
 
 import android.app.Dialog
+import android.util.Log
 import android.view.View
 import android.widget.CompoundButton
 import androidx.fragment.app.viewModels
@@ -8,6 +9,7 @@ import androidx.lifecycle.viewModelScope
 import com.lee.library.base.BaseNavigationFragment
 import com.lee.library.dialog.ChoiceDialog
 import com.lee.library.dialog.LoadingDialog
+import com.lee.library.dialog.core.CancelListener
 import com.lee.library.dialog.core.ConfirmListener
 import com.lee.library.extensions.*
 import com.lee.library.tools.DarkModeTools
@@ -102,11 +104,13 @@ class SettingsFragment : BaseNavigationFragment(R.layout.fragment_settings),
             }
             launchAndRepeatWithViewLifecycle {
                 collectState(SettingsViewState::isCacheConfirm) {
+                    Log.i("jv.lee", "response:isCacheConfirm:$it")
                     if (it) show(clearDialog) else dismiss(clearDialog)
                 }
             }
             launchAndRepeatWithViewLifecycle {
                 collectState(SettingsViewState::isLogoutConfirm) {
+                    Log.i("jv.lee", "response:isLogoutConfirm:$it")
                     if (it) show(logoutDialog) else dismiss(logoutDialog)
                 }
             }
@@ -180,6 +184,9 @@ class SettingsFragment : BaseNavigationFragment(R.layout.fragment_settings),
         clearDialog = ChoiceDialog(requireContext()).apply {
             setTitle(getString(R.string.settings_clear_title))
             setCancelable(true)
+            cancelListener = CancelListener {
+                viewModel.dispatch(SettingsViewAction.VisibleCacheDialog(visibility = false))
+            }
             confirmListener = ConfirmListener {
                 viewModel.dispatch(SettingsViewAction.RequestClearCache)
             }
@@ -189,6 +196,9 @@ class SettingsFragment : BaseNavigationFragment(R.layout.fragment_settings),
         logoutDialog = ChoiceDialog(requireContext()).apply {
             setTitle(getString(R.string.settings_logout_title))
             setCancelable(true)
+            cancelListener = CancelListener {
+                viewModel.dispatch(SettingsViewAction.VisibleLogoutDialog(visibility = false))
+            }
             confirmListener = ConfirmListener {
                 viewModel.viewModelScope.launch {
                     viewModel.accountService.requestLogout(requireActivity())
