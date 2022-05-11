@@ -17,10 +17,8 @@ import com.lee.library.tools.KeyboardTools.hideSoftInput
 import com.lee.library.tools.KeyboardTools.keyboardIsShow
 import com.lee.library.tools.KeyboardTools.keyboardPaddingBottom
 import com.lee.library.tools.KeyboardTools.parentTouchHideSoftInput
-import com.lee.library.tools.PreferencesTools
 import com.lee.library.viewstate.collectState
 import com.lee.playandroid.account.R
-import com.lee.playandroid.account.constants.Constants.SP_KEY_SAVE_INPUT_USERNAME
 import com.lee.playandroid.account.databinding.FragmentLoginBinding
 import com.lee.playandroid.account.viewmodel.*
 import com.lee.playandroid.library.common.entity.AccountViewAction
@@ -49,9 +47,6 @@ class LoginFragment : BaseNavigationFragment(R.layout.fragment_login), View.OnCl
     override fun bindView() {
         // 设置点击空白区域隐藏软键盘
         requireContext().parentTouchHideSoftInput(binding.root)
-
-        // 设置登陆过的账户名
-        binding.editUsername.setText(PreferencesTools.get<String>(SP_KEY_SAVE_INPUT_USERNAME))
 
         // 监听键盘弹起
         requireActivity().window.decorView.keyboardPaddingBottom(viewLifecycleOwner)
@@ -126,12 +121,8 @@ class LoginFragment : BaseNavigationFragment(R.layout.fragment_login), View.OnCl
 
     override fun onClick(view: View) {
         when (view) {
-            binding.tvRegister -> {
-                goRegister()
-            }
-            binding.tvLogin -> {
-                requestLogin()
-            }
+            binding.tvRegister -> goRegister()
+            binding.tvLogin -> requestLogin()
         }
     }
 

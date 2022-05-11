@@ -127,15 +127,9 @@ class RegisterFragment : BaseNavigationFragment(R.layout.fragment_register),
 
     override fun onClick(view: View) {
         when (view) {
-            binding.tvRegister -> {
-                requestRegister()
-            }
-            binding.tvLogin -> {
-                goLogin()
-            }
-            binding.root -> {
-                requireActivity().hideSoftInput()
-            }
+            binding.tvRegister -> requestRegister()
+            binding.tvLogin -> goLogin()
+            binding.root -> requireActivity().hideSoftInput()
         }
     }
 

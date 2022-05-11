@@ -103,7 +103,8 @@ class LoginViewModel : ViewModel() {
 }
 
 data class LoginViewState(
-    val username: String = "",
+    // 设置登陆过的账户名
+    val username: String = PreferencesTools.get(SP_KEY_SAVE_INPUT_USERNAME),
     val password: String = "",
     val isLoading: Boolean = false,
     val isLoginEnable: Boolean = false,
