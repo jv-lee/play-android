@@ -31,8 +31,7 @@ import kotlinx.coroutines.flow.collect
  * @date 2021/11/24
  * @description 注册页面
  */
-class RegisterFragment : BaseNavigationFragment(R.layout.fragment_register),
-    View.OnClickListener {
+class RegisterFragment : BaseNavigationFragment(R.layout.fragment_register), View.OnClickListener {
 
     private val viewModel by viewModels<RegisterViewModel>()
     private val accountViewModel by activityViewModels<AccountViewModel>()
