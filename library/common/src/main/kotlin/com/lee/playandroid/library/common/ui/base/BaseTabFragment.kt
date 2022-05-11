@@ -62,15 +62,14 @@ abstract class BaseTabFragment : BaseNavigationFragment(R.layout.fragment_base_t
 
         viewStates().run {
             launchAndRepeatWithViewLifecycle {
-                collectState(BaseTabViewState::loading) {
-                    if (it) binding.statusLayout.postLoading()
-                }
-            }
-
-            launchAndRepeatWithViewLifecycle {
                 collectState(BaseTabViewState::tabList) {
                     binding.statusLayout.setStatus(StatusLayout.STATUS_DATA)
                     bindAdapter(it)
+                }
+            }
+            launchAndRepeatWithViewLifecycle {
+                collectState(BaseTabViewState::loading) {
+                    if (it) binding.statusLayout.postLoading()
                 }
             }
         }
@@ -80,9 +79,12 @@ abstract class BaseTabFragment : BaseNavigationFragment(R.layout.fragment_base_t
         requestData()
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
+    override fun onDestroyView() {
+        super.onDestroyView()
         mediator?.detach()
+        binding.vpContainer.adapter = null
+        adapter = null
+        mediator = null
     }
 
     /**
@@ -91,6 +93,9 @@ abstract class BaseTabFragment : BaseNavigationFragment(R.layout.fragment_base_t
      */
     @SuppressLint("NotifyDataSetChanged")
     private fun bindAdapter(tabsData: List<Tab>) {
+        // 校验空数据及重复设置
+        if (binding.vpContainer.adapter != null || tabsData.isEmpty()) return
+
         val fragments = arrayListOf<Fragment>()
         val titles = arrayListOf<String>()
 
@@ -99,14 +104,9 @@ abstract class BaseTabFragment : BaseNavigationFragment(R.layout.fragment_base_t
             fragments.add(createChildFragment(it.id))
         }
 
-        if (binding.vpContainer.adapter == null) {
-            adapter = UiPagerAdapter2(childFragmentManager, viewLifecycleOwner.lifecycle)
-            adapter?.addAll(fragments)
-            binding.vpContainer.adapter = adapter
-        } else {
-            adapter?.addAll(fragments)
-            adapter?.notifyDataSetChanged()
-        }
+        adapter = UiPagerAdapter2(childFragmentManager, viewLifecycleOwner.lifecycle)
+        adapter?.addAll(fragments)
+        binding.vpContainer.adapter = adapter
 
         TabLayoutMediator(binding.tabLayout, binding.vpContainer) { tab, position ->
             if (titles.size > position) {
