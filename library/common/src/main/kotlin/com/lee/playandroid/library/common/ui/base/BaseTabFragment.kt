@@ -43,7 +43,7 @@ abstract class BaseTabFragment : BaseNavigationFragment(R.layout.fragment_base_t
 
     override fun bindView() {
         binding.statusLayout.setOnReloadListener(this)
-        binding.vpContainer.increaseOffscreenPageLimit()
+        binding.tabLayout.increaseOffscreenPageLimit(binding.vpContainer)
     }
 
     override fun bindData() {
