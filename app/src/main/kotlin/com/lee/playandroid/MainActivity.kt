@@ -12,11 +12,11 @@ import android.view.animation.AnimationUtils
 import android.view.animation.LinearInterpolator
 import androidx.activity.viewModels
 import androidx.annotation.DrawableRes
+import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.viewModelScope
 import com.lee.library.base.BaseActivity
 import com.lee.library.extensions.banBackEvent
 import com.lee.library.extensions.binding
-import com.lee.library.extensions.launchAndRepeatWithViewLifecycle
 import com.lee.library.extensions.startListener
 import com.lee.library.tools.DarkModeTools
 import com.lee.library.tools.ScreenDensityUtil
@@ -54,7 +54,7 @@ class MainActivity : BaseActivity() {
     override fun initSavedState(intent: Intent, savedInstanceState: Bundle?) {
         super.initSavedState(intent, savedInstanceState)
         if (savedInstanceState == null) {
-            viewModel.viewModelScope.launch {
+            lifecycleScope.launch {
                 // 进程初始化启动 请求配置
                 viewModel.accountService.requestAccountInfo(this@MainActivity)
 
@@ -66,7 +66,7 @@ class MainActivity : BaseActivity() {
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
-        viewModel.viewModelScope.launch {
+        lifecycleScope.launch {
             //程序以外重启 或重新创建MainActivity 无需获取配置，直接显示view
             viewModel.dispatch(SplashViewAction.NavigationMain())
         }
@@ -84,26 +84,28 @@ class MainActivity : BaseActivity() {
     }
 
     override fun bindData() {
-        launchAndRepeatWithViewLifecycle {
-            viewModel.viewEvents.collect { event ->
-                when (event) {
-                    // 取消携程任务通过动画显示主页内容
-                    is SplashViewEvent.NavigationMainEvent -> {
-                        viewModel.viewModelScope.cancel()
-                        animVisibleUi(event.duration)
-                    }
-                    // 通过动画显示闪屏广告内容
-                    is SplashViewEvent.VisibleSplashEvent -> {
-                        animVisibleSplash(event.splashAdRes)
+        lifecycleScope.run {
+            launchWhenResumed {
+                viewModel.viewEvents.collect { event ->
+                    when (event) {
+                        // 取消携程任务通过动画显示主页内容
+                        is SplashViewEvent.NavigationMainEvent -> {
+                            viewModel.viewModelScope.cancel()
+                            animVisibleUi(event.duration)
+                        }
+                        // 通过动画显示闪屏广告内容
+                        is SplashViewEvent.VisibleSplashEvent -> {
+                            animVisibleSplash(event.splashAdRes)
+                        }
                     }
                 }
             }
-        }
 
-        launchAndRepeatWithViewLifecycle {
-            // 监听闪屏广告倒计时数值更改
-            viewModel.viewStates.collectState(SplashViewState::timeText) {
-                splashBinding.tvTime.text = it
+            launchWhenResumed {
+                // 监听闪屏广告倒计时数值更改
+                viewModel.viewStates.collectState(SplashViewState::timeText) {
+                    splashBinding.tvTime.text = it
+                }
             }
         }
     }

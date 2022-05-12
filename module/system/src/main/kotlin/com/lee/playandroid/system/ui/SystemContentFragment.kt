@@ -3,6 +3,7 @@ package com.lee.playandroid.system.ui
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.navigation.fragment.findNavController
 import com.lee.library.adapter.base.BaseViewAdapter
 import com.lee.library.adapter.extensions.bindAllListener
@@ -65,10 +66,10 @@ class SystemContentFragment : BaseNavigationFragment(R.layout.fragment_system_co
         }
     }
 
-    override fun bindData() {
-        LiveDataBus.getInstance().injectBus(this)
+    override fun LifecycleCoroutineScope.bindData() {
+        LiveDataBus.getInstance().injectBus(this@SystemContentFragment)
 
-        launchAndRepeatWithViewLifecycle {
+        launchWhenResumed {
             viewModel.viewEvents.collect { event ->
                 when (event) {
                     is SystemContentViewEvent.RequestFailed -> {
@@ -79,7 +80,7 @@ class SystemContentFragment : BaseNavigationFragment(R.layout.fragment_system_co
             }
         }
 
-        launchAndRepeatWithViewLifecycle {
+        launchWhenResumed {
             viewModel.viewStates.collectState(
                 SystemContentViewState::isLoading,
                 SystemContentViewState::parentTabList

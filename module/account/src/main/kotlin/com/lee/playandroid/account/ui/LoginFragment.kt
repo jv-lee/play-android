@@ -5,12 +5,12 @@ import android.view.View
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.navigation.fragment.findNavController
 import com.lee.library.base.BaseNavigationFragment
 import com.lee.library.dialog.LoadingDialog
 import com.lee.library.extensions.binding
 import com.lee.library.extensions.dismiss
-import com.lee.library.extensions.launchAndRepeatWithViewLifecycle
 import com.lee.library.extensions.show
 import com.lee.library.interadp.TextWatcherAdapter
 import com.lee.library.tools.KeyboardTools.hideSoftInput
@@ -66,13 +66,13 @@ class LoginFragment : BaseNavigationFragment(R.layout.fragment_login), View.OnCl
         })
     }
 
-    override fun bindData() {
+    override fun LifecycleCoroutineScope.bindData() {
         // 监听登陆页面回调时是否已经成功注册 注册成功后直接退出至前置页面
         setFragmentResultListener(REQUEST_KEY_LOGIN) { _: String, _: Bundle ->
             findNavController().popBackStack()
         }
 
-        launchAndRepeatWithViewLifecycle {
+        launchWhenResumed {
             viewModel.viewEvents.collect { event ->
                 when (event) {
                     is LoginViewEvent.LoginSuccess -> {
@@ -89,23 +89,23 @@ class LoginFragment : BaseNavigationFragment(R.layout.fragment_login), View.OnCl
         }
 
         viewModel.viewStates.run {
-            launchAndRepeatWithViewLifecycle {
+            launchWhenResumed {
                 collectState(LoginViewState::isLoading) {
                     if (it) show(loadingDialog) else dismiss(loadingDialog)
                 }
             }
-            launchAndRepeatWithViewLifecycle {
+            launchWhenResumed {
                 collectState(LoginViewState::isLoginEnable) {
                     binding.tvLogin.setButtonDisable(!it)
                 }
             }
-            launchAndRepeatWithViewLifecycle {
+            launchWhenResumed {
                 collectState(LoginViewState::username) {
                     binding.editUsername.setText(it)
                     binding.editUsername.setSelection(it.length)
                 }
             }
-            launchAndRepeatWithViewLifecycle {
+            launchWhenResumed {
                 collectState(LoginViewState::password) {
                     binding.editPassword.setText(it)
                     binding.editPassword.setSelection(it.length)
@@ -114,16 +114,16 @@ class LoginFragment : BaseNavigationFragment(R.layout.fragment_login), View.OnCl
         }
     }
 
-    override fun onFragmentStop() {
-        super.onFragmentStop()
-        requireContext().hideSoftInput()
-    }
-
     override fun onClick(view: View) {
         when (view) {
             binding.tvRegister -> goRegister()
             binding.tvLogin -> requestLogin()
         }
+    }
+
+    override fun onFragmentStop() {
+        super.onFragmentStop()
+        requireContext().hideSoftInput()
     }
 
     /**

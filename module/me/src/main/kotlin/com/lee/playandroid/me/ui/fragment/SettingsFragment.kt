@@ -4,6 +4,7 @@ import android.app.Dialog
 import android.view.View
 import android.widget.CompoundButton
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.lifecycle.viewModelScope
 import com.lee.library.base.BaseNavigationFragment
 import com.lee.library.dialog.ChoiceDialog
@@ -58,8 +59,8 @@ class SettingsFragment : BaseNavigationFragment(R.layout.fragment_settings),
         createAlertDialog()
     }
 
-    override fun bindData() {
-        launchAndRepeatWithViewLifecycle {
+    override fun LifecycleCoroutineScope.bindData() {
+        launchWhenResumed {
             viewModel.viewEvents.collect { event ->
                 when (event) {
                     is SettingsViewEvent.ClearCacheResult -> {
@@ -69,7 +70,7 @@ class SettingsFragment : BaseNavigationFragment(R.layout.fragment_settings),
             }
         }
 
-        launchAndRepeatWithViewLifecycle {
+        launchWhenResumed {
             viewModel.accountService.getAccountViewEvents(requireActivity()).collect { event ->
                 when (event) {
                     is AccountViewEvent.LogoutSuccess -> {
@@ -83,12 +84,12 @@ class SettingsFragment : BaseNavigationFragment(R.layout.fragment_settings),
         }
 
         viewModel.accountService.getAccountViewStates(requireActivity()).run {
-            launchAndRepeatWithViewLifecycle {
+            launchWhenResumed {
                 collectState(AccountViewState::isLoading) {
                     if (it) show(loadingDialog) else dismiss(loadingDialog)
                 }
             }
-            launchAndRepeatWithViewLifecycle {
+            launchWhenResumed {
                 collectState(AccountViewState::isLogin) {
                     binding.lineLogout.visibility = if (it) View.VISIBLE else View.GONE
                 }
@@ -96,28 +97,27 @@ class SettingsFragment : BaseNavigationFragment(R.layout.fragment_settings),
         }
 
         viewModel.viewStates.run {
-            launchAndRepeatWithViewLifecycle {
+            launchWhenResumed {
                 collectState(SettingsViewState::isLoading) {
                     if (it) show(loadingDialog) else dismiss(loadingDialog)
                 }
             }
-            launchAndRepeatWithViewLifecycle {
+            launchWhenResumed {
                 collectState(SettingsViewState::isCacheConfirm) {
                     if (it) show(clearDialog) else dismiss(clearDialog)
                 }
             }
-            launchAndRepeatWithViewLifecycle {
+            launchWhenResumed {
                 collectState(SettingsViewState::isLogoutConfirm) {
                     if (it) show(logoutDialog) else dismiss(logoutDialog)
                 }
             }
-            launchAndRepeatWithViewLifecycle {
+            launchWhenResumed {
                 collectState(SettingsViewState::totalCacheSize) {
                     binding.lineClearCache.getRightTextView().text = it
                 }
             }
         }
-
     }
 
     override fun onClick(v: View) {

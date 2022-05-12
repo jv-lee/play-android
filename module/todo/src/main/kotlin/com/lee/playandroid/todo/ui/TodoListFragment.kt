@@ -4,13 +4,17 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.navigation.fragment.findNavController
 import com.lee.library.adapter.base.BaseViewAdapter
 import com.lee.library.adapter.extensions.bindAllListener
 import com.lee.library.adapter.page.submitData
 import com.lee.library.adapter.page.submitFailed
 import com.lee.library.base.BaseNavigationFragment
-import com.lee.library.extensions.*
+import com.lee.library.extensions.arguments
+import com.lee.library.extensions.binding
+import com.lee.library.extensions.findParentFragment
+import com.lee.library.extensions.toast
 import com.lee.library.utils.NetworkUtil
 import com.lee.library.viewstate.LoadStatus
 import com.lee.library.viewstate.collectState
@@ -84,8 +88,8 @@ class TodoListFragment : BaseNavigationFragment(R.layout.fragment_todo_list),
         binding.rvContainer.addItemDecoration(StickyDateItemDecoration(requireContext(), mAdapter))
     }
 
-    override fun bindData() {
-        launchAndRepeatWithViewLifecycle {
+    override fun LifecycleCoroutineScope.bindData() {
+        launchWhenResumed {
             viewModel.viewEvents.collect { event ->
                 when (event) {
                     is TodoListViewEvent.ActionFailed -> {
@@ -108,7 +112,7 @@ class TodoListFragment : BaseNavigationFragment(R.layout.fragment_todo_list),
             }
         }
 
-        launchAndRepeatWithViewLifecycle {
+        launchWhenResumed {
             viewModel.todoDataFlow.collectState<PageData<TodoData>>(success = {
                 mAdapter?.submitData(it, diff = true)
             }, error = {

@@ -1,6 +1,7 @@
 package com.lee.playandroid.me.ui.fragment
 
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.navigation.fragment.findNavController
 import com.lee.library.adapter.base.BaseViewAdapter
 import com.lee.library.adapter.extensions.bindAllListener
@@ -9,7 +10,6 @@ import com.lee.library.adapter.page.submitFailed
 import com.lee.library.base.BaseNavigationFragment
 import com.lee.library.extensions.binding
 import com.lee.library.extensions.inflate
-import com.lee.library.extensions.launchAndRepeatWithViewLifecycle
 import com.lee.library.tools.DarkModeTools
 import com.lee.library.tools.StatusTools.setDarkStatusIcon
 import com.lee.library.tools.StatusTools.setLightStatusIcon
@@ -72,8 +72,8 @@ class CoinFragment : BaseNavigationFragment(R.layout.fragment_coin),
         }
     }
 
-    override fun bindData() {
-        launchAndRepeatWithViewLifecycle {
+    override fun LifecycleCoroutineScope.bindData() {
+        launchWhenResumed {
             viewModel.coinRecordFlow.collectState<PageData<CoinRecord>>(success = {
                 mAdapter.submitData(it, diff = true)
             }, error = {
@@ -82,7 +82,7 @@ class CoinFragment : BaseNavigationFragment(R.layout.fragment_coin),
             })
         }
 
-        launchAndRepeatWithViewLifecycle {
+        launchWhenResumed {
             viewModel.accountService.getAccountViewStates(requireActivity())
                 .collectState(AccountViewState::accountData) {
                     headerBinding.tvIntegralCount.text = it?.coinInfo?.coinCount.toString()

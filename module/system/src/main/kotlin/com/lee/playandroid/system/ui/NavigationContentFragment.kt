@@ -2,6 +2,7 @@ package com.lee.playandroid.system.ui
 
 import android.annotation.SuppressLint
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.LifecycleCoroutineScope
 import com.lee.library.adapter.page.submitSinglePage
 import com.lee.library.base.BaseNavigationFragment
 import com.lee.library.extensions.*
@@ -73,10 +74,10 @@ class NavigationContentFragment : BaseNavigationFragment(R.layout.fragment_navig
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    override fun bindData() {
-        LiveDataBus.getInstance().injectBus(this)
+    override fun LifecycleCoroutineScope.bindData() {
+        LiveDataBus.getInstance().injectBus(this@NavigationContentFragment)
 
-        launchAndRepeatWithViewLifecycle {
+        launchWhenResumed {
             viewModel.viewEvents.collect { event ->
                 when (event) {
                     is NavigationContentViewEvent.RequestFailed -> {
@@ -90,14 +91,14 @@ class NavigationContentFragment : BaseNavigationFragment(R.layout.fragment_navig
         }
 
         viewModel.viewStates.run {
-            launchAndRepeatWithViewLifecycle {
+            launchWhenResumed {
                 collectState(NavigationContentViewState::navigationItemList) {
                     binding.statusLayout.setStatus(StatusLayout.STATUS_DATA)
                     mNavigationTabAdapter?.updateNotify(it)
                     mNavigationContentAdapter?.submitSinglePage(it)
                 }
             }
-            launchAndRepeatWithViewLifecycle {
+            launchWhenResumed {
                 collectState(NavigationContentViewState::selectedTabIndex) {
                     mNavigationTabAdapter?.selectItem(it)
                 }

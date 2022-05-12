@@ -4,9 +4,9 @@ import android.content.DialogInterface
 import android.os.Bundle
 import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import com.lee.library.base.BaseAlertFragment
 import com.lee.library.extensions.binding
-import com.lee.library.extensions.launchAndRepeatWithViewLifecycle
 import com.lee.library.viewstate.collectState
 import com.lee.library.widget.WheelView
 import com.lee.playandroid.todo.R
@@ -37,7 +37,7 @@ class SelectTodoTypeDialog :
     }
 
     override fun bindData() {
-        launchAndRepeatWithViewLifecycle {
+        viewLifecycleOwner.lifecycleScope.launchWhenResumed {
             viewModel.viewStates.collectState(SelectTodoTypeViewState::todoTypeWheelData) {
                 binding.wheelView.bindData(
                     it.todoTypes, object : WheelView.DataFormat<TodoTypeData> {

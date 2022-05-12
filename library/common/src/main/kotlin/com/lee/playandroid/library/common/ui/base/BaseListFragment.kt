@@ -1,6 +1,7 @@
 package com.lee.playandroid.library.common.ui.base
 
 import android.view.View
+import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.lee.library.adapter.base.BaseViewAdapter
 import com.lee.library.adapter.extensions.bindAllListener
@@ -55,9 +56,9 @@ abstract class BaseListFragment : BaseNavigationFragment(R.layout.fragment_base_
         }
     }
 
-    override fun bindData() {
+    override fun LifecycleCoroutineScope.bindData() {
         //列表数据更新
-        launchAndRepeatWithViewLifecycle {
+        launchWhenResumed {
             dataFlow().collectState<PageData<Content>>(success = {
                 binding.refreshLayout.isRefreshing = false
                 mAdapter.submitData(it, diff = true)

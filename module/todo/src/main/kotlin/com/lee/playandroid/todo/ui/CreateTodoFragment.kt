@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.widget.DatePicker
 import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.navigation.fragment.findNavController
 import com.lee.library.base.BaseNavigationFragment
 import com.lee.library.dialog.LoadingDialog
@@ -96,8 +97,8 @@ class CreateTodoFragment : BaseNavigationFragment(R.layout.fragment_create_todo)
 
     }
 
-    override fun bindData() {
-        launchAndRepeatWithViewLifecycle {
+    override fun LifecycleCoroutineScope.bindData() {
+        launchWhenResumed {
             viewModel.viewEvents.collect { event ->
                 when (event) {
                     is CreateTodoViewEvent.RequestSuccess -> {

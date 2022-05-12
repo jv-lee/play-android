@@ -4,14 +4,14 @@ import android.os.Bundle
 import android.view.View
 import android.view.inputmethod.EditorInfo.IME_ACTION_SEARCH
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.navigation.fragment.findNavController
 import com.lee.library.adapter.page.submitSinglePage
 import com.lee.library.base.BaseNavigationFragment
 import com.lee.library.extensions.binding
-import com.lee.library.extensions.launchAndRepeatWithViewLifecycle
-import com.lee.library.viewstate.collectState
 import com.lee.library.tools.KeyboardTools.hideSoftInput
 import com.lee.library.tools.KeyboardTools.parentTouchHideSoftInput
+import com.lee.library.viewstate.collectState
 import com.lee.playandroid.library.common.extensions.actionFailed
 import com.lee.playandroid.search.R
 import com.lee.playandroid.search.databinding.FragmentSearchBinding
@@ -77,8 +77,8 @@ class SearchFragment : BaseNavigationFragment(R.layout.fragment_search) {
         }
     }
 
-    override fun bindData() {
-        launchAndRepeatWithViewLifecycle {
+    override fun LifecycleCoroutineScope.bindData() {
+        launchWhenResumed {
             viewModel.viewEvents.collect { event ->
                 when (event) {
                     is SearchViewEvent.Navigation -> {
@@ -92,12 +92,12 @@ class SearchFragment : BaseNavigationFragment(R.layout.fragment_search) {
         }
 
         viewModel.viewStates.run {
-            launchAndRepeatWithViewLifecycle {
+            launchWhenResumed {
                 collectState(SearchViewState::searchHotList) {
                     mHotAdapter?.submitSinglePage(it)
                 }
             }
-            launchAndRepeatWithViewLifecycle {
+            launchWhenResumed {
                 collectState(SearchViewState::searchHistoryList) {
                     viewEmptyVisible(it.isEmpty())
                     mHistoryAdapter?.submitSinglePage(it)

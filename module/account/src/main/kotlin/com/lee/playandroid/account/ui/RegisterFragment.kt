@@ -5,12 +5,12 @@ import android.view.View
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.navigation.fragment.findNavController
 import com.lee.library.base.BaseNavigationFragment
 import com.lee.library.dialog.LoadingDialog
 import com.lee.library.extensions.binding
 import com.lee.library.extensions.dismiss
-import com.lee.library.extensions.launchAndRepeatWithViewLifecycle
 import com.lee.library.extensions.show
 import com.lee.library.interadp.TextWatcherAdapter
 import com.lee.library.tools.KeyboardTools.hideSoftInput
@@ -68,8 +68,8 @@ class RegisterFragment : BaseNavigationFragment(R.layout.fragment_register), Vie
         })
     }
 
-    override fun bindData() {
-        launchAndRepeatWithViewLifecycle {
+    override fun LifecycleCoroutineScope.bindData() {
+        launchWhenResumed {
             // 监听注册成功后获取的账户信息
             viewModel.viewEvents.collect { event ->
                 when (event) {
@@ -88,29 +88,29 @@ class RegisterFragment : BaseNavigationFragment(R.layout.fragment_register), Vie
         }
 
         viewModel.viewStates.run {
-            launchAndRepeatWithViewLifecycle {
+            launchWhenResumed {
                 collectState(RegisterViewState::isLoading) {
                     if (it) show(loadingDialog) else dismiss(loadingDialog)
                 }
             }
-            launchAndRepeatWithViewLifecycle {
+            launchWhenResumed {
                 collectState(RegisterViewState::isRegisterEnable) {
                     binding.tvRegister.setButtonDisable(!it)
                 }
             }
-            launchAndRepeatWithViewLifecycle {
+            launchWhenResumed {
                 collectState(RegisterViewState::username) {
                     binding.editUsername.setText(it)
                     binding.editUsername.setSelection(it.length)
                 }
             }
-            launchAndRepeatWithViewLifecycle {
+            launchWhenResumed {
                 collectState(RegisterViewState::password) {
                     binding.editPassword.setText(it)
                     binding.editPassword.setSelection(it.length)
                 }
             }
-            launchAndRepeatWithViewLifecycle {
+            launchWhenResumed {
                 collectState(RegisterViewState::rePassword) {
                     binding.editRePassword.setText(it)
                     binding.editRePassword.setSelection(it.length)
@@ -119,17 +119,17 @@ class RegisterFragment : BaseNavigationFragment(R.layout.fragment_register), Vie
         }
     }
 
-    override fun onFragmentStop() {
-        super.onFragmentStop()
-        requireContext().hideSoftInput()
-    }
-
     override fun onClick(view: View) {
         when (view) {
             binding.tvRegister -> requestRegister()
             binding.tvLogin -> goLogin()
             binding.root -> requireActivity().hideSoftInput()
         }
+    }
+
+    override fun onFragmentStop() {
+        super.onFragmentStop()
+        requireContext().hideSoftInput()
     }
 
     /**

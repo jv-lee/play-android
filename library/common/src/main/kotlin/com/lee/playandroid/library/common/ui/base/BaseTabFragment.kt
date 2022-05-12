@@ -2,12 +2,12 @@ package com.lee.playandroid.library.common.ui.base
 
 import android.annotation.SuppressLint
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.LifecycleCoroutineScope
 import com.google.android.material.tabs.TabLayoutMediator
 import com.lee.library.adapter.core.UiPagerAdapter2
 import com.lee.library.base.BaseNavigationFragment
 import com.lee.library.extensions.binding
 import com.lee.library.extensions.increaseOffscreenPageLimit
-import com.lee.library.extensions.launchAndRepeatWithViewLifecycle
 import com.lee.library.viewstate.collectState
 import com.lee.library.widget.StatusLayout
 import com.lee.playandroid.library.common.R
@@ -46,8 +46,8 @@ abstract class BaseTabFragment : BaseNavigationFragment(R.layout.fragment_base_t
         binding.tabLayout.increaseOffscreenPageLimit(binding.vpContainer)
     }
 
-    override fun bindData() {
-        launchAndRepeatWithViewLifecycle {
+    override fun LifecycleCoroutineScope.bindData() {
+        launchWhenResumed {
             viewEvents().collect { event ->
                 when (event) {
                     is BaseTabViewEvent.RequestFailed -> {
@@ -61,13 +61,13 @@ abstract class BaseTabFragment : BaseNavigationFragment(R.layout.fragment_base_t
         }
 
         viewStates().run {
-            launchAndRepeatWithViewLifecycle {
+            launchWhenResumed {
                 collectState(BaseTabViewState::tabList) {
                     binding.statusLayout.setStatus(StatusLayout.STATUS_DATA)
                     bindAdapter(it)
                 }
             }
-            launchAndRepeatWithViewLifecycle {
+            launchWhenResumed {
                 collectState(BaseTabViewState::loading) {
                     if (it) binding.statusLayout.postLoading()
                 }

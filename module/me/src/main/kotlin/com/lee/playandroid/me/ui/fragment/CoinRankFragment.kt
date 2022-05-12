@@ -1,6 +1,7 @@
 package com.lee.playandroid.me.ui.fragment
 
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.lee.library.adapter.base.BaseViewAdapter
@@ -9,7 +10,6 @@ import com.lee.library.adapter.page.submitData
 import com.lee.library.adapter.page.submitFailed
 import com.lee.library.base.BaseNavigationFragment
 import com.lee.library.extensions.binding
-import com.lee.library.extensions.launchAndRepeatWithViewLifecycle
 import com.lee.library.viewstate.LoadStatus
 import com.lee.library.viewstate.collectState
 import com.lee.library.widget.toolbar.TitleToolbar
@@ -64,8 +64,8 @@ class CoinRankFragment : BaseNavigationFragment(R.layout.fragment_coin_rank),
         }
     }
 
-    override fun bindData() {
-        launchAndRepeatWithViewLifecycle {
+    override fun LifecycleCoroutineScope.bindData() {
+        launchWhenResumed {
             viewModel.coinRankFlow.collectState<PageData<CoinRank>>(success = {
                 mAdapter.submitData(it, diff = true)
             }, error = {

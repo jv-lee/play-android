@@ -8,7 +8,6 @@ import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.*
 import com.lee.library.R
-import com.lee.library.base.BaseNavigationFragment
 import com.lee.library.utils.ActivityUtil
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
@@ -80,20 +79,6 @@ inline fun Fragment.launchAndRepeatWithViewLifecycle(
 ) {
     viewLifecycleOwner.lifecycleScope.launch {
         viewLifecycleOwner.lifecycle.repeatOnLifecycle(minActiveState) {
-            block()
-        }
-    }
-}
-
-/**
- * 携程flow fragment生命周期绑定
- */
-inline fun BaseNavigationFragment.launchAndRepeatWithViewLifecycle(
-    minActiveState: Lifecycle.State = Lifecycle.State.STARTED,
-    crossinline block: suspend CoroutineScope.() -> Unit
-) {
-    getNavigationLifecycle().lifecycleScope.launch {
-        getNavigationLifecycle().lifecycle.repeatOnLifecycle(minActiveState) {
             block()
         }
     }

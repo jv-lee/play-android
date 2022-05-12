@@ -2,6 +2,7 @@ package com.lee.playandroid.me.ui.fragment
 
 import android.view.View
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.navigation.fragment.findNavController
 import com.lee.library.adapter.base.BaseViewAdapter
 import com.lee.library.adapter.extensions.bindAllListener
@@ -9,7 +10,6 @@ import com.lee.library.adapter.page.submitData
 import com.lee.library.adapter.page.submitFailed
 import com.lee.library.base.BaseNavigationFragment
 import com.lee.library.extensions.binding
-import com.lee.library.extensions.launchAndRepeatWithViewLifecycle
 import com.lee.library.extensions.toast
 import com.lee.library.utils.NetworkUtil
 import com.lee.library.viewstate.LoadStatus
@@ -58,8 +58,8 @@ class CollectFragment : BaseNavigationFragment(R.layout.fragment_collect),
         }
     }
 
-    override fun bindData() {
-        launchAndRepeatWithViewLifecycle {
+    override fun LifecycleCoroutineScope.bindData() {
+        launchWhenResumed {
             viewModel.viewEvents.collect { event ->
                 when (event) {
                     is CollectViewEvent.UnCollectSuccess -> {
@@ -72,7 +72,7 @@ class CollectFragment : BaseNavigationFragment(R.layout.fragment_collect),
                 }
             }
         }
-        launchAndRepeatWithViewLifecycle {
+        launchWhenResumed {
             viewModel.collectFlow.collectState<PageData<Content>>(success = {
                 mAdapter?.submitData(it, diff = true)
             }, error = {

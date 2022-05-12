@@ -2,6 +2,7 @@ package com.lee.playandroid.details.ui
 
 import android.view.View
 import android.widget.FrameLayout
+import androidx.lifecycle.LifecycleCoroutineScope
 import com.just.agentweb.AgentWeb
 import com.lee.library.base.BaseNavigationFragment
 import com.lee.library.extensions.*
@@ -69,8 +70,8 @@ class DetailsFragment : BaseNavigationFragment(R.layout.fragment_details) {
             .apply { webCreator.webView.setWebBackEvent() }
     }
 
-    override fun bindData() {
-        launchAndRepeatWithViewLifecycle {
+    override fun LifecycleCoroutineScope.bindData() {
+        launchWhenResumed {
             viewModel.viewEvents.collect { event ->
                 when (event) {
                     is DetailsViewEvent.ShareDetailsEvent -> {
@@ -86,7 +87,7 @@ class DetailsFragment : BaseNavigationFragment(R.layout.fragment_details) {
             }
         }
 
-        launchAndRepeatWithViewLifecycle {
+        launchWhenResumed {
             viewModel.viewStates.collectState(
                 DetailsViewState::title,
                 DetailsViewState::actionEnable

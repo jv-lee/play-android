@@ -2,6 +2,7 @@ package com.lee.playandroid.square.ui.fragment
 
 import android.view.View
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.navigation.fragment.findNavController
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.lee.library.adapter.base.BaseViewAdapter
@@ -9,7 +10,10 @@ import com.lee.library.adapter.extensions.bindAllListener
 import com.lee.library.adapter.extensions.unbindAllListener
 import com.lee.library.adapter.page.submitData
 import com.lee.library.base.BaseNavigationFragment
-import com.lee.library.extensions.*
+import com.lee.library.extensions.binding
+import com.lee.library.extensions.delayBackEvent
+import com.lee.library.extensions.smoothScrollToTop
+import com.lee.library.extensions.toast
 import com.lee.library.livedatabus.InjectBus
 import com.lee.library.livedatabus.LiveDataBus
 import com.lee.library.viewstate.LoadStatus
@@ -64,10 +68,10 @@ class SquareFragment : BaseNavigationFragment(R.layout.fragment_square),
         }
     }
 
-    override fun bindData() {
-        LiveDataBus.getInstance().injectBus(this)
+    override fun LifecycleCoroutineScope.bindData() {
+        LiveDataBus.getInstance().injectBus(this@SquareFragment)
 
-        launchAndRepeatWithViewLifecycle {
+        launchWhenResumed {
             viewModel.squareFlow.collectState<PageData<Content>>(success = {
                 binding.refreshView.isRefreshing = false
                 mAdapter?.submitData(it)

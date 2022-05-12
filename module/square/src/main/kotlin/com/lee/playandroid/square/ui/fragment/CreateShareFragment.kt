@@ -4,10 +4,14 @@ import android.os.Bundle
 import android.view.inputmethod.EditorInfo
 import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.navigation.fragment.findNavController
 import com.lee.library.base.BaseNavigationFragment
 import com.lee.library.dialog.LoadingDialog
-import com.lee.library.extensions.*
+import com.lee.library.extensions.binding
+import com.lee.library.extensions.dismiss
+import com.lee.library.extensions.show
+import com.lee.library.extensions.toast
 import com.lee.library.tools.KeyboardTools.parentTouchHideSoftInput
 import com.lee.library.viewstate.collectState
 import com.lee.playandroid.square.R
@@ -44,8 +48,8 @@ class CreateShareFragment : BaseNavigationFragment(R.layout.fragment_create_shar
         }
     }
 
-    override fun bindData() {
-        launchAndRepeatWithViewLifecycle {
+    override fun LifecycleCoroutineScope.bindData() {
+        launchWhenResumed {
             viewModel.viewEvents.collect { event ->
                 when (event) {
                     is CreateShareViewEvent.SendSuccess -> {
@@ -62,7 +66,7 @@ class CreateShareFragment : BaseNavigationFragment(R.layout.fragment_create_shar
             }
         }
 
-        launchAndRepeatWithViewLifecycle {
+        launchWhenResumed {
             viewModel.viewStates.collectState(CreateShareViewState::loading) {
                 if (it) show(loadingDialog)
             }

@@ -1,6 +1,7 @@
 package com.lee.playandroid.search.ui
 
 import android.view.View
+import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.navigation.fragment.findNavController
 import com.lee.library.adapter.base.BaseViewAdapter
 import com.lee.library.adapter.extensions.bindAllListener
@@ -9,7 +10,6 @@ import com.lee.library.adapter.page.submitFailed
 import com.lee.library.base.BaseNavigationFragment
 import com.lee.library.extensions.arguments
 import com.lee.library.extensions.binding
-import com.lee.library.extensions.launchAndRepeatWithViewLifecycle
 import com.lee.library.extensions.viewModelByFactory
 import com.lee.library.viewstate.LoadStatus
 import com.lee.library.viewstate.collectState
@@ -60,8 +60,8 @@ class SearchResultFragment : BaseNavigationFragment(R.layout.fragment_search_res
         }
     }
 
-    override fun bindData() {
-        launchAndRepeatWithViewLifecycle {
+    override fun LifecycleCoroutineScope.bindData() {
+        launchWhenResumed {
             viewModel.searchResultFlow.collectState<PageData<Content>>(success = {
                 mAdapter?.submitData(it, diff = true)
             }, error = {

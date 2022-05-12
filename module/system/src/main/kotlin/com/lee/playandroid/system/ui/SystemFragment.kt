@@ -1,6 +1,7 @@
 package com.lee.playandroid.system.ui
 
 import android.annotation.SuppressLint
+import androidx.lifecycle.LifecycleCoroutineScope
 import com.lee.library.adapter.core.UiPagerAdapter2
 import com.lee.library.base.BaseNavigationFragment
 import com.lee.library.extensions.bindRadioGroup
@@ -33,7 +34,7 @@ class SystemFragment : BaseNavigationFragment(R.layout.fragment_system) {
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    override fun bindData() {
+    override fun LifecycleCoroutineScope.bindData() {
         mAdapter = UiPagerAdapter2(childFragmentManager, viewLifecycleOwner.lifecycle)
         mAdapter?.addAll(mutableListOf(SystemContentFragment(), NavigationContentFragment()))
         binding.vpContainer.adapter = mAdapter

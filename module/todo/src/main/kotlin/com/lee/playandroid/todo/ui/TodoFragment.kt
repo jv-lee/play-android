@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResultListener
+import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.navigation.fragment.findNavController
 import com.lee.library.adapter.core.UiPagerAdapter2
 import com.lee.library.base.BaseNavigationFragment
@@ -58,7 +59,7 @@ class TodoFragment : BaseNavigationFragment(R.layout.fragment_todo) {
 
 
     @SuppressLint("NotifyDataSetChanged")
-    override fun bindData() {
+    override fun LifecycleCoroutineScope.bindData() {
         createTodoPages()
 
         val listener = fun(requestKey: String, bundle: Bundle) {

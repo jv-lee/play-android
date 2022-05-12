@@ -2,6 +2,7 @@ package com.lee.playandroid.me.ui.fragment
 
 import android.view.View
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.navigation.fragment.findNavController
 import com.lee.library.base.BaseNavigationFragment
 import com.lee.library.extensions.*
@@ -43,8 +44,8 @@ class MeFragment : BaseNavigationFragment(R.layout.fragment_me),
         binding.lineSettings.setOnClickListener(this)
     }
 
-    override fun bindData() {
-        launchAndRepeatWithViewLifecycle {
+    override fun LifecycleCoroutineScope.bindData() {
+        launchWhenResumed {
             viewModel.accountService.getAccountViewStates(requireActivity()).collectState(
                 AccountViewState::isLogin,
                 AccountViewState::accountData

@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.navigation.fragment.findNavController
 import com.lee.library.adapter.base.BaseViewAdapter
 import com.lee.library.adapter.extensions.bindAllListener
@@ -11,7 +12,6 @@ import com.lee.library.adapter.page.submitData
 import com.lee.library.adapter.page.submitFailed
 import com.lee.library.base.BaseNavigationFragment
 import com.lee.library.extensions.binding
-import com.lee.library.extensions.launchAndRepeatWithViewLifecycle
 import com.lee.library.extensions.toast
 import com.lee.library.utils.NetworkUtil
 import com.lee.library.viewstate.LoadStatus
@@ -73,13 +73,13 @@ class MyShareFragment : BaseNavigationFragment(R.layout.fragment_my_share),
         }
     }
 
-    override fun bindData() {
+    override fun LifecycleCoroutineScope.bindData() {
         // 监听登陆页面回调时是否已经发布成功，刷新数据列表
         setFragmentResultListener(REQUEST_KEY_REFRESH) { _: String, _: Bundle ->
             viewModel.dispatch(MyShareViewAction.RequestPage(LoadStatus.INIT))
         }
 
-        launchAndRepeatWithViewLifecycle {
+        launchWhenResumed {
             viewModel.viewEvents.collect { event ->
                 when (event) {
                     is MyShareViewEvent.DeleteShareSuccess -> {
@@ -93,7 +93,7 @@ class MyShareFragment : BaseNavigationFragment(R.layout.fragment_my_share),
             }
         }
 
-        launchAndRepeatWithViewLifecycle {
+        launchWhenResumed {
             viewModel.myShareFlow.collectState<PageData<Content>>(success = {
                 mAdapter?.submitData(it, diff = true)
             }, error = {
