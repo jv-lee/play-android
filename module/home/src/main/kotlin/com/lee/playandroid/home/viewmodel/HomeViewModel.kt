@@ -76,9 +76,7 @@ class HomeViewModel : ViewModel() {
 
         //获取网络item数据
         val textItemData = api.getContentDataAsync(page).checkData().apply {
-            data.forEach {
-                dataList.add(HomeContent(content = it))
-            }
+            data.map { dataList.add(HomeContent(content = it)) }
         }
 
         //构建分页ui数据
