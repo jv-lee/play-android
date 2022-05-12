@@ -13,6 +13,7 @@ import com.lee.library.adapter.page.submitFailed
 import com.lee.library.base.BaseNavigationFragment
 import com.lee.library.extensions.binding
 import com.lee.library.extensions.toast
+import com.lee.library.interadp.setClickListener
 import com.lee.library.utils.NetworkUtil
 import com.lee.library.viewstate.LoadStatus
 import com.lee.library.viewstate.collectState
@@ -56,11 +57,9 @@ class MyShareFragment : BaseNavigationFragment(R.layout.fragment_my_share),
     private var mAdapter: SimpleTextAdapter? = null
 
     override fun bindView() {
-        binding.toolbar.setClickListener(object : TitleToolbar.ClickListener() {
-            override fun moreClick() {
-                findNavController().navigate(R.id.action_my_share_fragment_to_create_share_fragment)
-            }
-        })
+        binding.toolbar.setClickListener {
+            moreClick { findNavController().navigate(R.id.action_my_share_fragment_to_create_share_fragment) }
+        }
 
         binding.rvContainer.addOnItemTouchListener(slidingPaneItemTouchListener)
         if (binding.rvContainer.adapter == null) {

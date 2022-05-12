@@ -9,8 +9,8 @@ import androidx.navigation.fragment.findNavController
 import com.lee.library.adapter.core.UiPagerAdapter2
 import com.lee.library.base.BaseNavigationFragment
 import com.lee.library.extensions.binding
+import com.lee.library.interadp.setClickListener
 import com.lee.library.tools.PreferencesTools
-import com.lee.library.widget.toolbar.TitleToolbar
 import com.lee.playandroid.library.common.entity.TodoData
 import com.lee.playandroid.todo.R
 import com.lee.playandroid.todo.constants.Constants.SP_KEY_TODO_TYPE
@@ -45,16 +45,15 @@ class TodoFragment : BaseNavigationFragment(R.layout.fragment_todo) {
     override fun bindView() {
         initTodoTitle()
 
+        binding.toolbar.setClickListener {
+            moreClick { findNavController().navigate(R.id.action_todo_fragment_to_select_todo_type_dialog) }
+        }
+
         binding.navigationBar.bindViewPager(binding.vpContainer)
 
         binding.floatingButton.setOnClickListener {
             startCreateTodoPage()
         }
-        binding.toolbar.setClickListener(object : TitleToolbar.ClickListener() {
-            override fun moreClick() {
-                findNavController().navigate(R.id.action_todo_fragment_to_select_todo_type_dialog)
-            }
-        })
     }
 
 

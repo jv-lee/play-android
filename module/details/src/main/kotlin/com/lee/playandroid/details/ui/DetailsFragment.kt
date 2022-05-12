@@ -1,14 +1,13 @@
 package com.lee.playandroid.details.ui
 
-import android.view.View
 import android.widget.FrameLayout
 import androidx.lifecycle.LifecycleCoroutineScope
 import com.just.agentweb.AgentWeb
 import com.lee.library.base.BaseNavigationFragment
 import com.lee.library.extensions.*
+import com.lee.library.interadp.setClickListener
 import com.lee.library.utils.ShareUtil
 import com.lee.library.viewstate.collectState
-import com.lee.library.widget.toolbar.TitleToolbar
 import com.lee.playandroid.details.R
 import com.lee.playandroid.details.databinding.FragmentDetailsBinding
 import com.lee.playandroid.details.viewmodel.DetailsViewAction
@@ -40,25 +39,20 @@ class DetailsFragment : BaseNavigationFragment(R.layout.fragment_details) {
 
     private lateinit var web: AgentWeb
 
-    private val toolbarClickListener = object : TitleToolbar.ClickListener() {
-        override fun moreClick() {
-            binding.toolbar.showMenu(-40, 10)
-        }
-
-        override fun menuItemClick(view: View) {
-            when (view.id) {
-                R.id.collect -> {
-                    viewModel.dispatch(DetailsViewAction.UpdateCollectStatus)
-                }
-                R.id.share -> {
-                    viewModel.dispatch(DetailsViewAction.RequestShareDetails)
+    override fun bindView() {
+        binding.toolbar.setClickListener {
+            moreClick { binding.toolbar.showMenu(-40, 10) }
+            menuItemClick { view ->
+                when (view.id) {
+                    R.id.collect -> {
+                        viewModel.dispatch(DetailsViewAction.UpdateCollectStatus)
+                    }
+                    R.id.share -> {
+                        viewModel.dispatch(DetailsViewAction.RequestShareDetails)
+                    }
                 }
             }
         }
-    }
-
-    override fun bindView() {
-        binding.toolbar.setClickListener(toolbarClickListener)
 
         web = AgentWeb.with(this)
             .setAgentWebParent(binding.frameContainer, FrameLayout.LayoutParams(-1, -1))

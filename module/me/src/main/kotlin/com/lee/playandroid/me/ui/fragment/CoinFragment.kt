@@ -10,12 +10,12 @@ import com.lee.library.adapter.page.submitFailed
 import com.lee.library.base.BaseNavigationFragment
 import com.lee.library.extensions.binding
 import com.lee.library.extensions.inflate
+import com.lee.library.interadp.setClickListener
 import com.lee.library.tools.DarkModeTools
 import com.lee.library.tools.StatusTools.setDarkStatusIcon
 import com.lee.library.tools.StatusTools.setLightStatusIcon
 import com.lee.library.viewstate.LoadStatus
 import com.lee.library.viewstate.collectState
-import com.lee.library.widget.toolbar.TitleToolbar
 import com.lee.playandroid.library.common.constants.ApiConstants
 import com.lee.playandroid.library.common.entity.AccountViewState
 import com.lee.playandroid.library.common.entity.CoinRecord
@@ -48,14 +48,14 @@ class CoinFragment : BaseNavigationFragment(R.layout.fragment_coin),
     private lateinit var mAdapter: CoinRecordAdapter
 
     override fun bindView() {
-        binding.toolbar.setClickListener(object : TitleToolbar.ClickListener() {
-            override fun moreClick() {
+        binding.toolbar.setClickListener {
+            moreClick {
                 findNavController().navigateDetails(
                     getString(R.string.coin_help_title),
                     ApiConstants.URI_COIN_HELP
                 )
             }
-        })
+        }
         headerBinding.tvRankLabel.setOnClickListener {
             findNavController().navigate(R.id.action_coin_fragment_to_coin_rank_fragment)
         }

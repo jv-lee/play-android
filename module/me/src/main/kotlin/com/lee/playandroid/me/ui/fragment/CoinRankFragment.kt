@@ -10,9 +10,9 @@ import com.lee.library.adapter.page.submitData
 import com.lee.library.adapter.page.submitFailed
 import com.lee.library.base.BaseNavigationFragment
 import com.lee.library.extensions.binding
+import com.lee.library.interadp.setClickListener
 import com.lee.library.viewstate.LoadStatus
 import com.lee.library.viewstate.collectState
-import com.lee.library.widget.toolbar.TitleToolbar
 import com.lee.playandroid.library.common.constants.ApiConstants
 import com.lee.playandroid.library.common.entity.CoinRank
 import com.lee.playandroid.library.common.entity.PageData
@@ -41,15 +41,14 @@ class CoinRankFragment : BaseNavigationFragment(R.layout.fragment_coin_rank),
     private lateinit var mAdapter: CoinRankAdapter
 
     override fun bindView() {
-        binding.toolbar.setClickListener(
-            object : TitleToolbar.ClickListener() {
-                override fun moreClick() {
-                    findNavController().navigateDetails(
-                        getString(R.string.coin_help_title),
-                        ApiConstants.URI_COIN_HELP
-                    )
-                }
-            })
+        binding.toolbar.setClickListener {
+            moreClick {
+                findNavController().navigateDetails(
+                    getString(R.string.coin_help_title),
+                    ApiConstants.URI_COIN_HELP
+                )
+            }
+        }
 
         binding.rvContainer.layoutManager = GridLayoutManager(requireContext(), 3).apply {
             spanSizeLookup = RankSpanSizeLookup()
