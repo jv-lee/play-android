@@ -135,9 +135,7 @@ class TodoFragment : BaseNavigationFragment(R.layout.fragment_todo) {
      * 供子Fragment调用互通
      */
     fun moveTodoItem(todo: TodoData) {
-        childFragmentManager.fragments.forEach {
-            (it as? TodoActionListener)?.moveAction(todo)
-        }
+        childFragmentManager.fragments.forEach { (it as? TodoActionListener)?.moveAction(todo) }
     }
 
 }

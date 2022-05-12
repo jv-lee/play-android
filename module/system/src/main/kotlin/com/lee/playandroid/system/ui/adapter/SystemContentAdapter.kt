@@ -42,9 +42,7 @@ class SystemContentAdapter(context: Context, data: List<ParentTab>) :
 
         private fun buildChildrenLabel(tabs: List<Tab>): String {
             val builder = StringBuilder()
-            tabs.forEach {
-                builder.append(it.name + "\t\t")
-            }
+            tabs.forEach { builder.append(it.name + "\t\t") }
             return builder.toString()
         }
 

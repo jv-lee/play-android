@@ -99,7 +99,7 @@ abstract class BaseTabFragment : BaseNavigationFragment(R.layout.fragment_base_t
         val fragments = arrayListOf<Fragment>()
         val titles = arrayListOf<String>()
 
-        tabsData.map {
+        tabsData.forEach {
             titles.add(it.name)
             fragments.add(createChildFragment(it.id))
         }
