@@ -5,10 +5,12 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.LifecycleCoroutineScope
 import com.lee.library.adapter.page.submitSinglePage
 import com.lee.library.base.BaseNavigationFragment
-import com.lee.library.extensions.*
+import com.lee.library.extensions.binding
+import com.lee.library.extensions.findParentFragment
+import com.lee.library.extensions.setMargin
+import com.lee.library.extensions.smoothScrollToTop
 import com.lee.library.livedatabus.InjectBus
 import com.lee.library.livedatabus.LiveDataBus
-import com.lee.library.viewstate.LoadStatus
 import com.lee.library.viewstate.collectState
 import com.lee.library.widget.StatusLayout
 import com.lee.playandroid.library.common.entity.NavigationSelectEvent
@@ -42,7 +44,6 @@ class NavigationContentFragment : BaseNavigationFragment(R.layout.fragment_navig
     private var mNavigationContentAdapter: NavigationContentAdapter? = null
 
     override fun bindView() {
-        binding.statusLayout.setStatus(StatusLayout.STATUS_LOADING)
         binding.statusLayout.setOnReloadListener(this)
 
         findParentFragment<SystemFragment>()?.parentBindingAction {
@@ -91,14 +92,18 @@ class NavigationContentFragment : BaseNavigationFragment(R.layout.fragment_navig
         }
 
         viewModel.viewStates.run {
-            launchWhenResumed {
-                collectState(NavigationContentViewState::navigationItemList) {
-                    binding.statusLayout.setStatus(StatusLayout.STATUS_DATA)
-                    mNavigationTabAdapter?.updateNotify(it)
-                    mNavigationContentAdapter?.submitSinglePage(it)
+            launchWhenStarted {
+                collectState(
+                    NavigationContentViewState::navigationItemList,
+                    NavigationContentViewState::isLoading
+                ) { data, isLoading ->
+                    if (isLoading) binding.statusLayout.setStatus(StatusLayout.STATUS_LOADING)
+                    else binding.statusLayout.setStatus(StatusLayout.STATUS_DATA)
+                    mNavigationTabAdapter?.updateNotify(data)
+                    mNavigationContentAdapter?.submitSinglePage(data)
                 }
             }
-            launchWhenResumed {
+            launchWhenStarted {
                 collectState(NavigationContentViewState::selectedTabIndex) {
                     mNavigationTabAdapter?.selectItem(it)
                 }
@@ -108,11 +113,11 @@ class NavigationContentFragment : BaseNavigationFragment(R.layout.fragment_navig
 
     override fun lazyLoad() {
         super.lazyLoad()
-        viewModel.dispatch(NavigationContentViewAction.RequestData(LoadStatus.INIT))
+        viewModel.dispatch(NavigationContentViewAction.RequestData)
     }
 
     override fun onReload() {
-        viewModel.dispatch(NavigationContentViewAction.RequestData(LoadStatus.RELOAD))
+        viewModel.dispatch(NavigationContentViewAction.RequestData)
     }
 
     @InjectBus(NavigationSelectEvent.key, isActive = true)

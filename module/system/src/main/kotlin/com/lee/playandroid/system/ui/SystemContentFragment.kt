@@ -80,7 +80,7 @@ class SystemContentFragment : BaseNavigationFragment(R.layout.fragment_system_co
             }
         }
 
-        launchWhenResumed {
+        launchWhenStarted {
             viewModel.viewStates.collectState(
                 SystemContentViewState::isLoading,
                 SystemContentViewState::parentTabList

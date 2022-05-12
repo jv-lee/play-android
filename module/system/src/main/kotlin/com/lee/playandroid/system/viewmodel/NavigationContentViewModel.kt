@@ -4,7 +4,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.lee.library.cache.CacheManager
 import com.lee.library.extensions.cacheFlow
-import com.lee.library.viewstate.LoadStatus
 import com.lee.playandroid.library.common.entity.NavigationItem
 import com.lee.playandroid.library.common.extensions.checkData
 import com.lee.playandroid.library.common.extensions.createApi
@@ -33,7 +32,7 @@ class NavigationContentViewModel : ViewModel() {
     fun dispatch(action: NavigationContentViewAction) {
         when (action) {
             is NavigationContentViewAction.RequestData -> {
-                requestNavigationData(action.status)
+                requestNavigationData()
             }
             is NavigationContentViewAction.SelectTabIndex -> {
                 selectTabIndex(action.index)
@@ -44,15 +43,18 @@ class NavigationContentViewModel : ViewModel() {
     /**
      * 该方法不再init调用，因为直接加载会导致页面卡顿，采用fragment懒加载方式
      */
-    private fun requestNavigationData(@LoadStatus status: Int) {
+    private fun requestNavigationData() {
         viewModelScope.launch {
             cacheManager.cacheFlow(CACHE_KEY_NAVIGATION_CONTENT) {
                 api.getNavigationDataAsync().checkData()
                     .filter { it.articles.isNotEmpty() }
+            }.onStart {
+                _viewStates.update { it.copy(isLoading = true) }
             }.catch { error ->
+                _viewStates.update { it.copy(isLoading = false) }
                 _viewEvents.send(NavigationContentViewEvent.RequestFailed(error = error))
             }.collect { data ->
-                _viewStates.update { it.copy(navigationItemList = data) }
+                _viewStates.update { it.copy(navigationItemList = data, isLoading = false) }
             }
         }
 
@@ -65,6 +67,7 @@ class NavigationContentViewModel : ViewModel() {
 }
 
 data class NavigationContentViewState(
+    val isLoading: Boolean = true,
     val navigationItemList: List<NavigationItem> = emptyList(),
     val selectedTabIndex: Int = 0
 )
@@ -74,6 +77,6 @@ sealed class NavigationContentViewEvent {
 }
 
 sealed class NavigationContentViewAction {
-    data class RequestData(@LoadStatus val status: Int) : NavigationContentViewAction()
+    object RequestData : NavigationContentViewAction()
     data class SelectTabIndex(val index: Int) : NavigationContentViewAction()
 }
