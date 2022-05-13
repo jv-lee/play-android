@@ -46,8 +46,7 @@ class NavigationContentViewModel : ViewModel() {
     private fun requestNavigationData() {
         viewModelScope.launch {
             cacheManager.cacheFlow(CACHE_KEY_NAVIGATION_CONTENT) {
-                api.getNavigationDataAsync().checkData()
-                    .filter { it.articles.isNotEmpty() }
+                api.getNavigationDataAsync().checkData().filter { it.articles.isNotEmpty() }
             }.onStart {
                 _viewStates.update { it.copy(isLoading = true) }
             }.catch { error ->

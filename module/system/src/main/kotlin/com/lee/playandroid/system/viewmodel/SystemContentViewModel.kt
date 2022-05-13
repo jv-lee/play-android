@@ -44,9 +44,7 @@ class SystemContentViewModel : ViewModel() {
     private fun requestParentTab() {
         viewModelScope.launch {
             cacheManager.cacheFlow(CACHE_KEY_SYSTEM_CONTENT) {
-                api.getParentTabAsync().checkData().filter {
-                    it.children.isNotEmpty()
-                }
+                api.getParentTabAsync().checkData().filter { it.children.isNotEmpty() }
             }.catch { error ->
                 _viewEvents.send(SystemContentViewEvent.RequestFailed(error = error))
             }.collect { data ->
