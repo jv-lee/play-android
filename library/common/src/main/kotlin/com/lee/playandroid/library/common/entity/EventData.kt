@@ -8,15 +8,7 @@ import androidx.annotation.Keep
  * @description
  */
 @Keep
-data class NavigationSelectEvent(val title: String) {
-    companion object {
-        const val key = "NavigationSelectEvent"
-    }
-}
+data class NavigationSelectEvent(val title: String)
 
 @Keep
-class LoginEvent {
-    companion object {
-        const val key = "LoginEvent"
-    }
-}
+class LoginEvent

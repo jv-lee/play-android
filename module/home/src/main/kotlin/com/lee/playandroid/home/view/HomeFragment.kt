@@ -134,7 +134,7 @@ class HomeFragment : BaseNavigationFragment(R.layout.fragment_home),
         mAdapter = null
     }
 
-    @InjectBus(NavigationSelectEvent.key)
+    @InjectBus
     fun navigationEvent(event: NavigationSelectEvent) {
         if (event.title == getString(R.string.nav_home) && isResumed) {
             binding.rvContainer.smoothScrollToTop()

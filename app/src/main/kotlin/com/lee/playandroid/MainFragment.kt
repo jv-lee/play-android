@@ -61,7 +61,7 @@ class MainFragment : BaseFragment(R.layout.fragment_main),
 
     private fun initNavigation() {
         binding.navigationBar.bindNavigationAction(binding.container, mainLabels) { menuItem, _ ->
-            LiveDataBus.instance.getChannel(NavigationSelectEvent.key)
+            LiveDataBus.instance.getChannel(NavigationSelectEvent::class.java)
                 .postValue(NavigationSelectEvent(menuItem.title.toString()))
         }
     }
@@ -80,7 +80,7 @@ class MainFragment : BaseFragment(R.layout.fragment_main),
         }
     }
 
-    @InjectBus(LoginEvent.key)
+    @InjectBus
     fun loginEvent(event: LoginEvent) {
         viewLifecycleOwner.lifecycleScope.launch {
             ModuleService.find<AccountService>().requestLogout(requireActivity())

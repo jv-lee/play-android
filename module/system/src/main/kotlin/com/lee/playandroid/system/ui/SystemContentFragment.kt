@@ -123,7 +123,7 @@ class SystemContentFragment : BaseNavigationFragment(R.layout.fragment_system_co
         )
     }
 
-    @InjectBus(NavigationSelectEvent.key)
+    @InjectBus
     fun navigationEvent(event: NavigationSelectEvent) {
         if (event.title == getString(R.string.nav_system) && isResumed) {
             binding.rvContainer.smoothScrollToTop()

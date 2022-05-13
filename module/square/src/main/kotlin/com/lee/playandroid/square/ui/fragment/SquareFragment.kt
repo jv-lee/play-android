@@ -139,7 +139,7 @@ class SquareFragment : BaseNavigationFragment(R.layout.fragment_square),
         mAdapter = null
     }
 
-    @InjectBus(NavigationSelectEvent.key)
+    @InjectBus
     fun navigationEvent(event: NavigationSelectEvent) {
         if (event.title == getString(R.string.nav_square) && isResumed) {
             binding.rvContainer.smoothScrollToTop()
