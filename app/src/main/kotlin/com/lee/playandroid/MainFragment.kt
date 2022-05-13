@@ -3,6 +3,7 @@ package com.lee.playandroid
 import android.annotation.SuppressLint
 import android.view.ViewStub
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import com.lee.library.base.BaseFragment
 import com.lee.library.extensions.binding
@@ -17,7 +18,10 @@ import com.lee.playandroid.databinding.LayoutStubFloatingBinding
 import com.lee.playandroid.library.common.entity.LoginEvent
 import com.lee.playandroid.library.common.entity.NavigationSelectEvent
 import com.lee.playandroid.library.common.ui.extensions.bindNavigationAction
+import com.lee.playandroid.library.service.AccountService
+import com.lee.playandroid.library.service.hepler.ModuleService
 import com.lee.playandroid.router.navigateLogin
+import kotlinx.coroutines.launch
 
 /**
  * @author jv.lee
@@ -43,7 +47,7 @@ class MainFragment : BaseFragment(R.layout.fragment_main),
     }
 
     override fun bindData() {
-        LiveDataBus.getInstance().injectBus(this)
+        LiveDataBus.instance.injectBus(this)
     }
 
     @SuppressLint("ResourceType")
@@ -57,7 +61,7 @@ class MainFragment : BaseFragment(R.layout.fragment_main),
 
     private fun initNavigation() {
         binding.navigationBar.bindNavigationAction(binding.container, mainLabels) { menuItem, _ ->
-            LiveDataBus.getInstance().getChannel(NavigationSelectEvent.key)
+            LiveDataBus.instance.getChannel(NavigationSelectEvent.key)
                 .postValue(NavigationSelectEvent(menuItem.title.toString()))
         }
     }
@@ -76,10 +80,13 @@ class MainFragment : BaseFragment(R.layout.fragment_main),
         }
     }
 
-    @InjectBus(LoginEvent.key, isActive = true)
+    @InjectBus(LoginEvent.key)
     fun loginEvent(event: LoginEvent) {
-        toast(getString(R.string.login_token_failed))
-        binding.container.findNavController().navigateLogin()
+        viewLifecycleOwner.lifecycleScope.launch {
+            ModuleService.find<AccountService>().requestLogout(requireActivity())
+            toast(getString(R.string.login_token_failed))
+            binding.container.findNavController().navigateLogin()
+        }
     }
 
 }

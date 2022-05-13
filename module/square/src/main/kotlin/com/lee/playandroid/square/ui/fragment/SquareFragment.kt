@@ -69,7 +69,7 @@ class SquareFragment : BaseNavigationFragment(R.layout.fragment_square),
     }
 
     override fun LifecycleCoroutineScope.bindData() {
-        LiveDataBus.getInstance().injectBus(this@SquareFragment)
+        LiveDataBus.instance.injectBus(this@SquareFragment)
 
         launchWhenResumed {
             viewModel.squareFlow.collectState<PageData<Content>>(success = {
@@ -139,7 +139,7 @@ class SquareFragment : BaseNavigationFragment(R.layout.fragment_square),
         mAdapter = null
     }
 
-    @InjectBus(NavigationSelectEvent.key, isActive = true)
+    @InjectBus(NavigationSelectEvent.key)
     fun navigationEvent(event: NavigationSelectEvent) {
         if (event.title == getString(R.string.nav_square) && isResumed) {
             binding.rvContainer.smoothScrollToTop()

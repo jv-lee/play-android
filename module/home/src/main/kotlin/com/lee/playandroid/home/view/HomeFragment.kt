@@ -71,7 +71,7 @@ class HomeFragment : BaseNavigationFragment(R.layout.fragment_home),
     }
 
     override fun LifecycleCoroutineScope.bindData() {
-        LiveDataBus.getInstance().injectBus(this@HomeFragment)
+        LiveDataBus.instance.injectBus(this@HomeFragment)
 
         launchWhenResumed {
             viewModel.contentListFlow.collectState<PageUiData<HomeContent>>(success = {
@@ -134,7 +134,7 @@ class HomeFragment : BaseNavigationFragment(R.layout.fragment_home),
         mAdapter = null
     }
 
-    @InjectBus(NavigationSelectEvent.key, isActive = true)
+    @InjectBus(NavigationSelectEvent.key)
     fun navigationEvent(event: NavigationSelectEvent) {
         if (event.title == getString(R.string.nav_home) && isResumed) {
             binding.rvContainer.smoothScrollToTop()

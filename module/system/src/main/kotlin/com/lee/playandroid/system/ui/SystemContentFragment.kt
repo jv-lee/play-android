@@ -12,7 +12,6 @@ import com.lee.library.adapter.page.submitSinglePage
 import com.lee.library.base.BaseNavigationFragment
 import com.lee.library.extensions.binding
 import com.lee.library.extensions.findParentFragment
-import com.lee.library.extensions.launchAndRepeatWithViewLifecycle
 import com.lee.library.extensions.smoothScrollToTop
 import com.lee.library.livedatabus.InjectBus
 import com.lee.library.livedatabus.LiveDataBus
@@ -67,7 +66,7 @@ class SystemContentFragment : BaseNavigationFragment(R.layout.fragment_system_co
     }
 
     override fun LifecycleCoroutineScope.bindData() {
-        LiveDataBus.getInstance().injectBus(this@SystemContentFragment)
+        LiveDataBus.instance.injectBus(this@SystemContentFragment)
 
         launchWhenResumed {
             viewModel.viewEvents.collect { event ->
@@ -124,7 +123,7 @@ class SystemContentFragment : BaseNavigationFragment(R.layout.fragment_system_co
         )
     }
 
-    @InjectBus(NavigationSelectEvent.key, isActive = true)
+    @InjectBus(NavigationSelectEvent.key)
     fun navigationEvent(event: NavigationSelectEvent) {
         if (event.title == getString(R.string.nav_system) && isResumed) {
             binding.rvContainer.smoothScrollToTop()

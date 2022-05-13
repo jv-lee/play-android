@@ -76,7 +76,7 @@ class NavigationContentFragment : BaseNavigationFragment(R.layout.fragment_navig
 
     @SuppressLint("NotifyDataSetChanged")
     override fun LifecycleCoroutineScope.bindData() {
-        LiveDataBus.getInstance().injectBus(this@NavigationContentFragment)
+        LiveDataBus.instance.injectBus(this@NavigationContentFragment)
 
         launchWhenResumed {
             viewModel.viewEvents.collect { event ->
@@ -120,7 +120,7 @@ class NavigationContentFragment : BaseNavigationFragment(R.layout.fragment_navig
         viewModel.dispatch(NavigationContentViewAction.RequestData)
     }
 
-    @InjectBus(NavigationSelectEvent.key, isActive = true)
+    @InjectBus(NavigationSelectEvent.key)
     fun navigationEvent(event: NavigationSelectEvent) {
         if (event.title == getString(R.string.nav_system) && isResumed) {
             viewModel.dispatch(NavigationContentViewAction.SelectTabIndex(0))

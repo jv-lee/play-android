@@ -43,7 +43,7 @@ class FailedInterceptor : Interceptor {
                     if (code == ApiConstants.REQUEST_TOKEN_ERROR) {
                         //单独处理登陆状态 ， 已登陆状态发起重新登陆事件
                         if (PreferencesTools.get(SP_KEY_IS_LOGIN)) {
-                            LiveDataBus.getInstance().getChannel(LoginEvent.key)
+                            LiveDataBus.instance.getChannel(LoginEvent.key)
                                 .postValue(LoginEvent())
                         }
                     }
