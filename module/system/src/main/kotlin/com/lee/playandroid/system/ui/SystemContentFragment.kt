@@ -51,7 +51,7 @@ class SystemContentFragment : BaseNavigationFragment(R.layout.fragment_system_co
     override fun bindView() {
         //根据父Fragment toolbar高度设置ItemDecoration来控制显示间隔
         findParentFragment<SystemFragment>()?.parentBindingAction {
-            binding.rvContainer.addItemDecoration(OffsetItemDecoration(it.toolbar.getToolbarLayoutHeight()))
+            binding.rvContainer.addItemDecoration(OffsetItemDecoration(toolbar.getToolbarLayoutHeight()))
         }
 
         if (binding.rvContainer.adapter == null) {

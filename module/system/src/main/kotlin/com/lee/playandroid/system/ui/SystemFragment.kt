@@ -50,8 +50,8 @@ class SystemFragment : BaseNavigationFragment(R.layout.fragment_system) {
      * 提供给子类操作父Fragment bindingUi控制
      * @param action 父Fragment binding作用域
      */
-    fun parentBindingAction(action: (FragmentSystemBinding) -> Unit) {
-        action(binding)
+    fun parentBindingAction(action: FragmentSystemBinding.() -> Unit) {
+        binding.action()
     }
 
 }

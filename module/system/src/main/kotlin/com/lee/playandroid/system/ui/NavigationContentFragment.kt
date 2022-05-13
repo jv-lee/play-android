@@ -47,7 +47,7 @@ class NavigationContentFragment : BaseNavigationFragment(R.layout.fragment_navig
         binding.statusLayout.setOnReloadListener(this)
 
         findParentFragment<SystemFragment>()?.parentBindingAction {
-            val topOffset = (it.toolbar.getToolbarLayoutHeight() * 0.9).toInt()
+            val topOffset = (toolbar.getToolbarLayoutHeight() * 0.9).toInt()
             val bottomOffset = resources.getDimension(R.dimen.navigation_bar_height).toInt()
 
             binding.rvTab.setMargin(top = topOffset, bottom = bottomOffset)
