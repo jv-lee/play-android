@@ -39,7 +39,7 @@ fun FragmentActivity.actionFailed(throwable: Throwable) {
         val throwableCode = throwable.hashCode()
         if (throwableCode != saveThrowableCode) {
             saveThrowableCode = throwableCode
-            toast(HttpManager.getInstance().getServerMessage(throwable, "errorMsg"))
+            toast(HttpManager.instance.getServerMessage(throwable, "errorMsg"))
         }
     } else {
         SnackBarEx.Builder(findViewById(android.R.id.content))
@@ -55,7 +55,7 @@ fun Fragment.actionFailed(throwable: Throwable) {
         val throwableCode = throwable.hashCode()
         if (throwableCode != saveThrowableCode) {
             saveThrowableCode = throwableCode
-            toast(HttpManager.getInstance().getServerMessage(throwable, "errorMsg"))
+            toast(HttpManager.instance.getServerMessage(throwable, "errorMsg"))
         }
     } else {
         SnackBarEx.Builder(requireActivity().findViewById(android.R.id.content))

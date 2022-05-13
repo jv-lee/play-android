@@ -18,13 +18,12 @@ import java.io.InputStream
 @GlideModule
 class PioneerGlideModel : AppGlideModule() {
     override fun registerComponents(context: Context, glide: Glide, registry: Registry) {
-        HttpManager.getInstance().getClient()
-            ?.let {
-                registry.replace(
-                    GlideUrl::class.java,
-                    InputStream::class.java,
-                    OkHttpUrlLoader.Factory(it)
-                )
-            }
+        HttpManager.instance.getClient().let {
+            registry.replace(
+                GlideUrl::class.java,
+                InputStream::class.java,
+                OkHttpUrlLoader.Factory(it)
+            )
+        }
     }
 }

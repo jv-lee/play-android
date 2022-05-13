@@ -75,7 +75,7 @@ class App : BaseApplication() {
         //初始化工具类
         CoroutineScope(Dispatchers.IO).launch {
             // 初始化网络拦截器
-            HttpManager.getInstance().setCommonInterceptor()
+            HttpManager.instance.setCommonInterceptor()
 
             // 初始化缓存管理器
             CacheManager.init(this@App, BuildConfig.VERSION_CODE)
