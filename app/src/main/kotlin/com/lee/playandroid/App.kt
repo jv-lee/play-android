@@ -32,6 +32,8 @@ import kotlinx.coroutines.launch
  */
 class App : BaseApplication() {
 
+    private val appPackageName by lazy { packageName.replace(".debug", "") }
+
     private val fragmentLifecycleCallbacks = object : SimpleFragmentLifecycleCallbacks() {
 
         override fun onFragmentCreated(
@@ -48,19 +50,26 @@ class App : BaseApplication() {
     private val activityLifecycleCallbacks = object : SimpleActivityLifecycleCallbacks() {
 
         override fun onActivityCreated(activity: Activity, bundle: Bundle?) {
-            activity.appThemeSet()
-            activity.bindFragmentLifecycle(fragmentLifecycleCallbacks)
+            // 过滤项目外的activity
+            if (activity::class.java.name.contains(appPackageName)) {
+                activity.appThemeSet()
+                activity.bindFragmentLifecycle(fragmentLifecycleCallbacks)
+            }
             super.onActivityCreated(activity, bundle)
         }
 
         override fun onActivityDestroyed(activity: Activity) {
-            ScreenDensityUtil.resetDensity(activity)
-            activity.unbindFragmentLifecycle(fragmentLifecycleCallbacks)
+            if (activity::class.java.name.contains(appPackageName)) {
+                ScreenDensityUtil.resetDensity(activity)
+                activity.unbindFragmentLifecycle(fragmentLifecycleCallbacks)
+            }
             super.onActivityDestroyed(activity)
         }
 
         override fun onActivityResumed(activity: Activity) {
-            ScreenDensityUtil.init(activity)
+            if (activity::class.java.name.contains(appPackageName)) {
+                ScreenDensityUtil.init(activity)
+            }
             super.onActivityResumed(activity)
         }
 

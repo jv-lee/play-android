@@ -1,15 +1,21 @@
 package com.lee.playandroid.me.ui.fragment
 
+import android.Manifest
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.navigation.fragment.findNavController
+import com.imagetools.select.ImageLaunch
+import com.imagetools.select.entity.SelectConfig
+import com.imagetools.select.entity.TakeConfig
 import com.lee.library.base.BaseNavigationFragment
 import com.lee.library.extensions.*
 import com.lee.library.tools.DarkViewUpdateTools
+import com.lee.library.tools.PermissionLauncher
 import com.lee.library.viewstate.collectState
 import com.lee.playandroid.library.common.entity.AccountData
 import com.lee.playandroid.library.common.entity.AccountViewState
+import com.lee.playandroid.me.BuildConfig
 import com.lee.playandroid.me.R
 import com.lee.playandroid.me.databinding.FragmentMeBinding
 import com.lee.playandroid.me.viewmodel.MeViewModel
@@ -24,11 +30,14 @@ import com.lee.playandroid.library.common.R as CR
  * @description 首页第四个Tab 我的页面
  */
 class MeFragment : BaseNavigationFragment(R.layout.fragment_me),
-    View.OnClickListener, DarkViewUpdateTools.ViewCallback {
+    View.OnClickListener, View.OnLongClickListener, DarkViewUpdateTools.ViewCallback {
 
     private val viewModel by viewModels<MeViewModel>()
 
     private val binding by binding(FragmentMeBinding::bind)
+
+    private val imageLaunch = ImageLaunch(this)
+    private val permissionLaunch = PermissionLauncher(this)
 
     override fun bindView() {
         // 拦截back处理
@@ -42,6 +51,12 @@ class MeFragment : BaseNavigationFragment(R.layout.fragment_me),
         binding.lineShare.setOnClickListener(this)
         binding.lineTodo.setOnClickListener(this)
         binding.lineSettings.setOnClickListener(this)
+
+        if (BuildConfig.DEBUG) {
+            binding.lineIntegral.setOnLongClickListener(this)
+            binding.lineCollect.setOnLongClickListener(this)
+            binding.lineShare.setOnLongClickListener(this)
+        }
     }
 
     override fun LifecycleCoroutineScope.bindData() {
@@ -79,6 +94,35 @@ class MeFragment : BaseNavigationFragment(R.layout.fragment_me),
             toast(getString(CR.string.login_message))
             findNavController().navigateLogin()
         }
+    }
+
+    override fun onLongClick(v: View?): Boolean {
+        when (v) {
+            binding.lineIntegral -> {
+                permissionLaunch.requestPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE, {
+                    imageLaunch.select(
+                        SelectConfig(isMultiple = false, isCompress = false, columnCount = 3)
+                    ) {
+                        toast(it[0].uri.toString())
+                    }
+                })
+            }
+            binding.lineCollect -> {
+                permissionLaunch.requestPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE, {
+                    imageLaunch.select(SelectConfig(isMultiple = true, isCompress = false)) {
+                        toast(it[0].uri.toString())
+                    }
+                })
+            }
+            binding.lineShare -> {
+                permissionLaunch.requestPermission(Manifest.permission.CAMERA, {
+                    imageLaunch.take(TakeConfig(isCrop = true)) {
+                        toast(it.uri.toString())
+                    }
+                })
+            }
+        }
+        return true
     }
 
     override fun updateDarkView() {
