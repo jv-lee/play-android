@@ -63,8 +63,12 @@ abstract class BaseTabFragment : BaseNavigationFragment(R.layout.fragment_base_t
         viewStates().run {
             launchWhenResumed {
                 collectState(BaseTabViewState::tabList) {
-                    binding.statusLayout.setStatus(StatusLayout.STATUS_DATA)
-                    bindAdapter(it)
+                    if (it.isEmpty()) {
+                        binding.statusLayout.setStatus(StatusLayout.STATUS_EMPTY_DATA)
+                    } else {
+                        binding.statusLayout.setStatus(StatusLayout.STATUS_DATA)
+                        bindAdapter(it)
+                    }
                 }
             }
             launchWhenResumed {
