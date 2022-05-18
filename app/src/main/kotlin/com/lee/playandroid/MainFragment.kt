@@ -83,8 +83,8 @@ class MainFragment : BaseFragment(R.layout.fragment_main),
     @InjectBus
     fun loginEvent(event: LoginEvent) {
         viewLifecycleOwner.lifecycleScope.launch {
-            ModuleService.find<AccountService>().requestLogout(requireActivity())
             toast(getString(R.string.login_token_failed))
+            ModuleService.find<AccountService>().requestLogout(requireActivity())
             binding.container.findNavController().navigateLogin()
         }
     }
