@@ -45,7 +45,7 @@ class RegisterFragment : BaseNavigationFragment(R.layout.fragment_register), Vie
         requireContext().parentTouchHideSoftInput(binding.root)
 
         // 监听键盘弹起
-        binding.root.keyboardPaddingBottom(viewLifecycleOwner)
+        binding.root.keyboardPaddingBottom()
 
         // 设置监听
         binding.root.setOnClickListener(this)

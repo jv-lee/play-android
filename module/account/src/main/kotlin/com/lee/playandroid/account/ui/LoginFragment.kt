@@ -49,7 +49,7 @@ class LoginFragment : BaseNavigationFragment(R.layout.fragment_login), View.OnCl
         requireContext().parentTouchHideSoftInput(binding.root)
 
         // 监听键盘弹起
-        binding.root.keyboardPaddingBottom(viewLifecycleOwner)
+        binding.root.keyboardPaddingBottom()
 
         // 设置监听
         binding.tvLogin.setOnClickListener(this)

@@ -124,9 +124,7 @@ object KeyboardTools {
     /**
      * 监听键盘弹起更该viewPaddingBottom值
      */
-    fun View.keyboardPaddingBottom(
-        lifecycleOwner: LifecycleOwner? = findViewTreeLifecycleOwner()
-    ) {
+    fun View.keyboardPaddingBottom(lifecycleOwner: LifecycleOwner? = findViewTreeLifecycleOwner()) {
         val keyboardMinHeight = 100
         var initDiff = 0
         val listener = {
@@ -158,9 +156,9 @@ object KeyboardTools {
      * 监听键盘弹起
      */
     inline fun View.keyboardObserver(
-        crossinline openObserver: () -> Unit = {},
-        crossinline closeObserver: () -> Unit = {},
-        lifecycleOwner: LifecycleOwner? = findViewTreeLifecycleOwner()
+        lifecycleOwner: LifecycleOwner? = findViewTreeLifecycleOwner(),
+        crossinline open: () -> Unit = {},
+        crossinline close: () -> Unit = {},
     ) {
         var isOpen = false
         val keyboardHeight = 200
@@ -173,10 +171,10 @@ object KeyboardTools {
             val diff: Int = height - rect.height()
             if (diff > keyboardHeight && !isOpen) {
                 isOpen = true
-                openObserver()
+                open()
             } else if (diff < keyboardHeight && isOpen) {
                 isOpen = false
-                closeObserver()
+                close()
             }
         }
         lifecycleOwner?.lifecycle?.addObserver(object : LifecycleEventObserver {
