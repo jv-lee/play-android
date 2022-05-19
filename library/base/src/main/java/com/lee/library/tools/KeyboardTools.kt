@@ -123,7 +123,6 @@ object KeyboardTools {
 
     /**
      * 监听键盘弹起更该viewPaddingBottom值
-     * 使用activity.window.decorView 绑定该事件更好的防止内存泄漏
      */
     fun View.keyboardPaddingBottom(
         lifecycleOwner: LifecycleOwner? = findViewTreeLifecycleOwner()
@@ -144,11 +143,11 @@ object KeyboardTools {
                 setPadding(0, 0, 0, 0)
             }
         }
-        viewTreeObserver.addOnGlobalLayoutListener(listener)
-
         lifecycleOwner?.lifecycle?.addObserver(object : LifecycleEventObserver {
             override fun onStateChanged(source: LifecycleOwner, event: Lifecycle.Event) {
-                if (event == Lifecycle.Event.ON_DESTROY) {
+                if (event == Lifecycle.Event.ON_RESUME) {
+                    viewTreeObserver.addOnGlobalLayoutListener(listener)
+                } else if (event == Lifecycle.Event.ON_PAUSE) {
                     viewTreeObserver.removeOnGlobalLayoutListener(listener)
                 }
             }
@@ -161,7 +160,7 @@ object KeyboardTools {
     inline fun View.keyboardObserver(
         crossinline openObserver: () -> Unit = {},
         crossinline closeObserver: () -> Unit = {},
-        lifecycle: Lifecycle? = findViewTreeLifecycleOwner()?.lifecycle
+        lifecycleOwner: LifecycleOwner? = findViewTreeLifecycleOwner()
     ) {
         var isOpen = false
         val keyboardHeight = 200
@@ -180,11 +179,11 @@ object KeyboardTools {
                 closeObserver()
             }
         }
-        viewTreeObserver.addOnGlobalLayoutListener(listener)
-
-        lifecycle?.addObserver(object : LifecycleEventObserver {
+        lifecycleOwner?.lifecycle?.addObserver(object : LifecycleEventObserver {
             override fun onStateChanged(source: LifecycleOwner, event: Lifecycle.Event) {
-                if (event == Lifecycle.Event.ON_DESTROY) {
+                if (event == Lifecycle.Event.ON_RESUME) {
+                    viewTreeObserver.addOnGlobalLayoutListener(listener)
+                } else if (event == Lifecycle.Event.ON_PAUSE) {
                     viewTreeObserver.removeOnGlobalLayoutListener(listener)
                 }
             }
