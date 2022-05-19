@@ -39,7 +39,7 @@ class SearchFragment : BaseNavigationFragment(R.layout.fragment_search) {
 
     override fun bindView() {
         // 设置点击空白区域隐藏软键盘
-        requireActivity().parentTouchHideSoftInput(binding.root)
+        binding.root.parentTouchHideSoftInput()
 
         if (binding.rvHotContainer.adapter == null) {
             binding.rvHotContainer.adapter =

@@ -36,7 +36,7 @@ class CreateShareFragment : BaseNavigationFragment(R.layout.fragment_create_shar
     private val loadingDialog by lazy { LoadingDialog(requireContext()) }
 
     override fun bindView() {
-        requireActivity().parentTouchHideSoftInput(binding.root)
+        binding.root.parentTouchHideSoftInput()
 
         binding.editShareContent.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_SEND) {

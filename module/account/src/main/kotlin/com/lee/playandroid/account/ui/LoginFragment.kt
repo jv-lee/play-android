@@ -46,7 +46,7 @@ class LoginFragment : BaseNavigationFragment(R.layout.fragment_login), View.OnCl
 
     override fun bindView() {
         // 设置点击空白区域隐藏软键盘
-        requireContext().parentTouchHideSoftInput(binding.root)
+        binding.root.parentTouchHideSoftInput()
 
         // 监听键盘弹起
         binding.root.keyboardPaddingBottom()
