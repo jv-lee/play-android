@@ -45,7 +45,7 @@ class SystemContentTabFragment : BaseTabFragment() {
     }
 
     override fun viewStates(): StateFlow<BaseTabViewState> {
-        return MutableStateFlow(BaseTabViewState(tabList = tabData))
+        return MutableStateFlow(BaseTabViewState(tabList = tabData, loading = false))
     }
 
 

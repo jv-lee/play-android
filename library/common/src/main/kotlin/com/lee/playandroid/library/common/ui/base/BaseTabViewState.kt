@@ -8,7 +8,7 @@ import com.lee.playandroid.library.common.entity.Tab
  * @description
  */
 
-data class BaseTabViewState(val tabList: List<Tab> = emptyList(), val loading: Boolean = false)
+data class BaseTabViewState(val tabList: List<Tab> = emptyList(), val loading: Boolean = true)
 
 sealed class BaseTabViewEvent {
     data class RequestFailed(val error: Throwable) : BaseTabViewEvent()

@@ -1,6 +1,7 @@
 package com.lee.playandroid.library.common.ui.base
 
 import android.annotation.SuppressLint
+import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LifecycleCoroutineScope
 import com.google.android.material.tabs.TabLayoutMediator
@@ -60,20 +61,20 @@ abstract class BaseTabFragment : BaseNavigationFragment(R.layout.fragment_base_t
             }
         }
 
-        viewStates().run {
-            launchWhenResumed {
-                collectState(BaseTabViewState::tabList) {
-                    if (it.isEmpty()) {
-                        binding.statusLayout.setStatus(StatusLayout.STATUS_EMPTY_DATA)
-                    } else {
-                        binding.statusLayout.setStatus(StatusLayout.STATUS_DATA)
-                        bindAdapter(it)
-                    }
+        launchWhenResumed {
+            viewStates().collectState(
+                BaseTabViewState::loading,
+                BaseTabViewState::tabList
+            ) { loading, tab ->
+                if (loading) {
+                    binding.statusLayout.postLoading()
+                    return@collectState
                 }
-            }
-            launchWhenResumed {
-                collectState(BaseTabViewState::loading) {
-                    if (it) binding.statusLayout.postLoading()
+                if (tab.isEmpty()) {
+                    binding.statusLayout.setStatus(StatusLayout.STATUS_EMPTY_DATA)
+                } else {
+                    binding.statusLayout.setStatus(StatusLayout.STATUS_DATA)
+                    bindAdapter(tab)
                 }
             }
         }
@@ -112,6 +113,7 @@ abstract class BaseTabFragment : BaseNavigationFragment(R.layout.fragment_base_t
         adapter?.addAll(fragments)
         binding.vpContainer.adapter = adapter
 
+        binding.tabLayout.visibility = View.VISIBLE
         TabLayoutMediator(binding.tabLayout, binding.vpContainer) { tab, position ->
             if (titles.size > position) {
                 tab.text = titles[position]
