@@ -143,10 +143,18 @@ object KeyboardTools {
         }
         lifecycleOwner?.lifecycle?.addObserver(object : LifecycleEventObserver {
             override fun onStateChanged(source: LifecycleOwner, event: Lifecycle.Event) {
-                if (event == Lifecycle.Event.ON_RESUME) {
-                    viewTreeObserver.addOnGlobalLayoutListener(listener)
-                } else if (event == Lifecycle.Event.ON_PAUSE) {
-                    viewTreeObserver.removeOnGlobalLayoutListener(listener)
+                when (event) {
+                    Lifecycle.Event.ON_RESUME -> {
+                        viewTreeObserver.addOnGlobalLayoutListener(listener)
+                    }
+                    Lifecycle.Event.ON_PAUSE -> {
+                        viewTreeObserver.removeOnGlobalLayoutListener(listener)
+                    }
+                    Lifecycle.Event.ON_DESTROY -> {
+                        source.lifecycle.removeObserver(this)
+                    }
+                    else -> {
+                    }
                 }
             }
         })
@@ -179,10 +187,18 @@ object KeyboardTools {
         }
         lifecycleOwner?.lifecycle?.addObserver(object : LifecycleEventObserver {
             override fun onStateChanged(source: LifecycleOwner, event: Lifecycle.Event) {
-                if (event == Lifecycle.Event.ON_RESUME) {
-                    viewTreeObserver.addOnGlobalLayoutListener(listener)
-                } else if (event == Lifecycle.Event.ON_PAUSE) {
-                    viewTreeObserver.removeOnGlobalLayoutListener(listener)
+                when (event) {
+                    Lifecycle.Event.ON_RESUME -> {
+                        viewTreeObserver.addOnGlobalLayoutListener(listener)
+                    }
+                    Lifecycle.Event.ON_PAUSE -> {
+                        viewTreeObserver.removeOnGlobalLayoutListener(listener)
+                    }
+                    Lifecycle.Event.ON_DESTROY -> {
+                        source.lifecycle.removeObserver(this)
+                    }
+                    else -> {
+                    }
                 }
             }
         })
