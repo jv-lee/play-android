@@ -109,40 +109,35 @@ class CreateTodoFragment : BaseNavigationFragment(R.layout.fragment_create_todo)
         }
 
         viewModel.viewStates.run {
-            launchAndRepeatWithViewLifecycle {
-                collectState(CreateTodoViewState::isLoading) {
-                    if (it) show(loadingDialog) else dismiss(loadingDialog)
-                }
-            }
-            launchAndRepeatWithViewLifecycle {
+            launchWhenResumed {
                 collectState(CreateTodoViewState::appTitleRes) {
                     binding.toolbar.setTitleText(getString(it))
                 }
             }
-            launchAndRepeatWithViewLifecycle {
+            launchWhenResumed {
                 collectState(CreateTodoViewState::title) {
                     binding.editTitle.setText(it)
                     binding.editTitle.setSelection(it.length)
                 }
             }
-            launchAndRepeatWithViewLifecycle {
+            launchWhenResumed {
                 collectState(CreateTodoViewState::content) {
                     binding.editContent.setText(it)
                     binding.editContent.setSelection(it.length)
                 }
             }
-            launchAndRepeatWithViewLifecycle {
+            launchWhenResumed {
                 collectState(CreateTodoViewState::priority) {
                     binding.radioButtonLow.isChecked = it == PRIORITY_LOW
                     binding.radioButtonHeight.isChecked = it == PRIORITY_HEIGHT
                 }
             }
-            launchAndRepeatWithViewLifecycle {
+            launchWhenResumed {
                 collectState(CreateTodoViewState::date) {
                     binding.tvDateContent.text = it
                 }
             }
-            launchAndRepeatWithViewLifecycle {
+            launchWhenResumed {
                 collectState(CreateTodoViewState::calendar) { calendar ->
                     datePickerDialog = DatePickerDialog(
                         requireContext(), this@CreateTodoFragment,

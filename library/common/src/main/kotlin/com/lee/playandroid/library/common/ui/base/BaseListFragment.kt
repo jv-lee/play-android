@@ -10,7 +10,6 @@ import com.lee.library.adapter.page.submitData
 import com.lee.library.adapter.page.submitFailed
 import com.lee.library.base.BaseNavigationFragment
 import com.lee.library.extensions.binding
-import com.lee.library.extensions.launchAndRepeatWithViewLifecycle
 import com.lee.library.viewstate.LoadStatus
 import com.lee.library.viewstate.UiStatePage
 import com.lee.library.viewstate.collectState
