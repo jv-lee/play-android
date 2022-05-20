@@ -110,6 +110,11 @@ class CreateTodoFragment : BaseNavigationFragment(R.layout.fragment_create_todo)
 
         viewModel.viewStates.run {
             launchWhenResumed {
+                collectState(CreateTodoViewState::isLoading) {
+                    if (it) show(loadingDialog) else dismiss(loadingDialog)
+                }
+            }
+            launchWhenResumed {
                 collectState(CreateTodoViewState::appTitleRes) {
                     binding.toolbar.setTitleText(getString(it))
                 }
