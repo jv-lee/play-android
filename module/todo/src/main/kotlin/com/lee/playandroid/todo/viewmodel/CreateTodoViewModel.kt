@@ -5,7 +5,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.lee.library.base.ApplicationExtensions.app
-import com.lee.library.utils.TimeUtil
 import com.lee.playandroid.library.common.entity.TodoData
 import com.lee.playandroid.library.common.extensions.checkData
 import com.lee.playandroid.library.common.extensions.createApi
@@ -168,7 +167,8 @@ class CreateTodoViewModel(private val type: Int, private val todoData: TodoData?
     }
 
     private fun dateToStrFormat(): String {
-        return TimeUtil.date2String(Date(), SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()))
+        val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+        return sdf.format(Date())
     }
 
     class CreateFactory(private val type: Int, private val todoData: TodoData?) :
