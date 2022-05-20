@@ -4,23 +4,25 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResultListener
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.navigation.fragment.findNavController
 import com.lee.library.adapter.core.UiPagerAdapter2
 import com.lee.library.base.BaseNavigationFragment
 import com.lee.library.extensions.binding
 import com.lee.library.interadp.setClickListener
-import com.lee.library.tools.PreferencesTools
+import com.lee.library.viewstate.collectState
 import com.lee.playandroid.library.common.entity.TodoData
 import com.lee.playandroid.todo.R
-import com.lee.playandroid.todo.constants.Constants.SP_KEY_TODO_TYPE
 import com.lee.playandroid.todo.databinding.FragmentTodoBinding
-import com.lee.playandroid.todo.model.entity.TodoType
 import com.lee.playandroid.todo.ui.CreateTodoFragment.Companion.ARG_PARAMS_TYPE
 import com.lee.playandroid.todo.ui.CreateTodoFragment.Companion.ARG_TYPE_CREATE
 import com.lee.playandroid.todo.ui.TodoListFragment.Companion.ARG_STATUS_COMPLETE
 import com.lee.playandroid.todo.ui.TodoListFragment.Companion.ARG_STATUS_UPCOMING
 import com.lee.playandroid.todo.ui.listener.TodoActionListener
+import com.lee.playandroid.todo.viewmodel.TodoViewAction
+import com.lee.playandroid.todo.viewmodel.TodoViewModel
+import com.lee.playandroid.todo.viewmodel.TodoViewState
 
 /**
  * @author jv.lee
@@ -38,48 +40,38 @@ class TodoFragment : BaseNavigationFragment(R.layout.fragment_todo) {
         const val REQUEST_VALUE_TYPE = "requestValue:type"
     }
 
+    private val viewModel by viewModels<TodoViewModel>()
+
     private val binding by binding(FragmentTodoBinding::bind)
 
     private var mAdapter: UiPagerAdapter2? = null
 
     override fun bindView() {
-        initTodoTitle()
-
         binding.toolbar.setClickListener {
+            // 导航至todo类型选择弹窗
             moreClick { findNavController().navigate(R.id.action_todo_fragment_to_select_todo_type_dialog) }
         }
-
-        binding.navigationBar.bindViewPager(binding.vpContainer)
-
         binding.floatingButton.setOnClickListener {
-            startCreateTodoPage()
+            // 导航至todo编辑页面
+            findNavController().navigate(R.id.action_todo_fragment_to_create_todo_fragment,
+                Bundle().apply { putInt(ARG_PARAMS_TYPE, ARG_TYPE_CREATE) }
+            )
         }
+        // bottomNavigation与viewPager联动绑定
+        binding.navigationBar.bindViewPager(binding.vpContainer)
     }
 
 
     @SuppressLint("NotifyDataSetChanged")
     override fun LifecycleCoroutineScope.bindData() {
         createTodoPages()
+        bindFragmentResultListener()
 
-        val listener = fun(requestKey: String, bundle: Bundle) {
-            val todo = bundle.getParcelable<TodoData>(REQUEST_VALUE_TODO)
-            val type = bundle.getInt(REQUEST_VALUE_TYPE)
-            childFragmentManager.fragments.forEach {
-                val actionListener = it as? TodoActionListener
-                when (requestKey) {
-                    REQUEST_KEY_SAVE -> actionListener?.addAction(todo)
-                    REQUEST_KEY_UPDATE -> actionListener?.updateAction(todo)
-                    REQUEST_KEY_TYPE -> {
-                        initTodoTitle(type)
-                        actionListener?.notifyAction(type)
-                    }
-                }
+        launchWhenResumed {
+            viewModel.viewStates.collectState(TodoViewState::titleRes) {
+                binding.toolbar.setTitleText(getString(it))
             }
         }
-
-        setFragmentResultListener(REQUEST_KEY_SAVE, listener)
-        setFragmentResultListener(REQUEST_KEY_UPDATE, listener)
-        setFragmentResultListener(REQUEST_KEY_TYPE, listener)
     }
 
     override fun onDestroyView() {
@@ -100,35 +92,32 @@ class TodoFragment : BaseNavigationFragment(R.layout.fragment_todo) {
             binding.vpContainer.adapter = mAdapter
             binding.vpContainer.isUserInputEnabled = false
         } else {
+            mAdapter?.clear()
             mAdapter?.addAll(fragments)
             mAdapter?.notifyDataSetChanged()
         }
     }
 
-    /**
-     * 导航到创建TODO页
-     */
-    private fun startCreateTodoPage() {
-        val bundle = Bundle().apply {
-            putInt(ARG_PARAMS_TYPE, ARG_TYPE_CREATE)
+    private fun bindFragmentResultListener() {
+        val listener = fun(requestKey: String, bundle: Bundle) {
+            val todo = bundle.getParcelable<TodoData>(REQUEST_VALUE_TODO)
+            val type = bundle.getInt(REQUEST_VALUE_TYPE)
+            childFragmentManager.fragments.forEach {
+                val actionListener = it as? TodoActionListener
+                when (requestKey) {
+                    REQUEST_KEY_SAVE -> actionListener?.addAction(todo)
+                    REQUEST_KEY_UPDATE -> actionListener?.updateAction(todo)
+                    REQUEST_KEY_TYPE -> {
+                        viewModel.dispatch(TodoViewAction.ChangeTypeSelected(type))
+                        actionListener?.notifyAction(type)
+                    }
+                }
+            }
         }
-        findNavController().navigate(R.id.action_todo_fragment_to_create_todo_fragment, bundle)
-    }
 
-    /**
-     * 根据type设置todo标题
-     * @param type 当前todo类型
-     */
-    private fun initTodoTitle(
-        type: Int = PreferencesTools.get(SP_KEY_TODO_TYPE, TodoType.DEFAULT)
-    ) {
-        val textResId = when (type) {
-            TodoType.WORK -> R.string.todo_title_work
-            TodoType.LIFE -> R.string.todo_title_life
-            TodoType.PLAY -> R.string.todo_title_play
-            else -> R.string.todo_title_default
-        }
-        binding.toolbar.setTitleText(getString(textResId))
+        setFragmentResultListener(REQUEST_KEY_SAVE, listener)
+        setFragmentResultListener(REQUEST_KEY_UPDATE, listener)
+        setFragmentResultListener(REQUEST_KEY_TYPE, listener)
     }
 
     /**

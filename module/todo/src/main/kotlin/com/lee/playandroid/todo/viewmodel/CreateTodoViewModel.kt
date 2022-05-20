@@ -1,8 +1,10 @@
 package com.lee.playandroid.todo.viewmodel
 
+import android.os.Bundle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
+import com.lee.library.base.ApplicationExtensions.app
 import com.lee.library.utils.TimeUtil
 import com.lee.playandroid.library.common.entity.TodoData
 import com.lee.playandroid.library.common.extensions.checkData
@@ -10,6 +12,10 @@ import com.lee.playandroid.library.common.extensions.createApi
 import com.lee.playandroid.todo.R
 import com.lee.playandroid.todo.model.api.ApiService
 import com.lee.playandroid.todo.model.entity.TodoType
+import com.lee.playandroid.todo.ui.CreateTodoFragment.Companion.ARG_TYPE_CREATE
+import com.lee.playandroid.todo.ui.TodoFragment.Companion.REQUEST_KEY_SAVE
+import com.lee.playandroid.todo.ui.TodoFragment.Companion.REQUEST_KEY_UPDATE
+import com.lee.playandroid.todo.ui.TodoFragment.Companion.REQUEST_VALUE_TODO
 import com.lee.playandroid.todo.ui.TodoListFragment.Companion.ARG_STATUS_UPCOMING
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.*
@@ -22,7 +28,7 @@ import java.util.*
  * @date 2022/4/8
  * @description
  */
-class CreateTodoViewModel(private val todoData: TodoData?) : ViewModel(){
+class CreateTodoViewModel(private val type: Int, private val todoData: TodoData?) : ViewModel() {
 
     private val api = createApi<ApiService>()
 
@@ -109,7 +115,7 @@ class CreateTodoViewModel(private val todoData: TodoData?) : ViewModel(){
                 _viewEvents.send(CreateTodoViewEvent.RequestFailed(error))
             }.collect { data ->
                 _viewStates.update { it.copy(isLoading = false) }
-                _viewEvents.send(CreateTodoViewEvent.RequestSuccess(todoData = data))
+                _viewEvents.send(todoDataToSuccessEvent(data))
             }
         }
     }
@@ -134,9 +140,23 @@ class CreateTodoViewModel(private val todoData: TodoData?) : ViewModel(){
                 _viewEvents.send(CreateTodoViewEvent.RequestFailed(error))
             }.collect { data ->
                 _viewStates.update { it.copy(isLoading = false) }
-                _viewEvents.send(CreateTodoViewEvent.RequestSuccess(todoData = data))
+                _viewEvents.send(todoDataToSuccessEvent(data))
             }
         }
+    }
+
+    private fun todoDataToSuccessEvent(todoData: TodoData): CreateTodoViewEvent.RequestSuccess {
+        // 返回页面结果类型key 保存动作 ｜｜ 更新动作
+        val resultKey = if (type == ARG_TYPE_CREATE) REQUEST_KEY_SAVE else REQUEST_KEY_UPDATE
+
+        // 返回页面结果bundle数据 创建的todo还是更新的todo todo实体
+        val bundle = Bundle().apply { putParcelable(REQUEST_VALUE_TODO, todoData) }
+
+        // 处理成功后toast提示message
+        val message = if (type == ARG_TYPE_CREATE) app.getString(R.string.todo_create_success)
+        else app.getString(R.string.todo_update_success)
+
+        return CreateTodoViewEvent.RequestSuccess(resultKey, message, bundle)
     }
 
     private fun stringToCalendar(dateStr: String): Calendar {
@@ -151,9 +171,11 @@ class CreateTodoViewModel(private val todoData: TodoData?) : ViewModel(){
         return TimeUtil.date2String(Date(), SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()))
     }
 
-    class CreateFactory(private val todoData: TodoData?) : ViewModelProvider.Factory {
+    class CreateFactory(private val type: Int, private val todoData: TodoData?) :
+        ViewModelProvider.Factory {
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
-            return modelClass.getConstructor(TodoData::class.java).newInstance(todoData)
+            return modelClass.getConstructor(Int::class.java, TodoData::class.java)
+                .newInstance(type, todoData)
         }
     }
 
@@ -171,7 +193,12 @@ data class CreateTodoViewState(
 )
 
 sealed class CreateTodoViewEvent {
-    data class RequestSuccess(val todoData: TodoData) : CreateTodoViewEvent()
+    data class RequestSuccess(
+        val resultKey: String,
+        val message: String,
+        val bundle: Bundle
+    ) : CreateTodoViewEvent()
+
     data class RequestFailed(val error: Throwable) : CreateTodoViewEvent()
 }
 

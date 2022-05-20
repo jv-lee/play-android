@@ -54,13 +54,11 @@ class CreateShareFragment : BaseNavigationFragment(R.layout.fragment_create_shar
                 when (event) {
                     is CreateShareViewEvent.SendSuccess -> {
                         toast(event.message)
-                        dismiss(loadingDialog)
                         setFragmentResult(MyShareFragment.REQUEST_KEY_REFRESH, Bundle.EMPTY)
                         findNavController().popBackStack()
                     }
                     is CreateShareViewEvent.SendFailed -> {
                         toast(event.error.message)
-                        dismiss(loadingDialog)
                     }
                 }
             }
@@ -68,7 +66,7 @@ class CreateShareFragment : BaseNavigationFragment(R.layout.fragment_create_shar
 
         launchWhenResumed {
             viewModel.viewStates.collectState(CreateShareViewState::loading) {
-                if (it) show(loadingDialog)
+                if (it) show(loadingDialog) else dismiss(loadingDialog)
             }
         }
     }

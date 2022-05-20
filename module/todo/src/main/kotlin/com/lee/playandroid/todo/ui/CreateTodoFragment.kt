@@ -2,7 +2,6 @@ package com.lee.playandroid.todo.ui
 
 import android.app.DatePickerDialog
 import android.os.Build
-import android.os.Bundle
 import android.widget.DatePicker
 import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.viewModels
@@ -22,9 +21,6 @@ import com.lee.playandroid.library.common.entity.TodoData.Companion.PRIORITY_LOW
 import com.lee.playandroid.library.common.extensions.actionFailed
 import com.lee.playandroid.todo.R
 import com.lee.playandroid.todo.databinding.FragmentCreateTodoBinding
-import com.lee.playandroid.todo.ui.TodoFragment.Companion.REQUEST_KEY_SAVE
-import com.lee.playandroid.todo.ui.TodoFragment.Companion.REQUEST_KEY_UPDATE
-import com.lee.playandroid.todo.ui.TodoFragment.Companion.REQUEST_VALUE_TODO
 import com.lee.playandroid.todo.viewmodel.CreateTodoViewAction
 import com.lee.playandroid.todo.viewmodel.CreateTodoViewEvent
 import com.lee.playandroid.todo.viewmodel.CreateTodoViewModel
@@ -53,9 +49,7 @@ class CreateTodoFragment : BaseNavigationFragment(R.layout.fragment_create_todo)
     private val todoData by argumentsOrNull<TodoData>(ARG_PARAMS_TODO)
 
     private val viewModel by viewModels<CreateTodoViewModel>(factoryProducer = {
-        CreateTodoViewModel.CreateFactory(
-            todoData = todoData
-        )
+        CreateTodoViewModel.CreateFactory(type, todoData)
     })
 
     private val binding by binding(FragmentCreateTodoBinding::bind)
@@ -103,7 +97,8 @@ class CreateTodoFragment : BaseNavigationFragment(R.layout.fragment_create_todo)
             viewModel.viewEvents.collect { event ->
                 when (event) {
                     is CreateTodoViewEvent.RequestSuccess -> {
-                        responseTodo(event.todoData)
+                        setFragmentResult(event.resultKey, event.bundle)
+                        toast(event.message)
                         findNavController().popBackStack()
                     }
                     is CreateTodoViewEvent.RequestFailed -> {
@@ -160,6 +155,11 @@ class CreateTodoFragment : BaseNavigationFragment(R.layout.fragment_create_todo)
         }
     }
 
+    override fun onDateSet(view: DatePicker?, year: Int, month: Int, dayOfMonth: Int) {
+        val date = "$year-${month + 1}-$dayOfMonth"
+        viewModel.dispatch(CreateTodoViewAction.ChangeDate(date))
+    }
+
     override fun onFragmentResume() {
         super.onFragmentResume()
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
@@ -175,23 +175,4 @@ class CreateTodoFragment : BaseNavigationFragment(R.layout.fragment_create_todo)
         }
     }
 
-    override fun onDateSet(view: DatePicker?, year: Int, month: Int, dayOfMonth: Int) {
-        val date = "$year-${month + 1}-$dayOfMonth"
-        viewModel.dispatch(CreateTodoViewAction.ChangeDate(date))
-    }
-
-    /**
-     * todo操作回调处理
-     */
-    private fun responseTodo(todoData: TodoData) {
-        // 设置回调数据
-        val resultKey = if (type == ARG_TYPE_CREATE) REQUEST_KEY_SAVE else REQUEST_KEY_UPDATE
-        val bundle = Bundle().apply { putParcelable(REQUEST_VALUE_TODO, todoData) }
-        setFragmentResult(resultKey, bundle)
-
-        // 设置结果提示
-        val message = if (type == ARG_TYPE_CREATE) getString(R.string.todo_create_success)
-        else getString(R.string.todo_update_success)
-        toast(message)
-    }
 }

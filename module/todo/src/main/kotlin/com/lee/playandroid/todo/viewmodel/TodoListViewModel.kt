@@ -42,8 +42,11 @@ class TodoListViewModel(handle: SavedStateHandle) : ViewModel() {
     // 请求状态 1-完成；0未完成; 默认全部展示
     private val requestStatus = handle[ARG_PARAMS_STATUS] ?: 0
 
+    // 保存type选择类型key
+    private val typeSavedKey = SP_KEY_TODO_TYPE.plus(accountService.getUserId())
+
     // 请求类型
-    private var requestType = PreferencesTools.get(SP_KEY_TODO_TYPE, TodoType.DEFAULT)
+    private var requestType = PreferencesTools.get(typeSavedKey, TodoType.DEFAULT)
 
     // 缓存key 根据todo状态、todo类型、用户id
     private var cacheKey = CACHE_KEY_TODO_CONTENT.plus(requestStatus).plus(requestType)
@@ -155,7 +158,7 @@ class TodoListViewModel(handle: SavedStateHandle) : ViewModel() {
     private fun checkResetRequestType(@TodoType type: Int) {
         viewModelScope.launch {
             if (requestType != type) {
-                PreferencesTools.put(SP_KEY_TODO_TYPE, type)
+                PreferencesTools.put(typeSavedKey, type)
                 requestType = type
                 cacheKey = CACHE_KEY_TODO_CONTENT.plus(requestStatus).plus(requestType)
                     .plus(accountService.getUserId())
