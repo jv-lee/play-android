@@ -9,8 +9,6 @@ import androidx.lifecycle.viewModelScope
 import com.lee.library.base.BaseNavigationFragment
 import com.lee.library.dialog.ChoiceDialog
 import com.lee.library.dialog.LoadingDialog
-import com.lee.library.dialog.core.CancelListener
-import com.lee.library.dialog.core.ConfirmListener
 import com.lee.library.extensions.*
 import com.lee.library.tools.DarkModeTools
 import com.lee.library.tools.DarkViewUpdateTools
@@ -181,10 +179,10 @@ class SettingsFragment : BaseNavigationFragment(R.layout.fragment_settings),
         clearDialog = ChoiceDialog(requireContext()).apply {
             setTitle(getString(R.string.settings_clear_title))
             setCancelable(true)
-            cancelListener = CancelListener {
+            onCancel = {
                 viewModel.dispatch(SettingsViewAction.VisibleCacheDialog(visibility = false))
             }
-            confirmListener = ConfirmListener {
+            onConfirm = {
                 viewModel.dispatch(SettingsViewAction.RequestClearCache)
             }
         }
@@ -193,10 +191,10 @@ class SettingsFragment : BaseNavigationFragment(R.layout.fragment_settings),
         logoutDialog = ChoiceDialog(requireContext()).apply {
             setTitle(getString(R.string.settings_logout_title))
             setCancelable(true)
-            cancelListener = CancelListener {
+            onCancel = {
                 viewModel.dispatch(SettingsViewAction.VisibleLogoutDialog(visibility = false))
             }
-            confirmListener = ConfirmListener {
+            onConfirm = {
                 viewModel.viewModelScope.launch {
                     viewModel.accountService.requestLogout(requireActivity())
                     viewModel.dispatch(SettingsViewAction.VisibleLogoutDialog(visibility = false))
