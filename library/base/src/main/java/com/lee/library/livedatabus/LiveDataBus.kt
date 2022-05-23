@@ -151,7 +151,7 @@ class LiveDataBus private constructor() {
                         ) {
                             if (event == Lifecycle.Event.ON_DESTROY) {
                                 channel.removeObserver(observer)
-                                viewLifecycleOwner.lifecycle.removeObserver(this)
+                                source.lifecycle.removeObserver(this)
                             }
                         }
                     })
