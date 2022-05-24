@@ -3,6 +3,7 @@ package com.lee.playandroid.me.ui.fragment
 import android.app.Dialog
 import android.view.View
 import android.widget.CompoundButton
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.lifecycle.viewModelScope
@@ -10,17 +11,13 @@ import com.lee.library.base.BaseNavigationFragment
 import com.lee.library.dialog.ChoiceDialog
 import com.lee.library.dialog.LoadingDialog
 import com.lee.library.extensions.*
-import com.lee.library.tools.DarkModeTools
 import com.lee.library.tools.DarkViewUpdateTools
 import com.lee.library.viewstate.collectState
 import com.lee.playandroid.library.common.entity.AccountViewEvent
 import com.lee.playandroid.library.common.entity.AccountViewState
 import com.lee.playandroid.me.R
 import com.lee.playandroid.me.databinding.FragmentSettingsBinding
-import com.lee.playandroid.me.viewmodel.SettingsViewAction
-import com.lee.playandroid.me.viewmodel.SettingsViewEvent
-import com.lee.playandroid.me.viewmodel.SettingsViewModel
-import com.lee.playandroid.me.viewmodel.SettingsViewState
+import com.lee.playandroid.me.viewmodel.*
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
@@ -34,6 +31,8 @@ class SettingsFragment : BaseNavigationFragment(R.layout.fragment_settings),
 
     private val viewModel by viewModels<SettingsViewModel>()
 
+    private val themeViewModel by activityViewModels<ThemeViewModel>()
+
     private val binding by binding(FragmentSettingsBinding::bind)
 
     private val loadingDialog by lazy { LoadingDialog(requireContext()) }
@@ -43,10 +42,6 @@ class SettingsFragment : BaseNavigationFragment(R.layout.fragment_settings),
 
     override fun bindView() {
         DarkViewUpdateTools.bindViewCallback(viewLifecycleOwner, this)
-
-        binding.lineSystem.getRightSwitch()?.isChecked = DarkModeTools.get().isSystemTheme()
-        binding.lineNight.getRightSwitch()?.isChecked = DarkModeTools.get().isDarkTheme()
-        binding.lineNight.getRightSwitch()?.isEnabled = !DarkModeTools.get().isSystemTheme()
 
         binding.lineSystem.getRightSwitch()?.setOnCheckedChangeListener(this)
         binding.lineNight.getRightSwitch()?.setOnCheckedChangeListener(this)
@@ -116,6 +111,16 @@ class SettingsFragment : BaseNavigationFragment(R.layout.fragment_settings),
                 }
             }
         }
+
+        themeViewModel.viewStates.run {
+            launchWhenResumed {
+                collectState(ThemeViewState::isSystem, ThemeViewState::isDark) { isSystem, isDark ->
+                    binding.lineSystem.getRightSwitch()?.isChecked = isSystem
+                    binding.lineNight.getRightSwitch()?.isChecked = isDark
+                    binding.lineNight.getRightSwitch()?.isEnabled = !isSystem
+                }
+            }
+        }
     }
 
     override fun onClick(v: View) {
@@ -134,17 +139,10 @@ class SettingsFragment : BaseNavigationFragment(R.layout.fragment_settings),
 
         when (buttonView) {
             binding.lineSystem.getRightSwitch() -> {
-                DarkModeTools.get().updateSystemTheme(isChecked)
-                DarkViewUpdateTools.notifyUiMode()
-                //系统主题更新动态更新夜间模式状态
-                binding.lineNight.getRightSwitch()?.isChecked = DarkModeTools.get().isDarkTheme()
-                binding.lineNight.getRightSwitch()?.isEnabled = !isChecked
+                themeViewModel.dispatch(ThemeViewAction.UpdateSystemAction(isChecked))
             }
             binding.lineNight.getRightSwitch() -> {
-                if (DarkModeTools.get().isDarkTheme() != isChecked) {
-                    DarkModeTools.get().updateNightTheme(isChecked)
-                    DarkViewUpdateTools.notifyUiMode()
-                }
+                themeViewModel.dispatch(ThemeViewAction.UpdateDarkAction(isChecked))
             }
         }
     }
