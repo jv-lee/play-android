@@ -75,7 +75,6 @@ abstract class BaseListFragment : BaseNavigationFragment(R.layout.fragment_base_
     }
 
     override fun onRefresh() {
-        mAdapter.openLoadMore()
         requestContentList(LoadStatus.REFRESH)
     }
 

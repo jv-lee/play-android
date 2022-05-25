@@ -103,7 +103,6 @@ class SquareFragment : BaseNavigationFragment(R.layout.fragment_square),
     }
 
     override fun onRefresh() {
-        mAdapter?.openLoadMore()
         viewModel.dispatch(SquareViewAction.RequestPage(LoadStatus.REFRESH))
     }
 

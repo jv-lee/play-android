@@ -145,7 +145,6 @@ class TodoListFragment : BaseNavigationFragment(R.layout.fragment_todo_list),
     override fun addAction(todo: TodoData?) {
         todo ?: return
         if (status == ARG_STATUS_UPCOMING) {
-            mAdapter?.openLoadMore()
             viewModel.dispatch(TodoListViewAction.RequestPage(LoadStatus.REFRESH))
         }
     }
@@ -153,14 +152,12 @@ class TodoListFragment : BaseNavigationFragment(R.layout.fragment_todo_list),
     override fun updateAction(todo: TodoData?) {
         todo ?: return
         if (todo.status == status) {
-            mAdapter?.openLoadMore()
             viewModel.dispatch(TodoListViewAction.RequestPage(LoadStatus.REFRESH))
         }
     }
 
     override fun moveAction(todo: TodoData) {
         if (todo.status == status) {
-            mAdapter?.openLoadMore()
             viewModel.dispatch(TodoListViewAction.RequestPage(LoadStatus.REFRESH))
         }
     }

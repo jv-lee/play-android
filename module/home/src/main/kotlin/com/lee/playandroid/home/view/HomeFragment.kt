@@ -98,7 +98,6 @@ class HomeFragment : BaseNavigationFragment(R.layout.fragment_home),
     }
 
     override fun onRefresh() {
-        mAdapter?.openLoadMore()
         viewModel.dispatch(HomeViewAction.RequestPage(LoadStatus.REFRESH))
     }
 
