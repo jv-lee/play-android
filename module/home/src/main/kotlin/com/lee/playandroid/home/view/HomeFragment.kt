@@ -92,9 +92,7 @@ class HomeFragment : BaseNavigationFragment(R.layout.fragment_home),
     }
 
     override fun onItemClick(view: View?, entity: HomeContent?, position: Int) {
-        entity?.content?.apply {
-            findNavController().navigateDetails(title, link, id, collect)
-        }
+        entity?.content?.run { findNavController().navigateDetails(title, link, id, collect) }
     }
 
     override fun onRefresh() {

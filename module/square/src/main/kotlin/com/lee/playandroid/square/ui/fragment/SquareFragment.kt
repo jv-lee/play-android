@@ -9,6 +9,7 @@ import com.lee.library.adapter.base.BaseViewAdapter
 import com.lee.library.adapter.extensions.bindAllListener
 import com.lee.library.adapter.extensions.unbindAllListener
 import com.lee.library.adapter.page.submitData
+import com.lee.library.adapter.page.submitFailed
 import com.lee.library.base.BaseNavigationFragment
 import com.lee.library.extensions.binding
 import com.lee.library.extensions.delayBackEvent
@@ -77,7 +78,7 @@ class SquareFragment : BaseNavigationFragment(R.layout.fragment_square),
                 mAdapter?.submitData(it)
             }, error = {
                 binding.refreshView.isRefreshing = false
-                mAdapter?.loadFailed()
+                mAdapter?.submitFailed()
                 actionFailed(it)
             })
         }
@@ -87,8 +88,9 @@ class SquareFragment : BaseNavigationFragment(R.layout.fragment_square),
         // 需要校验登陆状态
         if (viewModel.accountService.isLogin()) {
             when (v) {
-                binding.ivCreate -> findNavController()
-                    .navigate(R.id.action_square_fragment_to_create_share_fragment)
+                binding.ivCreate -> {
+                    findNavController().navigate(R.id.action_square_fragment_to_create_share_fragment)
+                }
             }
         } else {
             toast(getString(CR.string.login_message))
@@ -97,9 +99,7 @@ class SquareFragment : BaseNavigationFragment(R.layout.fragment_square),
     }
 
     override fun onItemClick(view: View?, entity: Content?, position: Int) {
-        entity?.apply {
-            findNavController().navigateDetails(title, link, id, collect)
-        }
+        entity?.run { findNavController().navigateDetails(title, link, id, collect) }
     }
 
     override fun onRefresh() {

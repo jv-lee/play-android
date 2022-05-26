@@ -72,9 +72,7 @@ class SearchResultFragment : BaseNavigationFragment(R.layout.fragment_search_res
     }
 
     override fun onItemClick(view: View?, entity: Content?, position: Int) {
-        entity?.apply {
-            findNavController().navigateDetails(title, link, id, collect)
-        }
+        entity?.run { findNavController().navigateDetails(title, link, id, collect) }
     }
 
     override fun autoLoadMore() {
