@@ -1,14 +1,17 @@
 package com.lee.playandroid.system.viewmodel
 
+import android.os.Bundle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.lee.library.cache.CacheManager
 import com.lee.library.extensions.cacheFlow
 import com.lee.playandroid.library.common.entity.ParentTab
+import com.lee.playandroid.library.common.entity.Tab
 import com.lee.playandroid.library.common.extensions.checkData
 import com.lee.playandroid.library.common.extensions.createApi
 import com.lee.playandroid.system.constants.Constants.CACHE_KEY_SYSTEM_CONTENT
 import com.lee.playandroid.system.model.api.ApiService
+import com.lee.playandroid.system.ui.SystemContentTabFragment
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
@@ -38,6 +41,9 @@ class SystemContentViewModel : ViewModel() {
             is SystemContentViewAction.RequestData -> {
                 requestParentTab()
             }
+            is SystemContentViewAction.NavigationContentTab -> {
+                navigationContentTab(action.tab)
+            }
         }
     }
 
@@ -53,6 +59,21 @@ class SystemContentViewModel : ViewModel() {
         }
     }
 
+    /**
+     * 导航至目标页面
+     * @param tab 数据item title:item.name ,data:item.children
+     * @see SystemContentTabFragment
+     */
+    private fun navigationContentTab(tab: ParentTab) {
+        viewModelScope.launch {
+            val data = arrayListOf<Tab>().apply { addAll(tab.children) }
+            val bundle = Bundle()
+            bundle.putString(SystemContentTabFragment.ARG_PARAMS_TAB_TITLE, tab.name)
+            bundle.putParcelableArrayList(SystemContentTabFragment.ARG_PARAMS_TAB_DATA, data)
+            _viewEvents.send(SystemContentViewEvent.NavigationContentTabEvent(bundle = bundle))
+        }
+    }
+
 }
 
 data class SystemContentViewState(
@@ -62,8 +83,10 @@ data class SystemContentViewState(
 
 sealed class SystemContentViewEvent {
     data class RequestFailed(val error: Throwable) : SystemContentViewEvent()
+    data class NavigationContentTabEvent(val bundle: Bundle) : SystemContentViewEvent()
 }
 
 sealed class SystemContentViewAction {
     object RequestData : SystemContentViewAction()
+    data class NavigationContentTab(val tab: ParentTab) : SystemContentViewAction()
 }

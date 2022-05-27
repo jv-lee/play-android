@@ -1,6 +1,5 @@
 package com.lee.playandroid.system.ui
 
-import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.LifecycleCoroutineScope
@@ -18,7 +17,6 @@ import com.lee.library.livedatabus.LiveDataBus
 import com.lee.library.viewstate.collectState
 import com.lee.playandroid.library.common.entity.NavigationSelectEvent
 import com.lee.playandroid.library.common.entity.ParentTab
-import com.lee.playandroid.library.common.entity.Tab
 import com.lee.playandroid.library.common.extensions.actionFailed
 import com.lee.playandroid.library.common.ui.widget.MainLoadResource
 import com.lee.playandroid.library.common.ui.widget.OffsetItemDecoration
@@ -75,6 +73,12 @@ class SystemContentFragment : BaseNavigationFragment(R.layout.fragment_system_co
                         actionFailed(event.error)
                         mAdapter?.submitFailed()
                     }
+                    is SystemContentViewEvent.NavigationContentTabEvent -> {
+                        findNavController().navigate(
+                            R.id.action_system_fragment_to_system_content_tab_fragment,
+                            event.bundle
+                        )
+                    }
                 }
             }
         }
@@ -90,7 +94,7 @@ class SystemContentFragment : BaseNavigationFragment(R.layout.fragment_system_co
     }
 
     override fun onItemClick(view: View, entity: ParentTab, position: Int) {
-        navigationToContentTab(entity)
+        viewModel.dispatch(SystemContentViewAction.NavigationContentTab(entity))
     }
 
     override fun pageReload() {
@@ -103,24 +107,6 @@ class SystemContentFragment : BaseNavigationFragment(R.layout.fragment_system_co
         super.onDestroyView()
         binding.rvContainer.adapter = null
         mAdapter = null
-    }
-
-    /**
-     * 导航至目标页面
-     * @param item 数据item title:item.name ,data:item.children
-     * @see SystemContentTabFragment
-     */
-    private fun navigationToContentTab(item: ParentTab) {
-        val data = arrayListOf<Tab>().apply { addAll(item.children) }
-
-        val bundle = Bundle()
-        bundle.putString(SystemContentTabFragment.ARG_PARAMS_TAB_TITLE, item.name)
-        bundle.putParcelableArrayList(SystemContentTabFragment.ARG_PARAMS_TAB_DATA, data)
-
-        findNavController().navigate(
-            R.id.action_system_fragment_to_system_content_tab_fragment,
-            bundle
-        )
     }
 
     @InjectBus
