@@ -1,10 +1,12 @@
 package com.lee.playandroid.search.viewmodel
 
+import android.os.Bundle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.lee.playandroid.library.common.entity.SearchHistory
 import com.lee.playandroid.search.model.db.SearchHistoryDatabase
 import com.lee.playandroid.search.model.entity.SearchHot
+import com.lee.playandroid.search.ui.SearchResultFragment
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
@@ -29,7 +31,7 @@ class SearchViewModel : ViewModel() {
 
     fun dispatch(action: SearchViewAction) {
         when (action) {
-            is SearchViewAction.NavigationSearch -> {
+            is SearchViewAction.NavigationSearchResult -> {
                 navigationSearchKey(action.key)
             }
             is SearchViewAction.AddHistory -> {
@@ -74,10 +76,19 @@ class SearchViewModel : ViewModel() {
         }
     }
 
+    /**
+     * 导航到搜索结果页
+     * @param key 搜索key
+     */
     private fun navigationSearchKey(key: String) {
         viewModelScope.launch {
+            // 添加历史记录隐藏软键盘
             addSearchHistory(key)
-            _viewEvents.send(SearchViewEvent.Navigation(key))
+            _viewStates.update { it.copy(hideKeyboard = true) }
+
+            val bundle = Bundle()
+            bundle.putString(SearchResultFragment.ARG_PARAMS_SEARCH_KEY, key)
+            _viewEvents.send(SearchViewEvent.NavigationSearchResultEvent(bundle))
         }
     }
 
@@ -116,17 +127,18 @@ class SearchViewModel : ViewModel() {
 }
 
 data class SearchViewState(
+    val hideKeyboard: Boolean = false,
     val searchHotList: List<SearchHot> = emptyList(),
     val searchHistoryList: List<SearchHistory> = emptyList(),
 )
 
 sealed class SearchViewEvent {
-    data class Navigation(val key: String) : SearchViewEvent()
+    data class NavigationSearchResultEvent(val bundle: Bundle) : SearchViewEvent()
     data class FailedEvent(val error: Throwable) : SearchViewEvent()
 }
 
 sealed class SearchViewAction {
-    data class NavigationSearch(val key: String) : SearchViewAction()
+    data class NavigationSearchResult(val key: String) : SearchViewAction()
     data class AddHistory(val key: String) : SearchViewAction()
     data class DeleteHistory(val key: String) : SearchViewAction()
     object ClearHistory : SearchViewAction()

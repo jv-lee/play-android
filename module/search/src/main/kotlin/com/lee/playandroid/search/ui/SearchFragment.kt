@@ -1,6 +1,5 @@
 package com.lee.playandroid.search.ui
 
-import android.os.Bundle
 import android.view.View
 import android.view.inputmethod.EditorInfo.IME_ACTION_SEARCH
 import androidx.fragment.app.viewModels
@@ -46,7 +45,7 @@ class SearchFragment : BaseNavigationFragment(R.layout.fragment_search) {
                 SearchHotAdapter(requireContext(), arrayListOf()).apply {
                     mHotAdapter = this
                     setOnItemClickListener { _, entity, _ ->
-                        viewModel.dispatch(SearchViewAction.NavigationSearch(entity.key))
+                        viewModel.dispatch(SearchViewAction.NavigationSearchResult(entity.key))
                     }
                 }.proxy
         }
@@ -56,7 +55,7 @@ class SearchFragment : BaseNavigationFragment(R.layout.fragment_search) {
                 SearchHistoryAdapter(requireContext(), arrayListOf()).apply {
                     mHistoryAdapter = this
                     setOnItemClickListener { _, entity, _ ->
-                        viewModel.dispatch(SearchViewAction.NavigationSearch(entity.key))
+                        viewModel.dispatch(SearchViewAction.NavigationSearchResult(entity.key))
                     }
                     setOnItemChildClickListener({ _, entity, _ ->
                         viewModel.dispatch(SearchViewAction.DeleteHistory(entity.key))
@@ -67,7 +66,7 @@ class SearchFragment : BaseNavigationFragment(R.layout.fragment_search) {
         binding.editQuery.setOnEditorActionListener { textView, actionId, _ ->
             val text = textView.text
             if (actionId == IME_ACTION_SEARCH && text.isNotEmpty()) {
-                viewModel.dispatch(SearchViewAction.NavigationSearch(text.toString()))
+                viewModel.dispatch(SearchViewAction.NavigationSearchResult(text.toString()))
             }
             return@setOnEditorActionListener false
         }
@@ -81,8 +80,11 @@ class SearchFragment : BaseNavigationFragment(R.layout.fragment_search) {
         launchWhenResumed {
             viewModel.viewEvents.collect { event ->
                 when (event) {
-                    is SearchViewEvent.Navigation -> {
-                        navigationResult(event.key)
+                    is SearchViewEvent.NavigationSearchResultEvent -> {
+                        findNavController().navigate(
+                            R.id.action_search_fragment_to_search_result_fragment,
+                            event.bundle
+                        )
                     }
                     is SearchViewEvent.FailedEvent -> {
                         actionFailed(event.error)
@@ -92,6 +94,11 @@ class SearchFragment : BaseNavigationFragment(R.layout.fragment_search) {
         }
 
         viewModel.viewStates.run {
+            launchWhenResumed {
+                collectState(SearchViewState::hideKeyboard) {
+                    if (it) requireActivity().hideSoftInput()
+                }
+            }
             launchWhenResumed {
                 collectState(SearchViewState::searchHotList) {
                     mHotAdapter?.submitSinglePage(it)
@@ -112,19 +119,6 @@ class SearchFragment : BaseNavigationFragment(R.layout.fragment_search) {
         binding.rvHistoryContainer.adapter = null
         mHistoryAdapter = null
         mHistoryAdapter = null
-    }
-
-    /**
-     * 导航到搜索结果页
-     * @param key 搜索key
-     */
-    private fun navigationResult(key: String) {
-        //隐藏键盘
-        requireActivity().hideSoftInput()
-
-        val bundle = Bundle()
-        bundle.putString(SearchResultFragment.ARG_PARAMS_SEARCH_KEY, key)
-        findNavController().navigate(R.id.action_search_fragment_to_search_result_fragment, bundle)
     }
 
     /**
