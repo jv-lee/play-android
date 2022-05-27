@@ -36,8 +36,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorThemeItem"
-        android:paddingBottom="@dimen/medium_offset"
-        android:layoutDirection="ltr">
+        android:layoutDirection="ltr"
+        android:paddingBottom="@dimen/medium_offset">
 
         <TextView
             android:id="@+id/tv_level"
@@ -64,6 +64,8 @@
             android:layout_marginStart="@dimen/large_offset"
             android:layout_marginTop="@dimen/medium_offset"
             android:layout_marginEnd="@dimen/large_offset"
+            android:ellipsize="end"
+            android:maxLines="1"
             android:textColor="@color/colorThemeAccent"
             android:textSize="@dimen/font_size_medium"
             app:layout_constraintEnd_toEndOf="parent"
@@ -78,6 +80,8 @@
             android:layout_marginStart="@dimen/large_offset"
             android:layout_marginTop="@dimen/small_offset"
             android:layout_marginEnd="@dimen/large_offset"
+            android:ellipsize="end"
+            android:maxLines="1"
             android:textColor="@color/colorThemePrimary"
             android:textSize="@dimen/font_size_small"
             app:layout_constraintEnd_toEndOf="parent"
