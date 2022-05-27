@@ -15,7 +15,6 @@ import com.lee.library.extensions.arguments
 import com.lee.library.extensions.binding
 import com.lee.library.extensions.findParentFragment
 import com.lee.library.extensions.toast
-import com.lee.library.utils.NetworkUtil
 import com.lee.library.viewstate.LoadStatus
 import com.lee.library.viewstate.collectState
 import com.lee.library.widget.SlidingPaneItemTouchListener
@@ -97,16 +96,26 @@ class TodoListFragment : BaseNavigationFragment(R.layout.fragment_todo_list),
                         actionFailed(event.error)
                     }
                     is TodoListViewEvent.UpdateTodoActionSuccess -> {
+                        mAdapter?.data?.removeAt(event.position)
+                        mAdapter?.notifyItemRemoved(event.position)
                         toast(getString(R.string.todo_move_success))
                         findParentFragment<TodoFragment>()?.moveTodoItem(event.todo)
                     }
                     is TodoListViewEvent.DeleteTodoActionSuccess -> {
+                        mAdapter?.data?.removeAt(event.position)
+                        mAdapter?.notifyItemRemoved(event.position)
                         toast(getString(R.string.todo_delete_success))
                     }
                     is TodoListViewEvent.ResetRequestType -> {
                         mAdapter?.initStatusView()
                         mAdapter?.pageLoading()
                         viewModel.dispatch(TodoListViewAction.RequestPage(LoadStatus.REFRESH))
+                    }
+                    is TodoListViewEvent.NavigationEditTodoPage -> {
+                        findNavController().navigate(
+                            R.id.action_todo_fragment_to_create_todo_fragment,
+                            event.bundle
+                        )
                     }
                 }
             }
@@ -124,9 +133,15 @@ class TodoListFragment : BaseNavigationFragment(R.layout.fragment_todo_list),
 
     override fun onItemChild(view: View, entity: TodoData, position: Int) {
         when (view.id) {
-            R.id.const_container -> startEditTodoPage(entity)
-            R.id.btn_done -> moveTodoAction(position)
-            R.id.btn_delete -> deleteTodoAction(position)
+            R.id.const_container -> {
+                viewModel.dispatch(TodoListViewAction.NavigationEditTodoPage(entity))
+            }
+            R.id.btn_done -> {
+                viewModel.dispatch(TodoListViewAction.RequestUpdate(position))
+            }
+            R.id.btn_delete -> {
+                viewModel.dispatch(TodoListViewAction.RequestDelete(position))
+            }
         }
     }
 
@@ -173,45 +188,4 @@ class TodoListFragment : BaseNavigationFragment(R.layout.fragment_todo_list),
         mAdapter = null
     }
 
-    /**
-     * 移动TODO状态
-     */
-    private fun moveTodoAction(position: Int) {
-        if (NetworkUtil.isNetworkConnected(requireContext())) {
-            mAdapter?.data?.removeAt(position)
-            mAdapter?.notifyItemRemoved(position)
-            viewModel.dispatch(TodoListViewAction.RequestUpdate(position))
-        } else {
-            binding.rvContainer.closeAllItems()
-            toast(getString(R.string.network_not_access))
-        }
-    }
-
-    /**
-     * 处理todo删除
-     */
-    private fun deleteTodoAction(position: Int) {
-        if (NetworkUtil.isNetworkConnected(requireContext())) {
-            mAdapter?.data?.removeAt(position)
-            mAdapter?.notifyItemRemoved(position)
-            viewModel.dispatch(TodoListViewAction.RequestDelete(position))
-        } else {
-            binding.rvContainer.closeAllItems()
-            toast(getString(R.string.network_not_access))
-        }
-    }
-
-    /**
-     * 导航至todo编辑页
-     */
-    private fun startEditTodoPage(todo: TodoData) {
-        val bundle = Bundle().apply {
-            putInt(CreateTodoFragment.ARG_PARAMS_TYPE, CreateTodoFragment.ARG_TYPE_EDIT)
-            putParcelable(CreateTodoFragment.ARG_PARAMS_TODO, todo)
-        }
-        findNavController().navigate(
-            R.id.action_todo_fragment_to_create_todo_fragment,
-            bundle
-        )
-    }
 }

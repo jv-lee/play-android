@@ -1,13 +1,16 @@
 package com.lee.playandroid.todo.viewmodel
 
+import android.os.Bundle
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.lee.library.base.ApplicationExtensions.app
 import com.lee.library.cache.CacheManager
 import com.lee.library.extensions.getCache
 import com.lee.library.extensions.putCache
 import com.lee.library.extensions.putPageCache
 import com.lee.library.tools.PreferencesTools
+import com.lee.library.utils.NetworkUtil
 import com.lee.library.viewstate.*
 import com.lee.playandroid.library.common.constants.ApiConstants
 import com.lee.playandroid.library.common.entity.PageData
@@ -16,10 +19,12 @@ import com.lee.playandroid.library.common.extensions.checkData
 import com.lee.playandroid.library.common.extensions.createApi
 import com.lee.playandroid.library.service.AccountService
 import com.lee.playandroid.library.service.hepler.ModuleService
+import com.lee.playandroid.todo.R
 import com.lee.playandroid.todo.constants.Constants.CACHE_KEY_TODO_CONTENT
 import com.lee.playandroid.todo.constants.Constants.SP_KEY_TODO_TYPE
 import com.lee.playandroid.todo.model.api.ApiService
 import com.lee.playandroid.todo.model.entity.TodoType
+import com.lee.playandroid.todo.ui.CreateTodoFragment
 import com.lee.playandroid.todo.ui.TodoListFragment.Companion.ARG_PARAMS_STATUS
 import com.lee.playandroid.todo.ui.TodoListFragment.Companion.ARG_STATUS_COMPLETE
 import com.lee.playandroid.todo.ui.TodoListFragment.Companion.ARG_STATUS_UPCOMING
@@ -80,6 +85,9 @@ class TodoListViewModel(handle: SavedStateHandle) : ViewModel() {
             is TodoListViewAction.CheckResetRequestType -> {
                 checkResetRequestType(action.type)
             }
+            is TodoListViewAction.NavigationEditTodoPage -> {
+                navigationEditTodoPage(action.todo)
+            }
         }
     }
 
@@ -102,6 +110,8 @@ class TodoListViewModel(handle: SavedStateHandle) : ViewModel() {
         if (deleteLock.compareAndSet(false, true)) {
             viewModelScope.launch {
                 flow {
+                    check(NetworkUtil.isNetworkConnected(app)) { app.getString(R.string.network_not_access) }
+
                     val data = _todoDataFlow.getValueData<PageData<TodoData>>()!!
                     val item = data.data[position]
 
@@ -115,9 +125,14 @@ class TodoListViewModel(handle: SavedStateHandle) : ViewModel() {
                 }.catch { error ->
                     deleteLock.set(false)
                     _viewEvents.send(TodoListViewEvent.ActionFailed(error = error))
-                }.collect {
+                }.collect { data ->
                     deleteLock.set(false)
-                    _viewEvents.send(TodoListViewEvent.DeleteTodoActionSuccess(it))
+                    _viewEvents.send(
+                        TodoListViewEvent.DeleteTodoActionSuccess(
+                            position = position,
+                            todo = data
+                        )
+                    )
                 }
             }
         }
@@ -127,11 +142,16 @@ class TodoListViewModel(handle: SavedStateHandle) : ViewModel() {
         if (updateLock.compareAndSet(false, true)) {
             viewModelScope.launch {
                 flow {
+                    check(NetworkUtil.isNetworkConnected(app)) { app.getString(R.string.network_not_access) }
+
                     val data = _todoDataFlow.getValueData<PageData<TodoData>>()!!
                     val item = data.data[position]
 
                     val newItem =
-                        item.copy(status = if (requestStatus == ARG_STATUS_UPCOMING) ARG_STATUS_COMPLETE else ARG_STATUS_UPCOMING)
+                        item.copy(
+                            status = if (requestStatus == ARG_STATUS_UPCOMING)
+                                ARG_STATUS_COMPLETE else ARG_STATUS_UPCOMING
+                        )
                     val response = api.postUpdateTodoStatusAsync(item.id, newItem.status)
                     if (response.errorCode == ApiConstants.REQUEST_OK) {
                         // 根据数据源删除item
@@ -146,7 +166,12 @@ class TodoListViewModel(handle: SavedStateHandle) : ViewModel() {
                     _viewEvents.send(TodoListViewEvent.ActionFailed(error = error))
                 }.collect { data ->
                     updateLock.set(false)
-                    _viewEvents.send(TodoListViewEvent.UpdateTodoActionSuccess(todo = data))
+                    _viewEvents.send(
+                        TodoListViewEvent.UpdateTodoActionSuccess(
+                            position = position,
+                            todo = data
+                        )
+                    )
                 }
             }
         }
@@ -164,6 +189,16 @@ class TodoListViewModel(handle: SavedStateHandle) : ViewModel() {
                     .plus(accountService.getUserId())
                 _viewEvents.send(TodoListViewEvent.ResetRequestType)
             }
+        }
+    }
+
+    private fun navigationEditTodoPage(todo: TodoData) {
+        viewModelScope.launch {
+            val bundle = Bundle().apply {
+                putInt(CreateTodoFragment.ARG_PARAMS_TYPE, CreateTodoFragment.ARG_TYPE_EDIT)
+                putParcelable(CreateTodoFragment.ARG_PARAMS_TODO, todo)
+            }
+            _viewEvents.send(TodoListViewEvent.NavigationEditTodoPage(bundle))
         }
     }
 
@@ -185,10 +220,11 @@ class TodoListViewModel(handle: SavedStateHandle) : ViewModel() {
 }
 
 sealed class TodoListViewEvent {
-    data class DeleteTodoActionSuccess(val todo: TodoData) : TodoListViewEvent()
-    data class UpdateTodoActionSuccess(val todo: TodoData) : TodoListViewEvent()
+    data class DeleteTodoActionSuccess(val position: Int, val todo: TodoData) : TodoListViewEvent()
+    data class UpdateTodoActionSuccess(val position: Int, val todo: TodoData) : TodoListViewEvent()
     data class ActionFailed(val error: Throwable) : TodoListViewEvent()
     object ResetRequestType : TodoListViewEvent()
+    data class NavigationEditTodoPage(val bundle: Bundle) : TodoListViewEvent()
 }
 
 sealed class TodoListViewAction {
@@ -196,4 +232,5 @@ sealed class TodoListViewAction {
     data class RequestDelete(val position: Int) : TodoListViewAction()
     data class RequestUpdate(val position: Int) : TodoListViewAction()
     data class CheckResetRequestType(@TodoType val type: Int) : TodoListViewAction()
+    data class NavigationEditTodoPage(val todo: TodoData) : TodoListViewAction()
 }
