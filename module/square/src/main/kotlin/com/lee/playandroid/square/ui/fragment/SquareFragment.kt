@@ -87,11 +87,7 @@ class SquareFragment : BaseNavigationFragment(R.layout.fragment_square),
     override fun onClick(v: View?) {
         // 需要校验登陆状态
         if (viewModel.accountService.isLogin()) {
-            when (v) {
-                binding.ivCreate -> {
-                    findNavController().navigate(R.id.action_square_fragment_to_create_share_fragment)
-                }
-            }
+            findNavController().navigate(R.id.action_square_fragment_to_create_share_fragment)
         } else {
             toast(getString(CR.string.login_message))
             findNavController().navigateLogin()
