@@ -11,7 +11,6 @@ import com.lee.library.adapter.page.submitFailed
 import com.lee.library.base.BaseNavigationFragment
 import com.lee.library.extensions.binding
 import com.lee.library.extensions.toast
-import com.lee.library.utils.NetworkUtil
 import com.lee.library.viewstate.LoadStatus
 import com.lee.library.viewstate.collectState
 import com.lee.library.widget.SlidingPaneItemTouchListener
@@ -63,6 +62,8 @@ class CollectFragment : BaseNavigationFragment(R.layout.fragment_collect),
             viewModel.viewEvents.collect { event ->
                 when (event) {
                     is CollectViewEvent.UnCollectSuccess -> {
+                        mAdapter?.data?.removeAt(event.position)
+                        mAdapter?.notifyItemRemoved(event.position)
                         toast(getString(R.string.collect_remove_item_success))
                     }
                     is CollectViewEvent.UnCollectFailed -> {
@@ -101,7 +102,7 @@ class CollectFragment : BaseNavigationFragment(R.layout.fragment_collect),
                     .navigateDetails(entity.title, entity.link, entity.id, entity.collect)
             }
             R.id.btn_delete -> {
-                unCollectAction(position)
+                viewModel.dispatch(CollectViewAction.UnCollect(position))
             }
         }
     }
@@ -111,18 +112,6 @@ class CollectFragment : BaseNavigationFragment(R.layout.fragment_collect),
         binding.rvContainer.removeOnItemTouchListener(slidingPaneItemTouchListener)
         binding.rvContainer.adapter = null
         mAdapter = null
-    }
-
-    private fun unCollectAction(position: Int) {
-        if (NetworkUtil.isNetworkConnected(requireContext())) {
-            mAdapter?.data?.removeAt(position)
-            mAdapter?.notifyItemRemoved(position)
-            viewModel.dispatch(CollectViewAction.UnCollect(position))
-        } else {
-            binding.rvContainer.closeAllItems()
-            toast(getString(R.string.network_not_access))
-        }
-
     }
 
 }

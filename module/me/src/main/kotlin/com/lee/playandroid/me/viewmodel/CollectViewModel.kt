@@ -2,10 +2,12 @@ package com.lee.playandroid.me.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.lee.library.base.ApplicationExtensions.app
 import com.lee.library.cache.CacheManager
 import com.lee.library.extensions.getCache
 import com.lee.library.extensions.putCache
 import com.lee.library.extensions.putPageCache
+import com.lee.library.utils.NetworkUtil
 import com.lee.library.viewstate.*
 import com.lee.playandroid.library.common.constants.ApiConstants
 import com.lee.playandroid.library.common.entity.Content
@@ -14,6 +16,7 @@ import com.lee.playandroid.library.common.extensions.checkData
 import com.lee.playandroid.library.common.extensions.createApi
 import com.lee.playandroid.library.service.AccountService
 import com.lee.playandroid.library.service.hepler.ModuleService
+import com.lee.playandroid.me.R
 import com.lee.playandroid.me.constants.Constants.CACHE_KEY_COLLECT
 import com.lee.playandroid.me.model.api.ApiService
 import kotlinx.coroutines.channels.Channel
@@ -80,6 +83,8 @@ class CollectViewModel : ViewModel() {
         if (deleteLock.compareAndSet(false, true)) {
             viewModelScope.launch {
                 flow {
+                    check(NetworkUtil.isNetworkConnected(app)) { app.getString(R.string.network_not_access) }
+
                     val data = _collectFlow.getValueData<PageData<Content>>()!!
                     val item = data.data[position]
 
@@ -95,7 +100,7 @@ class CollectViewModel : ViewModel() {
                     _viewEvents.send(CollectViewEvent.UnCollectFailed(error = error))
                 }.collect {
                     deleteLock.set(false)
-                    _viewEvents.send(CollectViewEvent.UnCollectSuccess)
+                    _viewEvents.send(CollectViewEvent.UnCollectSuccess(position))
                 }
             }
         }
@@ -121,12 +126,12 @@ class CollectViewModel : ViewModel() {
 
 }
 
+sealed class CollectViewEvent {
+    data class UnCollectSuccess(val position: Int) : CollectViewEvent()
+    data class UnCollectFailed(val error: Throwable) : CollectViewEvent()
+}
+
 sealed class CollectViewAction {
     data class RequestPage(@LoadStatus val status: Int) : CollectViewAction()
     data class UnCollect(val position: Int) : CollectViewAction()
-}
-
-sealed class CollectViewEvent {
-    object UnCollectSuccess : CollectViewEvent()
-    data class UnCollectFailed(val error: Throwable) : CollectViewEvent()
 }
