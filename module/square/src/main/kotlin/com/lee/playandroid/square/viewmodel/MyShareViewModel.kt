@@ -2,10 +2,12 @@ package com.lee.playandroid.square.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.lee.library.base.ApplicationExtensions.app
 import com.lee.library.cache.CacheManager
 import com.lee.library.extensions.getCache
 import com.lee.library.extensions.putCache
 import com.lee.library.extensions.putPageCache
+import com.lee.library.utils.NetworkUtil
 import com.lee.library.viewstate.*
 import com.lee.playandroid.library.common.constants.ApiConstants
 import com.lee.playandroid.library.common.entity.Content
@@ -14,6 +16,7 @@ import com.lee.playandroid.library.common.extensions.checkData
 import com.lee.playandroid.library.common.extensions.createApi
 import com.lee.playandroid.library.service.AccountService
 import com.lee.playandroid.library.service.hepler.ModuleService
+import com.lee.playandroid.square.R
 import com.lee.playandroid.square.constants.Constants.CACHE_KEY_MY_SHARE_CONTENT
 import com.lee.playandroid.square.model.api.ApiService
 import kotlinx.coroutines.channels.Channel
@@ -74,6 +77,8 @@ class MyShareViewModel : ViewModel() {
         if (deleteLock.compareAndSet(false, true)) {
             viewModelScope.launch {
                 flow {
+                    check(NetworkUtil.isNetworkConnected(app)) { app.getString(R.string.network_not_access) }
+
                     val data = _myShareFlow.getValueData<PageData<Content>>()!!
                     val item = data.data[position]
 
@@ -89,7 +94,7 @@ class MyShareViewModel : ViewModel() {
                     _viewEvents.send(MyShareViewEvent.DeleteShareFailed(error = error))
                 }.collect {
                     deleteLock.set(false)
-                    _viewEvents.send(MyShareViewEvent.DeleteShareSuccess)
+                    _viewEvents.send(MyShareViewEvent.DeleteShareSuccess(position))
                 }
             }
         }
@@ -121,6 +126,6 @@ sealed class MyShareViewAction {
 }
 
 sealed class MyShareViewEvent {
-    object DeleteShareSuccess : MyShareViewEvent()
+    data class DeleteShareSuccess(val position: Int) : MyShareViewEvent()
     data class DeleteShareFailed(val error: Throwable) : MyShareViewEvent()
 }

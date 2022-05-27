@@ -14,12 +14,10 @@ import com.lee.library.base.BaseNavigationFragment
 import com.lee.library.extensions.binding
 import com.lee.library.extensions.toast
 import com.lee.library.interadp.setClickListener
-import com.lee.library.utils.NetworkUtil
 import com.lee.library.viewstate.LoadStatus
 import com.lee.library.viewstate.collectState
 import com.lee.library.widget.SlidingPaneItemTouchListener
 import com.lee.library.widget.closeAllItems
-import com.lee.library.widget.toolbar.TitleToolbar
 import com.lee.playandroid.library.common.entity.Content
 import com.lee.playandroid.library.common.entity.PageData
 import com.lee.playandroid.library.common.extensions.actionFailed
@@ -82,6 +80,8 @@ class MyShareFragment : BaseNavigationFragment(R.layout.fragment_my_share),
             viewModel.viewEvents.collect { event ->
                 when (event) {
                     is MyShareViewEvent.DeleteShareSuccess -> {
+                        mAdapter?.data?.removeAt(event.position)
+                        mAdapter?.notifyItemRemoved(event.position)
                         toast(getString(R.string.share_delete_success))
                     }
                     is MyShareViewEvent.DeleteShareFailed -> {
@@ -121,7 +121,7 @@ class MyShareFragment : BaseNavigationFragment(R.layout.fragment_my_share),
                     .navigateDetails(entity.title, entity.link, entity.id, entity.collect)
             }
             CR.id.btn_delete -> {
-                deleteShareAction(position)
+                viewModel.dispatch(MyShareViewAction.DeleteShare(position))
             }
         }
     }
@@ -131,18 +131,6 @@ class MyShareFragment : BaseNavigationFragment(R.layout.fragment_my_share),
         binding.rvContainer.removeOnItemTouchListener(slidingPaneItemTouchListener)
         binding.rvContainer.adapter = null
         mAdapter = null
-    }
-
-    private fun deleteShareAction(position: Int) {
-        if (NetworkUtil.isNetworkConnected(requireContext())) {
-            mAdapter?.data?.removeAt(position)
-            mAdapter?.notifyItemRemoved(position)
-            viewModel.dispatch(MyShareViewAction.DeleteShare(position))
-        } else {
-            binding.rvContainer.closeAllItems()
-            toast(getString(R.string.network_not_access))
-        }
-
     }
 
 }
