@@ -47,7 +47,6 @@ class RegisterFragment : BaseNavigationFragment(R.layout.fragment_register), Vie
         binding.root.keyboardPaddingBottom()
 
         // 设置监听
-        binding.root.setOnClickListener(this)
         binding.tvLogin.setOnClickListener(this)
         binding.tvRegister.setOnClickListener(this)
         binding.editUsername.addTextChangedListener(object : TextWatcherAdapter {
@@ -72,6 +71,9 @@ class RegisterFragment : BaseNavigationFragment(R.layout.fragment_register), Vie
             // 监听注册成功后获取的账户信息
             viewModel.viewEvents.collect { event ->
                 when (event) {
+                    is RegisterViewEvent.RegisterFailed -> {
+                        actionFailed(event.error)
+                    }
                     is RegisterViewEvent.RegisterSuccess -> {
                         accountViewModel.dispatch(
                             AccountViewAction.UpdateAccountStatus(event.accountData, true)
@@ -79,14 +81,23 @@ class RegisterFragment : BaseNavigationFragment(R.layout.fragment_register), Vie
                         setFragmentResult(REQUEST_KEY_LOGIN, Bundle.EMPTY)
                         findNavController().popBackStack()
                     }
-                    is RegisterViewEvent.RegisterFailed -> {
-                        actionFailed(event.error)
+                    is RegisterViewEvent.NavigationLoginEvent -> {
+                        if (requireContext().keyboardIsShow()) {
+                            requireContext().hideSoftInput()
+                        } else {
+                            findNavController().popBackStack()
+                        }
                     }
                 }
             }
         }
 
         viewModel.viewStates.run {
+            launchWhenResumed {
+                collectState(RegisterViewState::hideKeyboard) {
+                    if (it) requireContext().hideSoftInput()
+                }
+            }
             launchWhenResumed {
                 collectState(RegisterViewState::isLoading) {
                     if (it) show(loadingDialog) else dismiss(loadingDialog)
@@ -120,38 +131,14 @@ class RegisterFragment : BaseNavigationFragment(R.layout.fragment_register), Vie
 
     override fun onClick(view: View) {
         when (view) {
-            binding.tvRegister -> requestRegister()
-            binding.tvLogin -> goLogin()
-            binding.root -> requireActivity().hideSoftInput()
+            binding.tvRegister -> viewModel.dispatch(RegisterViewAction.RequestRegister)
+            binding.tvLogin -> viewModel.dispatch(RegisterViewAction.NavigationLogin)
         }
     }
 
     override fun onFragmentStop() {
         super.onFragmentStop()
-        requireContext().hideSoftInput()
-    }
-
-    /**
-     * 回退至登陆页
-     * 判断当前软键盘是否弹起，优先关闭软键盘
-     */
-    private fun goLogin() {
-        if (requireContext().keyboardIsShow()) {
-            requireActivity().hideSoftInput()
-        } else {
-            findNavController().popBackStack()
-        }
-    }
-
-    /**
-     * 发起注册处理
-     * 隐藏键盘后延时处理使ui更平滑
-     */
-    private fun requestRegister() {
-        requireActivity().hideSoftInput()
-        binding.tvRegister.postDelayed({
-            viewModel.dispatch(RegisterViewAction.RequestRegister)
-        }, 300)
+        viewModel.dispatch(RegisterViewAction.HideKeyboard)
     }
 
 }

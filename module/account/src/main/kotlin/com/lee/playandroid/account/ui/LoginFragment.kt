@@ -75,18 +75,18 @@ class LoginFragment : BaseNavigationFragment(R.layout.fragment_login), View.OnCl
         launchWhenResumed {
             viewModel.viewEvents.collect { event ->
                 when (event) {
+                    is LoginViewEvent.LoginFailed -> {
+                        actionFailed(event.error)
+                    }
                     is LoginViewEvent.LoginSuccess -> {
                         accountViewModel.dispatch(
                             AccountViewAction.UpdateAccountStatus(event.accountData, true)
                         )
                         findNavController().popBackStack()
                     }
-                    is LoginViewEvent.LoginFailed -> {
-                        actionFailed(event.error)
-                    }
                     is LoginViewEvent.NavigationRegisterEvent -> {
                         if (requireContext().keyboardIsShow()) {
-                            viewModel.dispatch(LoginViewAction.HideKeyboard)
+                            requireContext().hideSoftInput()
                         } else {
                             findNavController().navigate(R.id.action_login_fragment_to_register_fragment)
                         }

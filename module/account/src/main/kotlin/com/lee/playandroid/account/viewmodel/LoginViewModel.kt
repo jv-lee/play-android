@@ -3,8 +3,6 @@ package com.lee.playandroid.account.viewmodel
 import android.text.TextUtils
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.lee.library.base.ApplicationExtensions.app
-import com.lee.library.tools.KeyboardTools.keyboardIsShow
 import com.lee.library.tools.PreferencesTools
 import com.lee.playandroid.account.constants.Constants.SP_KEY_SAVE_INPUT_USERNAME
 import com.lee.playandroid.account.model.api.ApiService
@@ -91,13 +89,9 @@ class LoginViewModel : ViewModel() {
 
     /**
      * 发起登陆处理
-     * 隐藏键盘后延时处理使ui更平滑
      */
     private fun requestLogin() {
         viewModelScope.launch {
-            // 延时给予隐藏键盘的动画时间
-            _viewStates.update { it.copy(hideKeyboard = true) }
-            delay(300)
             flow {
                 // 延时给予loading动画执行时间
                 delay(500)
@@ -111,14 +105,14 @@ class LoginViewModel : ViewModel() {
                 val accountResponse = api.getAccountInfoAsync().checkData()
                 emit(accountResponse)
             }.onStart {
-                _viewStates.update { it.copy(isLoading = true) }
+                _viewStates.update { it.copy(isLoading = true, hideKeyboard = true) }
             }.catch { error ->
-                _viewStates.update { it.copy(isLoading = false) }
+                _viewStates.update { it.copy(isLoading = false, hideKeyboard = false) }
                 _viewEvents.send(LoginViewEvent.LoginFailed(error))
             }.collect { data ->
                 // 缓存用户明输入信息下次复用
                 PreferencesTools.put(SP_KEY_SAVE_INPUT_USERNAME, viewStates.value.username)
-                _viewStates.update { it.copy(isLoading = false) }
+                _viewStates.update { it.copy(isLoading = false, hideKeyboard = false) }
                 _viewEvents.send(LoginViewEvent.LoginSuccess(data))
             }
         }
