@@ -1,6 +1,5 @@
 package com.lee.playandroid.system.ui
 
-import android.annotation.SuppressLint
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.LifecycleCoroutineScope
 import com.lee.library.adapter.page.submitSinglePage
@@ -74,7 +73,6 @@ class NavigationContentFragment : BaseNavigationFragment(R.layout.fragment_navig
         }
     }
 
-    @SuppressLint("NotifyDataSetChanged")
     override fun LifecycleCoroutineScope.bindData() {
         LiveDataBus.instance.injectBus(this@NavigationContentFragment)
 
