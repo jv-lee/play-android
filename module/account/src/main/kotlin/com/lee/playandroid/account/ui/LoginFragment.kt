@@ -84,11 +84,23 @@ class LoginFragment : BaseNavigationFragment(R.layout.fragment_login), View.OnCl
                     is LoginViewEvent.LoginFailed -> {
                         actionFailed(event.error)
                     }
+                    is LoginViewEvent.NavigationRegisterEvent -> {
+                        if (requireContext().keyboardIsShow()) {
+                            viewModel.dispatch(LoginViewAction.HideKeyboard)
+                        } else {
+                            findNavController().navigate(R.id.action_login_fragment_to_register_fragment)
+                        }
+                    }
                 }
             }
         }
 
         viewModel.viewStates.run {
+            launchWhenResumed {
+                collectState(LoginViewState::hideKeyboard) {
+                    if (it) requireContext().hideSoftInput()
+                }
+            }
             launchWhenResumed {
                 collectState(LoginViewState::isLoading) {
                     if (it) show(loadingDialog) else dismiss(loadingDialog)
@@ -116,37 +128,14 @@ class LoginFragment : BaseNavigationFragment(R.layout.fragment_login), View.OnCl
 
     override fun onClick(view: View) {
         when (view) {
-            binding.tvRegister -> goRegister()
-            binding.tvLogin -> requestLogin()
+            binding.tvRegister -> viewModel.dispatch(LoginViewAction.NavigationRegister)
+            binding.tvLogin -> viewModel.dispatch(LoginViewAction.RequestLogin)
         }
     }
 
     override fun onFragmentStop() {
         super.onFragmentStop()
-        requireContext().hideSoftInput()
-    }
-
-    /**
-     * 跳转至注册页
-     * 判断当前软键盘是否弹起，优先关闭软键盘
-     */
-    private fun goRegister() {
-        if (requireContext().keyboardIsShow()) {
-            requireActivity().hideSoftInput()
-        } else {
-            findNavController().navigate(R.id.action_login_fragment_to_register_fragment)
-        }
-    }
-
-    /**
-     * 发起登陆处理
-     * 隐藏键盘后延时处理使ui更平滑
-     */
-    private fun requestLogin() {
-        requireActivity().hideSoftInput()
-        binding.tvLogin.postDelayed({
-            viewModel.dispatch(LoginViewAction.RequestLogin)
-        }, 300)
+        viewModel.dispatch(LoginViewAction.HideKeyboard)
     }
 
 }

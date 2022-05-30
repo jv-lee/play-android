@@ -3,6 +3,8 @@ package com.lee.playandroid.account.viewmodel
 import android.text.TextUtils
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.lee.library.base.ApplicationExtensions.app
+import com.lee.library.tools.KeyboardTools.keyboardIsShow
 import com.lee.library.tools.PreferencesTools
 import com.lee.playandroid.account.constants.Constants.SP_KEY_SAVE_INPUT_USERNAME
 import com.lee.playandroid.account.model.api.ApiService
@@ -10,6 +12,7 @@ import com.lee.playandroid.library.common.entity.AccountData
 import com.lee.playandroid.library.common.extensions.checkData
 import com.lee.playandroid.library.common.extensions.createApi
 import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
@@ -43,6 +46,12 @@ class LoginViewModel : ViewModel() {
             is LoginViewAction.RequestLogin -> {
                 requestLogin()
             }
+            is LoginViewAction.HideKeyboard -> {
+                hideKeyboard()
+            }
+            is LoginViewAction.NavigationRegister -> {
+                navigationRegister()
+            }
         }
     }
 
@@ -74,10 +83,24 @@ class LoginViewModel : ViewModel() {
         }
     }
 
+    private fun hideKeyboard() {
+        _viewStates.update {
+            it.copy(hideKeyboard = true)
+        }
+    }
+
+    /**
+     * 发起登陆处理
+     * 隐藏键盘后延时处理使ui更平滑
+     */
     private fun requestLogin() {
         viewModelScope.launch {
+            // 延时给予隐藏键盘的动画时间
+            _viewStates.update { it.copy(hideKeyboard = true) }
+            delay(300)
             flow {
-                kotlinx.coroutines.delay(500)
+                // 延时给予loading动画执行时间
+                delay(500)
 
                 // 校验输入格式
                 if (TextUtils.isEmpty(viewStates.value.username) || TextUtils.isEmpty(viewStates.value.password)) {
@@ -100,6 +123,16 @@ class LoginViewModel : ViewModel() {
             }
         }
     }
+
+    /**
+     * 跳转至注册页
+     * 判断当前软键盘是否弹起，优先关闭软键盘
+     */
+    private fun navigationRegister() {
+        viewModelScope.launch {
+            _viewEvents.send(LoginViewEvent.NavigationRegisterEvent)
+        }
+    }
 }
 
 data class LoginViewState(
@@ -108,15 +141,19 @@ data class LoginViewState(
     val password: String = "",
     val isLoading: Boolean = false,
     val isLoginEnable: Boolean = false,
+    val hideKeyboard: Boolean = false,
 )
 
 sealed class LoginViewEvent {
     data class LoginSuccess(val accountData: AccountData) : LoginViewEvent()
     data class LoginFailed(val error: Throwable) : LoginViewEvent()
+    object NavigationRegisterEvent : LoginViewEvent()
 }
 
 sealed class LoginViewAction {
     data class ChangeUsername(val username: String) : LoginViewAction()
     data class ChangePassword(val password: String) : LoginViewAction()
+    object HideKeyboard : LoginViewAction()
     object RequestLogin : LoginViewAction()
+    object NavigationRegister : LoginViewAction()
 }
