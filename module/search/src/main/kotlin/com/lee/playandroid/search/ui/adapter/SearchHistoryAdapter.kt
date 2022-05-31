@@ -11,9 +11,9 @@ import com.lee.playandroid.library.common.entity.SearchHistory
 import com.lee.playandroid.search.databinding.ItemSearchHistoryBinding
 
 /**
+ *
  * @author jv.lee
  * @date 2021/11/19
- * @description
  */
 class SearchHistoryAdapter(context: Context, data: List<SearchHistory>) :
     ViewBindingAdapter<SearchHistory>(context, data) {

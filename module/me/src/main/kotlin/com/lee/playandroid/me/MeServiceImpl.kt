@@ -7,9 +7,9 @@ import com.lee.playandroid.library.service.MeService
 import com.lee.playandroid.me.model.api.ApiService
 
 /**
+ *
  * @author jv.lee
  * @date 2021/12/3
- * @description
  */
 @AutoService(MeService::class)
 class MeServiceImpl : MeService {

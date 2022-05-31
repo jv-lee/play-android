@@ -26,9 +26,9 @@ import com.lee.playandroid.library.common.extensions.actionFailed
 import kotlinx.coroutines.flow.collect
 
 /**
+ * 注册页面
  * @author jv.lee
  * @date 2021/11/24
- * @description 注册页面
  */
 class RegisterFragment : BaseNavigationFragment(R.layout.fragment_register), View.OnClickListener {
 

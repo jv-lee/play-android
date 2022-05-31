@@ -13,9 +13,9 @@ import com.lee.playandroid.library.common.entity.Tab
 import com.lee.playandroid.system.databinding.ItemSystemContentBinding
 
 /**
+ * 体系列表适配器
  * @author jv.lee
  * @date 2021/11/10
- * @description 体系列表适配器
  */
 class SystemContentAdapter(context: Context, data: List<ParentTab>) :
     ViewBindingAdapter<ParentTab>(context, data) {

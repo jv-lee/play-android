@@ -12,9 +12,9 @@ import com.lee.playandroid.library.common.extensions.getTitle
 import com.lee.playandroid.system.databinding.ItemNavigationContentTagBinding
 
 /**
+ *
  * @author jv.lee
  * @date 2021/11/16
- * @description
  */
 class NavigationContentTagAdapter(context: Context, data: List<Content>) :
     ViewBindingAdapter<Content>(context, data) {

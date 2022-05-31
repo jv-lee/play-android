@@ -34,9 +34,9 @@ import kotlinx.coroutines.launch
 import java.util.concurrent.atomic.AtomicBoolean
 
 /**
+ * TodoViewModel TodoList页面使用，删改查处理
  * @author jv.lee
  * @date 2021/12/27
- * @description TodoViewModel TodoList页面使用，删改查处理
  */
 class TodoListViewModel(handle: SavedStateHandle) : ViewModel() {
 

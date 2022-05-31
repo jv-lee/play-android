@@ -3,9 +3,9 @@ package com.lee.library.adapter.extensions
 import com.lee.library.adapter.base.BaseViewAdapter
 
 /**
+ *
  * @author jv.lee
  * @date 2022/1/11
- * @description
  */
 
 @Suppress("UNCHECKED_CAST")

@@ -18,26 +18,26 @@ import com.lee.library.R
 import com.lee.library.extensions.dp2px
 
 /**
+ * 状态按钮 可设置点击状态不同颜色 及锁定点击状态颜色
+ * @see pressedBackgroundColor
+ * @see pressedTextColor
+ * @see pressedStrokeColor
+ *
+ * @see normalBackgroundColor
+ * @see normalTextColor
+ * @see normalStrokeColor
+ *
+ * @see disableBackgroundColor
+ * @see disableTextColor
+ * @see disableStrokeColor
+ *
+ * @see strokeWidth
+ * @see buttonRadius
+ * @see buttonDisable
+ * @see rippleMode
+ *
  * @author jv.lee
  * @date 2020/9/16
- * @description 状态按钮 可设置点击状态不同颜色 及锁定点击状态颜色
- *
- * pressedBackgroundColor：按下时背景颜色
- * pressedTextColor：按下时文字颜色
- * pressedStrokeColor：按下时边框颜色
- *
- * normalBackgroundColor：默认背景颜色
- * normalTextColor：默认文字颜色
- * normalStrokeColor：默认边框颜色
- *
- * disableBackgroundColor：锁定点击时背景颜色
- * disableTextColor：锁定点击时文字颜色
- * disableStrokeColor：锁定点击时边框颜色
- *
- * strokeWidth：边框宽度
- * buttonRadius：边角圆角度
- * buttonDisable：是否可点击状态
- * rippleMode：点击扩散效果 noneMode：无 stateMode：扩散并且保持点击颜色变更 defaultMode：默认扩散效果
  */
 @Keep
 class SelectorTextView : AppCompatTextView {

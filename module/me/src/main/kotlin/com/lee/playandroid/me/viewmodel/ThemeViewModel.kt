@@ -8,9 +8,9 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
 
 /**
+ * app主题控制viewModel
  * @author jv.lee
  * @date 2022/4/20
- * @description app主题控制viewModel
  */
 class ThemeViewModel : ViewModel() {
 

@@ -29,9 +29,9 @@ import kotlinx.coroutines.flow.collect
 import java.util.*
 
 /**
+ * 创建TODO页面
  * @author jv.lee
  * @date 2021/12/28
- * @description 创建TODO页面
  */
 class CreateTodoFragment : BaseNavigationFragment(R.layout.fragment_create_todo),
     DatePickerDialog.OnDateSetListener {

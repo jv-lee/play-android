@@ -26,9 +26,9 @@ import com.lee.playandroid.me.viewmodel.CoinRankViewModel
 import com.lee.playandroid.router.navigateDetails
 
 /**
+ * 积分排行榜页面
  * @author jv.lee
  * @date 2021/12/8
- * @description 积分排行榜页面
  */
 class CoinRankFragment : BaseNavigationFragment(R.layout.fragment_coin_rank),
     BaseViewAdapter.LoadErrorListener,

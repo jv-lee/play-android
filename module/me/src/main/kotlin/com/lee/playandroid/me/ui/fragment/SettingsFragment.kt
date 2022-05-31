@@ -22,9 +22,9 @@ import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 /**
+ * 应用设置页
  * @author jv.lee
  * @date 2021/11/25
- * @description 应用设置页
  */
 class SettingsFragment : BaseNavigationFragment(R.layout.fragment_settings),
     View.OnClickListener, CompoundButton.OnCheckedChangeListener, DarkViewUpdateTools.ViewCallback {

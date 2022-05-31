@@ -20,9 +20,9 @@ import com.lee.playandroid.project.R
 import com.lee.playandroid.project.databinding.ItemProjectBinding
 
 /**
+ * 项目列表适配器
  * @author jv.lee
  * @date 2021/11/8
- * @description 项目列表适配器
  */
 class ProjectListAdapter(context: Context, data: List<Content>) :
     ViewBindingAdapter<Content>(context, data) {

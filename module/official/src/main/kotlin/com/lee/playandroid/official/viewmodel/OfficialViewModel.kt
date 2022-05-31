@@ -16,9 +16,9 @@ import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
 /**
+ * 公众号Tab ViewModel
  * @author jv.lee
  * @date 2021/11/8
- * @description 公众号Tab ViewModel
  */
 class OfficialViewModel : ViewModel() {
 

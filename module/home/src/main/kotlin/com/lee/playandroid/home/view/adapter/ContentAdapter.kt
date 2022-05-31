@@ -27,9 +27,9 @@ import com.lee.playandroid.router.navigateDeepLink
 import com.lee.playandroid.router.navigateDetails
 
 /**
+ * 首页Home数据列表适配器
  * @author jv.lee
  * @date 2021/11/2
- * @description 首页Home数据列表适配器
  */
 class ContentAdapter(context: Context, data: List<HomeContent>) :
     ViewBindingAdapter<HomeContent>(context, data) {

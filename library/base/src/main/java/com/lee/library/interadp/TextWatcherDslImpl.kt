@@ -5,9 +5,9 @@ import android.text.TextWatcher
 import android.widget.TextView
 
 /**
+ *
  * @author jv.lee
  * @date 2022/5/11
- * @description
  */
 fun TextView.addTextChangeListener(init: TextWatcherDslImpl.() -> Unit) {
     val listener = TextWatcherDslImpl()

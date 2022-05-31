@@ -24,9 +24,9 @@ import com.lee.playandroid.router.navigateLogin
 import kotlinx.coroutines.launch
 
 /**
+ * MainFragment 是所有Fragment的容器类
  * @author jv.lee
  * @date 2021/11/2
- * @description MainFragment 是所有Fragment的容器类
  */
 class MainFragment : BaseFragment(R.layout.fragment_main),
     DarkViewUpdateTools.ViewCallback {

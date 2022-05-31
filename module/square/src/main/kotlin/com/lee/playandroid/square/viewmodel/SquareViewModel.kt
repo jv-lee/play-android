@@ -16,9 +16,9 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 
 /**
+ * 广场ViewModel
  * @author jv.lee
  * @date 2021/12/13
- * @description 广场ViewModel
  */
 class SquareViewModel : ViewModel() {
 

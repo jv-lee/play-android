@@ -17,9 +17,9 @@ import com.lee.playandroid.library.common.extensions.getTitle
 import com.lee.playandroid.official.databinding.ItemOfficialBinding
 
 /**
+ * 公众号列表适配器
  * @author jv.lee
  * @date 2021/11/8
- * @description 公众号列表适配器
  */
 class OfficialListAdapter(context: Context, data: List<Content>) :
     ViewBindingAdapter<Content>(context, data) {

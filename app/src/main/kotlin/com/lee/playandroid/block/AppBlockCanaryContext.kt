@@ -8,9 +8,9 @@ import com.lee.playandroid.BuildConfig
 import com.lee.playandroid.R
 
 /**
+ * BlockCanaryContext定制
  * @author jv.lee
  * @date 2022/2/9
- * @description BlockCanaryContext定制
  */
 class AppBlockCanaryContext : BlockCanaryContext() {
     override fun provideQualifier(): String {

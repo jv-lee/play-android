@@ -14,9 +14,9 @@ import com.lee.playandroid.library.common.extensions.getDateFormat
 import com.lee.playandroid.library.common.extensions.getTitle
 
 /**
+ * 简单文本通用adapter
  * @author jv.lee
  * @date 2021/12/2
- * @description 简单文本通用adapter
  */
 class SimpleTextAdapter(context: Context, data: List<Content>) :
     ViewBindingAdapter<Content>(context, data) {

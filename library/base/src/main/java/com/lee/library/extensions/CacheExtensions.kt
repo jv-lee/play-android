@@ -6,12 +6,13 @@ import com.lee.library.cache.CacheManager
 import kotlinx.coroutines.flow.flow
 
 /**
+ * 缓存管理器扩展类
  * @author jv.lee
  * @date 2021/9/9
- * @description 缓存管理器扩展类
  */
 
 /**
+ * 获取缓存数据
  * @param key 缓存key
  */
 inline fun <reified T> CacheManager.getCache(key: String): T? {
@@ -20,6 +21,7 @@ inline fun <reified T> CacheManager.getCache(key: String): T? {
 }
 
 /**
+ * 添加缓存数据
  * @param key 存储key
  * @param data 存储数据源
  */

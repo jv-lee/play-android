@@ -33,9 +33,9 @@ import com.lee.playandroid.todo.viewmodel.TodoListViewModel
 import kotlinx.coroutines.flow.collect
 
 /**
+ * TODO列表数据页 (待完成/已完成)
  * @author jv.lee
  * @date 2021/12/23
- * @description TODO列表数据页 (待完成/已完成)
  */
 class TodoListFragment : BaseNavigationFragment(R.layout.fragment_todo_list),
     BaseViewAdapter.OnItemChildView<TodoData>,

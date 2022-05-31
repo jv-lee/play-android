@@ -14,9 +14,9 @@ import com.lee.playandroid.todo.databinding.ItemTodoBinding
 import com.lee.playandroid.todo.ui.TodoListFragment.Companion.ARG_STATUS_UPCOMING
 
 /**
+ * TODO列表数据适配器
  * @author jv.lee
  * @date 2021/12/27
- * @description TODO列表数据适配器
  */
 class TodoListAdapter(context: Context, private val status: Int, data: List<TodoData>) :
     ViewBindingAdapter<TodoData>(context, data) {

@@ -23,9 +23,9 @@ import com.lee.playandroid.search.viewmodel.SearchViewState
 import kotlinx.coroutines.flow.collect
 
 /**
+ * 搜索页面
  * @author jv.lee
  * @date 2021/11/19
- * @description 搜索页面
  */
 class SearchFragment : BaseNavigationFragment(R.layout.fragment_search) {
 

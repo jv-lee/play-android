@@ -12,9 +12,9 @@ import com.lee.playandroid.system.R
 import com.lee.playandroid.system.databinding.FragmentSystemBinding
 
 /**
+ * 首页第三个Tab 体系页面
  * @author jv.lee
  * @date 2021/11/2
- * @description 首页第三个Tab 体系页面
  */
 class SystemFragment : BaseNavigationFragment(R.layout.fragment_system) {
 

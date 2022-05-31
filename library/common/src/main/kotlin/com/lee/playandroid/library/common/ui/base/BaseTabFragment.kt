@@ -20,9 +20,9 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.collect
 
 /**
+ * 基础tabFragment类
  * @author jv.lee
  * @date 2021/11/9
- * @description 基础tabFragment类
  */
 abstract class BaseTabFragment : BaseNavigationFragment(R.layout.fragment_base_tab),
     StatusLayout.OnReloadListener {

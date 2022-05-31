@@ -5,9 +5,9 @@ import com.lee.library.utils.TimeUtil
 import com.lee.playandroid.library.common.entity.Content
 
 /**
+ *
  * @author jv.lee
  * @date 2022/3/2
- * @description
  */
 
 fun Content.getTitle(): String =

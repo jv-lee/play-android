@@ -8,9 +8,9 @@ import androidx.annotation.LayoutRes
 import androidx.core.view.contains
 
 /**
+ *
  * @author jv.lee
  * @date 2021/10/29
- * @description
  */
 class Skeleton private constructor(builder: Builder) {
 

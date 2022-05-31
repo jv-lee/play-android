@@ -11,9 +11,9 @@ import com.lee.library.net.HttpManager
 import java.io.InputStream
 
 /**
+ *
  * @author jv.lee
  * @date 2020/4/20
- * @description
  */
 @GlideModule
 class PioneerGlideModel : AppGlideModule() {

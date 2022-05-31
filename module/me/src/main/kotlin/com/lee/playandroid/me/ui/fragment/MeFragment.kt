@@ -25,9 +25,9 @@ import com.lee.playandroid.router.navigateTodo
 import com.lee.playandroid.library.common.R as CR
 
 /**
+ * 首页第四个Tab 我的页面
  * @author jv.lee
  * @date 2021/11/2
- * @description 首页第四个Tab 我的页面
  */
 class MeFragment : BaseNavigationFragment(R.layout.fragment_me),
     View.OnClickListener, View.OnLongClickListener, DarkViewUpdateTools.ViewCallback {

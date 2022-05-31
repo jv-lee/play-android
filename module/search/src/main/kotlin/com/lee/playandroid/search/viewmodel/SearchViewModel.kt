@@ -12,9 +12,9 @@ import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
 /**
+ *
  * @author jv.lee
  * @date 2021/11/19
- * @description
  */
 class SearchViewModel : ViewModel() {
 

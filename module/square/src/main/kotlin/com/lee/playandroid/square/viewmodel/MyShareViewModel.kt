@@ -25,9 +25,9 @@ import kotlinx.coroutines.launch
 import java.util.concurrent.atomic.AtomicBoolean
 
 /**
+ * 我的分享列表
  * @author jv.lee
  * @date 2021/12/16
- * @description 我的分享列表
  */
 class MyShareViewModel : ViewModel() {
 

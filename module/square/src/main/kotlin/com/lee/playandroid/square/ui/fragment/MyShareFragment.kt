@@ -32,9 +32,9 @@ import kotlinx.coroutines.flow.collect
 import com.lee.playandroid.library.common.R as CR
 
 /**
+ * 我的分享页面
  * @author jv.lee
  * @date 2021/12/13
- * @description 我的分享页面
  */
 class MyShareFragment : BaseNavigationFragment(R.layout.fragment_my_share),
     BaseViewAdapter.LoadErrorListener,

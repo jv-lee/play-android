@@ -25,9 +25,9 @@ import com.lee.playandroid.library.common.extensions.actionFailed
 import kotlinx.coroutines.flow.collect
 
 /**
+ * 登陆页面
  * @author jv.lee
  * @date 2021/11/24
- * @description 登陆页面
  */
 class LoginFragment : BaseNavigationFragment(R.layout.fragment_login), View.OnClickListener {
 

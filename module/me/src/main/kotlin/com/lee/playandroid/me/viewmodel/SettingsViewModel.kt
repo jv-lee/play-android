@@ -12,9 +12,9 @@ import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
 /**
+ *
  * @author jv.lee
  * @date 2022/4/29
- * @description
  */
 class SettingsViewModel : ViewModel() {
 

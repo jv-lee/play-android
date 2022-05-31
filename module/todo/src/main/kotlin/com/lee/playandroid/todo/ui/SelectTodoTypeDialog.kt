@@ -19,9 +19,9 @@ import com.lee.playandroid.todo.viewmodel.SelectTodoTypeViewModel
 import com.lee.playandroid.todo.viewmodel.SelectTodoTypeViewState
 
 /**
+ * Todo列表类型选择器弹窗
  * @author jv.lee
  * @date 2022/1/2
- * @description Todo列表类型选择器弹窗
  */
 class SelectTodoTypeDialog :
     BaseAlertFragment(R.layout.dialog_select_todo) {

@@ -19,9 +19,9 @@ import com.lee.library.extensions.setDrawableCompat
 import com.lee.playandroid.me.R
 
 /**
+ *
  * @author jv.lee
  * @date 2020/4/10
- * @description
  */
 class LineButtonView : ConstraintLayout {
 

@@ -12,10 +12,10 @@ import com.lee.playandroid.home.databinding.ItemContentCategoryChildBinding
 import com.lee.playandroid.home.model.entity.HomeCategory
 
 /**
+ * 首页分类列表适配器 基于
+ * @see ContentAdapter.ContentCategoryItem
  * @author jv.lee
  * @date 2021/11/8
- * @description 首页分类列表适配器 基于
- * @see ContentAdapter.ContentCategoryItem
  */
 class ContentCategoryAdapter(context: Context, data: List<HomeCategory>) :
     ViewBindingAdapter<HomeCategory>(context, data) {

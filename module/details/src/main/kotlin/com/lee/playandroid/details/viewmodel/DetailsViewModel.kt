@@ -16,9 +16,9 @@ import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
 /**
+ *
  * @author jv.lee
  * @date 2021/12/3
- * @description
  */
 class DetailsViewModel(savedStateHandle: SavedStateHandle) : ViewModel() {
 

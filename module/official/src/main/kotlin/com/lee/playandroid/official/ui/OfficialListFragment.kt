@@ -14,9 +14,9 @@ import com.lee.playandroid.router.navigateDetails
 import kotlinx.coroutines.flow.StateFlow
 
 /**
+ * 公众号列表页
  * @author jv.lee
  * @date 2021/11/8
- * @description 公众号列表页
  */
 class OfficialListFragment : BaseListFragment() {
 

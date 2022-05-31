@@ -5,9 +5,9 @@ import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 
 /**
+ *
  * @author jv.lee
  * @date 2021/11/11
- * @description
  */
 class OffsetItemDecoration(
     private val offsetTop: Int = 0,

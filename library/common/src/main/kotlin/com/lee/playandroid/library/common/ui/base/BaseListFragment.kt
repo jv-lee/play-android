@@ -21,9 +21,9 @@ import com.lee.playandroid.library.common.extensions.actionFailed
 import kotlinx.coroutines.flow.StateFlow
 
 /**
+ *
  * @author jv.lee
  * @date 2021/11/8
- * @description
  */
 abstract class BaseListFragment : BaseNavigationFragment(R.layout.fragment_base_list),
     SwipeRefreshLayout.OnRefreshListener,

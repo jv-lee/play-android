@@ -10,9 +10,9 @@ import com.lee.library.widget.SnackBarEx
 import com.lee.playandroid.library.common.R
 
 /**
+ * 项目错误ui处理公共扩展函数
  * @author jv.lee
  * @date 2021/12/9
- * @description
  */
 
 private const val EXTENSIONS_KEY_THROWABLE_CODE = "extensionsKey:throwableCode"

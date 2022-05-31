@@ -3,9 +3,9 @@ package com.lee.playandroid.library.common.entity
 import androidx.annotation.Keep
 
 /**
+ *
  * @author jv.lee
  * @date 2021/11/25
- * @description
  */
 @Keep
 data class AccountData(val coinInfo: CoinInfo, val userInfo: UserInfo)

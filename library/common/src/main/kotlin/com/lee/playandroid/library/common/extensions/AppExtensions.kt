@@ -8,9 +8,9 @@ import com.lee.library.tools.StatusTools.setLightStatusIcon
 import com.lee.library.tools.StatusTools.setNavigationBarColor
 
 /**
+ * app通用扩展
  * @author jv.lee
  * @date 2022/3/7
- * @description
  */
 
 fun Activity.appThemeSet() {

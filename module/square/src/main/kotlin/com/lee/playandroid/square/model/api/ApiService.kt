@@ -7,9 +7,9 @@ import com.lee.playandroid.library.common.entity.PageData
 import retrofit2.http.*
 
 /**
+ *
  * @author jv.lee
  * @date 2021/12/13
- * @description
  */
 interface ApiService {
 

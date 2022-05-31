@@ -6,9 +6,9 @@ import androidx.recyclerview.widget.RecyclerView
 
 
 /**
+ * RecyclerView Item 拖动/侧滑处理
  * @author jv.lee
  * @date 2021/12/3
- * @description RecyclerView Item 拖动/侧滑处理
  */
 class RecyclerItemTouchHelper(private val helperCallback: ItemTouchHelperCallback) :
     ItemTouchHelper.Callback() {

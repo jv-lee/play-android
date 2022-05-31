@@ -8,9 +8,9 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.StateFlow
 
 /**
+ *
  * @author jv.lee
  * @date 2021/11/25
- * @description
  */
 interface AccountService {
 

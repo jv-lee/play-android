@@ -4,9 +4,9 @@ import com.lee.library.base.ApplicationExtensions.app
 import com.lee.playandroid.todo.R
 
 /**
+ *
  * @author jv.lee
  * @date 2022/1/2
- * @description
  */
 data class TodoTypeData(val type: Int, val name: String) {
     companion object {

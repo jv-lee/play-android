@@ -4,9 +4,9 @@ import com.lee.library.adapter.listener.LoadResource
 import com.lee.playandroid.library.common.R
 
 /**
+ *
  * @author jv.lee
  * @date 2021/11/30
- * @description
  */
 class AppLoadResource : LoadResource {
     override fun pageLayoutId(): Int {

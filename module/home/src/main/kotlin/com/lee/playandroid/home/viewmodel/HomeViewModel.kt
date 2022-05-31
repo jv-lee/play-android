@@ -17,9 +17,9 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 
 /**
+ * 首页viewModel
  * @author jv.lee
  * @date 2021/11/2
- * @description 首页viewModel
  */
 class HomeViewModel : ViewModel() {
 

@@ -13,9 +13,9 @@ import com.lee.playandroid.me.databinding.ItemCoinRankBinding
 import com.lee.playandroid.me.databinding.ItemCoinRankTopBinding
 
 /**
+ * 积分排行榜适配器
  * @author jv.lee
  * @date 2021/12/9
- * @description 积分排行榜适配器
  */
 class CoinRankAdapter(context: Context, data: List<CoinRank>) :
     ViewBindingAdapter<CoinRank>(context, data) {

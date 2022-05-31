@@ -12,9 +12,9 @@ import com.lee.playandroid.system.R
 import com.lee.playandroid.system.databinding.ItemNavigationTabBinding
 
 /**
+ *
  * @author jv.lee
  * @date 2021/11/12
- * @description
  */
 class NavigationContentTabAdapter(data: MutableList<NavigationItem>) :
     VerticalTabAdapter<NavigationItem>(data) {

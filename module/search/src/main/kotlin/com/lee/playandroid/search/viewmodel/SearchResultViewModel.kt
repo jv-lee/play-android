@@ -13,9 +13,9 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 /**
+ *
  * @author jv.lee
  * @date 2021/11/22
- * @description
  */
 class SearchResultViewModel(handle: SavedStateHandle) : ViewModel() {
 

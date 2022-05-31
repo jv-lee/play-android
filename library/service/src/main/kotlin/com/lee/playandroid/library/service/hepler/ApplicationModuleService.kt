@@ -5,9 +5,9 @@ import com.lee.playandroid.library.service.ApplicationService
 import java.util.*
 
 /**
+ * 各模块application初始化回调
  * @author jv.lee
  * @date 2021/9/9
- * @description 各模块application初始化回调
  */
 object ApplicationModuleService {
     fun init(application: Application) {

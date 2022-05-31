@@ -6,9 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 
 /**
+ * 线性列表view 适配器
  * @author jv.lee
  * @date 2020/9/7
- * @description
  */
 open class LinearAdapter<T>(val context: Context, val data: ArrayList<T>) {
     private var rootView: ViewGroup? = null

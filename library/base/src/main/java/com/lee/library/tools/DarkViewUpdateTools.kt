@@ -6,9 +6,9 @@ import androidx.lifecycle.LifecycleOwner
 import kotlin.collections.set
 
 /**
+ *
  * @author jv.lee
  * @date 2021/6/8
- * @description
  */
 object DarkViewUpdateTools {
 

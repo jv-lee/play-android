@@ -14,10 +14,10 @@ import com.lee.playandroid.system.viewmodel.SystemContentListViewModel
 import kotlinx.coroutines.flow.StateFlow
 
 /**
+ * 体系内容数据列表类
+ * @see SystemContentTabFragment 子列表Fragment
  * @author jv.lee
  * @date 2021/11/10
- * @description 体系内容数据列表类
- * @see SystemContentTabFragment 子列表Fragment
  */
 class SystemContentListFragment : BaseListFragment() {
 

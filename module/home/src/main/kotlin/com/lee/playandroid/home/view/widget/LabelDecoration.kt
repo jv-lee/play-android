@@ -14,9 +14,9 @@ import com.lee.playandroid.home.R
 import com.lee.playandroid.home.view.adapter.ContentAdapter
 
 /**
+ *
  * @author jv.lee
  * @date 2021/11/10
- * @description
  */
 class LabelDecoration(context: Context) : RecyclerView.ItemDecoration() {
 

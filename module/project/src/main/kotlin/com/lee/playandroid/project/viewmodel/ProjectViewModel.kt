@@ -16,9 +16,9 @@ import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
 /**
+ * 项目Tab ViewModel
  * @author jv.lee
  * @date 2021/11/9
- * @description 项目Tab ViewModel
  */
 class ProjectViewModel : ViewModel() {
 

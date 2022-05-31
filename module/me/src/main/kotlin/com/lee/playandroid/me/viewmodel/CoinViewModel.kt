@@ -16,9 +16,9 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 
 /**
+ * 积分ViewModel
  * @author jv.lee
  * @date 2021/11/30
- * @description 积分ViewModel
  */
 class CoinViewModel : ViewModel() {
 

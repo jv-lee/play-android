@@ -25,10 +25,10 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 /**
+ * 程序主入口
+ * 进行模块、工具类、基础配置初始化 activity/fragment生命周期统一监听功能业务处理
  * @author jv.lee
  * @date 2021/11/2
- * @description 程序主入口
- * 进行模块、工具类、基础配置初始化 activity/fragment生命周期统一监听功能业务处理
  */
 class App : BaseApplication() {
 

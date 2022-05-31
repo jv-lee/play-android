@@ -6,9 +6,9 @@ import com.lee.library.adapter.core.VerticalTabAdapter
 import com.lee.library.widget.layoutmanager.LinearTopSmoothScroller
 
 /**
+ * 导航页 双RecyclerView联动ui逻辑扩展
  * @author jv.lee
  * @date 2021/12/22
- * @description 导航页 双RecyclerView联动ui逻辑扩展
  */
 
 fun VerticalTabAdapter<*>.bindTabLinkage(

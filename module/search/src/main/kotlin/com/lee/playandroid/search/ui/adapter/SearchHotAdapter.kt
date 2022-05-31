@@ -13,9 +13,9 @@ import com.lee.playandroid.search.model.entity.SearchHot
 import java.util.*
 
 /**
+ *
  * @author jv.lee
  * @date 2021/11/19
- * @description
  */
 class SearchHotAdapter(context: Context, data: List<SearchHot>) :
     ViewBindingAdapter<SearchHot>(context, data) {

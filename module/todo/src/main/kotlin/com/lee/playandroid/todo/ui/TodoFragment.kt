@@ -25,9 +25,9 @@ import com.lee.playandroid.todo.viewmodel.TodoViewModel
 import com.lee.playandroid.todo.viewmodel.TodoViewState
 
 /**
+ * TODO页面
  * @author jv.lee
  * @date 2021/12/23
- * @description TODO页面
  */
 class TodoFragment : BaseNavigationFragment(R.layout.fragment_todo) {
 

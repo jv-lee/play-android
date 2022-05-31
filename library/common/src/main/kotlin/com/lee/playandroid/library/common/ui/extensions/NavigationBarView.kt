@@ -20,9 +20,9 @@ import com.lee.playandroid.library.common.R
 import java.lang.ref.WeakReference
 
 /**
+ * 首页BottomNavView -> Navigation扩展方法及动画修改
  * @author jv.lee
  * @date 2021/9/10
- * @description 首页BottomNavView -> Navigation扩展方法及动画修改
  */
 
 inline fun ExpandBottomNavigationView.bindNavigationAction(

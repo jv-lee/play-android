@@ -11,9 +11,9 @@ import com.lee.playandroid.library.common.entity.CoinRecord
 import com.lee.playandroid.me.databinding.ItemCoinRecordBinding
 
 /**
+ * 积分获取记录列表适配器
  * @author jv.lee
  * @date 2021/11/30
- * @description 积分获取记录列表适配器
  */
 class CoinRecordAdapter(context: Context, data: List<CoinRecord>) :
     ViewBindingAdapter<CoinRecord>(context, data) {

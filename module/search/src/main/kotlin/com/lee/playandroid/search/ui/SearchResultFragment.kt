@@ -24,9 +24,9 @@ import com.lee.playandroid.search.viewmodel.SearchResultViewAction
 import com.lee.playandroid.search.viewmodel.SearchResultViewModel
 
 /**
+ * 搜索结果列表
  * @author jv.lee
  * @date 2021/11/22
- * @description 搜索结果列表
  */
 class SearchResultFragment : BaseNavigationFragment(R.layout.fragment_search_result),
     BaseViewAdapter.AutoLoadMoreListener,

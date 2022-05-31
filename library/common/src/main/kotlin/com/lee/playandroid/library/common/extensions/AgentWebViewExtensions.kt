@@ -6,9 +6,9 @@ import androidx.lifecycle.LifecycleOwner
 import com.just.agentweb.AgentWeb
 
 /**
+ *
  * @author jv.lee
  * @date 2021/11/18
- * @description
  */
 fun AgentWeb.bindLifecycle(lifecycle: Lifecycle): AgentWeb {
     lifecycle.addObserver(object : LifecycleEventObserver {

@@ -25,9 +25,9 @@ import kotlinx.coroutines.launch
 import java.util.concurrent.atomic.AtomicBoolean
 
 /**
+ * 收藏页面ViewModel
  * @author jv.lee
  * @date 2021/12/2
- * @description 收藏页面ViewModel
  */
 class CollectViewModel : ViewModel() {
 

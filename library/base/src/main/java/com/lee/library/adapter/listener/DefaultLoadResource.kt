@@ -3,9 +3,9 @@ package com.lee.library.adapter.listener
 import com.lee.library.R
 
 /**
+ *
  * @author jv.lee
  * @date 2020/4/13
- * @description
  */
 class DefaultLoadResource : LoadResource {
     override fun pageLayoutId(): Int {

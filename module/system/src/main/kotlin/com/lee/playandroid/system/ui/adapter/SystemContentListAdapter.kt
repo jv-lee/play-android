@@ -17,9 +17,9 @@ import com.lee.playandroid.library.common.extensions.getTitle
 import com.lee.playandroid.system.databinding.ItemContentBinding
 
 /**
+ * 体系列表 子内容列表适配器
  * @author jv.lee
  * @date 2021/11/10
- * @description 体系列表 子内容列表适配器
  */
 class SystemContentListAdapter(context: Context, data: List<Content>) :
     ViewBindingAdapter<Content>(context, data) {

@@ -16,9 +16,9 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 
 /**
+ * 公众号列表 ViewModel
  * @author jv.lee
  * @date 2021/11/8
- * @description 公众号列表 ViewModel
  */
 class OfficialListViewModel(handle: SavedStateHandle) : ViewModel() {
 

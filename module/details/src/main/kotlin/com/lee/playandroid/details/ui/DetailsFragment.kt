@@ -18,9 +18,9 @@ import com.lee.playandroid.library.common.extensions.bindLifecycle
 import kotlinx.coroutines.flow.collect
 
 /**
+ * 内容详情页
  * @author jv.lee
  * @date 2020/3/24
- * @description 内容详情页
  */
 class DetailsFragment : BaseNavigationFragment(R.layout.fragment_details) {
 

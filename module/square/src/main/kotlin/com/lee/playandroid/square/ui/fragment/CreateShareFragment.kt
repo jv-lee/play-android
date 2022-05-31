@@ -23,9 +23,9 @@ import com.lee.playandroid.square.viewmodel.CreateShareViewState
 import kotlinx.coroutines.flow.collect
 
 /**
+ * 创建分享页面
  * @author jv.lee
  * @date 2021/12/13
- * @description 创建分享页面
  */
 class CreateShareFragment : BaseNavigationFragment(R.layout.fragment_create_share) {
 

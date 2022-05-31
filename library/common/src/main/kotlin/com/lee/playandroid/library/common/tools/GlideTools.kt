@@ -11,9 +11,9 @@ import com.lee.library.tools.DarkModeTools
 import com.lee.playandroid.library.common.R
 
 /**
+ *
  * @author jv.lee
  * @date 2020/3/30
- * @description
  */
 class GlideTools {
 

@@ -34,9 +34,9 @@ import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 /**
+ * 程序主窗口 单Activity架构
  * @author jv.lee
  * @date 2021/11/2
- * @description 程序主窗口 单Activity架构
  */
 class MainActivity : BaseActivity() {
 

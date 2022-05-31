@@ -7,9 +7,9 @@ import com.lee.library.adapter.page.PagingData
 import kotlinx.parcelize.Parcelize
 
 /**
+ * 网络请求操作类
  * @author jv.lee
  * @date 2020/3/25
- * @description 网络请求操作类
  */
 @Keep
 data class Data<T>(

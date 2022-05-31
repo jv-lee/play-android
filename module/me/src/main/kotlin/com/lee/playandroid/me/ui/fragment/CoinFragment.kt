@@ -31,9 +31,9 @@ import com.lee.playandroid.me.viewmodel.CoinViewModel
 import com.lee.playandroid.router.navigateDetails
 
 /**
+ * 积分页面
  * @author jv.lee
  * @date 2021/11/25
- * @description 积分页面
  */
 class CoinFragment : BaseNavigationFragment(R.layout.fragment_coin),
     BaseViewAdapter.LoadErrorListener,

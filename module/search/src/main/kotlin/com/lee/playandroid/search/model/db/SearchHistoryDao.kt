@@ -6,9 +6,9 @@ import com.lee.library.db.base.BaseDao
 import com.lee.playandroid.library.common.entity.SearchHistory
 
 /**
+ *
  * @author jv.lee
  * @date 2021/11/22
- * @description
  */
 @Dao
 interface SearchHistoryDao : BaseDao<SearchHistory> {

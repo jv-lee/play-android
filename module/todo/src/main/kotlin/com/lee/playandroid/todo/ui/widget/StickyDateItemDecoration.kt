@@ -14,9 +14,9 @@ import com.lee.playandroid.todo.R
 import com.lee.playandroid.todo.ui.adapter.TodoListAdapter
 
 /**
+ * TODO列表吸附时间头item
  * @author jv.lee
  * @date 2021/12/28
- * @description TODO列表吸附时间头item
  */
 class StickyDateItemDecoration constructor(
     private val context: Context,

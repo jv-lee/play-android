@@ -4,9 +4,9 @@ import com.lee.playandroid.library.common.entity.TodoData
 import com.lee.playandroid.todo.model.entity.TodoType
 
 /**
+ * todo双状态列表行为通信
  * @author jv.lee
  * @date 2021/12/29
- * @description todo双状态列表行为通信
  */
 interface TodoActionListener {
     /**

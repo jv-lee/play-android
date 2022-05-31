@@ -35,9 +35,9 @@ import com.lee.playandroid.router.navigateDetails
 import com.lee.playandroid.router.navigateSearch
 
 /**
+ * 首页第一个Tab 主页
  * @author jv.lee
  * @date 2021/11/2
- * @description 首页第一个Tab 主页
  */
 class HomeFragment : BaseNavigationFragment(R.layout.fragment_home),
     View.OnClickListener, SwipeRefreshLayout.OnRefreshListener,

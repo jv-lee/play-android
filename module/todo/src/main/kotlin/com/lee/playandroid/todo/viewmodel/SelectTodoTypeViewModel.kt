@@ -13,9 +13,9 @@ import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
 /**
+ *
  * @author jv.lee
  * @date 2022/1/2
- * @description
  */
 class SelectTodoTypeViewModel : ViewModel() {
 

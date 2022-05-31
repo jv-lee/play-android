@@ -28,9 +28,9 @@ import com.lee.playandroid.router.navigateDetails
 import kotlinx.coroutines.flow.collect
 
 /**
+ * 收藏列表页
  * @author jv.lee
  * @date 2021/11/25
- * @description 收藏列表页
  */
 class CollectFragment : BaseNavigationFragment(R.layout.fragment_collect),
     BaseViewAdapter.LoadErrorListener,

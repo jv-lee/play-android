@@ -13,10 +13,10 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.flow
 
 /**
+ * 体系内容Tab页
+ * @see SystemContentFragment 体系列表跳转至当前该体系tab页面
  * @author jv.lee
  * @date 2021/11/10
- * @description 体系内容Tab页
- * @see SystemContentFragment 体系列表跳转至当前该体系tab页面
  */
 class SystemContentTabFragment : BaseTabFragment() {
 

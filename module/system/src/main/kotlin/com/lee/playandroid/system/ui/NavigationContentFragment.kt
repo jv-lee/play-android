@@ -27,10 +27,10 @@ import com.lee.playandroid.system.viewmodel.NavigationContentViewState
 import kotlinx.coroutines.flow.collect
 
 /**
+ * 导航Fragment
+ * @see SystemFragment 体系Fragment下第二个Tab
  * @author jv.lee
  * @date 2021/11/10
- * @description  导航Fragment
- * @see SystemFragment 体系Fragment下第二个Tab
  */
 class NavigationContentFragment : BaseNavigationFragment(R.layout.fragment_navigation_content),
     StatusLayout.OnReloadListener {

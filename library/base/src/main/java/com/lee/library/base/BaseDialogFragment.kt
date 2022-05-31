@@ -14,9 +14,9 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.cancel
 
 /**
+ *
  * @author jv.lee
  * @date 2019/8/16.
- * @description
  */
 abstract class BaseDialogFragment(
     private val resourceId: Int? = 0,

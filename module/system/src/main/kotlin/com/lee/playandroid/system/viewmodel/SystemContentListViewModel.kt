@@ -12,9 +12,9 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 
 /**
+ * 体系内容 子内容列表 ViewModel
  * @author jv.lee
  * @date 2021/11/10
- * @description 体系内容 子内容列表 ViewModel
  */
 class SystemContentListViewModel(handle: SavedStateHandle) : ViewModel() {
 

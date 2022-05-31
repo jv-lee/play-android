@@ -7,9 +7,9 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 
 /**
+ *
  * @author jv.lee
  * @date 2019/8/16.
- * @description
  */
 abstract class BaseFragment(private val resourceId: Int? = 0) : Fragment() {
 

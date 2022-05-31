@@ -17,9 +17,9 @@ import com.lee.playandroid.library.common.extensions.getTitle
 import com.lee.playandroid.square.databinding.ItemSquareBinding
 
 /**
+ *
  * @author jv.lee
  * @date 2021/12/13
- * @description
  */
 class SquareAdapter(context: Context, data: List<Content>) :
     ViewBindingAdapter<Content>(context, data) {

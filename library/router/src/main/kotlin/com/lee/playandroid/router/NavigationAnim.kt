@@ -3,9 +3,9 @@ package com.lee.playandroid.router
 import androidx.navigation.NavOptions
 
 /**
+ *
  * @author jv.lee
  * @date 2022/1/4
- * @description
  */
 sealed class NavigationAnim {
     object Bottom : NavigationAnim()

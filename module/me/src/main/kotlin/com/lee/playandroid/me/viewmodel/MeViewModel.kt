@@ -5,9 +5,9 @@ import com.lee.playandroid.library.service.AccountService
 import com.lee.playandroid.library.service.hepler.ModuleService
 
 /**
+ *
  * @author jv.lee
  * @date 2022/5/5
- * @description
  */
 class MeViewModel : ViewModel() {
     val accountService: AccountService = ModuleService.find()

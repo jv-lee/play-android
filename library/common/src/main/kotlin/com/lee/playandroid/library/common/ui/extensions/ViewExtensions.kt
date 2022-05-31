@@ -6,9 +6,9 @@ import androidx.core.content.ContextCompat
 import com.lee.playandroid.library.common.R
 
 /**
+ *
  * @author jv.lee
  * @date 2022/1/5
- * @description
  */
 
 fun View.setThemeGradientBackground() {

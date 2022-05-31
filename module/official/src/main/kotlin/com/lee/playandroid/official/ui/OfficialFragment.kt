@@ -12,9 +12,9 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.StateFlow
 
 /**
+ * 公众号Tab页
  * @author jv.lee
  * @date 2021/11/2
- * @description 公众号Tab页
  */
 class OfficialFragment : BaseTabFragment() {
 

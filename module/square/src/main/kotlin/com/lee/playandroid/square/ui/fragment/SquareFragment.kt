@@ -36,9 +36,9 @@ import com.lee.playandroid.square.viewmodel.SquareViewModel
 import com.lee.playandroid.library.common.R as CR
 
 /**
+ * 首页第二个Tab 广场页面
  * @author jv.lee
  * @date 2021/12/13
- * @description 首页第二个Tab 广场页面
  */
 class SquareFragment : BaseNavigationFragment(R.layout.fragment_square),
     View.OnClickListener, SwipeRefreshLayout.OnRefreshListener,

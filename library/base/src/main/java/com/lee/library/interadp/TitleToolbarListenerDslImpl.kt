@@ -4,9 +4,9 @@ import android.view.View
 import com.lee.library.widget.toolbar.TitleToolbar
 
 /**
+ *
  * @author jv.lee
  * @date 2022/5/12
- * @description
  */
 fun TitleToolbar.setClickListener(init: TitleToolbarListenerDslImpl.() -> Unit) {
     val listener = TitleToolbarListenerDslImpl()

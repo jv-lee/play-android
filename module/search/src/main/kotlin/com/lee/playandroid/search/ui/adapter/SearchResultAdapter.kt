@@ -21,9 +21,9 @@ import com.lee.playandroid.search.databinding.ItemSearchResultPictureBinding
 import com.lee.playandroid.search.databinding.ItemSearchResultTextBinding
 
 /**
+ *
  * @author jv.lee
  * @date 2021/11/22
- * @description
  */
 class SearchResultAdapter(context: Context, data: List<Content>) :
     ViewBindingAdapter<Content>(context, data) {

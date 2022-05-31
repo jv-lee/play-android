@@ -17,9 +17,9 @@ import kotlinx.coroutines.launch
 import java.util.*
 
 /**
+ * 积分排行榜ViewModel
  * @author jv.lee
  * @date 2021/11/30
- * @description 积分排行榜ViewModel
  */
 class CoinRankViewModel : ViewModel() {
 

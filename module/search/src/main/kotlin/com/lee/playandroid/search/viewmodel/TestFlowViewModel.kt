@@ -17,9 +17,9 @@ import kotlinx.coroutines.flow.*
 import retrofit2.http.GET
 
 /**
+ *
  * @author jv.lee
  * @date 2022/2/14
- * @description
  */
 @Deprecated("不好用")
 class TestFlowViewModel : CoroutineViewModel() {
