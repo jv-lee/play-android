@@ -6,7 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.lee.library.tools.PreferencesTools
 import com.lee.playandroid.account.constants.Constants.SP_KEY_SAVE_INPUT_USERNAME
 import com.lee.playandroid.account.model.api.ApiService
-import com.lee.playandroid.library.common.entity.AccountData
+import com.lee.playandroid.library.common.entity.AccountViewAction
 import com.lee.playandroid.library.common.extensions.checkData
 import com.lee.playandroid.library.common.extensions.createApi
 import kotlinx.coroutines.channels.Channel
@@ -112,8 +112,11 @@ class LoginViewModel : ViewModel() {
             }.collect { data ->
                 // 缓存用户明输入信息下次复用
                 PreferencesTools.put(SP_KEY_SAVE_INPUT_USERNAME, viewStates.value.username)
+                // 更新ui状态
                 _viewStates.update { it.copy(isLoading = false, hideKeyboard = false) }
-                _viewEvents.send(LoginViewEvent.LoginSuccess(data))
+                // 发送登陆成功事件携带账户ui状态
+                val status = AccountViewAction.UpdateAccountStatus(data, true)
+                _viewEvents.send(LoginViewEvent.LoginSuccess(status))
             }
         }
     }
@@ -139,7 +142,7 @@ data class LoginViewState(
 )
 
 sealed class LoginViewEvent {
-    data class LoginSuccess(val accountData: AccountData) : LoginViewEvent()
+    data class LoginSuccess(val status: AccountViewAction.UpdateAccountStatus) : LoginViewEvent()
     data class LoginFailed(val error: Throwable) : LoginViewEvent()
     object NavigationRegisterEvent : LoginViewEvent()
 }

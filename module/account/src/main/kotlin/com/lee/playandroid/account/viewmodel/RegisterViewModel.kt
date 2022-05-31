@@ -5,7 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.lee.library.tools.PreferencesTools
 import com.lee.playandroid.account.constants.Constants
 import com.lee.playandroid.account.model.api.ApiService
-import com.lee.playandroid.library.common.entity.AccountData
+import com.lee.playandroid.library.common.entity.AccountViewAction
 import com.lee.playandroid.library.common.extensions.checkData
 import com.lee.playandroid.library.common.extensions.createApi
 import kotlinx.coroutines.channels.Channel
@@ -111,8 +111,11 @@ class RegisterViewModel : ViewModel() {
             }.collect { data ->
                 // 缓存用户名下次输入直接设置
                 PreferencesTools.put(Constants.SP_KEY_SAVE_INPUT_USERNAME, data.userInfo.username)
+                // 更新ui状态
                 _viewStates.update { it.copy(isLoading = false, hideKeyboard = false) }
-                _viewEvents.send(RegisterViewEvent.RegisterSuccess(data))
+                // 发送注册成功事件携带账户ui状态
+                val status = AccountViewAction.UpdateAccountStatus(data, true)
+                _viewEvents.send(RegisterViewEvent.RegisterSuccess(status))
             }
         }
     }
@@ -139,7 +142,9 @@ data class RegisterViewState(
 )
 
 sealed class RegisterViewEvent {
-    data class RegisterSuccess(val accountData: AccountData) : RegisterViewEvent()
+    data class RegisterSuccess(val status: AccountViewAction.UpdateAccountStatus) :
+        RegisterViewEvent()
+
     data class RegisterFailed(val error: Throwable) : RegisterViewEvent()
     object NavigationLoginEvent : RegisterViewEvent()
 }

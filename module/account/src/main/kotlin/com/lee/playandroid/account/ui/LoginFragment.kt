@@ -21,7 +21,6 @@ import com.lee.library.viewstate.collectState
 import com.lee.playandroid.account.R
 import com.lee.playandroid.account.databinding.FragmentLoginBinding
 import com.lee.playandroid.account.viewmodel.*
-import com.lee.playandroid.library.common.entity.AccountViewAction
 import com.lee.playandroid.library.common.extensions.actionFailed
 import kotlinx.coroutines.flow.collect
 
@@ -79,17 +78,12 @@ class LoginFragment : BaseNavigationFragment(R.layout.fragment_login), View.OnCl
                         actionFailed(event.error)
                     }
                     is LoginViewEvent.LoginSuccess -> {
-                        accountViewModel.dispatch(
-                            AccountViewAction.UpdateAccountStatus(event.accountData, true)
-                        )
+                        accountViewModel.dispatch(event.status)
                         findNavController().popBackStack()
                     }
                     is LoginViewEvent.NavigationRegisterEvent -> {
-                        if (requireContext().keyboardIsShow()) {
-                            requireContext().hideSoftInput()
-                        } else {
-                            findNavController().navigate(R.id.action_login_fragment_to_register_fragment)
-                        }
+                        if (requireContext().keyboardIsShow()) requireContext().hideSoftInput()
+                        else findNavController().navigate(R.id.action_login_fragment_to_register_fragment)
                     }
                 }
             }
