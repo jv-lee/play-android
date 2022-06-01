@@ -1,8 +1,8 @@
 package com.lee.playandroid.me.viewmodel
 
 import androidx.lifecycle.ViewModel
-import com.lee.library.tools.DarkModeTools
-import com.lee.library.tools.DarkViewUpdateTools
+import com.lee.playandroid.base.tools.DarkModeTools
+import com.lee.playandroid.base.tools.DarkViewUpdateTools
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update

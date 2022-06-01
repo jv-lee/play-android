@@ -1,6 +1,6 @@
 package com.lee.playandroid.common.interceptor
 
-import com.lee.library.tools.PreferencesTools
+import com.lee.playandroid.base.tools.PreferencesTools
 import com.lee.playandroid.common.BuildConfig
 import okhttp3.Interceptor
 import okhttp3.Response

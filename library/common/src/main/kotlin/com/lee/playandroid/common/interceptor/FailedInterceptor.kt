@@ -1,8 +1,8 @@
 package com.lee.playandroid.common.interceptor
 
 import com.google.gson.JsonParser
-import com.lee.library.livedatabus.LiveDataBus
-import com.lee.library.tools.PreferencesTools
+import com.lee.playandroid.base.livedatabus.LiveDataBus
+import com.lee.playandroid.base.tools.PreferencesTools
 import com.lee.playandroid.common.constants.ApiConstants
 import com.lee.playandroid.common.entity.LoginEvent
 import okhttp3.Interceptor

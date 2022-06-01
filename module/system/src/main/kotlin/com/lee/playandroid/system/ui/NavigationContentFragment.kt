@@ -2,16 +2,16 @@ package com.lee.playandroid.system.ui
 
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.LifecycleCoroutineScope
-import com.lee.library.adapter.page.submitSinglePage
-import com.lee.library.base.BaseNavigationFragment
-import com.lee.library.extensions.binding
-import com.lee.library.extensions.findParentFragment
-import com.lee.library.extensions.setMargin
-import com.lee.library.extensions.smoothScrollToTop
-import com.lee.library.livedatabus.InjectBus
-import com.lee.library.livedatabus.LiveDataBus
-import com.lee.library.viewstate.collectState
-import com.lee.library.widget.StatusLayout
+import com.lee.playandroid.base.adapter.page.submitSinglePage
+import com.lee.playandroid.base.base.BaseNavigationFragment
+import com.lee.playandroid.base.extensions.binding
+import com.lee.playandroid.base.extensions.findParentFragment
+import com.lee.playandroid.base.extensions.setMargin
+import com.lee.playandroid.base.extensions.smoothScrollToTop
+import com.lee.playandroid.base.livedatabus.InjectBus
+import com.lee.playandroid.base.livedatabus.LiveDataBus
+import com.lee.playandroid.base.viewstate.collectState
+import com.lee.playandroid.base.widget.StatusLayout
 import com.lee.playandroid.common.entity.NavigationSelectEvent
 import com.lee.playandroid.common.extensions.actionFailed
 import com.lee.playandroid.common.ui.extensions.bindTabLinkage

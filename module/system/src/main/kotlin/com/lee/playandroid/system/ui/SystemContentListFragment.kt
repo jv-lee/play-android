@@ -2,9 +2,9 @@ package com.lee.playandroid.system.ui
 
 import android.os.Bundle
 import androidx.navigation.fragment.findNavController
-import com.lee.library.adapter.base.BaseViewAdapter
-import com.lee.library.extensions.viewModelByFactory
-import com.lee.library.viewstate.UiStatePage
+import com.lee.playandroid.base.adapter.base.BaseViewAdapter
+import com.lee.playandroid.base.extensions.viewModelByFactory
+import com.lee.playandroid.base.viewstate.UiStatePage
 import com.lee.playandroid.common.entity.Content
 import com.lee.playandroid.common.ui.base.BaseListFragment
 import com.lee.playandroid.router.navigateDetails

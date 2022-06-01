@@ -5,9 +5,9 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.viewbinding.ViewBinding
 import com.google.android.material.shape.ShapeAppearanceModel
-import com.lee.library.adapter.binding.ViewBindingAdapter
-import com.lee.library.adapter.binding.ViewBindingHolder
-import com.lee.library.adapter.item.ViewBindingItem
+import com.lee.playandroid.base.adapter.binding.ViewBindingAdapter
+import com.lee.playandroid.base.adapter.binding.ViewBindingHolder
+import com.lee.playandroid.base.adapter.item.ViewBindingItem
 import com.lee.playandroid.common.entity.Content
 import com.lee.playandroid.common.extensions.getAuthor
 import com.lee.playandroid.common.extensions.getDateFormat

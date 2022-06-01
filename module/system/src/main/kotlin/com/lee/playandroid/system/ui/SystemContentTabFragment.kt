@@ -1,8 +1,8 @@
 package com.lee.playandroid.system.ui
 
 import androidx.fragment.app.Fragment
-import com.lee.library.extensions.arguments
-import com.lee.library.extensions.argumentsList
+import com.lee.playandroid.base.extensions.arguments
+import com.lee.playandroid.base.extensions.argumentsList
 import com.lee.playandroid.common.entity.Tab
 import com.lee.playandroid.common.ui.base.BaseTabFragment
 import com.lee.playandroid.common.ui.base.BaseTabViewEvent

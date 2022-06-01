@@ -13,9 +13,9 @@ import androidx.appcompat.widget.SwitchCompat
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.core.view.updateLayoutParams
-import com.lee.library.extensions.dimensToSp
-import com.lee.library.extensions.dp2px
-import com.lee.library.extensions.setDrawableCompat
+import com.lee.playandroid.base.extensions.dimensToSp
+import com.lee.playandroid.base.extensions.dp2px
+import com.lee.playandroid.base.extensions.setDrawableCompat
 import com.lee.playandroid.me.R
 
 /**

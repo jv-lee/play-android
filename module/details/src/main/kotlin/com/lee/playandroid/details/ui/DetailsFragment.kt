@@ -3,11 +3,11 @@ package com.lee.playandroid.details.ui
 import android.widget.FrameLayout
 import androidx.lifecycle.LifecycleCoroutineScope
 import com.just.agentweb.AgentWeb
-import com.lee.library.base.BaseNavigationFragment
-import com.lee.library.extensions.*
-import com.lee.library.interadp.setClickListener
-import com.lee.library.utils.ShareUtil
-import com.lee.library.viewstate.collectState
+import com.lee.playandroid.base.base.BaseNavigationFragment
+import com.lee.playandroid.base.extensions.*
+import com.lee.playandroid.base.interadp.setClickListener
+import com.lee.playandroid.base.utils.ShareUtil
+import com.lee.playandroid.base.viewstate.collectState
 import com.lee.playandroid.details.R
 import com.lee.playandroid.details.databinding.FragmentDetailsBinding
 import com.lee.playandroid.details.viewmodel.DetailsViewAction

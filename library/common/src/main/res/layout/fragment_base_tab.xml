@@ -5,13 +5,13 @@
     android:layout_height="match_parent"
     android:background="@color/colorThemeBackground">
 
-    <com.lee.library.widget.toolbar.TitleToolbar
+    <com.lee.playandroid.base.widget.toolbar.TitleToolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <com.lee.library.widget.StatusLayout
+    <com.lee.playandroid.base.widget.StatusLayout
         android:id="@+id/status_layout"
         style="@style/StatusLayout"
         android:layout_width="0dp"
@@ -41,6 +41,6 @@
             android:layout_height="match_parent"
             android:layout_marginTop="@dimen/margin_tab_height" />
 
-    </com.lee.library.widget.StatusLayout>
+    </com.lee.playandroid.base.widget.StatusLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

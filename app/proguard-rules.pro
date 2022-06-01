@@ -161,18 +161,18 @@ public void *(android.webkit.webView, jav.lang.String);
 -keep @com.lee.library.ioc.annotation.** class* {*;}
 # 如果类中有使用了注解的方法，则不混淆类和类成员
 -keepclasseswithmembers class * {
-@com.lee.library.ioc.annotation.** <methods>;
+@com.lee.playandroid.base.ioc.annotation.** <methods>;
 }
 -keepclasseswithmembers class * {
-@com.lee.library.livedatabus.InjectBus <methods>;
+@com.lee.playandroid.base.livedatabus.InjectBus <methods>;
 }
 # 如果类中有使用了注解的字段，则不混淆类和类成员
 -keepclasseswithmembers class * {
-@com.lee.library.ioc.annotation.** <fields>;
+@com.lee.playandroid.base.ioc.annotation.** <fields>;
 }
 # 如果类中有使用了注解的构造函数，则不混淆类和类成员
 -keepclasseswithmembers class * {
-@com.lee.library.ioc.annotation.** <init>(...);
+@com.lee.playandroid.base.ioc.annotation.** <init>(...);
 }
 
 # The "Signature" attribute is required to be able to access generic types whencompiling in JDK 5.0 and higher.

@@ -8,11 +8,11 @@ import androidx.navigation.fragment.findNavController
 import com.imagetools.select.ImageLaunch
 import com.imagetools.select.entity.SelectConfig
 import com.imagetools.select.entity.TakeConfig
-import com.lee.library.base.BaseNavigationFragment
-import com.lee.library.extensions.*
-import com.lee.library.tools.DarkViewUpdateTools
-import com.lee.library.tools.PermissionLauncher
-import com.lee.library.viewstate.collectState
+import com.lee.playandroid.base.base.BaseNavigationFragment
+import com.lee.playandroid.base.extensions.*
+import com.lee.playandroid.base.tools.DarkViewUpdateTools
+import com.lee.playandroid.base.tools.PermissionLauncher
+import com.lee.playandroid.base.viewstate.collectState
 import com.lee.playandroid.common.entity.AccountData
 import com.lee.playandroid.common.entity.AccountViewState
 import com.lee.playandroid.me.BuildConfig

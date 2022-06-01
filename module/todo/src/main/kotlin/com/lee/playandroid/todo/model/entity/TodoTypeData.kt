@@ -1,6 +1,6 @@
 package com.lee.playandroid.todo.model.entity
 
-import com.lee.library.base.ApplicationExtensions.app
+import com.lee.playandroid.base.base.ApplicationExtensions.app
 import com.lee.playandroid.todo.R
 
 /**

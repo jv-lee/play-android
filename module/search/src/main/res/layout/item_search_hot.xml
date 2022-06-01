@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.lee.library.widget.SelectorTextView xmlns:android="http://schemas.android.com/apk/res/android"
+<com.lee.playandroid.base.widget.SelectorTextView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/tv_hot"
@@ -18,4 +18,4 @@
     app:rippleMode="stateMode"
     tools:text="Kotlin">
 
-</com.lee.library.widget.SelectorTextView>
+</com.lee.playandroid.base.widget.SelectorTextView>

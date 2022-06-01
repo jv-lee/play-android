@@ -3,7 +3,7 @@ package com.lee.playandroid.common.entity
 import android.os.Parcelable
 import androidx.annotation.Keep
 import com.google.gson.annotations.SerializedName
-import com.lee.library.adapter.page.PagingData
+import com.lee.playandroid.base.adapter.page.PagingData
 import kotlinx.parcelize.Parcelize
 
 /**

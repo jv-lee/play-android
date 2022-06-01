@@ -1,12 +1,12 @@
 package com.lee.playandroid.search.viewmodel
 
 import androidx.lifecycle.*
-import com.lee.library.cache.CacheManager
-import com.lee.library.extensions.getCache
-import com.lee.library.extensions.putCache
-import com.lee.library.viewstate.uiState
-import com.lee.library.viewmodel.CoroutineViewModel
-import com.lee.library.viewstate.UiState
+import com.lee.playandroid.base.cache.CacheManager
+import com.lee.playandroid.base.extensions.getCache
+import com.lee.playandroid.base.extensions.putCache
+import com.lee.playandroid.base.viewstate.uiState
+import com.lee.playandroid.base.viewmodel.CoroutineViewModel
+import com.lee.playandroid.base.viewstate.UiState
 import com.lee.playandroid.common.entity.Data
 import com.lee.playandroid.common.entity.ParentTab
 import com.lee.playandroid.common.extensions.checkData

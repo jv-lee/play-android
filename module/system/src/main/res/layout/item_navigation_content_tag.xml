@@ -5,7 +5,7 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content">
 
-    <com.lee.library.widget.SelectorTextView
+    <com.lee.playandroid.base.widget.SelectorTextView
         android:id="@+id/tv_tag"
         android:padding="@dimen/medium_offset"
         android:layout_width="wrap_content"

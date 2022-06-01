@@ -2,8 +2,8 @@ package com.lee.playandroid.common.ui.extensions
 
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.lee.library.adapter.core.VerticalTabAdapter
-import com.lee.library.widget.layoutmanager.LinearTopSmoothScroller
+import com.lee.playandroid.base.adapter.core.VerticalTabAdapter
+import com.lee.playandroid.base.widget.layoutmanager.LinearTopSmoothScroller
 
 /**
  * 导航页 双RecyclerView联动ui逻辑扩展

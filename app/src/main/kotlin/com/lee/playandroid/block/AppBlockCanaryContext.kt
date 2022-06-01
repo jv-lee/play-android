@@ -3,7 +3,7 @@ package com.lee.playandroid.block
 import android.content.Context
 import com.github.moduth.blockcanary.BlockCanaryContext
 import com.github.moduth.blockcanary.internal.BlockInfo
-import com.lee.library.utils.LogUtil
+import com.lee.playandroid.base.utils.LogUtil
 import com.lee.playandroid.BuildConfig
 import com.lee.playandroid.R
 

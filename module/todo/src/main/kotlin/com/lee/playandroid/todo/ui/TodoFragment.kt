@@ -7,11 +7,11 @@ import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.navigation.fragment.findNavController
-import com.lee.library.adapter.core.UiPagerAdapter2
-import com.lee.library.base.BaseNavigationFragment
-import com.lee.library.extensions.binding
-import com.lee.library.interadp.setClickListener
-import com.lee.library.viewstate.collectState
+import com.lee.playandroid.base.adapter.core.UiPagerAdapter2
+import com.lee.playandroid.base.base.BaseNavigationFragment
+import com.lee.playandroid.base.extensions.binding
+import com.lee.playandroid.base.interadp.setClickListener
+import com.lee.playandroid.base.viewstate.collectState
 import com.lee.playandroid.common.entity.TodoData
 import com.lee.playandroid.todo.R
 import com.lee.playandroid.todo.databinding.FragmentTodoBinding

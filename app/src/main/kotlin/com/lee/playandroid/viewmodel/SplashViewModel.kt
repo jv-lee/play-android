@@ -2,7 +2,7 @@ package com.lee.playandroid.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.lee.library.base.ApplicationExtensions.app
+import com.lee.playandroid.base.base.ApplicationExtensions.app
 import com.lee.playandroid.R
 import com.lee.playandroid.service.AccountService
 import com.lee.playandroid.service.hepler.ModuleService

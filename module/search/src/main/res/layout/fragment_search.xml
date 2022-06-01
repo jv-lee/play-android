@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:background="@color/colorThemeBackground">
 
-    <com.lee.library.widget.toolbar.TitleToolbar
+    <com.lee.playandroid.base.widget.toolbar.TitleToolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -29,7 +29,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-    </com.lee.library.widget.toolbar.TitleToolbar>
+    </com.lee.playandroid.base.widget.toolbar.TitleToolbar>
 
     <TextView
         android:id="@+id/tv_hot_label"
@@ -50,7 +50,7 @@
         android:layout_margin="@dimen/large_offset"
         android:paddingStart="@dimen/medium_offset"
         android:paddingEnd="@dimen/medium_offset"
-        app:layoutManager="com.lee.library.widget.layoutmanager.FlowLayoutManager"
+        app:layoutManager="com.lee.playandroid.base.widget.layoutmanager.FlowLayoutManager"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv_hot_label" />

@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/colorThemeBackground">
 
-    <com.lee.library.widget.toolbar.CustomToolbarLayout
+    <com.lee.playandroid.base.widget.toolbar.CustomToolbarLayout
         android:id="@+id/toolbar_layout"
         android:layout_width="match_parent"
         android:layout_height="160dp"
@@ -52,7 +52,7 @@
             app:layout_constraintStart_toStartOf="@id/tv_account_name"
             app:layout_constraintTop_toBottomOf="@id/tv_account_name" />
 
-    </com.lee.library.widget.toolbar.CustomToolbarLayout>
+    </com.lee.playandroid.base.widget.toolbar.CustomToolbarLayout>
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"

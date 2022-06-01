@@ -3,10 +3,10 @@ package com.lee.playandroid.common.extensions
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
-import com.lee.library.extensions.toast
-import com.lee.library.net.HttpManager
-import com.lee.library.utils.NetworkUtil
-import com.lee.library.widget.SnackBarEx
+import com.lee.playandroid.base.extensions.toast
+import com.lee.playandroid.base.net.HttpManager
+import com.lee.playandroid.base.utils.NetworkUtil
+import com.lee.playandroid.base.widget.SnackBarEx
 import com.lee.playandroid.common.R
 
 /**

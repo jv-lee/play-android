@@ -2,11 +2,11 @@ package com.lee.playandroid.system.ui
 
 import android.annotation.SuppressLint
 import androidx.lifecycle.LifecycleCoroutineScope
-import com.lee.library.adapter.core.UiPagerAdapter2
-import com.lee.library.base.BaseNavigationFragment
-import com.lee.library.extensions.bindRadioGroup
-import com.lee.library.extensions.binding
-import com.lee.library.extensions.delayBackEvent
+import com.lee.playandroid.base.adapter.core.UiPagerAdapter2
+import com.lee.playandroid.base.base.BaseNavigationFragment
+import com.lee.playandroid.base.extensions.bindRadioGroup
+import com.lee.playandroid.base.extensions.binding
+import com.lee.playandroid.base.extensions.delayBackEvent
 import com.lee.playandroid.common.ui.extensions.setThemeGradientBackground
 import com.lee.playandroid.system.R
 import com.lee.playandroid.system.databinding.FragmentSystemBinding

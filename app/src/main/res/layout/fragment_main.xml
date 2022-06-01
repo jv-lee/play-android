@@ -19,7 +19,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:navGraph="@navigation/navigation_main" />
 
-    <com.lee.library.widget.nav.ExpandBottomNavigationView
+    <com.lee.playandroid.base.widget.nav.ExpandBottomNavigationView
         android:id="@+id/navigation_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

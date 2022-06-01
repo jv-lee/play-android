@@ -1,6 +1,6 @@
 package com.lee.playandroid.common.ui.widget
 
-import com.lee.library.adapter.listener.LoadResource
+import com.lee.playandroid.base.adapter.listener.LoadResource
 import com.lee.playandroid.common.R
 
 /**

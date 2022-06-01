@@ -5,9 +5,9 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.text.HtmlCompat
 import androidx.viewbinding.ViewBinding
-import com.lee.library.adapter.binding.ViewBindingAdapter
-import com.lee.library.adapter.binding.ViewBindingHolder
-import com.lee.library.adapter.item.ViewBindingItem
+import com.lee.playandroid.base.adapter.binding.ViewBindingAdapter
+import com.lee.playandroid.base.adapter.binding.ViewBindingHolder
+import com.lee.playandroid.base.adapter.item.ViewBindingItem
 import com.lee.playandroid.common.entity.ParentTab
 import com.lee.playandroid.common.entity.Tab
 import com.lee.playandroid.system.databinding.ItemSystemContentBinding

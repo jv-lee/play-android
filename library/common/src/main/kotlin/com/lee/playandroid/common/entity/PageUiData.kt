@@ -1,6 +1,6 @@
 package com.lee.playandroid.common.entity
 
-import com.lee.library.adapter.page.PagingData
+import com.lee.playandroid.base.adapter.page.PagingData
 
 data class PageUiData<T>(val page: Int, val pageTotal: Int, val data: MutableList<T>) :
     PagingData<T> {

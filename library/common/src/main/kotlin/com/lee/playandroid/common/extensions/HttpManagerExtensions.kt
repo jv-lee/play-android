@@ -1,8 +1,8 @@
 package com.lee.playandroid.common.extensions
 
-import com.lee.library.net.HttpManager
-import com.lee.library.net.request.IRequest
-import com.lee.library.net.request.Request
+import com.lee.playandroid.base.net.HttpManager
+import com.lee.playandroid.base.net.request.IRequest
+import com.lee.playandroid.base.net.request.Request
 import com.lee.playandroid.common.BuildConfig
 import com.lee.playandroid.common.interceptor.FailedInterceptor
 import com.lee.playandroid.common.interceptor.HeaderInterceptor

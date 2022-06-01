@@ -2,8 +2,8 @@ package com.lee.playandroid.official.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.lee.library.cache.CacheManager
-import com.lee.library.extensions.cacheFlow
+import com.lee.playandroid.base.cache.CacheManager
+import com.lee.playandroid.base.extensions.cacheFlow
 import com.lee.playandroid.common.extensions.checkData
 import com.lee.playandroid.common.extensions.createApi
 import com.lee.playandroid.common.ui.base.BaseTabViewAction

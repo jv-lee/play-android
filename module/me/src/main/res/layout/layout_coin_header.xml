@@ -10,7 +10,7 @@
         android:background="@drawable/shape_coin_header_bg"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <com.lee.library.widget.ShadowConstraintLayout
+    <com.lee.playandroid.base.widget.ShadowConstraintLayout
         android:id="@+id/shadow_container"
         android:layout_width="match_parent"
         android:layout_height="180dp"
@@ -79,6 +79,6 @@
             android:textColor="@color/colorThemeAccent"
             app:layout_constraintBottom_toBottomOf="parent" />
 
-    </com.lee.library.widget.ShadowConstraintLayout>
+    </com.lee.playandroid.base.widget.ShadowConstraintLayout>
 
 </RelativeLayout>

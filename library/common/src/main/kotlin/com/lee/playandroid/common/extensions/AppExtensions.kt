@@ -2,10 +2,10 @@ package com.lee.playandroid.common.extensions
 
 import android.app.Activity
 import android.graphics.Color
-import com.lee.library.tools.DarkModeTools
-import com.lee.library.tools.StatusTools.setDarkStatusIcon
-import com.lee.library.tools.StatusTools.setLightStatusIcon
-import com.lee.library.tools.StatusTools.setNavigationBarColor
+import com.lee.playandroid.base.tools.DarkModeTools
+import com.lee.playandroid.base.tools.StatusTools.setDarkStatusIcon
+import com.lee.playandroid.base.tools.StatusTools.setLightStatusIcon
+import com.lee.playandroid.base.tools.StatusTools.setNavigationBarColor
 
 /**
  * app通用扩展

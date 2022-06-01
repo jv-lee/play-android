@@ -2,8 +2,8 @@ package com.lee.playandroid.me.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.lee.library.base.ApplicationExtensions.app
-import com.lee.library.utils.CacheUtil
+import com.lee.playandroid.base.base.ApplicationExtensions.app
+import com.lee.playandroid.base.utils.CacheUtil
 import com.lee.playandroid.service.AccountService
 import com.lee.playandroid.service.hepler.ModuleService
 import com.lee.playandroid.me.R

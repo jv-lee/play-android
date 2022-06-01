@@ -5,9 +5,9 @@ import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.viewbinding.ViewBinding
-import com.lee.library.adapter.binding.ViewBindingAdapter
-import com.lee.library.adapter.binding.ViewBindingHolder
-import com.lee.library.adapter.item.ViewBindingItem
+import com.lee.playandroid.base.adapter.binding.ViewBindingAdapter
+import com.lee.playandroid.base.adapter.binding.ViewBindingHolder
+import com.lee.playandroid.base.adapter.item.ViewBindingItem
 import com.lee.playandroid.search.databinding.ItemSearchHotBinding
 import com.lee.playandroid.search.model.entity.SearchHot
 import java.util.*

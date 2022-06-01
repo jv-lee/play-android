@@ -1,7 +1,7 @@
 package com.lee.playandroid.common.extensions
 
 import androidx.core.text.HtmlCompat
-import com.lee.library.utils.TimeUtil
+import com.lee.playandroid.base.utils.TimeUtil
 import com.lee.playandroid.common.entity.Content
 
 /**

@@ -3,7 +3,7 @@ package com.lee.playandroid.square.viewmodel
 import android.text.TextUtils
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.lee.library.base.ApplicationExtensions.app
+import com.lee.playandroid.base.base.ApplicationExtensions.app
 import com.lee.playandroid.common.constants.ApiConstants
 import com.lee.playandroid.common.extensions.createApi
 import com.lee.playandroid.square.R

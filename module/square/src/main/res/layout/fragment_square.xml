@@ -11,14 +11,14 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <com.lee.library.widget.SavedRecyclerView
+        <com.lee.playandroid.base.widget.SavedRecyclerView
             android:id="@+id/rv_container"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:descendantFocusability="blocksDescendants"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
-        <com.lee.library.widget.toolbar.CustomToolbarLayout
+        <com.lee.playandroid.base.widget.toolbar.CustomToolbarLayout
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -50,7 +50,7 @@
                 app:layout_constraintTop_toTopOf="@id/tv_title"
                 tools:ignore="UnusedAttribute" />
 
-        </com.lee.library.widget.toolbar.CustomToolbarLayout>
+        </com.lee.playandroid.base.widget.toolbar.CustomToolbarLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
