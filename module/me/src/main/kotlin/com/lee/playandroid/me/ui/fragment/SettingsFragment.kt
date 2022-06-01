@@ -13,8 +13,8 @@ import com.lee.library.dialog.LoadingDialog
 import com.lee.library.extensions.*
 import com.lee.library.tools.DarkViewUpdateTools
 import com.lee.library.viewstate.collectState
-import com.lee.playandroid.library.common.entity.AccountViewEvent
-import com.lee.playandroid.library.common.entity.AccountViewState
+import com.lee.playandroid.common.entity.AccountViewEvent
+import com.lee.playandroid.common.entity.AccountViewState
 import com.lee.playandroid.me.R
 import com.lee.playandroid.me.databinding.FragmentSettingsBinding
 import com.lee.playandroid.me.viewmodel.*

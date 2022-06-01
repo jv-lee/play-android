@@ -5,9 +5,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.lee.library.base.ApplicationExtensions.app
-import com.lee.playandroid.library.common.entity.TodoData
-import com.lee.playandroid.library.common.extensions.checkData
-import com.lee.playandroid.library.common.extensions.createApi
+import com.lee.playandroid.common.entity.TodoData
+import com.lee.playandroid.common.extensions.checkData
+import com.lee.playandroid.common.extensions.createApi
 import com.lee.playandroid.todo.R
 import com.lee.playandroid.todo.model.api.ApiService
 import com.lee.playandroid.todo.model.entity.TodoType

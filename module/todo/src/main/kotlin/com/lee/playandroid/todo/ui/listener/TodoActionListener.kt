@@ -1,6 +1,6 @@
 package com.lee.playandroid.todo.ui.listener
 
-import com.lee.playandroid.library.common.entity.TodoData
+import com.lee.playandroid.common.entity.TodoData
 import com.lee.playandroid.todo.model.entity.TodoType
 
 /**

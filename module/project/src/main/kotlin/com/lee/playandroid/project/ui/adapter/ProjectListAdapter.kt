@@ -3,19 +3,16 @@ package com.lee.playandroid.project.ui.adapter
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.core.text.HtmlCompat
 import androidx.viewbinding.ViewBinding
 import com.google.android.material.shape.ShapeAppearanceModel
 import com.lee.library.adapter.binding.ViewBindingAdapter
 import com.lee.library.adapter.binding.ViewBindingHolder
 import com.lee.library.adapter.item.ViewBindingItem
-import com.lee.library.base.ApplicationExtensions.app
-import com.lee.library.utils.TimeUtil
-import com.lee.playandroid.library.common.entity.Content
-import com.lee.playandroid.library.common.extensions.getAuthor
-import com.lee.playandroid.library.common.extensions.getDateFormat
-import com.lee.playandroid.library.common.extensions.getTitle
-import com.lee.playandroid.library.common.tools.GlideTools
+import com.lee.playandroid.common.entity.Content
+import com.lee.playandroid.common.extensions.getAuthor
+import com.lee.playandroid.common.extensions.getDateFormat
+import com.lee.playandroid.common.extensions.getTitle
+import com.lee.playandroid.common.tools.GlideTools
 import com.lee.playandroid.project.R
 import com.lee.playandroid.project.databinding.ItemProjectBinding
 

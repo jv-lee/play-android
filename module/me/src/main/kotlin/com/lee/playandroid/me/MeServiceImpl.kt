@@ -1,9 +1,9 @@
 package com.lee.playandroid.me
 
 import com.google.auto.service.AutoService
-import com.lee.playandroid.library.common.entity.Data
-import com.lee.playandroid.library.common.extensions.createApi
-import com.lee.playandroid.library.service.MeService
+import com.lee.playandroid.common.entity.Data
+import com.lee.playandroid.common.extensions.createApi
+import com.lee.playandroid.service.MeService
 import com.lee.playandroid.me.model.api.ApiService
 
 /**

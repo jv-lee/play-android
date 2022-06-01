@@ -1,8 +1,8 @@
 package com.lee.playandroid.account.model.api
 
-import com.lee.playandroid.library.common.entity.AccountData
-import com.lee.playandroid.library.common.entity.Data
-import com.lee.playandroid.library.common.entity.UserInfo
+import com.lee.playandroid.common.entity.AccountData
+import com.lee.playandroid.common.entity.Data
+import com.lee.playandroid.common.entity.UserInfo
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
 import retrofit2.http.GET

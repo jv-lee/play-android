@@ -13,8 +13,8 @@ import com.lee.library.extensions.*
 import com.lee.library.tools.DarkViewUpdateTools
 import com.lee.library.tools.PermissionLauncher
 import com.lee.library.viewstate.collectState
-import com.lee.playandroid.library.common.entity.AccountData
-import com.lee.playandroid.library.common.entity.AccountViewState
+import com.lee.playandroid.common.entity.AccountData
+import com.lee.playandroid.common.entity.AccountViewState
 import com.lee.playandroid.me.BuildConfig
 import com.lee.playandroid.me.R
 import com.lee.playandroid.me.databinding.FragmentMeBinding
@@ -22,7 +22,7 @@ import com.lee.playandroid.me.viewmodel.MeViewModel
 import com.lee.playandroid.router.navigateLogin
 import com.lee.playandroid.router.navigateMyShare
 import com.lee.playandroid.router.navigateTodo
-import com.lee.playandroid.library.common.R as CR
+import com.lee.playandroid.common.R as CR
 
 /**
  * 首页第四个Tab 我的页面

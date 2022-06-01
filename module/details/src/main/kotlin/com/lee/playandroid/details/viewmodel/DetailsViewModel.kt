@@ -8,9 +8,9 @@ import com.lee.playandroid.details.ui.DetailsFragment.Companion.ARG_PARAMS_COLLE
 import com.lee.playandroid.details.ui.DetailsFragment.Companion.ARG_PARAMS_ID
 import com.lee.playandroid.details.ui.DetailsFragment.Companion.ARG_PARAMS_TITLE
 import com.lee.playandroid.details.ui.DetailsFragment.Companion.ARG_PARAMS_URL
-import com.lee.playandroid.library.common.constants.ApiConstants
-import com.lee.playandroid.library.service.MeService
-import com.lee.playandroid.library.service.hepler.ModuleService
+import com.lee.playandroid.common.constants.ApiConstants
+import com.lee.playandroid.service.MeService
+import com.lee.playandroid.service.hepler.ModuleService
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch

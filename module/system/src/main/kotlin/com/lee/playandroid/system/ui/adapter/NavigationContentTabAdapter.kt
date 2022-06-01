@@ -7,7 +7,7 @@ import androidx.viewbinding.ViewBinding
 import com.lee.library.adapter.core.VerticalTabAdapter
 import com.lee.library.extensions.setBackgroundDrawableCompat
 import com.lee.library.extensions.setTextColorCompat
-import com.lee.playandroid.library.common.entity.NavigationItem
+import com.lee.playandroid.common.entity.NavigationItem
 import com.lee.playandroid.system.R
 import com.lee.playandroid.system.databinding.ItemNavigationTabBinding
 

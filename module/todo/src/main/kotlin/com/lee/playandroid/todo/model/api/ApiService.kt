@@ -1,8 +1,8 @@
 package com.lee.playandroid.todo.model.api
 
-import com.lee.playandroid.library.common.entity.Data
-import com.lee.playandroid.library.common.entity.PageData
-import com.lee.playandroid.library.common.entity.TodoData
+import com.lee.playandroid.common.entity.Data
+import com.lee.playandroid.common.entity.PageData
+import com.lee.playandroid.common.entity.TodoData
 import com.lee.playandroid.todo.model.entity.TodoType
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded

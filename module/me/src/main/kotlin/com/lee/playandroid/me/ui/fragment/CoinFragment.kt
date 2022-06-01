@@ -16,11 +16,11 @@ import com.lee.library.tools.StatusTools.setDarkStatusIcon
 import com.lee.library.tools.StatusTools.setLightStatusIcon
 import com.lee.library.viewstate.LoadStatus
 import com.lee.library.viewstate.collectState
-import com.lee.playandroid.library.common.constants.ApiConstants
-import com.lee.playandroid.library.common.entity.AccountViewState
-import com.lee.playandroid.library.common.entity.CoinRecord
-import com.lee.playandroid.library.common.entity.PageData
-import com.lee.playandroid.library.common.extensions.actionFailed
+import com.lee.playandroid.common.constants.ApiConstants
+import com.lee.playandroid.common.entity.AccountViewState
+import com.lee.playandroid.common.entity.CoinRecord
+import com.lee.playandroid.common.entity.PageData
+import com.lee.playandroid.common.extensions.actionFailed
 import com.lee.playandroid.me.R
 import com.lee.playandroid.me.databinding.FragmentCoinBinding
 import com.lee.playandroid.me.databinding.LayoutCoinHeaderBinding

@@ -12,10 +12,10 @@ import com.lee.library.livedatabus.InjectBus
 import com.lee.library.livedatabus.LiveDataBus
 import com.lee.library.viewstate.collectState
 import com.lee.library.widget.StatusLayout
-import com.lee.playandroid.library.common.entity.NavigationSelectEvent
-import com.lee.playandroid.library.common.extensions.actionFailed
-import com.lee.playandroid.library.common.ui.extensions.bindTabLinkage
-import com.lee.playandroid.library.common.ui.widget.MainLoadResource
+import com.lee.playandroid.common.entity.NavigationSelectEvent
+import com.lee.playandroid.common.extensions.actionFailed
+import com.lee.playandroid.common.ui.extensions.bindTabLinkage
+import com.lee.playandroid.common.ui.widget.MainLoadResource
 import com.lee.playandroid.system.R
 import com.lee.playandroid.system.databinding.FragmentNavigationContentBinding
 import com.lee.playandroid.system.ui.adapter.NavigationContentAdapter

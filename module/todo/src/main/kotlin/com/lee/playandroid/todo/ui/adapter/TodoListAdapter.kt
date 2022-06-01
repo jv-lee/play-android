@@ -8,7 +8,7 @@ import androidx.viewbinding.ViewBinding
 import com.lee.library.adapter.binding.ViewBindingAdapter
 import com.lee.library.adapter.binding.ViewBindingHolder
 import com.lee.library.adapter.item.ViewBindingItem
-import com.lee.playandroid.library.common.entity.TodoData
+import com.lee.playandroid.common.entity.TodoData
 import com.lee.playandroid.todo.R
 import com.lee.playandroid.todo.databinding.ItemTodoBinding
 import com.lee.playandroid.todo.ui.TodoListFragment.Companion.ARG_STATUS_UPCOMING

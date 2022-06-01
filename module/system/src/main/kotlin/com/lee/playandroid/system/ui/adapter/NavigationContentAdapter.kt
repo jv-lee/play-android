@@ -8,7 +8,7 @@ import androidx.viewbinding.ViewBinding
 import com.lee.library.adapter.binding.ViewBindingAdapter
 import com.lee.library.adapter.binding.ViewBindingHolder
 import com.lee.library.adapter.item.ViewBindingItem
-import com.lee.playandroid.library.common.entity.NavigationItem
+import com.lee.playandroid.common.entity.NavigationItem
 import com.lee.playandroid.router.navigateDetails
 import com.lee.playandroid.system.R
 import com.lee.playandroid.system.databinding.ItemNavigationContentBinding

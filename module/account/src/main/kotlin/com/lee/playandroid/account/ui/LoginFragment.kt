@@ -21,7 +21,7 @@ import com.lee.library.viewstate.collectState
 import com.lee.playandroid.account.R
 import com.lee.playandroid.account.databinding.FragmentLoginBinding
 import com.lee.playandroid.account.viewmodel.*
-import com.lee.playandroid.library.common.extensions.actionFailed
+import com.lee.playandroid.common.extensions.actionFailed
 import kotlinx.coroutines.flow.collect
 
 /**

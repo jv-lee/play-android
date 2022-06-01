@@ -3,7 +3,7 @@ package com.lee.playandroid.search.model.db
 import androidx.room.Dao
 import androidx.room.Query
 import com.lee.library.db.base.BaseDao
-import com.lee.playandroid.library.common.entity.SearchHistory
+import com.lee.playandroid.common.entity.SearchHistory
 
 /**
  *

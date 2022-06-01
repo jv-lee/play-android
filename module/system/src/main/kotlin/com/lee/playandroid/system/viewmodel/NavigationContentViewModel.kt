@@ -4,9 +4,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.lee.library.cache.CacheManager
 import com.lee.library.extensions.cacheFlow
-import com.lee.playandroid.library.common.entity.NavigationItem
-import com.lee.playandroid.library.common.extensions.checkData
-import com.lee.playandroid.library.common.extensions.createApi
+import com.lee.playandroid.common.entity.NavigationItem
+import com.lee.playandroid.common.extensions.checkData
+import com.lee.playandroid.common.extensions.createApi
 import com.lee.playandroid.system.constants.Constants.CACHE_KEY_NAVIGATION_CONTENT
 import com.lee.playandroid.system.model.api.ApiService
 import kotlinx.coroutines.channels.Channel

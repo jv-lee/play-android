@@ -7,8 +7,8 @@ import com.lee.library.cache.CacheManager
 import com.lee.library.extensions.getCache
 import com.lee.library.extensions.putPageCache
 import com.lee.library.viewstate.*
-import com.lee.playandroid.library.common.extensions.checkData
-import com.lee.playandroid.library.common.extensions.createApi
+import com.lee.playandroid.common.extensions.checkData
+import com.lee.playandroid.common.extensions.createApi
 import com.lee.playandroid.project.constants.Constants
 import com.lee.playandroid.project.model.api.ApiService
 import com.lee.playandroid.project.ui.ProjectListFragment

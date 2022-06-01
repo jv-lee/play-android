@@ -1,6 +1,6 @@
 package com.lee.playandroid.me.model.api
 
-import com.lee.playandroid.library.common.entity.*
+import com.lee.playandroid.common.entity.*
 import retrofit2.http.*
 
 /**

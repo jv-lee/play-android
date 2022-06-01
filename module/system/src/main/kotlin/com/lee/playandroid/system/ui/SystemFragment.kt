@@ -7,7 +7,7 @@ import com.lee.library.base.BaseNavigationFragment
 import com.lee.library.extensions.bindRadioGroup
 import com.lee.library.extensions.binding
 import com.lee.library.extensions.delayBackEvent
-import com.lee.playandroid.library.common.ui.extensions.setThemeGradientBackground
+import com.lee.playandroid.common.ui.extensions.setThemeGradientBackground
 import com.lee.playandroid.system.R
 import com.lee.playandroid.system.databinding.FragmentSystemBinding
 

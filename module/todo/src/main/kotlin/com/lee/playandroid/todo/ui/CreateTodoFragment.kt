@@ -15,10 +15,10 @@ import com.lee.library.tools.KeyboardTools.hideSoftInput
 import com.lee.library.tools.KeyboardTools.keyboardPaddingBottom
 import com.lee.library.tools.KeyboardTools.parentTouchHideSoftInput
 import com.lee.library.viewstate.collectState
-import com.lee.playandroid.library.common.entity.TodoData
-import com.lee.playandroid.library.common.entity.TodoData.Companion.PRIORITY_HEIGHT
-import com.lee.playandroid.library.common.entity.TodoData.Companion.PRIORITY_LOW
-import com.lee.playandroid.library.common.extensions.actionFailed
+import com.lee.playandroid.common.entity.TodoData
+import com.lee.playandroid.common.entity.TodoData.Companion.PRIORITY_HEIGHT
+import com.lee.playandroid.common.entity.TodoData.Companion.PRIORITY_LOW
+import com.lee.playandroid.common.extensions.actionFailed
 import com.lee.playandroid.todo.R
 import com.lee.playandroid.todo.databinding.FragmentCreateTodoBinding
 import com.lee.playandroid.todo.viewmodel.CreateTodoViewAction

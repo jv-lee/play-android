@@ -4,8 +4,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.lee.library.base.ApplicationExtensions.app
 import com.lee.library.utils.CacheUtil
-import com.lee.playandroid.library.service.AccountService
-import com.lee.playandroid.library.service.hepler.ModuleService
+import com.lee.playandroid.service.AccountService
+import com.lee.playandroid.service.hepler.ModuleService
 import com.lee.playandroid.me.R
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.*

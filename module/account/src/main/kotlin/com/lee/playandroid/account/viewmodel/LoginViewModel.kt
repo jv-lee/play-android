@@ -6,9 +6,9 @@ import androidx.lifecycle.viewModelScope
 import com.lee.library.tools.PreferencesTools
 import com.lee.playandroid.account.constants.Constants.SP_KEY_SAVE_INPUT_USERNAME
 import com.lee.playandroid.account.model.api.ApiService
-import com.lee.playandroid.library.common.entity.AccountViewAction
-import com.lee.playandroid.library.common.extensions.checkData
-import com.lee.playandroid.library.common.extensions.createApi
+import com.lee.playandroid.common.entity.AccountViewAction
+import com.lee.playandroid.common.extensions.checkData
+import com.lee.playandroid.common.extensions.createApi
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*

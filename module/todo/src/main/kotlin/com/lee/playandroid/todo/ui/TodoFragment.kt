@@ -12,7 +12,7 @@ import com.lee.library.base.BaseNavigationFragment
 import com.lee.library.extensions.binding
 import com.lee.library.interadp.setClickListener
 import com.lee.library.viewstate.collectState
-import com.lee.playandroid.library.common.entity.TodoData
+import com.lee.playandroid.common.entity.TodoData
 import com.lee.playandroid.todo.R
 import com.lee.playandroid.todo.databinding.FragmentTodoBinding
 import com.lee.playandroid.todo.ui.CreateTodoFragment.Companion.ARG_PARAMS_TYPE

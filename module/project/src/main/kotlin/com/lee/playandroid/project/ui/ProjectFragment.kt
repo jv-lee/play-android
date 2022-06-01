@@ -2,10 +2,10 @@ package com.lee.playandroid.project.ui
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import com.lee.playandroid.library.common.ui.base.BaseTabFragment
-import com.lee.playandroid.library.common.ui.base.BaseTabViewAction
-import com.lee.playandroid.library.common.ui.base.BaseTabViewEvent
-import com.lee.playandroid.library.common.ui.base.BaseTabViewState
+import com.lee.playandroid.common.ui.base.BaseTabFragment
+import com.lee.playandroid.common.ui.base.BaseTabViewAction
+import com.lee.playandroid.common.ui.base.BaseTabViewEvent
+import com.lee.playandroid.common.ui.base.BaseTabViewState
 import com.lee.playandroid.project.R
 import com.lee.playandroid.project.viewmodel.ProjectViewModel
 import kotlinx.coroutines.flow.Flow

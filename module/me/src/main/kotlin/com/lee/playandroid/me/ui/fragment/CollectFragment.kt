@@ -15,10 +15,10 @@ import com.lee.library.viewstate.LoadStatus
 import com.lee.library.viewstate.collectState
 import com.lee.library.widget.SlidingPaneItemTouchListener
 import com.lee.library.widget.closeAllItems
-import com.lee.playandroid.library.common.entity.Content
-import com.lee.playandroid.library.common.entity.PageData
-import com.lee.playandroid.library.common.extensions.actionFailed
-import com.lee.playandroid.library.common.ui.adapter.SimpleTextAdapter
+import com.lee.playandroid.common.entity.Content
+import com.lee.playandroid.common.entity.PageData
+import com.lee.playandroid.common.extensions.actionFailed
+import com.lee.playandroid.common.ui.adapter.SimpleTextAdapter
 import com.lee.playandroid.me.R
 import com.lee.playandroid.me.databinding.FragmentCollectBinding
 import com.lee.playandroid.me.viewmodel.CollectViewAction

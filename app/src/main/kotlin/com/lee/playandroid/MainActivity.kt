@@ -24,7 +24,7 @@ import com.lee.library.viewstate.collectState
 import com.lee.playandroid.databinding.ActivityMainBinding
 import com.lee.playandroid.databinding.LayoutStubMainBinding
 import com.lee.playandroid.databinding.LayoutStubSplashBinding
-import com.lee.playandroid.library.common.extensions.appThemeSet
+import com.lee.playandroid.common.extensions.appThemeSet
 import com.lee.playandroid.viewmodel.SplashViewAction
 import com.lee.playandroid.viewmodel.SplashViewEvent
 import com.lee.playandroid.viewmodel.SplashViewModel

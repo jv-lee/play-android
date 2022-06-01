@@ -22,7 +22,7 @@ import com.lee.playandroid.account.R
 import com.lee.playandroid.account.databinding.FragmentRegisterBinding
 import com.lee.playandroid.account.ui.LoginFragment.Companion.REQUEST_KEY_LOGIN
 import com.lee.playandroid.account.viewmodel.*
-import com.lee.playandroid.library.common.extensions.actionFailed
+import com.lee.playandroid.common.extensions.actionFailed
 import kotlinx.coroutines.flow.collect
 
 /**

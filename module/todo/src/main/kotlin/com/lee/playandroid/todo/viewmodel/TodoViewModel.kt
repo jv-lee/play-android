@@ -2,8 +2,8 @@ package com.lee.playandroid.todo.viewmodel
 
 import androidx.lifecycle.ViewModel
 import com.lee.library.tools.PreferencesTools
-import com.lee.playandroid.library.service.AccountService
-import com.lee.playandroid.library.service.hepler.ModuleService
+import com.lee.playandroid.service.AccountService
+import com.lee.playandroid.service.hepler.ModuleService
 import com.lee.playandroid.todo.R
 import com.lee.playandroid.todo.constants.Constants.SP_KEY_TODO_TYPE
 import com.lee.playandroid.todo.model.entity.TodoType

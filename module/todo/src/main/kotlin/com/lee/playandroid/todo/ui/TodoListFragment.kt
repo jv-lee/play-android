@@ -19,9 +19,9 @@ import com.lee.library.viewstate.LoadStatus
 import com.lee.library.viewstate.collectState
 import com.lee.library.widget.SlidingPaneItemTouchListener
 import com.lee.library.widget.closeAllItems
-import com.lee.playandroid.library.common.entity.PageData
-import com.lee.playandroid.library.common.entity.TodoData
-import com.lee.playandroid.library.common.extensions.actionFailed
+import com.lee.playandroid.common.entity.PageData
+import com.lee.playandroid.common.entity.TodoData
+import com.lee.playandroid.common.extensions.actionFailed
 import com.lee.playandroid.todo.R
 import com.lee.playandroid.todo.databinding.FragmentTodoListBinding
 import com.lee.playandroid.todo.ui.adapter.TodoListAdapter

@@ -19,13 +19,13 @@ import com.lee.library.livedatabus.InjectBus
 import com.lee.library.livedatabus.LiveDataBus
 import com.lee.library.viewstate.LoadStatus
 import com.lee.library.viewstate.collectState
-import com.lee.playandroid.library.common.entity.Content
-import com.lee.playandroid.library.common.entity.NavigationSelectEvent
-import com.lee.playandroid.library.common.entity.PageData
-import com.lee.playandroid.library.common.extensions.actionFailed
-import com.lee.playandroid.library.common.ui.extensions.setThemeGradientBackground
-import com.lee.playandroid.library.common.ui.widget.MainLoadResource
-import com.lee.playandroid.library.common.ui.widget.OffsetItemDecoration
+import com.lee.playandroid.common.entity.Content
+import com.lee.playandroid.common.entity.NavigationSelectEvent
+import com.lee.playandroid.common.entity.PageData
+import com.lee.playandroid.common.extensions.actionFailed
+import com.lee.playandroid.common.ui.extensions.setThemeGradientBackground
+import com.lee.playandroid.common.ui.widget.MainLoadResource
+import com.lee.playandroid.common.ui.widget.OffsetItemDecoration
 import com.lee.playandroid.router.navigateDetails
 import com.lee.playandroid.router.navigateLogin
 import com.lee.playandroid.square.R
@@ -33,7 +33,7 @@ import com.lee.playandroid.square.databinding.FragmentSquareBinding
 import com.lee.playandroid.square.ui.adapter.SquareAdapter
 import com.lee.playandroid.square.viewmodel.SquareViewAction
 import com.lee.playandroid.square.viewmodel.SquareViewModel
-import com.lee.playandroid.library.common.R as CR
+import com.lee.playandroid.common.R as CR
 
 /**
  * 首页第二个Tab 广场页面

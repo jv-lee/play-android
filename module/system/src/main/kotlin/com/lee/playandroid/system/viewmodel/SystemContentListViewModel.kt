@@ -4,8 +4,8 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.lee.library.viewstate.*
-import com.lee.playandroid.library.common.extensions.checkData
-import com.lee.playandroid.library.common.extensions.createApi
+import com.lee.playandroid.common.extensions.checkData
+import com.lee.playandroid.common.extensions.createApi
 import com.lee.playandroid.system.model.api.ApiService
 import com.lee.playandroid.system.ui.SystemContentListFragment
 import kotlinx.coroutines.flow.MutableStateFlow

@@ -1,6 +1,6 @@
 package com.lee.playandroid.system.model.api
 
-import com.lee.playandroid.library.common.entity.*
+import com.lee.playandroid.common.entity.*
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query

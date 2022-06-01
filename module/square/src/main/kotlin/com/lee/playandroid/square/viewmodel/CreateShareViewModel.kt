@@ -4,8 +4,8 @@ import android.text.TextUtils
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.lee.library.base.ApplicationExtensions.app
-import com.lee.playandroid.library.common.constants.ApiConstants
-import com.lee.playandroid.library.common.extensions.createApi
+import com.lee.playandroid.common.constants.ApiConstants
+import com.lee.playandroid.common.extensions.createApi
 import com.lee.playandroid.square.R
 import com.lee.playandroid.square.model.api.ApiService
 import kotlinx.coroutines.channels.Channel

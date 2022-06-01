@@ -14,7 +14,7 @@ import com.lee.playandroid.details.viewmodel.DetailsViewAction
 import com.lee.playandroid.details.viewmodel.DetailsViewEvent
 import com.lee.playandroid.details.viewmodel.DetailsViewModel
 import com.lee.playandroid.details.viewmodel.DetailsViewState
-import com.lee.playandroid.library.common.extensions.bindLifecycle
+import com.lee.playandroid.common.extensions.bindLifecycle
 import kotlinx.coroutines.flow.collect
 
 /**

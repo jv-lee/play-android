@@ -13,9 +13,9 @@ import com.lee.library.extensions.binding
 import com.lee.library.extensions.viewModelByFactory
 import com.lee.library.viewstate.LoadStatus
 import com.lee.library.viewstate.collectState
-import com.lee.playandroid.library.common.entity.Content
-import com.lee.playandroid.library.common.entity.PageData
-import com.lee.playandroid.library.common.extensions.actionFailed
+import com.lee.playandroid.common.entity.Content
+import com.lee.playandroid.common.entity.PageData
+import com.lee.playandroid.common.extensions.actionFailed
 import com.lee.playandroid.router.navigateDetails
 import com.lee.playandroid.search.R
 import com.lee.playandroid.search.databinding.FragmentSearchResultBinding

@@ -5,8 +5,8 @@ import androidx.navigation.fragment.findNavController
 import com.lee.library.adapter.base.BaseViewAdapter
 import com.lee.library.extensions.viewModelByFactory
 import com.lee.library.viewstate.UiStatePage
-import com.lee.playandroid.library.common.entity.Content
-import com.lee.playandroid.library.common.ui.base.BaseListFragment
+import com.lee.playandroid.common.entity.Content
+import com.lee.playandroid.common.ui.base.BaseListFragment
 import com.lee.playandroid.official.ui.adapter.OfficialListAdapter
 import com.lee.playandroid.official.viewmodel.OfficialListViewAction
 import com.lee.playandroid.official.viewmodel.OfficialListViewModel

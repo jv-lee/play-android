@@ -1,8 +1,8 @@
 package com.lee.playandroid.search.model.api
 
-import com.lee.playandroid.library.common.entity.Content
-import com.lee.playandroid.library.common.entity.Data
-import com.lee.playandroid.library.common.entity.PageData
+import com.lee.playandroid.common.entity.Content
+import com.lee.playandroid.common.entity.Data
+import com.lee.playandroid.common.entity.PageData
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
 import retrofit2.http.POST

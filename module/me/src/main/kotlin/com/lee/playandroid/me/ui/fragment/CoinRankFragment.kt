@@ -13,10 +13,10 @@ import com.lee.library.extensions.binding
 import com.lee.library.interadp.setClickListener
 import com.lee.library.viewstate.LoadStatus
 import com.lee.library.viewstate.collectState
-import com.lee.playandroid.library.common.constants.ApiConstants
-import com.lee.playandroid.library.common.entity.CoinRank
-import com.lee.playandroid.library.common.entity.PageData
-import com.lee.playandroid.library.common.extensions.actionFailed
+import com.lee.playandroid.common.constants.ApiConstants
+import com.lee.playandroid.common.entity.CoinRank
+import com.lee.playandroid.common.entity.PageData
+import com.lee.playandroid.common.extensions.actionFailed
 import com.lee.playandroid.me.R
 import com.lee.playandroid.me.databinding.FragmentCoinRankBinding
 import com.lee.playandroid.me.ui.adapter.CoinRankAdapter

@@ -18,10 +18,10 @@ import com.lee.library.viewstate.LoadStatus
 import com.lee.library.viewstate.collectState
 import com.lee.library.widget.SlidingPaneItemTouchListener
 import com.lee.library.widget.closeAllItems
-import com.lee.playandroid.library.common.entity.Content
-import com.lee.playandroid.library.common.entity.PageData
-import com.lee.playandroid.library.common.extensions.actionFailed
-import com.lee.playandroid.library.common.ui.adapter.SimpleTextAdapter
+import com.lee.playandroid.common.entity.Content
+import com.lee.playandroid.common.entity.PageData
+import com.lee.playandroid.common.extensions.actionFailed
+import com.lee.playandroid.common.ui.adapter.SimpleTextAdapter
 import com.lee.playandroid.router.navigateDetails
 import com.lee.playandroid.square.R
 import com.lee.playandroid.square.databinding.FragmentMyShareBinding
@@ -29,7 +29,7 @@ import com.lee.playandroid.square.viewmodel.MyShareViewAction
 import com.lee.playandroid.square.viewmodel.MyShareViewEvent
 import com.lee.playandroid.square.viewmodel.MyShareViewModel
 import kotlinx.coroutines.flow.collect
-import com.lee.playandroid.library.common.R as CR
+import com.lee.playandroid.common.R as CR
 
 /**
  * 我的分享页面

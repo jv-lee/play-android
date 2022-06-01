@@ -6,10 +6,10 @@ import com.lee.library.cache.CacheManager
 import com.lee.library.extensions.getCache
 import com.lee.library.extensions.putPageCache
 import com.lee.library.viewstate.*
-import com.lee.playandroid.library.common.extensions.checkData
-import com.lee.playandroid.library.common.extensions.createApi
-import com.lee.playandroid.library.service.AccountService
-import com.lee.playandroid.library.service.hepler.ModuleService
+import com.lee.playandroid.common.extensions.checkData
+import com.lee.playandroid.common.extensions.createApi
+import com.lee.playandroid.service.AccountService
+import com.lee.playandroid.service.hepler.ModuleService
 import com.lee.playandroid.square.constants.Constants.CACHE_KEY_SQUARE_CONTENT
 import com.lee.playandroid.square.model.api.ApiService
 import kotlinx.coroutines.flow.MutableStateFlow

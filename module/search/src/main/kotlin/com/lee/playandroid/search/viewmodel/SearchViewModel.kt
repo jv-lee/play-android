@@ -3,7 +3,7 @@ package com.lee.playandroid.search.viewmodel
 import android.os.Bundle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.lee.playandroid.library.common.entity.SearchHistory
+import com.lee.playandroid.common.entity.SearchHistory
 import com.lee.playandroid.search.model.db.SearchHistoryDatabase
 import com.lee.playandroid.search.model.entity.SearchHot
 import com.lee.playandroid.search.ui.SearchResultFragment

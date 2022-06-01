@@ -2,7 +2,7 @@ package com.lee.playandroid.search
 
 import android.app.Application
 import com.google.auto.service.AutoService
-import com.lee.playandroid.library.service.ApplicationService
+import com.lee.playandroid.service.ApplicationService
 import com.lee.playandroid.search.model.db.SearchHistoryDatabase
 
 /**

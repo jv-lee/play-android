@@ -16,10 +16,10 @@ import com.lee.library.net.HttpManager
 import com.lee.library.tools.DarkModeTools
 import com.lee.library.tools.ScreenDensityUtil
 import com.lee.playandroid.block.AppBlockCanaryContext
-import com.lee.playandroid.library.common.extensions.appThemeSet
-import com.lee.playandroid.library.common.extensions.setCommonInterceptor
-import com.lee.playandroid.library.common.ui.widget.AppLoadResource
-import com.lee.playandroid.library.service.hepler.ApplicationModuleService
+import com.lee.playandroid.common.extensions.appThemeSet
+import com.lee.playandroid.common.extensions.setCommonInterceptor
+import com.lee.playandroid.common.ui.widget.AppLoadResource
+import com.lee.playandroid.service.hepler.ApplicationModuleService
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
