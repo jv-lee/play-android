@@ -14,13 +14,13 @@ interface BuildTypes {
     }
 
     val isMinifyEnabled: Boolean
-    val zipAlignEnabled: Boolean
+    val isShrinkResources: Boolean
     val paramsMap: Map<String, String>
 }
 
 object BuildDebug : BuildTypes {
     override val isMinifyEnabled = false
-    override val zipAlignEnabled = false
+    override val isShrinkResources = false
     override val paramsMap = mapOf(Pair("BASE_URI", "https://www.wanandroid.com"))
 
     object SigningConfig {
@@ -33,7 +33,7 @@ object BuildDebug : BuildTypes {
 
 object BuildRelease : BuildTypes {
     override val isMinifyEnabled = true
-    override val zipAlignEnabled = true
+    override val isShrinkResources = true
     override val paramsMap = mapOf(Pair("BASE_URI", "https://www.wanandroid.com"))
 
     object SigningConfig {
