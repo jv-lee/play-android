@@ -40,6 +40,21 @@ class SearchFragment : BaseNavigationFragment(R.layout.fragment_search) {
         // 设置点击空白区域隐藏软键盘
         binding.root.parentTouchHideSoftInput()
 
+        // 清除历史记录点击事件
+        binding.tvHistoryClear.setOnClickListener {
+            viewModel.dispatch(SearchViewAction.ClearHistory)
+        }
+
+        // 搜索输入框内容监听
+        binding.editQuery.setOnEditorActionListener { textView, actionId, _ ->
+            val text = textView.text
+            if (actionId == IME_ACTION_SEARCH && text.isNotEmpty()) {
+                viewModel.dispatch(SearchViewAction.NavigationSearchResult(text.toString()))
+            }
+            return@setOnEditorActionListener false
+        }
+
+        // 搜索热词列表适配器设置
         if (binding.rvHotContainer.adapter == null) {
             binding.rvHotContainer.adapter =
                 SearchHotAdapter(requireContext(), arrayListOf()).apply {
@@ -50,6 +65,7 @@ class SearchFragment : BaseNavigationFragment(R.layout.fragment_search) {
                 }.proxy
         }
 
+        // 搜索历史列表适配器设置
         if (binding.rvHistoryContainer.adapter == null) {
             binding.rvHistoryContainer.adapter =
                 SearchHistoryAdapter(requireContext(), arrayListOf()).apply {
@@ -62,30 +78,20 @@ class SearchFragment : BaseNavigationFragment(R.layout.fragment_search) {
                     }, R.id.iv_delete)
                 }.proxy
         }
-
-        binding.editQuery.setOnEditorActionListener { textView, actionId, _ ->
-            val text = textView.text
-            if (actionId == IME_ACTION_SEARCH && text.isNotEmpty()) {
-                viewModel.dispatch(SearchViewAction.NavigationSearchResult(text.toString()))
-            }
-            return@setOnEditorActionListener false
-        }
-
-        binding.tvHistoryClear.setOnClickListener {
-            viewModel.dispatch(SearchViewAction.ClearHistory)
-        }
     }
 
     override fun LifecycleCoroutineScope.bindData() {
         launchWhenResumed {
             viewModel.viewEvents.collect { event ->
                 when (event) {
+                    // 搜索结果提交页面导航处理
                     is SearchViewEvent.NavigationSearchResultEvent -> {
                         findNavController().navigate(
                             R.id.action_search_fragment_to_search_result_fragment,
                             event.bundle
                         )
                     }
+                    // 页面错误统一处理
                     is SearchViewEvent.FailedEvent -> {
                         actionFailed(event.error)
                     }
@@ -95,16 +101,19 @@ class SearchFragment : BaseNavigationFragment(R.layout.fragment_search) {
 
         viewModel.viewStates.run {
             launchWhenResumed {
+                // 监听键盘隐藏状态变更
                 collectState(SearchViewState::hideKeyboard) {
                     if (it) requireActivity().hideSoftInput()
                 }
             }
             launchWhenResumed {
+                // 监听搜索热词数据绑定回调
                 collectState(SearchViewState::searchHotList) {
                     mHotAdapter?.submitSinglePage(it)
                 }
             }
             launchWhenResumed {
+                // 监听搜索历史数据绑定回调
                 collectState(SearchViewState::searchHistoryList) {
                     viewEmptyVisible(it.isEmpty())
                     mHistoryAdapter?.submitSinglePage(it)

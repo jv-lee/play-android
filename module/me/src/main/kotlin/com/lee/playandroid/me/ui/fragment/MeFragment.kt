@@ -156,11 +156,7 @@ class MeFragment : BaseNavigationFragment(R.layout.fragment_me),
         binding.ivHeader.setImageResource(R.mipmap.ic_launcher_round)
         binding.tvAccountName.text = account.userInfo.username
         binding.tvLevel.text =
-            getString(
-                R.string.me_account_info_text,
-                account.coinInfo.level,
-                account.coinInfo.rank.toString()
-            )
+            getString(R.string.me_account_info_text, account.coinInfo.level, account.coinInfo.rank)
         binding.tvLevel.visibility = View.VISIBLE
     }
 

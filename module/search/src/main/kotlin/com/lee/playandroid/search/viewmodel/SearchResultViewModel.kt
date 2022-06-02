@@ -39,6 +39,10 @@ class SearchResultViewModel(handle: SavedStateHandle) : ViewModel() {
         }
     }
 
+    /**
+     * 根据搜索key获取搜索结果数据
+     * @param status 分页请求状态
+     */
     private fun requestSearch(@LoadStatus status: Int) {
         viewModelScope.launch {
             _searchResultFlow.pageLaunch(status, { page ->
