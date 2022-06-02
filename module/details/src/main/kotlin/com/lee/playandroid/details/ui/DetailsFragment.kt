@@ -73,7 +73,7 @@ class DetailsFragment : BaseNavigationFragment(R.layout.fragment_details) {
             viewModel.viewEvents.collect { event ->
                 when (event) {
                     is DetailsViewEvent.ShareDetailsEvent -> {
-                        ShareUtil.shareText(context, event.shareContent)
+                        ShareUtil.shareText(requireContext(), event.shareContent)
                     }
                     is DetailsViewEvent.CollectEvent -> {
                         toast(getString(event.messageRes))
