@@ -1,9 +1,9 @@
 package com.lee.playandroid.project.ui
 
 import android.os.Bundle
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.lee.playandroid.base.adapter.base.BaseViewAdapter
-import com.lee.playandroid.base.extensions.viewModelByFactory
 import com.lee.playandroid.base.viewstate.UiStatePage
 import com.lee.playandroid.common.entity.Content
 import com.lee.playandroid.common.ui.base.BaseListFragment
@@ -28,7 +28,7 @@ class ProjectListFragment : BaseListFragment() {
         }
     }
 
-    private val viewModel by viewModelByFactory<ProjectListViewModel>()
+    private val viewModel by viewModels<ProjectListViewModel>()
 
     override fun createAdapter(): BaseViewAdapter<Content> {
         return ProjectListAdapter(requireContext(), arrayListOf())

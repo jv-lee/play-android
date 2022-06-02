@@ -1,6 +1,7 @@
 package com.lee.playandroid.search.ui
 
 import android.view.View
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.navigation.fragment.findNavController
 import com.lee.playandroid.base.adapter.base.BaseViewAdapter
@@ -10,7 +11,6 @@ import com.lee.playandroid.base.adapter.page.submitFailed
 import com.lee.playandroid.base.base.BaseNavigationFragment
 import com.lee.playandroid.base.extensions.arguments
 import com.lee.playandroid.base.extensions.binding
-import com.lee.playandroid.base.extensions.viewModelByFactory
 import com.lee.playandroid.base.viewstate.LoadStatus
 import com.lee.playandroid.base.viewstate.collectState
 import com.lee.playandroid.common.entity.Content
@@ -39,7 +39,7 @@ class SearchResultFragment : BaseNavigationFragment(R.layout.fragment_search_res
 
     private val searchKey by arguments<String>(ARG_PARAMS_SEARCH_KEY)
 
-    private val viewModel by viewModelByFactory<SearchResultViewModel>()
+    private val viewModel by viewModels<SearchResultViewModel>()
 
     private val binding by binding(FragmentSearchResultBinding::bind)
 
@@ -48,6 +48,7 @@ class SearchResultFragment : BaseNavigationFragment(R.layout.fragment_search_res
     override fun bindView() {
         binding.toolbar.setTitleText(searchKey)
 
+        // 搜索结果列表适配器设置
         if (binding.rvContainer.adapter == null) {
             binding.rvContainer.adapter =
                 SearchResultAdapter(requireContext(), arrayListOf()).apply {
@@ -62,6 +63,7 @@ class SearchResultFragment : BaseNavigationFragment(R.layout.fragment_search_res
 
     override fun LifecycleCoroutineScope.bindData() {
         launchWhenResumed {
+            // 监听搜索结果列表数据绑定
             viewModel.searchResultFlow.collectState<PageData<Content>>(success = {
                 mAdapter?.submitData(it, diff = true)
             }, error = {
