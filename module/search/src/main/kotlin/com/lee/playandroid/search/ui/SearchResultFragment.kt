@@ -9,7 +9,6 @@ import com.lee.playandroid.base.adapter.extensions.bindAllListener
 import com.lee.playandroid.base.adapter.page.submitData
 import com.lee.playandroid.base.adapter.page.submitFailed
 import com.lee.playandroid.base.base.BaseNavigationFragment
-import com.lee.playandroid.base.extensions.arguments
 import com.lee.playandroid.base.extensions.binding
 import com.lee.playandroid.base.viewstate.LoadStatus
 import com.lee.playandroid.base.viewstate.collectState
@@ -22,6 +21,7 @@ import com.lee.playandroid.search.databinding.FragmentSearchResultBinding
 import com.lee.playandroid.search.ui.adapter.SearchResultAdapter
 import com.lee.playandroid.search.viewmodel.SearchResultViewAction
 import com.lee.playandroid.search.viewmodel.SearchResultViewModel
+import com.lee.playandroid.search.viewmodel.SearchResultViewState
 
 /**
  * 搜索结果列表
@@ -37,8 +37,6 @@ class SearchResultFragment : BaseNavigationFragment(R.layout.fragment_search_res
         const val ARG_PARAMS_SEARCH_KEY = "searchKey"
     }
 
-    private val searchKey by arguments<String>(ARG_PARAMS_SEARCH_KEY)
-
     private val viewModel by viewModels<SearchResultViewModel>()
 
     private val binding by binding(FragmentSearchResultBinding::bind)
@@ -46,8 +44,6 @@ class SearchResultFragment : BaseNavigationFragment(R.layout.fragment_search_res
     private var mAdapter: SearchResultAdapter? = null
 
     override fun bindView() {
-        binding.toolbar.setTitleText(searchKey)
-
         // 搜索结果列表适配器设置
         if (binding.rvContainer.adapter == null) {
             binding.rvContainer.adapter =
@@ -62,6 +58,13 @@ class SearchResultFragment : BaseNavigationFragment(R.layout.fragment_search_res
     }
 
     override fun LifecycleCoroutineScope.bindData() {
+        launchWhenResumed {
+            // 监听搜索key绑定到toolbar.title
+            viewModel.viewStates.collectState(SearchResultViewState::title) {
+                binding.toolbar.setTitleText(it)
+            }
+        }
+
         launchWhenResumed {
             // 监听搜索结果列表数据绑定
             viewModel.searchResultFlow.collectState<PageData<Content>>(success = {

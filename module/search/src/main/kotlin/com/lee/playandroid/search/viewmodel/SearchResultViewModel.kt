@@ -9,6 +9,7 @@ import com.lee.playandroid.common.extensions.createApi
 import com.lee.playandroid.search.model.api.ApiService
 import com.lee.playandroid.search.ui.SearchResultFragment
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
@@ -22,6 +23,9 @@ class SearchResultViewModel(handle: SavedStateHandle) : ViewModel() {
     private val key = handle[SearchResultFragment.ARG_PARAMS_SEARCH_KEY] ?: ""
 
     private val api = createApi<ApiService>()
+
+    private val _viewStates = MutableStateFlow(SearchResultViewState(key))
+    val viewStates: StateFlow<SearchResultViewState> = _viewStates
 
     private val _searchResultFlow: UiStatePageMutableStateFlow =
         MutableStateFlow(UiStatePage.Default(0))
@@ -52,6 +56,8 @@ class SearchResultViewModel(handle: SavedStateHandle) : ViewModel() {
     }
 
 }
+
+data class SearchResultViewState(val title: String)
 
 sealed class SearchResultViewAction {
     data class RequestPage(@LoadStatus val status: Int) : SearchResultViewAction()
