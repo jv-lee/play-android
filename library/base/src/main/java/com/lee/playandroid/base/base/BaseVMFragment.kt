@@ -13,9 +13,9 @@ import androidx.lifecycle.ViewModelProvider
 import com.lee.playandroid.base.extensions.getVmClass
 
 /**
- *
+ * 封装ViewModel\DataBinding Fragment通用基类
  * @author jv.lee
- * @date 2019/8/16.
+ * @date 2019/8/16
  */
 abstract class BaseVMFragment<V : ViewDataBinding, VM : ViewModel>(var layoutId: Int) :
     BaseFragment() {

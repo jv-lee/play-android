@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 
 /**
- *
+ * fragment通用基类
  * @author jv.lee
  * @date 2019/8/16.
  */
