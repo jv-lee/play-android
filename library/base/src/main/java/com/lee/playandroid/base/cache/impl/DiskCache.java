@@ -11,7 +11,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 
 /**
- *
+ * 磁盘缓存实现类
  * @author jv.lee
  * @date 2019-11-14
  */
