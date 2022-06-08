@@ -6,8 +6,9 @@ import androidx.recyclerview.widget.DiffUtil
  *
  * @author jv.lee
  * @date 2020/4/30
+ * RecyclerView 新旧数据源替换处理帮助类
  */
-class DiffCallback<T> constructor(private val oldData: List<T>,private val newData: List<T>) :
+class DiffCallback<T> constructor(private val oldData: List<T>, private val newData: List<T>) :
     DiffUtil.Callback() {
 
     override fun getOldListSize(): Int {
