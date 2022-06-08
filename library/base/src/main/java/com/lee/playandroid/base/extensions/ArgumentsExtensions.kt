@@ -1,3 +1,8 @@
+/*
+ * activity/fragment 获取intent参数扩展函数
+ * @author jv.lee
+ * @date 2020/8/19
+ */
 package com.lee.playandroid.base.extensions
 
 import android.app.Activity
@@ -5,13 +10,6 @@ import android.os.Bundle
 import android.os.Parcelable
 import androidx.annotation.MainThread
 import androidx.fragment.app.Fragment
-import java.util.*
-
-/**
- * activity/fragment 获取intent参数扩展函数
- * @author jv.lee
- * @date 2020/8/19
- */
 
 @MainThread
 inline fun <reified P : Any> Activity.arguments(key: String): Lazy<P> =
