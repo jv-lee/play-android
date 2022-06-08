@@ -1,5 +1,6 @@
 package com.lee.playandroid.home.view
 
+import android.content.res.Configuration
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.LifecycleCoroutineScope
@@ -19,18 +20,18 @@ import com.lee.playandroid.base.livedatabus.LiveDataBus
 import com.lee.playandroid.base.viewstate.LoadStatus
 import com.lee.playandroid.base.viewstate.collectState
 import com.lee.playandroid.base.widget.banner.BannerView
-import com.lee.playandroid.home.R
-import com.lee.playandroid.home.bean.HomeContent
-import com.lee.playandroid.home.databinding.FragmentHomeBinding
-import com.lee.playandroid.home.view.adapter.ContentAdapter
-import com.lee.playandroid.home.viewmodel.HomeViewAction
-import com.lee.playandroid.home.viewmodel.HomeViewModel
 import com.lee.playandroid.common.entity.NavigationSelectEvent
 import com.lee.playandroid.common.entity.PageUiData
 import com.lee.playandroid.common.extensions.actionFailed
 import com.lee.playandroid.common.ui.extensions.setThemeGradientBackground
 import com.lee.playandroid.common.ui.widget.MainLoadResource
 import com.lee.playandroid.common.ui.widget.OffsetItemDecoration
+import com.lee.playandroid.home.R
+import com.lee.playandroid.home.bean.HomeContent
+import com.lee.playandroid.home.databinding.FragmentHomeBinding
+import com.lee.playandroid.home.view.adapter.ContentAdapter
+import com.lee.playandroid.home.viewmodel.HomeViewAction
+import com.lee.playandroid.home.viewmodel.HomeViewModel
 import com.lee.playandroid.router.navigateDetails
 import com.lee.playandroid.router.navigateSearch
 
@@ -83,6 +84,12 @@ class HomeFragment : BaseNavigationFragment(R.layout.fragment_home),
                 actionFailed(it)
             })
         }
+    }
+
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        super.onConfigurationChanged(newConfig)
+        // 屏幕发生变化后重新计算categoryItem宽度
+        mAdapter?.takeIf { it.itemCount > 2 }?.run { notifyItemChanged(1) }
     }
 
     override fun onClick(v: View?) {
