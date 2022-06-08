@@ -2,6 +2,7 @@ package com.lee.playandroid.base.dialog.core
 
 import android.content.Context
 import com.lee.playandroid.base.R
+import com.lee.playandroid.base.dialog.extensions.setBottomDialog
 
 /**
  * 使用 setBottomDialog(260) 限制子类最大高度 不设置limitHeight默认为全屏
