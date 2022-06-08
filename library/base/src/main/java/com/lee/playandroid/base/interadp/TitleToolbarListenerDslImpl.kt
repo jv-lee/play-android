@@ -4,7 +4,7 @@ import android.view.View
 import com.lee.playandroid.base.widget.toolbar.TitleToolbar
 
 /**
- *
+ * TitleToolbar内部接口DLS实现
  * @author jv.lee
  * @date 2022/5/12
  */

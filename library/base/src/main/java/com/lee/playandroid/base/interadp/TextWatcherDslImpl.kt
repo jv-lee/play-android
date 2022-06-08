@@ -5,7 +5,7 @@ import android.text.TextWatcher
 import android.widget.TextView
 
 /**
- *
+ * TextView EditText文本监听DSL实现
  * @author jv.lee
  * @date 2022/5/11
  */
