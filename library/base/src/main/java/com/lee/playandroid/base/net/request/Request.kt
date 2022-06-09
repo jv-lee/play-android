@@ -3,7 +3,7 @@ package com.lee.playandroid.base.net.request
 import androidx.annotation.NonNull
 
 /**
- *
+ * 请求参数组合实现类
  * @author jv.lee
  * @date 2020/3/20
  */
