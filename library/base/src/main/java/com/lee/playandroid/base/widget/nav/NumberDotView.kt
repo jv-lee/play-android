@@ -13,6 +13,7 @@ import com.lee.playandroid.base.R
 import com.lee.playandroid.base.extensions.dp2px
 
 /**
+ * [ExpandBottomNavigationView] 带数字的红点view
  * @author jv.lee
  * @date 2019/5/7
  */

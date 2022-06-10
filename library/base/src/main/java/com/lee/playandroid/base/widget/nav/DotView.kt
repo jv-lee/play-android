@@ -10,6 +10,7 @@ import androidx.annotation.ColorInt
 import com.lee.playandroid.base.R
 
 /**
+ * [ExpandBottomNavigationView] 红点view
  * @author jv.lee
  * @date 2019/5/7
  */

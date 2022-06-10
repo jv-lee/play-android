@@ -8,7 +8,7 @@ import android.widget.TextView
 import com.lee.playandroid.base.R
 
 /**
- *
+ * 自定义简单功能的 menuItem
  * @author jv.lee
  * @date 2020/4/22
  */

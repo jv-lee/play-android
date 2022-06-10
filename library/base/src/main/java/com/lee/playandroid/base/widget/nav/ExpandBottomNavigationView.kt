@@ -23,6 +23,7 @@ import com.lee.playandroid.base.extensions.dp2px
 import com.lee.playandroid.base.tools.ReflexTools.reflexField
 
 /**
+ * 底部导航栏 支持红点与viewPager、viewPager2监听等处理
  * 使用png 等多色彩图片时 需要动态设置 itemIconTintList = null
  * @author jv.lee
  * @date 2019/5/7
