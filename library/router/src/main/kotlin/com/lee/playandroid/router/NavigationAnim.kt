@@ -1,9 +1,14 @@
 package com.lee.playandroid.router
 
 import androidx.navigation.NavOptions
+import com.lee.playandroid.router.NavigationAnim.*
 
 /**
- *
+ * 路由页面切换动画
+ * [NavigationAnim.Bottom] 底部弹起动画
+ * [SlideIn] 单项侧边滑入动画
+ * [SlideInOut] 侧边滑入联动侧边滑出动画
+ * [ZoomIn] 缩放显示动画
  * @author jv.lee
  * @date 2022/1/4
  */

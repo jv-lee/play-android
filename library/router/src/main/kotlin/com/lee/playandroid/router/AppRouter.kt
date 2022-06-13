@@ -1,3 +1,8 @@
+/*
+ * app全局路由扩展函数 (项目所有跳转都通过该扩展类来实现)
+ * @author jv.lee
+ * @date 2022/1/4
+ */
 package com.lee.playandroid.router
 
 import android.net.Uri
@@ -5,12 +10,6 @@ import androidx.core.net.toUri
 import androidx.navigation.NavController
 import androidx.navigation.NavDeepLinkRequest
 import java.net.URLEncoder
-
-/**
- * app全局路由扩展函数 (项目所有跳转都通过该扩展类来实现)
- * @author jv.lee
- * @date 2022/1/4
- */
 
 fun NavController.navigateDeepLink(uri: Uri, anim: NavigationAnim = NavigationAnim.SlideIn) {
     navigate(NavDeepLinkRequest.Builder.fromUri(uri).build(), anim.options())
