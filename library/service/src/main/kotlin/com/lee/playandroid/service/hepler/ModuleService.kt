@@ -3,7 +3,7 @@ package com.lee.playandroid.service.hepler
 import java.util.*
 
 /**
- * AutoService工具类
+ * AutoService工具类 项目中通过ModuleService来获取其他模块提供服务
  * @author jv.lee
  * @date 2021/9/9
  */

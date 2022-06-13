@@ -1,7 +1,7 @@
 package com.lee.playandroid.service.hepler
 
 import android.app.Application
-import com.lee.playandroid.service.ApplicationService
+import com.lee.playandroid.service.core.ApplicationService
 import java.util.*
 
 /**
