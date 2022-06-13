@@ -5,7 +5,7 @@ import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 
 /**
- *
+ * 通用app列表item设置padding值Decoration
  * @author jv.lee
  * @date 2021/11/11
  */

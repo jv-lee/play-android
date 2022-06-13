@@ -21,7 +21,7 @@ import com.lee.playandroid.common.extensions.actionFailed
 import kotlinx.coroutines.flow.StateFlow
 
 /**
- *
+ * 列表fragment通用类
  * @author jv.lee
  * @date 2021/11/8
  */

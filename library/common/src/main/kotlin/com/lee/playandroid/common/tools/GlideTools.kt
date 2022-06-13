@@ -11,7 +11,7 @@ import com.lee.playandroid.base.tools.DarkModeTools
 import com.lee.playandroid.common.R
 
 /**
- *
+ * 全局通用glide加载工具类
  * @author jv.lee
  * @date 2020/3/30
  */

@@ -1,3 +1,6 @@
+/*
+ * 分页数据包装实体
+ */
 package com.lee.playandroid.common.entity
 
 import com.lee.playandroid.base.adapter.page.PagingData

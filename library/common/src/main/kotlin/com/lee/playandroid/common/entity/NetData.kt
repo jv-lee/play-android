@@ -1,3 +1,8 @@
+/*
+ * 网络请求操作类
+ * @author jv.lee
+ * @date 2020/3/25
+ */
 package com.lee.playandroid.common.entity
 
 import android.os.Parcelable
@@ -6,11 +11,6 @@ import com.google.gson.annotations.SerializedName
 import com.lee.playandroid.base.adapter.page.PagingData
 import kotlinx.parcelize.Parcelize
 
-/**
- * 网络请求操作类
- * @author jv.lee
- * @date 2020/3/25
- */
 @Keep
 data class Data<T>(
     val data: T,

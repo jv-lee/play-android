@@ -1,3 +1,8 @@
+/*
+ * 项目错误ui处理公共扩展函数
+ * @author jv.lee
+ * @date 2021/12/9
+ */
 package com.lee.playandroid.common.extensions
 
 import android.os.Bundle
@@ -8,12 +13,6 @@ import com.lee.playandroid.base.net.HttpManager
 import com.lee.playandroid.base.utils.NetworkUtil
 import com.lee.playandroid.base.widget.SnackBarEx
 import com.lee.playandroid.common.R
-
-/**
- * 项目错误ui处理公共扩展函数
- * @author jv.lee
- * @date 2021/12/9
- */
 
 private const val EXTENSIONS_KEY_THROWABLE_CODE = "extensionsKey:throwableCode"
 

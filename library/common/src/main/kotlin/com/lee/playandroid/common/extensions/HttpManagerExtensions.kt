@@ -1,3 +1,8 @@
+/*
+ * httpManager全局扩展函数
+ * @author jv.lee
+ * @date 2021/12/9
+ */
 package com.lee.playandroid.common.extensions
 
 import com.lee.playandroid.base.net.HttpManager
@@ -26,6 +31,9 @@ fun HttpManager.setCommonInterceptor() {
     putInterceptor(SaveCookieInterceptor())
 }
 
+/**
+ * 创建RetrofitApi接口
+ */
 inline fun <reified T> createApi(
     baseUri: String = BuildConfig.BASE_URI,
     request: Request = Request(

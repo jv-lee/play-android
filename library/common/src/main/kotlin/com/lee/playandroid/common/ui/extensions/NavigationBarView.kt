@@ -1,3 +1,8 @@
+/*
+ * 首页BottomNavView -> Navigation扩展方法及动画修改
+ * @author jv.lee
+ * @date 2021/9/10
+ */
 package com.lee.playandroid.common.ui.extensions
 
 import android.os.Bundle
@@ -18,12 +23,6 @@ import com.lee.playandroid.base.extensions.endListener
 import com.lee.playandroid.base.widget.nav.ExpandBottomNavigationView
 import com.lee.playandroid.common.R
 import java.lang.ref.WeakReference
-
-/**
- * 首页BottomNavView -> Navigation扩展方法及动画修改
- * @author jv.lee
- * @date 2021/9/10
- */
 
 inline fun ExpandBottomNavigationView.bindNavigationAction(
     container: FragmentContainerView,

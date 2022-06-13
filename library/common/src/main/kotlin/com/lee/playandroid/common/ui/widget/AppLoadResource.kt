@@ -4,7 +4,7 @@ import com.lee.playandroid.base.adapter.listener.LoadResource
 import com.lee.playandroid.common.R
 
 /**
- *
+ * app通用列表加载状态layout资源
  * @author jv.lee
  * @date 2021/11/30
  */
