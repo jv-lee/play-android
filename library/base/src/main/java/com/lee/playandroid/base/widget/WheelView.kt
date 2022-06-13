@@ -18,7 +18,16 @@ import com.lee.playandroid.base.R
 import kotlin.math.roundToInt
 
 /**
- *
+ * 可滑动滚动的多选框
+ * [lineHeight] 多选框每行的高度
+ * [selectedTextColor] 选中文案的文本颜色
+ * [unSelectedTextColor] 未选中文案的文本颜色
+ * [selectedTextSize] 选中文案的文本大小
+ * [unSelectedTextSize] 未选中文案的文本大小
+ * [selectItemStyle] 选中文案样式
+ * [SelectItemStyle.GONE] 默认无样式
+ * [SelectItemStyle.ITEM] 选中item填充背景
+ * [SelectItemStyle.LINE] 选中item填充边框
  * @author jv.lee
  * @date 2021/1/6
  */
