@@ -25,7 +25,7 @@ import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
 /**
- *
+ * 账户操作ViewModel
  * @author jv.lee
  * @date 2022/3/23
  */

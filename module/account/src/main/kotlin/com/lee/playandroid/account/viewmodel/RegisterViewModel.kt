@@ -14,7 +14,7 @@ import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
 /**
- *
+ * 注册功能viewModel
  * @author jv.lee
  * @date 2022/3/23
  */

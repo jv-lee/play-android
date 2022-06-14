@@ -17,7 +17,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.StateFlow
 
 /**
- *
+ * 账户对外提供功能实现接口
  * @author jv.lee
  * @date 2021/11/25
  */
