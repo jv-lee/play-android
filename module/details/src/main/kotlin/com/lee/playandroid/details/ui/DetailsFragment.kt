@@ -22,7 +22,7 @@ import com.lee.playandroid.details.viewmodel.DetailsViewState
 import kotlinx.coroutines.flow.collect
 
 /**
- * 内容详情页
+ * 文章详情页
  * @author jv.lee
  * @date 2020/3/24
  */
@@ -35,7 +35,7 @@ class DetailsFragment : BaseNavigationFragment(R.layout.fragment_details) {
         const val ARG_PARAMS_COLLECT = "isCollect"
     }
 
-    private val detailsUrl by arguments<String>(ARG_PARAMS_URL)
+    private val url by arguments<String>(ARG_PARAMS_URL)
 
     private val viewModel by viewModels<DetailsViewModel>()
 
@@ -63,7 +63,7 @@ class DetailsFragment : BaseNavigationFragment(R.layout.fragment_details) {
             .useDefaultIndicator(R.color.colorThemeAccent)
             .createAgentWeb()
             .ready()
-            .go(detailsUrl)
+            .go(url)
             .bindLifecycle(lifecycle)
             .apply { webCreator.webView.setWebBackEvent() }
     }
