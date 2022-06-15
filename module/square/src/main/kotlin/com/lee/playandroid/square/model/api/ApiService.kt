@@ -7,19 +7,21 @@ import com.lee.playandroid.common.entity.PageData
 import retrofit2.http.*
 
 /**
- *
+ * 广场模块api接口
  * @author jv.lee
  * @date 2021/12/13
  */
 interface ApiService {
 
     /**
+     * 广场列表
      * @param page 分页页面 取值[0-40]
      */
     @GET("/user_article/list/{page}/json")
     suspend fun getSquareDataSync(@Path("page") page: Int): Data<PageData<Content>>
 
     /**
+     * 我的分享列表
      * @param page 分页页面 取值[1-40]
      */
     @GET("/user/lg/private_articles/{page}/json")

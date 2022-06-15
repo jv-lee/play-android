@@ -25,7 +25,7 @@ import com.lee.playandroid.todo.viewmodel.TodoViewModel
 import com.lee.playandroid.todo.viewmodel.TodoViewState
 
 /**
- * TODO页面
+ * todo页面（待完成/已完成）
  * @author jv.lee
  * @date 2021/12/23
  */

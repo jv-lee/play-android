@@ -12,7 +12,7 @@ import com.lee.playandroid.system.R
 import com.lee.playandroid.system.databinding.ItemNavigationTabBinding
 
 /**
- *
+ * 导航内容左侧tab适配器
  * @author jv.lee
  * @date 2021/11/12
  */

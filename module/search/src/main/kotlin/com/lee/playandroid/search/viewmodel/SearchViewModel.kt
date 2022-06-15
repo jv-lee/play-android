@@ -4,7 +4,7 @@ import android.os.Bundle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.lee.playandroid.common.entity.SearchHistory
-import com.lee.playandroid.search.model.db.SearchHistoryDatabase
+import com.lee.playandroid.search.model.db.SearchDatabase
 import com.lee.playandroid.search.model.entity.SearchHot
 import com.lee.playandroid.search.ui.SearchResultFragment
 import kotlinx.coroutines.channels.Channel
@@ -12,7 +12,7 @@ import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
 /**
- *
+ * 搜索页面viewModel
  * @author jv.lee
  * @date 2021/11/19
  */
@@ -67,7 +67,7 @@ class SearchViewModel : ViewModel() {
     private fun requestSearchHistoryData() {
         viewModelScope.launch {
             flow {
-                emit(SearchHistoryDatabase.get().searchHistoryDao().querySearchHistory())
+                emit(SearchDatabase.get().searchHistoryDao().querySearchHistory())
             }.catch { error ->
                 _viewEvents.send(SearchViewEvent.FailedEvent(error = error))
             }.collect { data ->
@@ -98,7 +98,7 @@ class SearchViewModel : ViewModel() {
      */
     private fun addSearchHistory(key: String) {
         viewModelScope.launch {
-            SearchHistoryDatabase.get().searchHistoryDao().insert(SearchHistory(key = key))
+            SearchDatabase.get().searchHistoryDao().insert(SearchHistory(key = key))
             requestSearchHistoryData()
         }
     }
@@ -109,7 +109,7 @@ class SearchViewModel : ViewModel() {
      */
     private fun deleteSearchHistory(key: String) {
         viewModelScope.launch {
-            SearchHistoryDatabase.get().searchHistoryDao().delete(SearchHistory(key = key))
+            SearchDatabase.get().searchHistoryDao().delete(SearchHistory(key = key))
             requestSearchHistoryData()
         }
     }
@@ -119,7 +119,7 @@ class SearchViewModel : ViewModel() {
      */
     private fun clearSearchHistory() {
         viewModelScope.launch {
-            SearchHistoryDatabase.get().searchHistoryDao().clearSearchHistory()
+            SearchDatabase.get().searchHistoryDao().clearSearchHistory()
             requestSearchHistoryData()
         }
     }

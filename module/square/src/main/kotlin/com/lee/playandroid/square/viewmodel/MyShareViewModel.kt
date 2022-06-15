@@ -25,7 +25,7 @@ import kotlinx.coroutines.launch
 import java.util.concurrent.atomic.AtomicBoolean
 
 /**
- * 我的分享列表
+ * 我的分享内容页viewModel
  * @author jv.lee
  * @date 2021/12/16
  */

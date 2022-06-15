@@ -11,7 +11,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 /**
- * 搜索历史
+ * 搜索历史数据库实体
  */
 @Keep
 @Entity

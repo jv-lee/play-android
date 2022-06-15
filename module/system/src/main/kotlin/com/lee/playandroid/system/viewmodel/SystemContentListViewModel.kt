@@ -12,7 +12,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 
 /**
- * 体系内容 子内容列表 ViewModel
+ * 体系内容子页面contentList viewModel
  * @author jv.lee
  * @date 2021/11/10
  */

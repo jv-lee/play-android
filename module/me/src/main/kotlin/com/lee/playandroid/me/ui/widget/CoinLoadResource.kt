@@ -4,7 +4,7 @@ import com.lee.playandroid.base.adapter.listener.LoadResource
 import com.lee.playandroid.me.R
 
 /**
- *
+ * 积分列表加载item状态resource
  * @author jv.lee
  * @date 2021/11/30
  */

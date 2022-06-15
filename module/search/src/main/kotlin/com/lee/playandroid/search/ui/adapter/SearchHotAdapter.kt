@@ -13,7 +13,7 @@ import com.lee.playandroid.search.model.entity.SearchHot
 import java.util.*
 
 /**
- *
+ * 搜索热词列表适配器
  * @author jv.lee
  * @date 2021/11/19
  */

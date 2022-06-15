@@ -17,7 +17,7 @@ import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
 /**
- * 体系内容列表 ViewModel
+ * 体系内容列表 viewModel
  * @author jv.lee
  * @date 2021/11/10
  */

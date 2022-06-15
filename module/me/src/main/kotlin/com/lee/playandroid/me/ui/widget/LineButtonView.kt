@@ -19,7 +19,7 @@ import com.lee.playandroid.base.extensions.setDrawableCompat
 import com.lee.playandroid.me.R
 
 /**
- *
+ * 设置item通用item按钮
  * @author jv.lee
  * @date 2020/4/10
  */

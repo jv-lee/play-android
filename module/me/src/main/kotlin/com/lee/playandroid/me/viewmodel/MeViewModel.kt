@@ -5,7 +5,7 @@ import com.lee.playandroid.service.AccountService
 import com.lee.playandroid.service.hepler.ModuleService
 
 /**
- *
+ * MePage ViewModel
  * @author jv.lee
  * @date 2022/5/5
  */

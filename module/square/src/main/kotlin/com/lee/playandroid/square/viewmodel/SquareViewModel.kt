@@ -16,7 +16,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 
 /**
- * 广场ViewModel
+ * 广场页 viewModel
  * @author jv.lee
  * @date 2021/12/13
  */

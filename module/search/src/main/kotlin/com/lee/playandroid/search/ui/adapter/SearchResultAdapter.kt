@@ -19,7 +19,7 @@ import com.lee.playandroid.search.databinding.ItemSearchResultPictureBinding
 import com.lee.playandroid.search.databinding.ItemSearchResultTextBinding
 
 /**
- *
+ * 搜索结果列表适配器
  * @author jv.lee
  * @date 2021/11/22
  */

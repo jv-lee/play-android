@@ -14,7 +14,7 @@ import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
 /**
- * 体系第二个tab 导航页面 ViewModel
+ * 导航内容列表 viewModel
  * @author jv.lee
  * @date 2021/11/12
  */

@@ -6,7 +6,7 @@ import com.lee.playandroid.base.db.base.BaseDao
 import com.lee.playandroid.common.entity.SearchHistory
 
 /**
- *
+ * 搜索历史记录dao操作类
  * @author jv.lee
  * @date 2021/11/22
  */

@@ -33,7 +33,7 @@ import com.lee.playandroid.todo.viewmodel.TodoListViewModel
 import kotlinx.coroutines.flow.collect
 
 /**
- * TODO列表数据页 (待完成/已完成)
+ * todo列表数据页 (待完成/已完成)
  * @author jv.lee
  * @date 2021/12/23
  */
@@ -44,13 +44,19 @@ class TodoListFragment : BaseNavigationFragment(R.layout.fragment_todo_list),
     TodoActionListener {
 
     companion object {
-        // 1:已完成 0:待完成
+        /**
+         * 页面构建状态类型 1:已完成 0:待完成
+         */
         const val ARG_PARAMS_STATUS = "status"
 
-        // 待完成TODO列表状态值
+        /**
+         * 待完成TODO列表状态值
+         */
         const val ARG_STATUS_UPCOMING = 0
 
-        // 已完成TODO列表状态值
+        /**
+         * 已完成TODO列表状态值
+         */
         const val ARG_STATUS_COMPLETE = 1
 
         fun newInstance(status: Int): Fragment {

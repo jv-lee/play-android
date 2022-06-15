@@ -14,7 +14,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 /**
- *
+ * 搜索结果页viewModel
  * @author jv.lee
  * @date 2021/11/22
  */

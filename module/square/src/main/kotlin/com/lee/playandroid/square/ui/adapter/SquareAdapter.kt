@@ -15,7 +15,7 @@ import com.lee.playandroid.common.extensions.getTitle
 import com.lee.playandroid.square.databinding.ItemSquareBinding
 
 /**
- *
+ * 广场列表适配器
  * @author jv.lee
  * @date 2021/12/13
  */

@@ -4,7 +4,7 @@ import com.lee.playandroid.base.base.ApplicationExtensions.app
 import com.lee.playandroid.todo.R
 
 /**
- *
+ * todo类型选择器本地实体
  * @author jv.lee
  * @date 2022/1/2
  */

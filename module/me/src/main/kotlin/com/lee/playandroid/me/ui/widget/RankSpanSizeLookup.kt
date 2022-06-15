@@ -3,7 +3,7 @@ package com.lee.playandroid.me.ui.widget
 import androidx.recyclerview.widget.GridLayoutManager
 
 /**
- *
+ * 排行榜列表gridLayout span行itemCount控制
  * @author jv.lee
  * @date 2021/12/9
  */

@@ -12,7 +12,7 @@ import com.lee.playandroid.common.extensions.getTitle
 import com.lee.playandroid.system.databinding.ItemNavigationContentTagBinding
 
 /**
- *
+ * 导航内容右侧tag适配器
  * @author jv.lee
  * @date 2021/11/16
  */

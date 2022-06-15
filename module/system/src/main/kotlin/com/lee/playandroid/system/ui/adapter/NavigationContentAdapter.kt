@@ -14,7 +14,7 @@ import com.lee.playandroid.system.R
 import com.lee.playandroid.system.databinding.ItemNavigationContentBinding
 
 /**
- *
+ * 导航内容列表适配器
  * @author jv.lee
  * @date 2021/11/16
  */

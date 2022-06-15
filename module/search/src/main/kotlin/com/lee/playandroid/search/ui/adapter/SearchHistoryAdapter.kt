@@ -11,7 +11,7 @@ import com.lee.playandroid.common.entity.SearchHistory
 import com.lee.playandroid.search.databinding.ItemSearchHistoryBinding
 
 /**
- *
+ * 搜索历史记录列表适配器
  * @author jv.lee
  * @date 2021/11/19
  */

@@ -14,7 +14,7 @@ import com.lee.playandroid.home.R
 import com.lee.playandroid.home.view.adapter.ContentAdapter
 
 /**
- *
+ * 首页列表添加文案Decoration样式
  * @author jv.lee
  * @date 2021/11/10
  */
