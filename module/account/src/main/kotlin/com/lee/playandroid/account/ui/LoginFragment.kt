@@ -7,6 +7,9 @@ import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.navigation.fragment.findNavController
+import com.lee.playandroid.account.R
+import com.lee.playandroid.account.databinding.FragmentLoginBinding
+import com.lee.playandroid.account.viewmodel.*
 import com.lee.playandroid.base.base.BaseNavigationFragment
 import com.lee.playandroid.base.dialog.LoadingDialog
 import com.lee.playandroid.base.extensions.binding
@@ -18,9 +21,6 @@ import com.lee.playandroid.base.tools.KeyboardTools.keyboardIsShow
 import com.lee.playandroid.base.tools.KeyboardTools.keyboardPaddingBottom
 import com.lee.playandroid.base.tools.KeyboardTools.parentTouchHideSoftInput
 import com.lee.playandroid.base.viewstate.collectState
-import com.lee.playandroid.account.R
-import com.lee.playandroid.account.databinding.FragmentLoginBinding
-import com.lee.playandroid.account.viewmodel.*
 import com.lee.playandroid.common.extensions.actionFailed
 import kotlinx.coroutines.flow.collect
 
@@ -32,7 +32,9 @@ import kotlinx.coroutines.flow.collect
 class LoginFragment : BaseNavigationFragment(R.layout.fragment_login), View.OnClickListener {
 
     companion object {
-        // login/register 页面回传注册key
+        /**
+         * 注册界面注册成功后回调登陆页面回传key（通知登陆页面已注册成功）
+         */
         const val REQUEST_KEY_LOGIN = "requestKey:login"
     }
 
