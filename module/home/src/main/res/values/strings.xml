@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="home_header_text">Welcome to Play Android.</string>
+    <string name="home_header_text">Welcome to Play Android</string>
     <string name="home_category_label">Category</string>
     <string name="home_recommend_label">Recommend</string>
 </resources>
