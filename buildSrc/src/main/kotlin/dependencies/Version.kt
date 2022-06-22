@@ -12,7 +12,7 @@ object Version {
     const val constraintLayout = "2.1.1"
     const val viewpager2 = "1.0.0"
     const val swipeRefreshLayout = "1.1.0"
-    const val slidingpanelayout = "1.1.0" // 1.1.0正常使用 ， 1.2.0无法正常显示
+    const val slidingPaneLayout = "1.1.0" // 1.1.0正常使用 ， 1.2.0无法正常显示
     const val activity = "1.4.0"
     const val fragment = "1.4.0"
     const val navigation = "2.4.0"
@@ -28,6 +28,6 @@ object Version {
     const val junit = "4.13.2"
     const val junitAndroid = "1.1.2"
     const val espressoAndroid = "3.3.0"
-    const val leakcanary = "2.3"
+    const val leakcanary = "2.9.1"
     const val blockCanary = "1.5.0"
 }
