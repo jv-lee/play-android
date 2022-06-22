@@ -4,7 +4,6 @@ import android.app.Activity
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
-import com.github.moduth.blockcanary.BlockCanary
 import com.lee.playandroid.base.adapter.manager.ViewLoadManager
 import com.lee.playandroid.base.base.BaseApplication
 import com.lee.playandroid.base.cache.CacheManager
@@ -15,7 +14,6 @@ import com.lee.playandroid.base.interadp.SimpleFragmentLifecycleCallbacks
 import com.lee.playandroid.base.net.HttpManager
 import com.lee.playandroid.base.tools.DarkModeTools
 import com.lee.playandroid.base.tools.ScreenDensityUtil
-import com.lee.playandroid.block.AppBlockCanaryContext
 import com.lee.playandroid.common.extensions.appThemeSet
 import com.lee.playandroid.common.extensions.setCommonInterceptor
 import com.lee.playandroid.common.ui.widget.AppLoadResource
@@ -95,10 +93,10 @@ class App : BaseApplication() {
             // 全局统一loadPage资源样式设置
             ViewLoadManager.getInstance().setLoadResource(AppLoadResource())
 
-            // 卡顿检测
-            if (BuildConfig.DEBUG) {
-                BlockCanary.install(this@App, AppBlockCanaryContext()).start()
-            }
+            // 卡顿检测  compileSdk = 32 即android12 无法编译通过 (manifest <activity> has intent-filter exported = true )
+//            if (BuildConfig.DEBUG) {
+//                BlockCanary.install(this@App, AppBlockCanaryContext()).start()
+//            }
         }
 
         // 注册Activity生命周期监听
