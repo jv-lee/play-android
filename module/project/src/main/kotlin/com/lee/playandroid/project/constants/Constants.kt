@@ -7,13 +7,9 @@ package com.lee.playandroid.project.constants
  */
 object Constants {
 
-    /**
-     * 项目页面tab数据缓存key
-     */
+    /** 项目页面tab数据缓存key */
     const val CACHE_KEY_PROJECT_TAB = "cacheKey:project-tab"
 
-    /**
-     * 项目页面contentList首页缓存key
-     */
+    /** 项目页面contentList首页缓存key */
     const val CACHE_KEY_PROJECT_DATA = "cacheKey:project-data"
 }

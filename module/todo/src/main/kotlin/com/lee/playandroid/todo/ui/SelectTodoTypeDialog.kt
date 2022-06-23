@@ -38,6 +38,7 @@ class SelectTodoTypeDialog :
 
     override fun bindData() {
         viewLifecycleOwner.lifecycleScope.launchWhenResumed {
+            // 监听todoType列表数据实时构建当前滑动选择类标
             viewModel.viewStates.collectState(SelectTodoTypeViewState::todoTypeWheelData) {
                 binding.wheelView.bindData(
                     it.todoTypes, object : WheelView.DataFormat<TodoTypeData> {
@@ -56,6 +57,7 @@ class SelectTodoTypeDialog :
 
     override fun onDismiss(dialog: DialogInterface) {
         super.onDismiss(dialog)
+        // 弹窗关闭时回传当前选中todoType通知页面更新
         setFragmentResult(REQUEST_KEY_TYPE, Bundle().apply {
             putInt(REQUEST_VALUE_TYPE, type)
         })

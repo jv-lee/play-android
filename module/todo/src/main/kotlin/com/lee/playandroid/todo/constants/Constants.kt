@@ -7,13 +7,9 @@ package com.lee.playandroid.todo.constants
  */
 object Constants {
 
-    /**
-     * todo内容首页缓存key
-     */
+    /** todo内容首页缓存key */
     const val CACHE_KEY_TODO_CONTENT = "cacheKey:todo-content"
 
-    /**
-     * todo当前类型列表选择器sp存储key
-     */
+    /** todo当前类型列表选择器sp存储key */
     const val SP_KEY_TODO_TYPE = "spKey:todo-type"
 }

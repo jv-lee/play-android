@@ -1,3 +1,5 @@
+@file:SuppressLint("NotifyDataSetChanged")
+
 package com.lee.playandroid.todo.ui
 
 import android.annotation.SuppressLint
@@ -32,11 +34,19 @@ import com.lee.playandroid.todo.viewmodel.TodoViewState
 class TodoFragment : BaseNavigationFragment(R.layout.fragment_todo) {
 
     companion object {
+        /** 回传请求key：通知TODO数据添加 */
         const val REQUEST_KEY_SAVE = "requestKey:save"
+
+        /** 回传请求key：通知TODO数据更新 */
         const val REQUEST_KEY_UPDATE = "requestKey:update"
+
+        /** 回传请求key：通知TODO类型更新 */
         const val REQUEST_KEY_TYPE = "requestKey:type"
 
+        /** 回传数据请求key：通知TODO变更数据结果 */
         const val REQUEST_VALUE_TODO = "requestValue:todo"
+
+        /** 回传数据请求key：通知TODO类型变更数据结果 */
         const val REQUEST_VALUE_TYPE = "requestValue:type"
     }
 
@@ -61,13 +71,12 @@ class TodoFragment : BaseNavigationFragment(R.layout.fragment_todo) {
         binding.navigationBar.bindViewPager(binding.vpContainer)
     }
 
-
-    @SuppressLint("NotifyDataSetChanged")
     override fun LifecycleCoroutineScope.bindData() {
         createTodoPages()
         bindFragmentResultListener()
 
         launchWhenResumed {
+            // 监听当前标题状态实时更新标题显示
             viewModel.viewStates.collectState(TodoViewState::titleRes) {
                 binding.toolbar.setTitleText(getString(it))
             }
@@ -79,7 +88,9 @@ class TodoFragment : BaseNavigationFragment(R.layout.fragment_todo) {
         binding.vpContainer.adapter = null
     }
 
-    @SuppressLint("NotifyDataSetChanged")
+    /**
+     * 构建todoViewPager页面（完成page/未完成page）
+     */
     private fun createTodoPages() {
         val fragments = arrayListOf<Fragment>().apply {
             add(TodoListFragment.newInstance(ARG_STATUS_UPCOMING))
@@ -98,15 +109,24 @@ class TodoFragment : BaseNavigationFragment(R.layout.fragment_todo) {
         }
     }
 
+    /**
+     * 绑定todo处理后的结果处理监听
+     */
     private fun bindFragmentResultListener() {
+        // 页面回传状态变更监听函数
         val listener = fun(requestKey: String, bundle: Bundle) {
+            // 回传的todo数据（save、update）
             val todo = bundle.getParcelable<TodoData>(REQUEST_VALUE_TODO)
+            // 回传的type数据 页面数据类型发生变更
             val type = bundle.getInt(REQUEST_VALUE_TYPE)
             childFragmentManager.fragments.forEach {
                 val actionListener = it as? TodoActionListener
                 when (requestKey) {
+                    // todo添加后处理
                     REQUEST_KEY_SAVE -> actionListener?.addAction(todo)
+                    // todo更新后处理
                     REQUEST_KEY_UPDATE -> actionListener?.updateAction(todo)
+                    // todo类型变更后处理
                     REQUEST_KEY_TYPE -> {
                         viewModel.dispatch(TodoViewAction.ChangeTypeSelected(type))
                         actionListener?.notifyAction(type)
@@ -115,16 +135,20 @@ class TodoFragment : BaseNavigationFragment(R.layout.fragment_todo) {
             }
         }
 
+        // 绑定数据添加回传监听
         setFragmentResultListener(REQUEST_KEY_SAVE, listener)
+        // 绑定数据更新回传监听
         setFragmentResultListener(REQUEST_KEY_UPDATE, listener)
+        // 绑定TODO页面类型更新回传监听
         setFragmentResultListener(REQUEST_KEY_TYPE, listener)
     }
 
     /**
      * 供子Fragment调用互通
+     * @param todoData todo数据
      */
-    fun moveTodoItem(todo: TodoData) {
-        childFragmentManager.fragments.forEach { (it as? TodoActionListener)?.moveAction(todo) }
+    fun moveTodoItem(todoData: TodoData) {
+        childFragmentManager.fragments.forEach { (it as? TodoActionListener)?.moveAction(todoData) }
     }
 
 }

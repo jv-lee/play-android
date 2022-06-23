@@ -7,13 +7,9 @@ package com.lee.playandroid.square.constants
  */
 object Constants {
 
-    /**
-     * 广场列表首页缓存key
-     */
+    /** 广场列表首页缓存key */
     const val CACHE_KEY_SQUARE_CONTENT = "cacheKey:square-content"
 
-    /**
-     * 我的收藏列表首页缓存key
-     */
+    /** 我的收藏列表首页缓存key */
     const val CACHE_KEY_MY_SHARE_CONTENT = "cacheKey:my-share-content"
 }

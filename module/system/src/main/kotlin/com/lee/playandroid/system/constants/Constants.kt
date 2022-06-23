@@ -7,13 +7,9 @@ package com.lee.playandroid.system.constants
  */
 object Constants {
 
-    /**
-     * 体系内容首页缓存key
-     */
+    /** 体系内容首页缓存key */
     const val CACHE_KEY_SYSTEM_CONTENT = "cacheKey:system-content"
 
-    /**
-     * 导航内容首页缓存key
-     */
+    /** 导航内容首页缓存key */
     const val CACHE_KEY_NAVIGATION_CONTENT = "cacheKey:navigation-content"
 }

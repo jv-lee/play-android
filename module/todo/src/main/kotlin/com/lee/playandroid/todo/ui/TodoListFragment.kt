@@ -44,19 +44,13 @@ class TodoListFragment : BaseNavigationFragment(R.layout.fragment_todo_list),
     TodoActionListener {
 
     companion object {
-        /**
-         * 页面构建状态类型 1:已完成 0:待完成
-         */
+        /** 页面构建状态类型 已完成：[ARG_STATUS_UPCOMING] 待完成：[ARG_STATUS_COMPLETE] */
         const val ARG_PARAMS_STATUS = "status"
 
-        /**
-         * 待完成TODO列表状态值
-         */
+        /** 待完成TODO列表状态值 */
         const val ARG_STATUS_UPCOMING = 0
 
-        /**
-         * 已完成TODO列表状态值
-         */
+        /** 已完成TODO列表状态值 */
         const val ARG_STATUS_COMPLETE = 1
 
         fun newInstance(status: Int): Fragment {
@@ -80,6 +74,7 @@ class TodoListFragment : BaseNavigationFragment(R.layout.fragment_todo_list),
 
     override fun bindView() {
         binding.rvContainer.itemAnimator = null
+        // 添加自定义侧滑菜单触摸监听器
         binding.rvContainer.addOnItemTouchListener(slidingPaneItemTouchListener)
         if (binding.rvContainer.adapter == null) {
             binding.rvContainer.adapter =
@@ -90,6 +85,7 @@ class TodoListFragment : BaseNavigationFragment(R.layout.fragment_todo_list),
                     bindAllListener(this@TodoListFragment)
                 }.proxy
         }
+        // 添加todo日期吸顶itemDecoration
         binding.rvContainer.addItemDecoration(StickyDateItemDecoration(requireContext(), mAdapter))
     }
 
@@ -97,26 +93,31 @@ class TodoListFragment : BaseNavigationFragment(R.layout.fragment_todo_list),
         launchWhenResumed {
             viewModel.viewEvents.collect { event ->
                 when (event) {
+                    // 列表item状态更新失败事件
                     is TodoListViewEvent.ActionFailed -> {
                         binding.rvContainer.closeAllItems()
                         actionFailed(event.error)
                     }
+                    // 列表item更新成功事件
                     is TodoListViewEvent.UpdateTodoActionSuccess -> {
                         mAdapter?.data?.removeAt(event.position)
                         mAdapter?.notifyItemRemoved(event.position)
                         toast(getString(R.string.todo_move_success))
                         findParentFragment<TodoFragment>()?.moveTodoItem(event.todo)
                     }
+                    // 列表item移除成功事件
                     is TodoListViewEvent.DeleteTodoActionSuccess -> {
                         mAdapter?.data?.removeAt(event.position)
                         mAdapter?.notifyItemRemoved(event.position)
                         toast(getString(R.string.todo_delete_success))
                     }
+                    // todo列表type变更回调重新刷新页面
                     is TodoListViewEvent.ResetRequestType -> {
                         mAdapter?.initStatusView()
                         mAdapter?.pageLoading()
                         viewModel.dispatch(TodoListViewAction.RequestPage(LoadStatus.REFRESH))
                     }
+                    // 导航至todo编辑页事件
                     is TodoListViewEvent.NavigationEditTodoPage -> {
                         findNavController().navigate(
                             R.id.action_todo_fragment_to_create_todo_fragment,
@@ -128,6 +129,7 @@ class TodoListFragment : BaseNavigationFragment(R.layout.fragment_todo_list),
         }
 
         launchWhenResumed {
+            // todo列表数据监听填充
             viewModel.todoDataFlow.collectState<PageData<TodoData>>(success = {
                 mAdapter?.submitData(it, diff = true)
             }, error = {
@@ -140,12 +142,15 @@ class TodoListFragment : BaseNavigationFragment(R.layout.fragment_todo_list),
     override fun onItemChild(view: View, entity: TodoData, position: Int) {
         when (view.id) {
             R.id.const_container -> {
+                // todoList item点击导航至编辑页
                 viewModel.dispatch(TodoListViewAction.NavigationEditTodoPage(entity))
             }
             R.id.btn_done -> {
+                // todoList 状态更改按钮点击通知更新todo状态（完成/未完成）
                 viewModel.dispatch(TodoListViewAction.RequestUpdate(position))
             }
             R.id.btn_delete -> {
+                // todoList 删除按钮点击通知移除该todoItem
                 viewModel.dispatch(TodoListViewAction.RequestDelete(position))
             }
         }

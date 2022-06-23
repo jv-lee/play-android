@@ -37,11 +37,12 @@ class CreateTodoFragment : BaseNavigationFragment(R.layout.fragment_create_todo)
     DatePickerDialog.OnDateSetListener {
 
     companion object {
-        // 0：创建 1：编辑
+        /** 当前页面类型 创建TODO:[ARG_TYPE_CREATE]  编辑TODO:[ARG_TYPE_EDIT] */
         const val ARG_PARAMS_TYPE = "type"
         const val ARG_TYPE_CREATE = 0
         const val ARG_TYPE_EDIT = 1
 
+        /** 编辑状态传入的todo数据 */
         const val ARG_PARAMS_TODO = "todo"
     }
 

@@ -22,6 +22,7 @@ import kotlinx.coroutines.flow.StateFlow
 class SystemContentListFragment : BaseListFragment() {
 
     companion object {
+        /** 文章id */
         const val ARG_PARAMS_ID = "id"
 
         fun newInstance(id: Long) = SystemContentListFragment().apply {

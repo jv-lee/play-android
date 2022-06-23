@@ -34,6 +34,7 @@ class SearchResultFragment : BaseNavigationFragment(R.layout.fragment_search_res
     BaseViewAdapter.OnItemClickListener<Content> {
 
     companion object {
+        /** 搜索键名 */
         const val ARG_PARAMS_SEARCH_KEY = "searchKey"
     }
 

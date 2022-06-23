@@ -42,7 +42,7 @@ class MyShareFragment : BaseNavigationFragment(R.layout.fragment_my_share),
     BaseViewAdapter.OnItemChildView<Content> {
 
     companion object {
-        // 页面回传刷新数据
+        /** 页面回传刷新数据 */
         const val REQUEST_KEY_REFRESH = "requestKey:refresh"
     }
 

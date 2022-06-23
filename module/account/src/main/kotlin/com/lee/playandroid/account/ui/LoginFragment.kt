@@ -32,9 +32,7 @@ import kotlinx.coroutines.flow.collect
 class LoginFragment : BaseNavigationFragment(R.layout.fragment_login), View.OnClickListener {
 
     companion object {
-        /**
-         * 注册界面注册成功后回调登陆页面回传key（通知登陆页面已注册成功）
-         */
+        /** 注册界面注册成功后回调登陆页面回传key（通知登陆页面已注册成功） */
         const val REQUEST_KEY_LOGIN = "requestKey:login"
     }
 

@@ -21,7 +21,9 @@ import kotlinx.coroutines.flow.flow
 class SystemContentTabFragment : BaseTabFragment() {
 
     companion object {
+        /** 体系内容页标题 */
         const val ARG_PARAMS_TAB_TITLE = "tabTitle"
+        /** 体系内容页tab数据 */
         const val ARG_PARAMS_TAB_DATA = "tabData"
     }
 
