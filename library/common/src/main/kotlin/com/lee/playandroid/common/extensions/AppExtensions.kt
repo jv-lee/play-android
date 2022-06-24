@@ -12,6 +12,9 @@ import com.lee.playandroid.base.tools.StatusTools.setDarkStatusIcon
 import com.lee.playandroid.base.tools.StatusTools.setLightStatusIcon
 import com.lee.playandroid.base.tools.StatusTools.setNavigationBarColor
 
+/**
+ * activity主题根据深色模式适配
+ */
 fun Activity.appThemeSet() {
     // 主题icon适配
     if (DarkModeTools.get().isDarkTheme()) {
@@ -20,5 +23,15 @@ fun Activity.appThemeSet() {
     } else {
         setNavigationBarColor(Color.WHITE)
         setDarkStatusIcon()
+    }
+}
+
+/**
+ * 判断当前activity是否为内部activity，过滤第三方库activity不执行 [block] 方法块
+ */
+fun Activity.runInternalBlock(block: () -> Unit) {
+    val appPackageName = packageName.replace(".debug", "")
+    if (this::class.java.name.contains(appPackageName)) {
+        block()
     }
 }

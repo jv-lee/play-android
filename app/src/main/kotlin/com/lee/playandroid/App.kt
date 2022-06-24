@@ -15,6 +15,7 @@ import com.lee.playandroid.base.net.HttpManager
 import com.lee.playandroid.base.tools.DarkModeTools
 import com.lee.playandroid.base.tools.ScreenDensityUtil
 import com.lee.playandroid.common.extensions.appThemeSet
+import com.lee.playandroid.common.extensions.runInternalBlock
 import com.lee.playandroid.common.extensions.setCommonInterceptor
 import com.lee.playandroid.common.ui.widget.AppLoadResource
 import com.lee.playandroid.service.hepler.ApplicationModuleService
@@ -30,8 +31,6 @@ import kotlinx.coroutines.launch
  */
 class App : BaseApplication() {
 
-    private val appPackageName by lazy { packageName.replace(".debug", "") }
-
     private val fragmentLifecycleCallbacks = object : SimpleFragmentLifecycleCallbacks() {
 
         override fun onFragmentCreated(
@@ -42,14 +41,13 @@ class App : BaseApplication() {
             ScreenDensityUtil.init(f.requireActivity())
             super.onFragmentCreated(fm, f, savedInstanceState)
         }
-
     }
 
     private val activityLifecycleCallbacks = object : SimpleActivityLifecycleCallbacks() {
 
         override fun onActivityCreated(activity: Activity, bundle: Bundle?) {
             // 过滤项目外的activity
-            if (activity::class.java.name.contains(appPackageName)) {
+            activity.runInternalBlock {
                 activity.appThemeSet()
                 activity.bindFragmentLifecycle(fragmentLifecycleCallbacks)
             }
@@ -57,7 +55,7 @@ class App : BaseApplication() {
         }
 
         override fun onActivityDestroyed(activity: Activity) {
-            if (activity::class.java.name.contains(appPackageName)) {
+            activity.runInternalBlock {
                 ScreenDensityUtil.resetDensity(activity)
                 activity.unbindFragmentLifecycle(fragmentLifecycleCallbacks)
             }
@@ -65,31 +63,24 @@ class App : BaseApplication() {
         }
 
         override fun onActivityResumed(activity: Activity) {
-            if (activity::class.java.name.contains(appPackageName)) {
-                ScreenDensityUtil.init(activity)
-            }
+            activity.runInternalBlock { ScreenDensityUtil.init(activity) }
             super.onActivityResumed(activity)
         }
 
     }
 
     override fun init() {
-        // 深色主题适配
-        DarkModeTools.init(applicationContext)
-        // 屏幕适配
-        ScreenDensityUtil.init(this)
-
-        //初始化工具类
         CoroutineScope(Dispatchers.IO).launch {
+            // 深色主题适配
+            DarkModeTools.init(applicationContext)
+            // 屏幕适配
+            ScreenDensityUtil.init(this@App)
             // 初始化网络拦截器
             HttpManager.instance.setCommonInterceptor()
-
             // 初始化缓存管理器
-            CacheManager.init(this@App, BuildConfig.VERSION_CODE)
-
+            CacheManager.init(applicationContext, BuildConfig.VERSION_CODE)
             // 子模块统一初始化
             ApplicationModuleService.init(this@App)
-
             // 全局统一loadPage资源样式设置
             ViewLoadManager.getInstance().setLoadResource(AppLoadResource())
 
@@ -97,10 +88,10 @@ class App : BaseApplication() {
 //            if (BuildConfig.DEBUG) {
 //                BlockCanary.install(this@App, AppBlockCanaryContext()).start()
 //            }
-        }
 
-        // 注册Activity生命周期监听
-        registerActivityLifecycleCallbacks(activityLifecycleCallbacks)
+            // 注册Activity生命周期监听
+            registerActivityLifecycleCallbacks(activityLifecycleCallbacks)
+        }
     }
 
     override fun unInit() {
