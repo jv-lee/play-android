@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="@dimen/large_offset">
+    android:padding="@dimen/offset_large">
 
     <ImageView
         android:id="@+id/iv_rank_icon"
@@ -19,12 +19,12 @@
         android:id="@+id/tv_username"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/medium_offset"
+        android:layout_marginTop="@dimen/offset_medium"
         android:ellipsize="end"
         android:gravity="center"
         android:maxLines="1"
-        android:paddingStart="@dimen/medium_offset"
-        android:paddingEnd="@dimen/medium_offset"
+        android:paddingStart="@dimen/offset_medium"
+        android:paddingEnd="@dimen/offset_medium"
         android:textColor="@color/colorThemeAccent"
         android:textSize="@dimen/font_size_medium"
         app:layout_constraintEnd_toEndOf="parent"
@@ -36,8 +36,8 @@
         android:id="@+id/tv_user_coin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/medium_offset"
-        android:layout_marginEnd="@dimen/medium_offset"
+        android:layout_marginTop="@dimen/offset_medium"
+        android:layout_marginEnd="@dimen/offset_medium"
         android:drawableStart="@drawable/vector_user_coin"
         android:ellipsize="end"
         android:gravity="center"

@@ -30,7 +30,7 @@
             <com.lee.playandroid.me.ui.widget.LineButtonView
                 android:id="@+id/line_system"
                 style="@style/CommendLineButtonSwitchView"
-                android:layout_marginTop="@dimen/medium_offset"
+                android:layout_marginTop="@dimen/offset_medium"
                 app:leftText="@string/dark_mode_system" />
 
             <com.lee.playandroid.me.ui.widget.LineButtonView
@@ -41,14 +41,14 @@
             <com.lee.playandroid.me.ui.widget.LineButtonView
                 android:id="@+id/line_clear_cache"
                 style="@style/CommendLineButtonView"
-                android:layout_marginTop="@dimen/medium_offset"
+                android:layout_marginTop="@dimen/offset_medium"
                 app:leftText="@string/settings_clear_text"
                 app:rightText="0.0b" />
 
             <com.lee.playandroid.me.ui.widget.LineButtonView
                 android:id="@+id/line_logout"
                 style="@style/CommendLineButtonView"
-                android:layout_marginTop="@dimen/medium_offset"
+                android:layout_marginTop="@dimen/offset_medium"
                 android:visibility="gone"
                 app:leftDrawable="@drawable/vector_logout"
                 app:leftText="@string/settings_logout"

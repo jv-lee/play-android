@@ -19,14 +19,14 @@
         <item name="android:layout_height">@dimen/search_text_height</item>
         <item name="android:background">@drawable/shape_theme_search</item>
         <item name="android:drawableStart">@drawable/vector_search</item>
-        <item name="android:drawablePadding">@dimen/small_offset</item>
+        <item name="android:drawablePadding">@dimen/offset_small</item>
         <item name="android:gravity">start|center_vertical</item>
-        <item name="android:paddingStart">@dimen/small_offset</item>
-        <item name="android:paddingEnd">@dimen/small_offset</item>
+        <item name="android:paddingStart">@dimen/offset_small</item>
+        <item name="android:paddingEnd">@dimen/offset_small</item>
         <item name="android:textSize">@dimen/font_size_medium</item>
         <item name="android:textColor">@color/colorThemePrimary</item>
         <item name="android:text">@string/search_hint</item>
-        <item name="android:layout_marginEnd">@dimen/medium_offset</item>
+        <item name="android:layout_marginEnd">@dimen/offset_medium</item>
     </style>
 
     <!--    搜索edit样式    -->

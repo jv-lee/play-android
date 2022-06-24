@@ -39,7 +39,7 @@
         android:id="@+id/floating_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/large_offset"
+        android:layout_margin="@dimen/offset_large"
         android:src="@drawable/vector_create"
         app:backgroundTint="@color/colorThemeFocus"
         app:layout_constraintBottom_toTopOf="@id/navigation_bar"

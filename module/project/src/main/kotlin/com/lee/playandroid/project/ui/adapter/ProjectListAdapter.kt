@@ -37,8 +37,8 @@ class ProjectListAdapter(context: Context, data: List<Content>) :
             holder.getViewBinding<ItemProjectBinding>().apply {
                 entity.apply {
                     ivImage.shapeAppearanceModel = ShapeAppearanceModel.Builder()
-                        .setTopLeftCornerSize(root.context.resources.getDimension(R.dimen.radius_offset))
-                        .setBottomLeftCornerSize(root.context.resources.getDimension(R.dimen.radius_offset))
+                        .setTopLeftCornerSize(root.context.resources.getDimension(R.dimen.offset_radius))
+                        .setBottomLeftCornerSize(root.context.resources.getDimension(R.dimen.offset_radius))
                         .build()
                     GlideTools.get().loadImage(envelopePic, ivImage)
 

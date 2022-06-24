@@ -3,6 +3,6 @@
     android:shape="rectangle">
     <solid android:color="@color/colorThemeFocusLight" />
     <corners
-        android:topLeftRadius="@dimen/radius_offset"
-        android:topRightRadius="@dimen/radius_offset" />
+        android:topLeftRadius="@dimen/offset_radius"
+        android:topRightRadius="@dimen/offset_radius" />
 </shape>

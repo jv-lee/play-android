@@ -5,5 +5,5 @@
     android:layout_width="match_parent"
     android:layout_height="@dimen/banner_height"
     app:bannerMode="clipMode"
-    app:indicatorPadding="@dimen/large_offset"
+    app:indicatorPadding="@dimen/offset_large"
     app:layout_constraintTop_toTopOf="parent" />

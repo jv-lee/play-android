@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="@dimen/large_offset">
+    android:padding="@dimen/offset_large">
 
     <TextView
         android:id="@+id/tv_title"
@@ -24,7 +24,7 @@
         android:id="@+id/rv_container"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/medium_offset"
+        android:layout_marginTop="@dimen/offset_medium"
         app:layoutManager="com.lee.playandroid.base.widget.layoutmanager.FlowLayoutManager"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

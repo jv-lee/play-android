@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="76dp"
     android:layoutDirection="rtl"
-    android:layout_marginBottom="@dimen/medium_offset">
+    android:layout_marginBottom="@dimen/offset_medium">
 
     <FrameLayout
         android:layout_width="wrap_content"
@@ -27,7 +27,7 @@
         android:layout_height="match_parent"
         android:background="@color/colorThemeItem"
         android:foreground="?attr/selectableItemBackgroundBorderless"
-        android:padding="@dimen/large_offset">
+        android:padding="@dimen/offset_large">
 
         <TextView
             android:id="@+id/tv_title"

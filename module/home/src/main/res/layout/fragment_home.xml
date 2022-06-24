@@ -27,7 +27,7 @@
                 android:id="@+id/tv_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingEnd="@dimen/large_offset"
+                android:paddingEnd="@dimen/offset_large"
                 android:text="@string/home_header_text"
                 android:textColor="@color/colorThemeAccent"
                 android:textSize="@dimen/font_size_large_xx"

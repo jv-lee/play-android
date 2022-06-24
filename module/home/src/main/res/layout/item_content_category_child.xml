@@ -4,12 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_margin="@dimen/medium_offset"
-    android:padding="@dimen/large_offset"
+    android:layout_margin="@dimen/offset_medium"
+    android:padding="@dimen/offset_large"
     app:rippleEnable="true"
     app:shadowColor="@color/colorThemeShadow"
     app:shadowFillColor="@color/colorThemeItem"
-    app:shadowRound="@dimen/radius_offset">
+    app:shadowRound="@dimen/offset_radius">
 
     <ImageView
         android:id="@+id/iv_category_icon"
@@ -24,7 +24,7 @@
         android:id="@+id/tv_category_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/medium_offset"
+        android:layout_marginTop="@dimen/offset_medium"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/iv_category_icon"

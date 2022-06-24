@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!--    全局通用样式 （统一全局margin padding radius值）-->
-    <dimen name="radius_offset">16dp</dimen>
-    <dimen name="large_offset">16dp</dimen>
-    <dimen name="medium_offset">8dp</dimen>
-    <dimen name="small_offset">4dp</dimen>
+    <dimen name="offset_radius">16dp</dimen>
+    <dimen name="offset_large">16dp</dimen>
+    <dimen name="offset_medium">8dp</dimen>
+    <dimen name="offset_small">4dp</dimen>
 
     <!--    全局通用字体size值-->
     <dimen name="font_size_large_xx">20sp</dimen>

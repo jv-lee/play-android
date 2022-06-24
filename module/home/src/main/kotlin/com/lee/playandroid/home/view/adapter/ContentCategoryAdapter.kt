@@ -43,7 +43,7 @@ class ContentCategoryAdapter(context: Context, data: List<HomeCategory>) :
                 // 重新设置item宽度,宽度占屏幕一半并且减去margin值
                 val resource = root.context.resources
                 val layoutParams = root.layoutParams
-                val marginOffset = resource.getDimension(R.dimen.medium_offset)
+                val marginOffset = resource.getDimension(R.dimen.offset_medium)
                 layoutParams.width =
                     ((resource.displayMetrics.widthPixels / 2) - (marginOffset * 2)).toInt()
                 root.layoutParams = layoutParams
