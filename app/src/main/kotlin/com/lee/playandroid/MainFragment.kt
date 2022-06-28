@@ -13,14 +13,14 @@ import com.lee.playandroid.base.livedatabus.InjectBus
 import com.lee.playandroid.base.livedatabus.LiveDataBus
 import com.lee.playandroid.base.tools.DarkViewUpdateTools
 import com.lee.playandroid.base.widget.FloatingLayout
-import com.lee.playandroid.databinding.FragmentMainBinding
-import com.lee.playandroid.databinding.LayoutStubFloatingBinding
 import com.lee.playandroid.common.entity.LoginEvent
 import com.lee.playandroid.common.entity.NavigationSelectEvent
 import com.lee.playandroid.common.ui.extensions.bindNavigationAction
+import com.lee.playandroid.databinding.FragmentMainBinding
+import com.lee.playandroid.databinding.LayoutStubFloatingBinding
+import com.lee.playandroid.router.navigateLogin
 import com.lee.playandroid.service.AccountService
 import com.lee.playandroid.service.hepler.ModuleService
-import com.lee.playandroid.router.navigateLogin
 import kotlinx.coroutines.launch
 
 /**
@@ -74,7 +74,7 @@ class MainFragment : BaseFragment(R.layout.fragment_main),
 
             floatingBinding.root.setEventCallback(object : FloatingLayout.EventCallback() {
                 override fun onClicked() {
-                    toast("welcome to play android ~")
+                    toast(getString(R.string.home_header_text))
                 }
             })
         }
