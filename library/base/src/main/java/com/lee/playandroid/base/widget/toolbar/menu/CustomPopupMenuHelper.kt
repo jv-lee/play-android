@@ -52,12 +52,16 @@ class CustomPopupMenuHelper(var context: Context, var menuResId: Int) : View.OnC
     }
 
     private fun createCardView() = CardView(context).apply {
+        val cardRadius = context.dp2px(16)
+        val contentPadding = context.dp2px(3).toInt()
+
         layoutParams = ViewGroup.LayoutParams(
             ViewGroup.LayoutParams.WRAP_CONTENT,
             ViewGroup.LayoutParams.WRAP_CONTENT
         )
         useCompatPadding = true
-        radius = context.dp2px(6)
+        radius = cardRadius
+        setContentPadding(0,contentPadding,0,contentPadding)
         setCardBackgroundColor(ContextCompat.getColor(context, R.color.baseItemColor))
     }
 

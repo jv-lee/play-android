@@ -108,7 +108,7 @@ class CustomMenuInflater(var context: Context) {
         val lineView = View(context)
         lineView.layoutParams =
             ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, context.dp2px(1).toInt())
-        lineView.setBackgroundColor(ContextCompat.getColor(context, android.R.color.darker_gray))
+        lineView.setBackgroundColor(ContextCompat.getColor(context, R.color.baseDarkColor))
         rootView.addView(lineView)
     }
 
@@ -127,6 +127,7 @@ class CustomMenuInflater(var context: Context) {
         view.id = itemId
         view.getTitle().text = itemTitleText
         view.getTitle().setDrawableCompat(left = itemIconId, tint = itemIconTint)
+        view.getTitle().setTextColor(ContextCompat.getColor(context, R.color.baseDarkColor))
         rootView.addView(view)
 
         typed.recycle()
