@@ -3,6 +3,7 @@ package com.lee.playandroid.details.viewmodel
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.lee.playandroid.base.base.ApplicationExtensions.app
 import com.lee.playandroid.common.constants.ApiConstants
 import com.lee.playandroid.details.R
 import com.lee.playandroid.details.ui.DetailsFragment.Companion.ARG_PARAMS_COLLECT
@@ -47,7 +48,7 @@ class DetailsViewModel(savedStateHandle: SavedStateHandle) : ViewModel() {
 
     private fun requestShareDetails() {
         viewModelScope.launch {
-            _viewEvents.send(DetailsViewEvent.ShareDetailsEvent("${params.title}:${params.url}"))
+            _viewEvents.send(DetailsViewEvent.ShareEvent("${params.title}:${params.url}"))
         }
     }
 
@@ -55,7 +56,7 @@ class DetailsViewModel(savedStateHandle: SavedStateHandle) : ViewModel() {
         viewModelScope.launch {
             //已收藏直接返回结果
             if (params.isCollect) {
-                _viewEvents.send(DetailsViewEvent.CollectEvent(messageRes = R.string.menu_collect_completed))
+                _viewEvents.send(DetailsViewEvent.CollectEvent(message = app.getString(R.string.menu_collect_completed)))
                 return@launch
             }
 
@@ -67,10 +68,10 @@ class DetailsViewModel(savedStateHandle: SavedStateHandle) : ViewModel() {
                     throw RuntimeException(response.errorMsg)
                 }
             }.catch { error ->
-                _viewEvents.send(DetailsViewEvent.CollectFailed(error = error))
+                _viewEvents.send(DetailsViewEvent.CollectEvent(message = error.message))
             }.collect { data ->
                 params.isCollect = data
-                _viewEvents.send(DetailsViewEvent.CollectEvent(messageRes = R.string.menu_collect_complete))
+                _viewEvents.send(DetailsViewEvent.CollectEvent(message = app.getString(R.string.menu_collect_complete)))
             }
         }
     }
@@ -90,9 +91,8 @@ data class DetailsViewState(
 )
 
 sealed class DetailsViewEvent {
-    data class ShareDetailsEvent(val shareContent: String) : DetailsViewEvent()
-    data class CollectEvent(val messageRes: Int) : DetailsViewEvent()
-    data class CollectFailed(val error: Throwable) : DetailsViewEvent()
+    data class ShareEvent(val shareText: String) : DetailsViewEvent()
+    data class CollectEvent(val message: String?) : DetailsViewEvent()
 }
 
 sealed class DetailsViewAction {

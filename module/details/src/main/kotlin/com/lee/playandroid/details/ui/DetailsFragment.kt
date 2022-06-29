@@ -72,14 +72,11 @@ class DetailsFragment : BaseNavigationFragment(R.layout.fragment_details) {
         launchWhenResumed {
             viewModel.viewEvents.collect { event ->
                 when (event) {
-                    is DetailsViewEvent.ShareDetailsEvent -> {
-                        ShareUtil.shareText(requireContext(), event.shareContent)
-                    }
                     is DetailsViewEvent.CollectEvent -> {
-                        toast(getString(event.messageRes))
+                        toast(event.message)
                     }
-                    is DetailsViewEvent.CollectFailed -> {
-                        toast(event.error.message)
+                    is DetailsViewEvent.ShareEvent -> {
+                        ShareUtil.shareText(requireContext(), event.shareText)
                     }
                 }
             }
