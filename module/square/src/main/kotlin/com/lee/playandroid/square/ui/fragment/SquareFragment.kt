@@ -57,6 +57,11 @@ class SquareFragment : BaseNavigationFragment(R.layout.fragment_square),
         delayBackEvent()
         // 设置toolbar主题渐变色背景
         binding.toolbar.setThemeGradientBackground()
+        binding.refreshView.setProgressViewOffset(
+            false,
+            binding.toolbar.getToolbarLayoutHeight() / 2,
+            binding.refreshView.progressViewEndOffset + binding.toolbar.getToolbarLayoutHeight() / 2
+        )
 
         binding.rvContainer.addItemDecoration(OffsetItemDecoration(binding.toolbar.getToolbarLayoutHeight()))
         if (binding.rvContainer.adapter == null) {

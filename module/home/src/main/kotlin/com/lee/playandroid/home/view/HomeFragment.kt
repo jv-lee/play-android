@@ -57,6 +57,11 @@ class HomeFragment : BaseNavigationFragment(R.layout.fragment_home),
         delayBackEvent()
         // 设置toolbar主题渐变色背景
         binding.toolbar.setThemeGradientBackground()
+        binding.refreshView.setProgressViewOffset(
+            false,
+            binding.toolbar.getToolbarLayoutHeight() / 2,
+            binding.refreshView.progressViewEndOffset + binding.toolbar.getToolbarLayoutHeight() / 2
+        )
 
         binding.rvContainer.addSaveStateViewType(BannerView::class.java)
         binding.rvContainer.addItemDecoration(OffsetItemDecoration(binding.toolbar.getToolbarLayoutHeight()))
