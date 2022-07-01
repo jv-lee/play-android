@@ -19,7 +19,7 @@
         android:layout_marginEnd="@dimen/offset_medium"
         app:shadowColor="@color/colorThemeShadow"
         app:shadowFillColor="@color/colorThemeItem"
-        app:shadowRound="@dimen/offset_radius">
+        app:shadowRound="@dimen/offset_radius_medium">
 
         <TextView
             android:id="@+id/tv_title_description"

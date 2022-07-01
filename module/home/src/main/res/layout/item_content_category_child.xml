@@ -2,16 +2,8 @@
 <com.lee.playandroid.base.widget.ShadowConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_marginStart="@dimen/offset_small"
-    android:layout_marginTop="@dimen/offset_small"
-    android:layout_marginEnd="@dimen/offset_small"
-    android:padding="@dimen/offset_large"
-    app:rippleEnable="true"
-    app:shadowColor="@color/colorThemeShadow"
-    app:shadowFillColor="@color/colorThemeItem"
-    app:shadowRound="@dimen/offset_radius">
+    style="@style/CardItemContainer"
+    android:layout_width="wrap_content">
 
     <ImageView
         android:id="@+id/iv_category_icon"

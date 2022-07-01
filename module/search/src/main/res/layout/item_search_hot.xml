@@ -9,7 +9,7 @@
     android:layout_marginBottom="@dimen/offset_small"
     android:padding="@dimen/offset_medium"
     android:textSize="@dimen/font_size_small"
-    app:buttonRadius="@dimen/offset_radius"
+    app:buttonRadius="@dimen/offset_radius_medium"
     app:normalBackgroundColor="@color/colorThemeLabel"
     app:normalTextColor="@color/colorThemeAccent"
     app:pressedBackgroundColor="#ebebeb"

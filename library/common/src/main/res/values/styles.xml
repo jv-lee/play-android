@@ -62,4 +62,21 @@
         <item name="layout_network">@layout/layout_app_status_not_network</item>
     </style>
 
+    <!--  项目通用卡片item容器（统一margin、padding值）
+    因该样式在ShadowConstraintLayout使用,有阴影间距shadowBlur的距离，所以margin值需要考虑该值像素间距。
+     -->
+    <style name="CardItemContainer">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginStart">@dimen/offset_small</item>
+        <item name="android:layout_marginEnd">@dimen/offset_small</item>
+        <item name="android:layout_marginTop">@dimen/offset_small</item>
+        <item name="android:padding">@dimen/offset_large</item>
+        <item name="rippleEnable">true</item>
+        <item name="shadowColor">@color/colorThemeShadow</item>
+        <item name="shadowFillColor">@color/colorThemeItem</item>
+        <item name="shadowRound">@dimen/offset_radius_medium</item>
+        <item name="shadowBlur">@dimen/offset_small</item>
+    </style>
+
 </resources>

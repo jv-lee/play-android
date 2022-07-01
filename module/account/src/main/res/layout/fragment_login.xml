@@ -94,7 +94,7 @@
         android:paddingBottom="@dimen/offset_medium"
         android:text="@string/account_login_button"
         app:buttonDisable="true"
-        app:buttonRadius="@dimen/offset_radius"
+        app:buttonRadius="@dimen/offset_radius_medium"
         app:disableBackgroundColor="@color/colorThemeLock"
         app:disableTextColor="@color/colorThemeLockDark"
         app:layout_constraintBottom_toBottomOf="@id/tv_register"

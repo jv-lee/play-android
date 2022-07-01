@@ -15,6 +15,7 @@
         app:pressedBackgroundColor="@color/colorThemeItem"
         app:normalTextColor="@color/colorThemePrimary"
         app:pressedTextColor="@color/colorThemePrimaryDark"
+        app:buttonRadius="@dimen/offset_radius_small"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

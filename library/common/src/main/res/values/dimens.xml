@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!--    全局通用样式 （统一全局margin padding radius值）-->
-    <dimen name="offset_radius">16dp</dimen>
+    <dimen name="offset_radius_medium">16dp</dimen>
+    <dimen name="offset_radius_small">8dp</dimen>
     <dimen name="offset_large">16dp</dimen>
     <dimen name="offset_medium">8dp</dimen>
     <dimen name="offset_small">4dp</dimen>
