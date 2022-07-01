@@ -76,6 +76,7 @@
             android:paddingStart="@dimen/offset_large"
             android:paddingEnd="@dimen/offset_medium"
             android:text="@string/coin_to_rank_text"
+            android:textSize="@dimen/font_size_medium"
             android:textColor="@color/colorThemeAccent"
             app:layout_constraintBottom_toBottomOf="parent" />
 

@@ -45,7 +45,7 @@
     <!--   自定义VIEW  -->
     <dimen name="view_line_icon_size">24dp</dimen>
     <dimen name="view_line_text_margin">0dp</dimen>
-    <dimen name="view_line_text_size">@dimen/font_size_small</dimen>
-    <dimen name="view_line_sub_text_size">@dimen/font_size_small_x</dimen>
+    <dimen name="view_line_text_size">@dimen/font_size_medium</dimen>
+    <dimen name="view_line_sub_text_size">@dimen/font_size_small</dimen>
 
 </resources>
