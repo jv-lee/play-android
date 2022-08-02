@@ -31,7 +31,7 @@
         app:layout_constraintTop_toBottomOf="@id/tv_title"
         app:shadowColor="@color/colorThemeShadow"
         app:shadowFillColor="@color/colorThemeItem"
-        app:shadowRound="26dp">
+        app:shadowRound="@dimen/offset_radius_medium">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/edit_username"
@@ -74,8 +74,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/offset_large"
-        android:layout_marginTop="@dimen/offset_large"
         android:text="@string/account_go_to_register_text"
+        android:textSize="@dimen/font_size_medium"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="@id/input_layout"
         app:layout_constraintTop_toBottomOf="@id/input_layout"
