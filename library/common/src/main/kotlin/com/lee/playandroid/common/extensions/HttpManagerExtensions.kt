@@ -9,6 +9,7 @@ import com.lee.playandroid.base.net.HttpManager
 import com.lee.playandroid.base.net.request.IRequest
 import com.lee.playandroid.base.net.request.Request
 import com.lee.playandroid.common.BuildConfig
+import com.lee.playandroid.common.constants.ApiConstants
 import com.lee.playandroid.common.interceptor.FailedInterceptor
 import com.lee.playandroid.common.interceptor.HeaderInterceptor
 import com.lee.playandroid.common.interceptor.ParameterInterceptor
@@ -35,7 +36,7 @@ fun HttpManager.setCommonInterceptor() {
  * 创建RetrofitApi接口
  */
 inline fun <reified T> createApi(
-    baseUri: String = BuildConfig.BASE_URI,
+    baseUri: String = ApiConstants.BASE_URI,
     request: Request = Request(
         baseUri,
         IRequest.ConverterType.JSON,

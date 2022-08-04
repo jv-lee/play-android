@@ -1,11 +1,15 @@
 package com.lee.playandroid.common.constants
 
+import com.lee.playandroid.common.BuildConfig
+
 /**
  * 全局通用api常量
  * @author jv.lee
  * @date 2021/12/3
  */
 object ApiConstants {
+    // baseApi
+    const val BASE_URI = BuildConfig.BASE_URI
 
     // 站点api请求 成功码
     const val REQUEST_OK = 0
