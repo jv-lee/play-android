@@ -2,17 +2,16 @@ package com.lee.playandroid.account.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.lee.playandroid.account.R
+import com.lee.playandroid.account.constants.Constants.CACHE_KEY_ACCOUNT_DATA
+import com.lee.playandroid.account.constants.Constants.SP_KEY_IS_LOGIN
+import com.lee.playandroid.account.model.api.ApiService
 import com.lee.playandroid.base.base.ApplicationExtensions.app
 import com.lee.playandroid.base.cache.CacheManager
 import com.lee.playandroid.base.extensions.clearCache
 import com.lee.playandroid.base.extensions.getCache
 import com.lee.playandroid.base.extensions.putCache
 import com.lee.playandroid.base.tools.PreferencesTools
-import com.lee.playandroid.account.R
-import com.lee.playandroid.account.constants.Constants.CACHE_KEY_ACCOUNT_DATA
-import com.lee.playandroid.account.constants.Constants.SP_KEY_IS_LOGIN
-import com.lee.playandroid.account.model.api.ApiService
-import com.lee.playandroid.common.BuildConfig
 import com.lee.playandroid.common.constants.ApiConstants.REQUEST_TOKEN_ERROR_MESSAGE
 import com.lee.playandroid.common.entity.AccountData
 import com.lee.playandroid.common.entity.AccountViewAction
@@ -106,7 +105,6 @@ class AccountViewModel : ViewModel() {
             } else {
                 cacheManager.clearCache(CACHE_KEY_ACCOUNT_DATA)
                 PreferencesTools.put(SP_KEY_IS_LOGIN, false)
-                PreferencesTools.put(BuildConfig.BASE_URI, "")
                 it.copy(accountData = accountData, isLogin = isLogin)
             }
         }
