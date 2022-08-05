@@ -40,7 +40,7 @@ class ThemeViewModel : ViewModel() {
     private fun updateDark(enable: Boolean) {
         // 过滤防止跟随系统选择时重复选中
         if (viewStates.value.isDark != enable) {
-            darkModeTools.updateNightTheme(enable = enable)
+            darkModeTools.updateDarkTheme(enable = enable)
             DarkViewUpdateTools.notifyUiMode()
             initDarkTheme()
         }
