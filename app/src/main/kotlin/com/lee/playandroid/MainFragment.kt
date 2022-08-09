@@ -37,6 +37,8 @@ class MainFragment : BaseFragment(R.layout.fragment_main),
 
     private val mainLabels by lazy { resources.getStringArray(R.array.main_labels) }
 
+    private val accountService by lazy { ModuleService.find<AccountService>() }
+
     override fun bindView() {
         //设置深色主题控制器监听
         DarkViewUpdateTools.bindViewCallback(viewLifecycleOwner, this)
@@ -54,7 +56,7 @@ class MainFragment : BaseFragment(R.layout.fragment_main),
         // 监听退出登陆成功事件
         viewLifecycleOwner.lifecycleScope.run {
             launchWhenResumed {
-                ModuleService.find<AccountService>().getAccountViewEvents(requireActivity())
+                accountService.getAccountViewEvents(requireActivity())
                     .collect { event ->
                         when (event) {
                             is AccountViewEvent.LogoutSuccess -> {
@@ -103,7 +105,7 @@ class MainFragment : BaseFragment(R.layout.fragment_main),
     fun loginEvent(event: LoginEvent) {
         viewLifecycleOwner.lifecycleScope.launch {
             toast(getString(R.string.login_token_failed))
-            ModuleService.find<AccountService>().requestLogout(requireActivity())
+            accountService.requestLogout(requireActivity())
         }
     }
 
