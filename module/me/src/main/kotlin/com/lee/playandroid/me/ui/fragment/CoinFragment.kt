@@ -9,7 +9,6 @@ import com.lee.playandroid.base.adapter.page.submitData
 import com.lee.playandroid.base.adapter.page.submitFailed
 import com.lee.playandroid.base.base.BaseNavigationFragment
 import com.lee.playandroid.base.extensions.binding
-import com.lee.playandroid.base.extensions.inflate
 import com.lee.playandroid.base.interadp.setClickListener
 import com.lee.playandroid.base.tools.DarkModeTools
 import com.lee.playandroid.base.tools.StatusTools.setDarkStatusIcon
@@ -23,7 +22,6 @@ import com.lee.playandroid.common.entity.PageData
 import com.lee.playandroid.common.extensions.actionFailed
 import com.lee.playandroid.me.R
 import com.lee.playandroid.me.databinding.FragmentCoinBinding
-import com.lee.playandroid.me.databinding.LayoutCoinHeaderBinding
 import com.lee.playandroid.me.ui.adapter.CoinRecordAdapter
 import com.lee.playandroid.me.ui.widget.CoinLoadResource
 import com.lee.playandroid.me.viewmodel.CoinViewAction
@@ -43,8 +41,6 @@ class CoinFragment : BaseNavigationFragment(R.layout.fragment_coin),
 
     private val binding by binding(FragmentCoinBinding::bind)
 
-    private val headerBinding by inflate(LayoutCoinHeaderBinding::inflate)
-
     private lateinit var mAdapter: CoinRecordAdapter
 
     override fun bindView() {
@@ -56,7 +52,7 @@ class CoinFragment : BaseNavigationFragment(R.layout.fragment_coin),
                 )
             }
         }
-        headerBinding.tvRankLabel.setOnClickListener {
+        binding.layoutCoinHeader.tvRankLabel.setOnClickListener {
             findNavController().navigate(R.id.action_coin_fragment_to_coin_rank_fragment)
         }
 
@@ -65,7 +61,6 @@ class CoinFragment : BaseNavigationFragment(R.layout.fragment_coin),
                 mAdapter = this
                 setLoadResource(CoinLoadResource())
                 initStatusView()
-                addHeader(headerBinding.root)
                 pageLoading()
                 bindAllListener(this@CoinFragment)
             }.proxy
@@ -85,7 +80,7 @@ class CoinFragment : BaseNavigationFragment(R.layout.fragment_coin),
         launchWhenResumed {
             viewModel.accountService.getAccountViewStates(requireActivity())
                 .collectState(AccountViewState::accountData) {
-                    headerBinding.tvIntegralCount.text = it?.coinInfo?.coinCount.toString()
+                    binding.layoutCoinHeader.tvIntegralCount.text = it?.coinInfo?.coinCount.toString()
                 }
         }
     }
