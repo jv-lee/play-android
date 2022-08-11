@@ -122,6 +122,8 @@ class TodoListViewModel(handle: SavedStateHandle) : ViewModel() {
                     } else {
                         throw RuntimeException(response.errorMsg)
                     }
+                }.onStart {
+                    _viewEvents.send(TodoListViewEvent.ResetSlidingState)
                 }.catch { error ->
                     _viewEvents.send(TodoListViewEvent.ActionFailed(error = error))
                 }.onCompletion {
@@ -161,6 +163,8 @@ class TodoListViewModel(handle: SavedStateHandle) : ViewModel() {
                     } else {
                         throw RuntimeException(response.errorMsg)
                     }
+                }.onStart {
+                    _viewEvents.send(TodoListViewEvent.ResetSlidingState)
                 }.catch { error ->
                     _viewEvents.send(TodoListViewEvent.ActionFailed(error = error))
                 }.onCompletion {
@@ -220,6 +224,7 @@ class TodoListViewModel(handle: SavedStateHandle) : ViewModel() {
 }
 
 sealed class TodoListViewEvent {
+    object ResetSlidingState : TodoListViewEvent()
     data class DeleteTodoActionSuccess(val position: Int, val todo: TodoData) : TodoListViewEvent()
     data class UpdateTodoActionSuccess(val position: Int, val todo: TodoData) : TodoListViewEvent()
     data class ActionFailed(val error: Throwable) : TodoListViewEvent()

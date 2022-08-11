@@ -9,7 +9,10 @@ import com.lee.playandroid.base.adapter.extensions.bindAllListener
 import com.lee.playandroid.base.adapter.page.submitData
 import com.lee.playandroid.base.adapter.page.submitFailed
 import com.lee.playandroid.base.base.BaseNavigationFragment
+import com.lee.playandroid.base.dialog.LoadingDialog
 import com.lee.playandroid.base.extensions.binding
+import com.lee.playandroid.base.extensions.dismiss
+import com.lee.playandroid.base.extensions.show
 import com.lee.playandroid.base.extensions.toast
 import com.lee.playandroid.base.viewstate.LoadStatus
 import com.lee.playandroid.base.viewstate.collectState
@@ -24,6 +27,7 @@ import com.lee.playandroid.me.databinding.FragmentCollectBinding
 import com.lee.playandroid.me.viewmodel.CollectViewAction
 import com.lee.playandroid.me.viewmodel.CollectViewEvent
 import com.lee.playandroid.me.viewmodel.CollectViewModel
+import com.lee.playandroid.me.viewmodel.CollectViewState
 import com.lee.playandroid.router.navigateDetails
 import kotlinx.coroutines.flow.collect
 
@@ -42,6 +46,8 @@ class CollectFragment : BaseNavigationFragment(R.layout.fragment_collect),
     private val binding by binding(FragmentCollectBinding::bind)
 
     private val slidingPaneItemTouchListener by lazy { SlidingPaneItemTouchListener(requireContext()) }
+
+    private val loadingDialog by lazy { LoadingDialog(requireContext()) }
 
     private var mAdapter: SimpleTextAdapter? = null
 
@@ -68,6 +74,8 @@ class CollectFragment : BaseNavigationFragment(R.layout.fragment_collect),
                     }
                     is CollectViewEvent.UnCollectFailed -> {
                         actionFailed(event.error)
+                    }
+                    is CollectViewEvent.ResetSlidingState -> {
                         binding.rvContainer.closeAllItems()
                     }
                 }
@@ -80,6 +88,12 @@ class CollectFragment : BaseNavigationFragment(R.layout.fragment_collect),
                 mAdapter?.submitFailed()
                 actionFailed(it)
             })
+        }
+
+        launchWhenResumed {
+            viewModel.viewStates.collectState(CollectViewState::isLoading) {
+                if (it) show(loadingDialog) else dismiss(loadingDialog)
+            }
         }
     }
 

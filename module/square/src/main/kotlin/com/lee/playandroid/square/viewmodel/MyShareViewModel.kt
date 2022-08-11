@@ -38,6 +38,9 @@ class MyShareViewModel : ViewModel() {
     private val cacheKey = CACHE_KEY_MY_SHARE_CONTENT.plus(accountService.getUserId())
     private val deleteLock = AtomicBoolean(false)
 
+    private val _viewStates = MutableStateFlow(MyShareViewState())
+    val viewStates: StateFlow<MyShareViewState> = _viewStates
+
     private val _myShareFlow: UiStatePageMutableStateFlow = MutableStateFlow(UiStatePage.Default(1))
     val myShareFlow: StateFlow<UiStatePage> = _myShareFlow
 
@@ -89,10 +92,14 @@ class MyShareViewModel : ViewModel() {
                     } else {
                         throw RuntimeException(response.errorMsg)
                     }
+                }.onStart {
+                    _viewEvents.send(MyShareViewEvent.ResetSlidingState)
+                    _viewStates.update { it.copy(isLoading = true) }
                 }.catch { error ->
                     _viewEvents.send(MyShareViewEvent.DeleteShareFailed(error = error))
                 }.onCompletion {
                     deleteLock.set(false)
+                    _viewStates.update { it.copy(isLoading = false) }
                 }.collect {
                     _viewEvents.send(MyShareViewEvent.DeleteShareSuccess(position))
                 }
@@ -120,12 +127,17 @@ class MyShareViewModel : ViewModel() {
 
 }
 
+data class MyShareViewState(
+    val isLoading: Boolean = false
+)
+
+sealed class MyShareViewEvent {
+    object ResetSlidingState : MyShareViewEvent()
+    data class DeleteShareSuccess(val position: Int) : MyShareViewEvent()
+    data class DeleteShareFailed(val error: Throwable) : MyShareViewEvent()
+}
+
 sealed class MyShareViewAction {
     data class RequestPage(@LoadStatus val status: Int) : MyShareViewAction()
     data class DeleteShare(val position: Int) : MyShareViewAction()
-}
-
-sealed class MyShareViewEvent {
-    data class DeleteShareSuccess(val position: Int) : MyShareViewEvent()
-    data class DeleteShareFailed(val error: Throwable) : MyShareViewEvent()
 }

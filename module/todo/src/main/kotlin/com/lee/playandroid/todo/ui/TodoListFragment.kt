@@ -93,9 +93,12 @@ class TodoListFragment : BaseNavigationFragment(R.layout.fragment_todo_list),
         launchWhenResumed {
             viewModel.viewEvents.collect { event ->
                 when (event) {
+                    // 重置sliding状态
+                    is TodoListViewEvent.ResetSlidingState -> {
+                        binding.rvContainer.closeAllItems()
+                    }
                     // 列表item状态更新失败事件
                     is TodoListViewEvent.ActionFailed -> {
-                        binding.rvContainer.closeAllItems()
                         actionFailed(event.error)
                     }
                     // 列表item更新成功事件

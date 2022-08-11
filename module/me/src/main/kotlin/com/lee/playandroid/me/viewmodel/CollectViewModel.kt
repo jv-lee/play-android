@@ -38,6 +38,9 @@ class CollectViewModel : ViewModel() {
     private val cacheKey = CACHE_KEY_COLLECT.plus(accountService.getUserId())
     private val deleteLock = AtomicBoolean(false)
 
+    private val _viewStates = MutableStateFlow(CollectViewState())
+    val viewStates: StateFlow<CollectViewState> = _viewStates
+
     private val _collectFlow: UiStatePageMutableStateFlow = MutableStateFlow(UiStatePage.Default(0))
     val collectFlow: UiStatePageStateFlow = _collectFlow
 
@@ -95,10 +98,14 @@ class CollectViewModel : ViewModel() {
                     } else {
                         throw RuntimeException(response.errorMsg)
                     }
+                }.onStart {
+                    _viewEvents.send(CollectViewEvent.ResetSlidingState)
+                    _viewStates.update { it.copy(isLoading = true) }
                 }.catch { error ->
                     _viewEvents.send(CollectViewEvent.UnCollectFailed(error = error))
                 }.onCompletion {
                     deleteLock.set(false)
+                    _viewStates.update { it.copy(isLoading = false) }
                 }.collect {
                     _viewEvents.send(CollectViewEvent.UnCollectSuccess(position))
                 }
@@ -126,7 +133,12 @@ class CollectViewModel : ViewModel() {
 
 }
 
+data class CollectViewState(
+    val isLoading: Boolean = false
+)
+
 sealed class CollectViewEvent {
+    object ResetSlidingState : CollectViewEvent()
     data class UnCollectSuccess(val position: Int) : CollectViewEvent()
     data class UnCollectFailed(val error: Throwable) : CollectViewEvent()
 }

@@ -11,7 +11,10 @@ import com.lee.playandroid.base.adapter.extensions.bindAllListener
 import com.lee.playandroid.base.adapter.page.submitData
 import com.lee.playandroid.base.adapter.page.submitFailed
 import com.lee.playandroid.base.base.BaseNavigationFragment
+import com.lee.playandroid.base.dialog.LoadingDialog
 import com.lee.playandroid.base.extensions.binding
+import com.lee.playandroid.base.extensions.dismiss
+import com.lee.playandroid.base.extensions.show
 import com.lee.playandroid.base.extensions.toast
 import com.lee.playandroid.base.interadp.setClickListener
 import com.lee.playandroid.base.viewstate.LoadStatus
@@ -28,6 +31,7 @@ import com.lee.playandroid.square.databinding.FragmentMyShareBinding
 import com.lee.playandroid.square.viewmodel.MyShareViewAction
 import com.lee.playandroid.square.viewmodel.MyShareViewEvent
 import com.lee.playandroid.square.viewmodel.MyShareViewModel
+import com.lee.playandroid.square.viewmodel.MyShareViewState
 import kotlinx.coroutines.flow.collect
 import com.lee.playandroid.common.R as CR
 
@@ -51,6 +55,8 @@ class MyShareFragment : BaseNavigationFragment(R.layout.fragment_my_share),
     private val binding by binding(FragmentMyShareBinding::bind)
 
     private val slidingPaneItemTouchListener by lazy { SlidingPaneItemTouchListener(requireContext()) }
+
+    private val loadingDialog by lazy { LoadingDialog(requireContext()) }
 
     private var mAdapter: SimpleTextAdapter? = null
 
@@ -86,6 +92,8 @@ class MyShareFragment : BaseNavigationFragment(R.layout.fragment_my_share),
                     }
                     is MyShareViewEvent.DeleteShareFailed -> {
                         actionFailed(event.error)
+                    }
+                    is MyShareViewEvent.ResetSlidingState -> {
                         binding.rvContainer.closeAllItems()
                     }
                 }
@@ -99,6 +107,12 @@ class MyShareFragment : BaseNavigationFragment(R.layout.fragment_my_share),
                 mAdapter?.submitFailed()
                 actionFailed(it)
             })
+        }
+
+        launchWhenResumed {
+            viewModel.viewStates.collectState(MyShareViewState::isLoading) {
+                if (it) show(loadingDialog) else dismiss(loadingDialog)
+            }
         }
     }
 
