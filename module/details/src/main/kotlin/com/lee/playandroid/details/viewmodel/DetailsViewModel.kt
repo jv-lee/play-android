@@ -67,8 +67,12 @@ class DetailsViewModel(savedStateHandle: SavedStateHandle) : ViewModel() {
                 } else {
                     throw RuntimeException(response.errorMsg)
                 }
+            }.onStart {
+                _viewStates.update { it.copy(isLoading = true) }
             }.catch { error ->
                 _viewEvents.send(DetailsViewEvent.CollectEvent(message = error.message))
+            }.onCompletion {
+                _viewStates.update { it.copy(isLoading = false) }
             }.collect { data ->
                 params.isCollect = data
                 _viewEvents.send(DetailsViewEvent.CollectEvent(message = app.getString(R.string.menu_collect_complete)))
@@ -86,6 +90,7 @@ class DetailsViewModel(savedStateHandle: SavedStateHandle) : ViewModel() {
 }
 
 data class DetailsViewState(
+    val isLoading: Boolean = false,
     val title: String = "",
     val actionEnable: Boolean = false
 )

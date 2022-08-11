@@ -5,10 +5,8 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.LifecycleCoroutineScope
 import com.just.agentweb.AgentWeb
 import com.lee.playandroid.base.base.BaseNavigationFragment
-import com.lee.playandroid.base.extensions.arguments
-import com.lee.playandroid.base.extensions.binding
-import com.lee.playandroid.base.extensions.setWebBackEvent
-import com.lee.playandroid.base.extensions.toast
+import com.lee.playandroid.base.dialog.LoadingDialog
+import com.lee.playandroid.base.extensions.*
 import com.lee.playandroid.base.interadp.setClickListener
 import com.lee.playandroid.base.utils.ShareUtil
 import com.lee.playandroid.base.viewstate.collectState
@@ -40,6 +38,8 @@ class DetailsFragment : BaseNavigationFragment(R.layout.fragment_details) {
     private val viewModel by viewModels<DetailsViewModel>()
 
     private val binding by binding(FragmentDetailsBinding::bind)
+
+    private val loadingDialog by lazy { LoadingDialog(requireContext()) }
 
     private lateinit var web: AgentWeb
 
@@ -89,6 +89,12 @@ class DetailsFragment : BaseNavigationFragment(R.layout.fragment_details) {
             ) { title, enable ->
                 binding.toolbar.setTitleText(title)
                 binding.toolbar.setMoreEnable(enable)
+            }
+        }
+
+        launchWhenResumed {
+            viewModel.viewStates.collectState(DetailsViewState::isLoading) {
+                if (it) show(loadingDialog) else dismiss(loadingDialog)
             }
         }
     }
