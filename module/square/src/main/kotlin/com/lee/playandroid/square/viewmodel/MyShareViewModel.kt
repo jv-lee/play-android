@@ -90,10 +90,10 @@ class MyShareViewModel : ViewModel() {
                         throw RuntimeException(response.errorMsg)
                     }
                 }.catch { error ->
-                    deleteLock.set(false)
                     _viewEvents.send(MyShareViewEvent.DeleteShareFailed(error = error))
-                }.collect {
+                }.onCompletion {
                     deleteLock.set(false)
+                }.collect {
                     _viewEvents.send(MyShareViewEvent.DeleteShareSuccess(position))
                 }
             }

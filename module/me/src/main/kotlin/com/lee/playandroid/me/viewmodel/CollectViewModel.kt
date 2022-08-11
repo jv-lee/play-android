@@ -14,11 +14,11 @@ import com.lee.playandroid.common.entity.Content
 import com.lee.playandroid.common.entity.PageData
 import com.lee.playandroid.common.extensions.checkData
 import com.lee.playandroid.common.extensions.createApi
-import com.lee.playandroid.service.AccountService
-import com.lee.playandroid.service.hepler.ModuleService
 import com.lee.playandroid.me.R
 import com.lee.playandroid.me.constants.Constants.CACHE_KEY_COLLECT
 import com.lee.playandroid.me.model.api.ApiService
+import com.lee.playandroid.service.AccountService
+import com.lee.playandroid.service.hepler.ModuleService
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
@@ -96,10 +96,10 @@ class CollectViewModel : ViewModel() {
                         throw RuntimeException(response.errorMsg)
                     }
                 }.catch { error ->
-                    deleteLock.set(false)
                     _viewEvents.send(CollectViewEvent.UnCollectFailed(error = error))
-                }.collect {
+                }.onCompletion {
                     deleteLock.set(false)
+                }.collect {
                     _viewEvents.send(CollectViewEvent.UnCollectSuccess(position))
                 }
             }

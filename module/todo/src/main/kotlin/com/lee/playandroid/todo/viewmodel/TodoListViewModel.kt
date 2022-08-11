@@ -123,10 +123,10 @@ class TodoListViewModel(handle: SavedStateHandle) : ViewModel() {
                         throw RuntimeException(response.errorMsg)
                     }
                 }.catch { error ->
-                    deleteLock.set(false)
                     _viewEvents.send(TodoListViewEvent.ActionFailed(error = error))
-                }.collect { data ->
+                }.onCompletion {
                     deleteLock.set(false)
+                }.collect { data ->
                     _viewEvents.send(
                         TodoListViewEvent.DeleteTodoActionSuccess(
                             position = position,
@@ -162,10 +162,10 @@ class TodoListViewModel(handle: SavedStateHandle) : ViewModel() {
                         throw RuntimeException(response.errorMsg)
                     }
                 }.catch { error ->
-                    updateLock.set(false)
                     _viewEvents.send(TodoListViewEvent.ActionFailed(error = error))
-                }.collect { data ->
+                }.onCompletion {
                     updateLock.set(false)
+                }.collect { data ->
                     _viewEvents.send(
                         TodoListViewEvent.UpdateTodoActionSuccess(
                             position = position,
