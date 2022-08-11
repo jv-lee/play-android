@@ -4,9 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.lee.playandroid.base.base.ApplicationExtensions.app
 import com.lee.playandroid.base.cache.CacheManager
-import com.lee.playandroid.base.extensions.getCache
-import com.lee.playandroid.base.extensions.putCache
-import com.lee.playandroid.base.extensions.putPageCache
+import com.lee.playandroid.base.extensions.*
 import com.lee.playandroid.base.utils.NetworkUtil
 import com.lee.playandroid.base.viewstate.*
 import com.lee.playandroid.common.constants.ApiConstants
@@ -106,7 +104,7 @@ class CollectViewModel : ViewModel() {
                 }.onCompletion {
                     deleteLock.set(false)
                     _viewStates.update { it.copy(isLoading = false) }
-                }.collect {
+                }.lowestTime().collect {
                     _viewEvents.send(CollectViewEvent.UnCollectSuccess(position))
                 }
             }

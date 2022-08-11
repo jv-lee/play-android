@@ -4,6 +4,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.lee.playandroid.base.base.ApplicationExtensions.app
+import com.lee.playandroid.base.extensions.lowestTime
 import com.lee.playandroid.common.constants.ApiConstants
 import com.lee.playandroid.details.R
 import com.lee.playandroid.details.ui.DetailsFragment.Companion.ARG_PARAMS_COLLECT
@@ -73,7 +74,7 @@ class DetailsViewModel(savedStateHandle: SavedStateHandle) : ViewModel() {
                 _viewEvents.send(DetailsViewEvent.CollectEvent(message = error.message))
             }.onCompletion {
                 _viewStates.update { it.copy(isLoading = false) }
-            }.collect { data ->
+            }.lowestTime().collect { data ->
                 params.isCollect = data
                 _viewEvents.send(DetailsViewEvent.CollectEvent(message = app.getString(R.string.menu_collect_complete)))
             }

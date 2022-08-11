@@ -12,7 +12,7 @@ import kotlinx.coroutines.flow.onStart
 /**
  * flow 添加延时回调
  */
-fun <T> Flow<T>.delay(timeMillis: Long) = map {
+fun <T> Flow<T>.delay(timeMillis: Long = 300) = map {
     kotlinx.coroutines.delay(timeMillis)
     it
 }
