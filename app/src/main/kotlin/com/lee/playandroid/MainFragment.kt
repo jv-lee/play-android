@@ -13,7 +13,6 @@ import com.lee.playandroid.base.livedatabus.InjectBus
 import com.lee.playandroid.base.livedatabus.LiveDataBus
 import com.lee.playandroid.base.tools.DarkViewUpdateTools
 import com.lee.playandroid.base.widget.FloatingLayout
-import com.lee.playandroid.common.entity.AccountViewEvent
 import com.lee.playandroid.common.entity.LoginEvent
 import com.lee.playandroid.common.entity.NavigationSelectEvent
 import com.lee.playandroid.common.ui.extensions.bindNavigationAction
@@ -22,7 +21,6 @@ import com.lee.playandroid.databinding.LayoutStubFloatingBinding
 import com.lee.playandroid.router.navigateLogin
 import com.lee.playandroid.service.AccountService
 import com.lee.playandroid.service.hepler.ModuleService
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 /**
@@ -52,23 +50,6 @@ class MainFragment : BaseFragment(R.layout.fragment_main),
 
     override fun bindData() {
         LiveDataBus.instance.injectBus(this)
-
-        // 监听退出登陆成功事件
-        viewLifecycleOwner.lifecycleScope.run {
-            launchWhenResumed {
-                accountService.getAccountViewEvents(requireActivity())
-                    .collect { event ->
-                        when (event) {
-                            is AccountViewEvent.LogoutSuccess -> {
-                                binding.container.findNavController().navigateLogin()
-                            }
-                            is AccountViewEvent.LogoutFailed -> {
-                                toast(event.message)
-                            }
-                        }
-                    }
-            }
-        }
     }
 
     @SuppressLint("ResourceType")
@@ -105,7 +86,8 @@ class MainFragment : BaseFragment(R.layout.fragment_main),
     fun loginEvent(event: LoginEvent) {
         viewLifecycleOwner.lifecycleScope.launch {
             toast(getString(R.string.login_token_failed))
-            accountService.requestLogout(requireActivity())
+            accountService.clearLoginState(requireActivity())
+            binding.container.findNavController().navigateLogin()
         }
     }
 
