@@ -9,6 +9,10 @@ import com.lee.playandroid.common.entity.TodoData
 import com.lee.playandroid.common.extensions.checkData
 import com.lee.playandroid.common.extensions.createApi
 import com.lee.playandroid.todo.R
+import com.lee.playandroid.base.tools.PreferencesTools
+import com.lee.playandroid.service.AccountService
+import com.lee.playandroid.service.hepler.ModuleService
+import com.lee.playandroid.todo.constants.Constants.SP_KEY_TODO_TYPE
 import com.lee.playandroid.todo.model.api.ApiService
 import com.lee.playandroid.todo.model.entity.TodoType
 import com.lee.playandroid.todo.ui.CreateTodoFragment.Companion.ARG_TYPE_CREATE
@@ -31,7 +35,13 @@ class CreateTodoViewModel(private val type: Int, private val todoData: TodoData?
 
     private val api = createApi<ApiService>()
 
-    private val _viewStates = MutableStateFlow(CreateTodoViewState())
+    private val accountService: AccountService = ModuleService.find()
+
+    private val typeSavedKey = SP_KEY_TODO_TYPE.plus(accountService.getUserId())
+
+    private val _viewStates = MutableStateFlow(
+        CreateTodoViewState(type = PreferencesTools.get(typeSavedKey, TodoType.DEFAULT))
+    )
     val viewStates: StateFlow<CreateTodoViewState> = _viewStates
 
     private val _viewEvents = Channel<CreateTodoViewEvent>(Channel.BUFFERED)
@@ -103,7 +113,7 @@ class CreateTodoViewModel(private val type: Int, private val todoData: TodoData?
                     viewStates.value.title,
                     viewStates.value.content,
                     viewStates.value.date,
-                    TodoType.DEFAULT,
+                    viewStates.value.type,
                     viewStates.value.priority
                 ).checkData()
                 emit(response)
@@ -127,7 +137,7 @@ class CreateTodoViewModel(private val type: Int, private val todoData: TodoData?
                     viewStates.value.title,
                     viewStates.value.content,
                     viewStates.value.date,
-                    TodoType.DEFAULT,
+                    viewStates.value.type,
                     viewStates.value.priority,
                     todoData?.status ?: ARG_STATUS_UPCOMING
                 ).checkData()
@@ -182,6 +192,7 @@ class CreateTodoViewModel(private val type: Int, private val todoData: TodoData?
 }
 
 data class CreateTodoViewState(
+    var type: Int = TodoType.DEFAULT,
     val isLoading: Boolean = false,
     val appTitleRes: Int = R.string.title_create_todo,
     val isCreate: Boolean = true,
