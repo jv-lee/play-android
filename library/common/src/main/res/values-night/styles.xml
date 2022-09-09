@@ -39,4 +39,8 @@
         <item name="android:imeOptions">actionSearch</item>
     </style>
 
+    <style name="ThemeDatePickerDialog" parent="android:Theme.Material.Dialog" tools:targetApi="lollipop">
+        <item name="android:colorAccent">@color/colorThemeFocus</item>
+    </style>
+
 </resources>

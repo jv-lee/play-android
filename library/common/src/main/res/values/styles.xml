@@ -79,4 +79,8 @@
         <item name="shadowBlur">@dimen/offset_small</item>
     </style>
 
+    <style name="ThemeDatePickerDialog" parent="android:Theme.Material.Light.Dialog" tools:targetApi="lollipop">
+        <item name="android:colorAccent">@color/colorThemeFocus</item>
+    </style>
+
 </resources>

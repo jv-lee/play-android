@@ -146,7 +146,7 @@ class CreateTodoFragment : BaseNavigationFragment(R.layout.fragment_create_todo)
             launchWhenResumed {
                 collectState(CreateTodoViewState::calendar) { calendar ->
                     datePickerDialog = DatePickerDialog(
-                        requireContext(), this@CreateTodoFragment,
+                        requireContext(), R.style.ThemeDatePickerDialog,this@CreateTodoFragment,
                         calendar.get(Calendar.YEAR),
                         calendar.get(Calendar.MONTH),
                         calendar.get(Calendar.DAY_OF_MONTH)
