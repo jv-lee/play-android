@@ -17,7 +17,7 @@ object Version {
     const val fragment = "1.5.1"
     const val navigation = "2.5.1"
     const val lifecycle = "2.5.1"
-    const val room = "2.4.0"
+    const val room = "2.5.0-alpha03"
     const val glide = "4.11.0"
     const val retrofit = "2.6.0"
     const val gson = "2.8.8"

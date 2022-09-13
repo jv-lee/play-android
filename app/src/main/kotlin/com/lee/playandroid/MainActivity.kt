@@ -148,11 +148,11 @@ class MainActivity : BaseActivity() {
             splashBinding.root.alpha = 1F - (it.animatedValue as Float)
         }
         anim.addListener(object : AnimatorListenerAdapter() {
-            override fun onAnimationStart(animation: Animator?) {
+            override fun onAnimationStart(animation: Animator) {
                 binding.mainContainer.visibility = View.VISIBLE
             }
 
-            override fun onAnimationEnd(animation: Animator?) {
+            override fun onAnimationEnd(animation: Animator) {
                 binding.root.removeView(splashBinding.root)
                 window.decorView.background = null
             }

@@ -24,7 +24,6 @@ fun Project.appConfigure(
     plugins.apply(BuildPlugin.application)
     plugins.apply(BuildPlugin.kotlin)
     plugins.apply(BuildPlugin.kapt)
-    plugins.apply(BuildPlugin.navigationSafeargs)
 
     projectConfigure()
 

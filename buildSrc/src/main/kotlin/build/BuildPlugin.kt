@@ -13,6 +13,4 @@ object BuildPlugin {
     const val kapt = "kotlin-kapt"
 
     const val parcelize = "kotlin-parcelize"
-
-    const val navigationSafeargs = "androidx.navigation.safeargs.kotlin"
 }
