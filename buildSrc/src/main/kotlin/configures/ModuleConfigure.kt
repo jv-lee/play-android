@@ -53,10 +53,6 @@ fun Project.moduleConfigure(
             viewBinding = true
         }
 
-        kapt {
-            generateStubs = true
-        }
-
         androidConfigure()
     }
 

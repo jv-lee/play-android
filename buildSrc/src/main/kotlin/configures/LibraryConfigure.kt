@@ -58,10 +58,6 @@ fun Project.libraryConfigure(
             }
         }
 
-        kapt {
-            generateStubs = true
-        }
-
         androidConfigure()
     }
 
