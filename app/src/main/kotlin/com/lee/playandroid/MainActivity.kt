@@ -30,7 +30,6 @@ import com.lee.playandroid.viewmodel.SplashViewEvent
 import com.lee.playandroid.viewmodel.SplashViewModel
 import com.lee.playandroid.viewmodel.SplashViewState
 import kotlinx.coroutines.cancel
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 /**
