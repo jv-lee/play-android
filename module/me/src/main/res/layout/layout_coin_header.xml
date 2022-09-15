@@ -71,7 +71,7 @@
             android:layout_width="match_parent"
             android:layout_height="46dp"
             android:drawableEnd="@drawable/vector_arrow"
-            android:foreground="?attr/selectableItemBackgroundBorderless"
+            android:background="@drawable/ripple_coin_item"
             android:gravity="center_vertical"
             android:includeFontPadding="true"
             android:paddingStart="@dimen/offset_large"
