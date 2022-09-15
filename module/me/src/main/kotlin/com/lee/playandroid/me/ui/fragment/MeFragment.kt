@@ -129,6 +129,7 @@ class MeFragment : BaseNavigationFragment(R.layout.fragment_me),
         binding.constRoot.setBackgroundColorCompat(R.color.colorThemeBackground)
         binding.toolbarLayout.setBackgroundColorCompat(R.color.colorThemeItem)
         binding.tvAccountName.setTextColorCompat(R.color.colorThemeAccent)
+        binding.tvLevel.setTextColorCompat(R.color.colorThemeFocus)
         binding.ivHeader.strokeColor =
             requireContext().getColorStateListCompat(R.color.colorThemeFocus)
 

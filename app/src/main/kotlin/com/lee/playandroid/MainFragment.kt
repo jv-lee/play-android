@@ -2,11 +2,11 @@ package com.lee.playandroid
 
 import android.annotation.SuppressLint
 import android.view.ViewStub
-import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import com.lee.playandroid.base.base.BaseFragment
 import com.lee.playandroid.base.extensions.binding
+import com.lee.playandroid.base.extensions.getCheckedColorStateListCompat
 import com.lee.playandroid.base.extensions.setBackgroundColorCompat
 import com.lee.playandroid.base.extensions.toast
 import com.lee.playandroid.base.livedatabus.InjectBus
@@ -54,10 +54,14 @@ class MainFragment : BaseFragment(R.layout.fragment_main),
 
     @SuppressLint("ResourceType")
     override fun updateDarkView() {
-        binding.navigationBar.itemTextColor =
-            ContextCompat.getColorStateList(requireContext(), R.drawable.selector_main)
-        binding.navigationBar.itemIconTintList =
-            ContextCompat.getColorStateList(requireContext(), R.drawable.selector_main)
+        binding.navigationBar.itemTextColor = requireContext().getCheckedColorStateListCompat(
+            R.color.colorThemeFocus,
+            R.color.colorPrimary
+        )
+        binding.navigationBar.itemIconTintList = requireContext().getCheckedColorStateListCompat(
+            R.color.colorThemeFocus,
+            R.color.colorPrimary
+        )
         binding.navigationBar.setBackgroundColorCompat(R.color.colorThemeItem)
     }
 
