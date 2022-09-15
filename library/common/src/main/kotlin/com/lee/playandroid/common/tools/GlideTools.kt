@@ -50,7 +50,7 @@ class GlideTools {
         imageView: ImageView,
         @DrawableRes placeholderResId: Int =
         //glide内部没有进行图片模式判断 所以自行根据深色模式设置占位图
-            if (DarkModeTools.get().isDarkTheme())
+            if (DarkModeTools.get().isDark)
                 R.mipmap.ic_picture_placeholder_night
             else
                 R.mipmap.ic_picture_placeholder
