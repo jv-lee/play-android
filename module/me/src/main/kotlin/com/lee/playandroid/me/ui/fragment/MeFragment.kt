@@ -12,6 +12,7 @@ import com.lee.playandroid.base.base.BaseNavigationFragment
 import com.lee.playandroid.base.extensions.*
 import com.lee.playandroid.base.tools.DarkViewUpdateTools
 import com.lee.playandroid.base.tools.PermissionLauncher
+import com.lee.playandroid.base.tools.ShakeHelper
 import com.lee.playandroid.base.viewstate.collectState
 import com.lee.playandroid.common.entity.AccountData
 import com.lee.playandroid.common.entity.AccountViewState
@@ -72,27 +73,29 @@ class MeFragment : BaseNavigationFragment(R.layout.fragment_me),
     }
 
     override fun onClick(view: View) {
-        // 无需校验登陆状态
-        if (view == binding.lineSettings) {
-            findNavController().navigate(R.id.action_me_fragment_to_settings_fragment)
-            return
-        }
-
-        // 需要校验登陆状态
-        if (viewModel.accountService.isLogin()) {
-            when (view) {
-                binding.lineIntegral ->
-                    findNavController().navigate(R.id.action_me_fragment_to_coin_fragment)
-                binding.lineCollect ->
-                    findNavController().navigate(R.id.action_me_fragment_to_collect_fragment)
-                binding.lineShare ->
-                    findNavController().navigateMyShare()
-                binding.lineTodo ->
-                    findNavController().navigateTodo()
+        ShakeHelper.run {
+            // 无需校验登陆状态
+            if (view == binding.lineSettings) {
+                findNavController().navigate(R.id.action_me_fragment_to_settings_fragment)
+                return@run
             }
-        } else {
-            toast(getString(CR.string.login_message))
-            findNavController().navigateLogin()
+
+            // 需要校验登陆状态
+            if (viewModel.accountService.isLogin()) {
+                when (view) {
+                    binding.lineIntegral ->
+                        findNavController().navigate(R.id.action_me_fragment_to_coin_fragment)
+                    binding.lineCollect ->
+                        findNavController().navigate(R.id.action_me_fragment_to_collect_fragment)
+                    binding.lineShare ->
+                        findNavController().navigateMyShare()
+                    binding.lineTodo ->
+                        findNavController().navigateTodo()
+                }
+            } else {
+                toast(getString(CR.string.login_message))
+                findNavController().navigateLogin()
+            }
         }
     }
 
