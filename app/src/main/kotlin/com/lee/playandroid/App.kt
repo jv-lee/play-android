@@ -48,7 +48,6 @@ class App : BaseApplication() {
         override fun onActivityCreated(activity: Activity, bundle: Bundle?) {
             // 过滤项目外的activity
             activity.runInternalBlock {
-                activity.appThemeSet()
                 activity.bindFragmentLifecycle(fragmentLifecycleCallbacks)
             }
             super.onActivityCreated(activity, bundle)
@@ -63,7 +62,10 @@ class App : BaseApplication() {
         }
 
         override fun onActivityResumed(activity: Activity) {
-            activity.runInternalBlock { ScreenDensityUtil.init(activity) }
+            activity.runInternalBlock {
+                ScreenDensityUtil.init(activity)
+                activity.appThemeSet()
+            }
             super.onActivityResumed(activity)
         }
 
