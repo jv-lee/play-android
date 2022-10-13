@@ -5,6 +5,7 @@
  */
 package com.lee.playandroid.base.dialog.extensions
 
+import android.app.Activity
 import android.app.Dialog
 import android.content.Context
 import android.graphics.Color
@@ -13,7 +14,6 @@ import android.os.Build
 import android.util.DisplayMetrics
 import android.view.*
 import com.lee.playandroid.base.extensions.dp2px
-import com.lee.playandroid.base.tools.StatusTools.getContentHeight
 
 /**
  * 设置底部dialogPadding值来实现默认高度
@@ -75,5 +75,15 @@ fun Dialog.setBackDismiss(isCancel: Boolean) {
     setCanceledOnTouchOutside(isCancel)
     if (!isCancel) {
         setOnKeyListener { _, keyCode, _ -> keyCode == KeyEvent.KEYCODE_BACK }
+    }
+}
+
+private fun Context.getContentHeight(): Int {
+    return try {
+        val content =
+            (this as Activity).window.decorView.findViewById<View>(android.R.id.content)
+        content.measuredHeight
+    } catch (e: Exception) {
+        0
     }
 }
