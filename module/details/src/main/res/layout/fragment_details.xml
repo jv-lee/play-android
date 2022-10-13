@@ -22,7 +22,7 @@
         android:elevation="1dp"
         app:layout_constraintTop_toTopOf="parent"
         app:menuRes="@menu/menu_details"
-        app:moreEnable="visible"
+        app:moreVisible="visible"
         tools:ignore="UnusedAttribute" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

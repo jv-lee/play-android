@@ -12,7 +12,7 @@
         android:background="@color/colorThemeFocus"
         app:backIconTint="@android:color/white"
         app:layout_constraintTop_toTopOf="parent"
-        app:moreEnable="visible"
+        app:moreVisible="visible"
         app:moreIcon="@drawable/vector_help"
         app:moreIconTint="@android:color/white"
         app:titleColor="@android:color/white"

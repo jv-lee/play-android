@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         app:backIconTint="@color/colorThemeAccent"
         app:layout_constraintTop_toTopOf="parent"
-        app:moreEnable="visible"
+        app:moreVisible="visible"
         app:moreIcon="@drawable/vector_add"
         app:moreIconTint="@color/colorThemeAccent"
         app:titleColor="@color/colorThemeAccent"
