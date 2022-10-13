@@ -78,6 +78,15 @@ fun Dialog.setBackDismiss(isCancel: Boolean) {
     }
 }
 
+/**
+ * dialog隐藏阴影遮罩
+ */
+fun Dialog.hideCover(): Dialog {
+    window?.clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND)
+    return this
+}
+
+
 private fun Context.getContentHeight(): Int {
     return try {
         val content =
