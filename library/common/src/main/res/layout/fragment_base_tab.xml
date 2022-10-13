@@ -9,6 +9,7 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:elevationEnable="false"
         app:layout_constraintTop_toTopOf="parent" />
 
     <com.lee.playandroid.base.widget.StatusLayout
@@ -26,11 +27,11 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/tab_height"
             android:background="@color/colorThemeItem"
+            android:visibility="gone"
             app:tabBackground="@android:color/transparent"
             app:tabIndicatorColor="@color/colorThemeAccent"
             app:tabIndicatorFullWidth="false"
             app:tabMode="scrollable"
-            android:visibility="gone"
             app:tabRippleColor="@android:color/transparent"
             app:tabSelectedTextColor="@color/colorThemeAccent"
             app:tabTextColor="@color/colorThemePrimary" />

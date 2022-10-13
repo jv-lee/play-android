@@ -94,7 +94,7 @@ class DetailsFragment : BaseNavigationFragment(R.layout.fragment_details) {
                 DetailsViewState::actionEnable
             ) { title, enable ->
                 binding.toolbar.setTitleText(title)
-                binding.toolbar.setMoreEnable(enable)
+                binding.toolbar.setMoreVisible(enable)
             }
         }
 
