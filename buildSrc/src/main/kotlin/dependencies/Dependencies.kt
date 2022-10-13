@@ -29,6 +29,7 @@ object Dependencies {
         "androidx.swiperefreshlayout:swiperefreshlayout:${Version.swipeRefreshLayout}"
     const val slidingpanelayout =
         "androidx.slidingpanelayout:slidingpanelayout:${Version.slidingPaneLayout}"
+    const val webkit = "androidx.webkit:webkit:${Version.webkit}"
 
     //fragment导航
     const val navigationFragment =

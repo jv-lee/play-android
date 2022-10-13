@@ -5,9 +5,12 @@
  */
 package com.lee.playandroid.common.extensions
 
+import android.content.res.Configuration
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.LifecycleOwner
+import androidx.webkit.WebSettingsCompat
+import androidx.webkit.WebViewFeature
 import com.just.agentweb.AgentWeb
 
 /**
@@ -28,5 +31,25 @@ fun AgentWeb.bindLifecycle(lifecycle: Lifecycle): AgentWeb {
             }
         }
     })
+    return this
+}
+
+/**
+ * webView适配深色模式
+ */
+fun AgentWeb.supportDarkMode(): AgentWeb {
+    val settings = this.agentWebSettings.webSettings
+    val resources = webCreator.webView.context.resources
+
+    if (WebViewFeature.isFeatureSupported(WebViewFeature.FORCE_DARK)) {
+        when (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
+            Configuration.UI_MODE_NIGHT_YES -> {
+                WebSettingsCompat.setForceDark(settings, WebSettingsCompat.FORCE_DARK_ON)
+            }
+            Configuration.UI_MODE_NIGHT_NO, Configuration.UI_MODE_NIGHT_UNDEFINED -> {
+                WebSettingsCompat.setForceDark(settings, WebSettingsCompat.FORCE_DARK_OFF)
+            }
+        }
+    }
     return this
 }

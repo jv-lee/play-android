@@ -8,16 +8,17 @@ import com.lee.playandroid.base.base.BaseNavigationFragment
 import com.lee.playandroid.base.dialog.LoadingDialog
 import com.lee.playandroid.base.extensions.*
 import com.lee.playandroid.base.interadp.setClickListener
+import com.lee.playandroid.base.tools.DarkModeTools
 import com.lee.playandroid.base.utils.ShareUtil
 import com.lee.playandroid.base.viewstate.collectState
 import com.lee.playandroid.common.extensions.bindLifecycle
+import com.lee.playandroid.common.extensions.supportDarkMode
 import com.lee.playandroid.details.R
 import com.lee.playandroid.details.databinding.FragmentDetailsBinding
 import com.lee.playandroid.details.viewmodel.DetailsViewAction
 import com.lee.playandroid.details.viewmodel.DetailsViewEvent
 import com.lee.playandroid.details.viewmodel.DetailsViewModel
 import com.lee.playandroid.details.viewmodel.DetailsViewState
-import kotlinx.coroutines.flow.collect
 
 /**
  * 文章详情页
@@ -65,7 +66,12 @@ class DetailsFragment : BaseNavigationFragment(R.layout.fragment_details) {
             .ready()
             .go(url)
             .bindLifecycle(lifecycle)
-            .apply { webCreator.webView.setWebBackEvent() }
+            .apply {
+                webCreator.webView.setWebBackEvent()
+                DarkModeTools.get().setWebDarkCompat()
+                supportDarkMode()
+            }
+
     }
 
     override fun LifecycleCoroutineScope.bindData() {
