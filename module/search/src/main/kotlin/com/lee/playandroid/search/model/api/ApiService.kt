@@ -3,10 +3,8 @@ package com.lee.playandroid.search.model.api
 import com.lee.playandroid.common.entity.Content
 import com.lee.playandroid.common.entity.Data
 import com.lee.playandroid.common.entity.PageData
-import retrofit2.http.Field
-import retrofit2.http.FormUrlEncoded
-import retrofit2.http.POST
-import retrofit2.http.Path
+import com.lee.playandroid.common.entity.SearchHot
+import retrofit2.http.*
 
 /**
  * 搜索模块api接口
@@ -21,5 +19,8 @@ interface ApiService {
         @Path("page") page: Int,
         @Field("k") key: String
     ): Data<PageData<Content>>
+
+    @GET("hotkey/json")
+    suspend fun getSearchHotAsync(): Data<List<SearchHot>>
 
 }

@@ -3,9 +3,15 @@ package com.lee.playandroid.search.viewmodel
 import android.os.Bundle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.lee.playandroid.base.cache.CacheManager
+import com.lee.playandroid.base.extensions.cacheFlow
 import com.lee.playandroid.common.entity.SearchHistory
+import com.lee.playandroid.common.extensions.checkData
+import com.lee.playandroid.common.extensions.createApi
+import com.lee.playandroid.search.constants.Constants
+import com.lee.playandroid.search.model.api.ApiService
 import com.lee.playandroid.search.model.db.SearchDatabase
-import com.lee.playandroid.search.model.entity.SearchHot
+import com.lee.playandroid.search.model.entity.SearchHotUI
 import com.lee.playandroid.search.ui.SearchResultFragment
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.*
@@ -17,6 +23,10 @@ import kotlinx.coroutines.launch
  * @date 2021/11/19
  */
 class SearchViewModel : ViewModel() {
+
+    private val api = createApi<ApiService>()
+    private val searchHistoryDao = SearchDatabase.get().searchHistoryDao()
+    private val cacheManager = CacheManager.getDefault()
 
     private val _viewStates = MutableStateFlow(SearchViewState())
     val viewStates: Flow<SearchViewState> = _viewStates
@@ -51,8 +61,10 @@ class SearchViewModel : ViewModel() {
      */
     private fun requestSearchHotData() {
         viewModelScope.launch {
-            flow {
-                emit(SearchHot.getHotCategory())
+            cacheManager.cacheFlow(Constants.CACHE_KEY_SEARCH_HOT) {
+                api.getSearchHotAsync().checkData()
+            }.map { list ->
+                list.map { SearchHotUI(it.name) }
             }.catch { error ->
                 _viewEvents.send(SearchViewEvent.FailedEvent(error = error))
             }.collect { data ->
@@ -67,7 +79,7 @@ class SearchViewModel : ViewModel() {
     private fun requestSearchHistoryData() {
         viewModelScope.launch {
             flow {
-                emit(SearchDatabase.get().searchHistoryDao().querySearchHistory())
+                emit(searchHistoryDao.querySearchHistory())
             }.catch { error ->
                 _viewEvents.send(SearchViewEvent.FailedEvent(error = error))
             }.collect { data ->
@@ -98,7 +110,7 @@ class SearchViewModel : ViewModel() {
      */
     private fun addSearchHistory(key: String) {
         viewModelScope.launch {
-            SearchDatabase.get().searchHistoryDao().insert(SearchHistory(key = key))
+            searchHistoryDao.insert(SearchHistory(key = key))
             requestSearchHistoryData()
         }
     }
@@ -109,7 +121,7 @@ class SearchViewModel : ViewModel() {
      */
     private fun deleteSearchHistory(key: String) {
         viewModelScope.launch {
-            SearchDatabase.get().searchHistoryDao().delete(SearchHistory(key = key))
+            searchHistoryDao.delete(SearchHistory(key = key))
             requestSearchHistoryData()
         }
     }
@@ -119,7 +131,7 @@ class SearchViewModel : ViewModel() {
      */
     private fun clearSearchHistory() {
         viewModelScope.launch {
-            SearchDatabase.get().searchHistoryDao().clearSearchHistory()
+            searchHistoryDao.clearSearchHistory()
             requestSearchHistoryData()
         }
     }
@@ -128,7 +140,7 @@ class SearchViewModel : ViewModel() {
 
 data class SearchViewState(
     val hideKeyboard: Boolean = false,
-    val searchHotList: List<SearchHot> = emptyList(),
+    val searchHotList: List<SearchHotUI> = emptyList(),
     val searchHistoryList: List<SearchHistory> = emptyList(),
 )
 

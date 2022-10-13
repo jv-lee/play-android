@@ -68,7 +68,7 @@ open class CustomToolbarLayout : ConstraintLayout {
      */
     fun getStatusBarHeight() = statusBarHeight
 
-    private fun initBottomLine() {
+    fun initBottomLine() {
         val lineView = View(context)
         lineView.run {
             id = R.id.toolbar_line
@@ -78,7 +78,7 @@ open class CustomToolbarLayout : ConstraintLayout {
             lineView.setBackgroundColor(
                 ContextCompat.getColor(
                     context,
-                    R.color.baseBackgroundColor
+                    R.color.baseLightColor
                 )
             )
         }

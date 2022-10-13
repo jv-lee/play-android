@@ -5,7 +5,6 @@
     android:id="@+id/tv_hot"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_marginEnd="@dimen/offset_small"
     android:layout_marginBottom="@dimen/offset_small"
     android:padding="@dimen/offset_medium"
     android:textSize="@dimen/font_size_small"

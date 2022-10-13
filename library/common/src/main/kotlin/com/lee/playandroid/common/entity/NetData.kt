@@ -187,3 +187,13 @@ data class TodoData(
         const val PRIORITY_HEIGHT = 1
     }
 }
+
+@Parcelize
+@Keep
+data class SearchHot(
+    val id: Long,
+    val link: String,
+    val name: String,
+    val order: Int,
+    val visible: Int
+) : Parcelable
