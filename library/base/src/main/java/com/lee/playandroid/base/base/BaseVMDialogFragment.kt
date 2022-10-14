@@ -34,7 +34,7 @@ abstract class BaseVMDialogFragment<V : ViewDataBinding, VM : ViewModel>(
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         try {
             viewModel = ViewModelProvider(this).get(getVmClass(this))
-        } catch (e: Exception) {
+        } catch (_: Exception) {
         }
         super.onViewCreated(view, savedInstanceState)
     }

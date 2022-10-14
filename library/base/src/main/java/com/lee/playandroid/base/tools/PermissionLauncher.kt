@@ -1,6 +1,7 @@
 package com.lee.playandroid.base.tools
 
-import android.annotation.SuppressLint
+import android.annotation.TargetApi
+import android.os.Build
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
@@ -12,7 +13,7 @@ import com.lee.playandroid.base.extensions.destroy
  * @author jv.lee
  * @date 2021/8/27
  */
-@SuppressLint("NewApi")
+@TargetApi(Build.VERSION_CODES.M)
 class PermissionLauncher {
 
     constructor(fragment: Fragment) {
@@ -42,7 +43,6 @@ class PermissionLauncher {
     private var permissionLauncher: ActivityResultLauncher<String>? = null
     private var permissionsLauncher: ActivityResultLauncher<Array<String>>? = null
 
-    @SuppressLint("NewApi")
     private fun createLauncher(thisClass: Any) {
         val thisT = when (thisClass) {
             is FragmentActivity -> {

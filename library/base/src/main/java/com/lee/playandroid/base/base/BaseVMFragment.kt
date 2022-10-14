@@ -33,7 +33,7 @@ abstract class BaseVMFragment<V : ViewDataBinding, VM : ViewModel>(var layoutId:
         //设置viewModel
         try {
             viewModel = ViewModelProvider(this).get(getVmClass(this))
-        } catch (e: Exception) {
+        } catch (_: Exception) {
         }
         super.onViewCreated(view, savedInstanceState)
     }
