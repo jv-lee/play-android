@@ -29,14 +29,7 @@ import com.lee.playandroid.base.R;
 @SuppressLint("AppCompatCustomView")
 public class RoundImageView extends ImageView {
 
-    /**
-     * mWidth:图形宽度
-     * mRadius：圆半径
-     * mRoundRadius:圆角大小
-     * type:记录是圆形还是圆角矩形
-     * mRect:矩形凹行大小
-     */
-    private int mWidth;
+    private int mSize;
     private int mRadius;
     private float mRoundRadius;
     private float mTopLeftRoundRadius;
@@ -53,9 +46,6 @@ public class RoundImageView extends ImageView {
 
     private boolean scFlag;
 
-    /**
-     * 0 圆形、1 圆角矩形、2 椭圆、10 默认圆角大小
-     */
     private static final int TYPE_CIRCLE = 0;
     public static final int TYPE_ROUND = 1;
     public static final int TYPE_OVAL = 2;
@@ -107,9 +97,9 @@ public class RoundImageView extends ImageView {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
         //圆形 设置圆角 设置宽高统一
         if (mType == TYPE_CIRCLE) {
-            mWidth = Math.min(getMeasuredWidth(), getMeasuredHeight());
-            mRadius = mWidth / 2;
-            setMeasuredDimension(mWidth, mWidth);
+            mSize = Math.min(getMeasuredWidth(), getMeasuredHeight());
+            mRadius = mSize / 2;
+            setMeasuredDimension(mSize, mSize);
         }
     }
 
@@ -168,7 +158,7 @@ public class RoundImageView extends ImageView {
         if (mType == TYPE_CIRCLE) {
             // 拿到bitmap宽或高的小值
             int bSize = Math.min(bitmap.getWidth(), bitmap.getHeight());
-            scale = mWidth * 1.0f / bSize;
+            scale = mSize * 1.0f / bSize;
 
         } else if (mType == TYPE_ROUND || mType == TYPE_OVAL) {
             // 如果图片的宽或者高与view的宽高不匹配，计算出需要缩放的比例；缩放后的图片的宽高，一定要大于我们view的宽高；所以我们这里取大值；
@@ -234,10 +224,9 @@ public class RoundImageView extends ImageView {
     /**
      * 设置大图是否缩放关闭开关
      *
-     * @param flag
+     * @param enable 是否开启缩放开关
      */
-    public void scaleCloseEnable(boolean flag) {
-        scFlag = flag;
+    public void scaleCloseEnable(boolean enable) {
+        scFlag = enable;
     }
-
 }

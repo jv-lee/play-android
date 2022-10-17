@@ -2,7 +2,6 @@ package com.lee.playandroid.base.widget.nav
 
 import android.content.Context
 import android.graphics.Color
-import android.os.Build
 import android.util.AttributeSet
 import android.util.TypedValue
 import android.view.Gravity
@@ -10,7 +9,6 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import androidx.annotation.RequiresApi
 import androidx.core.view.children
 import androidx.viewpager.widget.ViewPager
 import androidx.viewpager2.widget.ViewPager2
@@ -28,8 +26,7 @@ import com.lee.playandroid.base.tools.ReflexTools.reflexField
  * @author jv.lee
  * @date 2019/5/7
  */
-@RequiresApi(api = Build.VERSION_CODES.HONEYCOMB)
-class ExpandBottomNavigationView @JvmOverloads constructor(
+class ExpandBottomNavigationView constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0
@@ -52,12 +49,14 @@ class ExpandBottomNavigationView @JvmOverloads constructor(
     init {
         attrs?.let {
             context.obtainStyledAttributes(it, R.styleable.ExpandBottomNavigationView).apply {
-                dotNumberTextSize = getDimension(R.styleable.ExpandBottomNavigationView_dotNumberTextSize, 12f)
+                dotNumberTextSize =
+                    getDimension(R.styleable.ExpandBottomNavigationView_dotNumberTextSize, 12f)
                 dotBackground =
                     getColor(R.styleable.ExpandBottomNavigationView_dotBackground, Color.RED)
                 dotNumberTextColor =
                     getColor(R.styleable.ExpandBottomNavigationView_dotNumberTextColor, Color.WHITE)
-                dotLineColor = getColor(R.styleable.ExpandBottomNavigationView_dotLineColor, Color.WHITE)
+                dotLineColor =
+                    getColor(R.styleable.ExpandBottomNavigationView_dotLineColor, Color.WHITE)
                 dotSize = getDimension(R.styleable.ExpandBottomNavigationView_dotSize, 6f).toInt()
                 recycle()
             }
@@ -74,7 +73,7 @@ class ExpandBottomNavigationView @JvmOverloads constructor(
         for (i in 0 until menu.size()) {
             if (menu.getItem(i) === menuItem) {
                 mViewPager?.setCurrentItem(i, false)
-                mViewPager2?.setCurrentItem(i,false)
+                mViewPager2?.setCurrentItem(i, false)
                 mItemPositionListener?.onPosition(menuItem, i)
             }
         }
@@ -136,7 +135,8 @@ class ExpandBottomNavigationView @JvmOverloads constructor(
             dots.clear()
             for (i in 0 until childCount) {
                 val itemView = menuView.getChildAt(i) as BottomNavigationItemView
-                val params = LayoutParams(context.dp2px(dotSize).toInt(), context.dp2px(dotSize).toInt())
+                val params =
+                    LayoutParams(context.dp2px(dotSize).toInt(), context.dp2px(dotSize).toInt())
                 params.gravity = Gravity.CENTER_HORIZONTAL
                 params.topMargin = context.dp2px(dotSize).toInt()
                 params.leftMargin = context.dp2px(dotSize).toInt()
@@ -175,7 +175,7 @@ class ExpandBottomNavigationView @JvmOverloads constructor(
     }
 
     interface ItemPositionListener {
-        fun onPosition(menuItem: MenuItem, position: Int)
+        fun onPosition(menuItem: MenuItem?, position: Int)
     }
 
     fun setItemPositionListener(itemPositionListener: ItemPositionListener?) {

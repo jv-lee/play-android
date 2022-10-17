@@ -1,3 +1,4 @@
+@file:Suppress("UNCHECKED_CAST")
 package com.lee.playandroid.base.widget
 
 import android.annotation.SuppressLint
@@ -15,6 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.LinearSnapHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.lee.playandroid.base.R
+import com.lee.playandroid.base.widget.WheelView.SelectItemStyle
 import kotlin.math.roundToInt
 
 /**
@@ -44,14 +46,11 @@ class WheelView : RecyclerView {
     private var oldSelectPosition = 0
     private val linearSnapHelper = LinearSnapHelper()
 
+    private var lineHeight = dp2px(DEFAULT_ITEM_HEIGHT)
     private var selectedTextColor: Int = 0
     private var unSelectedTextColor: Int = 0
-
     private var selectedTextSize: Float = 0F
     private var unSelectedTextSize: Float = 0F
-
-    private var lineHeight = dp2px(DEFAULT_ITEM_HEIGHT)
-
     private var selectItemStyle = SelectItemStyle.GONE
 
     private val paddingDecoration = PaddingDecoration()
@@ -144,7 +143,7 @@ class WheelView : RecyclerView {
     }
 
     private inner class SelectAdapter<T>(val data: List<T>, val dataFormat: DataFormat<T>) :
-        RecyclerView.Adapter<SelectAdapter<T>.SelectViewHolder>() {
+        Adapter<SelectAdapter<T>.SelectViewHolder>() {
 
         var mSelectedListener: SelectedListener<T>? = null
 
@@ -160,7 +159,7 @@ class WheelView : RecyclerView {
             holder.bindView(data[position], position)
         }
 
-        private inner class SelectViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        private inner class SelectViewHolder(itemView: View) : ViewHolder(itemView) {
             fun bindView(item: T, position: Int) {
                 val textView = itemView.findViewById<TextView>(R.id.tv_text)
                 textView.layoutParams = LayoutParams(LayoutParams.MATCH_PARENT, lineHeight.toInt())
@@ -179,13 +178,13 @@ class WheelView : RecyclerView {
 
     }
 
-    private inner class PaddingDecoration : RecyclerView.ItemDecoration() {
+    private inner class PaddingDecoration : ItemDecoration() {
 
         override fun getItemOffsets(
             outRect: Rect,
             view: View,
             parent: RecyclerView,
-            state: RecyclerView.State
+            state: State
         ) {
             super.getItemOffsets(outRect, view, parent, state)
             val position = parent.getChildAdapterPosition(view)
@@ -210,7 +209,6 @@ class WheelView : RecyclerView {
         fun selected(item: T)
     }
 
-    @Suppress("UNCHECKED_CAST")
     fun <T> bindData(
         data: List<T>,
         dataFormat: DataFormat<T>,
@@ -227,7 +225,6 @@ class WheelView : RecyclerView {
         smoothScrollBy(0, (startPosition * lineHeight).toInt())
     }
 
-    @Suppress("UNCHECKED_CAST")
     private fun <T> clearState() {
         layoutManager = null
         adapter = null
