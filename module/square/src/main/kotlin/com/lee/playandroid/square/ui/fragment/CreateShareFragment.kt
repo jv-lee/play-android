@@ -12,7 +12,7 @@ import com.lee.playandroid.base.extensions.binding
 import com.lee.playandroid.base.extensions.dismiss
 import com.lee.playandroid.base.extensions.show
 import com.lee.playandroid.base.extensions.toast
-import com.lee.playandroid.base.tools.KeyboardTools.parentTouchHideSoftInput
+import com.lee.playandroid.base.tools.SystemBarTools.parentTouchHideSoftInput
 import com.lee.playandroid.base.viewstate.collectState
 import com.lee.playandroid.square.R
 import com.lee.playandroid.square.databinding.FragmentCreateShareBinding
@@ -20,7 +20,6 @@ import com.lee.playandroid.square.viewmodel.CreateShareViewAction
 import com.lee.playandroid.square.viewmodel.CreateShareViewEvent
 import com.lee.playandroid.square.viewmodel.CreateShareViewModel
 import com.lee.playandroid.square.viewmodel.CreateShareViewState
-import kotlinx.coroutines.flow.collect
 
 /**
  * 创建分享页面
@@ -36,7 +35,7 @@ class CreateShareFragment : BaseNavigationFragment(R.layout.fragment_create_shar
     private val loadingDialog by lazy { LoadingDialog(requireContext()) }
 
     override fun bindView() {
-        binding.root.parentTouchHideSoftInput()
+        requireActivity().window.parentTouchHideSoftInput()
 
         binding.editShareContent.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_SEND) {

@@ -96,7 +96,6 @@ class SearchViewModel : ViewModel() {
         viewModelScope.launch {
             // 添加历史记录隐藏软键盘
             addSearchHistory(key)
-            _viewStates.update { it.copy(hideKeyboard = true) }
 
             val bundle = Bundle()
             bundle.putString(SearchResultFragment.ARG_PARAMS_SEARCH_KEY, key)
@@ -139,7 +138,6 @@ class SearchViewModel : ViewModel() {
 }
 
 data class SearchViewState(
-    val hideKeyboard: Boolean = false,
     val searchHotList: List<SearchHotUI> = emptyList(),
     val searchHistoryList: List<SearchHistory> = emptyList(),
 )

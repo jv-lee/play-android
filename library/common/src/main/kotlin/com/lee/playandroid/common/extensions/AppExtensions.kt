@@ -8,8 +8,8 @@ package com.lee.playandroid.common.extensions
 import android.app.Activity
 import android.graphics.Color
 import com.lee.playandroid.base.tools.DarkModeTools
-import com.lee.playandroid.base.tools.StatusTools.setDarkStatusIcon
-import com.lee.playandroid.base.tools.StatusTools.setLightStatusIcon
+import com.lee.playandroid.base.tools.SystemBarTools.setDarkStatusIcon
+import com.lee.playandroid.base.tools.SystemBarTools.setLightStatusIcon
 
 /**
  * activity主题根据深色模式适配

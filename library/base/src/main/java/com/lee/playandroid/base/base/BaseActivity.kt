@@ -3,8 +3,8 @@ package com.lee.playandroid.base.base
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.lee.playandroid.base.tools.StatusTools.compatStatusBar
-import com.lee.playandroid.base.tools.StatusTools.statusBar
+import com.lee.playandroid.base.tools.SystemBarTools.compatStatusBar
+import com.lee.playandroid.base.tools.SystemBarTools.statusBar
 
 /**
  * Activity通用基类

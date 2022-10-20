@@ -16,13 +16,12 @@ import com.lee.playandroid.base.extensions.binding
 import com.lee.playandroid.base.extensions.dismiss
 import com.lee.playandroid.base.extensions.show
 import com.lee.playandroid.base.interadp.TextWatcherAdapter
-import com.lee.playandroid.base.tools.KeyboardTools.hideSoftInput
-import com.lee.playandroid.base.tools.KeyboardTools.keyboardIsShow
-import com.lee.playandroid.base.tools.KeyboardTools.keyboardPaddingBottom
-import com.lee.playandroid.base.tools.KeyboardTools.parentTouchHideSoftInput
+import com.lee.playandroid.base.tools.SystemBarTools.hasSoftInputShow
+import com.lee.playandroid.base.tools.SystemBarTools.hideSoftInput
+import com.lee.playandroid.base.tools.SystemBarTools.parentTouchHideSoftInput
+import com.lee.playandroid.base.tools.SystemBarTools.softInputBottomPaddingChange
 import com.lee.playandroid.base.viewstate.collectState
 import com.lee.playandroid.common.extensions.actionFailed
-import kotlinx.coroutines.flow.collect
 
 /**
  * 登陆页面
@@ -45,10 +44,10 @@ class LoginFragment : BaseNavigationFragment(R.layout.fragment_login), View.OnCl
 
     override fun bindView() {
         // 设置点击空白区域隐藏软键盘
-        binding.root.parentTouchHideSoftInput()
+        requireActivity().window.parentTouchHideSoftInput()
 
         // 监听键盘弹起
-        binding.root.keyboardPaddingBottom()
+        binding.root.softInputBottomPaddingChange()
 
         // 设置监听
         binding.tvLogin.setOnClickListener(this)
@@ -82,8 +81,10 @@ class LoginFragment : BaseNavigationFragment(R.layout.fragment_login), View.OnCl
                         findNavController().popBackStack()
                     }
                     is LoginViewEvent.NavigationRegisterEvent -> {
-                        if (requireContext().keyboardIsShow()) requireContext().hideSoftInput()
-                        else findNavController().navigate(R.id.action_login_fragment_to_register_fragment)
+                        requireActivity().window.run {
+                            if (hasSoftInputShow()) hideSoftInput()
+                            else findNavController().navigate(R.id.action_login_fragment_to_register_fragment)
+                        }
                     }
                 }
             }
@@ -92,7 +93,7 @@ class LoginFragment : BaseNavigationFragment(R.layout.fragment_login), View.OnCl
         viewModel.viewStates.run {
             launchWhenResumed {
                 collectState(LoginViewState::hideKeyboard) {
-                    if (it) requireContext().hideSoftInput()
+                    if (it) requireActivity().window.hideSoftInput()
                 }
             }
             launchWhenResumed {

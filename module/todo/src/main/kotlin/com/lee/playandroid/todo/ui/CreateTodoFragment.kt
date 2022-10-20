@@ -11,9 +11,10 @@ import com.lee.playandroid.base.base.BaseNavigationFragment
 import com.lee.playandroid.base.dialog.LoadingDialog
 import com.lee.playandroid.base.extensions.*
 import com.lee.playandroid.base.interadp.TextWatcherAdapter
-import com.lee.playandroid.base.tools.KeyboardTools.hideSoftInput
-import com.lee.playandroid.base.tools.KeyboardTools.keyboardPaddingBottom
-import com.lee.playandroid.base.tools.KeyboardTools.parentTouchHideSoftInput
+import com.lee.playandroid.base.tools.SystemBarTools.hasSoftInputShow
+import com.lee.playandroid.base.tools.SystemBarTools.hideSoftInput
+import com.lee.playandroid.base.tools.SystemBarTools.parentTouchHideSoftInput
+import com.lee.playandroid.base.tools.SystemBarTools.softInputBottomPaddingChange
 import com.lee.playandroid.base.viewstate.collectState
 import com.lee.playandroid.common.entity.TodoData
 import com.lee.playandroid.common.entity.TodoData.Companion.PRIORITY_HEIGHT
@@ -25,7 +26,6 @@ import com.lee.playandroid.todo.viewmodel.CreateTodoViewAction
 import com.lee.playandroid.todo.viewmodel.CreateTodoViewEvent
 import com.lee.playandroid.todo.viewmodel.CreateTodoViewModel
 import com.lee.playandroid.todo.viewmodel.CreateTodoViewState
-import kotlinx.coroutines.flow.collect
 import java.util.*
 
 /**
@@ -60,11 +60,11 @@ class CreateTodoFragment : BaseNavigationFragment(R.layout.fragment_create_todo)
     private var datePickerDialog: DatePickerDialog? = null
 
     override fun bindView() {
-        // 设置键盘点击空白区取消
-        binding.root.parentTouchHideSoftInput()
+        // 设置点击空白区域隐藏软键盘
+        requireActivity().window.parentTouchHideSoftInput()
 
         // 监听键盘弹起
-        binding.root.keyboardPaddingBottom()
+        binding.root.softInputBottomPaddingChange()
 
         binding.tvDateContent.setOnClickListener {
             datePickerDialog?.let(this::show)
@@ -146,7 +146,7 @@ class CreateTodoFragment : BaseNavigationFragment(R.layout.fragment_create_todo)
             launchWhenResumed {
                 collectState(CreateTodoViewState::calendar) { calendar ->
                     datePickerDialog = DatePickerDialog(
-                        requireContext(), R.style.ThemeDatePickerDialog,this@CreateTodoFragment,
+                        requireContext(), R.style.ThemeDatePickerDialog, this@CreateTodoFragment,
                         calendar.get(Calendar.YEAR),
                         calendar.get(Calendar.MONTH),
                         calendar.get(Calendar.DAY_OF_MONTH)
@@ -170,7 +170,9 @@ class CreateTodoFragment : BaseNavigationFragment(R.layout.fragment_create_todo)
 
     override fun onFragmentStop() {
         super.onFragmentStop()
-        requireContext().hideSoftInput()
+        if (requireActivity().window.hasSoftInputShow()) {
+            requireActivity().window.hideSoftInput()
+        }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             datePickerDialog?.setOnDateSetListener(null)
         }

@@ -11,8 +11,8 @@ import com.lee.playandroid.base.base.BaseNavigationFragment
 import com.lee.playandroid.base.extensions.binding
 import com.lee.playandroid.base.interadp.setClickListener
 import com.lee.playandroid.base.tools.DarkModeTools
-import com.lee.playandroid.base.tools.StatusTools.setDarkStatusIcon
-import com.lee.playandroid.base.tools.StatusTools.setLightStatusIcon
+import com.lee.playandroid.base.tools.SystemBarTools.setDarkStatusIcon
+import com.lee.playandroid.base.tools.SystemBarTools.setLightStatusIcon
 import com.lee.playandroid.base.viewstate.LoadStatus
 import com.lee.playandroid.base.viewstate.collectState
 import com.lee.playandroid.common.constants.ApiConstants

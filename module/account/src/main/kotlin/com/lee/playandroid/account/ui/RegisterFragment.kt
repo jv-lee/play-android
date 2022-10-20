@@ -7,23 +7,22 @@ import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.navigation.fragment.findNavController
+import com.lee.playandroid.account.R
+import com.lee.playandroid.account.databinding.FragmentRegisterBinding
+import com.lee.playandroid.account.ui.LoginFragment.Companion.REQUEST_KEY_LOGIN
+import com.lee.playandroid.account.viewmodel.*
 import com.lee.playandroid.base.base.BaseNavigationFragment
 import com.lee.playandroid.base.dialog.LoadingDialog
 import com.lee.playandroid.base.extensions.binding
 import com.lee.playandroid.base.extensions.dismiss
 import com.lee.playandroid.base.extensions.show
 import com.lee.playandroid.base.interadp.TextWatcherAdapter
-import com.lee.playandroid.base.tools.KeyboardTools.hideSoftInput
-import com.lee.playandroid.base.tools.KeyboardTools.keyboardIsShow
-import com.lee.playandroid.base.tools.KeyboardTools.keyboardPaddingBottom
-import com.lee.playandroid.base.tools.KeyboardTools.parentTouchHideSoftInput
+import com.lee.playandroid.base.tools.SystemBarTools.hasSoftInputShow
+import com.lee.playandroid.base.tools.SystemBarTools.hideSoftInput
+import com.lee.playandroid.base.tools.SystemBarTools.parentTouchHideSoftInput
+import com.lee.playandroid.base.tools.SystemBarTools.softInputBottomPaddingChange
 import com.lee.playandroid.base.viewstate.collectState
-import com.lee.playandroid.account.R
-import com.lee.playandroid.account.databinding.FragmentRegisterBinding
-import com.lee.playandroid.account.ui.LoginFragment.Companion.REQUEST_KEY_LOGIN
-import com.lee.playandroid.account.viewmodel.*
 import com.lee.playandroid.common.extensions.actionFailed
-import kotlinx.coroutines.flow.collect
 
 /**
  * 注册页面
@@ -41,9 +40,10 @@ class RegisterFragment : BaseNavigationFragment(R.layout.fragment_register), Vie
 
     override fun bindView() {
         // 设置点击空白区域隐藏软键盘
-        binding.root.parentTouchHideSoftInput()
+        requireActivity().window.parentTouchHideSoftInput()
+
         // 监听键盘弹起
-        binding.root.keyboardPaddingBottom()
+        binding.root.softInputBottomPaddingChange()
 
         // 设置监听
         binding.tvLogin.setOnClickListener(this)
@@ -79,8 +79,10 @@ class RegisterFragment : BaseNavigationFragment(R.layout.fragment_register), Vie
                         findNavController().popBackStack()
                     }
                     is RegisterViewEvent.NavigationLoginEvent -> {
-                        if (requireContext().keyboardIsShow()) requireContext().hideSoftInput()
-                        else findNavController().popBackStack()
+                        requireActivity().window.run {
+                            if (hasSoftInputShow()) hideSoftInput()
+                            else findNavController().popBackStack()
+                        }
                     }
                 }
             }
@@ -89,7 +91,7 @@ class RegisterFragment : BaseNavigationFragment(R.layout.fragment_register), Vie
         viewModel.viewStates.run {
             launchWhenResumed {
                 collectState(RegisterViewState::hideKeyboard) {
-                    if (it) requireContext().hideSoftInput()
+                    if (it) requireActivity().window.hideSoftInput()
                 }
             }
             launchWhenResumed {

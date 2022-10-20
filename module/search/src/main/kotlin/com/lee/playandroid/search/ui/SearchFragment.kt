@@ -8,8 +8,9 @@ import androidx.navigation.fragment.findNavController
 import com.lee.playandroid.base.adapter.page.submitSinglePage
 import com.lee.playandroid.base.base.BaseNavigationFragment
 import com.lee.playandroid.base.extensions.binding
-import com.lee.playandroid.base.tools.KeyboardTools.hideSoftInput
-import com.lee.playandroid.base.tools.KeyboardTools.parentTouchHideSoftInput
+import com.lee.playandroid.base.tools.SystemBarTools.hasSoftInputShow
+import com.lee.playandroid.base.tools.SystemBarTools.hideSoftInput
+import com.lee.playandroid.base.tools.SystemBarTools.parentTouchHideSoftInput
 import com.lee.playandroid.base.viewstate.collectState
 import com.lee.playandroid.common.extensions.actionFailed
 import com.lee.playandroid.search.R
@@ -20,7 +21,6 @@ import com.lee.playandroid.search.viewmodel.SearchViewAction
 import com.lee.playandroid.search.viewmodel.SearchViewEvent
 import com.lee.playandroid.search.viewmodel.SearchViewModel
 import com.lee.playandroid.search.viewmodel.SearchViewState
-import kotlinx.coroutines.flow.collect
 
 /**
  * 搜索页面
@@ -38,7 +38,7 @@ class SearchFragment : BaseNavigationFragment(R.layout.fragment_search) {
 
     override fun bindView() {
         // 设置点击空白区域隐藏软键盘
-        binding.root.parentTouchHideSoftInput()
+        requireActivity().window.parentTouchHideSoftInput()
 
         // 清除历史记录点击事件
         binding.tvHistoryClear.setOnClickListener {
@@ -101,12 +101,6 @@ class SearchFragment : BaseNavigationFragment(R.layout.fragment_search) {
 
         viewModel.viewStates.run {
             launchWhenResumed {
-                // 监听键盘隐藏状态变更
-                collectState(SearchViewState::hideKeyboard) {
-                    if (it) requireActivity().hideSoftInput()
-                }
-            }
-            launchWhenResumed {
                 // 监听搜索热词数据绑定回调
                 collectState(SearchViewState::searchHotList) {
                     mHotAdapter?.submitSinglePage(it)
@@ -119,6 +113,13 @@ class SearchFragment : BaseNavigationFragment(R.layout.fragment_search) {
                     mHistoryAdapter?.submitSinglePage(it)
                 }
             }
+        }
+    }
+
+    override fun onFragmentStop() {
+        super.onFragmentStop()
+        if (requireActivity().window.hasSoftInputShow()) {
+            requireActivity().window.hideSoftInput()
         }
     }
 
