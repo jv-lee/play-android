@@ -84,16 +84,15 @@ fun ExpandBottomNavigationView.setupWithNavController2(
     itemPositionListener: (MenuItem, Int) -> Unit
 ) {
     setItemPositionListener(object : ExpandBottomNavigationView.ItemPositionListener {
-        override fun onPosition(menuItem: MenuItem, position: Int) {
+        override fun onPosition(menuItem: MenuItem?, position: Int) {
             //navigation使用动画效果时不可以被点击触发
             if (animation != null && isNavigationAnimation) {
                 return
             }
-            itemPositionListener(menuItem, position)
-            onNavDestinationSelected(
-                menuItem,
-                navController
-            )
+            menuItem?.let {
+                itemPositionListener(it, position)
+                onNavDestinationSelected(it, navController)
+            }
         }
     })
     val weakReference = WeakReference(this)

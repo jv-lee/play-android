@@ -6,8 +6,7 @@
         <item name="colorPrimary">@color/colorThemePrimary</item>
         <item name="colorPrimaryDark">@color/colorThemePrimaryDark</item>
         <item name="colorAccent">@color/colorThemeAccent</item>
-        <item name="android:statusBarColor" tools:targetApi="lollipop">@android:color/transparent
-        </item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
         <item name="android:windowAnimationStyle">@style/AppTheme.Animation</item>
         <item name="android:windowBackground">@drawable/splash_bg</item>
         <item name="android:overScrollMode">never</item>
