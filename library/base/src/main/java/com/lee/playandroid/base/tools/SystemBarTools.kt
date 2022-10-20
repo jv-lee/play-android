@@ -16,6 +16,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.findViewTreeLifecycleOwner
+import java.util.concurrent.atomic.AtomicBoolean
 
 /**
  * 系统窗口工具栏（状态栏、导航栏、软键盘） 工具类扩展函数
@@ -191,13 +192,19 @@ object SystemBarTools {
         open: () -> Unit = {},
         close: () -> Unit = {},
     ) {
+        // 默认键盘未展开 过滤重复开关回调
+        val isClose = AtomicBoolean(true)
         runWindowInsets(lifecycleOwner) {
             if (isVisible(WindowInsetsCompat.Type.ime())) {
-                open()
-                setPadding(0, 0, 0, imeHeight() - navigationBarHeight())
+                if (isClose.compareAndSet(true, false)) {
+                    open()
+                    setPadding(0, 0, 0, imeHeight() - navigationBarHeight())
+                }
             } else {
-                close()
-                setPadding(0, 0, 0, 0)
+                if (isClose.compareAndSet(false, true)) {
+                    close()
+                    setPadding(0, 0, 0, 0)
+                }
             }
         }
     }
