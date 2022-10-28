@@ -5,21 +5,17 @@ import android.app.Activity
 import android.graphics.Color
 import android.os.Build
 import android.view.View
-import android.view.ViewTreeObserver
 import android.view.Window
 import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowCompat
+import androidx.core.view.WindowInsetsAnimationCompat
 import androidx.core.view.WindowInsetsCompat
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.LifecycleEventObserver
-import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.findViewTreeLifecycleOwner
 import java.util.concurrent.atomic.AtomicBoolean
 
 /**
- * 系统窗口工具栏（状态栏、导航栏、软键盘） 工具类扩展函数
+ * 系统窗口工具栏（状态栏、导航栏、软键盘） 扩展函数工具类
  * @author jv.lee
  * @date 2019/4/5
  */
@@ -127,42 +123,11 @@ object SystemBarTools {
     }
 
     /**
-     * 判断是否存在导航栏
-     */
-    fun WindowInsetsCompat.hasNavigationBar(): Boolean {
-        return isVisible(WindowInsetsCompat.Type.navigationBars()) && getInsets(
-            WindowInsetsCompat.Type.navigationBars()
-        ).bottom > 0
-    }
-
-    /**
-     * 获取导航栏高度
-     */
-    fun WindowInsetsCompat.navigationBarHeight(): Int {
-        return getInsets(WindowInsetsCompat.Type.navigationBars()).bottom
-    }
-
-    /**
-     * 获取状态栏高度
-     */
-    fun WindowInsetsCompat.statusBarHeight(): Int {
-        return getInsets(WindowInsetsCompat.Type.statusBars()).top
-    }
-
-    /**
-     * 获取键盘高度
-     */
-    fun WindowInsetsCompat.imeHeight(): Int {
-        return getInsets(WindowInsetsCompat.Type.ime()).bottom
-    }
-
-
-    /**
      * 点击任意view隐藏输入法
      */
     @SuppressLint("ClickableViewAccessibility")
-    fun Window.parentTouchHideSoftInput(childView: View? = null) {
-        val view = childView ?: decorView
+    fun Window.parentTouchHideSoftInput(parentView: View? = null) {
+        val view = parentView ?: decorView
         view.setOnTouchListener { _, _ ->
             if (hasSoftInputShow()) {
                 hideSoftInput()
@@ -172,61 +137,79 @@ object SystemBarTools {
     }
 
     /**
-     * windowInsets作用域
+     * 判断是否存在导航栏
+     * @see runWindowInsets 在该方法作用域中使用
      */
-    fun View.runWindowInsets(
-        lifecycleOwner: LifecycleOwner? = findViewTreeLifecycleOwner(),
-        block: WindowInsetsCompat .() -> Unit
-    ) {
-        val listener = ViewTreeObserver.OnGlobalLayoutListener {
-            ViewCompat.getRootWindowInsets(this)?.run(block)
-        }
-        lifecycleWindowGlobalLayout(listener, lifecycleOwner)
+    fun WindowInsetsCompat.hasNavigationBar(): Boolean {
+        return isVisible(WindowInsetsCompat.Type.navigationBars()) && getInsets(
+            WindowInsetsCompat.Type.navigationBars()
+        ).bottom > 0
     }
 
     /**
-     * 监听键盘弹起更该viewPaddingBottom值
+     * 获取导航栏高度
+     * @see runWindowInsets 在该方法作用域中使用
+     */
+    fun WindowInsetsCompat.navigationBarHeight(): Int {
+        return getInsets(WindowInsetsCompat.Type.navigationBars()).bottom
+    }
+
+    /**
+     * 获取状态栏高度
+     * @see runWindowInsets 在该方法作用域中使用
+     */
+    fun WindowInsetsCompat.statusBarHeight(): Int {
+        return getInsets(WindowInsetsCompat.Type.statusBars()).top
+    }
+
+    /**
+     * 获取键盘高度
+     * @see runWindowInsets 在该方法作用域中使用
+     */
+    fun WindowInsetsCompat.imeHeight(): Int {
+        return getInsets(WindowInsetsCompat.Type.ime()).bottom
+    }
+
+    /**
+     * windowInsets作用域
+     * @param block WindowInsetsCompat作用域回调函数
+     */
+    fun View.runWindowInsets(block: WindowInsetsCompat .() -> Unit) {
+        val listener = object : View.OnAttachStateChangeListener {
+            override fun onViewAttachedToWindow(v: View) {
+                ViewCompat.getRootWindowInsets(v)?.run(block)
+            }
+
+            override fun onViewDetachedFromWindow(v: View) {
+                removeOnAttachStateChangeListener(this)
+            }
+        }
+        addOnAttachStateChangeListener(listener)
+    }
+
+    /**
+     * 监听软键盘弹起动态修改viewPadding值 一般作用域页面根容器view
+     * @param open 键盘打开后回调
+     * @param close 键盘关闭后回调
      */
     fun View.softInputBottomPaddingChange(
-        lifecycleOwner: LifecycleOwner? = findViewTreeLifecycleOwner(),
         open: () -> Unit = {},
         close: () -> Unit = {},
     ) {
-        // 默认键盘未展开 过滤重复开关回调
         val isClose = AtomicBoolean(true)
-        runWindowInsets(lifecycleOwner) {
-            if (isVisible(WindowInsetsCompat.Type.ime())) {
-                if (isClose.compareAndSet(true, false)) {
-                    open()
-                    setPadding(0, 0, 0, imeHeight() - navigationBarHeight())
-                }
-            } else {
-                if (isClose.compareAndSet(false, true)) {
-                    close()
-                    setPadding(0, 0, 0, 0)
-                }
-            }
-        }
-    }
-
-    private fun View.lifecycleWindowGlobalLayout(
-        listener: ViewTreeObserver.OnGlobalLayoutListener,
-        lifecycleOwner: LifecycleOwner?
-    ) {
-        lifecycleOwner?.lifecycle?.addObserver(object : LifecycleEventObserver {
-            override fun onStateChanged(source: LifecycleOwner, event: Lifecycle.Event) {
-                when (event) {
-                    Lifecycle.Event.ON_RESUME -> {
-                        viewTreeObserver.addOnGlobalLayoutListener(listener)
+        ViewCompat.setWindowInsetsAnimationCallback(this, object :
+            WindowInsetsAnimationCompat.Callback(DISPATCH_MODE_STOP) {
+            override fun onProgress(
+                insets: WindowInsetsCompat,
+                runningAnimations: MutableList<WindowInsetsAnimationCompat>
+            ): WindowInsetsCompat {
+                return insets.apply {
+                    if (isVisible(WindowInsetsCompat.Type.ime())) {
+                        if (isClose.compareAndSet(true, false)) open()
+                    } else {
+                        if (isClose.compareAndSet(false, true)) close()
                     }
-                    Lifecycle.Event.ON_PAUSE -> {
-                        viewTreeObserver.removeOnGlobalLayoutListener(listener)
-                    }
-                    Lifecycle.Event.ON_DESTROY -> {
-                        source.lifecycle.removeObserver(this)
-                    }
-                    else -> {
-                    }
+                    setPadding(0, 0, 0, insets.imeHeight() - insets.navigationBarHeight())
                 }
             }
         })
