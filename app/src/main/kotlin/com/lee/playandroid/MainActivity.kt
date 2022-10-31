@@ -17,14 +17,15 @@ import androidx.lifecycle.viewModelScope
 import com.lee.playandroid.base.base.BaseActivity
 import com.lee.playandroid.base.extensions.banBackEvent
 import com.lee.playandroid.base.extensions.binding
+import com.lee.playandroid.base.extensions.setBackgroundColorCompat
 import com.lee.playandroid.base.extensions.startListener
 import com.lee.playandroid.base.tools.DarkModeTools
 import com.lee.playandroid.base.tools.ScreenDensityUtil
 import com.lee.playandroid.base.viewstate.collectState
+import com.lee.playandroid.common.extensions.appThemeSet
 import com.lee.playandroid.databinding.ActivityMainBinding
 import com.lee.playandroid.databinding.LayoutStubMainBinding
 import com.lee.playandroid.databinding.LayoutStubSplashBinding
-import com.lee.playandroid.common.extensions.appThemeSet
 import com.lee.playandroid.viewmodel.SplashViewAction
 import com.lee.playandroid.viewmodel.SplashViewEvent
 import com.lee.playandroid.viewmodel.SplashViewModel
@@ -154,6 +155,7 @@ class MainActivity : BaseActivity() {
             override fun onAnimationEnd(animation: Animator) {
                 binding.root.removeView(splashBinding.root)
                 window.decorView.background = null
+                window.decorView.setBackgroundColorCompat(R.color.colorThemeWindow)
             }
         })
         anim.start()
