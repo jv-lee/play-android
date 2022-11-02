@@ -13,7 +13,7 @@ import com.lee.playandroid.base.interadp.SimpleActivityLifecycleCallbacks
 import com.lee.playandroid.base.interadp.SimpleFragmentLifecycleCallbacks
 import com.lee.playandroid.base.net.HttpManager
 import com.lee.playandroid.base.tools.DarkModeTools
-import com.lee.playandroid.base.tools.ScreenDensityUtil
+import com.lee.playandroid.base.tools.ScreenDensityTools
 import com.lee.playandroid.common.extensions.appThemeSet
 import com.lee.playandroid.common.extensions.runInternalBlock
 import com.lee.playandroid.common.extensions.setCommonInterceptor
@@ -38,7 +38,7 @@ class App : BaseApplication() {
             f: Fragment,
             savedInstanceState: Bundle?
         ) {
-            ScreenDensityUtil.init(f.requireActivity())
+            ScreenDensityTools.init(f.requireActivity())
             super.onFragmentCreated(fm, f, savedInstanceState)
         }
     }
@@ -55,7 +55,7 @@ class App : BaseApplication() {
 
         override fun onActivityDestroyed(activity: Activity) {
             activity.runInternalBlock {
-                ScreenDensityUtil.resetDensity(activity)
+                ScreenDensityTools.resetDensity(activity)
                 activity.unbindFragmentLifecycle(fragmentLifecycleCallbacks)
             }
             super.onActivityDestroyed(activity)
@@ -63,7 +63,7 @@ class App : BaseApplication() {
 
         override fun onActivityResumed(activity: Activity) {
             activity.runInternalBlock {
-                ScreenDensityUtil.init(activity)
+                ScreenDensityTools.init(activity)
                 activity.appThemeSet()
             }
             super.onActivityResumed(activity)
@@ -76,7 +76,7 @@ class App : BaseApplication() {
             // 深色主题适配
             DarkModeTools.init(applicationContext)
             // 屏幕适配
-            ScreenDensityUtil.init(this@App)
+            ScreenDensityTools.init(this@App)
             // 初始化网络拦截器
             HttpManager.instance.setCommonInterceptor()
             // 初始化缓存管理器

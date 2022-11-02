@@ -20,7 +20,7 @@ import com.lee.playandroid.base.extensions.binding
 import com.lee.playandroid.base.extensions.setBackgroundColorCompat
 import com.lee.playandroid.base.extensions.startListener
 import com.lee.playandroid.base.tools.DarkModeTools
-import com.lee.playandroid.base.tools.ScreenDensityUtil
+import com.lee.playandroid.base.tools.ScreenDensityTools
 import com.lee.playandroid.base.viewstate.collectState
 import com.lee.playandroid.common.extensions.appThemeSet
 import com.lee.playandroid.databinding.ActivityMainBinding
@@ -74,7 +74,7 @@ class MainActivity : BaseActivity() {
 
     override fun onConfigurationChanged(newConfig: Configuration) {
         // 屏幕适配 / 深色主题适配
-        ScreenDensityUtil.init(this)
+        ScreenDensityTools.init(this)
         DarkModeTools.init(applicationContext)
         appThemeSet()
         super.onConfigurationChanged(newConfig)
