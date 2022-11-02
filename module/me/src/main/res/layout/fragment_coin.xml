@@ -11,10 +11,11 @@
         android:layout_height="wrap_content"
         android:background="@color/colorThemeFocus"
         app:backIconTint="@android:color/white"
+        app:elevationEnable="false"
         app:layout_constraintTop_toTopOf="parent"
-        app:moreVisible="visible"
         app:moreIcon="@drawable/vector_help"
         app:moreIconTint="@android:color/white"
+        app:moreVisible="visible"
         app:titleColor="@android:color/white"
         app:titleText="@string/me_item_coin" />
 
