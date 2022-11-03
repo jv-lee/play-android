@@ -12,16 +12,16 @@ import com.lee.playandroid.base.adapter.binding.ViewBindingAdapter
 import com.lee.playandroid.base.adapter.binding.ViewBindingHolder
 import com.lee.playandroid.base.adapter.item.ViewBindingItem
 import com.lee.playandroid.base.widget.banner.holder.CardImageCreateHolder
-import com.lee.playandroid.home.bean.HomeContent
-import com.lee.playandroid.home.databinding.ItemContentBannerBinding
-import com.lee.playandroid.home.databinding.ItemContentCategoryBinding
-import com.lee.playandroid.home.databinding.ItemContentTextBinding
 import com.lee.playandroid.common.entity.Banner
 import com.lee.playandroid.common.extensions.getAuthor
 import com.lee.playandroid.common.extensions.getCategory
 import com.lee.playandroid.common.extensions.getDateFormat
 import com.lee.playandroid.common.extensions.getTitle
 import com.lee.playandroid.common.tools.GlideTools
+import com.lee.playandroid.home.bean.HomeContent
+import com.lee.playandroid.home.databinding.ItemContentBannerBinding
+import com.lee.playandroid.home.databinding.ItemContentCategoryBinding
+import com.lee.playandroid.home.databinding.ItemContentTextBinding
 import com.lee.playandroid.router.NavigationAnim
 import com.lee.playandroid.router.navigateDeepLink
 import com.lee.playandroid.router.navigateDetails
@@ -41,7 +41,7 @@ class ContentAdapter(context: Context, data: List<HomeContent>) :
     init {
         addItemStyles(ContentBannerItem())
         addItemStyles(ContentCategoryItem())
-        //当前类型需要做itemDecoration(LabelDecoration) 处理 ，根据当前添加下标作为类型 ，修改顺序需同步修改 @see CONTENT_TEXT_ITEM_TYPE = 2
+        // 当前类型需要做itemDecoration(LabelDecoration) 处理 ，根据当前添加下标作为类型 ，修改顺序需同步修改 @see CONTENT_TEXT_ITEM_TYPE = 2
         addItemStyles(ContentTextItem())
     }
 
@@ -60,22 +60,24 @@ class ContentAdapter(context: Context, data: List<HomeContent>) :
         override fun convert(holder: ViewBindingHolder, entity: HomeContent, position: Int) {
             holder.getViewBinding<ItemContentBannerBinding>().apply {
                 entity.bannerList?.apply {
-                    banner.bindDataCreate(this, object : CardImageCreateHolder<Banner>() {
-                        override fun bindItem(imageView: ImageView, data: Banner) {
-                            GlideTools.get().loadImage(data.imagePath, imageView)
-                        }
+                    banner.bindDataCreate(
+                        this,
+                        object : CardImageCreateHolder<Banner>() {
+                            override fun bindItem(imageView: ImageView, data: Banner) {
+                                GlideTools.get().loadImage(data.imagePath, imageView)
+                            }
 
-                        override fun onItemClick(position: Int, item: Banner) {
-                            item.apply {
-                                Navigation.findNavController(banner)
-                                    .navigateDetails(title, url, id, collect)
+                            override fun onItemClick(position: Int, item: Banner) {
+                                item.apply {
+                                    Navigation.findNavController(banner)
+                                        .navigateDetails(title, url, id, collect)
+                                }
                             }
                         }
-                    })
+                    )
                 }
             }
         }
-
     }
 
     /**
@@ -99,7 +101,7 @@ class ContentAdapter(context: Context, data: List<HomeContent>) :
                 val data = entity.categoryList
                 data ?: return
 
-                //构建适配器
+                // 构建适配器
                 mAdapter ?: kotlin.run {
                     mAdapter = ContentCategoryAdapter(context, data).apply {
                         setOnItemClickListener { view, entity, _ ->
@@ -109,7 +111,7 @@ class ContentAdapter(context: Context, data: List<HomeContent>) :
                     }
                 }
 
-                //设置列表基础参数
+                // 设置列表基础参数
                 rvContainer.layoutManager ?: kotlin.run {
                     rvContainer.layoutManager =
                         LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
@@ -119,7 +121,6 @@ class ContentAdapter(context: Context, data: List<HomeContent>) :
                 }
             }
         }
-
     }
 
     /**
@@ -145,7 +146,5 @@ class ContentAdapter(context: Context, data: List<HomeContent>) :
                 }
             }
         }
-
     }
-
 }

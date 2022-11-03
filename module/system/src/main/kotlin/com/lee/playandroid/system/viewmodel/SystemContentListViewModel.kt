@@ -41,7 +41,6 @@ class SystemContentListViewModel(handle: SavedStateHandle) : ViewModel() {
             })
         }
     }
-
 }
 
 sealed class SystemContentListViewAction {

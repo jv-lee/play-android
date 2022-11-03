@@ -40,8 +40,10 @@ import com.lee.playandroid.common.R as CR
  * @author jv.lee
  * @date 2021/12/13
  */
-class SquareFragment : BaseNavigationFragment(R.layout.fragment_square),
-    View.OnClickListener, SwipeRefreshLayout.OnRefreshListener,
+class SquareFragment :
+    BaseNavigationFragment(R.layout.fragment_square),
+    View.OnClickListener,
+    SwipeRefreshLayout.OnRefreshListener,
     BaseViewAdapter.OnItemClickListener<Content>,
     BaseViewAdapter.AutoLoadMoreListener,
     BaseViewAdapter.LoadErrorListener {
@@ -63,7 +65,9 @@ class SquareFragment : BaseNavigationFragment(R.layout.fragment_square),
             binding.refreshView.progressViewEndOffset + binding.toolbar.getToolbarLayoutHeight() / 2
         )
 
-        binding.rvContainer.addItemDecoration(OffsetItemDecoration(binding.toolbar.getToolbarLayoutHeight()))
+        binding.rvContainer.addItemDecoration(
+            OffsetItemDecoration(binding.toolbar.getToolbarLayoutHeight())
+        )
         if (binding.rvContainer.adapter == null) {
             binding.rvContainer.adapter = SquareAdapter(requireContext(), arrayListOf()).apply {
                 mAdapter = this
@@ -78,14 +82,17 @@ class SquareFragment : BaseNavigationFragment(R.layout.fragment_square),
         LiveDataBus.instance.injectBus(this@SquareFragment)
 
         launchWhenResumed {
-            viewModel.squareFlow.collectState<PageData<Content>>(success = {
-                binding.refreshView.isRefreshing = false
-                mAdapter?.submitData(it)
-            }, error = {
-                binding.refreshView.isRefreshing = false
-                mAdapter?.submitFailed()
-                actionFailed(it)
-            })
+            viewModel.squareFlow.collectState<PageData<Content>>(
+                success = {
+                    binding.refreshView.isRefreshing = false
+                    mAdapter?.submitData(it)
+                },
+                error = {
+                    binding.refreshView.isRefreshing = false
+                    mAdapter?.submitFailed()
+                    actionFailed(it)
+                }
+            )
         }
     }
 
@@ -145,5 +152,4 @@ class SquareFragment : BaseNavigationFragment(R.layout.fragment_square),
             binding.rvContainer.smoothScrollToTop()
         }
     }
-
 }

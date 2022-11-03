@@ -38,7 +38,9 @@ class SearchResultAdapter(context: Context, data: List<Content>) :
 
         override fun getItemViewBinding(context: Context, parent: ViewGroup): ViewBinding {
             return ItemSearchResultTextBinding.inflate(
-                LayoutInflater.from(context), parent, false
+                LayoutInflater.from(context),
+                parent,
+                false
             )
         }
 
@@ -52,7 +54,6 @@ class SearchResultAdapter(context: Context, data: List<Content>) :
                 }
             }
         }
-
     }
 
     inner class SearchResultPictureItem : ViewBindingItem<Content>() {
@@ -63,27 +64,29 @@ class SearchResultAdapter(context: Context, data: List<Content>) :
 
         override fun getItemViewBinding(context: Context, parent: ViewGroup): ViewBinding {
             return ItemSearchResultPictureBinding.inflate(
-                LayoutInflater.from(context), parent, false
+                LayoutInflater.from(context),
+                parent,
+                false
             )
         }
 
         override fun convert(holder: ViewBindingHolder, entity: Content, position: Int) {
             holder.getViewBinding<ItemSearchResultPictureBinding>().apply {
-                entity.apply {
-                    ivImage.shapeAppearanceModel = ShapeAppearanceModel.Builder()
-                        .setTopLeftCornerSize(root.context.resources.getDimension(R.dimen.offset_radius_medium))
-                        .setBottomLeftCornerSize(root.context.resources.getDimension(R.dimen.offset_radius_medium))
-                        .build()
-                    GlideTools.get().loadImage(envelopePic, ivImage)
+                root.context.resources.apply {
+                    entity.apply {
+                        ivImage.shapeAppearanceModel = ShapeAppearanceModel.Builder()
+                            .setTopLeftCornerSize(getDimension(R.dimen.offset_radius_medium))
+                            .setBottomLeftCornerSize(getDimension(R.dimen.offset_radius_medium))
+                            .build()
+                        GlideTools.get().loadImage(envelopePic, ivImage)
 
-                    tvTitle.text = entity.getTitle()
-                    tvDescription.text = desc
-                    tvAuthor.text = entity.getAuthor()
-                    tvTime.text = entity.getDateFormat()
+                        tvTitle.text = entity.getTitle()
+                        tvDescription.text = desc
+                        tvAuthor.text = entity.getAuthor()
+                        tvTime.text = entity.getDateFormat()
+                    }
                 }
             }
         }
-
     }
-
 }

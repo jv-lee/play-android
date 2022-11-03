@@ -3,9 +3,9 @@ package com.lee.playandroid.account.viewmodel
 import android.text.TextUtils
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.lee.playandroid.base.tools.PreferencesTools
 import com.lee.playandroid.account.constants.Constants.SP_KEY_SAVE_INPUT_USERNAME
 import com.lee.playandroid.account.model.api.ApiService
+import com.lee.playandroid.base.tools.PreferencesTools
 import com.lee.playandroid.common.entity.AccountViewAction
 import com.lee.playandroid.common.extensions.checkData
 import com.lee.playandroid.common.extensions.createApi
@@ -97,7 +97,9 @@ class LoginViewModel : ViewModel() {
                 delay(500)
 
                 // 校验输入格式
-                if (TextUtils.isEmpty(viewStates.value.username) || TextUtils.isEmpty(viewStates.value.password)) {
+                if (TextUtils.isEmpty(viewStates.value.username) ||
+                    TextUtils.isEmpty(viewStates.value.password)
+                ) {
                     throw IllegalArgumentException("username || password is empty.")
                 }
 
@@ -138,7 +140,7 @@ data class LoginViewState(
     val password: String = "",
     val isLoading: Boolean = false,
     val isLoginEnable: Boolean = false,
-    val hideKeyboard: Boolean = false,
+    val hideKeyboard: Boolean = false
 )
 
 sealed class LoginViewEvent {

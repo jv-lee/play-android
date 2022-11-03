@@ -35,21 +35,21 @@ class ProjectListAdapter(context: Context, data: List<Content>) :
 
         override fun convert(holder: ViewBindingHolder, entity: Content, position: Int) {
             holder.getViewBinding<ItemProjectBinding>().apply {
-                entity.apply {
-                    ivImage.shapeAppearanceModel = ShapeAppearanceModel.Builder()
-                        .setTopLeftCornerSize(root.context.resources.getDimension(R.dimen.offset_radius_medium))
-                        .setBottomLeftCornerSize(root.context.resources.getDimension(R.dimen.offset_radius_medium))
-                        .build()
-                    GlideTools.get().loadImage(envelopePic, ivImage)
+                root.context.resources.apply {
+                    entity.apply {
+                        ivImage.shapeAppearanceModel = ShapeAppearanceModel.Builder()
+                            .setTopLeftCornerSize(getDimension(R.dimen.offset_radius_medium))
+                            .setBottomLeftCornerSize(getDimension(R.dimen.offset_radius_medium))
+                            .build()
+                        GlideTools.get().loadImage(envelopePic, ivImage)
 
-                    tvTitle.text = getTitle()
-                    tvDescription.text = desc
-                    tvAuthor.text = getAuthor()
-                    tvTime.text = getDateFormat()
+                        tvTitle.text = getTitle()
+                        tvDescription.text = desc
+                        tvAuthor.text = getAuthor()
+                        tvTime.text = getDateFormat()
+                    }
                 }
             }
         }
-
     }
-
 }

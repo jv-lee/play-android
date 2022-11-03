@@ -4,7 +4,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.lee.playandroid.base.base.ApplicationExtensions.app
 import com.lee.playandroid.base.cache.CacheManager
-import com.lee.playandroid.base.extensions.*
+import com.lee.playandroid.base.extensions.getCache
+import com.lee.playandroid.base.extensions.lowestTime
+import com.lee.playandroid.base.extensions.putCache
+import com.lee.playandroid.base.extensions.putPageCache
 import com.lee.playandroid.base.utils.NetworkUtil
 import com.lee.playandroid.base.viewstate.*
 import com.lee.playandroid.common.constants.ApiConstants
@@ -84,7 +87,9 @@ class CollectViewModel : ViewModel() {
         if (deleteLock.compareAndSet(false, true)) {
             viewModelScope.launch {
                 flow {
-                    check(NetworkUtil.isNetworkConnected(app)) { app.getString(R.string.network_not_access) }
+                    check(NetworkUtil.isNetworkConnected(app)) {
+                        app.getString(R.string.network_not_access)
+                    }
 
                     val data = _collectFlow.getValueData<PageData<Content>>()!!
                     val item = data.data[position]
@@ -128,7 +133,6 @@ class CollectViewModel : ViewModel() {
             }
         }
     }
-
 }
 
 data class CollectViewState(

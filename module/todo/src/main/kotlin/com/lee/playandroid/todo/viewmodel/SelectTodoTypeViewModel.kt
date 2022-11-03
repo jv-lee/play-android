@@ -41,7 +41,6 @@ class SelectTodoTypeViewModel : ViewModel() {
             }
         }
     }
-
 }
 
 data class SelectTodoTypeViewState(val todoTypeWheelData: TodoTypeWheelData = TodoTypeWheelData())

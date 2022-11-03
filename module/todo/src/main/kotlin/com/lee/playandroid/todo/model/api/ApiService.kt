@@ -30,7 +30,8 @@ interface ApiService {
         @Field("title") title: String,
         @Field("content") content: String,
         @Field("date") date: String,
-        @Field("type") @TodoType type: Int = 0,
+        @Field("type") @TodoType
+        type: Int = 0,
         @Field("priority") priority: Int = 2
     ): Data<TodoData>
 
@@ -58,7 +59,8 @@ interface ApiService {
         @Field("title") title: String,
         @Field("content") content: String,
         @Field("date") date: String,
-        @Field("type") @TodoType type: Int = 0,
+        @Field("type") @TodoType
+        type: Int = 0,
         @Field("priority") priority: Int = 2,
         @Field("status") status: Int
     ): Data<TodoData>
@@ -88,8 +90,7 @@ interface ApiService {
     suspend fun postTodoDataAsync(
         @Path("page") page: Int,
         @Field("status") status: Int,
-        @Field("type") @TodoType type: Int = 0
+        @Field("type") @TodoType
+        type: Int = 0
     ): Data<PageData<TodoData>>
-
-
 }

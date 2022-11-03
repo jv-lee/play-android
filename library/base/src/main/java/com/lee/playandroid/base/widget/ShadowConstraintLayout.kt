@@ -18,11 +18,11 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.graphics.toRect
 import com.lee.playandroid.base.R
 import com.lee.playandroid.base.extensions.dp2px
+import kotlin.math.abs
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import kotlin.math.abs
 
 /**
  * 阴影容器
@@ -95,7 +95,7 @@ class ShadowConstraintLayout(context: Context, attributeSet: AttributeSet) :
         )
         setLayerType(View.LAYER_TYPE_SOFTWARE, null)
 
-        //设置前景
+        // 设置前景
         if (rippleEnable && Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             CoroutineScope(Dispatchers.Main).launch {
                 val drawable = withContext(Dispatchers.IO) { createRippleDrawable() }
@@ -258,5 +258,4 @@ class ShadowConstraintLayout(context: Context, attributeSet: AttributeSet) :
             }
         })
     }
-
 }

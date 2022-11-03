@@ -134,12 +134,11 @@ class SearchViewModel : ViewModel() {
             requestSearchHistoryData()
         }
     }
-
 }
 
 data class SearchViewState(
     val searchHotList: List<SearchHotUI> = emptyList(),
-    val searchHistoryList: List<SearchHistory> = emptyList(),
+    val searchHistoryList: List<SearchHistory> = emptyList()
 )
 
 sealed class SearchViewEvent {

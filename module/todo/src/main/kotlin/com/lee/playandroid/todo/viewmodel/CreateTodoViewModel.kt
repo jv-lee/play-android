@@ -75,7 +75,8 @@ class CreateTodoViewModel(private val type: Int, private val todoData: TodoData?
         val dateStr = todoData?.dateStr ?: dateToStrFormat()
         _viewStates.update {
             it.copy(
-                appTitleRes = if (todoData == null) R.string.title_create_todo else R.string.title_edit_todo,
+                appTitleRes = if (todoData == null) R.string.title_create_todo
+                else R.string.title_edit_todo,
                 isCreate = todoData == null,
                 title = todoData?.title ?: "",
                 content = todoData?.content ?: "",
@@ -188,7 +189,6 @@ class CreateTodoViewModel(private val type: Int, private val todoData: TodoData?
                 .newInstance(type, todoData)
         }
     }
-
 }
 
 data class CreateTodoViewState(
@@ -200,7 +200,7 @@ data class CreateTodoViewState(
     val content: String = "",
     val date: String = "",
     val calendar: Calendar = Calendar.getInstance(),
-    val priority: Int = TodoData.PRIORITY_LOW,
+    val priority: Int = TodoData.PRIORITY_LOW
 )
 
 sealed class CreateTodoViewEvent {

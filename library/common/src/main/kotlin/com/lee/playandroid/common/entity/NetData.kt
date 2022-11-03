@@ -27,7 +27,7 @@ data class PageData<T>(
     val over: Boolean,
     val pageCount: Int,
     val size: Int,
-    val total: Int,
+    val total: Int
 ) : PagingData<T> {
     override fun getPageNumber(): Int {
         return curPage

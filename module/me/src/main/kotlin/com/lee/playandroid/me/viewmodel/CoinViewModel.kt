@@ -55,7 +55,6 @@ class CoinViewModel : ViewModel() {
             })
         }
     }
-
 }
 
 sealed class CoinViewAction {

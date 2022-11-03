@@ -56,13 +56,11 @@ class NavigationContentViewModel : ViewModel() {
                 _viewStates.update { it.copy(navigationItemList = data, isLoading = false) }
             }
         }
-
     }
 
     private fun selectTabIndex(index: Int) {
         _viewStates.update { it.copy(selectedTabIndex = index) }
     }
-
 }
 
 data class NavigationContentViewState(

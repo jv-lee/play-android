@@ -54,7 +54,6 @@ class SearchResultViewModel(handle: SavedStateHandle) : ViewModel() {
             })
         }
     }
-
 }
 
 data class SearchResultViewState(val title: String)

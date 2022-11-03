@@ -38,5 +38,4 @@ class NavigationContentTagAdapter(context: Context, data: List<Content>) :
             }
         }
     }
-
 }

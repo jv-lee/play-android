@@ -140,5 +140,4 @@ class SearchFragment : BaseNavigationFragment(R.layout.fragment_search) {
         binding.tvHistoryEmpty.visibility =
             if (visible) View.VISIBLE else View.GONE
     }
-
 }

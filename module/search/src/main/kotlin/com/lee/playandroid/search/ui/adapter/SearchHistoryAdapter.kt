@@ -32,6 +32,5 @@ class SearchHistoryAdapter(context: Context, data: List<SearchHistory>) :
                 tvText.text = entity.key
             }
         }
-
     }
 }

@@ -39,7 +39,9 @@ class CreateShareViewModel : ViewModel() {
         viewModelScope.launch {
             // 校验输入格式
             if (TextUtils.isEmpty(title) || TextUtils.isEmpty(content)) {
-                _viewEvents.send(CreateShareViewEvent.SendFailed(Throwable("title || content is empty.")))
+                _viewEvents.send(
+                    CreateShareViewEvent.SendFailed(Throwable("title || content is empty."))
+                )
             } else {
                 flow {
                     val response = api.postShareDataSync(title, content)
@@ -60,7 +62,6 @@ class CreateShareViewModel : ViewModel() {
             }
         }
     }
-
 }
 
 data class CreateShareViewState(val loading: Boolean = false)

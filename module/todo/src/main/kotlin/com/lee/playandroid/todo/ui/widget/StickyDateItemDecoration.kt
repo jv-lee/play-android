@@ -95,15 +95,20 @@ class StickyDateItemDecoration constructor(
             }
 
             c.drawRect(
-                left.toFloat(), (textY - topOffset).toFloat(),
-                right.toFloat(), textY.toFloat(), mPaint
+                left.toFloat(),
+                (textY - topOffset).toFloat(),
+                right.toFloat(),
+                textY.toFloat(),
+                mPaint
             )
 
             val rect = Rect()
             textPaint.getTextBounds(dateText, 0, dateText.length, rect)
             c.drawText(
-                dateText, (rect.width() / 4).toFloat(),
-                (textY - (topOffset - rect.height()) / 2).toFloat(), textPaint
+                dateText,
+                (rect.width() / 4).toFloat(),
+                (textY - (topOffset - rect.height()) / 2).toFloat(),
+                textPaint
             )
         }
     }
@@ -122,5 +127,4 @@ class StickyDateItemDecoration constructor(
         if (position < 0 || position >= data.size) return ""
         return data[position].dateStr
     }
-
 }

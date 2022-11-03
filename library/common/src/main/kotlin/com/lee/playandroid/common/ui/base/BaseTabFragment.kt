@@ -24,7 +24,8 @@ import kotlinx.coroutines.flow.collect
  * @author jv.lee
  * @date 2021/11/9
  */
-abstract class BaseTabFragment : BaseNavigationFragment(R.layout.fragment_base_tab),
+abstract class BaseTabFragment :
+    BaseNavigationFragment(R.layout.fragment_base_tab),
     StatusLayout.OnReloadListener {
 
     private val binding by binding(FragmentBaseTabBinding::bind)
@@ -122,5 +123,4 @@ abstract class BaseTabFragment : BaseNavigationFragment(R.layout.fragment_base_t
             mediator = it
         }.attach()
     }
-
 }

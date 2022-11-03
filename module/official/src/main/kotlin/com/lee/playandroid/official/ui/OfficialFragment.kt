@@ -40,6 +40,4 @@ class OfficialFragment : BaseTabFragment() {
     override fun viewStates(): StateFlow<BaseTabViewState> {
         return viewModel.viewStates
     }
-
-
 }

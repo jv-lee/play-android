@@ -52,7 +52,6 @@ class ProjectListViewModel(handle: SavedStateHandle) : ViewModel() {
             })
         }
     }
-
 }
 
 sealed class ProjectListViewAction {

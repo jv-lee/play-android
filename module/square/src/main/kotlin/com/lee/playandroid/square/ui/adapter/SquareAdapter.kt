@@ -40,10 +40,7 @@ class SquareAdapter(context: Context, data: List<Content>) :
                     tvTime.text = getDateFormat()
                     tvCategory.text = getCategory()
                 }
-
             }
         }
-
     }
-
 }

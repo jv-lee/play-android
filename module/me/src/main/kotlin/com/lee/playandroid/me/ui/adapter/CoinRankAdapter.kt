@@ -69,7 +69,5 @@ class CoinRankAdapter(context: Context, data: List<CoinRank>) :
                 )
             }
         }
-
     }
-
 }

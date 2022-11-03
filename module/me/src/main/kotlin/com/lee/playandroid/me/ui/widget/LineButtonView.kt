@@ -71,9 +71,8 @@ class LineButtonView : ConstraintLayout {
     }
 
     private fun initAttribute(attrs: AttributeSet) {
-
         context.obtainStyledAttributes(attrs, R.styleable.LineButtonView).run {
-            //左侧文字
+            // 左侧文字
             leftTextSize = context.dimensToSp(
                 getDimension(
                     R.styleable.LineButtonView_leftTextSize,
@@ -90,7 +89,7 @@ class LineButtonView : ConstraintLayout {
             )
             leftText = getString(R.styleable.LineButtonView_leftText) ?: ""
 
-            //左侧副标题
+            // 左侧副标题
             leftSubTextSize = context.dimensToSp(
                 getDimension(
                     R.styleable.LineButtonView_leftSubTextSize,
@@ -107,7 +106,7 @@ class LineButtonView : ConstraintLayout {
             )
             leftSubText = getString(R.styleable.LineButtonView_leftSubText) ?: ""
 
-            //右侧文字
+            // 右侧文字
             rightTextSize = context.dimensToSp(
                 getDimension(
                     R.styleable.LineButtonView_rightTextSize,
@@ -124,7 +123,7 @@ class LineButtonView : ConstraintLayout {
             )
             rightText = getString(R.styleable.LineButtonView_rightText) ?: ""
 
-            //图片资源
+            // 图片资源
             iconSize =
                 getDimensionPixelSize(
                     R.styleable.LineButtonView_iconSize,
@@ -141,7 +140,7 @@ class LineButtonView : ConstraintLayout {
                 0
             )
 
-            //右侧switch是否显示
+            // 右侧switch是否显示
             rightSwitchEnable = getBoolean(R.styleable.LineButtonView_rightSwitchEnable, false)
             switchThemeRes = getResourceId(
                 R.styleable.LineButtonView_switchTheme,
@@ -173,7 +172,6 @@ class LineButtonView : ConstraintLayout {
             gravity = Gravity.CENTER_VERTICAL
             addView(this)
         }
-
 
         tvLeftSubText = TextView(context).apply {
             id = leftSubTextId
@@ -261,5 +259,4 @@ class LineButtonView : ConstraintLayout {
     fun getRightSwitch(): SwitchCompat? {
         return switchRight
     }
-
 }

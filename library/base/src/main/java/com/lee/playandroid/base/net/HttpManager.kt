@@ -1,4 +1,5 @@
 @file:Suppress("UNCHECKED_CAST")
+
 package com.lee.playandroid.base.net
 
 import android.text.TextUtils
@@ -16,6 +17,7 @@ import com.lee.playandroid.base.net.factory.FlowCallAdapterFactory
 import com.lee.playandroid.base.net.factory.ProtoConverterFactory
 import com.lee.playandroid.base.net.request.IRequest
 import com.lee.playandroid.base.net.request.Request
+import java.io.File
 import okhttp3.Cache
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
@@ -25,7 +27,6 @@ import retrofit2.HttpException
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.converter.scalars.ScalarsConverterFactory
-import java.io.File
 
 /**
  * OkHttp + Retrofit网络请求库封装管理类
@@ -40,13 +41,12 @@ class HttpManager private constructor() {
         private const val MAX_CACHE: Long = 10 * 1024 * 1024
         private var gson: Gson? = null
 
-        fun getGson(): Gson = gson ?: GsonBuilder()
-            .registerTypeAdapterFactory(GsonDefaultAdapterFactory())
-            .registerTypeAdapter(Int::class.java, IntegerDefaultAdapter())
-            .registerTypeAdapter(Double::class.java, DoubleDefaultAdapter())
-            .registerTypeAdapter(Long::class.java, LongDefaultAdapter())
-            .create().also { gson = it }
-
+        fun getGson(): Gson =
+            gson ?: GsonBuilder().registerTypeAdapterFactory(GsonDefaultAdapterFactory())
+                .registerTypeAdapter(Int::class.java, IntegerDefaultAdapter())
+                .registerTypeAdapter(Double::class.java, DoubleDefaultAdapter())
+                .registerTypeAdapter(Long::class.java, LongDefaultAdapter()).create()
+                .also { gson = it }
     }
 
     private val mServiceMap by lazy { HashMap<String, Any>() }
@@ -98,16 +98,19 @@ class HttpManager private constructor() {
     }
 
     private fun <T> createService(
-        serviceClass: Class<T>, request: Request, client: OkHttpClient
+        serviceClass: Class<T>,
+        request: Request,
+        client: OkHttpClient
     ): T {
-        val builder = Retrofit.Builder()
-            .baseUrl(request.baseUrl)
+        val builder = Retrofit.Builder().baseUrl(request.baseUrl)
 
-        request.converterTypes?.run { map { builder.addConverterFactory(getConverterFactory(it)) } }
-            ?: kotlin.run { builder.addConverterFactory(getConverterFactory(request.converterType)) }
+        request.converterTypes?.run {
+            map { builder.addConverterFactory(getConverterFactory(it)) }
+        } ?: kotlin.run { builder.addConverterFactory(getConverterFactory(request.converterType)) }
 
-        request.callTypes?.run { map { builder.addCallAdapterFactory(getCallAdapter(it)) } }
-            ?: kotlin.run { builder.addCallAdapterFactory(getCallAdapter(request.callType)) }
+        request.callTypes?.run {
+            map { builder.addCallAdapterFactory(getCallAdapter(it)) }
+        } ?: kotlin.run { builder.addCallAdapterFactory(getCallAdapter(request.callType)) }
 
         return builder.client(client).build().create(serviceClass)
     }
@@ -120,7 +123,7 @@ class HttpManager private constructor() {
         val builder = if (isUnSafeClient) OkHttpClientBuilder().getUnSafeClient().newBuilder()
         else OkHttpClientBuilder().getSafeClient().newBuilder()
 
-        //cache
+        // cache
         val httpCacheDirectory = File(app.cacheDir, "OkHttpCache")
         builder.cache(Cache(httpCacheDirectory, MAX_CACHE))
 
@@ -171,5 +174,4 @@ class HttpManager private constructor() {
         }
         return throwable.message ?: throwable.toString()
     }
-
 }

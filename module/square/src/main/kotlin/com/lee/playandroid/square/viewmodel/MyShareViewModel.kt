@@ -81,7 +81,9 @@ class MyShareViewModel : ViewModel() {
         if (deleteLock.compareAndSet(false, true)) {
             viewModelScope.launch {
                 flow {
-                    check(NetworkUtil.isNetworkConnected(app)) { app.getString(R.string.network_not_access) }
+                    check(NetworkUtil.isNetworkConnected(app)) {
+                        app.getString(R.string.network_not_access)
+                    }
 
                     val data = _myShareFlow.getValueData<PageData<Content>>()!!
                     val item = data.data[position]
@@ -125,7 +127,6 @@ class MyShareViewModel : ViewModel() {
             }
         }
     }
-
 }
 
 data class MyShareViewState(

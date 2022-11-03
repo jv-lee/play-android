@@ -55,9 +55,13 @@ class DetailsViewModel(savedStateHandle: SavedStateHandle) : ViewModel() {
 
     private fun requestCollect() {
         viewModelScope.launch {
-            //已收藏直接返回结果
+            // 已收藏直接返回结果
             if (params.isCollect) {
-                _viewEvents.send(DetailsViewEvent.CollectEvent(message = app.getString(R.string.menu_collect_completed)))
+                _viewEvents.send(
+                    DetailsViewEvent.CollectEvent(
+                        message = app.getString(R.string.menu_collect_completed)
+                    )
+                )
                 return@launch
             }
 
@@ -76,7 +80,11 @@ class DetailsViewModel(savedStateHandle: SavedStateHandle) : ViewModel() {
                 _viewStates.update { it.copy(isLoading = false) }
             }.lowestTime().collect { data ->
                 params.isCollect = data
-                _viewEvents.send(DetailsViewEvent.CollectEvent(message = app.getString(R.string.menu_collect_complete)))
+                _viewEvents.send(
+                    DetailsViewEvent.CollectEvent(
+                        message = app.getString(R.string.menu_collect_complete)
+                    )
+                )
             }
         }
     }

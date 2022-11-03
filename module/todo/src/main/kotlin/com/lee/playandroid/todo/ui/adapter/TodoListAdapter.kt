@@ -35,15 +35,14 @@ class TodoListAdapter(context: Context, private val status: Int, data: List<Todo
             holder.getViewBinding<ItemTodoBinding>().apply {
                 tvTitle.text = entity.title
                 tvContent.text = entity.content
-                btnDone.text = if (status == ARG_STATUS_UPCOMING)
+                btnDone.text = if (status == ARG_STATUS_UPCOMING) {
                     root.context.getString(R.string.todo_item_complete)
-                else
+                } else {
                     root.context.getString(R.string.todo_item_upcoming)
+                }
                 tvLevel.visibility =
                     if (entity.priority == TodoData.PRIORITY_HEIGHT) View.VISIBLE else View.GONE
             }
         }
-
     }
-
 }

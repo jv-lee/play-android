@@ -3,11 +3,11 @@ package com.lee.playandroid.account
 import androidx.activity.viewModels
 import androidx.fragment.app.FragmentActivity
 import com.google.auto.service.AutoService
+import com.lee.playandroid.account.constants.Constants
+import com.lee.playandroid.account.viewmodel.AccountViewModel
 import com.lee.playandroid.base.cache.CacheManager
 import com.lee.playandroid.base.extensions.getCache
 import com.lee.playandroid.base.tools.PreferencesTools
-import com.lee.playandroid.account.constants.Constants
-import com.lee.playandroid.account.viewmodel.AccountViewModel
 import com.lee.playandroid.common.entity.AccountData
 import com.lee.playandroid.common.entity.AccountViewAction
 import com.lee.playandroid.common.entity.AccountViewEvent
@@ -55,5 +55,4 @@ class AccountServiceImpl : AccountService {
     override fun isLogin(): Boolean {
         return PreferencesTools.get(Constants.SP_KEY_IS_LOGIN)
     }
-
 }

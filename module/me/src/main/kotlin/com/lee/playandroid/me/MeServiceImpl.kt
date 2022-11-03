@@ -17,5 +17,4 @@ class MeServiceImpl : MeService {
     override suspend fun requestCollectAsync(id: Long): Data<String> {
         return createApi<ApiService>().postCollectAsync(id)
     }
-
 }

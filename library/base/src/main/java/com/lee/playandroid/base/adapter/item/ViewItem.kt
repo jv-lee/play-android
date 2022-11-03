@@ -21,5 +21,4 @@ abstract class ViewItem<T> : BaseViewItem<T> {
     }
 
     abstract fun getItemView(context: Context, parent: ViewGroup): View
-
 }

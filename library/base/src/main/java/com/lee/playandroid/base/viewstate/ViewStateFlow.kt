@@ -1,10 +1,9 @@
 package com.lee.playandroid.base.viewstate
 
+import kotlin.reflect.KProperty1
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
-import kotlin.reflect.KProperty1
 
 /**
  * flow 状态监听扩展

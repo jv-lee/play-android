@@ -32,7 +32,8 @@ import kotlinx.coroutines.flow.collect
  * @author jv.lee
  * @date 2021/11/10
  */
-class NavigationContentFragment : BaseNavigationFragment(R.layout.fragment_navigation_content),
+class NavigationContentFragment :
+    BaseNavigationFragment(R.layout.fragment_navigation_content),
     StatusLayout.OnReloadListener {
 
     private val viewModel by viewModels<NavigationContentViewModel>()
@@ -126,5 +127,4 @@ class NavigationContentFragment : BaseNavigationFragment(R.layout.fragment_navig
             binding.rvContainer.smoothScrollToTop()
         }
     }
-
 }

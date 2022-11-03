@@ -45,5 +45,4 @@ interface ApiService {
      */
     @POST("/lg/user_article/delete/{id}/json")
     suspend fun postDeleteShareAsync(@Path("id") id: Long): Data<String>
-
 }

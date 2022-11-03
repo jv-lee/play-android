@@ -57,18 +57,18 @@ class ThemeViewModel : ViewModel() {
         val isSystem = darkModeTools.isSystemTheme()
         _viewStates.update {
             it.copy(
-                isDark = isDark, isSystem = isSystem,
+                isDark = isDark,
+                isSystem = isSystem,
                 statusBarDarkContentEnabled = !isDark
             )
         }
     }
-
 }
 
 data class ThemeViewState(
     val isDark: Boolean = false,
     val isSystem: Boolean = false,
-    val statusBarDarkContentEnabled: Boolean = false,
+    val statusBarDarkContentEnabled: Boolean = false
 )
 
 sealed class ThemeViewAction {

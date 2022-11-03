@@ -16,6 +16,7 @@ import androidx.room.PrimaryKey
 @Keep
 @Entity
 data class SearchHistory(
-    @ColumnInfo(name = "search_history_key") @PrimaryKey(autoGenerate = false) val key: String,
+    @ColumnInfo(name = "search_history_key") @PrimaryKey(autoGenerate = false)
+    val key: String,
     @ColumnInfo(name = "search_history_time") val time: Long = System.currentTimeMillis()
 )

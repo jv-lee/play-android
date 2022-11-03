@@ -6,13 +6,13 @@ import com.lee.playandroid.base.cache.CacheManager
 import com.lee.playandroid.base.extensions.getCache
 import com.lee.playandroid.base.extensions.putPageCache
 import com.lee.playandroid.base.viewstate.*
+import com.lee.playandroid.common.entity.PageUiData
+import com.lee.playandroid.common.extensions.checkData
+import com.lee.playandroid.common.extensions.createApi
 import com.lee.playandroid.home.bean.HomeContent
 import com.lee.playandroid.home.constants.Constants
 import com.lee.playandroid.home.model.api.ApiService
 import com.lee.playandroid.home.model.entity.HomeCategory
-import com.lee.playandroid.common.entity.PageUiData
-import com.lee.playandroid.common.extensions.checkData
-import com.lee.playandroid.common.extensions.createApi
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 
@@ -50,10 +50,10 @@ class HomeViewModel : ViewModel() {
             _contentListFlow.pageLaunch(status, { page: Int ->
                 buildHomePageData(page)
             }, {
-                //缓存数据
+                // 缓存数据
                 cacheManager.getCache(Constants.CACHE_KEY_HOME_CONTENT)
             }, {
-                //存储缓存数据
+                // 存储缓存数据
                 cacheManager.putPageCache(Constants.CACHE_KEY_HOME_CONTENT, it)
             })
         }
@@ -62,10 +62,11 @@ class HomeViewModel : ViewModel() {
     /**
      * 根据页码构建首页数据
      */
-    private suspend fun MutableStateFlow<UiStatePage>.buildHomePageData(page: Int): PageUiData<HomeContent> {
+    private suspend fun MutableStateFlow<UiStatePage>.buildHomePageData(page: Int):
+        PageUiData<HomeContent> {
         val dataList = mutableListOf<HomeContent>()
 
-        //首页添加header数据
+        // 首页添加header数据
         if (page == requestFirstPage) {
             val banner = api.getBannerDataAsync().checkData()
             dataList.add(HomeContent(bannerList = banner))
@@ -74,12 +75,12 @@ class HomeViewModel : ViewModel() {
             dataList.add(HomeContent(categoryList = category))
         }
 
-        //获取网络item数据
+        // 获取网络item数据
         val textItemData = api.getContentDataAsync(page).checkData().apply {
             data.forEach { dataList.add(HomeContent(content = it)) }
         }
 
-        //构建分页ui数据
+        // 构建分页ui数据
         return PageUiData(
             textItemData.curPage,
             textItemData.total,

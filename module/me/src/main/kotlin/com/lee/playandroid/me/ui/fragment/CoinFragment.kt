@@ -33,7 +33,8 @@ import com.lee.playandroid.router.navigateDetails
  * @author jv.lee
  * @date 2021/11/25
  */
-class CoinFragment : BaseNavigationFragment(R.layout.fragment_coin),
+class CoinFragment :
+    BaseNavigationFragment(R.layout.fragment_coin),
     BaseViewAdapter.LoadErrorListener,
     BaseViewAdapter.AutoLoadMoreListener {
 
@@ -80,7 +81,8 @@ class CoinFragment : BaseNavigationFragment(R.layout.fragment_coin),
         launchWhenResumed {
             viewModel.accountService.getAccountViewStates(requireActivity())
                 .collectState(AccountViewState::accountData) {
-                    binding.layoutCoinHeader.tvIntegralCount.text = it?.coinInfo?.coinCount.toString()
+                    binding.layoutCoinHeader.tvIntegralCount.text =
+                        it?.coinInfo?.coinCount.toString()
                 }
         }
     }
@@ -115,5 +117,4 @@ class CoinFragment : BaseNavigationFragment(R.layout.fragment_coin),
         super.onDestroyView()
         binding.rvContainer.adapter = null
     }
-
 }

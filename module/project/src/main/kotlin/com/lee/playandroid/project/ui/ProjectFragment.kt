@@ -25,7 +25,6 @@ class ProjectFragment : BaseTabFragment() {
         findBinding().toolbar.setTitleText(getString(R.string.project_title))
     }
 
-
     override fun createChildFragment(id: Long): Fragment {
         return ProjectListFragment.newInstance(id)
     }
@@ -41,5 +40,4 @@ class ProjectFragment : BaseTabFragment() {
     override fun viewStates(): StateFlow<BaseTabViewState> {
         return viewModel.viewStates
     }
-
 }

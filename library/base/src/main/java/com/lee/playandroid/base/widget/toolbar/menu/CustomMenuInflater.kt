@@ -16,9 +16,9 @@ import androidx.core.content.ContextCompat
 import com.lee.playandroid.base.R
 import com.lee.playandroid.base.extensions.dp2px
 import com.lee.playandroid.base.extensions.setDrawableCompat
+import java.io.IOException
 import org.xmlpull.v1.XmlPullParser
 import org.xmlpull.v1.XmlPullParserException
-import java.io.IOException
 
 /**
  * 自定义简单功能的 menu解析器 支持标签 (<menu> <item id/title/icon /></menu>)
@@ -98,7 +98,9 @@ class CustomMenuInflater(var context: Context) {
                         reachedEndOfMenu = true
                     }
                 }
-                XmlPullParser.END_DOCUMENT -> throw java.lang.RuntimeException("Unexpected end of document")
+                XmlPullParser.END_DOCUMENT -> throw java.lang.RuntimeException(
+                    "Unexpected end of document"
+                )
             }
             eventType = parser.next()
         }
@@ -136,5 +138,4 @@ class CustomMenuInflater(var context: Context) {
     fun buildMenuView(): LinearLayout {
         return rootView
     }
-
 }

@@ -29,14 +29,14 @@ import com.lee.playandroid.me.viewmodel.CollectViewEvent
 import com.lee.playandroid.me.viewmodel.CollectViewModel
 import com.lee.playandroid.me.viewmodel.CollectViewState
 import com.lee.playandroid.router.navigateDetails
-import kotlinx.coroutines.flow.collect
 
 /**
  * 收藏列表页
  * @author jv.lee
  * @date 2021/11/25
  */
-class CollectFragment : BaseNavigationFragment(R.layout.fragment_collect),
+class CollectFragment :
+    BaseNavigationFragment(R.layout.fragment_collect),
     BaseViewAdapter.LoadErrorListener,
     BaseViewAdapter.AutoLoadMoreListener,
     BaseViewAdapter.OnItemChildView<Content> {
@@ -45,7 +45,9 @@ class CollectFragment : BaseNavigationFragment(R.layout.fragment_collect),
 
     private val binding by binding(FragmentCollectBinding::bind)
 
-    private val slidingPaneItemTouchListener by lazy { SlidingPaneItemTouchListener(requireContext()) }
+    private val slidingPaneItemTouchListener by lazy {
+        SlidingPaneItemTouchListener(requireContext())
+    }
 
     private val loadingDialog by lazy { LoadingDialog(requireContext()) }
 
@@ -82,12 +84,15 @@ class CollectFragment : BaseNavigationFragment(R.layout.fragment_collect),
             }
         }
         launchWhenResumed {
-            viewModel.collectFlow.collectState<PageData<Content>>(success = {
-                mAdapter?.submitData(it, diff = true)
-            }, error = {
-                mAdapter?.submitFailed()
-                actionFailed(it)
-            })
+            viewModel.collectFlow.collectState<PageData<Content>>(
+                success = {
+                    mAdapter?.submitData(it, diff = true)
+                },
+                error = {
+                    mAdapter?.submitFailed()
+                    actionFailed(it)
+                }
+            )
         }
 
         launchWhenResumed {
@@ -112,8 +117,12 @@ class CollectFragment : BaseNavigationFragment(R.layout.fragment_collect),
     override fun onItemChild(view: View, entity: Content, position: Int) {
         when (view.id) {
             R.id.frame_container -> {
-                findNavController()
-                    .navigateDetails(entity.title, entity.link, entity.id, entity.collect)
+                findNavController().navigateDetails(
+                    entity.title,
+                    entity.link,
+                    entity.id,
+                    entity.collect
+                )
             }
             R.id.btn_delete -> {
                 viewModel.dispatch(CollectViewAction.UnCollect(position))
@@ -127,5 +136,4 @@ class CollectFragment : BaseNavigationFragment(R.layout.fragment_collect),
         binding.rvContainer.adapter = null
         mAdapter = null
     }
-
 }

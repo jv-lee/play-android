@@ -45,7 +45,5 @@ class SystemContentAdapter(context: Context, data: List<ParentTab>) :
             tabs.forEach { builder.append(it.name + "\t\t") }
             return builder.toString()
         }
-
     }
-
 }

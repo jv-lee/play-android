@@ -36,7 +36,7 @@ class NavigationContentAdapter(context: Context, data: List<NavigationItem>) :
                 val context = holder.itemView.context
                 tvTitle.text = entity.name
 
-                //构建适配器
+                // 构建适配器
                 rvContainer.adapter = NavigationContentTagAdapter(context, entity.articles).apply {
                     setOnItemChildClickListener({ view, entity, _ ->
                         Navigation.findNavController(view)
@@ -45,6 +45,5 @@ class NavigationContentAdapter(context: Context, data: List<NavigationItem>) :
                 }
             }
         }
-
     }
 }

@@ -41,7 +41,5 @@ class SystemContentListAdapter(context: Context, data: List<Content>) :
                 }
             }
         }
-
     }
-
 }

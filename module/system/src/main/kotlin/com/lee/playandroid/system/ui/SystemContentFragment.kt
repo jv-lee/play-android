@@ -35,7 +35,8 @@ import kotlinx.coroutines.flow.collect
  * @author jv.lee
  * @date 2021/11/10
  */
-class SystemContentFragment : BaseNavigationFragment(R.layout.fragment_system_content),
+class SystemContentFragment :
+    BaseNavigationFragment(R.layout.fragment_system_content),
     BaseViewAdapter.OnItemClickListener<ParentTab>,
     BaseViewAdapter.LoadErrorListener {
 
@@ -46,9 +47,11 @@ class SystemContentFragment : BaseNavigationFragment(R.layout.fragment_system_co
     private var mAdapter: SystemContentAdapter? = null
 
     override fun bindView() {
-        //根据父Fragment toolbar高度设置ItemDecoration来控制显示间隔
+        // 根据父Fragment toolbar高度设置ItemDecoration来控制显示间隔
         findParentFragment<SystemFragment>()?.parentBindingAction {
-            binding.rvContainer.addItemDecoration(OffsetItemDecoration(toolbar.getToolbarLayoutHeight()))
+            binding.rvContainer.addItemDecoration(
+                OffsetItemDecoration(toolbar.getToolbarLayoutHeight())
+            )
         }
 
         if (binding.rvContainer.adapter == null) {
@@ -115,5 +118,4 @@ class SystemContentFragment : BaseNavigationFragment(R.layout.fragment_system_co
             binding.rvContainer.smoothScrollToTop()
         }
     }
-
 }

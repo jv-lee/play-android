@@ -53,7 +53,6 @@ class SquareViewModel : ViewModel() {
             })
         }
     }
-
 }
 
 sealed class SquareViewAction {

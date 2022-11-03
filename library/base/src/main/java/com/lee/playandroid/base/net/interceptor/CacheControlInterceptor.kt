@@ -2,17 +2,17 @@ package com.lee.playandroid.base.net.interceptor
 
 import com.lee.playandroid.base.base.ApplicationExtensions.app
 import com.lee.playandroid.base.utils.NetworkUtil
+import java.io.IOException
 import okhttp3.CacheControl
 import okhttp3.Interceptor
 import okhttp3.Response
-import java.io.IOException
 
 /**
  * 缓存控制拦截器
  * @author jv.lee
  * @date 2020/3/20
  */
-class CacheControlInterceptor :Interceptor {
+class CacheControlInterceptor : Interceptor {
 
     @Throws(IOException::class)
     override fun intercept(chain: Interceptor.Chain): Response {

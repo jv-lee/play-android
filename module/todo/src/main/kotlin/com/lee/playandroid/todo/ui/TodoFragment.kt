@@ -59,11 +59,16 @@ class TodoFragment : BaseNavigationFragment(R.layout.fragment_todo) {
     override fun bindView() {
         binding.toolbar.setClickListener {
             // 导航至todo类型选择弹窗
-            moreClick { findNavController().navigate(R.id.action_todo_fragment_to_select_todo_type_dialog) }
+            moreClick {
+                findNavController().navigate(
+                    R.id.action_todo_fragment_to_select_todo_type_dialog
+                )
+            }
         }
         binding.floatingButton.setOnClickListener {
             // 导航至todo编辑页面
-            findNavController().navigate(R.id.action_todo_fragment_to_create_todo_fragment,
+            findNavController().navigate(
+                R.id.action_todo_fragment_to_create_todo_fragment,
                 Bundle().apply { putInt(ARG_PARAMS_TYPE, ARG_TYPE_CREATE) }
             )
         }
@@ -150,5 +155,4 @@ class TodoFragment : BaseNavigationFragment(R.layout.fragment_todo) {
     fun moveTodoItem(todoData: TodoData) {
         childFragmentManager.fragments.forEach { (it as? TodoActionListener)?.moveAction(todoData) }
     }
-
 }

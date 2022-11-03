@@ -52,7 +52,6 @@ class OfficialListViewModel(handle: SavedStateHandle) : ViewModel() {
             })
         }
     }
-
 }
 
 sealed class OfficialListViewAction {

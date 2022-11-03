@@ -68,14 +68,19 @@ class MarqueeView @JvmOverloads constructor(
             gravity = Gravity.CENTER_VERTICAL
             textSize = fontSize
             setTextColor(fontColor)
-            setCompoundDrawables(leftDrawable?.apply {
-                setBounds(
-                    0,
-                    0,
-                    minimumWidth,
-                    minimumHeight
-                )
-            }, null, null, null)
+            setCompoundDrawables(
+                leftDrawable?.apply {
+                    setBounds(
+                        0,
+                        0,
+                        minimumWidth,
+                        minimumHeight
+                    )
+                },
+                null,
+                null,
+                null
+            )
         }
         addView(tvContent)
     }

@@ -37,8 +37,5 @@ class SimpleTextAdapter(context: Context, data: List<Content>) :
                 tvTime.text = entity.getDateFormat()
             }
         }
-
     }
-
 }
-

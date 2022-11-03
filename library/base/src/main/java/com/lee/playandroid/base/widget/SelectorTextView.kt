@@ -81,11 +81,11 @@ class SelectorTextView : AppCompatTextView {
             )
             pressedTextColor = getColor(
                 R.styleable.SelectorTextView_pressedTextColor,
-                ContextCompat.getColor(context,R.color.baseDarkColor)
+                ContextCompat.getColor(context, R.color.baseDarkColor)
             )
             normalTextColor = getColor(
                 R.styleable.SelectorTextView_normalTextColor,
-                ContextCompat.getColor(context,R.color.baseDarkColor)
+                ContextCompat.getColor(context, R.color.baseDarkColor)
             )
             disableBackgroundColor = getColor(
                 R.styleable.SelectorTextView_disableBackgroundColor,
@@ -93,7 +93,7 @@ class SelectorTextView : AppCompatTextView {
             )
             disableTextColor = getColor(
                 R.styleable.SelectorTextView_disableTextColor,
-                ContextCompat.getColor(context,R.color.baseDarkColor)
+                ContextCompat.getColor(context, R.color.baseDarkColor)
             )
             pressedStrokeColor = getColor(
                 R.styleable.SelectorTextView_pressedStrokeColor,
@@ -273,5 +273,4 @@ class SelectorTextView : AppCompatTextView {
             setButtonDisable(true)
         }
     }
-
 }

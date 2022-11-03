@@ -33,7 +33,8 @@ import java.util.*
  * @author jv.lee
  * @date 2021/12/28
  */
-class CreateTodoFragment : BaseNavigationFragment(R.layout.fragment_create_todo),
+class CreateTodoFragment :
+    BaseNavigationFragment(R.layout.fragment_create_todo),
     DatePickerDialog.OnDateSetListener {
 
     companion object {
@@ -90,7 +91,6 @@ class CreateTodoFragment : BaseNavigationFragment(R.layout.fragment_create_todo)
                 if (checkedId == binding.radioButtonLow.id) PRIORITY_LOW else PRIORITY_HEIGHT
             viewModel.dispatch(CreateTodoViewAction.ChangePriority(priority))
         }
-
     }
 
     override fun LifecycleCoroutineScope.bindData() {
@@ -146,7 +146,9 @@ class CreateTodoFragment : BaseNavigationFragment(R.layout.fragment_create_todo)
             launchWhenResumed {
                 collectState(CreateTodoViewState::calendar) { calendar ->
                     datePickerDialog = DatePickerDialog(
-                        requireContext(), R.style.ThemeDatePickerDialog, this@CreateTodoFragment,
+                        requireContext(),
+                        R.style.ThemeDatePickerDialog,
+                        this@CreateTodoFragment,
                         calendar.get(Calendar.YEAR),
                         calendar.get(Calendar.MONTH),
                         calendar.get(Calendar.DAY_OF_MONTH)
@@ -177,5 +179,4 @@ class CreateTodoFragment : BaseNavigationFragment(R.layout.fragment_create_todo)
             datePickerDialog?.setOnDateSetListener(null)
         }
     }
-
 }

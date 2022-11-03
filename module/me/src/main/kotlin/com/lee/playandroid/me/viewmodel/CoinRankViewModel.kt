@@ -49,11 +49,11 @@ class CoinRankViewModel : ViewModel() {
         viewModelScope.launch {
             _coinRankFlow.pageLaunch(status, { page ->
                 api.getCoinRankAsync(page).checkData().also { newData ->
-                    //排行榜UI显示 0 —><- 1 位置数据对掉
+                    // 排行榜UI显示 0 —><- 1 位置数据对掉
                     if (page == _coinRankFlow.requestFirstPage && newData.size >= 2) {
                         Collections.swap(newData.data, 0, 1)
                     }
-                    //内存存储每页数据至LiveData
+                    // 内存存储每页数据至LiveData
                     applyData(getValueData(), newData)
                 }
             }, {
@@ -63,10 +63,8 @@ class CoinRankViewModel : ViewModel() {
             })
         }
     }
-
 }
 
 sealed class CoinRankViewAction {
     data class RequestPage(@LoadStatus val status: Int) : CoinRankViewAction()
 }
-

@@ -30,14 +30,14 @@ import com.lee.playandroid.todo.ui.widget.StickyDateItemDecoration
 import com.lee.playandroid.todo.viewmodel.TodoListViewAction
 import com.lee.playandroid.todo.viewmodel.TodoListViewEvent
 import com.lee.playandroid.todo.viewmodel.TodoListViewModel
-import kotlinx.coroutines.flow.collect
 
 /**
  * todo列表数据页 (待完成/已完成)
  * @author jv.lee
  * @date 2021/12/23
  */
-class TodoListFragment : BaseNavigationFragment(R.layout.fragment_todo_list),
+class TodoListFragment :
+    BaseNavigationFragment(R.layout.fragment_todo_list),
     BaseViewAdapter.OnItemChildView<TodoData>,
     BaseViewAdapter.LoadErrorListener,
     BaseViewAdapter.AutoLoadMoreListener,
@@ -68,7 +68,9 @@ class TodoListFragment : BaseNavigationFragment(R.layout.fragment_todo_list),
 
     private val viewModel by viewModels<TodoListViewModel>()
 
-    private val slidingPaneItemTouchListener by lazy { SlidingPaneItemTouchListener(requireContext()) }
+    private val slidingPaneItemTouchListener by lazy {
+        SlidingPaneItemTouchListener(requireContext())
+    }
 
     private var mAdapter: TodoListAdapter? = null
 
@@ -133,12 +135,15 @@ class TodoListFragment : BaseNavigationFragment(R.layout.fragment_todo_list),
 
         launchWhenResumed {
             // todo列表数据监听填充
-            viewModel.todoDataFlow.collectState<PageData<TodoData>>(success = {
-                mAdapter?.submitData(it, diff = true)
-            }, error = {
-                mAdapter?.submitFailed()
-                actionFailed(it)
-            })
+            viewModel.todoDataFlow.collectState<PageData<TodoData>>(
+                success = {
+                    mAdapter?.submitData(it, diff = true)
+                },
+                error = {
+                    mAdapter?.submitFailed()
+                    actionFailed(it)
+                }
+            )
         }
     }
 
@@ -201,5 +206,4 @@ class TodoListFragment : BaseNavigationFragment(R.layout.fragment_todo_list),
         binding.rvContainer.adapter = null
         mAdapter = null
     }
-
 }

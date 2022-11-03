@@ -30,8 +30,11 @@ import com.lee.playandroid.common.R as CR
  * @author jv.lee
  * @date 2021/11/2
  */
-class MeFragment : BaseNavigationFragment(R.layout.fragment_me),
-    View.OnClickListener, View.OnLongClickListener, DarkViewUpdateTools.ViewCallback {
+class MeFragment :
+    BaseNavigationFragment(R.layout.fragment_me),
+    View.OnClickListener,
+    View.OnLongClickListener,
+    DarkViewUpdateTools.ViewCallback {
 
     private val viewModel by viewModels<MeViewModel>()
 
@@ -173,5 +176,4 @@ class MeFragment : BaseNavigationFragment(R.layout.fragment_me),
         binding.tvLevel.text = ""
         binding.tvLevel.visibility = View.GONE
     }
-
 }

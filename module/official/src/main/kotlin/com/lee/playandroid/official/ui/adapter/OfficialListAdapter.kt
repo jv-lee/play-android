@@ -41,7 +41,5 @@ class OfficialListAdapter(context: Context, data: List<Content>) :
                 }
             }
         }
-
     }
-
 }

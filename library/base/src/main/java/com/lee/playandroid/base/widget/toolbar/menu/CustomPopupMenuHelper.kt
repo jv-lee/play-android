@@ -25,11 +25,13 @@ class CustomPopupMenuHelper(var context: Context, var menuResId: Int) : View.OnC
 
     private val rootView: View by lazy {
         createCardView().also { card ->
-            card.addView(menuInflater.apply { inflate(menuResId) }.buildMenuView().also {
-                for (index in 0..it.childCount) {
-                    it.getChildAt(index)?.setOnClickListener(this)
+            card.addView(
+                menuInflater.apply { inflate(menuResId) }.buildMenuView().also {
+                    for (index in 0..it.childCount) {
+                        it.getChildAt(index)?.setOnClickListener(this)
+                    }
                 }
-            })
+            )
         }
     }
 
@@ -61,8 +63,7 @@ class CustomPopupMenuHelper(var context: Context, var menuResId: Int) : View.OnC
         )
         useCompatPadding = true
         radius = cardRadius
-        setContentPadding(0,contentPadding,0,contentPadding)
+        setContentPadding(0, contentPadding, 0, contentPadding)
         setCardBackgroundColor(ContextCompat.getColor(context, R.color.baseItemColor))
     }
-
 }

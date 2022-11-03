@@ -68,7 +68,6 @@ class App : BaseApplication() {
             }
             super.onActivityResumed(activity)
         }
-
     }
 
     override fun init() {

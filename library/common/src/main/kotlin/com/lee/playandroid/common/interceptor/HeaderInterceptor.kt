@@ -17,5 +17,4 @@ class HeaderInterceptor : Interceptor {
 
         return chain.proceed(builder.build())
     }
-
 }

@@ -34,6 +34,5 @@ class SearchHotAdapter(context: Context, data: List<SearchHotUI>) :
                 tvHot.setNormalTextColor(entity.normalColor)
             }
         }
-
     }
 }

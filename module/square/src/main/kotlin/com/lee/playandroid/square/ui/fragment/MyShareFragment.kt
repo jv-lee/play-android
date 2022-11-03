@@ -32,7 +32,6 @@ import com.lee.playandroid.square.viewmodel.MyShareViewAction
 import com.lee.playandroid.square.viewmodel.MyShareViewEvent
 import com.lee.playandroid.square.viewmodel.MyShareViewModel
 import com.lee.playandroid.square.viewmodel.MyShareViewState
-import kotlinx.coroutines.flow.collect
 import com.lee.playandroid.common.R as CR
 
 /**
@@ -40,7 +39,8 @@ import com.lee.playandroid.common.R as CR
  * @author jv.lee
  * @date 2021/12/13
  */
-class MyShareFragment : BaseNavigationFragment(R.layout.fragment_my_share),
+class MyShareFragment :
+    BaseNavigationFragment(R.layout.fragment_my_share),
     BaseViewAdapter.LoadErrorListener,
     BaseViewAdapter.AutoLoadMoreListener,
     BaseViewAdapter.OnItemChildView<Content> {
@@ -54,7 +54,11 @@ class MyShareFragment : BaseNavigationFragment(R.layout.fragment_my_share),
 
     private val binding by binding(FragmentMyShareBinding::bind)
 
-    private val slidingPaneItemTouchListener by lazy { SlidingPaneItemTouchListener(requireContext()) }
+    private val slidingPaneItemTouchListener by lazy {
+        SlidingPaneItemTouchListener(
+            requireContext()
+        )
+    }
 
     private val loadingDialog by lazy { LoadingDialog(requireContext()) }
 
@@ -62,7 +66,11 @@ class MyShareFragment : BaseNavigationFragment(R.layout.fragment_my_share),
 
     override fun bindView() {
         binding.toolbar.setClickListener {
-            moreClick { findNavController().navigate(R.id.action_my_share_fragment_to_create_share_fragment) }
+            moreClick {
+                findNavController().navigate(
+                    R.id.action_my_share_fragment_to_create_share_fragment
+                )
+            }
         }
 
         binding.rvContainer.addOnItemTouchListener(slidingPaneItemTouchListener)
@@ -101,12 +109,15 @@ class MyShareFragment : BaseNavigationFragment(R.layout.fragment_my_share),
         }
 
         launchWhenResumed {
-            viewModel.myShareFlow.collectState<PageData<Content>>(success = {
-                mAdapter?.submitData(it, diff = true)
-            }, error = {
-                mAdapter?.submitFailed()
-                actionFailed(it)
-            })
+            viewModel.myShareFlow.collectState<PageData<Content>>(
+                success = {
+                    mAdapter?.submitData(it, diff = true)
+                },
+                error = {
+                    mAdapter?.submitFailed()
+                    actionFailed(it)
+                }
+            )
         }
 
         launchWhenResumed {
@@ -146,5 +157,4 @@ class MyShareFragment : BaseNavigationFragment(R.layout.fragment_my_share),
         binding.rvContainer.adapter = null
         mAdapter = null
     }
-
 }

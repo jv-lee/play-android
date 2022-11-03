@@ -30,7 +30,5 @@ class OffsetItemDecoration(
                 outRect.bottom = offsetBottom
             }
         }
-
     }
-
 }

@@ -136,5 +136,4 @@ class RegisterFragment : BaseNavigationFragment(R.layout.fragment_register), Vie
         super.onFragmentStop()
         viewModel.dispatch(RegisterViewAction.HideKeyboard)
     }
-
 }

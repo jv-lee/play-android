@@ -1,7 +1,9 @@
 package com.lee.playandroid.base.net.client
 
 import com.lee.playandroid.base.net.interceptor.RetryInterceptor
-import okhttp3.*
+import okhttp3.ConnectionPool
+import okhttp3.OkHttpClient
+import okhttp3.Protocol
 import java.security.KeyManagementException
 import java.security.NoSuchAlgorithmException
 import java.security.SecureRandom
@@ -32,7 +34,6 @@ class OkHttpClientBuilder {
                 .readTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS)
                 .sslSocketFactory(SSLSocketFactoryCompat())
                 .build()
-
         }
         return safeClient!!
     }
@@ -100,5 +101,4 @@ class OkHttpClientBuilder {
         }
         return null
     }
-
 }

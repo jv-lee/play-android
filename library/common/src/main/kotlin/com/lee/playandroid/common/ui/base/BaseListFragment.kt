@@ -25,7 +25,8 @@ import kotlinx.coroutines.flow.StateFlow
  * @author jv.lee
  * @date 2021/11/8
  */
-abstract class BaseListFragment : BaseNavigationFragment(R.layout.fragment_base_list),
+abstract class BaseListFragment :
+    BaseNavigationFragment(R.layout.fragment_base_list),
     SwipeRefreshLayout.OnRefreshListener,
     BaseViewAdapter.AutoLoadMoreListener,
     BaseViewAdapter.LoadErrorListener,
@@ -56,16 +57,16 @@ abstract class BaseListFragment : BaseNavigationFragment(R.layout.fragment_base_
     }
 
     override fun LifecycleCoroutineScope.bindData() {
-        //列表数据更新
+        // 列表数据更新
         launchWhenResumed {
             dataFlow().collectState<PageData<Content>>(success = {
                 binding.refreshLayout.isRefreshing = false
                 mAdapter.submitData(it, diff = true)
             }, error = {
-                binding.refreshLayout.isRefreshing = false
-                mAdapter.submitFailed()
-                actionFailed(it)
-            })
+                    binding.refreshLayout.isRefreshing = false
+                    mAdapter.submitFailed()
+                    actionFailed(it)
+                })
         }
     }
 
@@ -105,5 +106,4 @@ abstract class BaseListFragment : BaseNavigationFragment(R.layout.fragment_base_
         mAdapter.unbindAllListener()
         binding.refreshLayout.setOnRefreshListener(null)
     }
-
 }

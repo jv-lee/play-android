@@ -69,11 +69,12 @@ class LabelDecoration(context: Context) : RecyclerView.ItemDecoration() {
         }
 
         val prevType = parent.adapter?.getItemViewType(position - 1)
-        if (prevType != ContentAdapter.CONTENT_TEXT_ITEM_TYPE && type == ContentAdapter.CONTENT_TEXT_ITEM_TYPE) {
+        if (prevType != ContentAdapter.CONTENT_TEXT_ITEM_TYPE &&
+            type == ContentAdapter.CONTENT_TEXT_ITEM_TYPE
+        ) {
             return true
         }
 
         return false
     }
-
 }

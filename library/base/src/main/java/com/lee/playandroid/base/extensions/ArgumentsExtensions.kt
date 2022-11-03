@@ -92,7 +92,8 @@ inline fun <reified P : Any> Fragment.getActivityIntentParamsOrNull(key: String)
 }
 
 @MainThread
-inline fun <reified P : Parcelable> Fragment.getActivityIntentParamsList(key: String): Lazy<ArrayList<P>> {
+inline fun <reified P : Parcelable> Fragment.getActivityIntentParamsList(key: String):
+    Lazy<ArrayList<P>> {
     return ParamsListLazy {
         checkNotNull(requireActivity().intent.extras) { "requestActivity().intent.extras is null." }
         requireActivity().intent.extras?.getValueList<P>(key) as ArrayList<P>

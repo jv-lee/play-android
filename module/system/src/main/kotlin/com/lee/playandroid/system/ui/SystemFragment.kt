@@ -51,5 +51,4 @@ class SystemFragment : BaseNavigationFragment(R.layout.fragment_system) {
     fun parentBindingAction(action: FragmentSystemBinding.() -> Unit) {
         binding.action()
     }
-
 }

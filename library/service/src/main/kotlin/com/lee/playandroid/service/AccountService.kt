@@ -58,5 +58,4 @@ interface AccountService : IModuleService {
      * 获取当前是否已登陆
      */
     fun isLogin(): Boolean
-
 }

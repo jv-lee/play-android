@@ -9,6 +9,7 @@ import com.lee.playandroid.base.R
  * @author jv.lee
  * @date 2020/9/21
  */
+@Suppress("LeakingThis")
 abstract class BaseVMAlertFragment<V : ViewDataBinding, VM : ViewModel>(
     resId: Int,
     isCancel: Boolean = true,

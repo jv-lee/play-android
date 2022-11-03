@@ -73,7 +73,6 @@ class SystemContentViewModel : ViewModel() {
             _viewEvents.send(SystemContentViewEvent.NavigationContentTabEvent(bundle = bundle))
         }
     }
-
 }
 
 data class SystemContentViewState(

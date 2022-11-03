@@ -83,7 +83,9 @@ class LoginFragment : BaseNavigationFragment(R.layout.fragment_login), View.OnCl
                     is LoginViewEvent.NavigationRegisterEvent -> {
                         requireActivity().window.run {
                             if (hasSoftInputShow()) hideSoftInput()
-                            else findNavController().navigate(R.id.action_login_fragment_to_register_fragment)
+                            else findNavController().navigate(
+                                R.id.action_login_fragment_to_register_fragment
+                            )
                         }
                     }
                 }
@@ -132,5 +134,4 @@ class LoginFragment : BaseNavigationFragment(R.layout.fragment_login), View.OnCl
         super.onFragmentStop()
         viewModel.dispatch(LoginViewAction.HideKeyboard)
     }
-
 }

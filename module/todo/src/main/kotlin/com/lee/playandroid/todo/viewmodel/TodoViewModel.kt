@@ -46,7 +46,6 @@ class TodoViewModel : ViewModel() {
         }
         _viewStates.update { it.copy(titleRes = textResId) }
     }
-
 }
 
 data class TodoViewState(

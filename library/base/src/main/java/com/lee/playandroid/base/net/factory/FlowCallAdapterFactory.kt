@@ -22,19 +22,21 @@ class FlowCallAdapterFactory private constructor() : CallAdapter.Factory() {
     }
 
     override fun get(
-        returnType: Type,
-        annotations: Array<out Annotation>,
-        retrofit: Retrofit
+        returnType: Type, annotations: Array<out Annotation>, retrofit: Retrofit
     ): CallAdapter<*, *>? {
         if (Flow::class.java != getRawType(returnType)) {
             return null
         }
-        check(returnType is ParameterizedType) { "Flow return type must be parameterized as Flow<Foo> or Flow<out Foo>" }
+        check(returnType is ParameterizedType) {
+            "Flow return type must be parameterized as Flow<Foo> or Flow<out Foo>"
+        }
         val responseType = getParameterUpperBound(0, returnType)
 
         val rawFlowType = getRawType(responseType)
         return if (rawFlowType == Response::class.java) {
-            check(responseType is ParameterizedType) { "Response must be parameterized as Response<Foo> or Response<out Foo>" }
+            check(responseType is ParameterizedType) {
+                "Response must be parameterized as Response<Foo> or Response<out Foo>"
+            }
             ResponseCallAdapter<Any>(getParameterUpperBound(0, responseType))
         } else {
             BodyCallAdapter<Any>(responseType)
@@ -49,24 +51,22 @@ class FlowCallAdapterFactory private constructor() : CallAdapter.Factory() {
 
         override fun adapt(call: Call<T>): Flow<T> {
             return flow {
-                emit(
-                    suspendCancellableCoroutine<T> { continuation ->
-                        call.enqueue(object : Callback<T> {
-                            override fun onFailure(call: Call<T>, t: Throwable) {
-                                continuation.resumeWithException(t)
-                            }
+                emit(suspendCancellableCoroutine<T> { continuation ->
+                    call.enqueue(object : Callback<T> {
+                        override fun onFailure(call: Call<T>, t: Throwable) {
+                            continuation.resumeWithException(t)
+                        }
 
-                            override fun onResponse(call: Call<T>, response: Response<T>) {
-                                if (response.isSuccessful) {
-                                    continuation.resume(response.body()!!)
-                                } else {
-                                    continuation.resumeWithException(HttpException(response))
-                                }
+                        override fun onResponse(call: Call<T>, response: Response<T>) {
+                            if (response.isSuccessful) {
+                                continuation.resume(response.body()!!)
+                            } else {
+                                continuation.resumeWithException(HttpException(response))
                             }
-                        })
-                        continuation.invokeOnCancellation { call.cancel() }
-                    }
-                )
+                        }
+                    })
+                    continuation.invokeOnCancellation { call.cancel() }
+                })
             }
         }
     }
@@ -79,21 +79,18 @@ class FlowCallAdapterFactory private constructor() : CallAdapter.Factory() {
 
         override fun adapt(call: Call<T>): Flow<Response<T>> {
             return flow {
-                emit(
-                    suspendCancellableCoroutine<Response<T>> { continuation ->
-                        call.enqueue(object : Callback<T> {
-                            override fun onFailure(call: Call<T>, t: Throwable) {
-                                continuation.resumeWithException(t)
-                            }
+                emit(suspendCancellableCoroutine<Response<T>> { continuation ->
+                    call.enqueue(object : Callback<T> {
+                        override fun onFailure(call: Call<T>, t: Throwable) {
+                            continuation.resumeWithException(t)
+                        }
 
-                            override fun onResponse(call: Call<T>, response: Response<T>) {
-                                continuation.resume(response)
-                            }
-
-                        })
-                        continuation.invokeOnCancellation { call.cancel() }
-                    }
-                )
+                        override fun onResponse(call: Call<T>, response: Response<T>) {
+                            continuation.resume(response)
+                        }
+                    })
+                    continuation.invokeOnCancellation { call.cancel() }
+                })
             }
         }
     }

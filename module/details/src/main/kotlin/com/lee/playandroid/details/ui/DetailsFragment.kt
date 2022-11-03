@@ -71,7 +71,6 @@ class DetailsFragment : BaseNavigationFragment(R.layout.fragment_details) {
                 DarkModeTools.get().setWebDarkCompat()
                 supportDarkMode()
             }
-
     }
 
     override fun LifecycleCoroutineScope.bindData() {
@@ -104,5 +103,4 @@ class DetailsFragment : BaseNavigationFragment(R.layout.fragment_details) {
             }
         }
     }
-
 }

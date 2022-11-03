@@ -18,7 +18,6 @@ import com.lee.playandroid.common.entity.AccountViewState
 import com.lee.playandroid.me.R
 import com.lee.playandroid.me.databinding.FragmentSettingsBinding
 import com.lee.playandroid.me.viewmodel.*
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 /**
@@ -26,8 +25,11 @@ import kotlinx.coroutines.launch
  * @author jv.lee
  * @date 2021/11/25
  */
-class SettingsFragment : BaseNavigationFragment(R.layout.fragment_settings),
-    View.OnClickListener, CompoundButton.OnCheckedChangeListener, DarkViewUpdateTools.ViewCallback {
+class SettingsFragment :
+    BaseNavigationFragment(R.layout.fragment_settings),
+    View.OnClickListener,
+    CompoundButton.OnCheckedChangeListener,
+    DarkViewUpdateTools.ViewCallback {
 
     private val viewModel by viewModels<SettingsViewModel>()
 
@@ -173,7 +175,7 @@ class SettingsFragment : BaseNavigationFragment(R.layout.fragment_settings),
      * 创建设置页Dialog提示弹窗
      */
     private fun createAlertDialog() {
-        //清除弹窗创建
+        // 清除弹窗创建
         clearDialog = ChoiceDialog(requireContext()).apply {
             setTitle(getString(R.string.settings_clear_title))
             setCancelable(true)
@@ -185,7 +187,7 @@ class SettingsFragment : BaseNavigationFragment(R.layout.fragment_settings),
             }
         }
 
-        //退出登陆弹窗创建
+        // 退出登陆弹窗创建
         logoutDialog = ChoiceDialog(requireContext()).apply {
             setTitle(getString(R.string.settings_logout_title))
             setCancelable(true)
@@ -200,5 +202,4 @@ class SettingsFragment : BaseNavigationFragment(R.layout.fragment_settings),
             }
         }
     }
-
 }

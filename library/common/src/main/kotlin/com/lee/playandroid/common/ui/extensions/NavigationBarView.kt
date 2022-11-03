@@ -53,28 +53,28 @@ inline fun ExpandBottomNavigationView.bindNavigationAction(
 
         val weakReference = WeakReference(this)
         controller.addOnDestinationChangedListener(object :
-            NavController.OnDestinationChangedListener {
-            override fun onDestinationChanged(
-                controller: NavController,
-                destination: NavDestination,
-                arguments: Bundle?
-            ) {
-                val view = weakReference.get()
-                if (view == null) {
-                    controller.removeOnDestinationChangedListener(this)
-                    return
-                }
-                if (labels.contains(destination.label)) {
-                    if (view.visibility == View.GONE && view.animation == null) {
-                        view.startAnimation(navigationInAnim)
+                NavController.OnDestinationChangedListener {
+                override fun onDestinationChanged(
+                    controller: NavController,
+                    destination: NavDestination,
+                    arguments: Bundle?
+                ) {
+                    val view = weakReference.get()
+                    if (view == null) {
+                        controller.removeOnDestinationChangedListener(this)
+                        return
                     }
-                } else {
-                    if (view.visibility == View.VISIBLE && view.animation == null) {
-                        view.startAnimation(navigationOutAnim)
+                    if (labels.contains(destination.label)) {
+                        if (view.visibility == View.GONE && view.animation == null) {
+                            view.startAnimation(navigationInAnim)
+                        }
+                    } else {
+                        if (view.visibility == View.VISIBLE && view.animation == null) {
+                            view.startAnimation(navigationOutAnim)
+                        }
                     }
                 }
-            }
-        })
+            })
     }
 }
 
@@ -85,7 +85,7 @@ fun ExpandBottomNavigationView.setupWithNavController2(
 ) {
     setItemPositionListener(object : ExpandBottomNavigationView.ItemPositionListener {
         override fun onPosition(menuItem: MenuItem?, position: Int) {
-            //navigation使用动画效果时不可以被点击触发
+            // navigation使用动画效果时不可以被点击触发
             if (animation != null && isNavigationAnimation) {
                 return
             }
@@ -114,7 +114,8 @@ fun ExpandBottomNavigationView.setupWithNavController2(
                     }
                 }
             }
-        })
+        }
+    )
 }
 
 private fun NavDestination.matchDestination(@IdRes destId: Int): Boolean =
@@ -142,4 +143,3 @@ private fun onNavDestinationSelected(item: MenuItem, navController: NavControlle
         false
     }
 }
-

@@ -41,12 +41,14 @@ class OfficialListFragment : BaseListFragment() {
 
     override fun navigationDetails(content: Content) {
         findNavController().navigateDetails(
-            content.title, content.link, content.id, content.collect
+            content.title,
+            content.link,
+            content.id,
+            content.collect
         )
     }
 
     override fun dataFlow(): StateFlow<UiStatePage> {
         return viewModel.contentListFlow
     }
-
 }

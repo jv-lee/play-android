@@ -5,9 +5,9 @@ import com.lee.playandroid.base.livedatabus.LiveDataBus
 import com.lee.playandroid.base.tools.PreferencesTools
 import com.lee.playandroid.common.constants.ApiConstants
 import com.lee.playandroid.common.entity.LoginEvent
+import java.nio.charset.Charset
 import okhttp3.Interceptor
 import okhttp3.Response
-import java.nio.charset.Charset
 
 /**
  * 全局统一错误拦截器
@@ -39,9 +39,9 @@ class FailedInterceptor : Interceptor {
                     val body = buffer.clone().readString(charset)
                     val json = JsonParser.parseString(body)
                     val code = json.asJsonObject.get(RESPONSE_CODE).asInt
-                    //登陆失效,打开登陆页面
+                    // 登陆失效,打开登陆页面
                     if (code == ApiConstants.REQUEST_TOKEN_ERROR) {
-                        //单独处理登陆状态 ， 已登陆状态发起重新登陆事件
+                        // 单独处理登陆状态 ， 已登陆状态发起重新登陆事件
                         if (PreferencesTools.get(SP_KEY_IS_LOGIN)) {
                             LiveDataBus.instance.getChannel(LoginEvent::class.java)
                                 .postValue(LoginEvent())
@@ -49,7 +49,6 @@ class FailedInterceptor : Interceptor {
                     }
                 }
             }
-
         } catch (e: Exception) {
             e.printStackTrace()
         }

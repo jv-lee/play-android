@@ -28,7 +28,8 @@ import kotlinx.coroutines.launch
  * @author jv.lee
  * @date 2021/11/2
  */
-class MainFragment : BaseFragment(R.layout.fragment_main),
+class MainFragment :
+    BaseFragment(R.layout.fragment_main),
     DarkViewUpdateTools.ViewCallback {
 
     private val binding by binding(FragmentMainBinding::bind)
@@ -38,10 +39,10 @@ class MainFragment : BaseFragment(R.layout.fragment_main),
     private val accountService by lazy { ModuleService.find<AccountService>() }
 
     override fun bindView() {
-        //设置深色主题控制器监听
+        // 设置深色主题控制器监听
         DarkViewUpdateTools.bindViewCallback(viewLifecycleOwner, this)
 
-        //fragment容器与navigationBar绑定
+        // fragment容器与navigationBar绑定
         initNavigation()
 
         // 加载stub悬浮按钮view
@@ -94,5 +95,4 @@ class MainFragment : BaseFragment(R.layout.fragment_main),
             binding.container.findNavController().navigateLogin()
         }
     }
-
 }

@@ -75,5 +75,4 @@ abstract class VerticalTabAdapter<T>(val data: MutableList<T>) :
     interface ItemClickCall {
         fun itemClick(position: Int)
     }
-
 }

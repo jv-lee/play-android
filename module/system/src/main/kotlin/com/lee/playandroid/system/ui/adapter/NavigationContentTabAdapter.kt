@@ -35,5 +35,4 @@ class NavigationContentTabAdapter(data: MutableList<NavigationItem>) :
             }
         }
     }
-
 }

@@ -182,7 +182,8 @@ open class TitleToolbar : CustomToolbarLayout {
             lineView.run {
                 id = R.id.toolbar_line
                 layoutParams = LayoutParams(
-                    ViewGroup.LayoutParams.MATCH_PARENT, context.px2dp(1).toInt()
+                    ViewGroup.LayoutParams.MATCH_PARENT,
+                    context.px2dp(1).toInt()
                 ).apply {
                     bottomToBottom = 0
                 }
@@ -270,5 +271,4 @@ open class TitleToolbar : CustomToolbarLayout {
         this.clickListener = clickListener
         menuPopupHelper?.toolbarClickListener = clickListener
     }
-
 }

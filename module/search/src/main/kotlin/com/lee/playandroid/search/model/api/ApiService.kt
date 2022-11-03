@@ -22,5 +22,4 @@ interface ApiService {
 
     @GET("hotkey/json")
     suspend fun getSearchHotAsync(): Data<List<SearchHot>>
-
 }

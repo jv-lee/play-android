@@ -67,7 +67,7 @@ class MainActivity : BaseActivity() {
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
         lifecycleScope.launch {
-            //程序以外重启 或重新创建MainActivity 无需获取配置，直接显示view
+            // 程序以外重启 或重新创建MainActivity 无需获取配置，直接显示view
             viewModel.dispatch(SplashViewAction.NavigationMain())
         }
     }
@@ -136,9 +136,9 @@ class MainActivity : BaseActivity() {
         val main = binding.root.findViewById<ViewStub>(R.id.view_stub_main).inflate()
         LayoutStubMainBinding.bind(main)
 
-        //移除back事件禁用
+        // 移除back事件禁用
         backCallback.remove()
-        //设置动画显示rootView
+        // 设置动画显示rootView
         val anim = ObjectAnimator.ofFloat(0F, 1F)
         anim.startDelay = duration
         anim.duration = duration
@@ -160,5 +160,4 @@ class MainActivity : BaseActivity() {
         })
         anim.start()
     }
-
 }

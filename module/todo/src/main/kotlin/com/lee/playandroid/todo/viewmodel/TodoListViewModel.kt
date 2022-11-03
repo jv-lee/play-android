@@ -110,7 +110,9 @@ class TodoListViewModel(handle: SavedStateHandle) : ViewModel() {
         if (deleteLock.compareAndSet(false, true)) {
             viewModelScope.launch {
                 flow {
-                    check(NetworkUtil.isNetworkConnected(app)) { app.getString(R.string.network_not_access) }
+                    check(NetworkUtil.isNetworkConnected(app)) {
+                        app.getString(R.string.network_not_access)
+                    }
 
                     val data = _todoDataFlow.getValueData<PageData<TodoData>>()!!
                     val item = data.data[position]
@@ -144,15 +146,18 @@ class TodoListViewModel(handle: SavedStateHandle) : ViewModel() {
         if (updateLock.compareAndSet(false, true)) {
             viewModelScope.launch {
                 flow {
-                    check(NetworkUtil.isNetworkConnected(app)) { app.getString(R.string.network_not_access) }
+                    check(NetworkUtil.isNetworkConnected(app)) {
+                        app.getString(R.string.network_not_access)
+                    }
 
                     val data = _todoDataFlow.getValueData<PageData<TodoData>>()!!
                     val item = data.data[position]
 
                     val newItem =
                         item.copy(
-                            status = if (requestStatus == ARG_STATUS_UPCOMING)
-                                ARG_STATUS_COMPLETE else ARG_STATUS_UPCOMING
+                            status = if (requestStatus == ARG_STATUS_UPCOMING) {
+                                ARG_STATUS_COMPLETE
+                            } else ARG_STATUS_UPCOMING
                         )
                     val response = api.postUpdateTodoStatusAsync(item.id, newItem.status)
                     if (response.errorCode == ApiConstants.REQUEST_OK) {
@@ -220,7 +225,6 @@ class TodoListViewModel(handle: SavedStateHandle) : ViewModel() {
                 }
             }
     }
-
 }
 
 sealed class TodoListViewEvent {

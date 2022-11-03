@@ -53,6 +53,5 @@ class ContentCategoryAdapter(context: Context, data: List<HomeCategory>) :
                 tvCategoryName.text = entity.name
             }
         }
-
     }
 }

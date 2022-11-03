@@ -28,7 +28,8 @@ import com.lee.playandroid.search.viewmodel.SearchResultViewState
  * @author jv.lee
  * @date 2021/11/22
  */
-class SearchResultFragment : BaseNavigationFragment(R.layout.fragment_search_result),
+class SearchResultFragment :
+    BaseNavigationFragment(R.layout.fragment_search_result),
     BaseViewAdapter.AutoLoadMoreListener,
     BaseViewAdapter.LoadErrorListener,
     BaseViewAdapter.OnItemClickListener<Content> {
@@ -68,12 +69,15 @@ class SearchResultFragment : BaseNavigationFragment(R.layout.fragment_search_res
 
         launchWhenResumed {
             // 监听搜索结果列表数据绑定
-            viewModel.searchResultFlow.collectState<PageData<Content>>(success = {
-                mAdapter?.submitData(it, diff = true)
-            }, error = {
-                mAdapter?.submitFailed()
-                actionFailed(it)
-            })
+            viewModel.searchResultFlow.collectState<PageData<Content>>(
+                success = {
+                    mAdapter?.submitData(it, diff = true)
+                },
+                error = {
+                    mAdapter?.submitFailed()
+                    actionFailed(it)
+                }
+            )
         }
     }
 

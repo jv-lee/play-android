@@ -89,7 +89,9 @@ class AccountViewModel : ViewModel() {
             }.collect {
                 _viewStates.update { it.copy(isLoading = false) }
                 updateAccountStatus(null, false)
-                _viewEvents.send(AccountViewEvent.LogoutSuccess(app.getString(R.string.account_logout_success)))
+                _viewEvents.send(
+                    AccountViewEvent.LogoutSuccess(app.getString(R.string.account_logout_success))
+                )
             }
         }
     }
@@ -111,5 +113,4 @@ class AccountViewModel : ViewModel() {
             }
         }
     }
-
 }

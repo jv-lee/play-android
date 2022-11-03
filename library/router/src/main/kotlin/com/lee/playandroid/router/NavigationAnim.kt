@@ -50,5 +50,4 @@ sealed class NavigationAnim {
                     .build()
         }
     }
-
 }

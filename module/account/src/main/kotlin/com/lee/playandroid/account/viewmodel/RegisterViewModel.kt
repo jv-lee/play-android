@@ -2,9 +2,9 @@ package com.lee.playandroid.account.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.lee.playandroid.base.tools.PreferencesTools
 import com.lee.playandroid.account.constants.Constants
 import com.lee.playandroid.account.model.api.ApiService
+import com.lee.playandroid.base.tools.PreferencesTools
 import com.lee.playandroid.common.entity.AccountViewAction
 import com.lee.playandroid.common.extensions.checkData
 import com.lee.playandroid.common.extensions.createApi
@@ -68,7 +68,11 @@ class RegisterViewModel : ViewModel() {
 
     private fun changeRegisterEnable() {
         _viewStates.update {
-            it.copy(isRegisterEnable = it.username.isNotEmpty() && it.password.isNotEmpty() && it.rePassword.isNotEmpty())
+            it.copy(
+                isRegisterEnable = it.username.isNotEmpty() &&
+                    it.password.isNotEmpty() &&
+                    it.rePassword.isNotEmpty()
+            )
         }
     }
 
@@ -129,7 +133,6 @@ class RegisterViewModel : ViewModel() {
             _viewEvents.send(RegisterViewEvent.NavigationLoginEvent)
         }
     }
-
 }
 
 data class RegisterViewState(
@@ -138,7 +141,7 @@ data class RegisterViewState(
     val rePassword: String = "",
     val isLoading: Boolean = false,
     val isRegisterEnable: Boolean = false,
-    val hideKeyboard: Boolean = false,
+    val hideKeyboard: Boolean = false
 )
 
 sealed class RegisterViewEvent {

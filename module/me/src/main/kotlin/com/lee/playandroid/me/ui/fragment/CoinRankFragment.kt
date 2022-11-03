@@ -30,7 +30,8 @@ import com.lee.playandroid.router.navigateDetails
  * @author jv.lee
  * @date 2021/12/8
  */
-class CoinRankFragment : BaseNavigationFragment(R.layout.fragment_coin_rank),
+class CoinRankFragment :
+    BaseNavigationFragment(R.layout.fragment_coin_rank),
     BaseViewAdapter.LoadErrorListener,
     BaseViewAdapter.AutoLoadMoreListener {
 
@@ -68,9 +69,9 @@ class CoinRankFragment : BaseNavigationFragment(R.layout.fragment_coin_rank),
             viewModel.coinRankFlow.collectState<PageData<CoinRank>>(success = {
                 mAdapter.submitData(it, diff = true)
             }, error = {
-                mAdapter.submitFailed()
-                actionFailed(it)
-            })
+                    mAdapter.submitFailed()
+                    actionFailed(it)
+                })
         }
     }
 
@@ -90,5 +91,4 @@ class CoinRankFragment : BaseNavigationFragment(R.layout.fragment_coin_rank),
         super.onDestroyView()
         binding.rvContainer.adapter = null
     }
-
 }

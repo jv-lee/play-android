@@ -40,8 +40,10 @@ import com.lee.playandroid.router.navigateSearch
  * @author jv.lee
  * @date 2021/11/2
  */
-class HomeFragment : BaseNavigationFragment(R.layout.fragment_home),
-    View.OnClickListener, SwipeRefreshLayout.OnRefreshListener,
+class HomeFragment :
+    BaseNavigationFragment(R.layout.fragment_home),
+    View.OnClickListener,
+    SwipeRefreshLayout.OnRefreshListener,
     BaseViewAdapter.OnItemClickListener<HomeContent>,
     BaseViewAdapter.AutoLoadMoreListener,
     BaseViewAdapter.LoadErrorListener {
@@ -64,14 +66,15 @@ class HomeFragment : BaseNavigationFragment(R.layout.fragment_home),
         )
 
         binding.rvContainer.addSaveStateViewType(BannerView::class.java)
-        binding.rvContainer.addItemDecoration(OffsetItemDecoration(binding.toolbar.getToolbarLayoutHeight()))
+        binding.rvContainer.addItemDecoration(
+            OffsetItemDecoration(binding.toolbar.getToolbarLayoutHeight())
+        )
         if (binding.rvContainer.adapter == null) {
             binding.rvContainer.adapter = ContentAdapter(requireContext(), arrayListOf()).apply {
                 mAdapter = this
                 setLoadResource(MainLoadResource())
                 initStatusView()
                 pageLoading()
-
             }.proxy
         }
     }
@@ -84,10 +87,10 @@ class HomeFragment : BaseNavigationFragment(R.layout.fragment_home),
                 binding.refreshView.isRefreshing = false
                 mAdapter?.submitData(it, diff = true)
             }, error = {
-                binding.refreshView.isRefreshing = false
-                mAdapter?.submitFailed()
-                actionFailed(it)
-            })
+                    binding.refreshView.isRefreshing = false
+                    mAdapter?.submitFailed()
+                    actionFailed(it)
+                })
         }
     }
 
@@ -149,5 +152,4 @@ class HomeFragment : BaseNavigationFragment(R.layout.fragment_home),
             binding.rvContainer.smoothScrollToTop()
         }
     }
-
 }

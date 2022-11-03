@@ -34,7 +34,7 @@ class GlideTools {
     }
 
     private fun initOptions() {
-        //初始化普通加载
+        // 初始化普通加载
         RequestOptions()
             .skipMemoryCache(false)
             .diskCacheStrategy(DiskCacheStrategy.ALL)
@@ -49,11 +49,12 @@ class GlideTools {
         path: String?,
         imageView: ImageView,
         @DrawableRes placeholderResId: Int =
-        //glide内部没有进行图片模式判断 所以自行根据深色模式设置占位图
-            if (DarkModeTools.get().isDark)
+            // glide内部没有进行图片模式判断 所以自行根据深色模式设置占位图
+            if (DarkModeTools.get().isDark) {
                 R.mipmap.ic_picture_placeholder_night
-            else
+            } else {
                 R.mipmap.ic_picture_placeholder
+            }
     ) {
         val request = Glide.with(imageView.context)
             .load(http2https(path))
@@ -73,5 +74,4 @@ class GlideTools {
         }
         return path
     }
-
 }

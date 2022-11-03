@@ -32,7 +32,5 @@ class CoinRecordAdapter(context: Context, data: List<CoinRecord>) :
                 tvText.text = entity.desc
             }
         }
-
     }
-
 }
