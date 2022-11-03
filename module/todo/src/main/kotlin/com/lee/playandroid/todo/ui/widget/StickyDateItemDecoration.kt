@@ -70,7 +70,7 @@ class StickyDateItemDecoration constructor(
         val left = parent.left
         val right = parent.right
 
-        var prevGroupKey = ""
+        var prevGroupKey: String
         var groupKey = ""
 
         for (index in 0..childCount) {

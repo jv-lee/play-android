@@ -37,6 +37,7 @@ fun AgentWeb.bindLifecycle(lifecycle: Lifecycle): AgentWeb {
 /**
  * webView适配深色模式
  */
+@Suppress("DEPRECATION")
 fun AgentWeb.supportDarkMode(): AgentWeb {
     val settings = this.agentWebSettings.webSettings
     val resources = webCreator.webView.context.resources

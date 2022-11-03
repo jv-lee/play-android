@@ -12,6 +12,7 @@ import com.lee.playandroid.base.extensions.toast
 import com.lee.playandroid.base.livedatabus.InjectBus
 import com.lee.playandroid.base.livedatabus.LiveDataBus
 import com.lee.playandroid.base.tools.DarkViewUpdateTools
+import com.lee.playandroid.base.utils.LogUtil
 import com.lee.playandroid.base.widget.FloatingLayout
 import com.lee.playandroid.common.entity.LoginEvent
 import com.lee.playandroid.common.entity.NavigationSelectEvent
@@ -89,6 +90,7 @@ class MainFragment :
 
     @InjectBus
     fun loginEvent(event: LoginEvent) {
+        LogUtil.i("loginEvent:$event")
         viewLifecycleOwner.lifecycleScope.launch {
             toast(getString(R.string.login_token_failed))
             accountService.clearLoginState(requireActivity())

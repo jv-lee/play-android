@@ -12,6 +12,7 @@ import androidx.navigation.fragment.findNavController
 import com.lee.playandroid.base.adapter.core.UiPagerAdapter2
 import com.lee.playandroid.base.base.BaseNavigationFragment
 import com.lee.playandroid.base.extensions.binding
+import com.lee.playandroid.base.extensions.getParcelableCompat
 import com.lee.playandroid.base.interadp.setClickListener
 import com.lee.playandroid.base.viewstate.collectState
 import com.lee.playandroid.common.entity.TodoData
@@ -121,7 +122,7 @@ class TodoFragment : BaseNavigationFragment(R.layout.fragment_todo) {
         // 页面回传状态变更监听函数
         val listener = fun(requestKey: String, bundle: Bundle) {
             // 回传的todo数据（save、update）
-            val todo = bundle.getParcelable<TodoData>(REQUEST_VALUE_TODO)
+            val todo = bundle.getParcelableCompat<TodoData>(REQUEST_VALUE_TODO)
             // 回传的type数据 页面数据类型发生变更
             val type = bundle.getInt(REQUEST_VALUE_TYPE)
             childFragmentManager.fragments.forEach {
