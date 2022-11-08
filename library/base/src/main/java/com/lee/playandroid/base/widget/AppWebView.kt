@@ -59,7 +59,6 @@ class AppWebView : WebView, LifecycleEventObserver {
         settings.cacheMode = WebSettings.LOAD_DEFAULT
         settings.domStorageEnabled = true
         settings.javaScriptCanOpenWindowsAutomatically = true
-        settings.savePassword = false
         setWebContentsDebuggingEnabled(true)
         webViewClient = object : WebViewClient() {
             @SuppressLint("WebViewClientOnReceivedSslError")
@@ -119,6 +118,7 @@ class AppWebView : WebView, LifecycleEventObserver {
              * @param url
              * @return
              */
+            @Deprecated("Deprecated in Java")
             override fun shouldOverrideUrlLoading(view: WebView, url: String): Boolean {
                 // 重定向时更新初始URL
                 if (view.url == firstUrl || view.url == firstOverrideUrl) {

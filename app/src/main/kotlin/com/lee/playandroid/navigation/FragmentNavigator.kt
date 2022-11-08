@@ -72,7 +72,8 @@ public open class FragmentNavigator(
     override fun popBackStack(popUpTo: NavBackStackEntry, savedState: Boolean) {
         if (fragmentManager.isStateSaved) {
             Log.i(
-                TAG, "Ignoring popBackStack() call: FragmentManager has already saved its state"
+                TAG,
+                "Ignoring popBackStack() call: FragmentManager has already saved its state"
             )
             return
         }
@@ -157,7 +158,8 @@ public open class FragmentNavigator(
     ) {
         if (fragmentManager.isStateSaved) {
             Log.i(
-                TAG, "Ignoring navigate() call: FragmentManager has already saved its state"
+                TAG,
+                "Ignoring navigate() call: FragmentManager has already saved its state"
             )
             return
         }
@@ -174,10 +176,10 @@ public open class FragmentNavigator(
         val backStack = state.backStack.value
         val initialNavigation = backStack.isEmpty()
         val restoreState = (
-                navOptions != null && !initialNavigation &&
-                        navOptions.shouldRestoreState() &&
-                        savedIds.remove(entry.id)
-                )
+            navOptions != null && !initialNavigation &&
+                navOptions.shouldRestoreState() &&
+                savedIds.remove(entry.id)
+            )
         if (restoreState) {
             // Restore back stack does all the work to restore the entry
             fragmentManager.restoreBackStack(entry.id)
@@ -221,10 +223,10 @@ public open class FragmentNavigator(
         @IdRes val destId = destination.id
         // TODO Build first class singleTop behavior for fragments
         val isSingleTopReplacement = (
-                navOptions != null && !initialNavigation &&
-                        navOptions.shouldLaunchSingleTop() &&
-                        backStack.last().destination.id == destId
-                )
+            navOptions != null && !initialNavigation &&
+                navOptions.shouldLaunchSingleTop() &&
+                backStack.last().destination.id == destId
+            )
         val isAdded = when {
             initialNavigation -> {
                 true
@@ -299,7 +301,7 @@ public open class FragmentNavigator(
          * will be associated with.
          */
         public constructor(navigatorProvider: NavigatorProvider) :
-                this(navigatorProvider.getNavigator(FragmentNavigator::class.java))
+            this(navigatorProvider.getNavigator(FragmentNavigator::class.java))
 
         @SuppressLint("MissingSuperCall")
         @CallSuper
