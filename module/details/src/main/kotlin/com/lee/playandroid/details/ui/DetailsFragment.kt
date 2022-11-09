@@ -1,6 +1,7 @@
 package com.lee.playandroid.details.ui
 
 import android.widget.FrameLayout
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.LifecycleCoroutineScope
 import com.just.agentweb.AgentWeb
@@ -61,14 +62,14 @@ class DetailsFragment : BaseNavigationFragment(R.layout.fragment_details) {
 
         web = AgentWeb.with(this)
             .setAgentWebParent(binding.frameContainer, FrameLayout.LayoutParams(-1, -1))
-            .useDefaultIndicator(R.color.colorThemeAccent)
+            .useDefaultIndicator(ContextCompat.getColor(requireContext(), R.color.colorThemeAccent))
             .createAgentWeb()
             .ready()
             .go(url)
             .bindLifecycle(lifecycle)
             .apply {
                 webCreator.webView.setWebBackEvent()
-                DarkModeTools.get().setWebDarkCompat()
+                DarkModeTools.get().changeDarkModeState()
                 supportDarkMode()
             }
     }
