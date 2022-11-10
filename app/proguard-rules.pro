@@ -30,7 +30,6 @@
 -keep public class * extends android.content.ContentProvider
 -keep public class * extends android.app.backup.BackupAgentHelper
 -keep public class * extends android.view.View
--keep public class com.android.vending.licensing.ILicensingService
 
 #support / androidx
 -dontwarn androidx.appcompat.app.**
@@ -39,11 +38,6 @@
 -keep class com.google.android.** {*;}
 -keep class androidx.core.** {*;}
 -keep class androidx.appcompat.** {*;}
-
-#DataStore Preferences
--keepclassmembers class * extends androidx.datastore.preferences.protobuf.GeneratedMessageLite {
-    <fields>;
-}
 
 -keep public class * extends androidx.annotation.**
 -keep public class * extends androidx.appcompat.**
@@ -100,17 +94,6 @@ java.lang.Object writeReplace();
 java.lang.Object readResolve();
 }
 
--keepclassmembers class fqcn.of.javascript.interface.for.webview {
-public *;
-}
--keepclassmembers class * extends android.webkit.webViewClient {
-public void *(android.webkit.WebView, java.lang.String, android.graphics.Bitmap);
-public boolean *(android.webkit.WebView, java.lang.String);
-}
--keepclassmembers class * extends android.webkit.webViewClient {
-public void *(android.webkit.webView, jav.lang.String);
-}
-
 # 不混淆继承viewModel的构造函数，防止ViewModelFactory反射构造错误
 -keepclassmembers class * extends androidx.lifecycle.ViewModel {
     <init>(...);
@@ -152,27 +135,12 @@ public void *(android.webkit.webView, jav.lang.String);
 }
 -dontwarn com.just.agentweb.**
 
-
 #排除注解类
 -keep class * extends java.lang.annotation.Annotation { *; }
 -keep interface * extends java.lang.annotation.Annotation { *; }
 
-# 不混淆使用了注解的类及类成员
--keep @com.lee.library.ioc.annotation.** class* {*;}
-# 如果类中有使用了注解的方法，则不混淆类和类成员
--keepclasseswithmembers class * {
-@com.lee.playandroid.base.ioc.annotation.** <methods>;
-}
 -keepclasseswithmembers class * {
 @com.lee.playandroid.base.livedatabus.InjectBus <methods>;
-}
-# 如果类中有使用了注解的字段，则不混淆类和类成员
--keepclasseswithmembers class * {
-@com.lee.playandroid.base.ioc.annotation.** <fields>;
-}
-# 如果类中有使用了注解的构造函数，则不混淆类和类成员
--keepclasseswithmembers class * {
-@com.lee.playandroid.base.ioc.annotation.** <init>(...);
 }
 
 # The "Signature" attribute is required to be able to access generic types whencompiling in JDK 5.0 and higher.
@@ -180,13 +148,17 @@ public void *(android.webkit.webView, jav.lang.String);
 # processing Annotations
 -keepattributes *Annotation*
 
-
 #实体类不参与混淆 使用注释@Keep 标记实体类
 #-keep class com.lee.playandroid.common.entity.** {*;}
 
 #模块服务不参与混淆 (模块服务实现类使用@Keep注解标注)
 -keep public class * extends com.lee.playandroid.service.core.IModuleService
 
+# 忽略R8混淆警告信息
+-dontwarn com.squareup.javapoet.**
+-dontwarn java.lang.reflect.**
+-dontwarn javax.tools.**
+-dontwarn javax.lang.**
 
 #关闭日志
 #-assumenosideeffects class android.util.Log {
