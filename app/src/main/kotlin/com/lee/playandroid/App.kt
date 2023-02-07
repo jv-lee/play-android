@@ -75,13 +75,13 @@ class App : BaseApplication() {
             // 深色主题适配
             DarkModeTools.init(applicationContext)
             // 屏幕适配
-            ScreenDensityTools.init(this@App)
+            ScreenDensityTools.init(applicationContext)
             // 初始化网络拦截器
             HttpManager.instance.setCommonInterceptor()
             // 初始化缓存管理器
             CacheManager.init(applicationContext, BuildConfig.VERSION_CODE)
             // 子模块统一初始化
-            ApplicationModuleService.init(this@App)
+            ApplicationModuleService.init(applicationContext)
             // 全局统一loadPage资源样式设置
             ViewLoadManager.getInstance().setLoadResource(AppLoadResource())
 
