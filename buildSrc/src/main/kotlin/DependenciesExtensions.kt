@@ -47,6 +47,7 @@ fun DependencyHandlerScope.commonTest() {
     androidTestImplementation(TestDependencies.junitAndroid)
     androidTestImplementation(TestDependencies.espresso)
     debugImplementation(TestDependencies.leakcanaryDebug)
+//    debugImplementation(TestDependencies.blockCanary)
 }
 
 //基础依赖配置
@@ -62,6 +63,7 @@ fun DependencyHandlerScope.commonDependencies() {
     api(Dependencies.fragment)
 
     api(Dependencies.multidex)
+    api(Dependencies.startup)
 
     api(Dependencies.appcompat)
     api(Dependencies.material)

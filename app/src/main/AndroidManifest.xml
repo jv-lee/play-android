@@ -30,6 +30,17 @@
             <nav-graph android:value="@navigation/main" />
         </activity>
 
+        <provider
+            android:name="androidx.startup.InitializationProvider"
+            android:authorities="${applicationId}.androidx-startup"
+            android:exported="false"
+            tools:node="merge">
+            <!-- 自动初始化标签 -->
+            <meta-data
+                android:name="com.lee.playandroid.startup.AutoInitializer"
+                android:value="androidx.startup" />
+        </provider>
+
     </application>
 
 </manifest>
