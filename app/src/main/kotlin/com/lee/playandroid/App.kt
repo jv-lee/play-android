@@ -15,7 +15,7 @@ import com.lee.playandroid.common.extensions.runInternalBlock
 
 /**
  * 程序主入口
- * 进行模块、工具类、基础配置初始化 activity/fragment生命周期统一监听功能业务处理
+ * activity/fragment生命周期统一监听功能业务处理
  * @author jv.lee
  * @date 2021/11/2
  */
