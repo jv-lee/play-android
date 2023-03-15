@@ -19,8 +19,8 @@ import com.lee.playandroid.system.databinding.ItemContentBinding
  * @author jv.lee
  * @date 2021/11/10
  */
-class SystemContentListAdapter(context: Context, data: List<Content>) :
-    ViewBindingAdapter<Content>(context, data) {
+class SystemContentListAdapter(context: Context) :
+    ViewBindingAdapter<Content>(context) {
 
     init {
         addItemStyles(ContentItem())

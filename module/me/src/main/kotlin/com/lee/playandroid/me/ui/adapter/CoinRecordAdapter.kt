@@ -15,8 +15,8 @@ import com.lee.playandroid.me.databinding.ItemCoinRecordBinding
  * @author jv.lee
  * @date 2021/11/30
  */
-class CoinRecordAdapter(context: Context, data: List<CoinRecord>) :
-    ViewBindingAdapter<CoinRecord>(context, data) {
+class CoinRecordAdapter(context: Context) :
+    ViewBindingAdapter<CoinRecord>(context) {
 
     init {
         addItemStyles(CoinRecordItem())

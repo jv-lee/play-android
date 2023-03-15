@@ -70,12 +70,12 @@ class HomeFragment :
             OffsetItemDecoration(binding.toolbar.getToolbarLayoutHeight())
         )
         if (binding.rvContainer.adapter == null) {
-            binding.rvContainer.adapter = ContentAdapter(requireContext(), arrayListOf()).apply {
+            binding.rvContainer.adapter = ContentAdapter(requireContext()).apply {
                 mAdapter = this
                 setLoadResource(MainLoadResource())
                 initStatusView()
                 pageLoading()
-            }.proxy
+            }.getProxy()
         }
     }
 
@@ -106,8 +106,8 @@ class HomeFragment :
         }
     }
 
-    override fun onItemClick(view: View?, entity: HomeContent?, position: Int) {
-        entity?.content?.run { findNavController().navigateDetails(title, link, id, collect) }
+    override fun onItemClick(view: View, entity: HomeContent, position: Int) {
+        entity.content?.run { findNavController().navigateDetails(title, link, id, collect) }
     }
 
     override fun onRefresh() {

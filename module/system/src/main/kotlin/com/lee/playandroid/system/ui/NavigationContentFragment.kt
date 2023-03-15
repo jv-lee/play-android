@@ -63,10 +63,10 @@ class NavigationContentFragment :
 
         if (binding.rvContainer.adapter == null) {
             binding.rvContainer.adapter =
-                NavigationContentAdapter(requireContext(), arrayListOf()).apply {
+                NavigationContentAdapter(requireContext()).apply {
                     mNavigationContentAdapter = this
                     setLoadResource(MainLoadResource())
-                }.proxy
+                }.getProxy()
         }
 
         mNavigationTabAdapter?.bindTabLinkage(binding.rvTab, binding.rvContainer) { position ->

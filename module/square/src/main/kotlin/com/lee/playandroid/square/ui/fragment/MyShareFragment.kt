@@ -75,12 +75,12 @@ class MyShareFragment :
 
         binding.rvContainer.addOnItemTouchListener(slidingPaneItemTouchListener)
         if (binding.rvContainer.adapter == null) {
-            binding.rvContainer.adapter = SimpleTextAdapter(requireContext(), arrayListOf()).apply {
+            binding.rvContainer.adapter = SimpleTextAdapter(requireContext()).apply {
                 mAdapter = this
                 initStatusView()
                 pageLoading()
                 bindAllListener(this@MyShareFragment)
-            }.proxy
+            }.getProxy()
         }
     }
 
@@ -94,7 +94,7 @@ class MyShareFragment :
             viewModel.viewEvents.collect { event ->
                 when (event) {
                     is MyShareViewEvent.DeleteShareSuccess -> {
-                        mAdapter?.data?.removeAt(event.position)
+                        mAdapter?.getData()?.removeAt(event.position)
                         mAdapter?.notifyItemRemoved(event.position)
                         toast(getString(R.string.share_delete_success))
                     }

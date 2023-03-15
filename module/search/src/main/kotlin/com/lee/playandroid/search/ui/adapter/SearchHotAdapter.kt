@@ -15,8 +15,8 @@ import com.lee.playandroid.search.model.entity.SearchHotUI
  * @author jv.lee
  * @date 2021/11/19
  */
-class SearchHotAdapter(context: Context, data: List<SearchHotUI>) :
-    ViewBindingAdapter<SearchHotUI>(context, data) {
+class SearchHotAdapter(context: Context) :
+    ViewBindingAdapter<SearchHotUI>(context) {
 
     init {
         addItemStyles(SearchHotItem())

@@ -21,8 +21,8 @@ import com.lee.playandroid.project.databinding.ItemProjectBinding
  * @author jv.lee
  * @date 2021/11/8
  */
-class ProjectListAdapter(context: Context, data: List<Content>) :
-    ViewBindingAdapter<Content>(context, data) {
+class ProjectListAdapter(context: Context) :
+    ViewBindingAdapter<Content>(context) {
 
     init {
         addItemStyles(ProjectItem())

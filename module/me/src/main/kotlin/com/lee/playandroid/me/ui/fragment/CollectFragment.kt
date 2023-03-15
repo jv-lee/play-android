@@ -56,12 +56,12 @@ class CollectFragment :
     override fun bindView() {
         binding.rvContainer.addOnItemTouchListener(slidingPaneItemTouchListener)
         if (binding.rvContainer.adapter == null) {
-            binding.rvContainer.adapter = SimpleTextAdapter(requireContext(), arrayListOf()).apply {
+            binding.rvContainer.adapter = SimpleTextAdapter(requireContext()).apply {
                 mAdapter = this
                 initStatusView()
                 pageLoading()
                 bindAllListener(this@CollectFragment)
-            }.proxy
+            }.getProxy()
         }
     }
 
@@ -70,7 +70,7 @@ class CollectFragment :
             viewModel.viewEvents.collect { event ->
                 when (event) {
                     is CollectViewEvent.UnCollectSuccess -> {
-                        mAdapter?.data?.removeAt(event.position)
+                        mAdapter?.getData()?.removeAt(event.position)
                         mAdapter?.notifyItemRemoved(event.position)
                         toast(getString(R.string.collect_remove_item_success))
                     }

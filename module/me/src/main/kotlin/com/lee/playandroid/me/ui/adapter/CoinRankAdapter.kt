@@ -17,8 +17,8 @@ import com.lee.playandroid.me.databinding.ItemCoinRankTopBinding
  * @author jv.lee
  * @date 2021/12/9
  */
-class CoinRankAdapter(context: Context, data: List<CoinRank>) :
-    ViewBindingAdapter<CoinRank>(context, data) {
+class CoinRankAdapter(context: Context) :
+    ViewBindingAdapter<CoinRank>(context) {
 
     init {
         addItemStyles(CoinRankItem())

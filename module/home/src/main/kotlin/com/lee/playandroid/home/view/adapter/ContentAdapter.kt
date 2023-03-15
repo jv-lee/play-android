@@ -3,6 +3,7 @@ package com.lee.playandroid.home.view.adapter
 import android.content.Context
 import android.net.Uri
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.navigation.Navigation
@@ -22,6 +23,7 @@ import com.lee.playandroid.home.bean.HomeContent
 import com.lee.playandroid.home.databinding.ItemContentBannerBinding
 import com.lee.playandroid.home.databinding.ItemContentCategoryBinding
 import com.lee.playandroid.home.databinding.ItemContentTextBinding
+import com.lee.playandroid.home.model.entity.HomeCategory
 import com.lee.playandroid.router.NavigationAnim
 import com.lee.playandroid.router.navigateDeepLink
 import com.lee.playandroid.router.navigateDetails
@@ -31,8 +33,8 @@ import com.lee.playandroid.router.navigateDetails
  * @author jv.lee
  * @date 2021/11/2
  */
-class ContentAdapter(context: Context, data: List<HomeContent>) :
-    ViewBindingAdapter<HomeContent>(context, data) {
+class ContentAdapter(context: Context) :
+    ViewBindingAdapter<HomeContent>(context) {
 
     companion object {
         const val CONTENT_TEXT_ITEM_TYPE = 2
@@ -103,11 +105,19 @@ class ContentAdapter(context: Context, data: List<HomeContent>) :
 
                 // 构建适配器
                 mAdapter ?: kotlin.run {
-                    mAdapter = ContentCategoryAdapter(context, data).apply {
-                        setOnItemClickListener { view, entity, _ ->
-                            Navigation.findNavController(view)
-                                .navigateDeepLink(Uri.parse(entity.link), NavigationAnim.ZoomIn)
-                        }
+                    mAdapter = ContentCategoryAdapter(context).apply {
+                        addData(data)
+                        setOnItemClickListener(object : OnItemClickListener<HomeCategory> {
+                            override fun onItemClick(
+                                view: View,
+                                entity: HomeCategory,
+                                position: Int
+                            ) {
+                                Navigation.findNavController(view)
+                                    .navigateDeepLink(Uri.parse(entity.link), NavigationAnim.ZoomIn)
+                            }
+
+                        })
                     }
                 }
 

@@ -23,8 +23,8 @@ import com.lee.playandroid.search.databinding.ItemSearchResultTextBinding
  * @author jv.lee
  * @date 2021/11/22
  */
-class SearchResultAdapter(context: Context, data: List<Content>) :
-    ViewBindingAdapter<Content>(context, data) {
+class SearchResultAdapter(context: Context) :
+    ViewBindingAdapter<Content>(context) {
 
     init {
         addItemStyles(SearchResultTextItem())

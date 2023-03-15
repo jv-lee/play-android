@@ -18,8 +18,8 @@ import com.lee.playandroid.todo.ui.TodoListFragment.Companion.ARG_STATUS_UPCOMIN
  * @author jv.lee
  * @date 2021/12/27
  */
-class TodoListAdapter(context: Context, private val status: Int, data: List<TodoData>) :
-    ViewBindingAdapter<TodoData>(context, data) {
+class TodoListAdapter(context: Context, private val status: Int) :
+    ViewBindingAdapter<TodoData>(context) {
 
     init {
         addItemChildIds(R.id.const_container, R.id.btn_done, R.id.btn_delete)

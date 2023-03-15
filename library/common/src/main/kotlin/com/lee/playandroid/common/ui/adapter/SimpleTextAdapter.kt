@@ -18,8 +18,8 @@ import com.lee.playandroid.common.extensions.getTitle
  * @author jv.lee
  * @date 2021/12/2
  */
-class SimpleTextAdapter(context: Context, data: List<Content>) :
-    ViewBindingAdapter<Content>(context, data) {
+class SimpleTextAdapter(context: Context) :
+    ViewBindingAdapter<Content>(context) {
 
     init {
         addItemChildIds(R.id.frame_container, R.id.btn_delete)

@@ -55,12 +55,12 @@ class CoinRankFragment :
             spanSizeLookup = RankSpanSizeLookup()
         }
         if (binding.rvContainer.adapter == null) {
-            binding.rvContainer.adapter = CoinRankAdapter(requireContext(), arrayListOf()).apply {
+            binding.rvContainer.adapter = CoinRankAdapter(requireContext()).apply {
                 mAdapter = this
                 initStatusView()
                 pageLoading()
                 bindAllListener(this@CoinRankFragment)
-            }.proxy
+            }.getProxy()
         }
     }
 

@@ -32,7 +32,7 @@ class ProjectListFragment : BaseListFragment() {
     private val viewModel by viewModels<ProjectListViewModel>()
 
     override fun createAdapter(): BaseViewAdapter<Content> {
-        return ProjectListAdapter(requireContext(), arrayListOf())
+        return ProjectListAdapter(requireContext())
     }
 
     override fun requestContentList(status: Int) {

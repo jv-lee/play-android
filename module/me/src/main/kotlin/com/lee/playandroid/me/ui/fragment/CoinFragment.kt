@@ -58,13 +58,13 @@ class CoinFragment :
         }
 
         if (binding.rvContainer.adapter == null) {
-            binding.rvContainer.adapter = CoinRecordAdapter(requireContext(), arrayListOf()).apply {
+            binding.rvContainer.adapter = CoinRecordAdapter(requireContext()).apply {
                 mAdapter = this
                 setLoadResource(CoinLoadResource())
                 initStatusView()
                 pageLoading()
                 bindAllListener(this@CoinFragment)
-            }.proxy
+            }.getProxy()
         }
     }
 

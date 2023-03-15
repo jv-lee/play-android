@@ -5,6 +5,7 @@ import android.view.inputmethod.EditorInfo.IME_ACTION_SEARCH
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.navigation.fragment.findNavController
+import com.lee.playandroid.base.adapter.base.BaseViewAdapter
 import com.lee.playandroid.base.adapter.page.submitSinglePage
 import com.lee.playandroid.base.base.BaseNavigationFragment
 import com.lee.playandroid.base.extensions.binding
@@ -12,9 +13,11 @@ import com.lee.playandroid.base.tools.SystemBarTools.hasSoftInputShow
 import com.lee.playandroid.base.tools.SystemBarTools.hideSoftInput
 import com.lee.playandroid.base.tools.SystemBarTools.parentTouchHideSoftInput
 import com.lee.playandroid.base.viewstate.collectState
+import com.lee.playandroid.common.entity.SearchHistory
 import com.lee.playandroid.common.extensions.actionFailed
 import com.lee.playandroid.search.R
 import com.lee.playandroid.search.databinding.FragmentSearchBinding
+import com.lee.playandroid.search.model.entity.SearchHotUI
 import com.lee.playandroid.search.ui.adapter.SearchHistoryAdapter
 import com.lee.playandroid.search.ui.adapter.SearchHotAdapter
 import com.lee.playandroid.search.viewmodel.SearchViewAction
@@ -57,26 +60,35 @@ class SearchFragment : BaseNavigationFragment(R.layout.fragment_search) {
         // 搜索热词列表适配器设置
         if (binding.rvHotContainer.adapter == null) {
             binding.rvHotContainer.adapter =
-                SearchHotAdapter(requireContext(), arrayListOf()).apply {
+                SearchHotAdapter(requireContext()).apply {
                     mHotAdapter = this
-                    setOnItemClickListener { _, entity, _ ->
-                        viewModel.dispatch(SearchViewAction.NavigationSearchResult(entity.key))
-                    }
-                }.proxy
+                    setOnItemClickListener(object :
+                        BaseViewAdapter.OnItemClickListener<SearchHotUI> {
+                        override fun onItemClick(view: View, entity: SearchHotUI, position: Int) {
+                            viewModel.dispatch(SearchViewAction.NavigationSearchResult(entity.key))
+                        }
+                    })
+                }.getProxy()
         }
 
         // 搜索历史列表适配器设置
         if (binding.rvHistoryContainer.adapter == null) {
             binding.rvHistoryContainer.adapter =
-                SearchHistoryAdapter(requireContext(), arrayListOf()).apply {
+                SearchHistoryAdapter(requireContext()).apply {
                     mHistoryAdapter = this
-                    setOnItemClickListener { _, entity, _ ->
-                        viewModel.dispatch(SearchViewAction.NavigationSearchResult(entity.key))
-                    }
-                    setOnItemChildClickListener({ _, entity, _ ->
-                        viewModel.dispatch(SearchViewAction.DeleteHistory(entity.key))
+                    setOnItemClickListener(object :
+                        BaseViewAdapter.OnItemClickListener<SearchHistory> {
+                        override fun onItemClick(view: View, entity: SearchHistory, position: Int) {
+                            viewModel.dispatch(SearchViewAction.NavigationSearchResult(entity.key))
+                        }
+                    })
+                    setOnItemChildClickListener(object :
+                        BaseViewAdapter.OnItemChildView<SearchHistory> {
+                        override fun onItemChild(view: View, entity: SearchHistory, position: Int) {
+                            viewModel.dispatch(SearchViewAction.DeleteHistory(entity.key))
+                        }
                     }, R.id.iv_delete)
-                }.proxy
+                }.getProxy()
         }
     }
 

@@ -27,7 +27,6 @@ import com.lee.playandroid.system.viewmodel.SystemContentViewAction
 import com.lee.playandroid.system.viewmodel.SystemContentViewEvent
 import com.lee.playandroid.system.viewmodel.SystemContentViewModel
 import com.lee.playandroid.system.viewmodel.SystemContentViewState
-import kotlinx.coroutines.flow.collect
 
 /**
  * 体系列表Fragment
@@ -56,13 +55,13 @@ class SystemContentFragment :
 
         if (binding.rvContainer.adapter == null) {
             binding.rvContainer.adapter =
-                SystemContentAdapter(requireContext(), arrayListOf()).apply {
+                SystemContentAdapter(requireContext()).apply {
                     mAdapter = this
                     setLoadResource(MainLoadResource())
                     initStatusView()
                     pageLoading()
                     bindAllListener(this@SystemContentFragment)
-                }.proxy
+                }.getProxy()
         }
     }
 

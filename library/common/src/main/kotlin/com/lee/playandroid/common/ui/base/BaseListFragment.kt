@@ -52,7 +52,7 @@ abstract class BaseListFragment :
                 mAdapter = this
                 initStatusView()
                 pageLoading()
-            }.proxy
+            }.getProxy()
         }
     }
 

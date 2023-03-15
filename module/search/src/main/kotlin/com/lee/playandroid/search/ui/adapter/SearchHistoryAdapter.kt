@@ -15,8 +15,8 @@ import com.lee.playandroid.search.databinding.ItemSearchHistoryBinding
  * @author jv.lee
  * @date 2021/11/19
  */
-class SearchHistoryAdapter(context: Context, data: List<SearchHistory>) :
-    ViewBindingAdapter<SearchHistory>(context, data) {
+class SearchHistoryAdapter(context: Context) :
+    ViewBindingAdapter<SearchHistory>(context) {
 
     init {
         addItemStyles(SearchHistoryItem())

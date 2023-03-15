@@ -33,7 +33,7 @@ class SystemContentListFragment : BaseListFragment() {
     private val viewModel by viewModels<SystemContentListViewModel>()
 
     override fun createAdapter(): BaseViewAdapter<Content> {
-        return SystemContentListAdapter(requireContext(), arrayListOf())
+        return SystemContentListAdapter(requireContext())
     }
 
     override fun requestContentList(status: Int) {

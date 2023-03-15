@@ -18,8 +18,8 @@ import com.lee.playandroid.home.model.entity.HomeCategory
  * @author jv.lee
  * @date 2021/11/8
  */
-class ContentCategoryAdapter(context: Context, data: List<HomeCategory>) :
-    ViewBindingAdapter<HomeCategory>(context, data) {
+class ContentCategoryAdapter(context: Context) :
+    ViewBindingAdapter<HomeCategory>(context) {
 
     init {
         addItemStyles(ContentCategoryChildItem())

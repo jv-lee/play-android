@@ -80,12 +80,12 @@ class TodoListFragment :
         binding.rvContainer.addOnItemTouchListener(slidingPaneItemTouchListener)
         if (binding.rvContainer.adapter == null) {
             binding.rvContainer.adapter =
-                TodoListAdapter(requireContext(), status, arrayListOf()).apply {
+                TodoListAdapter(requireContext(), status).apply {
                     mAdapter = this
                     initStatusView()
                     pageLoading()
                     bindAllListener(this@TodoListFragment)
-                }.proxy
+                }.getProxy()
         }
         // 添加todo日期吸顶itemDecoration
         binding.rvContainer.addItemDecoration(StickyDateItemDecoration(requireContext(), mAdapter))
@@ -105,14 +105,14 @@ class TodoListFragment :
                     }
                     // 列表item更新成功事件
                     is TodoListViewEvent.UpdateTodoActionSuccess -> {
-                        mAdapter?.data?.removeAt(event.position)
+                        mAdapter?.getData()?.removeAt(event.position)
                         mAdapter?.notifyItemRemoved(event.position)
                         toast(getString(R.string.todo_move_success))
                         findParentFragment<TodoFragment>()?.moveTodoItem(event.todo)
                     }
                     // 列表item移除成功事件
                     is TodoListViewEvent.DeleteTodoActionSuccess -> {
-                        mAdapter?.data?.removeAt(event.position)
+                        mAdapter?.getData()?.removeAt(event.position)
                         mAdapter?.notifyItemRemoved(event.position)
                         toast(getString(R.string.todo_delete_success))
                     }

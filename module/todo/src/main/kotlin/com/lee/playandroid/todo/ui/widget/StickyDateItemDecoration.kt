@@ -123,7 +123,7 @@ class StickyDateItemDecoration constructor(
 
     private fun getGroupKey(position: Int): String {
         adapter ?: return ""
-        val data = adapter.data
+        val data = adapter.getData()
         if (position < 0 || position >= data.size) return ""
         return data[position].dateStr
     }

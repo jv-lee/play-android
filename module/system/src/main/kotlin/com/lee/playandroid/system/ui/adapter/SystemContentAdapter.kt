@@ -17,8 +17,8 @@ import com.lee.playandroid.system.databinding.ItemSystemContentBinding
  * @author jv.lee
  * @date 2021/11/10
  */
-class SystemContentAdapter(context: Context, data: List<ParentTab>) :
-    ViewBindingAdapter<ParentTab>(context, data) {
+class SystemContentAdapter(context: Context) :
+    ViewBindingAdapter<ParentTab>(context) {
 
     init {
         addItemStyles(SystemContentItem())

@@ -49,13 +49,13 @@ class SearchResultFragment :
         // 搜索结果列表适配器设置
         if (binding.rvContainer.adapter == null) {
             binding.rvContainer.adapter =
-                SearchResultAdapter(requireContext(), arrayListOf()).apply {
+                SearchResultAdapter(requireContext()).apply {
                     mAdapter = this
 
                     initStatusView()
                     pageLoading()
                     bindAllListener(this@SearchResultFragment)
-                }.proxy
+                }.getProxy()
         }
     }
 
@@ -81,8 +81,8 @@ class SearchResultFragment :
         }
     }
 
-    override fun onItemClick(view: View?, entity: Content?, position: Int) {
-        entity?.run { findNavController().navigateDetails(title, link, id, collect) }
+    override fun onItemClick(view: View, entity: Content, position: Int) {
+        entity.run { findNavController().navigateDetails(title, link, id, collect) }
     }
 
     override fun autoLoadMore() {

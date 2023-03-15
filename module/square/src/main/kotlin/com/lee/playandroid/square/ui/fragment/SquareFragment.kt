@@ -69,12 +69,12 @@ class SquareFragment :
             OffsetItemDecoration(binding.toolbar.getToolbarLayoutHeight())
         )
         if (binding.rvContainer.adapter == null) {
-            binding.rvContainer.adapter = SquareAdapter(requireContext(), arrayListOf()).apply {
+            binding.rvContainer.adapter = SquareAdapter(requireContext()).apply {
                 mAdapter = this
                 setLoadResource(MainLoadResource())
                 initStatusView()
                 pageLoading()
-            }.proxy
+            }.getProxy()
         }
     }
 
@@ -85,7 +85,7 @@ class SquareFragment :
             viewModel.squareFlow.collectState<PageData<Content>>(
                 success = {
                     binding.refreshView.isRefreshing = false
-                    mAdapter?.submitData(it)
+                    mAdapter?.submitData(it, diff = true)
                 },
                 error = {
                     binding.refreshView.isRefreshing = false
@@ -106,8 +106,8 @@ class SquareFragment :
         }
     }
 
-    override fun onItemClick(view: View?, entity: Content?, position: Int) {
-        entity?.run { findNavController().navigateDetails(title, link, id, collect) }
+    override fun onItemClick(view: View, entity: Content, position: Int) {
+        entity.run { findNavController().navigateDetails(title, link, id, collect) }
     }
 
     override fun onRefresh() {

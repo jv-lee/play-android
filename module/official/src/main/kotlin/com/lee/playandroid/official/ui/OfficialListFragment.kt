@@ -32,7 +32,7 @@ class OfficialListFragment : BaseListFragment() {
     private val viewModel by viewModels<OfficialListViewModel>()
 
     override fun createAdapter(): BaseViewAdapter<Content> {
-        return OfficialListAdapter(requireContext(), arrayListOf())
+        return OfficialListAdapter(requireContext())
     }
 
     override fun requestContentList(status: Int) {

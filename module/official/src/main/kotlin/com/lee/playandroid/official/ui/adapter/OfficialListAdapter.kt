@@ -19,8 +19,8 @@ import com.lee.playandroid.official.databinding.ItemOfficialBinding
  * @author jv.lee
  * @date 2021/11/8
  */
-class OfficialListAdapter(context: Context, data: List<Content>) :
-    ViewBindingAdapter<Content>(context, data) {
+class OfficialListAdapter(context: Context) :
+    ViewBindingAdapter<Content>(context) {
 
     init {
         addItemStyles(OfficialItem())

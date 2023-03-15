@@ -19,8 +19,8 @@ import com.lee.playandroid.square.databinding.ItemSquareBinding
  * @author jv.lee
  * @date 2021/12/13
  */
-class SquareAdapter(context: Context, data: List<Content>) :
-    ViewBindingAdapter<Content>(context, data) {
+class SquareAdapter(context: Context) :
+    ViewBindingAdapter<Content>(context) {
 
     init {
         addItemStyles(SquareItem())

@@ -16,8 +16,8 @@ import com.lee.playandroid.system.databinding.ItemNavigationContentTagBinding
  * @author jv.lee
  * @date 2021/11/16
  */
-class NavigationContentTagAdapter(context: Context, data: List<Content>) :
-    ViewBindingAdapter<Content>(context, data) {
+class NavigationContentTagAdapter(context: Context) :
+    ViewBindingAdapter<Content>(context) {
 
     init {
         addItemStyles(NavigationContentTagItem())
