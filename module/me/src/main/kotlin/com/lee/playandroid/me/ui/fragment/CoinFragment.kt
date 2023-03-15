@@ -70,12 +70,15 @@ class CoinFragment :
 
     override fun LifecycleCoroutineScope.bindData() {
         launchWhenResumed {
-            viewModel.coinRecordFlow.collectState<PageData<CoinRecord>>(success = {
-                mAdapter.submitData(it, diff = true)
-            }, error = {
-                mAdapter.submitFailed()
-                actionFailed(it)
-            })
+            viewModel.coinRecordFlow.collectState<PageData<CoinRecord>>(
+                success = {
+                    mAdapter.submitData(it, diff = true)
+                },
+                error = {
+                    mAdapter.submitFailed()
+                    actionFailed(it)
+                }
+            )
         }
 
         launchWhenResumed {

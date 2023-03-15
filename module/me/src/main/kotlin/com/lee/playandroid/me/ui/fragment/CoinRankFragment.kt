@@ -66,12 +66,15 @@ class CoinRankFragment :
 
     override fun LifecycleCoroutineScope.bindData() {
         launchWhenResumed {
-            viewModel.coinRankFlow.collectState<PageData<CoinRank>>(success = {
-                mAdapter.submitData(it, diff = true)
-            }, error = {
+            viewModel.coinRankFlow.collectState<PageData<CoinRank>>(
+                success = {
+                    mAdapter.submitData(it, diff = true)
+                },
+                error = {
                     mAdapter.submitFailed()
                     actionFailed(it)
-                })
+                }
+            )
         }
     }
 

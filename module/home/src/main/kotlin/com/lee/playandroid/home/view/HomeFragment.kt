@@ -83,14 +83,17 @@ class HomeFragment :
         LiveDataBus.instance.injectBus(this@HomeFragment)
 
         launchWhenResumed {
-            viewModel.contentListFlow.collectState<PageUiData<HomeContent>>(success = {
-                binding.refreshView.isRefreshing = false
-                mAdapter?.submitData(it, diff = true)
-            }, error = {
+            viewModel.contentListFlow.collectState<PageUiData<HomeContent>>(
+                success = {
+                    binding.refreshView.isRefreshing = false
+                    mAdapter?.submitData(it, diff = true)
+                },
+                error = {
                     binding.refreshView.isRefreshing = false
                     mAdapter?.submitFailed()
                     actionFailed(it)
-                })
+                }
+            )
         }
     }
 

@@ -44,8 +44,6 @@ abstract class BaseListFragment :
 
     abstract fun dataFlow(): StateFlow<UiStatePage>
 
-    open fun findBinding() = binding
-
     override fun bindView() {
         if (binding.rvContainer.adapter == null) {
             binding.rvContainer.adapter = createAdapter().apply {
@@ -59,14 +57,17 @@ abstract class BaseListFragment :
     override fun LifecycleCoroutineScope.bindData() {
         // 列表数据更新
         launchWhenResumed {
-            dataFlow().collectState<PageData<Content>>(success = {
-                binding.refreshLayout.isRefreshing = false
-                mAdapter.submitData(it, diff = true)
-            }, error = {
+            dataFlow().collectState<PageData<Content>>(
+                success = {
+                    binding.refreshLayout.isRefreshing = false
+                    mAdapter.submitData(it, diff = true)
+                },
+                error = {
                     binding.refreshLayout.isRefreshing = false
                     mAdapter.submitFailed()
                     actionFailed(it)
-                })
+                }
+            )
         }
     }
 
