@@ -19,13 +19,12 @@ open class ViewBindingAdapter<T>(context: Context) : BaseViewAdapter<T>(context)
             ?: throw RuntimeException("itemStyle.getViewItem is null.")
         val viewBinding = item.getItemViewAny(parent.context, parent) as? ViewBinding
             ?: throw RuntimeException("itemStyle.getItemViewAny is null.")
-
         val viewHolder = ViewBindingHolder(viewBinding)
 
-        // 点击的监听
         if (item.openClick()) {
+            // itemView点击事件设置监听
             setListener(viewHolder, item.openShake())
-            // 子view监听
+            // childView点击事件设置监听
             setChildListener(viewHolder, item.openShake())
         }
         return viewHolder

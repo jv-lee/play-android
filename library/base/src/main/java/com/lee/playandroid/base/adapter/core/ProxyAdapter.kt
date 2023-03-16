@@ -117,7 +117,9 @@ class ProxyAdapter(
 
         val itemViewType = adapter.getItemViewType(adjPosition)
         if (itemViewType < 0 || itemViewType > (1 shl TYPE_SHIFT) - 1) {
-            throw IllegalArgumentException("Invalid item view type: RecyclerView.Adapter.getItemViewType return $itemViewType")
+            throw IllegalArgumentException(
+                "Invalid item view type: RecyclerView.Adapter.getItemViewType return $itemViewType"
+            )
         }
         return itemViewType
     }

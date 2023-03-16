@@ -18,7 +18,6 @@ import com.lee.playandroid.base.adapter.listener.LoadResource
 import com.lee.playandroid.base.adapter.listener.LoadStatusListener
 import com.lee.playandroid.base.adapter.manager.ViewItemManager
 import com.lee.playandroid.base.adapter.manager.ViewLoadManager
-import java.util.*
 
 /**
  * 封装的RecyclerViewAdapter
@@ -29,24 +28,30 @@ import java.util.*
 open class BaseViewAdapter<T>(private val context: Context) :
     RecyclerView.Adapter<BaseViewHolder>() {
 
-    private var loadMoreNum = 5
-    private var hasLoadMore = false
     private var lastClickTime = 0
-    private var currentPageStatus = AdapterStatus.UNKNOWN
-    private var currentItemStatus = AdapterStatus.UNKNOWN
+    private var loadMoreNum = 5 // 自动加载更多预备值
+    private var hasLoadMore = false // 是否开启加载更多
+    private var currentPageStatus = AdapterStatus.UNKNOWN // 当前页面状态
+    private var currentItemStatus = AdapterStatus.UNKNOWN // 当前item状态
 
-    private val itemClickTimeSpan = 1000
-    private val mData = arrayListOf<T>()
-    private val childClickIds = arrayListOf<Int>()
-    private val itemStyle = ViewItemManager<T>()
+    private val itemClickTimeSpan = 1000 // item点击间隔
+    private val mData = arrayListOf<T>() // 数据源
+    private val childClickIds = arrayListOf<Int>() // item子view点击id数组
+    private val itemStyle = ViewItemManager<T>() // item样式管理器
 
-    private var proxyAdapter: ProxyAdapter? = null
+    private var proxyAdapter: ProxyAdapter? = null // 列表头尾view代理适配器
 
+    /**
+     * 页面加载布局
+     */
     private var pageLayout: View? = null
     private var pageLoadingView: View? = null
     private var pageErrorView: View? = null
     private var pageEmptyView: View? = null
 
+    /**
+     * item加载布局
+     */
     private var itemLayout: View? = null
     private var loadMoreView: View? = null
     private var loadEndView: View? = null
@@ -89,14 +94,17 @@ open class BaseViewAdapter<T>(private val context: Context) :
     private var mLoadStatusListener: LoadStatusListener? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder {
+        // 根据布局的类型 创建不同的ViewHolder
         val item = itemStyle.getViewItem(viewType)
             ?: throw RuntimeException("itemStyle.getViewItem is null.")
-
-        val view = item.getItemViewAny(parent.context, parent) as View
-
+        val view = item.getItemViewAny(parent.context, parent) as? View
+            ?: throw RuntimeException("itemStyle.getItemViewAny is null.")
         val viewHolder = BaseViewHolder(view)
+
         if (item.openClick()) {
+            // itemView点击事件设置监听
             setListener(viewHolder, item.openShake())
+            // childView点击事件设置监听
             setChildListener(viewHolder, item.openShake())
         }
         return viewHolder
@@ -104,9 +112,7 @@ open class BaseViewAdapter<T>(private val context: Context) :
 
     override fun onBindViewHolder(holder: BaseViewHolder, position: Int) {
         convert(holder, mData[position])
-        if (mAutoLoadMoreListener != null && hasLoadMore) {
-            callEnd(position)
-        }
+        callEnd(position)
     }
 
     override fun onViewRecycled(holder: BaseViewHolder) {
@@ -137,6 +143,8 @@ open class BaseViewAdapter<T>(private val context: Context) :
      * @param position 当前下标
      */
     private fun callEnd(position: Int) {
+        if (!hasLoadMore || mAutoLoadMoreListener == null) return
+
         val currentPosition = itemCount - position
         // 回调加载更多 关闭开关
         if (currentPosition == loadMoreNum) {
@@ -155,13 +163,7 @@ open class BaseViewAdapter<T>(private val context: Context) :
     }
 
     private fun updateStatus(@AdapterStatus status: Int) {
-        if (pageLoadingView == null ||
-            pageEmptyView == null ||
-            pageErrorView == null ||
-            loadMoreView == null ||
-            loadEndView == null ||
-            loadErrorView == null
-        ) {
+        if (pageLayout == null || itemLayout == null) {
             return
         }
         (pageLayout as? ViewGroup)?.children?.forEach {
@@ -234,7 +236,7 @@ open class BaseViewAdapter<T>(private val context: Context) :
      * 设置错误回调逻辑
      */
     private fun bindLoadErrorListener() {
-        mLoadResource?.run {
+        mLoadResource?.apply {
             pageLayout?.findViewById<View>(pageReloadId())?.setOnClickListener {
                 updateStatus(AdapterStatus.STATUS_PAGE_LOADING)
                 mLoadErrorListener?.pageReload()
@@ -263,8 +265,7 @@ open class BaseViewAdapter<T>(private val context: Context) :
     protected fun setChildListener(viewHolder: BaseViewHolder, shake: Boolean) {
         mOnItemChildChange?.run {
             for (childClickId in childClickIds) {
-                val view =
-                    viewHolder.itemView.findViewById<View>(childClickId) ?: continue
+                val view = viewHolder.itemView.findViewById<View>(childClickId) ?: continue
                 view.setOnClickListener {
                     if (shake) {
                         val timeSpan = System.currentTimeMillis() - lastClickTime
@@ -372,36 +373,51 @@ open class BaseViewAdapter<T>(private val context: Context) :
         itemStyle.addStyles(item)
     }
 
+    /**
+     * 获取样式管理器 @see [ViewItemManager]
+     */
     fun getItemStyles() = itemStyle
 
+    /**
+     * 初始化列表状态view
+     * pageLayout（页面加载中、页面加载失败、页面空数据）
+     * itemLayout （加载更多、加载错误、加载到未页）
+     * @param isInit 是否是首次初始化状态
+     */
     fun initStatusView(isInit: Boolean = true) {
         // 开启loadMore模式
         hasLoadMore = true
 
-        (mLoadResource ?: ViewLoadManager.getInstance().getLoadResource().also {
-            mLoadResource = it
-        }).run {
+        // 初始化LoadResource
+        mLoadResource ?: kotlin.run {
+            mLoadResource = ViewLoadManager.getInstance().getLoadResource()
+        }
+
+        // 设置pageLayout and itemLayout
+        mLoadResource?.apply {
             // pageLayout
-            pageLayout ?: LayoutInflater.from(context)
-                .inflate(pageLayoutId(), FrameLayout(context), false).also {
-                    pageLayout = it
-                }.run {
-                    pageLoadingView = findViewById(pageLoadingId())
-                    pageEmptyView = findViewById(pageEmptyId())
-                    pageErrorView = findViewById(pageErrorId())
-                    addFooter(this)
-                }
+            pageLayout ?: kotlin.run {
+                pageLayout = LayoutInflater.from(context)
+                    .inflate(pageLayoutId(), FrameLayout(context), false)
+            }
+            pageLayout?.run {
+                pageLoadingView = findViewById(pageLoadingId())
+                pageEmptyView = findViewById(pageEmptyId())
+                pageErrorView = findViewById(pageErrorId())
+                addFooter(this)
+            }
 
             // itemLayout
-            itemLayout ?: LayoutInflater.from(context)
-                .inflate(itemLayoutId(), FrameLayout(context), false).also {
-                    itemLayout = it
-                }.run {
-                    loadMoreView = findViewById(itemLoadMoreId())
-                    loadEndView = findViewById(itemLoadEndId())
-                    loadErrorView = findViewById(itemLoadErrorId())
-                    addFooter(this)
-                }
+            itemLayout ?: kotlin.run {
+                itemLayout = LayoutInflater.from(context)
+                    .inflate(itemLayoutId(), FrameLayout(context), false)
+            }
+            itemLayout?.run {
+                loadMoreView = findViewById(itemLoadMoreId())
+                loadEndView = findViewById(itemLoadEndId())
+                loadErrorView = findViewById(itemLoadErrorId())
+                addFooter(this)
+            }
         }
 
         if (isInit) {
@@ -428,29 +444,41 @@ open class BaseViewAdapter<T>(private val context: Context) :
     /**
      * 开启加载更多状态
      */
-    open fun openLoadMore() {
+    fun openLoadMore() {
         hasLoadMore = true
         updateStatus(AdapterStatus.STATUS_INIT)
     }
 
+    /**
+     * 设置页面loading状态
+     */
     fun pageLoading() {
         updateStatus(AdapterStatus.STATUS_PAGE_LOADING)
     }
 
+    /**
+     * 设置页面空数据状态
+     */
     fun pageEmpty() {
         updateStatus(AdapterStatus.STATUS_PAGE_EMPTY)
     }
 
+    /**
+     * 设置页面错误状态
+     */
     fun pageError() {
         updateStatus(AdapterStatus.STATUS_PAGE_ERROR)
     }
 
+    /**
+     * 设置页面数据加载完毕状态进入item状态
+     */
     fun pageCompleted() {
         updateStatus(AdapterStatus.STATUS_PAGE_COMPLETED)
     }
 
     /**
-     * 加载完成
+     * 加载更多完成
      */
     fun loadMoreCompleted() {
         hasLoadMore = true
@@ -458,7 +486,7 @@ open class BaseViewAdapter<T>(private val context: Context) :
     }
 
     /**
-     * 没有更多了
+     * 设置未页状态
      */
     fun loadMoreEnd() {
         // 添加底部布局
@@ -471,7 +499,7 @@ open class BaseViewAdapter<T>(private val context: Context) :
     }
 
     /**
-     * 加载完成
+     * 加载更多完成
      */
     fun loadMoreCompleted(count: Int) {
         hasLoadMore = true
@@ -480,7 +508,7 @@ open class BaseViewAdapter<T>(private val context: Context) :
     }
 
     /**
-     * 没有更多了
+     * 设置未页状态
      */
     fun loadMoreEnd(count: Int) {
         // 添加底部布局
@@ -493,6 +521,9 @@ open class BaseViewAdapter<T>(private val context: Context) :
         notifyItemRangeInserted(startIndex, count)
     }
 
+    /**
+     * 设置item错误
+     */
     fun loadFailed() {
         updateStatus(AdapterStatus.STATUS_ITEM_ERROR)
     }
@@ -680,7 +711,7 @@ open class BaseViewAdapter<T>(private val context: Context) :
         bindLoadErrorListener()
     }
 
-    open fun setLoadStatusListener(loadStatusListener: LoadStatusListener) {
+    fun setLoadStatusListener(loadStatusListener: LoadStatusListener) {
         mLoadStatusListener = loadStatusListener
     }
 }

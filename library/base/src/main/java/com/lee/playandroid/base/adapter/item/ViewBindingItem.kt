@@ -12,8 +12,7 @@ import com.lee.playandroid.base.adapter.binding.ViewBindingHolder
  * @author jv.lee
  * @date 2021/6/15
  */
-abstract class ViewBindingItem<T> :
-    BaseViewItem<T> {
+abstract class ViewBindingItem<T> : BaseViewItem<T> {
 
     override fun getItemViewAny(context: Context, parent: ViewGroup): Any {
         return getItemViewBinding(context, parent)
