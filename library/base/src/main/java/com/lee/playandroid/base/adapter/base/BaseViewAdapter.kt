@@ -162,6 +162,10 @@ open class BaseViewAdapter<T>(private val context: Context) :
         }
     }
 
+    /**
+     * 更新适配器当前加载状态
+     * @param status [AdapterStatus]
+     */
     private fun updateStatus(@AdapterStatus status: Int) {
         if (pageLayout == null || itemLayout == null) {
             return
@@ -224,10 +228,21 @@ open class BaseViewAdapter<T>(private val context: Context) :
         return itemStyle.getItemViewStylesCount() > 0
     }
 
+    /**
+     * itemView 绘制方法
+     *
+     * @param holder
+     * @param entity
+     */
     private fun convert(holder: BaseViewHolder, entity: T) {
         itemStyle.convert(holder, entity, holder.layoutPosition)
     }
 
+    /**
+     * itemView 回收资源回收
+     *
+     * @param holder
+     */
     private fun viewRecycled(holder: BaseViewHolder) {
         itemStyle.viewRecycled(holder)
     }
@@ -316,6 +331,10 @@ open class BaseViewAdapter<T>(private val context: Context) :
         }
     }
 
+    /**
+     * 使用底部加载状态时，适配器需要获取代理实例
+     * 创建Adapter后最终通过getProxyAdapter 后设置到RecyclerView中
+     */
     fun getProxy(): ProxyAdapter {
         if (proxyAdapter == null) {
             proxyAdapter = ProxyAdapter(this as RecyclerView.Adapter<RecyclerView.ViewHolder>)
@@ -323,22 +342,47 @@ open class BaseViewAdapter<T>(private val context: Context) :
         return proxyAdapter as ProxyAdapter
     }
 
+    /**
+     * 添加头部view
+     *
+     * @param view
+     */
     fun addHeader(view: View) {
         getProxy().addHeaderView(view)
     }
 
+    /**
+     * 添加底部view
+     *
+     * @param view
+     */
     fun addFooter(view: View) {
         getProxy().addFooterView(view)
     }
 
+    /**
+     * 添加底部view 每一次设置到底部view组的顶部
+     *
+     * @param view
+     */
     fun addFooterAtTop(view: View) {
         getProxy().addFooterViewAtTop(view)
     }
 
+    /**
+     * 删除头部view
+     *
+     * @param view
+     */
     fun removeHeader(view: View) {
         getProxy().removeHeaderView(view)
     }
 
+    /**
+     * 删除底部view
+     *
+     * @param view
+     */
     fun removeFooter(view: View) {
         getProxy().removeFooterView(view)
     }
@@ -583,7 +627,7 @@ open class BaseViewAdapter<T>(private val context: Context) :
      * 返回所有子view
      *
      * @param <T>
-    </T> */
+     */
     interface OnItemChildView<T> {
         /**
          * item子view点击事件
@@ -711,11 +755,19 @@ open class BaseViewAdapter<T>(private val context: Context) :
         bindLoadErrorListener()
     }
 
+    /**
+     * 是遏制加载状态监听接口
+     *
+     * @param loadStatusListener 加载状态接口
+     */
     fun setLoadStatusListener(loadStatusListener: LoadStatusListener) {
         mLoadStatusListener = loadStatusListener
     }
 }
 
+/**
+ * 适配器加载状态
+ */
 @IntDef(
     AdapterStatus.UNKNOWN,
     AdapterStatus.STATUS_INIT,
