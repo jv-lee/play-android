@@ -387,25 +387,46 @@ open class BaseViewAdapter<T>(private val context: Context) :
         getProxy().removeFooterView(view)
     }
 
+    /**
+     * 添加数据源
+     * @param data 数据集合
+     */
     fun addData(data: List<T>) {
         mData.addAll(data)
     }
 
+    /**
+     * 添加数据
+     * @param data 单个数据add
+     */
     fun addData(data: T) {
         mData.add(data)
     }
 
+    /**
+     * 清空数据源
+     */
     fun clearData() {
         mData.clear()
     }
 
+    /**
+     * 更新数据源
+     * @param data 数据集合
+     */
     fun updateData(data: List<T>) {
         mData.clear()
         mData.addAll(data)
     }
 
+    /**
+     * 获取数据源
+     */
     fun getData() = mData
 
+    /**
+     * 根据下标获取当前下标数据实体
+     */
     fun getItemByPosition(position: Int) = mData[position]
 
     /**
@@ -469,6 +490,9 @@ open class BaseViewAdapter<T>(private val context: Context) :
         }
     }
 
+    /**
+     * 重置适配器加载状态至初始化状态
+     */
     fun reInitStatusView() {
         pageLayout?.run(this@BaseViewAdapter::removeFooter)
         itemLayout?.run(this@BaseViewAdapter::removeFooter)
