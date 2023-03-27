@@ -34,7 +34,7 @@ var Fragment.saveThrowableCode: Int
 
 fun FragmentActivity.actionFailed(throwable: Throwable) {
     if (isDestroyed) return
-    if (NetworkUtil.isConnected(applicationContext)) {
+    if (NetworkUtil.isNetworkConnected(applicationContext)) {
         val throwableCode = throwable.hashCode()
         if (throwableCode != saveThrowableCode) {
             saveThrowableCode = throwableCode
@@ -50,7 +50,7 @@ fun FragmentActivity.actionFailed(throwable: Throwable) {
 
 fun Fragment.actionFailed(throwable: Throwable) {
     if (!isAdded) return
-    if (NetworkUtil.isConnected(requireContext().applicationContext)) {
+    if (NetworkUtil.isNetworkConnected(requireContext().applicationContext)) {
         val throwableCode = throwable.hashCode()
         if (throwableCode != saveThrowableCode) {
             saveThrowableCode = throwableCode
