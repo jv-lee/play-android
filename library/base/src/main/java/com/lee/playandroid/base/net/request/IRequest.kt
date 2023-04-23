@@ -10,11 +10,21 @@ import com.lee.playandroid.base.net.request.IRequest.ConverterType.Companion.PRO
 import com.lee.playandroid.base.net.request.IRequest.ConverterType.Companion.STRING
 
 /**
- * 请求参数组合接口
+ * 请求参数组合实现类
  * @author jv.lee
  * @date 2020/3/20
  */
 interface IRequest {
+
+    val baseUrl: String?
+
+    val converterType: Int
+
+    val callType: Int
+
+    val isDownload: Boolean
+
+    val key: String?
 
     /**
      * 数据转换器类型
@@ -37,8 +47,6 @@ interface IRequest {
         }
     }
 
-    val baseUrl: String?
-
     /**
      * 数据返回包裹类型
      */
@@ -59,12 +67,4 @@ interface IRequest {
             const val NO = -1
         }
     }
-
-    val converterType: Int
-
-    val callType: Int
-
-    val isDownload: Boolean
-
-    val key: String?
 }
