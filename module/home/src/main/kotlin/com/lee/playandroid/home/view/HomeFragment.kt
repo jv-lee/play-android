@@ -30,7 +30,7 @@ import com.lee.playandroid.home.R
 import com.lee.playandroid.home.bean.HomeContent
 import com.lee.playandroid.home.databinding.FragmentHomeBinding
 import com.lee.playandroid.home.view.adapter.ContentAdapter
-import com.lee.playandroid.home.viewmodel.HomeViewAction
+import com.lee.playandroid.home.viewmodel.HomeViewIntent
 import com.lee.playandroid.home.viewmodel.HomeViewModel
 import com.lee.playandroid.router.navigateDetails
 import com.lee.playandroid.router.navigateSearch
@@ -114,19 +114,19 @@ class HomeFragment :
     }
 
     override fun onRefresh() {
-        viewModel.dispatch(HomeViewAction.RequestPage(LoadStatus.REFRESH))
+        viewModel.dispatch(HomeViewIntent.RequestPage(LoadStatus.REFRESH))
     }
 
     override fun autoLoadMore() {
-        viewModel.dispatch(HomeViewAction.RequestPage(LoadStatus.LOAD_MORE))
+        viewModel.dispatch(HomeViewIntent.RequestPage(LoadStatus.LOAD_MORE))
     }
 
     override fun pageReload() {
-        viewModel.dispatch(HomeViewAction.RequestPage(LoadStatus.REFRESH))
+        viewModel.dispatch(HomeViewIntent.RequestPage(LoadStatus.REFRESH))
     }
 
     override fun itemReload() {
-        viewModel.dispatch(HomeViewAction.RequestPage(LoadStatus.RELOAD))
+        viewModel.dispatch(HomeViewIntent.RequestPage(LoadStatus.RELOAD))
     }
 
     override fun onFragmentResume() {

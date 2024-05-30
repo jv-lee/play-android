@@ -49,16 +49,16 @@ class MyShareViewModel : ViewModel() {
     val viewEvents = _viewEvents.receiveAsFlow()
 
     init {
-        dispatch(MyShareViewAction.RequestPage(LoadStatus.INIT))
+        dispatch(MyShareViewIntent.RequestPage(LoadStatus.INIT))
     }
 
-    fun dispatch(action: MyShareViewAction) {
-        when (action) {
-            is MyShareViewAction.RequestPage -> {
-                requestMyShareData(action.status)
+    fun dispatch(intent: MyShareViewIntent) {
+        when (intent) {
+            is MyShareViewIntent.RequestPage -> {
+                requestMyShareData(intent.status)
             }
-            is MyShareViewAction.DeleteShare -> {
-                requestDeleteShare(action.position)
+            is MyShareViewIntent.DeleteShare -> {
+                requestDeleteShare(intent.position)
             }
         }
     }
@@ -139,7 +139,7 @@ sealed class MyShareViewEvent {
     data class DeleteShareFailed(val error: Throwable) : MyShareViewEvent()
 }
 
-sealed class MyShareViewAction {
-    data class RequestPage(@LoadStatus val status: Int) : MyShareViewAction()
-    data class DeleteShare(val position: Int) : MyShareViewAction()
+sealed class MyShareViewIntent {
+    data class RequestPage(@LoadStatus val status: Int) : MyShareViewIntent()
+    data class DeleteShare(val position: Int) : MyShareViewIntent()
 }

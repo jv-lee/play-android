@@ -31,7 +31,7 @@ import com.lee.playandroid.router.navigateLogin
 import com.lee.playandroid.square.R
 import com.lee.playandroid.square.databinding.FragmentSquareBinding
 import com.lee.playandroid.square.ui.adapter.SquareAdapter
-import com.lee.playandroid.square.viewmodel.SquareViewAction
+import com.lee.playandroid.square.viewmodel.SquareViewIntent
 import com.lee.playandroid.square.viewmodel.SquareViewModel
 import com.lee.playandroid.common.R as CR
 
@@ -111,19 +111,19 @@ class SquareFragment :
     }
 
     override fun onRefresh() {
-        viewModel.dispatch(SquareViewAction.RequestPage(LoadStatus.REFRESH))
+        viewModel.dispatch(SquareViewIntent.RequestPage(LoadStatus.REFRESH))
     }
 
     override fun autoLoadMore() {
-        viewModel.dispatch(SquareViewAction.RequestPage(LoadStatus.LOAD_MORE))
+        viewModel.dispatch(SquareViewIntent.RequestPage(LoadStatus.LOAD_MORE))
     }
 
     override fun pageReload() {
-        viewModel.dispatch(SquareViewAction.RequestPage(LoadStatus.REFRESH))
+        viewModel.dispatch(SquareViewIntent.RequestPage(LoadStatus.REFRESH))
     }
 
     override fun itemReload() {
-        viewModel.dispatch(SquareViewAction.RequestPage(LoadStatus.RELOAD))
+        viewModel.dispatch(SquareViewIntent.RequestPage(LoadStatus.RELOAD))
     }
 
     override fun onFragmentResume() {

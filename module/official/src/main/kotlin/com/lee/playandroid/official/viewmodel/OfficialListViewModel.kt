@@ -31,10 +31,10 @@ class OfficialListViewModel(handle: SavedStateHandle) : ViewModel() {
         MutableStateFlow(UiStatePage.Default(1))
     val contentListFlow: UiStatePageStateFlow = _contentListFlow
 
-    fun dispatch(action: OfficialListViewAction) {
-        when (action) {
-            is OfficialListViewAction.RequestPage -> {
-                requestContentList(action.status)
+    fun dispatch(intent: OfficialListViewIntent) {
+        when (intent) {
+            is OfficialListViewIntent.RequestPage -> {
+                requestContentList(intent.status)
             }
         }
     }
@@ -54,6 +54,6 @@ class OfficialListViewModel(handle: SavedStateHandle) : ViewModel() {
     }
 }
 
-sealed class OfficialListViewAction {
-    data class RequestPage(@LoadStatus val status: Int) : OfficialListViewAction()
+sealed class OfficialListViewIntent {
+    data class RequestPage(@LoadStatus val status: Int) : OfficialListViewIntent()
 }

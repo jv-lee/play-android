@@ -49,16 +49,16 @@ class CollectViewModel : ViewModel() {
     val viewEvents = _viewEvents.receiveAsFlow()
 
     init {
-        dispatch(CollectViewAction.RequestPage(LoadStatus.INIT))
+        dispatch(CollectViewIntent.RequestPage(LoadStatus.INIT))
     }
 
-    fun dispatch(action: CollectViewAction) {
-        when (action) {
-            is CollectViewAction.RequestPage -> {
-                requestCollect(action.status)
+    fun dispatch(intent: CollectViewIntent) {
+        when (intent) {
+            is CollectViewIntent.RequestPage -> {
+                requestCollect(intent.status)
             }
-            is CollectViewAction.UnCollect -> {
-                requestUnCollect(action.position)
+            is CollectViewIntent.UnCollect -> {
+                requestUnCollect(intent.position)
             }
         }
     }
@@ -145,7 +145,7 @@ sealed class CollectViewEvent {
     data class UnCollectFailed(val error: Throwable) : CollectViewEvent()
 }
 
-sealed class CollectViewAction {
-    data class RequestPage(@LoadStatus val status: Int) : CollectViewAction()
-    data class UnCollect(val position: Int) : CollectViewAction()
+sealed class CollectViewIntent {
+    data class RequestPage(@LoadStatus val status: Int) : CollectViewIntent()
+    data class UnCollect(val position: Int) : CollectViewIntent()
 }

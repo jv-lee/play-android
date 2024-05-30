@@ -14,7 +14,7 @@ import com.lee.playandroid.base.extensions.putCache
 import com.lee.playandroid.base.tools.PreferencesTools
 import com.lee.playandroid.common.constants.ApiConstants.REQUEST_TOKEN_ERROR_MESSAGE
 import com.lee.playandroid.common.entity.AccountData
-import com.lee.playandroid.common.entity.AccountViewAction
+import com.lee.playandroid.common.entity.AccountViewIntent
 import com.lee.playandroid.common.entity.AccountViewEvent
 import com.lee.playandroid.common.entity.AccountViewState
 import com.lee.playandroid.common.extensions.checkData
@@ -39,18 +39,18 @@ class AccountViewModel : ViewModel() {
     private val _viewEvents = Channel<AccountViewEvent>(Channel.BUFFERED)
     val viewEvents = _viewEvents.receiveAsFlow()
 
-    suspend fun dispatch(action: AccountViewAction) {
-        when (action) {
-            is AccountViewAction.RequestAccountData -> {
+    suspend fun dispatch(intent: AccountViewIntent) {
+        when (intent) {
+            is AccountViewIntent.RequestAccountData -> {
                 requestAccountData()
             }
-            is AccountViewAction.RequestLogout -> {
+            is AccountViewIntent.RequestLogout -> {
                 requestLogout()
             }
-            is AccountViewAction.UpdateAccountStatus -> {
-                updateAccountStatus(action.accountData, action.isLogin)
+            is AccountViewIntent.UpdateAccountStatus -> {
+                updateAccountStatus(intent.accountData, intent.isLogin)
             }
-            is AccountViewAction.ClearLoginState -> {
+            is AccountViewIntent.ClearLoginState -> {
                 updateAccountStatus(null, false)
             }
         }
@@ -105,12 +105,11 @@ class AccountViewModel : ViewModel() {
             if (isLogin) {
                 cacheManager.putCache(CACHE_KEY_ACCOUNT_DATA, accountData)
                 PreferencesTools.put(SP_KEY_IS_LOGIN, true)
-                it.copy(accountData = accountData, isLogin = isLogin)
             } else {
                 cacheManager.clearCache(CACHE_KEY_ACCOUNT_DATA)
                 PreferencesTools.put(SP_KEY_IS_LOGIN, false)
-                it.copy(accountData = accountData, isLogin = isLogin)
             }
+            it.copy(accountData = accountData, isLogin = isLogin)
         }
     }
 }

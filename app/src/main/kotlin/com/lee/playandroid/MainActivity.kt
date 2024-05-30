@@ -25,7 +25,7 @@ import com.lee.playandroid.common.extensions.appThemeSet
 import com.lee.playandroid.databinding.ActivityMainBinding
 import com.lee.playandroid.databinding.LayoutStubMainBinding
 import com.lee.playandroid.databinding.LayoutStubSplashBinding
-import com.lee.playandroid.viewmodel.SplashViewAction
+import com.lee.playandroid.viewmodel.SplashViewIntent
 import com.lee.playandroid.viewmodel.SplashViewEvent
 import com.lee.playandroid.viewmodel.SplashViewModel
 import com.lee.playandroid.viewmodel.SplashViewState
@@ -56,7 +56,7 @@ class MainActivity : BaseActivity() {
             viewModel.accountService.requestAccountInfo(this@MainActivity)
 
             // 发起闪屏广告逻辑
-            viewModel.dispatch(SplashViewAction.RequestSplashAd)
+            viewModel.dispatch(SplashViewIntent.RequestSplashAd)
         }
     }
 
@@ -115,7 +115,7 @@ class MainActivity : BaseActivity() {
             }
         splashBinding.container.startAnimation(splashAnimation)
         splashBinding.tvTime.setOnClickListener {
-            viewModel.dispatch(SplashViewAction.NavigationMain(300))
+            viewModel.dispatch(SplashViewIntent.NavigationMain(300))
         }
     }
 

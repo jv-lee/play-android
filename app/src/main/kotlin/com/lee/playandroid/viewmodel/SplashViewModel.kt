@@ -26,13 +26,13 @@ class SplashViewModel : ViewModel() {
     private val _viewEvents = Channel<SplashViewEvent>(Channel.BUFFERED)
     val viewEvents = _viewEvents.receiveAsFlow()
 
-    fun dispatch(action: SplashViewAction) {
-        when (action) {
-            is SplashViewAction.RequestSplashAd -> {
+    fun dispatch(intent: SplashViewIntent) {
+        when (intent) {
+            is SplashViewIntent.RequestSplashAd -> {
                 requestSplashAd()
             }
-            is SplashViewAction.NavigationMain -> {
-                navigationMain(action.duration)
+            is SplashViewIntent.NavigationMain -> {
+                navigationMain(intent.duration)
             }
         }
     }
@@ -66,7 +66,7 @@ sealed class SplashViewEvent {
     data class VisibleSplashEvent(val splashAdRes: Int) : SplashViewEvent()
 }
 
-sealed class SplashViewAction {
-    object RequestSplashAd : SplashViewAction()
-    data class NavigationMain(val duration: Long = 0) : SplashViewAction()
+sealed class SplashViewIntent {
+    object RequestSplashAd : SplashViewIntent()
+    data class NavigationMain(val duration: Long = 0) : SplashViewIntent()
 }

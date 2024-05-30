@@ -23,7 +23,7 @@ import com.lee.playandroid.common.ui.widget.OffsetItemDecoration
 import com.lee.playandroid.system.R
 import com.lee.playandroid.system.databinding.FragmentSystemContentBinding
 import com.lee.playandroid.system.ui.adapter.SystemContentAdapter
-import com.lee.playandroid.system.viewmodel.SystemContentViewAction
+import com.lee.playandroid.system.viewmodel.SystemContentViewIntent
 import com.lee.playandroid.system.viewmodel.SystemContentViewEvent
 import com.lee.playandroid.system.viewmodel.SystemContentViewModel
 import com.lee.playandroid.system.viewmodel.SystemContentViewState
@@ -96,11 +96,11 @@ class SystemContentFragment :
     }
 
     override fun onItemClick(view: View, entity: ParentTab, position: Int) {
-        viewModel.dispatch(SystemContentViewAction.NavigationContentTab(entity))
+        viewModel.dispatch(SystemContentViewIntent.NavigationContentTab(entity))
     }
 
     override fun pageReload() {
-        viewModel.dispatch(SystemContentViewAction.RequestData)
+        viewModel.dispatch(SystemContentViewIntent.RequestData)
     }
 
     override fun itemReload() {}

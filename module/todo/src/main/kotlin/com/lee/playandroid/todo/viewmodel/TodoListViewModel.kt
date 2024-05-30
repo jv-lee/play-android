@@ -68,25 +68,25 @@ class TodoListViewModel(handle: SavedStateHandle) : ViewModel() {
     val todoDataFlow: UiStatePageStateFlow = _todoDataFlow
 
     init {
-        dispatch(TodoListViewAction.RequestPage(LoadStatus.INIT))
+        dispatch(TodoListViewIntent.RequestPage(LoadStatus.INIT))
     }
 
-    fun dispatch(action: TodoListViewAction) {
-        when (action) {
-            is TodoListViewAction.RequestPage -> {
-                requestTodoData(action.status)
+    fun dispatch(intent: TodoListViewIntent) {
+        when (intent) {
+            is TodoListViewIntent.RequestPage -> {
+                requestTodoData(intent.status)
             }
-            is TodoListViewAction.RequestDelete -> {
-                requestDeleteTodo(action.position)
+            is TodoListViewIntent.RequestDelete -> {
+                requestDeleteTodo(intent.position)
             }
-            is TodoListViewAction.RequestUpdate -> {
-                requestUpdateTodoStatus(action.position)
+            is TodoListViewIntent.RequestUpdate -> {
+                requestUpdateTodoStatus(intent.position)
             }
-            is TodoListViewAction.CheckResetRequestType -> {
-                checkResetRequestType(action.type)
+            is TodoListViewIntent.CheckResetRequestType -> {
+                checkResetRequestType(intent.type)
             }
-            is TodoListViewAction.NavigationEditTodoPage -> {
-                navigationEditTodoPage(action.todo)
+            is TodoListViewIntent.NavigationEditTodoPage -> {
+                navigationEditTodoPage(intent.todo)
             }
         }
     }
@@ -236,10 +236,10 @@ sealed class TodoListViewEvent {
     data class NavigationEditTodoPage(val bundle: Bundle) : TodoListViewEvent()
 }
 
-sealed class TodoListViewAction {
-    data class RequestPage(@LoadStatus val status: Int) : TodoListViewAction()
-    data class RequestDelete(val position: Int) : TodoListViewAction()
-    data class RequestUpdate(val position: Int) : TodoListViewAction()
-    data class CheckResetRequestType(@TodoType val type: Int) : TodoListViewAction()
-    data class NavigationEditTodoPage(val todo: TodoData) : TodoListViewAction()
+sealed class TodoListViewIntent {
+    data class RequestPage(@LoadStatus val status: Int) : TodoListViewIntent()
+    data class RequestDelete(val position: Int) : TodoListViewIntent()
+    data class RequestUpdate(val position: Int) : TodoListViewIntent()
+    data class CheckResetRequestType(@TodoType val type: Int) : TodoListViewIntent()
+    data class NavigationEditTodoPage(val todo: TodoData) : TodoListViewIntent()
 }

@@ -50,17 +50,17 @@ class RegisterFragment : BaseNavigationFragment(R.layout.fragment_register), Vie
         binding.tvRegister.setOnClickListener(this)
         binding.editUsername.addTextChangedListener(object : TextWatcherAdapter {
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                viewModel.dispatch(RegisterViewAction.ChangeUsername(s?.toString() ?: ""))
+                viewModel.dispatch(RegisterViewIntent.ChangeUsername(s?.toString() ?: ""))
             }
         })
         binding.editPassword.addTextChangedListener(object : TextWatcherAdapter {
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                viewModel.dispatch(RegisterViewAction.ChangePassword(s?.toString() ?: ""))
+                viewModel.dispatch(RegisterViewIntent.ChangePassword(s?.toString() ?: ""))
             }
         })
         binding.editRePassword.addTextChangedListener(object : TextWatcherAdapter {
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                viewModel.dispatch(RegisterViewAction.ChangeRePassword(s?.toString() ?: ""))
+                viewModel.dispatch(RegisterViewIntent.ChangeRePassword(s?.toString() ?: ""))
             }
         })
     }
@@ -127,13 +127,13 @@ class RegisterFragment : BaseNavigationFragment(R.layout.fragment_register), Vie
 
     override fun onClick(view: View) {
         when (view) {
-            binding.tvRegister -> viewModel.dispatch(RegisterViewAction.RequestRegister)
-            binding.tvLogin -> viewModel.dispatch(RegisterViewAction.NavigationLogin)
+            binding.tvRegister -> viewModel.dispatch(RegisterViewIntent.RequestRegister)
+            binding.tvLogin -> viewModel.dispatch(RegisterViewIntent.NavigationLogin)
         }
     }
 
     override fun onFragmentStop() {
         super.onFragmentStop()
-        viewModel.dispatch(RegisterViewAction.HideKeyboard)
+        viewModel.dispatch(RegisterViewIntent.HideKeyboard)
     }
 }

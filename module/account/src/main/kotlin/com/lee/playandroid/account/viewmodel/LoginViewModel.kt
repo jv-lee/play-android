@@ -6,7 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.lee.playandroid.account.constants.Constants.SP_KEY_SAVE_INPUT_USERNAME
 import com.lee.playandroid.account.model.api.ApiService
 import com.lee.playandroid.base.tools.PreferencesTools
-import com.lee.playandroid.common.entity.AccountViewAction
+import com.lee.playandroid.common.entity.AccountViewIntent
 import com.lee.playandroid.common.extensions.checkData
 import com.lee.playandroid.common.extensions.createApi
 import kotlinx.coroutines.channels.Channel
@@ -33,21 +33,21 @@ class LoginViewModel : ViewModel() {
         restoreInputUsername()
     }
 
-    fun dispatch(action: LoginViewAction) {
-        when (action) {
-            is LoginViewAction.ChangeUsername -> {
-                changeUsername(action.username)
+    fun dispatch(intent: LoginViewIntent) {
+        when (intent) {
+            is LoginViewIntent.ChangeUsername -> {
+                changeUsername(intent.username)
             }
-            is LoginViewAction.ChangePassword -> {
-                changePassword(action.password)
+            is LoginViewIntent.ChangePassword -> {
+                changePassword(intent.password)
             }
-            is LoginViewAction.RequestLogin -> {
+            is LoginViewIntent.RequestLogin -> {
                 requestLogin()
             }
-            is LoginViewAction.HideKeyboard -> {
+            is LoginViewIntent.HideKeyboard -> {
                 hideKeyboard()
             }
-            is LoginViewAction.NavigationRegister -> {
+            is LoginViewIntent.NavigationRegister -> {
                 navigationRegister()
             }
         }
@@ -117,7 +117,7 @@ class LoginViewModel : ViewModel() {
                 // 更新ui状态
                 _viewStates.update { it.copy(isLoading = false, hideKeyboard = false) }
                 // 发送登陆成功事件携带账户ui状态
-                val status = AccountViewAction.UpdateAccountStatus(data, true)
+                val status = AccountViewIntent.UpdateAccountStatus(data, true)
                 _viewEvents.send(LoginViewEvent.LoginSuccess(status))
             }
         }
@@ -144,15 +144,15 @@ data class LoginViewState(
 )
 
 sealed class LoginViewEvent {
-    data class LoginSuccess(val status: AccountViewAction.UpdateAccountStatus) : LoginViewEvent()
+    data class LoginSuccess(val status: AccountViewIntent.UpdateAccountStatus) : LoginViewEvent()
     data class LoginFailed(val error: Throwable) : LoginViewEvent()
     object NavigationRegisterEvent : LoginViewEvent()
 }
 
-sealed class LoginViewAction {
-    data class ChangeUsername(val username: String) : LoginViewAction()
-    data class ChangePassword(val password: String) : LoginViewAction()
-    object HideKeyboard : LoginViewAction()
-    object RequestLogin : LoginViewAction()
-    object NavigationRegister : LoginViewAction()
+sealed class LoginViewIntent {
+    data class ChangeUsername(val username: String) : LoginViewIntent()
+    data class ChangePassword(val password: String) : LoginViewIntent()
+    object HideKeyboard : LoginViewIntent()
+    object RequestLogin : LoginViewIntent()
+    object NavigationRegister : LoginViewIntent()
 }

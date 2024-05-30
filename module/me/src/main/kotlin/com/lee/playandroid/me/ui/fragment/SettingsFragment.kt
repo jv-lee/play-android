@@ -128,10 +128,10 @@ class SettingsFragment :
     override fun onClick(v: View) {
         when (v) {
             binding.lineLogout -> {
-                viewModel.dispatch(SettingsViewAction.VisibleLogoutDialog(visibility = true))
+                viewModel.dispatch(SettingsViewIntent.VisibleLogoutDialog(visibility = true))
             }
             binding.lineClearCache -> {
-                viewModel.dispatch(SettingsViewAction.VisibleCacheDialog(visibility = true))
+                viewModel.dispatch(SettingsViewIntent.VisibleCacheDialog(visibility = true))
             }
         }
     }
@@ -141,10 +141,10 @@ class SettingsFragment :
 
         when (buttonView) {
             binding.lineSystem.getRightSwitch() -> {
-                themeViewModel.dispatch(ThemeViewAction.UpdateSystemAction(isChecked))
+                themeViewModel.dispatch(ThemeViewIntent.UpdateSystemStatus(isChecked))
             }
             binding.lineNight.getRightSwitch() -> {
-                themeViewModel.dispatch(ThemeViewAction.UpdateDarkAction(isChecked))
+                themeViewModel.dispatch(ThemeViewIntent.UpdateDarkStatus(isChecked))
             }
         }
     }
@@ -153,7 +153,7 @@ class SettingsFragment :
         binding.constRoot.setBackgroundColorCompat(R.color.colorThemeBackground)
         binding.toolbar.setBackgroundColorCompat(R.color.colorThemeItem)
         binding.toolbar.setTitleColor(R.color.colorThemeAccent)
-        binding.toolbar.setBackDrawableRes(R.drawable.ic_back, R.color.colorThemeAccent)
+        binding.toolbar.setBackDrawableRes(R.drawable.vector_back, R.color.colorThemeAccent)
 
         binding.lineClearCache.setBackgroundColorCompat(R.color.colorThemeItem)
         binding.lineClearCache.getLeftTextView().setTextColorCompat(R.color.colorThemeAccent)
@@ -180,10 +180,10 @@ class SettingsFragment :
             setTitle(getString(R.string.settings_clear_title))
             setCancelable(true)
             onCancel = {
-                viewModel.dispatch(SettingsViewAction.VisibleCacheDialog(visibility = false))
+                viewModel.dispatch(SettingsViewIntent.VisibleCacheDialog(visibility = false))
             }
             onConfirm = {
-                viewModel.dispatch(SettingsViewAction.RequestClearCache)
+                viewModel.dispatch(SettingsViewIntent.RequestClearCache)
             }
         }
 
@@ -192,12 +192,12 @@ class SettingsFragment :
             setTitle(getString(R.string.settings_logout_title))
             setCancelable(true)
             onCancel = {
-                viewModel.dispatch(SettingsViewAction.VisibleLogoutDialog(visibility = false))
+                viewModel.dispatch(SettingsViewIntent.VisibleLogoutDialog(visibility = false))
             }
             onConfirm = {
                 viewModel.viewModelScope.launch {
                     viewModel.accountService.requestLogout(requireActivity())
-                    viewModel.dispatch(SettingsViewAction.VisibleLogoutDialog(visibility = false))
+                    viewModel.dispatch(SettingsViewIntent.VisibleLogoutDialog(visibility = false))
                 }
             }
         }

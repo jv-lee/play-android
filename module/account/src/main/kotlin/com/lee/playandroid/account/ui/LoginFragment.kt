@@ -54,12 +54,12 @@ class LoginFragment : BaseNavigationFragment(R.layout.fragment_login), View.OnCl
         binding.tvRegister.setOnClickListener(this)
         binding.editUsername.addTextChangedListener(object : TextWatcherAdapter {
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                viewModel.dispatch(LoginViewAction.ChangeUsername(s?.toString() ?: ""))
+                viewModel.dispatch(LoginViewIntent.ChangeUsername(s?.toString() ?: ""))
             }
         })
         binding.editPassword.addTextChangedListener(object : TextWatcherAdapter {
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                viewModel.dispatch(LoginViewAction.ChangePassword(s?.toString() ?: ""))
+                viewModel.dispatch(LoginViewIntent.ChangePassword(s?.toString() ?: ""))
             }
         })
     }
@@ -125,13 +125,13 @@ class LoginFragment : BaseNavigationFragment(R.layout.fragment_login), View.OnCl
 
     override fun onClick(view: View) {
         when (view) {
-            binding.tvRegister -> viewModel.dispatch(LoginViewAction.NavigationRegister)
-            binding.tvLogin -> viewModel.dispatch(LoginViewAction.RequestLogin)
+            binding.tvRegister -> viewModel.dispatch(LoginViewIntent.NavigationRegister)
+            binding.tvLogin -> viewModel.dispatch(LoginViewIntent.RequestLogin)
         }
     }
 
     override fun onFragmentStop() {
         super.onFragmentStop()
-        viewModel.dispatch(LoginViewAction.HideKeyboard)
+        viewModel.dispatch(LoginViewIntent.HideKeyboard)
     }
 }

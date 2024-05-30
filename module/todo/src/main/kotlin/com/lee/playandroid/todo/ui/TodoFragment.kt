@@ -23,7 +23,7 @@ import com.lee.playandroid.todo.ui.CreateTodoFragment.Companion.ARG_TYPE_CREATE
 import com.lee.playandroid.todo.ui.TodoListFragment.Companion.ARG_STATUS_COMPLETE
 import com.lee.playandroid.todo.ui.TodoListFragment.Companion.ARG_STATUS_UPCOMING
 import com.lee.playandroid.todo.ui.listener.TodoActionListener
-import com.lee.playandroid.todo.viewmodel.TodoViewAction
+import com.lee.playandroid.todo.viewmodel.TodoViewIntent
 import com.lee.playandroid.todo.viewmodel.TodoViewModel
 import com.lee.playandroid.todo.viewmodel.TodoViewState
 
@@ -134,7 +134,7 @@ class TodoFragment : BaseNavigationFragment(R.layout.fragment_todo) {
                     REQUEST_KEY_UPDATE -> actionListener?.updateAction(todo)
                     // todo类型变更后处理
                     REQUEST_KEY_TYPE -> {
-                        viewModel.dispatch(TodoViewAction.ChangeTypeSelected(type))
+                        viewModel.dispatch(TodoViewIntent.ChangeTypeSelected(type))
                         actionListener?.notifyAction(type)
                     }
                 }

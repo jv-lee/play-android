@@ -13,6 +13,6 @@ sealed class BaseTabViewEvent {
     data class RequestFailed(val error: Throwable) : BaseTabViewEvent()
 }
 
-sealed class BaseTabViewAction {
-    object RequestData : BaseTabViewAction()
+sealed class BaseTabViewIntent {
+    object RequestData : BaseTabViewIntent()
 }

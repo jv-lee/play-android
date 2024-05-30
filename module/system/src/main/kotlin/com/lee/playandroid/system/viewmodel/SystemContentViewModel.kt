@@ -33,16 +33,16 @@ class SystemContentViewModel : ViewModel() {
     val viewEvents = _viewEvents.receiveAsFlow()
 
     init {
-        dispatch(SystemContentViewAction.RequestData)
+        dispatch(SystemContentViewIntent.RequestData)
     }
 
-    fun dispatch(action: SystemContentViewAction) {
-        when (action) {
-            is SystemContentViewAction.RequestData -> {
+    fun dispatch(intent: SystemContentViewIntent) {
+        when (intent) {
+            is SystemContentViewIntent.RequestData -> {
                 requestParentTab()
             }
-            is SystemContentViewAction.NavigationContentTab -> {
-                navigationContentTab(action.tab)
+            is SystemContentViewIntent.NavigationContentTab -> {
+                navigationContentTab(intent.tab)
             }
         }
     }
@@ -85,7 +85,7 @@ sealed class SystemContentViewEvent {
     data class NavigationContentTabEvent(val bundle: Bundle) : SystemContentViewEvent()
 }
 
-sealed class SystemContentViewAction {
-    object RequestData : SystemContentViewAction()
-    data class NavigationContentTab(val tab: ParentTab) : SystemContentViewAction()
+sealed class SystemContentViewIntent {
+    object RequestData : SystemContentViewIntent()
+    data class NavigationContentTab(val tab: ParentTab) : SystemContentViewIntent()
 }

@@ -6,7 +6,7 @@ import com.lee.playandroid.base.cache.CacheManager
 import com.lee.playandroid.base.extensions.cacheFlow
 import com.lee.playandroid.common.extensions.checkData
 import com.lee.playandroid.common.extensions.createApi
-import com.lee.playandroid.common.ui.base.BaseTabViewAction
+import com.lee.playandroid.common.ui.base.BaseTabViewIntent
 import com.lee.playandroid.common.ui.base.BaseTabViewEvent
 import com.lee.playandroid.common.ui.base.BaseTabViewState
 import com.lee.playandroid.project.constants.Constants.CACHE_KEY_PROJECT_TAB
@@ -32,12 +32,12 @@ class ProjectViewModel : ViewModel() {
     val viewEvents = _viewEvents.receiveAsFlow()
 
     init {
-        dispatch(BaseTabViewAction.RequestData)
+        dispatch(BaseTabViewIntent.RequestData)
     }
 
-    fun dispatch(action: BaseTabViewAction) {
-        when (action) {
-            is BaseTabViewAction.RequestData -> {
+    fun dispatch(intent: BaseTabViewIntent) {
+        when (intent) {
+            is BaseTabViewIntent.RequestData -> {
                 requestTabs()
             }
         }

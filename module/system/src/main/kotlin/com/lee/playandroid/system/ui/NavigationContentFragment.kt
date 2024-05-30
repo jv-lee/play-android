@@ -20,11 +20,10 @@ import com.lee.playandroid.system.R
 import com.lee.playandroid.system.databinding.FragmentNavigationContentBinding
 import com.lee.playandroid.system.ui.adapter.NavigationContentAdapter
 import com.lee.playandroid.system.ui.adapter.NavigationContentTabAdapter
-import com.lee.playandroid.system.viewmodel.NavigationContentViewAction
+import com.lee.playandroid.system.viewmodel.NavigationContentViewIntent
 import com.lee.playandroid.system.viewmodel.NavigationContentViewEvent
 import com.lee.playandroid.system.viewmodel.NavigationContentViewModel
 import com.lee.playandroid.system.viewmodel.NavigationContentViewState
-import kotlinx.coroutines.flow.collect
 
 /**
  * 导航Fragment
@@ -70,7 +69,7 @@ class NavigationContentFragment :
         }
 
         mNavigationTabAdapter?.bindTabLinkage(binding.rvTab, binding.rvContainer) { position ->
-            viewModel.dispatch(NavigationContentViewAction.SelectTabIndex(position))
+            viewModel.dispatch(NavigationContentViewIntent.SelectTabIndex(position))
         }
     }
 
@@ -112,17 +111,17 @@ class NavigationContentFragment :
 
     override fun lazyLoad() {
         super.lazyLoad()
-        viewModel.dispatch(NavigationContentViewAction.RequestData)
+        viewModel.dispatch(NavigationContentViewIntent.RequestData)
     }
 
     override fun onReload() {
-        viewModel.dispatch(NavigationContentViewAction.RequestData)
+        viewModel.dispatch(NavigationContentViewIntent.RequestData)
     }
 
     @InjectBus
     fun navigationEvent(event: NavigationSelectEvent) {
         if (event.title == getString(R.string.nav_system) && isResumed) {
-            viewModel.dispatch(NavigationContentViewAction.SelectTabIndex(0))
+            viewModel.dispatch(NavigationContentViewIntent.SelectTabIndex(0))
             binding.rvTab.smoothScrollToTop()
             binding.rvContainer.smoothScrollToTop()
         }

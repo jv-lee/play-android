@@ -29,13 +29,13 @@ class NavigationContentViewModel : ViewModel() {
     private val _viewEvents = Channel<NavigationContentViewEvent>(Channel.BUFFERED)
     val viewEvents = _viewEvents.receiveAsFlow()
 
-    fun dispatch(action: NavigationContentViewAction) {
-        when (action) {
-            is NavigationContentViewAction.RequestData -> {
+    fun dispatch(intent: NavigationContentViewIntent) {
+        when (intent) {
+            is NavigationContentViewIntent.RequestData -> {
                 requestNavigationData()
             }
-            is NavigationContentViewAction.SelectTabIndex -> {
-                selectTabIndex(action.index)
+            is NavigationContentViewIntent.SelectTabIndex -> {
+                selectTabIndex(intent.index)
             }
         }
     }
@@ -73,7 +73,7 @@ sealed class NavigationContentViewEvent {
     data class RequestFailed(val error: Throwable) : NavigationContentViewEvent()
 }
 
-sealed class NavigationContentViewAction {
-    object RequestData : NavigationContentViewAction()
-    data class SelectTabIndex(val index: Int) : NavigationContentViewAction()
+sealed class NavigationContentViewIntent {
+    object RequestData : NavigationContentViewIntent()
+    data class SelectTabIndex(val index: Int) : NavigationContentViewIntent()
 }

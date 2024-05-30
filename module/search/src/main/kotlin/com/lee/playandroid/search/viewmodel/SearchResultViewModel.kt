@@ -32,13 +32,13 @@ class SearchResultViewModel(handle: SavedStateHandle) : ViewModel() {
     val searchResultFlow: UiStatePageStateFlow = _searchResultFlow.asStateFlow()
 
     init {
-        dispatch(SearchResultViewAction.RequestPage(LoadStatus.INIT))
+        dispatch(SearchResultViewIntent.RequestPage(LoadStatus.INIT))
     }
 
-    fun dispatch(action: SearchResultViewAction) {
-        when (action) {
-            is SearchResultViewAction.RequestPage -> {
-                requestSearch(action.status)
+    fun dispatch(intent: SearchResultViewIntent) {
+        when (intent) {
+            is SearchResultViewIntent.RequestPage -> {
+                requestSearch(intent.status)
             }
         }
     }
@@ -58,6 +58,6 @@ class SearchResultViewModel(handle: SavedStateHandle) : ViewModel() {
 
 data class SearchResultViewState(val title: String)
 
-sealed class SearchResultViewAction {
-    data class RequestPage(@LoadStatus val status: Int) : SearchResultViewAction()
+sealed class SearchResultViewIntent {
+    data class RequestPage(@LoadStatus val status: Int) : SearchResultViewIntent()
 }

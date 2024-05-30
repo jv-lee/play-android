@@ -9,7 +9,7 @@ import com.lee.playandroid.common.entity.Content
 import com.lee.playandroid.common.ui.base.BaseListFragment
 import com.lee.playandroid.router.navigateDetails
 import com.lee.playandroid.system.ui.adapter.SystemContentListAdapter
-import com.lee.playandroid.system.viewmodel.SystemContentListViewAction
+import com.lee.playandroid.system.viewmodel.SystemContentListViewIntent
 import com.lee.playandroid.system.viewmodel.SystemContentListViewModel
 import kotlinx.coroutines.flow.StateFlow
 
@@ -37,7 +37,7 @@ class SystemContentListFragment : BaseListFragment() {
     }
 
     override fun requestContentList(status: Int) {
-        viewModel.dispatch(SystemContentListViewAction.RequestPage(status))
+        viewModel.dispatch(SystemContentListViewIntent.RequestPage(status))
     }
 
     override fun navigationDetails(content: Content) {

@@ -24,7 +24,7 @@ import com.lee.playandroid.me.R
 import com.lee.playandroid.me.databinding.FragmentCoinBinding
 import com.lee.playandroid.me.ui.adapter.CoinRecordAdapter
 import com.lee.playandroid.me.ui.widget.CoinLoadResource
-import com.lee.playandroid.me.viewmodel.CoinViewAction
+import com.lee.playandroid.me.viewmodel.CoinViewIntent
 import com.lee.playandroid.me.viewmodel.CoinViewModel
 import com.lee.playandroid.router.navigateDetails
 
@@ -91,15 +91,15 @@ class CoinFragment :
     }
 
     override fun autoLoadMore() {
-        viewModel.dispatch(CoinViewAction.RequestPage(LoadStatus.LOAD_MORE))
+        viewModel.dispatch(CoinViewIntent.RequestPage(LoadStatus.LOAD_MORE))
     }
 
     override fun pageReload() {
-        viewModel.dispatch(CoinViewAction.RequestPage(LoadStatus.REFRESH))
+        viewModel.dispatch(CoinViewIntent.RequestPage(LoadStatus.REFRESH))
     }
 
     override fun itemReload() {
-        viewModel.dispatch(CoinViewAction.RequestPage(LoadStatus.RELOAD))
+        viewModel.dispatch(CoinViewIntent.RequestPage(LoadStatus.RELOAD))
     }
 
     override fun onFragmentResume() {

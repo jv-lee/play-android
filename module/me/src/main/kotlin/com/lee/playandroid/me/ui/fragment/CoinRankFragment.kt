@@ -21,7 +21,7 @@ import com.lee.playandroid.me.R
 import com.lee.playandroid.me.databinding.FragmentCoinRankBinding
 import com.lee.playandroid.me.ui.adapter.CoinRankAdapter
 import com.lee.playandroid.me.ui.widget.RankSpanSizeLookup
-import com.lee.playandroid.me.viewmodel.CoinRankViewAction
+import com.lee.playandroid.me.viewmodel.CoinRankViewIntent
 import com.lee.playandroid.me.viewmodel.CoinRankViewModel
 import com.lee.playandroid.router.navigateDetails
 
@@ -79,15 +79,15 @@ class CoinRankFragment :
     }
 
     override fun autoLoadMore() {
-        viewModel.dispatch(CoinRankViewAction.RequestPage(LoadStatus.LOAD_MORE))
+        viewModel.dispatch(CoinRankViewIntent.RequestPage(LoadStatus.LOAD_MORE))
     }
 
     override fun pageReload() {
-        viewModel.dispatch(CoinRankViewAction.RequestPage(LoadStatus.REFRESH))
+        viewModel.dispatch(CoinRankViewIntent.RequestPage(LoadStatus.REFRESH))
     }
 
     override fun itemReload() {
-        viewModel.dispatch(CoinRankViewAction.RequestPage(LoadStatus.RELOAD))
+        viewModel.dispatch(CoinRankViewIntent.RequestPage(LoadStatus.RELOAD))
     }
 
     override fun onDestroyView() {

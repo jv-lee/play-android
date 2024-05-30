@@ -39,18 +39,18 @@ class SearchViewModel : ViewModel() {
         requestSearchHistoryData()
     }
 
-    fun dispatch(action: SearchViewAction) {
-        when (action) {
-            is SearchViewAction.NavigationSearchResult -> {
-                navigationSearchKey(action.key)
+    fun dispatch(intent: SearchViewIntent) {
+        when (intent) {
+            is SearchViewIntent.NavigationSearchResult -> {
+                navigationSearchKey(intent.key)
             }
-            is SearchViewAction.AddHistory -> {
-                addSearchHistory(action.key)
+            is SearchViewIntent.AddHistory -> {
+                addSearchHistory(intent.key)
             }
-            is SearchViewAction.DeleteHistory -> {
-                deleteSearchHistory(action.key)
+            is SearchViewIntent.DeleteHistory -> {
+                deleteSearchHistory(intent.key)
             }
-            is SearchViewAction.ClearHistory -> {
+            is SearchViewIntent.ClearHistory -> {
                 clearSearchHistory()
             }
         }
@@ -146,9 +146,9 @@ sealed class SearchViewEvent {
     data class FailedEvent(val error: Throwable) : SearchViewEvent()
 }
 
-sealed class SearchViewAction {
-    data class NavigationSearchResult(val key: String) : SearchViewAction()
-    data class AddHistory(val key: String) : SearchViewAction()
-    data class DeleteHistory(val key: String) : SearchViewAction()
-    object ClearHistory : SearchViewAction()
+sealed class SearchViewIntent {
+    data class NavigationSearchResult(val key: String) : SearchViewIntent()
+    data class AddHistory(val key: String) : SearchViewIntent()
+    data class DeleteHistory(val key: String) : SearchViewIntent()
+    object ClearHistory : SearchViewIntent()
 }

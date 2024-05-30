@@ -16,7 +16,7 @@ import com.lee.playandroid.base.tools.SystemBarTools.parentTouchHideSoftInput
 import com.lee.playandroid.base.viewstate.collectState
 import com.lee.playandroid.square.R
 import com.lee.playandroid.square.databinding.FragmentCreateShareBinding
-import com.lee.playandroid.square.viewmodel.CreateShareViewAction
+import com.lee.playandroid.square.viewmodel.CreateShareViewIntent
 import com.lee.playandroid.square.viewmodel.CreateShareViewEvent
 import com.lee.playandroid.square.viewmodel.CreateShareViewModel
 import com.lee.playandroid.square.viewmodel.CreateShareViewState
@@ -41,7 +41,7 @@ class CreateShareFragment : BaseNavigationFragment(R.layout.fragment_create_shar
             if (actionId == EditorInfo.IME_ACTION_SEND) {
                 val title = binding.editShareTitle.text.toString()
                 val content = binding.editShareContent.text.toString()
-                viewModel.dispatch(CreateShareViewAction.RequestSend(title, content))
+                viewModel.dispatch(CreateShareViewIntent.RequestSend(title, content))
             }
             return@setOnEditorActionListener false
         }

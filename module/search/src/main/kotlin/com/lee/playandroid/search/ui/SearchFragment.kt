@@ -20,7 +20,7 @@ import com.lee.playandroid.search.databinding.FragmentSearchBinding
 import com.lee.playandroid.search.model.entity.SearchHotUI
 import com.lee.playandroid.search.ui.adapter.SearchHistoryAdapter
 import com.lee.playandroid.search.ui.adapter.SearchHotAdapter
-import com.lee.playandroid.search.viewmodel.SearchViewAction
+import com.lee.playandroid.search.viewmodel.SearchViewIntent
 import com.lee.playandroid.search.viewmodel.SearchViewEvent
 import com.lee.playandroid.search.viewmodel.SearchViewModel
 import com.lee.playandroid.search.viewmodel.SearchViewState
@@ -45,14 +45,14 @@ class SearchFragment : BaseNavigationFragment(R.layout.fragment_search) {
 
         // 清除历史记录点击事件
         binding.tvHistoryClear.setOnClickListener {
-            viewModel.dispatch(SearchViewAction.ClearHistory)
+            viewModel.dispatch(SearchViewIntent.ClearHistory)
         }
 
         // 搜索输入框内容监听
         binding.editQuery.setOnEditorActionListener { textView, actionId, _ ->
             val text = textView.text
             if (actionId == IME_ACTION_SEARCH && text.isNotEmpty()) {
-                viewModel.dispatch(SearchViewAction.NavigationSearchResult(text.toString()))
+                viewModel.dispatch(SearchViewIntent.NavigationSearchResult(text.toString()))
             }
             return@setOnEditorActionListener false
         }
@@ -65,7 +65,7 @@ class SearchFragment : BaseNavigationFragment(R.layout.fragment_search) {
                     setOnItemClickListener(object :
                         BaseViewAdapter.OnItemClickListener<SearchHotUI> {
                         override fun onItemClick(view: View, entity: SearchHotUI, position: Int) {
-                            viewModel.dispatch(SearchViewAction.NavigationSearchResult(entity.key))
+                            viewModel.dispatch(SearchViewIntent.NavigationSearchResult(entity.key))
                         }
                     })
                 }.getProxy()
@@ -79,13 +79,13 @@ class SearchFragment : BaseNavigationFragment(R.layout.fragment_search) {
                     setOnItemClickListener(object :
                         BaseViewAdapter.OnItemClickListener<SearchHistory> {
                         override fun onItemClick(view: View, entity: SearchHistory, position: Int) {
-                            viewModel.dispatch(SearchViewAction.NavigationSearchResult(entity.key))
+                            viewModel.dispatch(SearchViewIntent.NavigationSearchResult(entity.key))
                         }
                     })
                     setOnItemChildClickListener(object :
                         BaseViewAdapter.OnItemChildView<SearchHistory> {
                         override fun onItemChild(view: View, entity: SearchHistory, position: Int) {
-                            viewModel.dispatch(SearchViewAction.DeleteHistory(entity.key))
+                            viewModel.dispatch(SearchViewIntent.DeleteHistory(entity.key))
                         }
                     }, R.id.iv_delete)
                 }.getProxy()

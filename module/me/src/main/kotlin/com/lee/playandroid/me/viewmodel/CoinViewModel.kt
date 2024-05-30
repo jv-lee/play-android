@@ -33,13 +33,13 @@ class CoinViewModel : ViewModel() {
     val coinRecordFlow: UiStatePageStateFlow = _coinRecordFlow
 
     init {
-        dispatch(CoinViewAction.RequestPage(LoadStatus.INIT))
+        dispatch(CoinViewIntent.RequestPage(LoadStatus.INIT))
     }
 
-    fun dispatch(action: CoinViewAction) {
-        when (action) {
-            is CoinViewAction.RequestPage -> {
-                requestCoinRecord(action.status)
+    fun dispatch(intent: CoinViewIntent) {
+        when (intent) {
+            is CoinViewIntent.RequestPage -> {
+                requestCoinRecord(intent.status)
             }
         }
     }
@@ -57,6 +57,6 @@ class CoinViewModel : ViewModel() {
     }
 }
 
-sealed class CoinViewAction {
-    data class RequestPage(@LoadStatus val status: Int) : CoinViewAction()
+sealed class CoinViewIntent {
+    data class RequestPage(@LoadStatus val status: Int) : CoinViewIntent()
 }

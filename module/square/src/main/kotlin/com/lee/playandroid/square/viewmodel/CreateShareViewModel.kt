@@ -27,10 +27,10 @@ class CreateShareViewModel : ViewModel() {
     private val _viewEvents = Channel<CreateShareViewEvent>(Channel.BUFFERED)
     val viewEvents = _viewEvents.receiveAsFlow()
 
-    fun dispatch(action: CreateShareViewAction) {
-        when (action) {
-            is CreateShareViewAction.RequestSend -> {
-                requestSendShare(action.title, action.content)
+    fun dispatch(intent: CreateShareViewIntent) {
+        when (intent) {
+            is CreateShareViewIntent.RequestSend -> {
+                requestSendShare(intent.title, intent.content)
             }
         }
     }
@@ -71,6 +71,6 @@ sealed class CreateShareViewEvent {
     data class SendFailed(val error: Throwable) : CreateShareViewEvent()
 }
 
-sealed class CreateShareViewAction {
-    data class RequestSend(val title: String, val content: String) : CreateShareViewAction()
+sealed class CreateShareViewIntent {
+    data class RequestSend(val title: String, val content: String) : CreateShareViewIntent()
 }

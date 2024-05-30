@@ -34,10 +34,10 @@ class SquareViewModel : ViewModel() {
         requestSquareData(LoadStatus.INIT)
     }
 
-    fun dispatch(action: SquareViewAction) {
-        when (action) {
-            is SquareViewAction.RequestPage -> {
-                requestSquareData(action.status)
+    fun dispatch(intent: SquareViewIntent) {
+        when (intent) {
+            is SquareViewIntent.RequestPage -> {
+                requestSquareData(intent.status)
             }
         }
     }
@@ -55,6 +55,6 @@ class SquareViewModel : ViewModel() {
     }
 }
 
-sealed class SquareViewAction {
-    data class RequestPage(@LoadStatus val status: Int) : SquareViewAction()
+sealed class SquareViewIntent {
+    data class RequestPage(@LoadStatus val status: Int) : SquareViewIntent()
 }

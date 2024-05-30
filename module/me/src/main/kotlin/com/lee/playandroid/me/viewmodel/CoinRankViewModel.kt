@@ -34,13 +34,13 @@ class CoinRankViewModel : ViewModel() {
     val coinRankFlow: UiStatePageStateFlow = _coinRankFlow
 
     init {
-        dispatch(CoinRankViewAction.RequestPage(LoadStatus.INIT))
+        dispatch(CoinRankViewIntent.RequestPage(LoadStatus.INIT))
     }
 
-    fun dispatch(action: CoinRankViewAction) {
-        when (action) {
-            is CoinRankViewAction.RequestPage -> {
-                requestCoinRank(action.status)
+    fun dispatch(intent: CoinRankViewIntent) {
+        when (intent) {
+            is CoinRankViewIntent.RequestPage -> {
+                requestCoinRank(intent.status)
             }
         }
     }
@@ -65,6 +65,6 @@ class CoinRankViewModel : ViewModel() {
     }
 }
 
-sealed class CoinRankViewAction {
-    data class RequestPage(@LoadStatus val status: Int) : CoinRankViewAction()
+sealed class CoinRankViewIntent {
+    data class RequestPage(@LoadStatus val status: Int) : CoinRankViewIntent()
 }

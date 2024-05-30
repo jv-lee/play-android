@@ -8,7 +8,7 @@ import com.lee.playandroid.base.viewstate.UiStatePage
 import com.lee.playandroid.common.entity.Content
 import com.lee.playandroid.common.ui.base.BaseListFragment
 import com.lee.playandroid.project.ui.adapter.ProjectListAdapter
-import com.lee.playandroid.project.viewmodel.ProjectListViewAction
+import com.lee.playandroid.project.viewmodel.ProjectListViewIntent
 import com.lee.playandroid.project.viewmodel.ProjectListViewModel
 import com.lee.playandroid.router.navigateDetails
 import kotlinx.coroutines.flow.StateFlow
@@ -36,7 +36,7 @@ class ProjectListFragment : BaseListFragment() {
     }
 
     override fun requestContentList(status: Int) {
-        viewModel.dispatch(ProjectListViewAction.RequestPage(status))
+        viewModel.dispatch(ProjectListViewIntent.RequestPage(status))
     }
 
     override fun navigationDetails(content: Content) {

@@ -31,10 +31,10 @@ class ProjectListViewModel(handle: SavedStateHandle) : ViewModel() {
         MutableStateFlow(UiStatePage.Default(1))
     val contentListFlow: UiStatePageStateFlow = _contentListFlow
 
-    fun dispatch(action: ProjectListViewAction) {
-        when (action) {
-            is ProjectListViewAction.RequestPage -> {
-                requestContentList(action.status)
+    fun dispatch(intent: ProjectListViewIntent) {
+        when (intent) {
+            is ProjectListViewIntent.RequestPage -> {
+                requestContentList(intent.status)
             }
         }
     }
@@ -54,6 +54,6 @@ class ProjectListViewModel(handle: SavedStateHandle) : ViewModel() {
     }
 }
 
-sealed class ProjectListViewAction {
-    data class RequestPage(@LoadStatus val status: Int) : ProjectListViewAction()
+sealed class ProjectListViewIntent {
+    data class RequestPage(@LoadStatus val status: Int) : ProjectListViewIntent()
 }

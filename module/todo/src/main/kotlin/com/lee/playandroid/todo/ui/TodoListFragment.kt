@@ -27,7 +27,7 @@ import com.lee.playandroid.todo.databinding.FragmentTodoListBinding
 import com.lee.playandroid.todo.ui.adapter.TodoListAdapter
 import com.lee.playandroid.todo.ui.listener.TodoActionListener
 import com.lee.playandroid.todo.ui.widget.StickyDateItemDecoration
-import com.lee.playandroid.todo.viewmodel.TodoListViewAction
+import com.lee.playandroid.todo.viewmodel.TodoListViewIntent
 import com.lee.playandroid.todo.viewmodel.TodoListViewEvent
 import com.lee.playandroid.todo.viewmodel.TodoListViewModel
 
@@ -120,7 +120,7 @@ class TodoListFragment :
                     is TodoListViewEvent.ResetRequestType -> {
                         mAdapter?.initStatusView()
                         mAdapter?.pageLoading()
-                        viewModel.dispatch(TodoListViewAction.RequestPage(LoadStatus.REFRESH))
+                        viewModel.dispatch(TodoListViewIntent.RequestPage(LoadStatus.REFRESH))
                     }
                     // 导航至todo编辑页事件
                     is TodoListViewEvent.NavigationEditTodoPage -> {
@@ -151,53 +151,53 @@ class TodoListFragment :
         when (view.id) {
             R.id.const_container -> {
                 // todoList item点击导航至编辑页
-                viewModel.dispatch(TodoListViewAction.NavigationEditTodoPage(entity))
+                viewModel.dispatch(TodoListViewIntent.NavigationEditTodoPage(entity))
             }
             R.id.btn_done -> {
                 // todoList 状态更改按钮点击通知更新todo状态（完成/未完成）
-                viewModel.dispatch(TodoListViewAction.RequestUpdate(position))
+                viewModel.dispatch(TodoListViewIntent.RequestUpdate(position))
             }
             R.id.btn_delete -> {
                 // todoList 删除按钮点击通知移除该todoItem
-                viewModel.dispatch(TodoListViewAction.RequestDelete(position))
+                viewModel.dispatch(TodoListViewIntent.RequestDelete(position))
             }
         }
     }
 
     override fun autoLoadMore() {
-        viewModel.dispatch(TodoListViewAction.RequestPage(LoadStatus.LOAD_MORE))
+        viewModel.dispatch(TodoListViewIntent.RequestPage(LoadStatus.LOAD_MORE))
     }
 
     override fun pageReload() {
-        viewModel.dispatch(TodoListViewAction.RequestPage(LoadStatus.REFRESH))
+        viewModel.dispatch(TodoListViewIntent.RequestPage(LoadStatus.REFRESH))
     }
 
     override fun itemReload() {
-        viewModel.dispatch(TodoListViewAction.RequestPage(LoadStatus.RELOAD))
+        viewModel.dispatch(TodoListViewIntent.RequestPage(LoadStatus.RELOAD))
     }
 
     override fun addAction(todo: TodoData?) {
         todo ?: return
         if (status == ARG_STATUS_UPCOMING) {
-            viewModel.dispatch(TodoListViewAction.RequestPage(LoadStatus.REFRESH))
+            viewModel.dispatch(TodoListViewIntent.RequestPage(LoadStatus.REFRESH))
         }
     }
 
     override fun updateAction(todo: TodoData?) {
         todo ?: return
         if (todo.status == status) {
-            viewModel.dispatch(TodoListViewAction.RequestPage(LoadStatus.REFRESH))
+            viewModel.dispatch(TodoListViewIntent.RequestPage(LoadStatus.REFRESH))
         }
     }
 
     override fun moveAction(todo: TodoData) {
         if (todo.status == status) {
-            viewModel.dispatch(TodoListViewAction.RequestPage(LoadStatus.REFRESH))
+            viewModel.dispatch(TodoListViewIntent.RequestPage(LoadStatus.REFRESH))
         }
     }
 
     override fun notifyAction(type: Int) {
-        viewModel.dispatch(TodoListViewAction.CheckResetRequestType(type = type))
+        viewModel.dispatch(TodoListViewIntent.CheckResetRequestType(type = type))
     }
 
     override fun onDestroyView() {

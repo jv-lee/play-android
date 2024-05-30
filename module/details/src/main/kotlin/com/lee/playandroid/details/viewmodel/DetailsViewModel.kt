@@ -36,12 +36,12 @@ class DetailsViewModel(savedStateHandle: SavedStateHandle) : ViewModel() {
     private val _viewEvents = Channel<DetailsViewEvent>(Channel.BUFFERED)
     val viewEvents = _viewEvents.receiveAsFlow()
 
-    fun dispatch(action: DetailsViewAction) {
-        when (action) {
-            is DetailsViewAction.UpdateCollectStatus -> {
+    fun dispatch(intent: DetailsViewIntent) {
+        when (intent) {
+            is DetailsViewIntent.UpdateCollectStatus -> {
                 requestCollect()
             }
-            is DetailsViewAction.RequestShareDetails -> {
+            is DetailsViewIntent.RequestShareDetails -> {
                 requestShareDetails()
             }
         }
@@ -109,7 +109,7 @@ sealed class DetailsViewEvent {
     data class CollectEvent(val message: String?) : DetailsViewEvent()
 }
 
-sealed class DetailsViewAction {
-    object RequestShareDetails : DetailsViewAction()
-    object UpdateCollectStatus : DetailsViewAction()
+sealed class DetailsViewIntent {
+    object RequestShareDetails : DetailsViewIntent()
+    object UpdateCollectStatus : DetailsViewIntent()
 }

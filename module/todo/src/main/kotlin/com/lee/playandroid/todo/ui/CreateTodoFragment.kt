@@ -22,7 +22,7 @@ import com.lee.playandroid.common.entity.TodoData.Companion.PRIORITY_LOW
 import com.lee.playandroid.common.extensions.actionFailed
 import com.lee.playandroid.todo.R
 import com.lee.playandroid.todo.databinding.FragmentCreateTodoBinding
-import com.lee.playandroid.todo.viewmodel.CreateTodoViewAction
+import com.lee.playandroid.todo.viewmodel.CreateTodoViewIntent
 import com.lee.playandroid.todo.viewmodel.CreateTodoViewEvent
 import com.lee.playandroid.todo.viewmodel.CreateTodoViewModel
 import com.lee.playandroid.todo.viewmodel.CreateTodoViewState
@@ -73,23 +73,23 @@ class CreateTodoFragment :
 
         // 保存TODO点击事件
         binding.tvSave.setOnClickListener {
-            viewModel.dispatch(CreateTodoViewAction.RequestPostTodo)
+            viewModel.dispatch(CreateTodoViewIntent.RequestPostTodo)
         }
 
         binding.editTitle.addTextChangedListener(object : TextWatcherAdapter {
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                viewModel.dispatch(CreateTodoViewAction.ChangeTitle(s?.toString() ?: ""))
+                viewModel.dispatch(CreateTodoViewIntent.ChangeTitle(s?.toString() ?: ""))
             }
         })
         binding.editContent.addTextChangedListener(object : TextWatcherAdapter {
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                viewModel.dispatch(CreateTodoViewAction.ChangeContent(s?.toString() ?: ""))
+                viewModel.dispatch(CreateTodoViewIntent.ChangeContent(s?.toString() ?: ""))
             }
         })
         binding.radioGroup.setOnCheckedChangeListener { _, checkedId ->
             val priority =
                 if (checkedId == binding.radioButtonLow.id) PRIORITY_LOW else PRIORITY_HEIGHT
-            viewModel.dispatch(CreateTodoViewAction.ChangePriority(priority))
+            viewModel.dispatch(CreateTodoViewIntent.ChangePriority(priority))
         }
     }
 
@@ -160,7 +160,7 @@ class CreateTodoFragment :
 
     override fun onDateSet(view: DatePicker?, year: Int, month: Int, dayOfMonth: Int) {
         val date = "$year-${month + 1}-$dayOfMonth"
-        viewModel.dispatch(CreateTodoViewAction.ChangeDate(date))
+        viewModel.dispatch(CreateTodoViewIntent.ChangeDate(date))
     }
 
     override fun onFragmentResume() {

@@ -3,7 +3,7 @@ package com.lee.playandroid.project.ui
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.lee.playandroid.common.ui.base.BaseTabFragment
-import com.lee.playandroid.common.ui.base.BaseTabViewAction
+import com.lee.playandroid.common.ui.base.BaseTabViewIntent
 import com.lee.playandroid.common.ui.base.BaseTabViewEvent
 import com.lee.playandroid.common.ui.base.BaseTabViewState
 import com.lee.playandroid.project.R
@@ -30,7 +30,7 @@ class ProjectFragment : BaseTabFragment() {
     }
 
     override fun requestData() {
-        viewModel.dispatch(BaseTabViewAction.RequestData)
+        viewModel.dispatch(BaseTabViewIntent.RequestData)
     }
 
     override fun viewEvents(): Flow<BaseTabViewEvent> {

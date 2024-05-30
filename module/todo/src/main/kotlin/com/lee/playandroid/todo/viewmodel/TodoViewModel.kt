@@ -29,10 +29,10 @@ class TodoViewModel : ViewModel() {
         changePageData()
     }
 
-    fun dispatch(action: TodoViewAction) {
-        when (action) {
-            is TodoViewAction.ChangeTypeSelected -> {
-                changePageData(action.type)
+    fun dispatch(intent: TodoViewIntent) {
+        when (intent) {
+            is TodoViewIntent.ChangeTypeSelected -> {
+                changePageData(intent.type)
             }
         }
     }
@@ -52,6 +52,6 @@ data class TodoViewState(
     val titleRes: Int = R.string.todo_title_default
 )
 
-sealed class TodoViewAction {
-    data class ChangeTypeSelected(@TodoType val type: Int) : TodoViewAction()
+sealed class TodoViewIntent {
+    data class ChangeTypeSelected(@TodoType val type: Int) : TodoViewIntent()
 }

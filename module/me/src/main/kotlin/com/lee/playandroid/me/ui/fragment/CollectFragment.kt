@@ -24,7 +24,7 @@ import com.lee.playandroid.common.extensions.actionFailed
 import com.lee.playandroid.common.ui.adapter.SimpleTextAdapter
 import com.lee.playandroid.me.R
 import com.lee.playandroid.me.databinding.FragmentCollectBinding
-import com.lee.playandroid.me.viewmodel.CollectViewAction
+import com.lee.playandroid.me.viewmodel.CollectViewIntent
 import com.lee.playandroid.me.viewmodel.CollectViewEvent
 import com.lee.playandroid.me.viewmodel.CollectViewModel
 import com.lee.playandroid.me.viewmodel.CollectViewState
@@ -103,15 +103,15 @@ class CollectFragment :
     }
 
     override fun autoLoadMore() {
-        viewModel.dispatch(CollectViewAction.RequestPage(LoadStatus.LOAD_MORE))
+        viewModel.dispatch(CollectViewIntent.RequestPage(LoadStatus.LOAD_MORE))
     }
 
     override fun pageReload() {
-        viewModel.dispatch(CollectViewAction.RequestPage(LoadStatus.REFRESH))
+        viewModel.dispatch(CollectViewIntent.RequestPage(LoadStatus.REFRESH))
     }
 
     override fun itemReload() {
-        viewModel.dispatch(CollectViewAction.RequestPage(LoadStatus.RELOAD))
+        viewModel.dispatch(CollectViewIntent.RequestPage(LoadStatus.RELOAD))
     }
 
     override fun onItemChild(view: View, entity: Content, position: Int) {
@@ -125,7 +125,7 @@ class CollectFragment :
                 )
             }
             R.id.btn_delete -> {
-                viewModel.dispatch(CollectViewAction.UnCollect(position))
+                viewModel.dispatch(CollectViewIntent.UnCollect(position))
             }
         }
     }

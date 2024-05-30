@@ -31,13 +31,13 @@ class HomeViewModel : ViewModel() {
     val contentListFlow: UiStatePageStateFlow = _contentListFlow
 
     init {
-        dispatch(HomeViewAction.RequestPage(LoadStatus.INIT))
+        dispatch(HomeViewIntent.RequestPage(LoadStatus.INIT))
     }
 
-    fun dispatch(action: HomeViewAction) {
-        when (action) {
-            is HomeViewAction.RequestPage -> {
-                requestHomeData(action.status)
+    fun dispatch(intent: HomeViewIntent) {
+        when (intent) {
+            is HomeViewIntent.RequestPage -> {
+                requestHomeData(intent.status)
             }
         }
     }
@@ -91,6 +91,6 @@ class HomeViewModel : ViewModel() {
     }
 }
 
-sealed class HomeViewAction {
-    data class RequestPage(@LoadStatus val status: Int) : HomeViewAction()
+sealed class HomeViewIntent {
+    data class RequestPage(@LoadStatus val status: Int) : HomeViewIntent()
 }

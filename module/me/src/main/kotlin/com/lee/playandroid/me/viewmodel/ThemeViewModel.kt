@@ -23,15 +23,15 @@ class ThemeViewModel : ViewModel() {
         initDarkTheme()
     }
 
-    fun dispatch(action: ThemeViewAction) {
-        when (action) {
-            is ThemeViewAction.UpdateDarkAction -> {
-                updateDark(action.enable)
+    fun dispatch(intent: ThemeViewIntent) {
+        when (intent) {
+            is ThemeViewIntent.UpdateDarkStatus -> {
+                updateDark(intent.enable)
             }
-            is ThemeViewAction.UpdateSystemAction -> {
-                updateSystem(action.enable)
+            is ThemeViewIntent.UpdateSystemStatus -> {
+                updateSystem(intent.enable)
             }
-            is ThemeViewAction.ResetThemeStatus -> {
+            is ThemeViewIntent.ResetThemeStatus -> {
                 initDarkTheme()
             }
         }
@@ -71,8 +71,8 @@ data class ThemeViewState(
     val statusBarDarkContentEnabled: Boolean = false
 )
 
-sealed class ThemeViewAction {
-    data class UpdateDarkAction(val enable: Boolean) : ThemeViewAction()
-    data class UpdateSystemAction(val enable: Boolean) : ThemeViewAction()
-    object ResetThemeStatus : ThemeViewAction()
+sealed class ThemeViewIntent {
+    data class UpdateDarkStatus(val enable: Boolean) : ThemeViewIntent()
+    data class UpdateSystemStatus(val enable: Boolean) : ThemeViewIntent()
+    object ResetThemeStatus : ThemeViewIntent()
 }

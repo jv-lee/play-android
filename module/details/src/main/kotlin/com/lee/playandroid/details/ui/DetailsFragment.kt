@@ -16,7 +16,7 @@ import com.lee.playandroid.common.extensions.bindLifecycle
 import com.lee.playandroid.common.extensions.supportDarkMode
 import com.lee.playandroid.details.R
 import com.lee.playandroid.details.databinding.FragmentDetailsBinding
-import com.lee.playandroid.details.viewmodel.DetailsViewAction
+import com.lee.playandroid.details.viewmodel.DetailsViewIntent
 import com.lee.playandroid.details.viewmodel.DetailsViewEvent
 import com.lee.playandroid.details.viewmodel.DetailsViewModel
 import com.lee.playandroid.details.viewmodel.DetailsViewState
@@ -51,10 +51,10 @@ class DetailsFragment : BaseNavigationFragment(R.layout.fragment_details) {
             menuItemClick { view ->
                 when (view.id) {
                     R.id.collect -> {
-                        viewModel.dispatch(DetailsViewAction.UpdateCollectStatus)
+                        viewModel.dispatch(DetailsViewIntent.UpdateCollectStatus)
                     }
                     R.id.share -> {
-                        viewModel.dispatch(DetailsViewAction.RequestShareDetails)
+                        viewModel.dispatch(DetailsViewIntent.RequestShareDetails)
                     }
                 }
             }

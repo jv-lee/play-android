@@ -26,10 +26,10 @@ class SystemContentListViewModel(handle: SavedStateHandle) : ViewModel() {
         MutableStateFlow(UiStatePage.Default(0))
     val contentListFlow: UiStatePageStateFlow = _contentListFlow
 
-    fun dispatch(action: SystemContentListViewAction) {
-        when (action) {
-            is SystemContentListViewAction.RequestPage -> {
-                requestContentList(action.status)
+    fun dispatch(intent: SystemContentListViewIntent) {
+        when (intent) {
+            is SystemContentListViewIntent.RequestPage -> {
+                requestContentList(intent.status)
             }
         }
     }
@@ -43,6 +43,6 @@ class SystemContentListViewModel(handle: SavedStateHandle) : ViewModel() {
     }
 }
 
-sealed class SystemContentListViewAction {
-    data class RequestPage(@LoadStatus val status: Int) : SystemContentListViewAction()
+sealed class SystemContentListViewIntent {
+    data class RequestPage(@LoadStatus val status: Int) : SystemContentListViewIntent()
 }

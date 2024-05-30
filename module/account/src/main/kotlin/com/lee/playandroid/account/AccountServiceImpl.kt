@@ -9,7 +9,7 @@ import com.lee.playandroid.base.cache.CacheManager
 import com.lee.playandroid.base.extensions.getCache
 import com.lee.playandroid.base.tools.PreferencesTools
 import com.lee.playandroid.common.entity.AccountData
-import com.lee.playandroid.common.entity.AccountViewAction
+import com.lee.playandroid.common.entity.AccountViewIntent
 import com.lee.playandroid.common.entity.AccountViewEvent
 import com.lee.playandroid.common.entity.AccountViewState
 import com.lee.playandroid.service.AccountService
@@ -33,15 +33,15 @@ class AccountServiceImpl : AccountService {
     }
 
     override suspend fun requestAccountInfo(activity: FragmentActivity) {
-        activity.viewModels<AccountViewModel>().value.dispatch(AccountViewAction.RequestAccountData)
+        activity.viewModels<AccountViewModel>().value.dispatch(AccountViewIntent.RequestAccountData)
     }
 
     override suspend fun requestLogout(activity: FragmentActivity) {
-        activity.viewModels<AccountViewModel>().value.dispatch(AccountViewAction.RequestLogout)
+        activity.viewModels<AccountViewModel>().value.dispatch(AccountViewIntent.RequestLogout)
     }
 
     override suspend fun clearLoginState(activity: FragmentActivity) {
-        activity.viewModels<AccountViewModel>().value.dispatch(AccountViewAction.ClearLoginState)
+        activity.viewModels<AccountViewModel>().value.dispatch(AccountViewIntent.ClearLoginState)
     }
 
     override fun getAccountInfo(): AccountData? {

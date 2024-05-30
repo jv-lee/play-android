@@ -19,7 +19,7 @@ import com.lee.playandroid.router.navigateDetails
 import com.lee.playandroid.search.R
 import com.lee.playandroid.search.databinding.FragmentSearchResultBinding
 import com.lee.playandroid.search.ui.adapter.SearchResultAdapter
-import com.lee.playandroid.search.viewmodel.SearchResultViewAction
+import com.lee.playandroid.search.viewmodel.SearchResultViewIntent
 import com.lee.playandroid.search.viewmodel.SearchResultViewModel
 import com.lee.playandroid.search.viewmodel.SearchResultViewState
 
@@ -86,15 +86,15 @@ class SearchResultFragment :
     }
 
     override fun autoLoadMore() {
-        viewModel.dispatch(SearchResultViewAction.RequestPage(LoadStatus.LOAD_MORE))
+        viewModel.dispatch(SearchResultViewIntent.RequestPage(LoadStatus.LOAD_MORE))
     }
 
     override fun pageReload() {
-        viewModel.dispatch(SearchResultViewAction.RequestPage(LoadStatus.REFRESH))
+        viewModel.dispatch(SearchResultViewIntent.RequestPage(LoadStatus.REFRESH))
     }
 
     override fun itemReload() {
-        viewModel.dispatch(SearchResultViewAction.RequestPage(LoadStatus.RELOAD))
+        viewModel.dispatch(SearchResultViewIntent.RequestPage(LoadStatus.RELOAD))
     }
 
     override fun onDestroyView() {

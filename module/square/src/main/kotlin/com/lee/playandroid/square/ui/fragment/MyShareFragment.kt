@@ -28,7 +28,7 @@ import com.lee.playandroid.common.ui.adapter.SimpleTextAdapter
 import com.lee.playandroid.router.navigateDetails
 import com.lee.playandroid.square.R
 import com.lee.playandroid.square.databinding.FragmentMyShareBinding
-import com.lee.playandroid.square.viewmodel.MyShareViewAction
+import com.lee.playandroid.square.viewmodel.MyShareViewIntent
 import com.lee.playandroid.square.viewmodel.MyShareViewEvent
 import com.lee.playandroid.square.viewmodel.MyShareViewModel
 import com.lee.playandroid.square.viewmodel.MyShareViewState
@@ -87,7 +87,7 @@ class MyShareFragment :
     override fun LifecycleCoroutineScope.bindData() {
         // 监听登陆页面回调时是否已经发布成功，刷新数据列表
         setFragmentResultListener(REQUEST_KEY_REFRESH) { _: String, _: Bundle ->
-            viewModel.dispatch(MyShareViewAction.RequestPage(LoadStatus.INIT))
+            viewModel.dispatch(MyShareViewIntent.RequestPage(LoadStatus.INIT))
         }
 
         launchWhenResumed {
@@ -128,15 +128,15 @@ class MyShareFragment :
     }
 
     override fun autoLoadMore() {
-        viewModel.dispatch(MyShareViewAction.RequestPage(LoadStatus.LOAD_MORE))
+        viewModel.dispatch(MyShareViewIntent.RequestPage(LoadStatus.LOAD_MORE))
     }
 
     override fun pageReload() {
-        viewModel.dispatch(MyShareViewAction.RequestPage(LoadStatus.REFRESH))
+        viewModel.dispatch(MyShareViewIntent.RequestPage(LoadStatus.REFRESH))
     }
 
     override fun itemReload() {
-        viewModel.dispatch(MyShareViewAction.RequestPage(LoadStatus.RELOAD))
+        viewModel.dispatch(MyShareViewIntent.RequestPage(LoadStatus.RELOAD))
     }
 
     override fun onItemChild(view: View, entity: Content, position: Int) {
@@ -146,7 +146,7 @@ class MyShareFragment :
                     .navigateDetails(entity.title, entity.link, entity.id, entity.collect)
             }
             CR.id.btn_delete -> {
-                viewModel.dispatch(MyShareViewAction.DeleteShare(position))
+                viewModel.dispatch(MyShareViewIntent.DeleteShare(position))
             }
         }
     }
