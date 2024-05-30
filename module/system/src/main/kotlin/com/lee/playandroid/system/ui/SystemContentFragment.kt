@@ -14,7 +14,7 @@ import com.lee.playandroid.base.extensions.findParentFragment
 import com.lee.playandroid.base.extensions.smoothScrollToTop
 import com.lee.playandroid.base.livedatabus.InjectBus
 import com.lee.playandroid.base.livedatabus.LiveDataBus
-import com.lee.playandroid.base.viewstate.collectState
+import com.lee.playandroid.base.uistate.collectState
 import com.lee.playandroid.common.entity.NavigationSelectEvent
 import com.lee.playandroid.common.entity.ParentTab
 import com.lee.playandroid.common.extensions.actionFailed

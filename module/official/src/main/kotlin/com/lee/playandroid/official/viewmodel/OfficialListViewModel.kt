@@ -6,7 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.lee.playandroid.base.cache.CacheManager
 import com.lee.playandroid.base.extensions.getCache
 import com.lee.playandroid.base.extensions.putPageCache
-import com.lee.playandroid.base.viewstate.*
+import com.lee.playandroid.base.uistate.*
 import com.lee.playandroid.common.extensions.checkData
 import com.lee.playandroid.common.extensions.createApi
 import com.lee.playandroid.official.constants.Constants.CACHE_KEY_OFFICIAL_DATA

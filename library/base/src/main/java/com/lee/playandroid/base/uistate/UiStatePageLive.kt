@@ -1,6 +1,6 @@
 @file:Suppress("UNCHECKED_CAST")
 
-package com.lee.playandroid.base.viewstate
+package com.lee.playandroid.base.uistate
 
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData

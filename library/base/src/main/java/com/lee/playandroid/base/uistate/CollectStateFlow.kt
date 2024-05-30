@@ -1,4 +1,4 @@
-package com.lee.playandroid.base.viewstate
+package com.lee.playandroid.base.uistate
 
 import kotlin.reflect.KProperty1
 import kotlinx.coroutines.flow.Flow

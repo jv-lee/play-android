@@ -1,4 +1,4 @@
-package com.lee.playandroid.base.viewstate
+package com.lee.playandroid.base.uistate
 
 /**
  * UiState ui状态类 支持 flow/liveData 扩展使用

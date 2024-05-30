@@ -4,7 +4,7 @@ import android.os.Bundle
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.lee.playandroid.base.adapter.base.BaseViewAdapter
-import com.lee.playandroid.base.viewstate.UiStatePage
+import com.lee.playandroid.base.uistate.UiStatePage
 import com.lee.playandroid.common.entity.Content
 import com.lee.playandroid.common.ui.base.BaseListFragment
 import com.lee.playandroid.project.ui.adapter.ProjectListAdapter

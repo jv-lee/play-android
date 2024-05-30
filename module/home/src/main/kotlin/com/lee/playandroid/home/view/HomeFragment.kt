@@ -17,8 +17,8 @@ import com.lee.playandroid.base.extensions.delayBackEvent
 import com.lee.playandroid.base.extensions.smoothScrollToTop
 import com.lee.playandroid.base.livedatabus.InjectBus
 import com.lee.playandroid.base.livedatabus.LiveDataBus
-import com.lee.playandroid.base.viewstate.LoadStatus
-import com.lee.playandroid.base.viewstate.collectState
+import com.lee.playandroid.base.uistate.LoadStatus
+import com.lee.playandroid.base.uistate.collectState
 import com.lee.playandroid.base.widget.banner.BannerView
 import com.lee.playandroid.common.entity.NavigationSelectEvent
 import com.lee.playandroid.common.entity.PageUiData

@@ -20,7 +20,7 @@ import com.lee.playandroid.base.extensions.setBackgroundColorCompat
 import com.lee.playandroid.base.extensions.startListener
 import com.lee.playandroid.base.tools.DarkModeTools
 import com.lee.playandroid.base.tools.ScreenDensityTools
-import com.lee.playandroid.base.viewstate.collectState
+import com.lee.playandroid.base.uistate.collectState
 import com.lee.playandroid.common.extensions.appThemeSet
 import com.lee.playandroid.databinding.ActivityMainBinding
 import com.lee.playandroid.databinding.LayoutStubMainBinding

@@ -9,7 +9,7 @@ import com.lee.playandroid.base.extensions.lowestTime
 import com.lee.playandroid.base.extensions.putCache
 import com.lee.playandroid.base.extensions.putPageCache
 import com.lee.playandroid.base.utils.NetworkUtil
-import com.lee.playandroid.base.viewstate.*
+import com.lee.playandroid.base.uistate.*
 import com.lee.playandroid.common.constants.ApiConstants
 import com.lee.playandroid.common.entity.Content
 import com.lee.playandroid.common.entity.PageData

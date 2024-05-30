@@ -1,4 +1,4 @@
-package com.lee.playandroid.base.viewstate
+package com.lee.playandroid.base.uistate
 
 import kotlinx.coroutines.flow.*
 

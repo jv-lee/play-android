@@ -11,7 +11,7 @@ import com.lee.playandroid.base.extensions.putCache
 import com.lee.playandroid.base.extensions.putPageCache
 import com.lee.playandroid.base.tools.PreferencesTools
 import com.lee.playandroid.base.utils.NetworkUtil
-import com.lee.playandroid.base.viewstate.*
+import com.lee.playandroid.base.uistate.*
 import com.lee.playandroid.common.constants.ApiConstants
 import com.lee.playandroid.common.entity.PageData
 import com.lee.playandroid.common.entity.TodoData

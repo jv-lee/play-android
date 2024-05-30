@@ -4,9 +4,9 @@ import androidx.lifecycle.*
 import com.lee.playandroid.base.cache.CacheManager
 import com.lee.playandroid.base.extensions.getCache
 import com.lee.playandroid.base.extensions.putCache
-import com.lee.playandroid.base.viewstate.uiState
+import com.lee.playandroid.base.uistate.uiState
 import com.lee.playandroid.base.viewmodel.CoroutineViewModel
-import com.lee.playandroid.base.viewstate.UiState
+import com.lee.playandroid.base.uistate.UiState
 import com.lee.playandroid.common.entity.Data
 import com.lee.playandroid.common.entity.ParentTab
 import com.lee.playandroid.common.extensions.checkData

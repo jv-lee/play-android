@@ -3,7 +3,7 @@ package com.lee.playandroid.search.viewmodel
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.lee.playandroid.base.viewstate.*
+import com.lee.playandroid.base.uistate.*
 import com.lee.playandroid.common.extensions.checkData
 import com.lee.playandroid.common.extensions.createApi
 import com.lee.playandroid.search.model.api.ApiService

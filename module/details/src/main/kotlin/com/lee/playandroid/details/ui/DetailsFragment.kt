@@ -11,7 +11,7 @@ import com.lee.playandroid.base.extensions.*
 import com.lee.playandroid.base.interadp.setClickListener
 import com.lee.playandroid.base.tools.DarkModeTools
 import com.lee.playandroid.base.utils.ShareUtil
-import com.lee.playandroid.base.viewstate.collectState
+import com.lee.playandroid.base.uistate.collectState
 import com.lee.playandroid.common.extensions.bindLifecycle
 import com.lee.playandroid.common.extensions.supportDarkMode
 import com.lee.playandroid.details.R

@@ -12,7 +12,7 @@ import com.lee.playandroid.base.dialog.ChoiceDialog
 import com.lee.playandroid.base.dialog.LoadingDialog
 import com.lee.playandroid.base.extensions.*
 import com.lee.playandroid.base.tools.DarkViewUpdateTools
-import com.lee.playandroid.base.viewstate.collectState
+import com.lee.playandroid.base.uistate.collectState
 import com.lee.playandroid.common.entity.AccountViewEvent
 import com.lee.playandroid.common.entity.AccountViewState
 import com.lee.playandroid.me.R

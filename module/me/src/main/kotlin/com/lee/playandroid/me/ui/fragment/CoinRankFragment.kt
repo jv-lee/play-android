@@ -11,8 +11,8 @@ import com.lee.playandroid.base.adapter.page.submitFailed
 import com.lee.playandroid.base.base.BaseNavigationFragment
 import com.lee.playandroid.base.extensions.binding
 import com.lee.playandroid.base.interadp.setClickListener
-import com.lee.playandroid.base.viewstate.LoadStatus
-import com.lee.playandroid.base.viewstate.collectState
+import com.lee.playandroid.base.uistate.LoadStatus
+import com.lee.playandroid.base.uistate.collectState
 import com.lee.playandroid.common.constants.ApiConstants
 import com.lee.playandroid.common.entity.CoinRank
 import com.lee.playandroid.common.entity.PageData

@@ -9,7 +9,7 @@ import com.lee.playandroid.base.adapter.core.UiPagerAdapter2
 import com.lee.playandroid.base.base.BaseNavigationFragment
 import com.lee.playandroid.base.extensions.binding
 import com.lee.playandroid.base.extensions.increaseOffscreenPageLimit
-import com.lee.playandroid.base.viewstate.collectState
+import com.lee.playandroid.base.uistate.collectState
 import com.lee.playandroid.base.widget.StatusLayout
 import com.lee.playandroid.common.R
 import com.lee.playandroid.common.databinding.FragmentBaseTabBinding
@@ -17,7 +17,6 @@ import com.lee.playandroid.common.entity.Tab
 import com.lee.playandroid.common.extensions.actionFailed
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.collect
 
 /**
  * 基础tabFragment类

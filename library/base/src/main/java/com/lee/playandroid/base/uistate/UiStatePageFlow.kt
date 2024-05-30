@@ -1,6 +1,6 @@
 @file:Suppress("UNCHECKED_CAST")
 
-package com.lee.playandroid.base.viewstate
+package com.lee.playandroid.base.uistate
 
 import com.lee.playandroid.base.adapter.page.PagingData
 import com.lee.playandroid.base.utils.LogUtil

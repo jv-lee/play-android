@@ -1,10 +1,10 @@
-package com.lee.playandroid.base.viewstate
+package com.lee.playandroid.base.uistate
 
 import androidx.annotation.IntDef
-import com.lee.playandroid.base.viewstate.LoadStatus.Companion.INIT
-import com.lee.playandroid.base.viewstate.LoadStatus.Companion.LOAD_MORE
-import com.lee.playandroid.base.viewstate.LoadStatus.Companion.REFRESH
-import com.lee.playandroid.base.viewstate.LoadStatus.Companion.RELOAD
+import com.lee.playandroid.base.uistate.LoadStatus.Companion.INIT
+import com.lee.playandroid.base.uistate.LoadStatus.Companion.LOAD_MORE
+import com.lee.playandroid.base.uistate.LoadStatus.Companion.REFRESH
+import com.lee.playandroid.base.uistate.LoadStatus.Companion.RELOAD
 import kotlin.random.Random
 
 /**
