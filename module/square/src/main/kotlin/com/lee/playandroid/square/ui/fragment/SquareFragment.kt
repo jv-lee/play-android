@@ -18,7 +18,7 @@ import com.lee.playandroid.base.extensions.toast
 import com.lee.playandroid.base.livedatabus.InjectBus
 import com.lee.playandroid.base.livedatabus.LiveDataBus
 import com.lee.playandroid.base.uistate.LoadStatus
-import com.lee.playandroid.base.uistate.collectState
+import com.lee.playandroid.base.extensions.collectState
 import com.lee.playandroid.common.entity.Content
 import com.lee.playandroid.common.entity.NavigationSelectEvent
 import com.lee.playandroid.common.entity.PageData

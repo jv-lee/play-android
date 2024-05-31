@@ -14,7 +14,7 @@ import com.lee.playandroid.base.tools.DarkModeTools
 import com.lee.playandroid.base.tools.SystemBarTools.setDarkStatusIcon
 import com.lee.playandroid.base.tools.SystemBarTools.setLightStatusIcon
 import com.lee.playandroid.base.uistate.LoadStatus
-import com.lee.playandroid.base.uistate.collectState
+import com.lee.playandroid.base.extensions.collectState
 import com.lee.playandroid.common.constants.ApiConstants
 import com.lee.playandroid.common.entity.AccountViewState
 import com.lee.playandroid.common.entity.CoinRecord

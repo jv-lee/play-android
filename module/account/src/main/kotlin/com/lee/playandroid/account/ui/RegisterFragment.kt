@@ -21,7 +21,7 @@ import com.lee.playandroid.base.tools.SystemBarTools.hasSoftInputShow
 import com.lee.playandroid.base.tools.SystemBarTools.hideSoftInput
 import com.lee.playandroid.base.tools.SystemBarTools.parentTouchHideSoftInput
 import com.lee.playandroid.base.tools.SystemBarTools.softInputBottomPaddingChange
-import com.lee.playandroid.base.uistate.collectState
+import com.lee.playandroid.base.extensions.collectState
 import com.lee.playandroid.common.extensions.actionFailed
 
 /**

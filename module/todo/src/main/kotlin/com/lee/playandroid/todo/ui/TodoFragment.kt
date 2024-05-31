@@ -14,7 +14,7 @@ import com.lee.playandroid.base.base.BaseNavigationFragment
 import com.lee.playandroid.base.extensions.binding
 import com.lee.playandroid.base.extensions.getParcelableCompat
 import com.lee.playandroid.base.interadp.setClickListener
-import com.lee.playandroid.base.uistate.collectState
+import com.lee.playandroid.base.extensions.collectState
 import com.lee.playandroid.common.entity.TodoData
 import com.lee.playandroid.todo.R
 import com.lee.playandroid.todo.databinding.FragmentTodoBinding

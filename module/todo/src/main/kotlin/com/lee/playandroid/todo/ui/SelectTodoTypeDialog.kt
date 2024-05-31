@@ -7,7 +7,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.lee.playandroid.base.base.BaseAlertFragment
 import com.lee.playandroid.base.extensions.binding
-import com.lee.playandroid.base.uistate.collectState
+import com.lee.playandroid.base.extensions.collectState
 import com.lee.playandroid.base.widget.WheelView
 import com.lee.playandroid.todo.R
 import com.lee.playandroid.todo.databinding.DialogSelectTodoBinding

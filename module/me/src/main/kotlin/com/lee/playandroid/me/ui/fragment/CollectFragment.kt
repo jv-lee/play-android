@@ -15,7 +15,7 @@ import com.lee.playandroid.base.extensions.dismiss
 import com.lee.playandroid.base.extensions.show
 import com.lee.playandroid.base.extensions.toast
 import com.lee.playandroid.base.uistate.LoadStatus
-import com.lee.playandroid.base.uistate.collectState
+import com.lee.playandroid.base.extensions.collectState
 import com.lee.playandroid.base.widget.SlidingPaneItemTouchListener
 import com.lee.playandroid.base.widget.closeAllItems
 import com.lee.playandroid.common.entity.Content

@@ -12,7 +12,7 @@ import com.lee.playandroid.base.base.BaseNavigationFragment
 import com.lee.playandroid.base.extensions.binding
 import com.lee.playandroid.base.uistate.LoadStatus
 import com.lee.playandroid.base.uistate.UiStatePage
-import com.lee.playandroid.base.uistate.collectState
+import com.lee.playandroid.base.extensions.collectState
 import com.lee.playandroid.common.R
 import com.lee.playandroid.common.databinding.FragmentBaseListBinding
 import com.lee.playandroid.common.entity.Content

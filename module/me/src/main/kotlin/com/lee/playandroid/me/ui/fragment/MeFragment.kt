@@ -13,7 +13,7 @@ import com.lee.playandroid.base.extensions.*
 import com.lee.playandroid.base.tools.DarkViewUpdateTools
 import com.lee.playandroid.base.tools.PermissionLauncher
 import com.lee.playandroid.base.tools.ShakeHelper
-import com.lee.playandroid.base.uistate.collectState
+import com.lee.playandroid.base.extensions.collectState
 import com.lee.playandroid.common.entity.AccountData
 import com.lee.playandroid.common.entity.AccountViewState
 import com.lee.playandroid.me.BuildConfig

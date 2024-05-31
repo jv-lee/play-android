@@ -10,7 +10,7 @@ import com.lee.playandroid.base.extensions.setMargin
 import com.lee.playandroid.base.extensions.smoothScrollToTop
 import com.lee.playandroid.base.livedatabus.InjectBus
 import com.lee.playandroid.base.livedatabus.LiveDataBus
-import com.lee.playandroid.base.uistate.collectState
+import com.lee.playandroid.base.extensions.collectState
 import com.lee.playandroid.base.widget.StatusLayout
 import com.lee.playandroid.common.entity.NavigationSelectEvent
 import com.lee.playandroid.common.extensions.actionFailed

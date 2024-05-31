@@ -16,7 +16,7 @@ import com.lee.playandroid.base.extensions.binding
 import com.lee.playandroid.base.extensions.findParentFragment
 import com.lee.playandroid.base.extensions.toast
 import com.lee.playandroid.base.uistate.LoadStatus
-import com.lee.playandroid.base.uistate.collectState
+import com.lee.playandroid.base.extensions.collectState
 import com.lee.playandroid.base.widget.SlidingPaneItemTouchListener
 import com.lee.playandroid.base.widget.closeAllItems
 import com.lee.playandroid.common.entity.PageData

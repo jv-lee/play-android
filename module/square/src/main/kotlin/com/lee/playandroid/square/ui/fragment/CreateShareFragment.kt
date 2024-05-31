@@ -13,7 +13,7 @@ import com.lee.playandroid.base.extensions.dismiss
 import com.lee.playandroid.base.extensions.show
 import com.lee.playandroid.base.extensions.toast
 import com.lee.playandroid.base.tools.SystemBarTools.parentTouchHideSoftInput
-import com.lee.playandroid.base.uistate.collectState
+import com.lee.playandroid.base.extensions.collectState
 import com.lee.playandroid.square.R
 import com.lee.playandroid.square.databinding.FragmentCreateShareBinding
 import com.lee.playandroid.square.viewmodel.CreateShareViewIntent
