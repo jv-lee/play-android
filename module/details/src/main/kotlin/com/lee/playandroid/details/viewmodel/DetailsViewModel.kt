@@ -5,6 +5,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.lee.playandroid.base.base.ApplicationExtensions.app
 import com.lee.playandroid.base.extensions.lowestTime
+import com.lee.playandroid.base.viewmodel.BaseMVIViewModel
+import com.lee.playandroid.base.viewmodel.IViewEvent
+import com.lee.playandroid.base.viewmodel.IViewIntent
+import com.lee.playandroid.base.viewmodel.IViewState
 import com.lee.playandroid.common.constants.ApiConstants
 import com.lee.playandroid.details.R
 import com.lee.playandroid.details.ui.DetailsFragment.Companion.ARG_PARAMS_COLLECT
@@ -23,24 +27,22 @@ import kotlinx.coroutines.launch
  * @author jv.lee
  * @date 2021/12/3
  */
-class DetailsViewModel(savedStateHandle: SavedStateHandle) : ViewModel() {
+class DetailsViewModel(savedStateHandle: SavedStateHandle) :
+    BaseMVIViewModel<DetailsViewState, DetailsViewEvent, DetailsViewIntent>() {
 
     private val params = DetailsParams(savedStateHandle)
 
     private val meService = ModuleService.find<MeService>()
 
-    private var _viewStates =
-        MutableStateFlow(DetailsViewState(title = params.title, actionEnable = params.id != 0L))
-    val viewStates: StateFlow<DetailsViewState> = _viewStates
+    override fun initViewState() =
+        DetailsViewState(title = params.title, actionEnable = params.id != 0L)
 
-    private val _viewEvents = Channel<DetailsViewEvent>(Channel.BUFFERED)
-    val viewEvents = _viewEvents.receiveAsFlow()
-
-    fun dispatch(intent: DetailsViewIntent) {
+    override fun dispatch(intent: DetailsViewIntent) {
         when (intent) {
             is DetailsViewIntent.UpdateCollectStatus -> {
                 requestCollect()
             }
+
             is DetailsViewIntent.RequestShareDetails -> {
                 requestShareDetails()
             }
@@ -102,14 +104,14 @@ data class DetailsViewState(
     val isLoading: Boolean = false,
     val title: String = "",
     val actionEnable: Boolean = false
-)
+) : IViewState
 
-sealed class DetailsViewEvent {
+sealed class DetailsViewEvent : IViewEvent {
     data class ShareEvent(val shareText: String) : DetailsViewEvent()
     data class CollectEvent(val message: String?) : DetailsViewEvent()
 }
 
-sealed class DetailsViewIntent {
+sealed class DetailsViewIntent : IViewIntent {
     object RequestShareDetails : DetailsViewIntent()
     object UpdateCollectStatus : DetailsViewIntent()
 }

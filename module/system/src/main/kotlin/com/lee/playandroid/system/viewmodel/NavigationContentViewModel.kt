@@ -1,16 +1,20 @@
 package com.lee.playandroid.system.viewmodel
 
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.lee.playandroid.base.cache.CacheManager
 import com.lee.playandroid.base.extensions.cacheFlow
+import com.lee.playandroid.base.viewmodel.BaseMVIViewModel
+import com.lee.playandroid.base.viewmodel.IViewEvent
+import com.lee.playandroid.base.viewmodel.IViewIntent
+import com.lee.playandroid.base.viewmodel.IViewState
 import com.lee.playandroid.common.entity.NavigationItem
 import com.lee.playandroid.common.extensions.checkData
 import com.lee.playandroid.common.extensions.createApi
 import com.lee.playandroid.system.constants.Constants.CACHE_KEY_NAVIGATION_CONTENT
 import com.lee.playandroid.system.model.api.ApiService
-import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.onStart
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 /**
@@ -18,22 +22,20 @@ import kotlinx.coroutines.launch
  * @author jv.lee
  * @date 2021/11/12
  */
-class NavigationContentViewModel : ViewModel() {
+class NavigationContentViewModel :
+    BaseMVIViewModel<NavigationContentViewState, NavigationContentViewEvent, NavigationContentViewIntent>() {
 
     private val api = createApi<ApiService>()
     private val cacheManager = CacheManager.getDefault()
 
-    private val _viewStates = MutableStateFlow(NavigationContentViewState())
-    val viewStates: StateFlow<NavigationContentViewState> = _viewStates
+    override fun initViewState() = NavigationContentViewState()
 
-    private val _viewEvents = Channel<NavigationContentViewEvent>(Channel.BUFFERED)
-    val viewEvents = _viewEvents.receiveAsFlow()
-
-    fun dispatch(intent: NavigationContentViewIntent) {
+    override fun dispatch(intent: NavigationContentViewIntent) {
         when (intent) {
             is NavigationContentViewIntent.RequestData -> {
                 requestNavigationData()
             }
+
             is NavigationContentViewIntent.SelectTabIndex -> {
                 selectTabIndex(intent.index)
             }
@@ -67,13 +69,13 @@ data class NavigationContentViewState(
     val isLoading: Boolean = true,
     val navigationItemList: List<NavigationItem> = emptyList(),
     val selectedTabIndex: Int = 0
-)
+) : IViewState
 
-sealed class NavigationContentViewEvent {
+sealed class NavigationContentViewEvent : IViewEvent {
     data class RequestFailed(val error: Throwable) : NavigationContentViewEvent()
 }
 
-sealed class NavigationContentViewIntent {
+sealed class NavigationContentViewIntent : IViewIntent {
     object RequestData : NavigationContentViewIntent()
     data class SelectTabIndex(val index: Int) : NavigationContentViewIntent()
 }

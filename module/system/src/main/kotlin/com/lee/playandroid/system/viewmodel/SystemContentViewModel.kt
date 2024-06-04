@@ -1,10 +1,13 @@
 package com.lee.playandroid.system.viewmodel
 
 import android.os.Bundle
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.lee.playandroid.base.cache.CacheManager
 import com.lee.playandroid.base.extensions.cacheFlow
+import com.lee.playandroid.base.viewmodel.BaseMVIViewModel
+import com.lee.playandroid.base.viewmodel.IViewEvent
+import com.lee.playandroid.base.viewmodel.IViewIntent
+import com.lee.playandroid.base.viewmodel.IViewState
 import com.lee.playandroid.common.entity.ParentTab
 import com.lee.playandroid.common.entity.Tab
 import com.lee.playandroid.common.extensions.checkData
@@ -12,8 +15,8 @@ import com.lee.playandroid.common.extensions.createApi
 import com.lee.playandroid.system.constants.Constants.CACHE_KEY_SYSTEM_CONTENT
 import com.lee.playandroid.system.model.api.ApiService
 import com.lee.playandroid.system.ui.SystemContentTabFragment
-import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 /**
@@ -21,26 +24,24 @@ import kotlinx.coroutines.launch
  * @author jv.lee
  * @date 2021/11/10
  */
-class SystemContentViewModel : ViewModel() {
+class SystemContentViewModel :
+    BaseMVIViewModel<SystemContentViewState, SystemContentViewEvent, SystemContentViewIntent>() {
 
     private val api = createApi<ApiService>()
     private val cacheManager = CacheManager.getDefault()
-
-    private val _viewStates = MutableStateFlow(SystemContentViewState())
-    val viewStates: StateFlow<SystemContentViewState> = _viewStates
-
-    private val _viewEvents = Channel<SystemContentViewEvent>(Channel.BUFFERED)
-    val viewEvents = _viewEvents.receiveAsFlow()
 
     init {
         dispatch(SystemContentViewIntent.RequestData)
     }
 
-    fun dispatch(intent: SystemContentViewIntent) {
+    override fun initViewState() = SystemContentViewState()
+
+    override fun dispatch(intent: SystemContentViewIntent) {
         when (intent) {
             is SystemContentViewIntent.RequestData -> {
                 requestParentTab()
             }
+
             is SystemContentViewIntent.NavigationContentTab -> {
                 navigationContentTab(intent.tab)
             }
@@ -78,14 +79,14 @@ class SystemContentViewModel : ViewModel() {
 data class SystemContentViewState(
     val isLoading: Boolean = true,
     val parentTabList: List<ParentTab> = emptyList()
-)
+) : IViewState
 
-sealed class SystemContentViewEvent {
+sealed class SystemContentViewEvent : IViewEvent {
     data class RequestFailed(val error: Throwable) : SystemContentViewEvent()
     data class NavigationContentTabEvent(val bundle: Bundle) : SystemContentViewEvent()
 }
 
-sealed class SystemContentViewIntent {
+sealed class SystemContentViewIntent : IViewIntent {
     object RequestData : SystemContentViewIntent()
     data class NavigationContentTab(val tab: ParentTab) : SystemContentViewIntent()
 }

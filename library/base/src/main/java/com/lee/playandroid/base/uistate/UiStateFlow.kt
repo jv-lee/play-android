@@ -131,7 +131,7 @@ inline fun <reified T> Flow<T>.uiState(): Flow<UiState> {
 /**
  * uiStateFlow数据collect扩展
  */
-suspend inline fun <reified T> Flow<UiState>.collectState(
+suspend inline fun <reified T> Flow<UiState>.collectCallback(
     crossinline success: (T) -> Unit,
     crossinline error: (Throwable) -> Unit,
     crossinline loading: () -> Unit = {},

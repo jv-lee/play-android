@@ -1,15 +1,20 @@
 package com.lee.playandroid.square.viewmodel
 
 import android.text.TextUtils
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.lee.playandroid.base.base.ApplicationExtensions.app
+import com.lee.playandroid.base.viewmodel.BaseMVIViewModel
+import com.lee.playandroid.base.viewmodel.IViewEvent
+import com.lee.playandroid.base.viewmodel.IViewIntent
+import com.lee.playandroid.base.viewmodel.IViewState
 import com.lee.playandroid.common.constants.ApiConstants
 import com.lee.playandroid.common.extensions.createApi
 import com.lee.playandroid.square.R
 import com.lee.playandroid.square.model.api.ApiService
-import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.onStart
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 /**
@@ -17,17 +22,14 @@ import kotlinx.coroutines.launch
  * @author jv.lee
  * @date 2021/12/21
  */
-class CreateShareViewModel : ViewModel() {
+class CreateShareViewModel :
+    BaseMVIViewModel<CreateShareViewState, CreateShareViewEvent, CreateShareViewIntent>() {
 
     private val api = createApi<ApiService>()
 
-    private val _viewStates = MutableStateFlow(CreateShareViewState())
-    val viewStates: StateFlow<CreateShareViewState> = _viewStates
+    override fun initViewState() = CreateShareViewState()
 
-    private val _viewEvents = Channel<CreateShareViewEvent>(Channel.BUFFERED)
-    val viewEvents = _viewEvents.receiveAsFlow()
-
-    fun dispatch(intent: CreateShareViewIntent) {
+    override fun dispatch(intent: CreateShareViewIntent) {
         when (intent) {
             is CreateShareViewIntent.RequestSend -> {
                 requestSendShare(intent.title, intent.content)
@@ -64,13 +66,13 @@ class CreateShareViewModel : ViewModel() {
     }
 }
 
-data class CreateShareViewState(val loading: Boolean = false)
+data class CreateShareViewState(val loading: Boolean = false) : IViewState
 
-sealed class CreateShareViewEvent {
+sealed class CreateShareViewEvent : IViewEvent {
     data class SendSuccess(val message: String) : CreateShareViewEvent()
     data class SendFailed(val error: Throwable) : CreateShareViewEvent()
 }
 
-sealed class CreateShareViewIntent {
+sealed class CreateShareViewIntent : IViewIntent {
     data class RequestSend(val title: String, val content: String) : CreateShareViewIntent()
 }

@@ -18,7 +18,7 @@ import com.lee.playandroid.base.extensions.smoothScrollToTop
 import com.lee.playandroid.base.livedatabus.InjectBus
 import com.lee.playandroid.base.livedatabus.LiveDataBus
 import com.lee.playandroid.base.uistate.LoadStatus
-import com.lee.playandroid.base.extensions.collectState
+import com.lee.playandroid.base.uistate.collectCallback
 import com.lee.playandroid.base.widget.banner.BannerView
 import com.lee.playandroid.common.entity.NavigationSelectEvent
 import com.lee.playandroid.common.entity.PageUiData
@@ -83,7 +83,7 @@ class HomeFragment :
         LiveDataBus.instance.injectBus(this@HomeFragment)
 
         launchWhenResumed {
-            viewModel.contentListFlow.collectState<PageUiData<HomeContent>>(
+            viewModel.contentListFlow.collectCallback<PageUiData<HomeContent>>(
                 success = {
                     binding.refreshView.isRefreshing = false
                     mAdapter?.submitData(it, diff = true)

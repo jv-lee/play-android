@@ -1,6 +1,5 @@
 package com.lee.playandroid.account.viewmodel
 
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.lee.playandroid.account.R
 import com.lee.playandroid.account.constants.Constants.CACHE_KEY_ACCOUNT_DATA
@@ -12,15 +11,18 @@ import com.lee.playandroid.base.extensions.clearCache
 import com.lee.playandroid.base.extensions.getCache
 import com.lee.playandroid.base.extensions.putCache
 import com.lee.playandroid.base.tools.PreferencesTools
+import com.lee.playandroid.base.viewmodel.BaseMVIViewModel
 import com.lee.playandroid.common.constants.ApiConstants.REQUEST_TOKEN_ERROR_MESSAGE
 import com.lee.playandroid.common.entity.AccountData
-import com.lee.playandroid.common.entity.AccountViewIntent
 import com.lee.playandroid.common.entity.AccountViewEvent
+import com.lee.playandroid.common.entity.AccountViewIntent
 import com.lee.playandroid.common.entity.AccountViewState
 import com.lee.playandroid.common.extensions.checkData
 import com.lee.playandroid.common.extensions.createApi
-import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.onStart
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 /**
@@ -28,48 +30,49 @@ import kotlinx.coroutines.launch
  * @author jv.lee
  * @date 2022/3/23
  */
-class AccountViewModel : ViewModel() {
+class AccountViewModel : BaseMVIViewModel<AccountViewState, AccountViewEvent, AccountViewIntent>() {
 
     private val api = createApi<ApiService>()
     private val cacheManager = CacheManager.getDefault()
 
-    private val _viewStates = MutableStateFlow(AccountViewState())
-    val viewStates: StateFlow<AccountViewState> = _viewStates
+    override fun initViewState() = AccountViewState()
 
-    private val _viewEvents = Channel<AccountViewEvent>(Channel.BUFFERED)
-    val viewEvents = _viewEvents.receiveAsFlow()
-
-    suspend fun dispatch(intent: AccountViewIntent) {
+    override fun dispatch(intent: AccountViewIntent) {
         when (intent) {
             is AccountViewIntent.RequestAccountData -> {
                 requestAccountData()
             }
+
             is AccountViewIntent.RequestLogout -> {
                 requestLogout()
             }
+
             is AccountViewIntent.UpdateAccountStatus -> {
                 updateAccountStatus(intent.accountData, intent.isLogin)
             }
+
             is AccountViewIntent.ClearLoginState -> {
                 updateAccountStatus(null, false)
             }
         }
     }
 
-    private suspend fun requestAccountData() {
-        flow {
-            emit(api.getAccountInfoAsync().checkData())
-        }.onStart {
-            cacheManager.getCache<AccountData>(CACHE_KEY_ACCOUNT_DATA)?.let {
-                emit(it)
+    private fun requestAccountData() {
+        viewModelScope.launch {
+            flow {
+                emit(api.getAccountInfoAsync().checkData())
+            }.onStart {
+                cacheManager.getCache<AccountData>(CACHE_KEY_ACCOUNT_DATA)?.let {
+                    emit(it)
+                }
+            }.catch { error ->
+                // 登陆token失效
+                if (error.message == REQUEST_TOKEN_ERROR_MESSAGE) {
+                    updateAccountStatus(null, false)
+                }
+            }.collect {
+                updateAccountStatus(it, true)
             }
-        }.catch { error ->
-            // 登陆token失效
-            if (error.message == REQUEST_TOKEN_ERROR_MESSAGE) {
-                updateAccountStatus(null, false)
-            }
-        }.collect {
-            updateAccountStatus(it, true)
         }
     }
 

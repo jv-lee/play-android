@@ -1,10 +1,13 @@
 package com.lee.playandroid.search.viewmodel
 
 import android.os.Bundle
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.lee.playandroid.base.cache.CacheManager
 import com.lee.playandroid.base.extensions.cacheFlow
+import com.lee.playandroid.base.viewmodel.BaseMVIViewModel
+import com.lee.playandroid.base.viewmodel.IViewEvent
+import com.lee.playandroid.base.viewmodel.IViewIntent
+import com.lee.playandroid.base.viewmodel.IViewState
 import com.lee.playandroid.common.entity.SearchHistory
 import com.lee.playandroid.common.extensions.checkData
 import com.lee.playandroid.common.extensions.createApi
@@ -13,8 +16,10 @@ import com.lee.playandroid.search.model.api.ApiService
 import com.lee.playandroid.search.model.db.SearchDatabase
 import com.lee.playandroid.search.model.entity.SearchHotUI
 import com.lee.playandroid.search.ui.SearchResultFragment
-import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 /**
@@ -22,34 +27,33 @@ import kotlinx.coroutines.launch
  * @author jv.lee
  * @date 2021/11/19
  */
-class SearchViewModel : ViewModel() {
+class SearchViewModel : BaseMVIViewModel<SearchViewState, SearchViewEvent, SearchViewIntent>() {
 
     private val api = createApi<ApiService>()
     private val searchHistoryDao = SearchDatabase.get().searchHistoryDao()
     private val cacheManager = CacheManager.getDefault()
-
-    private val _viewStates = MutableStateFlow(SearchViewState())
-    val viewStates: Flow<SearchViewState> = _viewStates
-
-    private val _viewEvents = Channel<SearchViewEvent>(Channel.BUFFERED)
-    val viewEvents = _viewEvents.receiveAsFlow()
 
     init {
         requestSearchHotData()
         requestSearchHistoryData()
     }
 
-    fun dispatch(intent: SearchViewIntent) {
+    override fun initViewState() = SearchViewState()
+
+    override fun dispatch(intent: SearchViewIntent) {
         when (intent) {
             is SearchViewIntent.NavigationSearchResult -> {
                 navigationSearchKey(intent.key)
             }
+
             is SearchViewIntent.AddHistory -> {
                 addSearchHistory(intent.key)
             }
+
             is SearchViewIntent.DeleteHistory -> {
                 deleteSearchHistory(intent.key)
             }
+
             is SearchViewIntent.ClearHistory -> {
                 clearSearchHistory()
             }
@@ -139,14 +143,14 @@ class SearchViewModel : ViewModel() {
 data class SearchViewState(
     val searchHotList: List<SearchHotUI> = emptyList(),
     val searchHistoryList: List<SearchHistory> = emptyList()
-)
+) : IViewState
 
-sealed class SearchViewEvent {
+sealed class SearchViewEvent : IViewEvent {
     data class NavigationSearchResultEvent(val bundle: Bundle) : SearchViewEvent()
     data class FailedEvent(val error: Throwable) : SearchViewEvent()
 }
 
-sealed class SearchViewIntent {
+sealed class SearchViewIntent : IViewIntent {
     data class NavigationSearchResult(val key: String) : SearchViewIntent()
     data class AddHistory(val key: String) : SearchViewIntent()
     data class DeleteHistory(val key: String) : SearchViewIntent()

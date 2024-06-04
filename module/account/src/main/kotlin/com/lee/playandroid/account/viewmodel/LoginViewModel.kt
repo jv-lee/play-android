@@ -6,6 +6,10 @@ import androidx.lifecycle.viewModelScope
 import com.lee.playandroid.account.constants.Constants.SP_KEY_SAVE_INPUT_USERNAME
 import com.lee.playandroid.account.model.api.ApiService
 import com.lee.playandroid.base.tools.PreferencesTools
+import com.lee.playandroid.base.viewmodel.BaseMVIViewModel
+import com.lee.playandroid.base.viewmodel.IViewEvent
+import com.lee.playandroid.base.viewmodel.IViewIntent
+import com.lee.playandroid.base.viewmodel.IViewState
 import com.lee.playandroid.common.entity.AccountViewIntent
 import com.lee.playandroid.common.extensions.checkData
 import com.lee.playandroid.common.extensions.createApi
@@ -19,21 +23,17 @@ import kotlinx.coroutines.launch
  * @author jv.lee
  * @date 2022/3/23
  */
-class LoginViewModel : ViewModel() {
+class LoginViewModel : BaseMVIViewModel<LoginViewState, LoginViewEvent, LoginViewIntent>() {
 
     private val api = createApi<ApiService>()
-
-    private val _viewStates = MutableStateFlow(LoginViewState())
-    val viewStates: StateFlow<LoginViewState> = _viewStates
-
-    private val _viewEvents = Channel<LoginViewEvent>(Channel.BUFFERED)
-    val viewEvents = _viewEvents.receiveAsFlow()
 
     init {
         restoreInputUsername()
     }
 
-    fun dispatch(intent: LoginViewIntent) {
+    override fun initViewState() = LoginViewState()
+
+    override fun dispatch(intent: LoginViewIntent) {
         when (intent) {
             is LoginViewIntent.ChangeUsername -> {
                 changeUsername(intent.username)
@@ -141,15 +141,15 @@ data class LoginViewState(
     val isLoading: Boolean = false,
     val isLoginEnable: Boolean = false,
     val hideKeyboard: Boolean = false
-)
+) : IViewState
 
-sealed class LoginViewEvent {
+sealed class LoginViewEvent : IViewEvent {
     data class LoginSuccess(val status: AccountViewIntent.UpdateAccountStatus) : LoginViewEvent()
     data class LoginFailed(val error: Throwable) : LoginViewEvent()
     object NavigationRegisterEvent : LoginViewEvent()
 }
 
-sealed class LoginViewIntent {
+sealed class LoginViewIntent : IViewIntent {
     data class ChangeUsername(val username: String) : LoginViewIntent()
     data class ChangePassword(val password: String) : LoginViewIntent()
     object HideKeyboard : LoginViewIntent()

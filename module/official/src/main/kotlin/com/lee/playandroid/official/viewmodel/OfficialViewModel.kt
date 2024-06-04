@@ -1,18 +1,19 @@
 package com.lee.playandroid.official.viewmodel
 
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.lee.playandroid.base.cache.CacheManager
 import com.lee.playandroid.base.extensions.cacheFlow
+import com.lee.playandroid.base.viewmodel.BaseMVIViewModel
 import com.lee.playandroid.common.extensions.checkData
 import com.lee.playandroid.common.extensions.createApi
-import com.lee.playandroid.common.ui.base.BaseTabViewIntent
 import com.lee.playandroid.common.ui.base.BaseTabViewEvent
+import com.lee.playandroid.common.ui.base.BaseTabViewIntent
 import com.lee.playandroid.common.ui.base.BaseTabViewState
 import com.lee.playandroid.official.constants.Constants.CACHE_KEY_OFFICIAL_TAB
 import com.lee.playandroid.official.model.api.ApiService
-import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.onStart
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 /**
@@ -20,22 +21,19 @@ import kotlinx.coroutines.launch
  * @author jv.lee
  * @date 2021/11/8
  */
-class OfficialViewModel : ViewModel() {
+class OfficialViewModel :
+    BaseMVIViewModel<BaseTabViewState, BaseTabViewEvent, BaseTabViewIntent>() {
 
     private val api = createApi<ApiService>()
     private val cacheManager = CacheManager.getDefault()
-
-    private val _viewStates = MutableStateFlow(BaseTabViewState())
-    val viewStates: StateFlow<BaseTabViewState> = _viewStates
-
-    private val _viewEvents = Channel<BaseTabViewEvent>(Channel.BUFFERED)
-    val viewEvents = _viewEvents.receiveAsFlow()
 
     init {
         dispatch(BaseTabViewIntent.RequestData)
     }
 
-    fun dispatch(intent: BaseTabViewIntent) {
+    override fun initViewState() = BaseTabViewState()
+
+    override fun dispatch(intent: BaseTabViewIntent) {
         when (intent) {
             is BaseTabViewIntent.RequestData -> {
                 requestTabs()

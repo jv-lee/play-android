@@ -1,14 +1,15 @@
 package com.lee.playandroid.todo.viewmodel
 
-import androidx.lifecycle.ViewModel
 import com.lee.playandroid.base.tools.PreferencesTools
+import com.lee.playandroid.base.viewmodel.BaseMVIViewModel
+import com.lee.playandroid.base.viewmodel.IViewEvent
+import com.lee.playandroid.base.viewmodel.IViewIntent
+import com.lee.playandroid.base.viewmodel.IViewState
 import com.lee.playandroid.service.AccountService
 import com.lee.playandroid.service.hepler.ModuleService
 import com.lee.playandroid.todo.R
 import com.lee.playandroid.todo.constants.Constants.SP_KEY_TODO_TYPE
 import com.lee.playandroid.todo.model.entity.TodoType
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
 
 /**
@@ -16,20 +17,19 @@ import kotlinx.coroutines.flow.update
  * @author jv.lee
  * @date 2022/5/19
  */
-class TodoViewModel : ViewModel() {
+class TodoViewModel : BaseMVIViewModel<TodoViewState, IViewEvent, TodoViewIntent>() {
 
     private val accountService: AccountService = ModuleService.find()
 
     private val typeSavedKey = SP_KEY_TODO_TYPE.plus(accountService.getUserId())
 
-    private val _viewStates = MutableStateFlow(TodoViewState())
-    val viewStates: StateFlow<TodoViewState> = _viewStates
-
     init {
         changePageData()
     }
 
-    fun dispatch(intent: TodoViewIntent) {
+    override fun initViewState() = TodoViewState()
+
+    override fun dispatch(intent: TodoViewIntent) {
         when (intent) {
             is TodoViewIntent.ChangeTypeSelected -> {
                 changePageData(intent.type)
@@ -50,8 +50,8 @@ class TodoViewModel : ViewModel() {
 
 data class TodoViewState(
     val titleRes: Int = R.string.todo_title_default
-)
+) : IViewState
 
-sealed class TodoViewIntent {
+sealed class TodoViewIntent : IViewIntent {
     data class ChangeTypeSelected(@TodoType val type: Int) : TodoViewIntent()
 }

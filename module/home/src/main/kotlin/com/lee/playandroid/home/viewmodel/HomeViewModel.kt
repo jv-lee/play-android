@@ -6,6 +6,7 @@ import com.lee.playandroid.base.cache.CacheManager
 import com.lee.playandroid.base.extensions.getCache
 import com.lee.playandroid.base.extensions.putPageCache
 import com.lee.playandroid.base.uistate.*
+import com.lee.playandroid.base.viewmodel.IViewIntent
 import com.lee.playandroid.common.entity.PageUiData
 import com.lee.playandroid.common.extensions.checkData
 import com.lee.playandroid.common.extensions.createApi
@@ -91,6 +92,6 @@ class HomeViewModel : ViewModel() {
     }
 }
 
-sealed class HomeViewIntent {
+sealed class HomeViewIntent : IViewIntent {
     data class RequestPage(@LoadStatus val status: Int) : HomeViewIntent()
 }

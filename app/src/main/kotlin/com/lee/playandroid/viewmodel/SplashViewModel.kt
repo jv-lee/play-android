@@ -1,14 +1,19 @@
 package com.lee.playandroid.viewmodel
 
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.lee.playandroid.R
 import com.lee.playandroid.base.base.ApplicationExtensions.app
+import com.lee.playandroid.base.viewmodel.BaseMVIViewModel
+import com.lee.playandroid.base.viewmodel.IViewEvent
+import com.lee.playandroid.base.viewmodel.IViewIntent
+import com.lee.playandroid.base.viewmodel.IViewState
 import com.lee.playandroid.service.AccountService
 import com.lee.playandroid.service.hepler.ModuleService
-import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.onCompletion
+import kotlinx.coroutines.flow.onStart
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 /**
@@ -16,21 +21,18 @@ import kotlinx.coroutines.launch
  * @author jv.lee
  * @date 2022/3/28
  */
-class SplashViewModel : ViewModel() {
+class SplashViewModel : BaseMVIViewModel<SplashViewState, SplashViewEvent, SplashViewIntent>() {
 
     val accountService = ModuleService.find<AccountService>()
 
-    private val _viewStates = MutableStateFlow(SplashViewState())
-    val viewStates: StateFlow<SplashViewState> = _viewStates
+    override fun initViewState() = SplashViewState()
 
-    private val _viewEvents = Channel<SplashViewEvent>(Channel.BUFFERED)
-    val viewEvents = _viewEvents.receiveAsFlow()
-
-    fun dispatch(intent: SplashViewIntent) {
+    override fun dispatch(intent: SplashViewIntent) {
         when (intent) {
             is SplashViewIntent.RequestSplashAd -> {
                 requestSplashAd()
             }
+
             is SplashViewIntent.NavigationMain -> {
                 navigationMain(intent.duration)
             }
@@ -59,14 +61,14 @@ class SplashViewModel : ViewModel() {
     }
 }
 
-data class SplashViewState(val timeText: String = "")
+data class SplashViewState(val timeText: String = "") : IViewState
 
-sealed class SplashViewEvent {
+sealed class SplashViewEvent : IViewEvent {
     data class NavigationMainEvent(val duration: Long) : SplashViewEvent()
     data class VisibleSplashEvent(val splashAdRes: Int) : SplashViewEvent()
 }
 
-sealed class SplashViewIntent {
+sealed class SplashViewIntent : IViewIntent {
     object RequestSplashAd : SplashViewIntent()
     data class NavigationMain(val duration: Long = 0) : SplashViewIntent()
 }

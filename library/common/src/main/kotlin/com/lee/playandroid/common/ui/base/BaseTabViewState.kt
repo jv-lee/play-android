@@ -5,14 +5,18 @@
  */
 package com.lee.playandroid.common.ui.base
 
+import com.lee.playandroid.base.viewmodel.IViewEvent
+import com.lee.playandroid.base.viewmodel.IViewIntent
+import com.lee.playandroid.base.viewmodel.IViewState
 import com.lee.playandroid.common.entity.Tab
 
-data class BaseTabViewState(val tabList: List<Tab> = emptyList(), val loading: Boolean = true)
+data class BaseTabViewState(val tabList: List<Tab> = emptyList(), val loading: Boolean = true) :
+    IViewState
 
-sealed class BaseTabViewEvent {
+sealed class BaseTabViewEvent : IViewEvent {
     data class RequestFailed(val error: Throwable) : BaseTabViewEvent()
 }
 
-sealed class BaseTabViewIntent {
+sealed class BaseTabViewIntent : IViewIntent {
     object RequestData : BaseTabViewIntent()
 }

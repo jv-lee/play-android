@@ -6,6 +6,7 @@ import com.lee.playandroid.base.cache.CacheManager
 import com.lee.playandroid.base.extensions.getCache
 import com.lee.playandroid.base.extensions.putPageCache
 import com.lee.playandroid.base.uistate.*
+import com.lee.playandroid.base.viewmodel.IViewIntent
 import com.lee.playandroid.common.extensions.checkData
 import com.lee.playandroid.common.extensions.createApi
 import com.lee.playandroid.service.AccountService
@@ -65,6 +66,6 @@ class CoinRankViewModel : ViewModel() {
     }
 }
 
-sealed class CoinRankViewIntent {
+sealed class CoinRankViewIntent : IViewIntent {
     data class RequestPage(@LoadStatus val status: Int) : CoinRankViewIntent()
 }

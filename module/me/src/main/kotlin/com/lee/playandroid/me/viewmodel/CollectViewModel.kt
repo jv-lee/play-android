@@ -1,6 +1,5 @@
 package com.lee.playandroid.me.viewmodel
 
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.lee.playandroid.base.base.ApplicationExtensions.app
 import com.lee.playandroid.base.cache.CacheManager
@@ -8,8 +7,18 @@ import com.lee.playandroid.base.extensions.getCache
 import com.lee.playandroid.base.extensions.lowestTime
 import com.lee.playandroid.base.extensions.putCache
 import com.lee.playandroid.base.extensions.putPageCache
+import com.lee.playandroid.base.uistate.LoadStatus
+import com.lee.playandroid.base.uistate.UiStatePage
+import com.lee.playandroid.base.uistate.UiStatePageMutableStateFlow
+import com.lee.playandroid.base.uistate.UiStatePageStateFlow
+import com.lee.playandroid.base.uistate.applyData
+import com.lee.playandroid.base.uistate.getValueData
+import com.lee.playandroid.base.uistate.pageLaunch
 import com.lee.playandroid.base.utils.NetworkUtil
-import com.lee.playandroid.base.uistate.*
+import com.lee.playandroid.base.viewmodel.BaseMVIViewModel
+import com.lee.playandroid.base.viewmodel.IViewEvent
+import com.lee.playandroid.base.viewmodel.IViewIntent
+import com.lee.playandroid.base.viewmodel.IViewState
 import com.lee.playandroid.common.constants.ApiConstants
 import com.lee.playandroid.common.entity.Content
 import com.lee.playandroid.common.entity.PageData
@@ -20,8 +29,12 @@ import com.lee.playandroid.me.constants.Constants.CACHE_KEY_COLLECT
 import com.lee.playandroid.me.model.api.ApiService
 import com.lee.playandroid.service.AccountService
 import com.lee.playandroid.service.hepler.ModuleService
-import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.onCompletion
+import kotlinx.coroutines.flow.onStart
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import java.util.concurrent.atomic.AtomicBoolean
 
@@ -30,7 +43,7 @@ import java.util.concurrent.atomic.AtomicBoolean
  * @author jv.lee
  * @date 2021/12/2
  */
-class CollectViewModel : ViewModel() {
+class CollectViewModel : BaseMVIViewModel<CollectViewState, CollectViewEvent, CollectViewIntent>() {
 
     private val api = createApi<ApiService>()
     private val cacheManager = CacheManager.getDefault()
@@ -39,24 +52,21 @@ class CollectViewModel : ViewModel() {
     private val cacheKey = CACHE_KEY_COLLECT.plus(accountService.getUserId())
     private val deleteLock = AtomicBoolean(false)
 
-    private val _viewStates = MutableStateFlow(CollectViewState())
-    val viewStates: StateFlow<CollectViewState> = _viewStates
-
     private val _collectFlow: UiStatePageMutableStateFlow = MutableStateFlow(UiStatePage.Default(0))
     val collectFlow: UiStatePageStateFlow = _collectFlow
-
-    private val _viewEvents = Channel<CollectViewEvent>(Channel.BUFFERED)
-    val viewEvents = _viewEvents.receiveAsFlow()
 
     init {
         dispatch(CollectViewIntent.RequestPage(LoadStatus.INIT))
     }
 
-    fun dispatch(intent: CollectViewIntent) {
+    override fun initViewState() = CollectViewState()
+
+    override fun dispatch(intent: CollectViewIntent) {
         when (intent) {
             is CollectViewIntent.RequestPage -> {
                 requestCollect(intent.status)
             }
+
             is CollectViewIntent.UnCollect -> {
                 requestUnCollect(intent.position)
             }
@@ -137,15 +147,15 @@ class CollectViewModel : ViewModel() {
 
 data class CollectViewState(
     val isLoading: Boolean = false
-)
+) : IViewState
 
-sealed class CollectViewEvent {
+sealed class CollectViewEvent : IViewEvent {
     object ResetSlidingState : CollectViewEvent()
     data class UnCollectSuccess(val position: Int) : CollectViewEvent()
     data class UnCollectFailed(val error: Throwable) : CollectViewEvent()
 }
 
-sealed class CollectViewIntent {
+sealed class CollectViewIntent : IViewIntent {
     data class RequestPage(@LoadStatus val status: Int) : CollectViewIntent()
     data class UnCollect(val position: Int) : CollectViewIntent()
 }

@@ -5,13 +5,17 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.lee.playandroid.base.base.ApplicationExtensions.app
+import com.lee.playandroid.base.tools.PreferencesTools
+import com.lee.playandroid.base.viewmodel.BaseMVIViewModel
+import com.lee.playandroid.base.viewmodel.IViewEvent
+import com.lee.playandroid.base.viewmodel.IViewIntent
+import com.lee.playandroid.base.viewmodel.IViewState
 import com.lee.playandroid.common.entity.TodoData
 import com.lee.playandroid.common.extensions.checkData
 import com.lee.playandroid.common.extensions.createApi
-import com.lee.playandroid.todo.R
-import com.lee.playandroid.base.tools.PreferencesTools
 import com.lee.playandroid.service.AccountService
 import com.lee.playandroid.service.hepler.ModuleService
+import com.lee.playandroid.todo.R
 import com.lee.playandroid.todo.constants.Constants.SP_KEY_TODO_TYPE
 import com.lee.playandroid.todo.model.api.ApiService
 import com.lee.playandroid.todo.model.entity.TodoType
@@ -20,18 +24,23 @@ import com.lee.playandroid.todo.ui.TodoFragment.Companion.REQUEST_KEY_SAVE
 import com.lee.playandroid.todo.ui.TodoFragment.Companion.REQUEST_KEY_UPDATE
 import com.lee.playandroid.todo.ui.TodoFragment.Companion.REQUEST_VALUE_TODO
 import com.lee.playandroid.todo.ui.TodoListFragment.Companion.ARG_STATUS_UPCOMING
-import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.onStart
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.Calendar
+import java.util.Date
+import java.util.Locale
 
 /**
  * 创建todo内容页面viewModel
  * @author jv.lee
  * @date 2022/4/8
  */
-class CreateTodoViewModel(private val type: Int, private val todoData: TodoData?) : ViewModel() {
+class CreateTodoViewModel(private val type: Int, private val todoData: TodoData?) :
+    BaseMVIViewModel<CreateTodoViewState, CreateTodoViewEvent, CreateTodoViewIntent>() {
 
     private val api = createApi<ApiService>()
 
@@ -39,32 +48,31 @@ class CreateTodoViewModel(private val type: Int, private val todoData: TodoData?
 
     private val typeSavedKey = SP_KEY_TODO_TYPE.plus(accountService.getUserId())
 
-    private val _viewStates = MutableStateFlow(
-        CreateTodoViewState(type = PreferencesTools.get(typeSavedKey, TodoType.DEFAULT))
-    )
-    val viewStates: StateFlow<CreateTodoViewState> = _viewStates
-
-    private val _viewEvents = Channel<CreateTodoViewEvent>(Channel.BUFFERED)
-    val viewEvents = _viewEvents.receiveAsFlow()
-
     init {
         initPageState()
     }
 
-    fun dispatch(intent: CreateTodoViewIntent) {
+    override fun initViewState() =
+        CreateTodoViewState(type = PreferencesTools.get(typeSavedKey, TodoType.DEFAULT))
+
+    override fun dispatch(intent: CreateTodoViewIntent) {
         when (intent) {
             is CreateTodoViewIntent.ChangeTitle -> {
                 changeTitle(intent.title)
             }
+
             is CreateTodoViewIntent.ChangeContent -> {
                 changeContent(intent.content)
             }
+
             is CreateTodoViewIntent.ChangePriority -> {
                 changePriority(intent.priority)
             }
+
             is CreateTodoViewIntent.ChangeDate -> {
                 changeDate(intent.date)
             }
+
             is CreateTodoViewIntent.RequestPostTodo -> {
                 requestPostTodo()
             }
@@ -201,9 +209,9 @@ data class CreateTodoViewState(
     val date: String = "",
     val calendar: Calendar = Calendar.getInstance(),
     val priority: Int = TodoData.PRIORITY_LOW
-)
+) : IViewState
 
-sealed class CreateTodoViewEvent {
+sealed class CreateTodoViewEvent : IViewEvent {
     data class RequestSuccess(
         val resultKey: String,
         val message: String,
@@ -213,7 +221,7 @@ sealed class CreateTodoViewEvent {
     data class RequestFailed(val error: Throwable) : CreateTodoViewEvent()
 }
 
-sealed class CreateTodoViewIntent {
+sealed class CreateTodoViewIntent : IViewIntent {
     data class ChangeTitle(val title: String) : CreateTodoViewIntent()
     data class ChangeContent(val content: String) : CreateTodoViewIntent()
     data class ChangePriority(val priority: Int) : CreateTodoViewIntent()

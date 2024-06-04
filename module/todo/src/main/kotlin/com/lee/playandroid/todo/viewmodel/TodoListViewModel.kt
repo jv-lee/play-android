@@ -60,12 +60,12 @@ class TodoListViewModel(handle: SavedStateHandle) : ViewModel() {
     private val deleteLock = AtomicBoolean(false)
     private val updateLock = AtomicBoolean(false)
 
-    private val _viewEvents = Channel<TodoListViewEvent>(Channel.BUFFERED)
-    val viewEvents = _viewEvents.receiveAsFlow()
-
     private val _todoDataFlow: UiStatePageMutableStateFlow =
         MutableStateFlow(UiStatePage.Default(1))
     val todoDataFlow: UiStatePageStateFlow = _todoDataFlow
+
+    private val _viewEvents = Channel<TodoListViewEvent>(Channel.BUFFERED)
+    val viewEvents = _viewEvents.receiveAsFlow()
 
     init {
         dispatch(TodoListViewIntent.RequestPage(LoadStatus.INIT))

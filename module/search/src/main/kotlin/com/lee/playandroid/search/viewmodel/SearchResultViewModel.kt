@@ -1,15 +1,22 @@
 package com.lee.playandroid.search.viewmodel
 
 import androidx.lifecycle.SavedStateHandle
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.lee.playandroid.base.uistate.*
+import com.lee.playandroid.base.uistate.LoadStatus
+import com.lee.playandroid.base.uistate.UiStatePage
+import com.lee.playandroid.base.uistate.UiStatePageMutableStateFlow
+import com.lee.playandroid.base.uistate.UiStatePageStateFlow
+import com.lee.playandroid.base.uistate.applyData
+import com.lee.playandroid.base.uistate.pageLaunch
+import com.lee.playandroid.base.viewmodel.BaseMVIViewModel
+import com.lee.playandroid.base.viewmodel.IViewEvent
+import com.lee.playandroid.base.viewmodel.IViewIntent
+import com.lee.playandroid.base.viewmodel.IViewState
 import com.lee.playandroid.common.extensions.checkData
 import com.lee.playandroid.common.extensions.createApi
 import com.lee.playandroid.search.model.api.ApiService
 import com.lee.playandroid.search.ui.SearchResultFragment
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
@@ -18,14 +25,12 @@ import kotlinx.coroutines.launch
  * @author jv.lee
  * @date 2021/11/22
  */
-class SearchResultViewModel(handle: SavedStateHandle) : ViewModel() {
+class SearchResultViewModel(handle: SavedStateHandle) :
+    BaseMVIViewModel<SearchResultViewState, IViewEvent, SearchResultViewIntent>() {
 
     private val key = handle[SearchResultFragment.ARG_PARAMS_SEARCH_KEY] ?: ""
 
     private val api = createApi<ApiService>()
-
-    private val _viewStates = MutableStateFlow(SearchResultViewState(key))
-    val viewStates: StateFlow<SearchResultViewState> = _viewStates
 
     private val _searchResultFlow: UiStatePageMutableStateFlow =
         MutableStateFlow(UiStatePage.Default(0))
@@ -35,7 +40,9 @@ class SearchResultViewModel(handle: SavedStateHandle) : ViewModel() {
         dispatch(SearchResultViewIntent.RequestPage(LoadStatus.INIT))
     }
 
-    fun dispatch(intent: SearchResultViewIntent) {
+    override fun initViewState() = SearchResultViewState(key)
+
+    override fun dispatch(intent: SearchResultViewIntent) {
         when (intent) {
             is SearchResultViewIntent.RequestPage -> {
                 requestSearch(intent.status)
@@ -56,8 +63,8 @@ class SearchResultViewModel(handle: SavedStateHandle) : ViewModel() {
     }
 }
 
-data class SearchResultViewState(val title: String)
+data class SearchResultViewState(val title: String) : IViewState
 
-sealed class SearchResultViewIntent {
+sealed class SearchResultViewIntent : IViewIntent {
     data class RequestPage(@LoadStatus val status: Int) : SearchResultViewIntent()
 }
