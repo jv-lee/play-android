@@ -2,13 +2,10 @@ package com.lee.playandroid.home.view.adapter
 
 import android.content.Context
 import android.net.Uri
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.viewbinding.ViewBinding
 import com.lee.playandroid.base.adapter.binding.ViewBindingAdapter
 import com.lee.playandroid.base.adapter.binding.ViewBindingHolder
 import com.lee.playandroid.base.adapter.item.ViewBindingItem
@@ -50,85 +47,79 @@ class ContentAdapter(context: Context) :
     /**
      * 首页BANNER样式
      */
-    inner class ContentBannerItem : ViewBindingItem<HomeContent>() {
-        override fun getItemViewBinding(context: Context, parent: ViewGroup): ViewBinding {
-            return ItemContentBannerBinding.inflate(LayoutInflater.from(context), parent, false)
-        }
+    inner class ContentBannerItem : ViewBindingItem<ItemContentBannerBinding, HomeContent>() {
 
         override fun isItemView(entity: HomeContent, position: Int): Boolean {
             return entity.bannerList != null
         }
 
-        override fun convert(holder: ViewBindingHolder, entity: HomeContent, position: Int) {
-            holder.getViewBinding<ItemContentBannerBinding>().apply {
-                entity.bannerList?.apply {
-                    banner.bindDataCreate(
-                        this,
-                        object : CardImageCreateHolder<Banner>() {
-                            override fun bindItem(imageView: ImageView, data: Banner) {
-                                GlideTools.get().loadImage(data.imagePath, imageView)
-                            }
+        override fun ItemContentBannerBinding.convert(
+            holder: ViewBindingHolder,
+            entity: HomeContent,
+            position: Int
+        ) {
+            entity.bannerList ?: return
+            banner.bindDataCreate(entity.bannerList, object : CardImageCreateHolder<Banner>() {
+                override fun bindItem(imageView: ImageView, data: Banner) {
+                    GlideTools.get().loadImage(data.imagePath, imageView)
+                }
 
-                            override fun onItemClick(position: Int, item: Banner) {
-                                item.apply {
-                                    Navigation.findNavController(banner)
-                                        .navigateDetails(title, url, id, collect)
-                                }
-                            }
-                        }
-                    )
+                override fun onItemClick(position: Int, item: Banner) {
+                    item.apply {
+                        Navigation.findNavController(banner)
+                            .navigateDetails(title, url, id, collect)
+                    }
                 }
             }
+            )
         }
     }
 
     /**
      * 首页分类样式
      */
-    inner class ContentCategoryItem : ViewBindingItem<HomeContent>() {
+    inner class ContentCategoryItem : ViewBindingItem<ItemContentCategoryBinding, HomeContent>() {
 
         private var mAdapter: ContentCategoryAdapter? = null
-
-        override fun getItemViewBinding(context: Context, parent: ViewGroup): ViewBinding {
-            return ItemContentCategoryBinding.inflate(LayoutInflater.from(context), parent, false)
-        }
 
         override fun isItemView(entity: HomeContent, position: Int): Boolean {
             return entity.categoryList != null
         }
 
-        override fun convert(holder: ViewBindingHolder, entity: HomeContent, position: Int) {
-            holder.getViewBinding<ItemContentCategoryBinding>().apply {
-                val context = holder.itemView.context
-                val data = entity.categoryList
-                data ?: return
+        override fun ItemContentCategoryBinding.convert(
+            holder: ViewBindingHolder,
+            entity: HomeContent,
+            position: Int
+        ) {
+            val context = holder.itemView.context
+            val data = entity.categoryList
+            data ?: return
 
-                // 构建适配器
-                mAdapter ?: kotlin.run {
-                    mAdapter = ContentCategoryAdapter(context).apply {
-                        addData(data)
-                        setOnItemClickListener(object : OnItemClickListener<HomeCategory> {
-                            override fun onItemClick(
-                                view: View,
-                                entity: HomeCategory,
-                                position: Int
-                            ) {
-                                Navigation.findNavController(view)
-                                    .navigateDeepLink(Uri.parse(entity.link), NavigationAnim.ZoomIn)
-                            }
+            // 构建适配器
+            mAdapter ?: kotlin.run {
+                mAdapter = ContentCategoryAdapter(context).apply {
+                    addData(data)
+                    setOnItemClickListener(object : OnItemClickListener<HomeCategory> {
+                        override fun onItemClick(
+                            view: View,
+                            entity: HomeCategory,
+                            position: Int
+                        ) {
+                            Navigation.findNavController(view)
+                                .navigateDeepLink(Uri.parse(entity.link), NavigationAnim.ZoomIn)
+                        }
 
-                        })
-                    }
+                    })
                 }
+            }
 
-                // 设置列表基础参数
-                rvContainer.layoutManager ?: kotlin.run {
-                    rvContainer.layoutManager =
-                        LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-                }
-                rvContainer.adapter ?: kotlin.run {
-                    rvContainer.adapter = mAdapter
-                }
+            // 设置列表基础参数
+            rvContainer.layoutManager ?: kotlin.run {
+                rvContainer.layoutManager =
+                    LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+            }
+            rvContainer.adapter ?: kotlin.run {
+                rvContainer.adapter = mAdapter
             }
         }
     }
@@ -136,24 +127,22 @@ class ContentAdapter(context: Context) :
     /**
      * 首页普通信息条目
      */
-    inner class ContentTextItem : ViewBindingItem<HomeContent>() {
-
-        override fun getItemViewBinding(context: Context, parent: ViewGroup): ViewBinding {
-            return ItemContentTextBinding.inflate(LayoutInflater.from(context), parent, false)
-        }
+    inner class ContentTextItem : ViewBindingItem<ItemContentTextBinding, HomeContent>() {
 
         override fun isItemView(entity: HomeContent, position: Int): Boolean {
             return entity.content != null
         }
 
-        override fun convert(holder: ViewBindingHolder, entity: HomeContent, position: Int) {
-            holder.getViewBinding<ItemContentTextBinding>().apply {
-                entity.content?.apply {
-                    tvTitle.text = getTitle()
-                    tvAuthor.text = getAuthor()
-                    tvTime.text = getDateFormat()
-                    tvCategory.text = getCategory()
-                }
+        override fun ItemContentTextBinding.convert(
+            holder: ViewBindingHolder,
+            entity: HomeContent,
+            position: Int
+        ) {
+            entity.content?.apply {
+                tvTitle.text = getTitle()
+                tvAuthor.text = getAuthor()
+                tvTime.text = getDateFormat()
+                tvCategory.text = getCategory()
             }
         }
     }

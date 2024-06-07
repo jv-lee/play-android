@@ -1,9 +1,6 @@
 package com.lee.playandroid.me.ui.adapter
 
 import android.content.Context
-import android.view.LayoutInflater
-import android.view.ViewGroup
-import androidx.viewbinding.ViewBinding
 import com.lee.playandroid.base.adapter.binding.ViewBindingAdapter
 import com.lee.playandroid.base.adapter.binding.ViewBindingHolder
 import com.lee.playandroid.base.adapter.item.ViewBindingItem
@@ -22,15 +19,14 @@ class CoinRecordAdapter(context: Context) :
         addItemStyles(CoinRecordItem())
     }
 
-    inner class CoinRecordItem : ViewBindingItem<CoinRecord>() {
-        override fun getItemViewBinding(context: Context, parent: ViewGroup): ViewBinding {
-            return ItemCoinRecordBinding.inflate(LayoutInflater.from(context), parent, false)
-        }
+    inner class CoinRecordItem : ViewBindingItem<ItemCoinRecordBinding, CoinRecord>() {
 
-        override fun convert(holder: ViewBindingHolder, entity: CoinRecord, position: Int) {
-            holder.getViewBinding<ItemCoinRecordBinding>().apply {
-                tvText.text = entity.desc
-            }
+        override fun ItemCoinRecordBinding.convert(
+            holder: ViewBindingHolder,
+            entity: CoinRecord,
+            position: Int
+        ) {
+            tvText.text = entity.desc
         }
     }
 }

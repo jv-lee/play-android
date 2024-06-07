@@ -1,9 +1,6 @@
 package com.lee.playandroid.search.ui.adapter
 
 import android.content.Context
-import android.view.LayoutInflater
-import android.view.ViewGroup
-import androidx.viewbinding.ViewBinding
 import com.google.android.material.shape.ShapeAppearanceModel
 import com.lee.playandroid.base.adapter.binding.ViewBindingAdapter
 import com.lee.playandroid.base.adapter.binding.ViewBindingHolder
@@ -31,61 +28,51 @@ class SearchResultAdapter(context: Context) :
         addItemStyles(SearchResultPictureItem())
     }
 
-    inner class SearchResultTextItem : ViewBindingItem<Content>() {
+    inner class SearchResultTextItem : ViewBindingItem<ItemSearchResultTextBinding, Content>() {
         override fun isItemView(entity: Content, position: Int): Boolean {
             return entity.envelopePic.isEmpty()
         }
 
-        override fun getItemViewBinding(context: Context, parent: ViewGroup): ViewBinding {
-            return ItemSearchResultTextBinding.inflate(
-                LayoutInflater.from(context),
-                parent,
-                false
-            )
-        }
-
-        override fun convert(holder: ViewBindingHolder, entity: Content, position: Int) {
-            holder.getViewBinding<ItemSearchResultTextBinding>().apply {
-                entity.apply {
-                    tvTitle.text = getTitle()
-                    tvAuthor.text = getAuthor()
-                    tvTime.text = getDateFormat()
-                    tvCategory.text = getCategory()
-                }
+        override fun ItemSearchResultTextBinding.convert(
+            holder: ViewBindingHolder,
+            entity: Content,
+            position: Int
+        ) {
+            entity.apply {
+                tvTitle.text = getTitle()
+                tvAuthor.text = getAuthor()
+                tvTime.text = getDateFormat()
+                tvCategory.text = getCategory()
             }
         }
     }
 
-    inner class SearchResultPictureItem : ViewBindingItem<Content>() {
+    inner class SearchResultPictureItem :
+        ViewBindingItem<ItemSearchResultPictureBinding, Content>() {
 
         override fun isItemView(entity: Content, position: Int): Boolean {
             return entity.envelopePic.isNotEmpty()
         }
 
-        override fun getItemViewBinding(context: Context, parent: ViewGroup): ViewBinding {
-            return ItemSearchResultPictureBinding.inflate(
-                LayoutInflater.from(context),
-                parent,
-                false
-            )
-        }
-
-        override fun convert(holder: ViewBindingHolder, entity: Content, position: Int) {
-            holder.getViewBinding<ItemSearchResultPictureBinding>().apply {
+        override fun ItemSearchResultPictureBinding.convert(
+            holder: ViewBindingHolder,
+            entity: Content,
+            position: Int
+        ) {
+            entity.apply {
                 root.context.resources.apply {
-                    entity.apply {
-                        ivImage.shapeAppearanceModel = ShapeAppearanceModel.Builder()
-                            .setTopLeftCornerSize(getDimension(R.dimen.offset_radius_medium))
-                            .setBottomLeftCornerSize(getDimension(R.dimen.offset_radius_medium))
-                            .build()
-                        GlideTools.get().loadImage(envelopePic, ivImage)
-
-                        tvTitle.text = entity.getTitle()
-                        tvDescription.text = desc
-                        tvAuthor.text = entity.getAuthor()
-                        tvTime.text = entity.getDateFormat()
-                    }
+                    ivImage.shapeAppearanceModel = ShapeAppearanceModel.Builder()
+                        .setTopLeftCornerSize(getDimension(R.dimen.offset_radius_medium))
+                        .setBottomLeftCornerSize(getDimension(R.dimen.offset_radius_medium))
+                        .build()
                 }
+
+                GlideTools.get().loadImage(envelopePic, ivImage)
+
+                tvTitle.text = entity.getTitle()
+                tvDescription.text = desc
+                tvAuthor.text = entity.getAuthor()
+                tvTime.text = entity.getDateFormat()
             }
         }
     }

@@ -26,19 +26,18 @@ class OfficialListAdapter(context: Context) :
         addItemStyles(OfficialItem())
     }
 
-    inner class OfficialItem : ViewBindingItem<Content>() {
-        override fun getItemViewBinding(context: Context, parent: ViewGroup): ViewBinding {
-            return ItemOfficialBinding.inflate(LayoutInflater.from(context), parent, false)
-        }
+    inner class OfficialItem : ViewBindingItem<ItemOfficialBinding, Content>() {
 
-        override fun convert(holder: ViewBindingHolder, entity: Content, position: Int) {
-            holder.getViewBinding<ItemOfficialBinding>().apply {
-                entity.apply {
-                    tvTitle.text = getTitle()
-                    tvAuthor.text = getAuthor()
-                    tvTime.text = getDateFormat()
-                    tvCategory.text = getCategory()
-                }
+        override fun ItemOfficialBinding.convert(
+            holder: ViewBindingHolder,
+            entity: Content,
+            position: Int
+        ) {
+            entity.apply {
+                tvTitle.text = getTitle()
+                tvAuthor.text = getAuthor()
+                tvTime.text = getDateFormat()
+                tvCategory.text = getCategory()
             }
         }
     }

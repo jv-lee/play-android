@@ -1,11 +1,8 @@
 package com.lee.playandroid.system.ui.adapter
 
 import android.content.Context
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.navigation.Navigation
-import androidx.viewbinding.ViewBinding
 import com.lee.playandroid.base.adapter.binding.ViewBindingAdapter
 import com.lee.playandroid.base.adapter.binding.ViewBindingHolder
 import com.lee.playandroid.base.adapter.item.ViewBindingItem
@@ -27,32 +24,31 @@ class NavigationContentAdapter(context: Context) :
         addItemStyles(NavigationContentItem())
     }
 
-    inner class NavigationContentItem : ViewBindingItem<NavigationItem>() {
+    inner class NavigationContentItem :
+        ViewBindingItem<ItemNavigationContentBinding, NavigationItem>() {
 
-        override fun getItemViewBinding(context: Context, parent: ViewGroup): ViewBinding {
-            return ItemNavigationContentBinding.inflate(LayoutInflater.from(context), parent, false)
-        }
+        override fun ItemNavigationContentBinding.convert(
+            holder: ViewBindingHolder,
+            entity: NavigationItem,
+            position: Int
+        ) {
+            val context = holder.itemView.context
+            tvTitle.text = entity.name
 
-        override fun convert(holder: ViewBindingHolder, entity: NavigationItem, position: Int) {
-            holder.getViewBinding<ItemNavigationContentBinding>().apply {
-                val context = holder.itemView.context
-                tvTitle.text = entity.name
-
-                // 构建适配器
-                rvContainer.adapter = NavigationContentTagAdapter(context).apply {
-                    addData(entity.articles)
-                    setOnItemChildClickListener(object : OnItemChildView<Content> {
-                        override fun onItemChild(view: View, entity: Content, position: Int) {
-                            Navigation.findNavController(view)
-                                .navigateDetails(
-                                    entity.title,
-                                    entity.link,
-                                    entity.id,
-                                    entity.collect
-                                )
-                        }
-                    }, R.id.tv_tag)
-                }
+            // 构建适配器
+            rvContainer.adapter = NavigationContentTagAdapter(context).apply {
+                addData(entity.articles)
+                setOnItemChildClickListener(object : OnItemChildView<Content> {
+                    override fun onItemChild(view: View, entity: Content, position: Int) {
+                        Navigation.findNavController(view)
+                            .navigateDetails(
+                                entity.title,
+                                entity.link,
+                                entity.id,
+                                entity.collect
+                            )
+                    }
+                }, R.id.tv_tag)
             }
         }
     }

@@ -1,9 +1,6 @@
 package com.lee.playandroid.project.ui.adapter
 
 import android.content.Context
-import android.view.LayoutInflater
-import android.view.ViewGroup
-import androidx.viewbinding.ViewBinding
 import com.google.android.material.shape.ShapeAppearanceModel
 import com.lee.playandroid.base.adapter.binding.ViewBindingAdapter
 import com.lee.playandroid.base.adapter.binding.ViewBindingHolder
@@ -28,27 +25,27 @@ class ProjectListAdapter(context: Context) :
         addItemStyles(ProjectItem())
     }
 
-    inner class ProjectItem : ViewBindingItem<Content>() {
-        override fun getItemViewBinding(context: Context, parent: ViewGroup): ViewBinding {
-            return ItemProjectBinding.inflate(LayoutInflater.from(context), parent, false)
-        }
+    inner class ProjectItem : ViewBindingItem<ItemProjectBinding, Content>() {
 
-        override fun convert(holder: ViewBindingHolder, entity: Content, position: Int) {
-            holder.getViewBinding<ItemProjectBinding>().apply {
+        override fun ItemProjectBinding.convert(
+            holder: ViewBindingHolder,
+            entity: Content,
+            position: Int
+        ) {
+            entity.apply {
                 root.context.resources.apply {
-                    entity.apply {
-                        ivImage.shapeAppearanceModel = ShapeAppearanceModel.Builder()
-                            .setTopLeftCornerSize(getDimension(R.dimen.offset_radius_medium))
-                            .setBottomLeftCornerSize(getDimension(R.dimen.offset_radius_medium))
-                            .build()
-                        GlideTools.get().loadImage(envelopePic, ivImage)
-
-                        tvTitle.text = getTitle()
-                        tvDescription.text = desc
-                        tvAuthor.text = getAuthor()
-                        tvTime.text = getDateFormat()
-                    }
+                    ivImage.shapeAppearanceModel = ShapeAppearanceModel.Builder()
+                        .setTopLeftCornerSize(getDimension(R.dimen.offset_radius_medium))
+                        .setBottomLeftCornerSize(getDimension(R.dimen.offset_radius_medium))
+                        .build()
                 }
+
+                GlideTools.get().loadImage(envelopePic, ivImage)
+
+                tvTitle.text = getTitle()
+                tvDescription.text = desc
+                tvAuthor.text = getAuthor()
+                tvTime.text = getDateFormat()
             }
         }
     }

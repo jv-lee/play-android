@@ -1,9 +1,6 @@
 package com.lee.playandroid.square.ui.adapter
 
 import android.content.Context
-import android.view.LayoutInflater
-import android.view.ViewGroup
-import androidx.viewbinding.ViewBinding
 import com.lee.playandroid.base.adapter.binding.ViewBindingAdapter
 import com.lee.playandroid.base.adapter.binding.ViewBindingHolder
 import com.lee.playandroid.base.adapter.item.ViewBindingItem
@@ -26,20 +23,18 @@ class SquareAdapter(context: Context) :
         addItemStyles(SquareItem())
     }
 
-    inner class SquareItem : ViewBindingItem<Content>() {
+    inner class SquareItem : ViewBindingItem<ItemSquareBinding, Content>() {
 
-        override fun getItemViewBinding(context: Context, parent: ViewGroup): ViewBinding {
-            return ItemSquareBinding.inflate(LayoutInflater.from(context), parent, false)
-        }
-
-        override fun convert(holder: ViewBindingHolder, entity: Content, position: Int) {
-            holder.getViewBinding<ItemSquareBinding>().apply {
-                entity.apply {
-                    tvTitle.text = getTitle()
-                    tvAuthor.text = getAuthor()
-                    tvTime.text = getDateFormat()
-                    tvCategory.text = getCategory()
-                }
+        override fun ItemSquareBinding.convert(
+            holder: ViewBindingHolder,
+            entity: Content,
+            position: Int
+        ) {
+            entity.apply {
+                tvTitle.text = getTitle()
+                tvAuthor.text = getAuthor()
+                tvTime.text = getDateFormat()
+                tvCategory.text = getCategory()
             }
         }
     }

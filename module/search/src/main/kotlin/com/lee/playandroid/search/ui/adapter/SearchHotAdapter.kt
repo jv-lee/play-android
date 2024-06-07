@@ -1,9 +1,6 @@
 package com.lee.playandroid.search.ui.adapter
 
 import android.content.Context
-import android.view.LayoutInflater
-import android.view.ViewGroup
-import androidx.viewbinding.ViewBinding
 import com.lee.playandroid.base.adapter.binding.ViewBindingAdapter
 import com.lee.playandroid.base.adapter.binding.ViewBindingHolder
 import com.lee.playandroid.base.adapter.item.ViewBindingItem
@@ -22,12 +19,13 @@ class SearchHotAdapter(context: Context) :
         addItemStyles(SearchHotItem())
     }
 
-    inner class SearchHotItem : ViewBindingItem<SearchHotUI>() {
-        override fun getItemViewBinding(context: Context, parent: ViewGroup): ViewBinding {
-            return ItemSearchHotBinding.inflate(LayoutInflater.from(context), parent, false)
-        }
+    inner class SearchHotItem : ViewBindingItem<ItemSearchHotBinding, SearchHotUI>() {
 
-        override fun convert(holder: ViewBindingHolder, entity: SearchHotUI, position: Int) {
+        override fun ItemSearchHotBinding.convert(
+            holder: ViewBindingHolder,
+            entity: SearchHotUI,
+            position: Int
+        ) {
             holder.getViewBinding<ItemSearchHotBinding>().apply {
                 tvHot.text = entity.key
                 tvHot.setPressTextColor(entity.pressColor)

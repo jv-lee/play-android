@@ -1,9 +1,6 @@
 package com.lee.playandroid.common.ui.adapter
 
 import android.content.Context
-import android.view.LayoutInflater
-import android.view.ViewGroup
-import androidx.viewbinding.ViewBinding
 import com.lee.playandroid.base.adapter.binding.ViewBindingAdapter
 import com.lee.playandroid.base.adapter.binding.ViewBindingHolder
 import com.lee.playandroid.base.adapter.item.ViewBindingItem
@@ -26,16 +23,15 @@ class SimpleTextAdapter(context: Context) :
         addItemStyles(SimpleTextItem())
     }
 
-    inner class SimpleTextItem : ViewBindingItem<Content>() {
-        override fun getItemViewBinding(context: Context, parent: ViewGroup): ViewBinding {
-            return ItemSimpleTextBinding.inflate(LayoutInflater.from(context), parent, false)
-        }
+    inner class SimpleTextItem : ViewBindingItem<ItemSimpleTextBinding, Content>() {
 
-        override fun convert(holder: ViewBindingHolder, entity: Content, position: Int) {
-            holder.getViewBinding<ItemSimpleTextBinding>().apply {
-                tvTitle.text = entity.getTitle()
-                tvTime.text = entity.getDateFormat()
-            }
+        override fun ItemSimpleTextBinding.convert(
+            holder: ViewBindingHolder,
+            entity: Content,
+            position: Int
+        ) {
+            tvTitle.text = entity.getTitle()
+            tvTime.text = entity.getDateFormat()
         }
     }
 }
