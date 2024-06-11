@@ -3,12 +3,12 @@
 package com.lee.playandroid.base.tools
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.activity.ComponentActivity
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import androidx.viewbinding.ViewBinding
-
 import java.lang.reflect.InvocationTargetException
 import java.lang.reflect.ParameterizedType
 
@@ -17,20 +17,56 @@ import java.lang.reflect.ParameterizedType
  * 通过反射ViewBinding泛型获取ViewBinding实例，进行activity/fragment 基类初始化viewBinding视图
  * @see com.lee.playandroid.base.base.BaseBindingActivity
  * @see com.lee.playandroid.base.base.BaseBindingFragment
- * @see com.lee.playandroid.base.base.BaseBindingNavigationFragment
  * @see com.lee.playandroid.base.base.BaseBindingDialogFragment
- * @see com.lee.playandroid.base.base.BaseBindingAlertFragment
  * @see com.lee.playandroid.base.base.BaseBindingSheetFragment
+ * @see com.lee.playandroid.base.base.BaseBindingNavigationFragment
  * @see com.lee.playandroid.base.adapter.item.ViewBindingItem
  */
 object ViewBindingTools {
 
+    /**
+     * 通过反射的方式，获取到对应的Binding类，并且初始化Activity binding视图绑定
+     * @see [ComponentActivity.onCreate]
+     */
+    @JvmStatic
+    fun <VB : ViewBinding> inflateWithGeneric(activity: ComponentActivity): VB {
+        // 通过反射的方法拿到对应视图的binding类名和类
+        val actualGenericTypeName = getActualGenericTypeName(activity.javaClass)
+        val bindingClass = activity.classLoader.loadClass(actualGenericTypeName)
+        val binding = bindingClass
+            .getMethod("inflate", LayoutInflater::class.java)
+            .invoke(null, activity.layoutInflater) as VB
+        val invoke = bindingClass.getMethod("getRoot").invoke(binding) as View
+        activity.setContentView(invoke)
+        return binding
+    }
+
+    /**
+     * 通过反射的方式，获取到对应的Binding类，binding视图绑定
+     * @see [Fragment.onCreateView]
+     * @see Adapter.itemView inflate binding
+     */
     @JvmStatic
     fun <VB : ViewBinding> inflateWithGeneric(genericOwner: Any, layoutInflater: LayoutInflater, parent: ViewGroup?, attachToParent: Boolean): VB =
         withGenericBindingClass<VB>(genericOwner) { clazz ->
             clazz.getMethod("inflate", LayoutInflater::class.java, ViewGroup::class.java, Boolean::class.java)
                 .invoke(null, layoutInflater, parent, attachToParent) as VB
         }.withLifecycleOwner(genericOwner)
+
+    /**
+     * 通过反射的方式获取泛型的实际类型
+     */
+    private fun getActualGenericTypeName(clazz: Class<*>): String {
+        val genericSuperclass = clazz.genericSuperclass
+        if (genericSuperclass is ParameterizedType) {
+            val actualTypeArguments = genericSuperclass.actualTypeArguments
+            if (actualTypeArguments.isNotEmpty()) {
+                val actualTypeArgument = actualTypeArguments[0]
+                return actualTypeArgument.typeName
+            }
+        }
+        return ""
+    }
 
     private fun <VB : ViewBinding> VB.withLifecycleOwner(genericOwner: Any) = apply {
         if (this is ViewDataBinding && genericOwner is ComponentActivity) {
