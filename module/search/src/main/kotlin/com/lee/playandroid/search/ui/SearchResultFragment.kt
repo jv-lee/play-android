@@ -8,15 +8,14 @@ import com.lee.playandroid.base.adapter.base.BaseViewAdapter
 import com.lee.playandroid.base.adapter.extensions.bindAllListener
 import com.lee.playandroid.base.adapter.page.submitData
 import com.lee.playandroid.base.adapter.page.submitFailed
-import com.lee.playandroid.base.base.BaseNavigationFragment
-import com.lee.playandroid.base.extensions.binding
-import com.lee.playandroid.base.uistate.LoadStatus
+import com.lee.playandroid.base.base.BaseBindingNavigationFragment
 import com.lee.playandroid.base.extensions.collectState
+import com.lee.playandroid.base.uistate.LoadStatus
+import com.lee.playandroid.base.uistate.collectCallback
 import com.lee.playandroid.common.entity.Content
 import com.lee.playandroid.common.entity.PageData
 import com.lee.playandroid.common.extensions.actionFailed
 import com.lee.playandroid.router.navigateDetails
-import com.lee.playandroid.search.R
 import com.lee.playandroid.search.databinding.FragmentSearchResultBinding
 import com.lee.playandroid.search.ui.adapter.SearchResultAdapter
 import com.lee.playandroid.search.viewmodel.SearchResultViewIntent
@@ -29,7 +28,7 @@ import com.lee.playandroid.search.viewmodel.SearchResultViewState
  * @date 2021/11/22
  */
 class SearchResultFragment :
-    BaseNavigationFragment(R.layout.fragment_search_result),
+    BaseBindingNavigationFragment<FragmentSearchResultBinding>(),
     BaseViewAdapter.AutoLoadMoreListener,
     BaseViewAdapter.LoadErrorListener,
     BaseViewAdapter.OnItemClickListener<Content> {
@@ -41,14 +40,12 @@ class SearchResultFragment :
 
     private val viewModel by viewModels<SearchResultViewModel>()
 
-    private val binding by binding(FragmentSearchResultBinding::bind)
-
     private var mAdapter: SearchResultAdapter? = null
 
     override fun bindView() {
         // 搜索结果列表适配器设置
-        if (binding.rvContainer.adapter == null) {
-            binding.rvContainer.adapter =
+        if (mBinding.rvContainer.adapter == null) {
+            mBinding.rvContainer.adapter =
                 SearchResultAdapter(requireContext()).apply {
                     mAdapter = this
 
@@ -63,13 +60,13 @@ class SearchResultFragment :
         launchWhenResumed {
             // 监听搜索key绑定到toolbar.title
             viewModel.viewStates.collectState(SearchResultViewState::title) {
-                binding.toolbar.setTitleText(it)
+                mBinding.toolbar.setTitleText(it)
             }
         }
 
         launchWhenResumed {
             // 监听搜索结果列表数据绑定
-            viewModel.searchResultFlow.collectState<PageData<Content>>(
+            viewModel.searchResultFlow.collectCallback<PageData<Content>>(
                 success = {
                     mAdapter?.submitData(it, diff = true)
                 },
@@ -99,7 +96,7 @@ class SearchResultFragment :
 
     override fun onDestroyView() {
         super.onDestroyView()
-        binding.rvContainer.adapter = null
+        mBinding.rvContainer.adapter = null
         mAdapter = null
     }
 }

@@ -7,17 +7,27 @@ import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.lifecycle.viewModelScope
-import com.lee.playandroid.base.base.BaseNavigationFragment
+import com.lee.playandroid.base.base.BaseBindingNavigationFragment
 import com.lee.playandroid.base.dialog.ChoiceDialog
 import com.lee.playandroid.base.dialog.LoadingDialog
-import com.lee.playandroid.base.extensions.*
-import com.lee.playandroid.base.tools.DarkViewUpdateTools
 import com.lee.playandroid.base.extensions.collectState
+import com.lee.playandroid.base.extensions.dismiss
+import com.lee.playandroid.base.extensions.setBackgroundColorCompat
+import com.lee.playandroid.base.extensions.setTextColorCompat
+import com.lee.playandroid.base.extensions.show
+import com.lee.playandroid.base.extensions.toast
+import com.lee.playandroid.base.tools.DarkViewUpdateTools
 import com.lee.playandroid.common.entity.AccountViewEvent
 import com.lee.playandroid.common.entity.AccountViewState
 import com.lee.playandroid.me.R
 import com.lee.playandroid.me.databinding.FragmentSettingsBinding
-import com.lee.playandroid.me.viewmodel.*
+import com.lee.playandroid.me.viewmodel.SettingsViewEvent
+import com.lee.playandroid.me.viewmodel.SettingsViewIntent
+import com.lee.playandroid.me.viewmodel.SettingsViewModel
+import com.lee.playandroid.me.viewmodel.SettingsViewState
+import com.lee.playandroid.me.viewmodel.ThemeViewIntent
+import com.lee.playandroid.me.viewmodel.ThemeViewModel
+import com.lee.playandroid.me.viewmodel.ThemeViewState
 import kotlinx.coroutines.launch
 
 /**
@@ -26,7 +36,7 @@ import kotlinx.coroutines.launch
  * @date 2021/11/25
  */
 class SettingsFragment :
-    BaseNavigationFragment(R.layout.fragment_settings),
+    BaseBindingNavigationFragment<FragmentSettingsBinding>(),
     View.OnClickListener,
     CompoundButton.OnCheckedChangeListener,
     DarkViewUpdateTools.ViewCallback {
@@ -34,8 +44,6 @@ class SettingsFragment :
     private val viewModel by viewModels<SettingsViewModel>()
 
     private val themeViewModel by activityViewModels<ThemeViewModel>()
-
-    private val binding by binding(FragmentSettingsBinding::bind)
 
     private val loadingDialog by lazy { LoadingDialog(requireContext()) }
 
@@ -45,11 +53,11 @@ class SettingsFragment :
     override fun bindView() {
         DarkViewUpdateTools.bindViewCallback(viewLifecycleOwner, this)
 
-        binding.lineSystem.getRightSwitch()?.setOnCheckedChangeListener(this)
-        binding.lineNight.getRightSwitch()?.setOnCheckedChangeListener(this)
+        mBinding.lineSystem.getRightSwitch()?.setOnCheckedChangeListener(this)
+        mBinding.lineNight.getRightSwitch()?.setOnCheckedChangeListener(this)
 
-        binding.lineClearCache.setOnClickListener(this)
-        binding.lineLogout.setOnClickListener(this)
+        mBinding.lineClearCache.setOnClickListener(this)
+        mBinding.lineLogout.setOnClickListener(this)
 
         createAlertDialog()
     }
@@ -86,7 +94,7 @@ class SettingsFragment :
             }
             launchWhenResumed {
                 collectState(AccountViewState::isLogin) {
-                    binding.lineLogout.visibility = if (it) View.VISIBLE else View.GONE
+                    mBinding.lineLogout.visibility = if (it) View.VISIBLE else View.GONE
                 }
             }
         }
@@ -109,7 +117,7 @@ class SettingsFragment :
             }
             launchWhenResumed {
                 collectState(SettingsViewState::totalCacheSize) {
-                    binding.lineClearCache.getRightTextView().text = it
+                    mBinding.lineClearCache.getRightTextView().text = it
                 }
             }
         }
@@ -117,9 +125,9 @@ class SettingsFragment :
         themeViewModel.viewStates.run {
             launchWhenResumed {
                 collectState(ThemeViewState::isSystem, ThemeViewState::isDark) { isSystem, isDark ->
-                    binding.lineSystem.getRightSwitch()?.isChecked = isSystem
-                    binding.lineNight.getRightSwitch()?.isChecked = isDark
-                    binding.lineNight.getRightSwitch()?.isEnabled = !isSystem
+                    mBinding.lineSystem.getRightSwitch()?.isChecked = isSystem
+                    mBinding.lineNight.getRightSwitch()?.isChecked = isDark
+                    mBinding.lineNight.getRightSwitch()?.isEnabled = !isSystem
                 }
             }
         }
@@ -127,10 +135,10 @@ class SettingsFragment :
 
     override fun onClick(v: View) {
         when (v) {
-            binding.lineLogout -> {
+            mBinding.lineLogout -> {
                 viewModel.dispatch(SettingsViewIntent.VisibleLogoutDialog(visibility = true))
             }
-            binding.lineClearCache -> {
+            mBinding.lineClearCache -> {
                 viewModel.dispatch(SettingsViewIntent.VisibleCacheDialog(visibility = true))
             }
         }
@@ -140,33 +148,33 @@ class SettingsFragment :
         if (!isResumed) return
 
         when (buttonView) {
-            binding.lineSystem.getRightSwitch() -> {
+            mBinding.lineSystem.getRightSwitch() -> {
                 themeViewModel.dispatch(ThemeViewIntent.UpdateSystemStatus(isChecked))
             }
-            binding.lineNight.getRightSwitch() -> {
+            mBinding.lineNight.getRightSwitch() -> {
                 themeViewModel.dispatch(ThemeViewIntent.UpdateDarkStatus(isChecked))
             }
         }
     }
 
     override fun updateDarkView() {
-        binding.constRoot.setBackgroundColorCompat(R.color.colorThemeBackground)
-        binding.toolbar.setBackgroundColorCompat(R.color.colorThemeItem)
-        binding.toolbar.setTitleColor(R.color.colorThemeAccent)
-        binding.toolbar.setBackDrawableRes(R.drawable.vector_back, R.color.colorThemeAccent)
+        mBinding.constRoot.setBackgroundColorCompat(R.color.colorThemeBackground)
+        mBinding.toolbar.setBackgroundColorCompat(R.color.colorThemeItem)
+        mBinding.toolbar.setTitleColor(R.color.colorThemeAccent)
+        mBinding.toolbar.setBackDrawableRes(R.drawable.vector_back, R.color.colorThemeAccent)
 
-        binding.lineClearCache.setBackgroundColorCompat(R.color.colorThemeItem)
-        binding.lineClearCache.getLeftTextView().setTextColorCompat(R.color.colorThemeAccent)
-        binding.lineClearCache.getRightTextView().setTextColorCompat(R.color.colorThemeAccent)
+        mBinding.lineClearCache.setBackgroundColorCompat(R.color.colorThemeItem)
+        mBinding.lineClearCache.getLeftTextView().setTextColorCompat(R.color.colorThemeAccent)
+        mBinding.lineClearCache.getRightTextView().setTextColorCompat(R.color.colorThemeAccent)
 
-        binding.lineLogout.setBackgroundColorCompat(R.color.colorThemeItem)
-        binding.lineLogout.getLeftTextView().setTextColorCompat(R.color.colorThemeAccent)
+        mBinding.lineLogout.setBackgroundColorCompat(R.color.colorThemeItem)
+        mBinding.lineLogout.getLeftTextView().setTextColorCompat(R.color.colorThemeAccent)
 
-        binding.lineSystem.setBackgroundColorCompat(R.color.colorThemeItem)
-        binding.lineSystem.getLeftTextView().setTextColorCompat(R.color.colorThemeAccent)
+        mBinding.lineSystem.setBackgroundColorCompat(R.color.colorThemeItem)
+        mBinding.lineSystem.getLeftTextView().setTextColorCompat(R.color.colorThemeAccent)
 
-        binding.lineNight.setBackgroundColorCompat(R.color.colorThemeItem)
-        binding.lineNight.getLeftTextView().setTextColorCompat(R.color.colorThemeAccent)
+        mBinding.lineNight.setBackgroundColorCompat(R.color.colorThemeItem)
+        mBinding.lineNight.getLeftTextView().setTextColorCompat(R.color.colorThemeAccent)
 
         createAlertDialog()
     }

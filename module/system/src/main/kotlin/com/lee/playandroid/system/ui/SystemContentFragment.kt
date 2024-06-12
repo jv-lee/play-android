@@ -8,13 +8,12 @@ import com.lee.playandroid.base.adapter.base.BaseViewAdapter
 import com.lee.playandroid.base.adapter.extensions.bindAllListener
 import com.lee.playandroid.base.adapter.page.submitFailed
 import com.lee.playandroid.base.adapter.page.submitSinglePage
-import com.lee.playandroid.base.base.BaseNavigationFragment
-import com.lee.playandroid.base.extensions.binding
+import com.lee.playandroid.base.base.BaseBindingNavigationFragment
+import com.lee.playandroid.base.extensions.collectState
 import com.lee.playandroid.base.extensions.findParentFragment
 import com.lee.playandroid.base.extensions.smoothScrollToTop
 import com.lee.playandroid.base.livedatabus.InjectBus
 import com.lee.playandroid.base.livedatabus.LiveDataBus
-import com.lee.playandroid.base.extensions.collectState
 import com.lee.playandroid.common.entity.NavigationSelectEvent
 import com.lee.playandroid.common.entity.ParentTab
 import com.lee.playandroid.common.extensions.actionFailed
@@ -23,8 +22,8 @@ import com.lee.playandroid.common.ui.widget.OffsetItemDecoration
 import com.lee.playandroid.system.R
 import com.lee.playandroid.system.databinding.FragmentSystemContentBinding
 import com.lee.playandroid.system.ui.adapter.SystemContentAdapter
-import com.lee.playandroid.system.viewmodel.SystemContentViewIntent
 import com.lee.playandroid.system.viewmodel.SystemContentViewEvent
+import com.lee.playandroid.system.viewmodel.SystemContentViewIntent
 import com.lee.playandroid.system.viewmodel.SystemContentViewModel
 import com.lee.playandroid.system.viewmodel.SystemContentViewState
 
@@ -35,26 +34,24 @@ import com.lee.playandroid.system.viewmodel.SystemContentViewState
  * @date 2021/11/10
  */
 class SystemContentFragment :
-    BaseNavigationFragment(R.layout.fragment_system_content),
+    BaseBindingNavigationFragment<FragmentSystemContentBinding>(),
     BaseViewAdapter.OnItemClickListener<ParentTab>,
     BaseViewAdapter.LoadErrorListener {
 
     private val viewModel by viewModels<SystemContentViewModel>()
-
-    private val binding by binding(FragmentSystemContentBinding::bind)
 
     private var mAdapter: SystemContentAdapter? = null
 
     override fun bindView() {
         // 根据父Fragment toolbar高度设置ItemDecoration来控制显示间隔
         findParentFragment<SystemFragment>()?.parentBindingAction {
-            binding.rvContainer.addItemDecoration(
+            mBinding.rvContainer.addItemDecoration(
                 OffsetItemDecoration(toolbar.getToolbarLayoutHeight())
             )
         }
 
-        if (binding.rvContainer.adapter == null) {
-            binding.rvContainer.adapter =
+        if (mBinding.rvContainer.adapter == null) {
+            mBinding.rvContainer.adapter =
                 SystemContentAdapter(requireContext()).apply {
                     mAdapter = this
                     setLoadResource(MainLoadResource())
@@ -107,14 +104,14 @@ class SystemContentFragment :
 
     override fun onDestroyView() {
         super.onDestroyView()
-        binding.rvContainer.adapter = null
+        mBinding.rvContainer.adapter = null
         mAdapter = null
     }
 
     @InjectBus
     fun navigationEvent(event: NavigationSelectEvent) {
         if (event.title == getString(R.string.nav_system) && isResumed) {
-            binding.rvContainer.smoothScrollToTop()
+            mBinding.rvContainer.smoothScrollToTop()
         }
     }
 }

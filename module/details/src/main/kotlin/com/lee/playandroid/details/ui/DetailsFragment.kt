@@ -5,19 +5,23 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.LifecycleCoroutineScope
 import com.just.agentweb.AgentWeb
-import com.lee.playandroid.base.base.BaseNavigationFragment
+import com.lee.playandroid.base.base.BaseBindingNavigationFragment
 import com.lee.playandroid.base.dialog.LoadingDialog
-import com.lee.playandroid.base.extensions.*
+import com.lee.playandroid.base.extensions.arguments
+import com.lee.playandroid.base.extensions.collectState
+import com.lee.playandroid.base.extensions.dismiss
+import com.lee.playandroid.base.extensions.setWebBackEvent
+import com.lee.playandroid.base.extensions.show
+import com.lee.playandroid.base.extensions.toast
 import com.lee.playandroid.base.interadp.setClickListener
 import com.lee.playandroid.base.tools.DarkModeTools
 import com.lee.playandroid.base.utils.ShareUtil
-import com.lee.playandroid.base.extensions.collectState
 import com.lee.playandroid.common.extensions.bindLifecycle
 import com.lee.playandroid.common.extensions.supportDarkMode
 import com.lee.playandroid.details.R
 import com.lee.playandroid.details.databinding.FragmentDetailsBinding
-import com.lee.playandroid.details.viewmodel.DetailsViewIntent
 import com.lee.playandroid.details.viewmodel.DetailsViewEvent
+import com.lee.playandroid.details.viewmodel.DetailsViewIntent
 import com.lee.playandroid.details.viewmodel.DetailsViewModel
 import com.lee.playandroid.details.viewmodel.DetailsViewState
 
@@ -26,7 +30,7 @@ import com.lee.playandroid.details.viewmodel.DetailsViewState
  * @author jv.lee
  * @date 2020/3/24
  */
-class DetailsFragment : BaseNavigationFragment(R.layout.fragment_details) {
+class DetailsFragment : BaseBindingNavigationFragment<FragmentDetailsBinding>() {
 
     companion object {
         const val ARG_PARAMS_ID = "id"
@@ -39,15 +43,13 @@ class DetailsFragment : BaseNavigationFragment(R.layout.fragment_details) {
 
     private val viewModel by viewModels<DetailsViewModel>()
 
-    private val binding by binding(FragmentDetailsBinding::bind)
-
     private val loadingDialog by lazy { LoadingDialog(requireContext()) }
 
     private lateinit var web: AgentWeb
 
     override fun bindView() {
-        binding.toolbar.setClickListener {
-            moreClick { binding.toolbar.showMenu(-40, 10) }
+        mBinding.toolbar.setClickListener {
+            moreClick { mBinding.toolbar.showMenu(-40, 10) }
             menuItemClick { view ->
                 when (view.id) {
                     R.id.collect -> {
@@ -61,7 +63,7 @@ class DetailsFragment : BaseNavigationFragment(R.layout.fragment_details) {
         }
 
         web = AgentWeb.with(this)
-            .setAgentWebParent(binding.frameContainer, FrameLayout.LayoutParams(-1, -1))
+            .setAgentWebParent(mBinding.frameContainer, FrameLayout.LayoutParams(-1, -1))
             .useDefaultIndicator(ContextCompat.getColor(requireContext(), R.color.colorThemeAccent))
             .createAgentWeb()
             .ready()
@@ -93,8 +95,8 @@ class DetailsFragment : BaseNavigationFragment(R.layout.fragment_details) {
                 DetailsViewState::title,
                 DetailsViewState::actionEnable
             ) { title, enable ->
-                binding.toolbar.setTitleText(title)
-                binding.toolbar.setMoreVisible(enable)
+                mBinding.toolbar.setTitleText(title)
+                mBinding.toolbar.setMoreVisible(enable)
             }
         }
 

@@ -7,12 +7,11 @@ import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.navigation.fragment.findNavController
 import com.lee.playandroid.base.adapter.base.BaseViewAdapter
 import com.lee.playandroid.base.adapter.page.submitSinglePage
-import com.lee.playandroid.base.base.BaseNavigationFragment
-import com.lee.playandroid.base.extensions.binding
+import com.lee.playandroid.base.base.BaseBindingNavigationFragment
+import com.lee.playandroid.base.extensions.collectState
 import com.lee.playandroid.base.tools.SystemBarTools.hasSoftInputShow
 import com.lee.playandroid.base.tools.SystemBarTools.hideSoftInput
 import com.lee.playandroid.base.tools.SystemBarTools.parentTouchHideSoftInput
-import com.lee.playandroid.base.extensions.collectState
 import com.lee.playandroid.common.entity.SearchHistory
 import com.lee.playandroid.common.extensions.actionFailed
 import com.lee.playandroid.search.R
@@ -20,8 +19,8 @@ import com.lee.playandroid.search.databinding.FragmentSearchBinding
 import com.lee.playandroid.search.model.entity.SearchHotUI
 import com.lee.playandroid.search.ui.adapter.SearchHistoryAdapter
 import com.lee.playandroid.search.ui.adapter.SearchHotAdapter
-import com.lee.playandroid.search.viewmodel.SearchViewIntent
 import com.lee.playandroid.search.viewmodel.SearchViewEvent
+import com.lee.playandroid.search.viewmodel.SearchViewIntent
 import com.lee.playandroid.search.viewmodel.SearchViewModel
 import com.lee.playandroid.search.viewmodel.SearchViewState
 
@@ -30,11 +29,9 @@ import com.lee.playandroid.search.viewmodel.SearchViewState
  * @author jv.lee
  * @date 2021/11/19
  */
-class SearchFragment : BaseNavigationFragment(R.layout.fragment_search) {
+class SearchFragment : BaseBindingNavigationFragment<FragmentSearchBinding>() {
 
     private val viewModel by viewModels<SearchViewModel>()
-
-    private val binding by binding(FragmentSearchBinding::bind)
 
     private var mHotAdapter: SearchHotAdapter? = null
     private var mHistoryAdapter: SearchHistoryAdapter? = null
@@ -44,12 +41,12 @@ class SearchFragment : BaseNavigationFragment(R.layout.fragment_search) {
         requireActivity().window.parentTouchHideSoftInput()
 
         // 清除历史记录点击事件
-        binding.tvHistoryClear.setOnClickListener {
+        mBinding.tvHistoryClear.setOnClickListener {
             viewModel.dispatch(SearchViewIntent.ClearHistory)
         }
 
         // 搜索输入框内容监听
-        binding.editQuery.setOnEditorActionListener { textView, actionId, _ ->
+        mBinding.editQuery.setOnEditorActionListener { textView, actionId, _ ->
             val text = textView.text
             if (actionId == IME_ACTION_SEARCH && text.isNotEmpty()) {
                 viewModel.dispatch(SearchViewIntent.NavigationSearchResult(text.toString()))
@@ -58,8 +55,8 @@ class SearchFragment : BaseNavigationFragment(R.layout.fragment_search) {
         }
 
         // 搜索热词列表适配器设置
-        if (binding.rvHotContainer.adapter == null) {
-            binding.rvHotContainer.adapter =
+        if (mBinding.rvHotContainer.adapter == null) {
+            mBinding.rvHotContainer.adapter =
                 SearchHotAdapter(requireContext()).apply {
                     mHotAdapter = this
                     setOnItemClickListener(object :
@@ -72,8 +69,8 @@ class SearchFragment : BaseNavigationFragment(R.layout.fragment_search) {
         }
 
         // 搜索历史列表适配器设置
-        if (binding.rvHistoryContainer.adapter == null) {
-            binding.rvHistoryContainer.adapter =
+        if (mBinding.rvHistoryContainer.adapter == null) {
+            mBinding.rvHistoryContainer.adapter =
                 SearchHistoryAdapter(requireContext()).apply {
                     mHistoryAdapter = this
                     setOnItemClickListener(object :
@@ -137,8 +134,8 @@ class SearchFragment : BaseNavigationFragment(R.layout.fragment_search) {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        binding.rvHotContainer.adapter = null
-        binding.rvHistoryContainer.adapter = null
+        mBinding.rvHotContainer.adapter = null
+        mBinding.rvHistoryContainer.adapter = null
         mHistoryAdapter = null
         mHistoryAdapter = null
     }
@@ -147,9 +144,9 @@ class SearchFragment : BaseNavigationFragment(R.layout.fragment_search) {
      * empty布局显示隐藏
      */
     private fun viewEmptyVisible(visible: Boolean) {
-        binding.rvHistoryContainer.visibility =
+        mBinding.rvHistoryContainer.visibility =
             if (visible) View.GONE else View.VISIBLE
-        binding.tvHistoryEmpty.visibility =
+        mBinding.tvHistoryEmpty.visibility =
             if (visible) View.VISIBLE else View.GONE
     }
 }

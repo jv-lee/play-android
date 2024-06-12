@@ -8,12 +8,10 @@ import com.lee.playandroid.base.adapter.extensions.bindAllListener
 import com.lee.playandroid.base.adapter.extensions.unbindAllListener
 import com.lee.playandroid.base.adapter.page.submitData
 import com.lee.playandroid.base.adapter.page.submitFailed
-import com.lee.playandroid.base.base.BaseNavigationFragment
-import com.lee.playandroid.base.extensions.binding
+import com.lee.playandroid.base.base.BaseBindingNavigationFragment
 import com.lee.playandroid.base.uistate.LoadStatus
 import com.lee.playandroid.base.uistate.UiStatePage
-import com.lee.playandroid.base.extensions.collectState
-import com.lee.playandroid.common.R
+import com.lee.playandroid.base.uistate.collectCallback
 import com.lee.playandroid.common.databinding.FragmentBaseListBinding
 import com.lee.playandroid.common.entity.Content
 import com.lee.playandroid.common.entity.PageData
@@ -26,13 +24,11 @@ import kotlinx.coroutines.flow.StateFlow
  * @date 2021/11/8
  */
 abstract class BaseListFragment :
-    BaseNavigationFragment(R.layout.fragment_base_list),
+    BaseBindingNavigationFragment<FragmentBaseListBinding>(),
     SwipeRefreshLayout.OnRefreshListener,
     BaseViewAdapter.AutoLoadMoreListener,
     BaseViewAdapter.LoadErrorListener,
     BaseViewAdapter.OnItemClickListener<Content> {
-
-    private val binding by binding(FragmentBaseListBinding::bind)
 
     private lateinit var mAdapter: BaseViewAdapter<Content>
 
@@ -45,8 +41,8 @@ abstract class BaseListFragment :
     abstract fun dataFlow(): StateFlow<UiStatePage>
 
     override fun bindView() {
-        if (binding.rvContainer.adapter == null) {
-            binding.rvContainer.adapter = createAdapter().apply {
+        if (mBinding.rvContainer.adapter == null) {
+            mBinding.rvContainer.adapter = createAdapter().apply {
                 mAdapter = this
                 initStatusView()
                 pageLoading()
@@ -57,13 +53,13 @@ abstract class BaseListFragment :
     override fun LifecycleCoroutineScope.bindData() {
         // 列表数据更新
         launchWhenResumed {
-            dataFlow().collectState<PageData<Content>>(
+            dataFlow().collectCallback<PageData<Content>>(
                 success = {
-                    binding.refreshLayout.isRefreshing = false
+                    mBinding.refreshLayout.isRefreshing = false
                     mAdapter.submitData(it, diff = true)
                 },
                 error = {
-                    binding.refreshLayout.isRefreshing = false
+                    mBinding.refreshLayout.isRefreshing = false
                     mAdapter.submitFailed()
                     actionFailed(it)
                 }
@@ -99,12 +95,12 @@ abstract class BaseListFragment :
     override fun onFragmentResume() {
         super.onFragmentResume()
         mAdapter.bindAllListener(this@BaseListFragment)
-        binding.refreshLayout.setOnRefreshListener(this)
+        mBinding.refreshLayout.setOnRefreshListener(this)
     }
 
     override fun onFragmentStop() {
         super.onFragmentStop()
         mAdapter.unbindAllListener()
-        binding.refreshLayout.setOnRefreshListener(null)
+        mBinding.refreshLayout.setOnRefreshListener(null)
     }
 }

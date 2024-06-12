@@ -10,11 +10,10 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.navigation.fragment.findNavController
 import com.lee.playandroid.base.adapter.core.UiPagerAdapter2
-import com.lee.playandroid.base.base.BaseNavigationFragment
-import com.lee.playandroid.base.extensions.binding
+import com.lee.playandroid.base.base.BaseBindingNavigationFragment
+import com.lee.playandroid.base.extensions.collectState
 import com.lee.playandroid.base.extensions.getParcelableCompat
 import com.lee.playandroid.base.interadp.setClickListener
-import com.lee.playandroid.base.extensions.collectState
 import com.lee.playandroid.common.entity.TodoData
 import com.lee.playandroid.todo.R
 import com.lee.playandroid.todo.databinding.FragmentTodoBinding
@@ -32,7 +31,7 @@ import com.lee.playandroid.todo.viewmodel.TodoViewState
  * @author jv.lee
  * @date 2021/12/23
  */
-class TodoFragment : BaseNavigationFragment(R.layout.fragment_todo) {
+class TodoFragment : BaseBindingNavigationFragment<FragmentTodoBinding>() {
 
     companion object {
         /** 回传请求key：通知TODO数据添加 */
@@ -53,12 +52,10 @@ class TodoFragment : BaseNavigationFragment(R.layout.fragment_todo) {
 
     private val viewModel by viewModels<TodoViewModel>()
 
-    private val binding by binding(FragmentTodoBinding::bind)
-
     private var mAdapter: UiPagerAdapter2? = null
 
     override fun bindView() {
-        binding.toolbar.setClickListener {
+        mBinding.toolbar.setClickListener {
             // 导航至todo类型选择弹窗
             moreClick {
                 findNavController().navigate(
@@ -66,7 +63,7 @@ class TodoFragment : BaseNavigationFragment(R.layout.fragment_todo) {
                 )
             }
         }
-        binding.floatingButton.setOnClickListener {
+        mBinding.floatingButton.setOnClickListener {
             // 导航至todo编辑页面
             findNavController().navigate(
                 R.id.action_todo_fragment_to_create_todo_fragment,
@@ -74,7 +71,7 @@ class TodoFragment : BaseNavigationFragment(R.layout.fragment_todo) {
             )
         }
         // bottomNavigation与viewPager联动绑定
-        binding.navigationBar.bindViewPager(binding.vpContainer)
+        mBinding.navigationBar.bindViewPager(mBinding.vpContainer)
     }
 
     override fun LifecycleCoroutineScope.bindData() {
@@ -84,14 +81,14 @@ class TodoFragment : BaseNavigationFragment(R.layout.fragment_todo) {
         launchWhenResumed {
             // 监听当前标题状态实时更新标题显示
             viewModel.viewStates.collectState(TodoViewState::titleRes) {
-                binding.toolbar.setTitleText(getString(it))
+                mBinding.toolbar.setTitleText(getString(it))
             }
         }
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
-        binding.vpContainer.adapter = null
+        mBinding.vpContainer.adapter = null
     }
 
     /**
@@ -103,11 +100,11 @@ class TodoFragment : BaseNavigationFragment(R.layout.fragment_todo) {
             add(TodoListFragment.newInstance(ARG_STATUS_COMPLETE))
         }
 
-        if (binding.vpContainer.adapter == null) {
+        if (mBinding.vpContainer.adapter == null) {
             mAdapter = UiPagerAdapter2(childFragmentManager, viewLifecycleOwner.lifecycle)
             mAdapter?.addAll(fragments)
-            binding.vpContainer.adapter = mAdapter
-            binding.vpContainer.isUserInputEnabled = false
+            mBinding.vpContainer.adapter = mAdapter
+            mBinding.vpContainer.isUserInputEnabled = false
         } else {
             mAdapter?.clear()
             mAdapter?.addAll(fragments)

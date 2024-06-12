@@ -11,8 +11,7 @@ import com.lee.playandroid.base.adapter.extensions.bindAllListener
 import com.lee.playandroid.base.adapter.extensions.unbindAllListener
 import com.lee.playandroid.base.adapter.page.submitData
 import com.lee.playandroid.base.adapter.page.submitFailed
-import com.lee.playandroid.base.base.BaseNavigationFragment
-import com.lee.playandroid.base.extensions.binding
+import com.lee.playandroid.base.base.BaseBindingNavigationFragment
 import com.lee.playandroid.base.extensions.delayBackEvent
 import com.lee.playandroid.base.extensions.smoothScrollToTop
 import com.lee.playandroid.base.livedatabus.InjectBus
@@ -41,7 +40,7 @@ import com.lee.playandroid.router.navigateSearch
  * @date 2021/11/2
  */
 class HomeFragment :
-    BaseNavigationFragment(R.layout.fragment_home),
+    BaseBindingNavigationFragment<FragmentHomeBinding>(),
     View.OnClickListener,
     SwipeRefreshLayout.OnRefreshListener,
     BaseViewAdapter.OnItemClickListener<HomeContent>,
@@ -50,27 +49,25 @@ class HomeFragment :
 
     private val viewModel by viewModels<HomeViewModel>()
 
-    private val binding by binding(FragmentHomeBinding::bind)
-
     private var mAdapter: ContentAdapter? = null
 
     override fun bindView() {
         // 拦截back处理
         delayBackEvent()
         // 设置toolbar主题渐变色背景
-        binding.toolbar.setThemeGradientBackground()
-        binding.refreshView.setProgressViewOffset(
+        mBinding.toolbar.setThemeGradientBackground()
+        mBinding.refreshView.setProgressViewOffset(
             false,
-            binding.toolbar.getToolbarLayoutHeight() / 2,
-            binding.refreshView.progressViewEndOffset + binding.toolbar.getToolbarLayoutHeight() / 2
+            mBinding.toolbar.getToolbarLayoutHeight() / 2,
+            mBinding.refreshView.progressViewEndOffset + mBinding.toolbar.getToolbarLayoutHeight() / 2
         )
 
-        binding.rvContainer.addSaveStateViewType(BannerView::class.java)
-        binding.rvContainer.addItemDecoration(
-            OffsetItemDecoration(binding.toolbar.getToolbarLayoutHeight())
+        mBinding.rvContainer.addSaveStateViewType(BannerView::class.java)
+        mBinding.rvContainer.addItemDecoration(
+            OffsetItemDecoration(mBinding.toolbar.getToolbarLayoutHeight())
         )
-        if (binding.rvContainer.adapter == null) {
-            binding.rvContainer.adapter = ContentAdapter(requireContext()).apply {
+        if (mBinding.rvContainer.adapter == null) {
+            mBinding.rvContainer.adapter = ContentAdapter(requireContext()).apply {
                 mAdapter = this
                 setLoadResource(MainLoadResource())
                 initStatusView()
@@ -85,11 +82,11 @@ class HomeFragment :
         launchWhenResumed {
             viewModel.contentListFlow.collectCallback<PageUiData<HomeContent>>(
                 success = {
-                    binding.refreshView.isRefreshing = false
+                    mBinding.refreshView.isRefreshing = false
                     mAdapter?.submitData(it, diff = true)
                 },
                 error = {
-                    binding.refreshView.isRefreshing = false
+                    mBinding.refreshView.isRefreshing = false
                     mAdapter?.submitFailed()
                     actionFailed(it)
                 }
@@ -105,7 +102,7 @@ class HomeFragment :
 
     override fun onClick(v: View?) {
         when (v) {
-            binding.ivSearch -> findNavController().navigateSearch()
+            mBinding.ivSearch -> findNavController().navigateSearch()
         }
     }
 
@@ -132,27 +129,27 @@ class HomeFragment :
     override fun onFragmentResume() {
         super.onFragmentResume()
         mAdapter?.bindAllListener(this)
-        binding.ivSearch.setOnClickListener(this)
-        binding.refreshView.setOnRefreshListener(this)
+        mBinding.ivSearch.setOnClickListener(this)
+        mBinding.refreshView.setOnRefreshListener(this)
     }
 
     override fun onFragmentStop() {
         super.onFragmentStop()
         mAdapter?.unbindAllListener()
-        binding.ivSearch.setOnClickListener(null)
-        binding.refreshView.setOnRefreshListener(null)
+        mBinding.ivSearch.setOnClickListener(null)
+        mBinding.refreshView.setOnRefreshListener(null)
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
-        binding.rvContainer.adapter = null
+        mBinding.rvContainer.adapter = null
         mAdapter = null
     }
 
     @InjectBus
     fun navigationEvent(event: NavigationSelectEvent) {
         if (event.title == getString(R.string.nav_home) && isResumed) {
-            binding.rvContainer.smoothScrollToTop()
+            mBinding.rvContainer.smoothScrollToTop()
         }
     }
 }

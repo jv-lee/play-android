@@ -6,12 +6,10 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.LifecycleCoroutineScope
 import com.google.android.material.tabs.TabLayoutMediator
 import com.lee.playandroid.base.adapter.core.UiPagerAdapter2
-import com.lee.playandroid.base.base.BaseNavigationFragment
-import com.lee.playandroid.base.extensions.binding
-import com.lee.playandroid.base.extensions.increaseOffscreenPageLimit
+import com.lee.playandroid.base.base.BaseBindingNavigationFragment
 import com.lee.playandroid.base.extensions.collectState
+import com.lee.playandroid.base.extensions.increaseOffscreenPageLimit
 import com.lee.playandroid.base.widget.StatusLayout
-import com.lee.playandroid.common.R
 import com.lee.playandroid.common.databinding.FragmentBaseTabBinding
 import com.lee.playandroid.common.entity.Tab
 import com.lee.playandroid.common.extensions.actionFailed
@@ -24,10 +22,8 @@ import kotlinx.coroutines.flow.StateFlow
  * @date 2021/11/9
  */
 abstract class BaseTabFragment :
-    BaseNavigationFragment(R.layout.fragment_base_tab),
+    BaseBindingNavigationFragment<FragmentBaseTabBinding>(),
     StatusLayout.OnReloadListener {
-
-    private val binding by binding(FragmentBaseTabBinding::bind)
 
     private var adapter: UiPagerAdapter2? = null
     private var mediator: TabLayoutMediator? = null
@@ -40,11 +36,11 @@ abstract class BaseTabFragment :
 
     abstract fun viewStates(): StateFlow<BaseTabViewState>
 
-    open fun findBinding() = binding
+    open fun findBinding() = mBinding
 
     override fun bindView() {
-        binding.statusLayout.setOnReloadListener(this)
-        binding.tabLayout.increaseOffscreenPageLimit(binding.vpContainer)
+        mBinding.statusLayout.setOnReloadListener(this)
+        mBinding.tabLayout.increaseOffscreenPageLimit(mBinding.vpContainer)
     }
 
     override fun LifecycleCoroutineScope.bindData() {
@@ -54,7 +50,7 @@ abstract class BaseTabFragment :
                     is BaseTabViewEvent.RequestFailed -> {
                         actionFailed(event.error)
                         adapter?.getFragments()?.isNullOrEmpty() ?: kotlin.run {
-                            binding.statusLayout.setStatus(StatusLayout.STATUS_DATA_ERROR)
+                            mBinding.statusLayout.setStatus(StatusLayout.STATUS_DATA_ERROR)
                         }
                     }
                 }
@@ -67,13 +63,13 @@ abstract class BaseTabFragment :
                 BaseTabViewState::tabList
             ) { loading, tab ->
                 if (loading) {
-                    binding.statusLayout.postLoading()
+                    mBinding.statusLayout.postLoading()
                     return@collectState
                 }
                 if (tab.isEmpty()) {
-                    binding.statusLayout.setStatus(StatusLayout.STATUS_EMPTY_DATA)
+                    mBinding.statusLayout.setStatus(StatusLayout.STATUS_EMPTY_DATA)
                 } else {
-                    binding.statusLayout.setStatus(StatusLayout.STATUS_DATA)
+                    mBinding.statusLayout.setStatus(StatusLayout.STATUS_DATA)
                     bindAdapter(tab)
                 }
             }
@@ -87,7 +83,7 @@ abstract class BaseTabFragment :
     override fun onDestroyView() {
         super.onDestroyView()
         mediator?.detach()
-        binding.vpContainer.adapter = null
+        mBinding.vpContainer.adapter = null
         adapter = null
         mediator = null
     }
@@ -99,7 +95,7 @@ abstract class BaseTabFragment :
     @SuppressLint("NotifyDataSetChanged")
     private fun bindAdapter(tabsData: List<Tab>) {
         // 校验空数据及重复设置
-        if (binding.vpContainer.adapter != null || tabsData.isEmpty()) return
+        if (mBinding.vpContainer.adapter != null || tabsData.isEmpty()) return
 
         val fragments = arrayListOf<Fragment>()
         val titles = arrayListOf<String>()
@@ -111,10 +107,10 @@ abstract class BaseTabFragment :
 
         adapter = UiPagerAdapter2(childFragmentManager, viewLifecycleOwner.lifecycle)
         adapter?.addAll(fragments)
-        binding.vpContainer.adapter = adapter
+        mBinding.vpContainer.adapter = adapter
 
-        binding.tabLayout.visibility = View.VISIBLE
-        TabLayoutMediator(binding.tabLayout, binding.vpContainer) { tab, position ->
+        mBinding.tabLayout.visibility = View.VISIBLE
+        TabLayoutMediator(mBinding.tabLayout, mBinding.vpContainer) { tab, position ->
             if (titles.size > position) {
                 tab.text = titles[position]
             }

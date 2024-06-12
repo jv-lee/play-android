@@ -1,9 +1,6 @@
 package com.lee.playandroid.system.ui.adapter
 
 import android.content.Context
-import android.view.LayoutInflater
-import android.view.ViewGroup
-import androidx.viewbinding.ViewBinding
 import com.lee.playandroid.base.adapter.binding.ViewBindingAdapter
 import com.lee.playandroid.base.adapter.binding.ViewBindingHolder
 import com.lee.playandroid.base.adapter.item.ViewBindingItem
@@ -26,19 +23,18 @@ class SystemContentListAdapter(context: Context) :
         addItemStyles(ContentItem())
     }
 
-    inner class ContentItem : ViewBindingItem<Content>() {
-        override fun getItemViewBinding(context: Context, parent: ViewGroup): ViewBinding {
-            return ItemContentBinding.inflate(LayoutInflater.from(context), parent, false)
-        }
+    inner class ContentItem : ViewBindingItem<ItemContentBinding, Content>() {
 
-        override fun convert(holder: ViewBindingHolder, entity: Content, position: Int) {
-            holder.getViewBinding<ItemContentBinding>().apply {
-                entity.apply {
-                    tvTitle.text = getTitle()
-                    tvAuthor.text = getAuthor()
-                    tvTime.text = getDateFormat()
-                    tvCategory.text = getCategory()
-                }
+        override fun ItemContentBinding.convert(
+            holder: ViewBindingHolder,
+            entity: Content,
+            position: Int
+        ) {
+            entity.apply {
+                tvTitle.text = getTitle()
+                tvAuthor.text = getAuthor()
+                tvTime.text = getDateFormat()
+                tvCategory.text = getCategory()
             }
         }
     }

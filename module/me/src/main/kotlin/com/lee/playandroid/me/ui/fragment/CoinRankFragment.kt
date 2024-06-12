@@ -8,11 +8,10 @@ import com.lee.playandroid.base.adapter.base.BaseViewAdapter
 import com.lee.playandroid.base.adapter.extensions.bindAllListener
 import com.lee.playandroid.base.adapter.page.submitData
 import com.lee.playandroid.base.adapter.page.submitFailed
-import com.lee.playandroid.base.base.BaseNavigationFragment
-import com.lee.playandroid.base.extensions.binding
+import com.lee.playandroid.base.base.BaseBindingNavigationFragment
 import com.lee.playandroid.base.interadp.setClickListener
 import com.lee.playandroid.base.uistate.LoadStatus
-import com.lee.playandroid.base.extensions.collectState
+import com.lee.playandroid.base.uistate.collectCallback
 import com.lee.playandroid.common.constants.ApiConstants
 import com.lee.playandroid.common.entity.CoinRank
 import com.lee.playandroid.common.entity.PageData
@@ -31,18 +30,16 @@ import com.lee.playandroid.router.navigateDetails
  * @date 2021/12/8
  */
 class CoinRankFragment :
-    BaseNavigationFragment(R.layout.fragment_coin_rank),
+    BaseBindingNavigationFragment<FragmentCoinRankBinding>(),
     BaseViewAdapter.LoadErrorListener,
     BaseViewAdapter.AutoLoadMoreListener {
 
     private val viewModel by viewModels<CoinRankViewModel>()
 
-    private val binding by binding(FragmentCoinRankBinding::bind)
-
     private lateinit var mAdapter: CoinRankAdapter
 
     override fun bindView() {
-        binding.toolbar.setClickListener {
+        mBinding.toolbar.setClickListener {
             moreClick {
                 findNavController().navigateDetails(
                     getString(R.string.coin_help_title),
@@ -51,11 +48,11 @@ class CoinRankFragment :
             }
         }
 
-        binding.rvContainer.layoutManager = GridLayoutManager(requireContext(), 3).apply {
+        mBinding.rvContainer.layoutManager = GridLayoutManager(requireContext(), 3).apply {
             spanSizeLookup = RankSpanSizeLookup()
         }
-        if (binding.rvContainer.adapter == null) {
-            binding.rvContainer.adapter = CoinRankAdapter(requireContext()).apply {
+        if (mBinding.rvContainer.adapter == null) {
+            mBinding.rvContainer.adapter = CoinRankAdapter(requireContext()).apply {
                 mAdapter = this
                 initStatusView()
                 pageLoading()
@@ -66,7 +63,7 @@ class CoinRankFragment :
 
     override fun LifecycleCoroutineScope.bindData() {
         launchWhenResumed {
-            viewModel.coinRankFlow.collectState<PageData<CoinRank>>(
+            viewModel.coinRankFlow.collectCallback<PageData<CoinRank>>(
                 success = {
                     mAdapter.submitData(it, diff = true)
                 },
@@ -92,6 +89,6 @@ class CoinRankFragment :
 
     override fun onDestroyView() {
         super.onDestroyView()
-        binding.rvContainer.adapter = null
+        mBinding.rvContainer.adapter = null
     }
 }

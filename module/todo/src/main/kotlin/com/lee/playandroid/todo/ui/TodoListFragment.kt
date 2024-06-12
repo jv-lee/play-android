@@ -10,13 +10,12 @@ import com.lee.playandroid.base.adapter.base.BaseViewAdapter
 import com.lee.playandroid.base.adapter.extensions.bindAllListener
 import com.lee.playandroid.base.adapter.page.submitData
 import com.lee.playandroid.base.adapter.page.submitFailed
-import com.lee.playandroid.base.base.BaseNavigationFragment
+import com.lee.playandroid.base.base.BaseBindingNavigationFragment
 import com.lee.playandroid.base.extensions.arguments
-import com.lee.playandroid.base.extensions.binding
 import com.lee.playandroid.base.extensions.findParentFragment
 import com.lee.playandroid.base.extensions.toast
 import com.lee.playandroid.base.uistate.LoadStatus
-import com.lee.playandroid.base.extensions.collectState
+import com.lee.playandroid.base.uistate.collectCallback
 import com.lee.playandroid.base.widget.SlidingPaneItemTouchListener
 import com.lee.playandroid.base.widget.closeAllItems
 import com.lee.playandroid.common.entity.PageData
@@ -27,8 +26,8 @@ import com.lee.playandroid.todo.databinding.FragmentTodoListBinding
 import com.lee.playandroid.todo.ui.adapter.TodoListAdapter
 import com.lee.playandroid.todo.ui.listener.TodoActionListener
 import com.lee.playandroid.todo.ui.widget.StickyDateItemDecoration
-import com.lee.playandroid.todo.viewmodel.TodoListViewIntent
 import com.lee.playandroid.todo.viewmodel.TodoListViewEvent
+import com.lee.playandroid.todo.viewmodel.TodoListViewIntent
 import com.lee.playandroid.todo.viewmodel.TodoListViewModel
 
 /**
@@ -37,7 +36,7 @@ import com.lee.playandroid.todo.viewmodel.TodoListViewModel
  * @date 2021/12/23
  */
 class TodoListFragment :
-    BaseNavigationFragment(R.layout.fragment_todo_list),
+    BaseBindingNavigationFragment<FragmentTodoListBinding>(),
     BaseViewAdapter.OnItemChildView<TodoData>,
     BaseViewAdapter.LoadErrorListener,
     BaseViewAdapter.AutoLoadMoreListener,
@@ -64,8 +63,6 @@ class TodoListFragment :
 
     private val status by arguments<Int>(ARG_PARAMS_STATUS)
 
-    private val binding by binding(FragmentTodoListBinding::bind)
-
     private val viewModel by viewModels<TodoListViewModel>()
 
     private val slidingPaneItemTouchListener by lazy {
@@ -75,11 +72,11 @@ class TodoListFragment :
     private var mAdapter: TodoListAdapter? = null
 
     override fun bindView() {
-        binding.rvContainer.itemAnimator = null
+        mBinding.rvContainer.itemAnimator = null
         // 添加自定义侧滑菜单触摸监听器
-        binding.rvContainer.addOnItemTouchListener(slidingPaneItemTouchListener)
-        if (binding.rvContainer.adapter == null) {
-            binding.rvContainer.adapter =
+        mBinding.rvContainer.addOnItemTouchListener(slidingPaneItemTouchListener)
+        if (mBinding.rvContainer.adapter == null) {
+            mBinding.rvContainer.adapter =
                 TodoListAdapter(requireContext(), status).apply {
                     mAdapter = this
                     initStatusView()
@@ -88,7 +85,7 @@ class TodoListFragment :
                 }.getProxy()
         }
         // 添加todo日期吸顶itemDecoration
-        binding.rvContainer.addItemDecoration(StickyDateItemDecoration(requireContext(), mAdapter))
+        mBinding.rvContainer.addItemDecoration(StickyDateItemDecoration(requireContext(), mAdapter))
     }
 
     override fun LifecycleCoroutineScope.bindData() {
@@ -97,7 +94,7 @@ class TodoListFragment :
                 when (event) {
                     // 重置sliding状态
                     is TodoListViewEvent.ResetSlidingState -> {
-                        binding.rvContainer.closeAllItems()
+                        mBinding.rvContainer.closeAllItems()
                     }
                     // 列表item状态更新失败事件
                     is TodoListViewEvent.ActionFailed -> {
@@ -135,7 +132,7 @@ class TodoListFragment :
 
         launchWhenResumed {
             // todo列表数据监听填充
-            viewModel.todoDataFlow.collectState<PageData<TodoData>>(
+            viewModel.todoDataFlow.collectCallback<PageData<TodoData>>(
                 success = {
                     mAdapter?.submitData(it, diff = true)
                 },
@@ -202,8 +199,8 @@ class TodoListFragment :
 
     override fun onDestroyView() {
         super.onDestroyView()
-        binding.rvContainer.removeOnItemTouchListener(slidingPaneItemTouchListener)
-        binding.rvContainer.adapter = null
+        mBinding.rvContainer.removeOnItemTouchListener(slidingPaneItemTouchListener)
+        mBinding.rvContainer.adapter = null
         mAdapter = null
     }
 }

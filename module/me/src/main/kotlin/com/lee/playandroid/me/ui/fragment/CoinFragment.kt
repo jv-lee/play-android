@@ -7,14 +7,14 @@ import com.lee.playandroid.base.adapter.base.BaseViewAdapter
 import com.lee.playandroid.base.adapter.extensions.bindAllListener
 import com.lee.playandroid.base.adapter.page.submitData
 import com.lee.playandroid.base.adapter.page.submitFailed
-import com.lee.playandroid.base.base.BaseNavigationFragment
-import com.lee.playandroid.base.extensions.binding
+import com.lee.playandroid.base.base.BaseBindingNavigationFragment
+import com.lee.playandroid.base.extensions.collectState
 import com.lee.playandroid.base.interadp.setClickListener
 import com.lee.playandroid.base.tools.DarkModeTools
 import com.lee.playandroid.base.tools.SystemBarTools.setDarkStatusIcon
 import com.lee.playandroid.base.tools.SystemBarTools.setLightStatusIcon
 import com.lee.playandroid.base.uistate.LoadStatus
-import com.lee.playandroid.base.extensions.collectState
+import com.lee.playandroid.base.uistate.collectCallback
 import com.lee.playandroid.common.constants.ApiConstants
 import com.lee.playandroid.common.entity.AccountViewState
 import com.lee.playandroid.common.entity.CoinRecord
@@ -34,18 +34,16 @@ import com.lee.playandroid.router.navigateDetails
  * @date 2021/11/25
  */
 class CoinFragment :
-    BaseNavigationFragment(R.layout.fragment_coin),
+    BaseBindingNavigationFragment<FragmentCoinBinding>(),
     BaseViewAdapter.LoadErrorListener,
     BaseViewAdapter.AutoLoadMoreListener {
 
     private val viewModel by viewModels<CoinViewModel>()
 
-    private val binding by binding(FragmentCoinBinding::bind)
-
     private lateinit var mAdapter: CoinRecordAdapter
 
     override fun bindView() {
-        binding.toolbar.setClickListener {
+        mBinding.toolbar.setClickListener {
             moreClick {
                 findNavController().navigateDetails(
                     getString(R.string.coin_help_title),
@@ -53,12 +51,12 @@ class CoinFragment :
                 )
             }
         }
-        binding.layoutCoinHeader.tvRankLabel.setOnClickListener {
+        mBinding.layoutCoinHeader.tvRankLabel.setOnClickListener {
             findNavController().navigate(R.id.action_coin_fragment_to_coin_rank_fragment)
         }
 
-        if (binding.rvContainer.adapter == null) {
-            binding.rvContainer.adapter = CoinRecordAdapter(requireContext()).apply {
+        if (mBinding.rvContainer.adapter == null) {
+            mBinding.rvContainer.adapter = CoinRecordAdapter(requireContext()).apply {
                 mAdapter = this
                 setLoadResource(CoinLoadResource())
                 initStatusView()
@@ -70,7 +68,7 @@ class CoinFragment :
 
     override fun LifecycleCoroutineScope.bindData() {
         launchWhenResumed {
-            viewModel.coinRecordFlow.collectState<PageData<CoinRecord>>(
+            viewModel.coinRecordFlow.collectCallback<PageData<CoinRecord>>(
                 success = {
                     mAdapter.submitData(it, diff = true)
                 },
@@ -84,7 +82,7 @@ class CoinFragment :
         launchWhenResumed {
             viewModel.accountService.getAccountViewStates(requireActivity())
                 .collectState(AccountViewState::accountData) {
-                    binding.layoutCoinHeader.tvIntegralCount.text =
+                    mBinding.layoutCoinHeader.tvIntegralCount.text =
                         it?.coinInfo?.coinCount.toString()
                 }
         }
@@ -118,6 +116,6 @@ class CoinFragment :
 
     override fun onDestroyView() {
         super.onDestroyView()
-        binding.rvContainer.adapter = null
+        mBinding.rvContainer.adapter = null
     }
 }

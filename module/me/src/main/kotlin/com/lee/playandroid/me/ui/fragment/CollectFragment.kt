@@ -8,14 +8,14 @@ import com.lee.playandroid.base.adapter.base.BaseViewAdapter
 import com.lee.playandroid.base.adapter.extensions.bindAllListener
 import com.lee.playandroid.base.adapter.page.submitData
 import com.lee.playandroid.base.adapter.page.submitFailed
-import com.lee.playandroid.base.base.BaseNavigationFragment
+import com.lee.playandroid.base.base.BaseBindingNavigationFragment
 import com.lee.playandroid.base.dialog.LoadingDialog
-import com.lee.playandroid.base.extensions.binding
+import com.lee.playandroid.base.extensions.collectState
 import com.lee.playandroid.base.extensions.dismiss
 import com.lee.playandroid.base.extensions.show
 import com.lee.playandroid.base.extensions.toast
 import com.lee.playandroid.base.uistate.LoadStatus
-import com.lee.playandroid.base.extensions.collectState
+import com.lee.playandroid.base.uistate.collectCallback
 import com.lee.playandroid.base.widget.SlidingPaneItemTouchListener
 import com.lee.playandroid.base.widget.closeAllItems
 import com.lee.playandroid.common.entity.Content
@@ -24,8 +24,8 @@ import com.lee.playandroid.common.extensions.actionFailed
 import com.lee.playandroid.common.ui.adapter.SimpleTextAdapter
 import com.lee.playandroid.me.R
 import com.lee.playandroid.me.databinding.FragmentCollectBinding
-import com.lee.playandroid.me.viewmodel.CollectViewIntent
 import com.lee.playandroid.me.viewmodel.CollectViewEvent
+import com.lee.playandroid.me.viewmodel.CollectViewIntent
 import com.lee.playandroid.me.viewmodel.CollectViewModel
 import com.lee.playandroid.me.viewmodel.CollectViewState
 import com.lee.playandroid.router.navigateDetails
@@ -36,14 +36,12 @@ import com.lee.playandroid.router.navigateDetails
  * @date 2021/11/25
  */
 class CollectFragment :
-    BaseNavigationFragment(R.layout.fragment_collect),
+    BaseBindingNavigationFragment<FragmentCollectBinding>(),
     BaseViewAdapter.LoadErrorListener,
     BaseViewAdapter.AutoLoadMoreListener,
     BaseViewAdapter.OnItemChildView<Content> {
 
     private val viewModel by viewModels<CollectViewModel>()
-
-    private val binding by binding(FragmentCollectBinding::bind)
 
     private val slidingPaneItemTouchListener by lazy {
         SlidingPaneItemTouchListener(requireContext())
@@ -54,9 +52,9 @@ class CollectFragment :
     private var mAdapter: SimpleTextAdapter? = null
 
     override fun bindView() {
-        binding.rvContainer.addOnItemTouchListener(slidingPaneItemTouchListener)
-        if (binding.rvContainer.adapter == null) {
-            binding.rvContainer.adapter = SimpleTextAdapter(requireContext()).apply {
+        mBinding.rvContainer.addOnItemTouchListener(slidingPaneItemTouchListener)
+        if (mBinding.rvContainer.adapter == null) {
+            mBinding.rvContainer.adapter = SimpleTextAdapter(requireContext()).apply {
                 mAdapter = this
                 initStatusView()
                 pageLoading()
@@ -78,13 +76,13 @@ class CollectFragment :
                         actionFailed(event.error)
                     }
                     is CollectViewEvent.ResetSlidingState -> {
-                        binding.rvContainer.closeAllItems()
+                        mBinding.rvContainer.closeAllItems()
                     }
                 }
             }
         }
         launchWhenResumed {
-            viewModel.collectFlow.collectState<PageData<Content>>(
+            viewModel.collectFlow.collectCallback<PageData<Content>>(
                 success = {
                     mAdapter?.submitData(it, diff = true)
                 },
@@ -132,8 +130,8 @@ class CollectFragment :
 
     override fun onDestroyView() {
         super.onDestroyView()
-        binding.rvContainer.removeOnItemTouchListener(slidingPaneItemTouchListener)
-        binding.rvContainer.adapter = null
+        mBinding.rvContainer.removeOnItemTouchListener(slidingPaneItemTouchListener)
+        mBinding.rvContainer.adapter = null
         mAdapter = null
     }
 }

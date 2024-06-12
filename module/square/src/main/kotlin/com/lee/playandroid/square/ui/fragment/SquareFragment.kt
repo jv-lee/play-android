@@ -10,15 +10,14 @@ import com.lee.playandroid.base.adapter.extensions.bindAllListener
 import com.lee.playandroid.base.adapter.extensions.unbindAllListener
 import com.lee.playandroid.base.adapter.page.submitData
 import com.lee.playandroid.base.adapter.page.submitFailed
-import com.lee.playandroid.base.base.BaseNavigationFragment
-import com.lee.playandroid.base.extensions.binding
+import com.lee.playandroid.base.base.BaseBindingNavigationFragment
 import com.lee.playandroid.base.extensions.delayBackEvent
 import com.lee.playandroid.base.extensions.smoothScrollToTop
 import com.lee.playandroid.base.extensions.toast
 import com.lee.playandroid.base.livedatabus.InjectBus
 import com.lee.playandroid.base.livedatabus.LiveDataBus
 import com.lee.playandroid.base.uistate.LoadStatus
-import com.lee.playandroid.base.extensions.collectState
+import com.lee.playandroid.base.uistate.collectCallback
 import com.lee.playandroid.common.entity.Content
 import com.lee.playandroid.common.entity.NavigationSelectEvent
 import com.lee.playandroid.common.entity.PageData
@@ -41,7 +40,7 @@ import com.lee.playandroid.common.R as CR
  * @date 2021/12/13
  */
 class SquareFragment :
-    BaseNavigationFragment(R.layout.fragment_square),
+    BaseBindingNavigationFragment<FragmentSquareBinding>(),
     View.OnClickListener,
     SwipeRefreshLayout.OnRefreshListener,
     BaseViewAdapter.OnItemClickListener<Content>,
@@ -50,26 +49,24 @@ class SquareFragment :
 
     private val viewModel by viewModels<SquareViewModel>()
 
-    private val binding by binding(FragmentSquareBinding::bind)
-
     private var mAdapter: SquareAdapter? = null
 
     override fun bindView() {
         // 拦截back处理
         delayBackEvent()
         // 设置toolbar主题渐变色背景
-        binding.toolbar.setThemeGradientBackground()
-        binding.refreshView.setProgressViewOffset(
+        mBinding.toolbar.setThemeGradientBackground()
+        mBinding.refreshView.setProgressViewOffset(
             false,
-            binding.toolbar.getToolbarLayoutHeight() / 2,
-            binding.refreshView.progressViewEndOffset + binding.toolbar.getToolbarLayoutHeight() / 2
+            mBinding.toolbar.getToolbarLayoutHeight() / 2,
+            mBinding.refreshView.progressViewEndOffset + mBinding.toolbar.getToolbarLayoutHeight() / 2
         )
 
-        binding.rvContainer.addItemDecoration(
-            OffsetItemDecoration(binding.toolbar.getToolbarLayoutHeight())
+        mBinding.rvContainer.addItemDecoration(
+            OffsetItemDecoration(mBinding.toolbar.getToolbarLayoutHeight())
         )
-        if (binding.rvContainer.adapter == null) {
-            binding.rvContainer.adapter = SquareAdapter(requireContext()).apply {
+        if (mBinding.rvContainer.adapter == null) {
+            mBinding.rvContainer.adapter = SquareAdapter(requireContext()).apply {
                 mAdapter = this
                 setLoadResource(MainLoadResource())
                 initStatusView()
@@ -82,13 +79,13 @@ class SquareFragment :
         LiveDataBus.instance.injectBus(this@SquareFragment)
 
         launchWhenResumed {
-            viewModel.squareFlow.collectState<PageData<Content>>(
+            viewModel.squareFlow.collectCallback<PageData<Content>>(
                 success = {
-                    binding.refreshView.isRefreshing = false
+                    mBinding.refreshView.isRefreshing = false
                     mAdapter?.submitData(it, diff = true)
                 },
                 error = {
-                    binding.refreshView.isRefreshing = false
+                    mBinding.refreshView.isRefreshing = false
                     mAdapter?.submitFailed()
                     actionFailed(it)
                 }
@@ -129,27 +126,27 @@ class SquareFragment :
     override fun onFragmentResume() {
         super.onFragmentResume()
         mAdapter?.bindAllListener(this)
-        binding.ivCreate.setOnClickListener(this)
-        binding.refreshView.setOnRefreshListener(this)
+        mBinding.ivCreate.setOnClickListener(this)
+        mBinding.refreshView.setOnRefreshListener(this)
     }
 
     override fun onFragmentStop() {
         super.onFragmentStop()
         mAdapter?.unbindAllListener()
-        binding.ivCreate.setOnClickListener(null)
-        binding.refreshView.setOnRefreshListener(null)
+        mBinding.ivCreate.setOnClickListener(null)
+        mBinding.refreshView.setOnRefreshListener(null)
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
-        binding.rvContainer.adapter = null
+        mBinding.rvContainer.adapter = null
         mAdapter = null
     }
 
     @InjectBus
     fun navigationEvent(event: NavigationSelectEvent) {
         if (event.title == getString(R.string.nav_square) && isResumed) {
-            binding.rvContainer.smoothScrollToTop()
+            mBinding.rvContainer.smoothScrollToTop()
         }
     }
 }

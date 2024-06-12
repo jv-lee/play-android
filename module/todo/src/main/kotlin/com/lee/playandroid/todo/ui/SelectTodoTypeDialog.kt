@@ -5,11 +5,9 @@ import android.os.Bundle
 import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import com.lee.playandroid.base.base.BaseAlertFragment
-import com.lee.playandroid.base.extensions.binding
+import com.lee.playandroid.base.base.BaseBindingAlertFragment
 import com.lee.playandroid.base.extensions.collectState
 import com.lee.playandroid.base.widget.WheelView
-import com.lee.playandroid.todo.R
 import com.lee.playandroid.todo.databinding.DialogSelectTodoBinding
 import com.lee.playandroid.todo.model.entity.TodoType
 import com.lee.playandroid.todo.model.entity.TodoTypeData
@@ -24,23 +22,21 @@ import com.lee.playandroid.todo.viewmodel.SelectTodoTypeViewState
  * @date 2022/1/2
  */
 class SelectTodoTypeDialog :
-    BaseAlertFragment(R.layout.dialog_select_todo) {
-
-    private val binding by binding(DialogSelectTodoBinding::bind)
+    BaseBindingAlertFragment<DialogSelectTodoBinding>(){
 
     private val viewModel by viewModels<SelectTodoTypeViewModel>()
 
     private var type = TodoType.DEFAULT
 
     override fun bindView() {
-        binding.root.setOnClickListener { dismiss() }
+        mBinding.root.setOnClickListener { dismiss() }
     }
 
     override fun bindData() {
         viewLifecycleOwner.lifecycleScope.launchWhenResumed {
             // 监听todoType列表数据实时构建当前滑动选择类标
             viewModel.viewStates.collectState(SelectTodoTypeViewState::todoTypeWheelData) {
-                binding.wheelView.bindData(
+                mBinding.wheelView.bindData(
                     it.todoTypes,
                     object : WheelView.DataFormat<TodoTypeData> {
                         override fun format(item: TodoTypeData) = item.name

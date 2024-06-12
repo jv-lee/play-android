@@ -6,18 +6,16 @@ import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.navigation.fragment.findNavController
-import com.lee.playandroid.base.base.BaseNavigationFragment
+import com.lee.playandroid.base.base.BaseBindingNavigationFragment
 import com.lee.playandroid.base.dialog.LoadingDialog
-import com.lee.playandroid.base.extensions.binding
+import com.lee.playandroid.base.extensions.collectState
 import com.lee.playandroid.base.extensions.dismiss
 import com.lee.playandroid.base.extensions.show
 import com.lee.playandroid.base.extensions.toast
 import com.lee.playandroid.base.tools.SystemBarTools.parentTouchHideSoftInput
-import com.lee.playandroid.base.extensions.collectState
-import com.lee.playandroid.square.R
 import com.lee.playandroid.square.databinding.FragmentCreateShareBinding
-import com.lee.playandroid.square.viewmodel.CreateShareViewIntent
 import com.lee.playandroid.square.viewmodel.CreateShareViewEvent
+import com.lee.playandroid.square.viewmodel.CreateShareViewIntent
 import com.lee.playandroid.square.viewmodel.CreateShareViewModel
 import com.lee.playandroid.square.viewmodel.CreateShareViewState
 
@@ -26,21 +24,19 @@ import com.lee.playandroid.square.viewmodel.CreateShareViewState
  * @author jv.lee
  * @date 2021/12/13
  */
-class CreateShareFragment : BaseNavigationFragment(R.layout.fragment_create_share) {
+class CreateShareFragment : BaseBindingNavigationFragment<FragmentCreateShareBinding>() {
 
     private val viewModel by viewModels<CreateShareViewModel>()
-
-    private val binding by binding(FragmentCreateShareBinding::bind)
 
     private val loadingDialog by lazy { LoadingDialog(requireContext()) }
 
     override fun bindView() {
         requireActivity().window.parentTouchHideSoftInput()
 
-        binding.editShareContent.setOnEditorActionListener { _, actionId, _ ->
+        mBinding.editShareContent.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_SEND) {
-                val title = binding.editShareTitle.text.toString()
-                val content = binding.editShareContent.text.toString()
+                val title = mBinding.editShareTitle.text.toString()
+                val content = mBinding.editShareContent.text.toString()
                 viewModel.dispatch(CreateShareViewIntent.RequestSend(title, content))
             }
             return@setOnEditorActionListener false

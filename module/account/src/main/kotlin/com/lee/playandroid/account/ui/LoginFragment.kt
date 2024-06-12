@@ -9,10 +9,14 @@ import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.navigation.fragment.findNavController
 import com.lee.playandroid.account.R
 import com.lee.playandroid.account.databinding.FragmentLoginBinding
-import com.lee.playandroid.account.viewmodel.*
-import com.lee.playandroid.base.base.BaseNavigationFragment
+import com.lee.playandroid.account.viewmodel.AccountViewModel
+import com.lee.playandroid.account.viewmodel.LoginViewEvent
+import com.lee.playandroid.account.viewmodel.LoginViewIntent
+import com.lee.playandroid.account.viewmodel.LoginViewModel
+import com.lee.playandroid.account.viewmodel.LoginViewState
+import com.lee.playandroid.base.base.BaseBindingNavigationFragment
 import com.lee.playandroid.base.dialog.LoadingDialog
-import com.lee.playandroid.base.extensions.binding
+import com.lee.playandroid.base.extensions.collectState
 import com.lee.playandroid.base.extensions.dismiss
 import com.lee.playandroid.base.extensions.show
 import com.lee.playandroid.base.interadp.TextWatcherAdapter
@@ -20,7 +24,6 @@ import com.lee.playandroid.base.tools.SystemBarTools.hasSoftInputShow
 import com.lee.playandroid.base.tools.SystemBarTools.hideSoftInput
 import com.lee.playandroid.base.tools.SystemBarTools.parentTouchHideSoftInput
 import com.lee.playandroid.base.tools.SystemBarTools.softInputBottomPaddingChange
-import com.lee.playandroid.base.extensions.collectState
 import com.lee.playandroid.common.extensions.actionFailed
 
 /**
@@ -28,7 +31,7 @@ import com.lee.playandroid.common.extensions.actionFailed
  * @author jv.lee
  * @date 2021/11/24
  */
-class LoginFragment : BaseNavigationFragment(R.layout.fragment_login), View.OnClickListener {
+class LoginFragment : BaseBindingNavigationFragment<FragmentLoginBinding>(), View.OnClickListener {
 
     companion object {
         /** 注册界面注册成功后回调登陆页面回传key（通知登陆页面已注册成功） */
@@ -38,8 +41,6 @@ class LoginFragment : BaseNavigationFragment(R.layout.fragment_login), View.OnCl
     private val viewModel by viewModels<LoginViewModel>()
     private val accountViewModel by activityViewModels<AccountViewModel>()
 
-    private val binding by binding(FragmentLoginBinding::bind)
-
     private val loadingDialog by lazy { LoadingDialog(requireContext()) }
 
     override fun bindView() {
@@ -47,17 +48,17 @@ class LoginFragment : BaseNavigationFragment(R.layout.fragment_login), View.OnCl
         requireActivity().window.parentTouchHideSoftInput()
 
         // 监听键盘弹起
-        binding.root.softInputBottomPaddingChange()
+        mBinding.root.softInputBottomPaddingChange()
 
         // 设置监听
-        binding.tvLogin.setOnClickListener(this)
-        binding.tvRegister.setOnClickListener(this)
-        binding.editUsername.addTextChangedListener(object : TextWatcherAdapter {
+        mBinding.tvLogin.setOnClickListener(this)
+        mBinding.tvRegister.setOnClickListener(this)
+        mBinding.editUsername.addTextChangedListener(object : TextWatcherAdapter {
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 viewModel.dispatch(LoginViewIntent.ChangeUsername(s?.toString() ?: ""))
             }
         })
-        binding.editPassword.addTextChangedListener(object : TextWatcherAdapter {
+        mBinding.editPassword.addTextChangedListener(object : TextWatcherAdapter {
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 viewModel.dispatch(LoginViewIntent.ChangePassword(s?.toString() ?: ""))
             }
@@ -105,19 +106,19 @@ class LoginFragment : BaseNavigationFragment(R.layout.fragment_login), View.OnCl
             }
             launchWhenResumed {
                 collectState(LoginViewState::isLoginEnable) {
-                    binding.tvLogin.setButtonDisable(!it)
+                    mBinding.tvLogin.setButtonDisable(!it)
                 }
             }
             launchWhenResumed {
                 collectState(LoginViewState::username) {
-                    binding.editUsername.setText(it)
-                    binding.editUsername.setSelection(it.length)
+                    mBinding.editUsername.setText(it)
+                    mBinding.editUsername.setSelection(it.length)
                 }
             }
             launchWhenResumed {
                 collectState(LoginViewState::password) {
-                    binding.editPassword.setText(it)
-                    binding.editPassword.setSelection(it.length)
+                    mBinding.editPassword.setText(it)
+                    mBinding.editPassword.setSelection(it.length)
                 }
             }
         }
@@ -125,8 +126,8 @@ class LoginFragment : BaseNavigationFragment(R.layout.fragment_login), View.OnCl
 
     override fun onClick(view: View) {
         when (view) {
-            binding.tvRegister -> viewModel.dispatch(LoginViewIntent.NavigationRegister)
-            binding.tvLogin -> viewModel.dispatch(LoginViewIntent.RequestLogin)
+            mBinding.tvRegister -> viewModel.dispatch(LoginViewIntent.NavigationRegister)
+            mBinding.tvLogin -> viewModel.dispatch(LoginViewIntent.RequestLogin)
         }
     }
 

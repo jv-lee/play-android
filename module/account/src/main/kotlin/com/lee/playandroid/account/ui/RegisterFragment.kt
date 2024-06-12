@@ -7,13 +7,16 @@ import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.navigation.fragment.findNavController
-import com.lee.playandroid.account.R
 import com.lee.playandroid.account.databinding.FragmentRegisterBinding
 import com.lee.playandroid.account.ui.LoginFragment.Companion.REQUEST_KEY_LOGIN
-import com.lee.playandroid.account.viewmodel.*
-import com.lee.playandroid.base.base.BaseNavigationFragment
+import com.lee.playandroid.account.viewmodel.AccountViewModel
+import com.lee.playandroid.account.viewmodel.RegisterViewEvent
+import com.lee.playandroid.account.viewmodel.RegisterViewIntent
+import com.lee.playandroid.account.viewmodel.RegisterViewModel
+import com.lee.playandroid.account.viewmodel.RegisterViewState
+import com.lee.playandroid.base.base.BaseBindingNavigationFragment
 import com.lee.playandroid.base.dialog.LoadingDialog
-import com.lee.playandroid.base.extensions.binding
+import com.lee.playandroid.base.extensions.collectState
 import com.lee.playandroid.base.extensions.dismiss
 import com.lee.playandroid.base.extensions.show
 import com.lee.playandroid.base.interadp.TextWatcherAdapter
@@ -21,7 +24,6 @@ import com.lee.playandroid.base.tools.SystemBarTools.hasSoftInputShow
 import com.lee.playandroid.base.tools.SystemBarTools.hideSoftInput
 import com.lee.playandroid.base.tools.SystemBarTools.parentTouchHideSoftInput
 import com.lee.playandroid.base.tools.SystemBarTools.softInputBottomPaddingChange
-import com.lee.playandroid.base.extensions.collectState
 import com.lee.playandroid.common.extensions.actionFailed
 
 /**
@@ -29,12 +31,10 @@ import com.lee.playandroid.common.extensions.actionFailed
  * @author jv.lee
  * @date 2021/11/24
  */
-class RegisterFragment : BaseNavigationFragment(R.layout.fragment_register), View.OnClickListener {
+class RegisterFragment : BaseBindingNavigationFragment<FragmentRegisterBinding>(), View.OnClickListener {
 
     private val viewModel by viewModels<RegisterViewModel>()
     private val accountViewModel by activityViewModels<AccountViewModel>()
-
-    private val binding by binding(FragmentRegisterBinding::bind)
 
     private val loadingDialog by lazy { LoadingDialog(requireContext()) }
 
@@ -43,22 +43,22 @@ class RegisterFragment : BaseNavigationFragment(R.layout.fragment_register), Vie
         requireActivity().window.parentTouchHideSoftInput()
 
         // 监听键盘弹起
-        binding.root.softInputBottomPaddingChange()
+        mBinding.root.softInputBottomPaddingChange()
 
         // 设置监听
-        binding.tvLogin.setOnClickListener(this)
-        binding.tvRegister.setOnClickListener(this)
-        binding.editUsername.addTextChangedListener(object : TextWatcherAdapter {
+        mBinding.tvLogin.setOnClickListener(this)
+        mBinding.tvRegister.setOnClickListener(this)
+        mBinding.editUsername.addTextChangedListener(object : TextWatcherAdapter {
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 viewModel.dispatch(RegisterViewIntent.ChangeUsername(s?.toString() ?: ""))
             }
         })
-        binding.editPassword.addTextChangedListener(object : TextWatcherAdapter {
+        mBinding.editPassword.addTextChangedListener(object : TextWatcherAdapter {
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 viewModel.dispatch(RegisterViewIntent.ChangePassword(s?.toString() ?: ""))
             }
         })
-        binding.editRePassword.addTextChangedListener(object : TextWatcherAdapter {
+        mBinding.editRePassword.addTextChangedListener(object : TextWatcherAdapter {
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 viewModel.dispatch(RegisterViewIntent.ChangeRePassword(s?.toString() ?: ""))
             }
@@ -101,25 +101,25 @@ class RegisterFragment : BaseNavigationFragment(R.layout.fragment_register), Vie
             }
             launchWhenResumed {
                 collectState(RegisterViewState::isRegisterEnable) {
-                    binding.tvRegister.setButtonDisable(!it)
+                    mBinding.tvRegister.setButtonDisable(!it)
                 }
             }
             launchWhenResumed {
                 collectState(RegisterViewState::username) {
-                    binding.editUsername.setText(it)
-                    binding.editUsername.setSelection(it.length)
+                    mBinding.editUsername.setText(it)
+                    mBinding.editUsername.setSelection(it.length)
                 }
             }
             launchWhenResumed {
                 collectState(RegisterViewState::password) {
-                    binding.editPassword.setText(it)
-                    binding.editPassword.setSelection(it.length)
+                    mBinding.editPassword.setText(it)
+                    mBinding.editPassword.setSelection(it.length)
                 }
             }
             launchWhenResumed {
                 collectState(RegisterViewState::rePassword) {
-                    binding.editRePassword.setText(it)
-                    binding.editRePassword.setSelection(it.length)
+                    mBinding.editRePassword.setText(it)
+                    mBinding.editRePassword.setSelection(it.length)
                 }
             }
         }
@@ -127,8 +127,8 @@ class RegisterFragment : BaseNavigationFragment(R.layout.fragment_register), Vie
 
     override fun onClick(view: View) {
         when (view) {
-            binding.tvRegister -> viewModel.dispatch(RegisterViewIntent.RequestRegister)
-            binding.tvLogin -> viewModel.dispatch(RegisterViewIntent.NavigationLogin)
+            mBinding.tvRegister -> viewModel.dispatch(RegisterViewIntent.RequestRegister)
+            mBinding.tvLogin -> viewModel.dispatch(RegisterViewIntent.NavigationLogin)
         }
     }
 

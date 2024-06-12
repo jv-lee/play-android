@@ -7,26 +7,30 @@ import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.navigation.fragment.findNavController
-import com.lee.playandroid.base.base.BaseNavigationFragment
+import com.lee.playandroid.base.base.BaseBindingNavigationFragment
 import com.lee.playandroid.base.dialog.LoadingDialog
-import com.lee.playandroid.base.extensions.*
+import com.lee.playandroid.base.extensions.arguments
+import com.lee.playandroid.base.extensions.argumentsOrNull
+import com.lee.playandroid.base.extensions.collectState
+import com.lee.playandroid.base.extensions.dismiss
+import com.lee.playandroid.base.extensions.show
+import com.lee.playandroid.base.extensions.toast
 import com.lee.playandroid.base.interadp.TextWatcherAdapter
 import com.lee.playandroid.base.tools.SystemBarTools.hasSoftInputShow
 import com.lee.playandroid.base.tools.SystemBarTools.hideSoftInput
 import com.lee.playandroid.base.tools.SystemBarTools.parentTouchHideSoftInput
 import com.lee.playandroid.base.tools.SystemBarTools.softInputBottomPaddingChange
-import com.lee.playandroid.base.extensions.collectState
 import com.lee.playandroid.common.entity.TodoData
 import com.lee.playandroid.common.entity.TodoData.Companion.PRIORITY_HEIGHT
 import com.lee.playandroid.common.entity.TodoData.Companion.PRIORITY_LOW
 import com.lee.playandroid.common.extensions.actionFailed
 import com.lee.playandroid.todo.R
 import com.lee.playandroid.todo.databinding.FragmentCreateTodoBinding
-import com.lee.playandroid.todo.viewmodel.CreateTodoViewIntent
 import com.lee.playandroid.todo.viewmodel.CreateTodoViewEvent
+import com.lee.playandroid.todo.viewmodel.CreateTodoViewIntent
 import com.lee.playandroid.todo.viewmodel.CreateTodoViewModel
 import com.lee.playandroid.todo.viewmodel.CreateTodoViewState
-import java.util.*
+import java.util.Calendar
 
 /**
  * 创建todo/编辑todo页面
@@ -34,7 +38,7 @@ import java.util.*
  * @date 2021/12/28
  */
 class CreateTodoFragment :
-    BaseNavigationFragment(R.layout.fragment_create_todo),
+    BaseBindingNavigationFragment<FragmentCreateTodoBinding>(),
     DatePickerDialog.OnDateSetListener {
 
     companion object {
@@ -54,8 +58,6 @@ class CreateTodoFragment :
         CreateTodoViewModel.CreateFactory(type, todoData)
     })
 
-    private val binding by binding(FragmentCreateTodoBinding::bind)
-
     private val loadingDialog by lazy { LoadingDialog(requireContext()) }
 
     private var datePickerDialog: DatePickerDialog? = null
@@ -65,30 +67,30 @@ class CreateTodoFragment :
         requireActivity().window.parentTouchHideSoftInput()
 
         // 监听键盘弹起
-        binding.root.softInputBottomPaddingChange()
+        mBinding.root.softInputBottomPaddingChange()
 
-        binding.tvDateContent.setOnClickListener {
+        mBinding.tvDateContent.setOnClickListener {
             datePickerDialog?.let(this::show)
         }
 
         // 保存TODO点击事件
-        binding.tvSave.setOnClickListener {
+        mBinding.tvSave.setOnClickListener {
             viewModel.dispatch(CreateTodoViewIntent.RequestPostTodo)
         }
 
-        binding.editTitle.addTextChangedListener(object : TextWatcherAdapter {
+        mBinding.editTitle.addTextChangedListener(object : TextWatcherAdapter {
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 viewModel.dispatch(CreateTodoViewIntent.ChangeTitle(s?.toString() ?: ""))
             }
         })
-        binding.editContent.addTextChangedListener(object : TextWatcherAdapter {
+        mBinding.editContent.addTextChangedListener(object : TextWatcherAdapter {
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 viewModel.dispatch(CreateTodoViewIntent.ChangeContent(s?.toString() ?: ""))
             }
         })
-        binding.radioGroup.setOnCheckedChangeListener { _, checkedId ->
+        mBinding.radioGroup.setOnCheckedChangeListener { _, checkedId ->
             val priority =
-                if (checkedId == binding.radioButtonLow.id) PRIORITY_LOW else PRIORITY_HEIGHT
+                if (checkedId == mBinding.radioButtonLow.id) PRIORITY_LOW else PRIORITY_HEIGHT
             viewModel.dispatch(CreateTodoViewIntent.ChangePriority(priority))
         }
     }
@@ -117,30 +119,30 @@ class CreateTodoFragment :
             }
             launchWhenResumed {
                 collectState(CreateTodoViewState::appTitleRes) {
-                    binding.toolbar.setTitleText(getString(it))
+                    mBinding.toolbar.setTitleText(getString(it))
                 }
             }
             launchWhenResumed {
                 collectState(CreateTodoViewState::title) {
-                    binding.editTitle.setText(it)
-                    binding.editTitle.setSelection(it.length)
+                    mBinding.editTitle.setText(it)
+                    mBinding.editTitle.setSelection(it.length)
                 }
             }
             launchWhenResumed {
                 collectState(CreateTodoViewState::content) {
-                    binding.editContent.setText(it)
-                    binding.editContent.setSelection(it.length)
+                    mBinding.editContent.setText(it)
+                    mBinding.editContent.setSelection(it.length)
                 }
             }
             launchWhenResumed {
                 collectState(CreateTodoViewState::priority) {
-                    binding.radioButtonLow.isChecked = it == PRIORITY_LOW
-                    binding.radioButtonHeight.isChecked = it == PRIORITY_HEIGHT
+                    mBinding.radioButtonLow.isChecked = it == PRIORITY_LOW
+                    mBinding.radioButtonHeight.isChecked = it == PRIORITY_HEIGHT
                 }
             }
             launchWhenResumed {
                 collectState(CreateTodoViewState::date) {
-                    binding.tvDateContent.text = it
+                    mBinding.tvDateContent.text = it
                 }
             }
             launchWhenResumed {

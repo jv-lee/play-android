@@ -10,15 +10,15 @@ import com.lee.playandroid.base.adapter.base.BaseViewAdapter
 import com.lee.playandroid.base.adapter.extensions.bindAllListener
 import com.lee.playandroid.base.adapter.page.submitData
 import com.lee.playandroid.base.adapter.page.submitFailed
-import com.lee.playandroid.base.base.BaseNavigationFragment
+import com.lee.playandroid.base.base.BaseBindingNavigationFragment
 import com.lee.playandroid.base.dialog.LoadingDialog
-import com.lee.playandroid.base.extensions.binding
+import com.lee.playandroid.base.extensions.collectState
 import com.lee.playandroid.base.extensions.dismiss
 import com.lee.playandroid.base.extensions.show
 import com.lee.playandroid.base.extensions.toast
 import com.lee.playandroid.base.interadp.setClickListener
 import com.lee.playandroid.base.uistate.LoadStatus
-import com.lee.playandroid.base.extensions.collectState
+import com.lee.playandroid.base.uistate.collectCallback
 import com.lee.playandroid.base.widget.SlidingPaneItemTouchListener
 import com.lee.playandroid.base.widget.closeAllItems
 import com.lee.playandroid.common.entity.Content
@@ -28,8 +28,8 @@ import com.lee.playandroid.common.ui.adapter.SimpleTextAdapter
 import com.lee.playandroid.router.navigateDetails
 import com.lee.playandroid.square.R
 import com.lee.playandroid.square.databinding.FragmentMyShareBinding
-import com.lee.playandroid.square.viewmodel.MyShareViewIntent
 import com.lee.playandroid.square.viewmodel.MyShareViewEvent
+import com.lee.playandroid.square.viewmodel.MyShareViewIntent
 import com.lee.playandroid.square.viewmodel.MyShareViewModel
 import com.lee.playandroid.square.viewmodel.MyShareViewState
 import com.lee.playandroid.common.R as CR
@@ -40,7 +40,7 @@ import com.lee.playandroid.common.R as CR
  * @date 2021/12/13
  */
 class MyShareFragment :
-    BaseNavigationFragment(R.layout.fragment_my_share),
+    BaseBindingNavigationFragment<FragmentMyShareBinding>(),
     BaseViewAdapter.LoadErrorListener,
     BaseViewAdapter.AutoLoadMoreListener,
     BaseViewAdapter.OnItemChildView<Content> {
@@ -51,8 +51,6 @@ class MyShareFragment :
     }
 
     private val viewModel by viewModels<MyShareViewModel>()
-
-    private val binding by binding(FragmentMyShareBinding::bind)
 
     private val slidingPaneItemTouchListener by lazy {
         SlidingPaneItemTouchListener(
@@ -65,7 +63,7 @@ class MyShareFragment :
     private var mAdapter: SimpleTextAdapter? = null
 
     override fun bindView() {
-        binding.toolbar.setClickListener {
+        mBinding.toolbar.setClickListener {
             moreClick {
                 findNavController().navigate(
                     R.id.action_my_share_fragment_to_create_share_fragment
@@ -73,9 +71,9 @@ class MyShareFragment :
             }
         }
 
-        binding.rvContainer.addOnItemTouchListener(slidingPaneItemTouchListener)
-        if (binding.rvContainer.adapter == null) {
-            binding.rvContainer.adapter = SimpleTextAdapter(requireContext()).apply {
+        mBinding.rvContainer.addOnItemTouchListener(slidingPaneItemTouchListener)
+        if (mBinding.rvContainer.adapter == null) {
+            mBinding.rvContainer.adapter = SimpleTextAdapter(requireContext()).apply {
                 mAdapter = this
                 initStatusView()
                 pageLoading()
@@ -102,14 +100,14 @@ class MyShareFragment :
                         actionFailed(event.error)
                     }
                     is MyShareViewEvent.ResetSlidingState -> {
-                        binding.rvContainer.closeAllItems()
+                        mBinding.rvContainer.closeAllItems()
                     }
                 }
             }
         }
 
         launchWhenResumed {
-            viewModel.myShareFlow.collectState<PageData<Content>>(
+            viewModel.myShareFlow.collectCallback<PageData<Content>>(
                 success = {
                     mAdapter?.submitData(it, diff = true)
                 },
@@ -153,8 +151,8 @@ class MyShareFragment :
 
     override fun onDestroyView() {
         super.onDestroyView()
-        binding.rvContainer.removeOnItemTouchListener(slidingPaneItemTouchListener)
-        binding.rvContainer.adapter = null
+        mBinding.rvContainer.removeOnItemTouchListener(slidingPaneItemTouchListener)
+        mBinding.rvContainer.adapter = null
         mAdapter = null
     }
 }
