@@ -67,12 +67,10 @@ class HomeFragment :
             OffsetItemDecoration(mBinding.toolbar.getToolbarLayoutHeight())
         )
         if (mBinding.rvContainer.adapter == null) {
-            mBinding.rvContainer.adapter = ContentAdapter(requireContext()).apply {
+            ContentAdapter(requireContext()).apply {
                 mAdapter = this
-                setLoadResource(MainLoadResource())
-                initStatusView()
-                pageLoading()
-            }.getProxy()
+                bindRecyclerView(mBinding.rvContainer, MainLoadResource())
+            }
         }
     }
 
@@ -141,9 +139,9 @@ class HomeFragment :
     }
 
     override fun onDestroyView() {
-        super.onDestroyView()
         mBinding.rvContainer.adapter = null
         mAdapter = null
+        super.onDestroyView()
     }
 
     @InjectBus

@@ -19,6 +19,8 @@ import com.lee.playandroid.common.extensions.actionFailed
 import com.lee.playandroid.me.R
 import com.lee.playandroid.me.databinding.FragmentCoinRankBinding
 import com.lee.playandroid.me.ui.adapter.CoinRankAdapter
+import com.lee.playandroid.me.ui.adapter.CoinRecordAdapter
+import com.lee.playandroid.me.ui.widget.CoinLoadResource
 import com.lee.playandroid.me.ui.widget.RankSpanSizeLookup
 import com.lee.playandroid.me.viewmodel.CoinRankViewIntent
 import com.lee.playandroid.me.viewmodel.CoinRankViewModel
@@ -52,12 +54,11 @@ class CoinRankFragment :
             spanSizeLookup = RankSpanSizeLookup()
         }
         if (mBinding.rvContainer.adapter == null) {
-            mBinding.rvContainer.adapter = CoinRankAdapter(requireContext()).apply {
+            CoinRankAdapter(requireContext()).apply {
                 mAdapter = this
-                initStatusView()
-                pageLoading()
+                bindRecyclerView(mBinding.rvContainer)
                 bindAllListener(this@CoinRankFragment)
-            }.getProxy()
+            }
         }
     }
 
@@ -88,7 +89,7 @@ class CoinRankFragment :
     }
 
     override fun onDestroyView() {
-        super.onDestroyView()
         mBinding.rvContainer.adapter = null
+        super.onDestroyView()
     }
 }

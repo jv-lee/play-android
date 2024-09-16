@@ -35,9 +35,9 @@ class SystemFragment : BaseBindingNavigationFragment<FragmentSystemBinding>() {
     }
 
     override fun onDestroyView() {
-        super.onDestroyView()
         mBinding.vpContainer.adapter = null
         mAdapter = null
+        super.onDestroyView()
     }
 
     /**

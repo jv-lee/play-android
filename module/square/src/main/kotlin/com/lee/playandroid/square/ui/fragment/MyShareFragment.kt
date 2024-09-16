@@ -73,12 +73,11 @@ class MyShareFragment :
 
         mBinding.rvContainer.addOnItemTouchListener(slidingPaneItemTouchListener)
         if (mBinding.rvContainer.adapter == null) {
-            mBinding.rvContainer.adapter = SimpleTextAdapter(requireContext()).apply {
+            SimpleTextAdapter(requireContext()).apply {
                 mAdapter = this
-                initStatusView()
-                pageLoading()
+                bindRecyclerView(mBinding.rvContainer)
                 bindAllListener(this@MyShareFragment)
-            }.getProxy()
+            }
         }
     }
 
@@ -137,7 +136,7 @@ class MyShareFragment :
         viewModel.dispatch(MyShareViewIntent.RequestPage(LoadStatus.RELOAD))
     }
 
-    override fun onItemChild(view: View, entity: Content, position: Int) {
+    override fun onItemChildClick(view: View, entity: Content, position: Int) {
         when (view.id) {
             CR.id.frame_container -> {
                 findNavController()
@@ -150,9 +149,10 @@ class MyShareFragment :
     }
 
     override fun onDestroyView() {
-        super.onDestroyView()
         mBinding.rvContainer.removeOnItemTouchListener(slidingPaneItemTouchListener)
         mBinding.rvContainer.adapter = null
         mAdapter = null
+        super.onDestroyView()
     }
+
 }

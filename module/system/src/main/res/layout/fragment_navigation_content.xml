@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.lee.playandroid.base.widget.StatusLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.lee.playandroid.base.widget.StateLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/status_layout"
     style="@style/StatusLayout"
@@ -19,4 +19,4 @@
         android:layout_marginStart="120dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
-</com.lee.playandroid.base.widget.StatusLayout>
+</com.lee.playandroid.base.widget.StateLayout>

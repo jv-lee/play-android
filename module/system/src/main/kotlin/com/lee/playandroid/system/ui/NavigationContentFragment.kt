@@ -10,7 +10,8 @@ import com.lee.playandroid.base.extensions.setMargin
 import com.lee.playandroid.base.extensions.smoothScrollToTop
 import com.lee.playandroid.base.livedatabus.InjectBus
 import com.lee.playandroid.base.livedatabus.LiveDataBus
-import com.lee.playandroid.base.widget.StatusLayout
+import com.lee.playandroid.base.uistate.PageState
+import com.lee.playandroid.base.widget.StateLayout
 import com.lee.playandroid.common.entity.NavigationSelectEvent
 import com.lee.playandroid.common.extensions.actionFailed
 import com.lee.playandroid.common.ui.extensions.bindTabLinkage
@@ -32,7 +33,7 @@ import com.lee.playandroid.system.viewmodel.NavigationContentViewState
  */
 class NavigationContentFragment :
     BaseBindingNavigationFragment<FragmentNavigationContentBinding>(),
-    StatusLayout.OnReloadListener {
+    StateLayout.OnReloadListener {
 
     private val viewModel by viewModels<NavigationContentViewModel>()
 
@@ -58,11 +59,10 @@ class NavigationContentFragment :
         }
 
         if (mBinding.rvContainer.adapter == null) {
-            mBinding.rvContainer.adapter =
-                NavigationContentAdapter(requireContext()).apply {
-                    mNavigationContentAdapter = this
-                    setLoadResource(MainLoadResource())
-                }.getProxy()
+            NavigationContentAdapter(requireContext()).apply {
+                mNavigationContentAdapter = this
+                bindRecyclerView(mBinding.rvContainer, MainLoadResource())
+            }
         }
 
         mNavigationTabAdapter?.bindTabLinkage(mBinding.rvTab, mBinding.rvContainer) { position ->
@@ -79,7 +79,7 @@ class NavigationContentFragment :
                     is NavigationContentViewEvent.RequestFailed -> {
                         actionFailed(event.error)
                         if (mNavigationTabAdapter?.data.isNullOrEmpty()) {
-                            mBinding.statusLayout.setStatus(StatusLayout.STATUS_DATA_ERROR)
+                            mBinding.statusLayout.setState(PageState.ERROR)
                         }
                     }
                 }
@@ -92,8 +92,8 @@ class NavigationContentFragment :
                     NavigationContentViewState::navigationItemList,
                     NavigationContentViewState::isLoading
                 ) { data, isLoading ->
-                    if (isLoading) mBinding.statusLayout.setStatus(StatusLayout.STATUS_LOADING)
-                    else mBinding.statusLayout.setStatus(StatusLayout.STATUS_DATA)
+                    if (isLoading) mBinding.statusLayout.setState(PageState.LOADING)
+                    else mBinding.statusLayout.setState(PageState.DATA)
                     mNavigationTabAdapter?.updateNotify(data)
                     mNavigationContentAdapter?.submitSinglePage(data)
                 }

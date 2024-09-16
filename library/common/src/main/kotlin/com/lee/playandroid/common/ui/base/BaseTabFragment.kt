@@ -9,7 +9,8 @@ import com.lee.playandroid.base.adapter.core.UiPagerAdapter2
 import com.lee.playandroid.base.base.BaseBindingNavigationFragment
 import com.lee.playandroid.base.extensions.collectState
 import com.lee.playandroid.base.extensions.increaseOffscreenPageLimit
-import com.lee.playandroid.base.widget.StatusLayout
+import com.lee.playandroid.base.uistate.PageState
+import com.lee.playandroid.base.widget.StateLayout
 import com.lee.playandroid.common.databinding.FragmentBaseTabBinding
 import com.lee.playandroid.common.entity.Tab
 import com.lee.playandroid.common.extensions.actionFailed
@@ -23,7 +24,7 @@ import kotlinx.coroutines.flow.StateFlow
  */
 abstract class BaseTabFragment :
     BaseBindingNavigationFragment<FragmentBaseTabBinding>(),
-    StatusLayout.OnReloadListener {
+    StateLayout.OnReloadListener {
 
     private var adapter: UiPagerAdapter2? = null
     private var mediator: TabLayoutMediator? = null
@@ -49,8 +50,8 @@ abstract class BaseTabFragment :
                 when (event) {
                     is BaseTabViewEvent.RequestFailed -> {
                         actionFailed(event.error)
-                        adapter?.getFragments()?.isNullOrEmpty() ?: kotlin.run {
-                            mBinding.statusLayout.setStatus(StatusLayout.STATUS_DATA_ERROR)
+                        adapter?.getFragments()?.isEmpty() ?: kotlin.run {
+                            mBinding.statusLayout.setState(PageState.ERROR)
                         }
                     }
                 }
@@ -67,9 +68,9 @@ abstract class BaseTabFragment :
                     return@collectState
                 }
                 if (tab.isEmpty()) {
-                    mBinding.statusLayout.setStatus(StatusLayout.STATUS_EMPTY_DATA)
+                    mBinding.statusLayout.setState(PageState.EMPTY)
                 } else {
-                    mBinding.statusLayout.setStatus(StatusLayout.STATUS_DATA)
+                    mBinding.statusLayout.setState(PageState.DATA)
                     bindAdapter(tab)
                 }
             }
@@ -81,11 +82,11 @@ abstract class BaseTabFragment :
     }
 
     override fun onDestroyView() {
-        super.onDestroyView()
         mediator?.detach()
         mBinding.vpContainer.adapter = null
         adapter = null
         mediator = null
+        super.onDestroyView()
     }
 
     /**

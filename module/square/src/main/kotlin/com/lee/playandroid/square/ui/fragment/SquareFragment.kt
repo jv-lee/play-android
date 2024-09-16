@@ -66,12 +66,10 @@ class SquareFragment :
             OffsetItemDecoration(mBinding.toolbar.getToolbarLayoutHeight())
         )
         if (mBinding.rvContainer.adapter == null) {
-            mBinding.rvContainer.adapter = SquareAdapter(requireContext()).apply {
+            SquareAdapter(requireContext()).apply {
                 mAdapter = this
-                setLoadResource(MainLoadResource())
-                initStatusView()
-                pageLoading()
-            }.getProxy()
+                bindRecyclerView(mBinding.rvContainer, MainLoadResource())
+            }
         }
     }
 
@@ -138,9 +136,9 @@ class SquareFragment :
     }
 
     override fun onDestroyView() {
-        super.onDestroyView()
         mBinding.rvContainer.adapter = null
         mAdapter = null
+        super.onDestroyView()
     }
 
     @InjectBus

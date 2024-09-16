@@ -39,7 +39,7 @@ class NavigationContentAdapter(context: Context) :
             rvContainer.adapter = NavigationContentTagAdapter(context).apply {
                 addData(entity.articles)
                 setOnItemChildClickListener(object : OnItemChildView<Content> {
-                    override fun onItemChild(view: View, entity: Content, position: Int) {
+                    override fun onItemChildClick(view: View, entity: Content, position: Int) {
                         Navigation.findNavController(view)
                             .navigateDetails(
                                 entity.title,

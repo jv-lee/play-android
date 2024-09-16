@@ -87,8 +87,8 @@ class TodoFragment : BaseBindingNavigationFragment<FragmentTodoBinding>() {
     }
 
     override fun onDestroyView() {
-        super.onDestroyView()
         mBinding.vpContainer.adapter = null
+        super.onDestroyView()
     }
 
     /**

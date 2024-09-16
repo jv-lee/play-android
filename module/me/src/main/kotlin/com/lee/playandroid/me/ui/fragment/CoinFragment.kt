@@ -20,6 +20,7 @@ import com.lee.playandroid.common.entity.AccountViewState
 import com.lee.playandroid.common.entity.CoinRecord
 import com.lee.playandroid.common.entity.PageData
 import com.lee.playandroid.common.extensions.actionFailed
+import com.lee.playandroid.common.ui.adapter.SimpleTextAdapter
 import com.lee.playandroid.me.R
 import com.lee.playandroid.me.databinding.FragmentCoinBinding
 import com.lee.playandroid.me.ui.adapter.CoinRecordAdapter
@@ -56,13 +57,11 @@ class CoinFragment :
         }
 
         if (mBinding.rvContainer.adapter == null) {
-            mBinding.rvContainer.adapter = CoinRecordAdapter(requireContext()).apply {
+            CoinRecordAdapter(requireContext()).apply {
                 mAdapter = this
-                setLoadResource(CoinLoadResource())
-                initStatusView()
-                pageLoading()
+                bindRecyclerView(mBinding.rvContainer, CoinLoadResource())
                 bindAllListener(this@CoinFragment)
-            }.getProxy()
+            }
         }
     }
 
@@ -115,7 +114,7 @@ class CoinFragment :
     }
 
     override fun onDestroyView() {
-        super.onDestroyView()
         mBinding.rvContainer.adapter = null
+        super.onDestroyView()
     }
 }

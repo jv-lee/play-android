@@ -54,12 +54,11 @@ class CollectFragment :
     override fun bindView() {
         mBinding.rvContainer.addOnItemTouchListener(slidingPaneItemTouchListener)
         if (mBinding.rvContainer.adapter == null) {
-            mBinding.rvContainer.adapter = SimpleTextAdapter(requireContext()).apply {
+            SimpleTextAdapter(requireContext()).apply {
                 mAdapter = this
-                initStatusView()
-                pageLoading()
+                bindRecyclerView(mBinding.rvContainer)
                 bindAllListener(this@CollectFragment)
-            }.getProxy()
+            }
         }
     }
 
@@ -112,7 +111,7 @@ class CollectFragment :
         viewModel.dispatch(CollectViewIntent.RequestPage(LoadStatus.RELOAD))
     }
 
-    override fun onItemChild(view: View, entity: Content, position: Int) {
+    override fun onItemChildClick(view: View, entity: Content, position: Int) {
         when (view.id) {
             R.id.frame_container -> {
                 findNavController().navigateDetails(
@@ -129,9 +128,9 @@ class CollectFragment :
     }
 
     override fun onDestroyView() {
-        super.onDestroyView()
         mBinding.rvContainer.removeOnItemTouchListener(slidingPaneItemTouchListener)
         mBinding.rvContainer.adapter = null
         mAdapter = null
+        super.onDestroyView()
     }
 }

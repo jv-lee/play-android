@@ -51,14 +51,11 @@ class SystemContentFragment :
         }
 
         if (mBinding.rvContainer.adapter == null) {
-            mBinding.rvContainer.adapter =
-                SystemContentAdapter(requireContext()).apply {
-                    mAdapter = this
-                    setLoadResource(MainLoadResource())
-                    initStatusView()
-                    pageLoading()
-                    bindAllListener(this@SystemContentFragment)
-                }.getProxy()
+            SystemContentAdapter(requireContext()).apply {
+                mAdapter = this
+                bindRecyclerView(mBinding.rvContainer, MainLoadResource())
+                bindAllListener(this@SystemContentFragment)
+            }
         }
     }
 
@@ -103,9 +100,9 @@ class SystemContentFragment :
     override fun itemReload() {}
 
     override fun onDestroyView() {
-        super.onDestroyView()
         mBinding.rvContainer.adapter = null
         mAdapter = null
+        super.onDestroyView()
     }
 
     @InjectBus

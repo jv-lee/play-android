@@ -42,11 +42,10 @@ abstract class BaseListFragment :
 
     override fun bindView() {
         if (mBinding.rvContainer.adapter == null) {
-            mBinding.rvContainer.adapter = createAdapter().apply {
+            createAdapter().apply {
                 mAdapter = this
-                initStatusView()
-                pageLoading()
-            }.getProxy()
+                bindRecyclerView(mBinding.rvContainer, loadStateEnable = false)
+            }
         }
     }
 

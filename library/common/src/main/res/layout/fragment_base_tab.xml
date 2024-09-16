@@ -12,7 +12,7 @@
         app:elevationEnable="false"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <com.lee.playandroid.base.widget.StatusLayout
+    <com.lee.playandroid.base.widget.StateLayout
         android:id="@+id/status_layout"
         style="@style/StatusLayout"
         android:layout_width="0dp"
@@ -42,6 +42,6 @@
             android:layout_height="match_parent"
             android:layout_marginTop="@dimen/margin_tab_height" />
 
-    </com.lee.playandroid.base.widget.StatusLayout>
+    </com.lee.playandroid.base.widget.StateLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

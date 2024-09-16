@@ -76,13 +76,11 @@ class TodoListFragment :
         // 添加自定义侧滑菜单触摸监听器
         mBinding.rvContainer.addOnItemTouchListener(slidingPaneItemTouchListener)
         if (mBinding.rvContainer.adapter == null) {
-            mBinding.rvContainer.adapter =
-                TodoListAdapter(requireContext(), status).apply {
-                    mAdapter = this
-                    initStatusView()
-                    pageLoading()
-                    bindAllListener(this@TodoListFragment)
-                }.getProxy()
+            TodoListAdapter(requireContext(), status).apply {
+                mAdapter = this
+                bindRecyclerView(mBinding.rvContainer)
+                bindAllListener(this@TodoListFragment)
+            }
         }
         // 添加todo日期吸顶itemDecoration
         mBinding.rvContainer.addItemDecoration(StickyDateItemDecoration(requireContext(), mAdapter))
@@ -144,7 +142,7 @@ class TodoListFragment :
         }
     }
 
-    override fun onItemChild(view: View, entity: TodoData, position: Int) {
+    override fun onItemChildClick(view: View, entity: TodoData, position: Int) {
         when (view.id) {
             R.id.const_container -> {
                 // todoList item点击导航至编辑页
@@ -198,9 +196,9 @@ class TodoListFragment :
     }
 
     override fun onDestroyView() {
-        super.onDestroyView()
         mBinding.rvContainer.removeOnItemTouchListener(slidingPaneItemTouchListener)
         mBinding.rvContainer.adapter = null
         mAdapter = null
+        super.onDestroyView()
     }
 }

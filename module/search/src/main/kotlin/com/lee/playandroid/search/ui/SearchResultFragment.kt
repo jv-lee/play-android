@@ -45,14 +45,11 @@ class SearchResultFragment :
     override fun bindView() {
         // 搜索结果列表适配器设置
         if (mBinding.rvContainer.adapter == null) {
-            mBinding.rvContainer.adapter =
-                SearchResultAdapter(requireContext()).apply {
-                    mAdapter = this
-
-                    initStatusView()
-                    pageLoading()
-                    bindAllListener(this@SearchResultFragment)
-                }.getProxy()
+            SearchResultAdapter(requireContext()).apply {
+                mAdapter = this
+                bindRecyclerView(mBinding.rvContainer)
+                bindAllListener(this@SearchResultFragment)
+            }
         }
     }
 
@@ -95,8 +92,8 @@ class SearchResultFragment :
     }
 
     override fun onDestroyView() {
-        super.onDestroyView()
         mBinding.rvContainer.adapter = null
         mAdapter = null
+        super.onDestroyView()
     }
 }

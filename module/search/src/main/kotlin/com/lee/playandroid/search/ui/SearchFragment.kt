@@ -6,6 +6,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.navigation.fragment.findNavController
 import com.lee.playandroid.base.adapter.base.BaseViewAdapter
+import com.lee.playandroid.base.adapter.extensions.bindAllListener
 import com.lee.playandroid.base.adapter.page.submitSinglePage
 import com.lee.playandroid.base.base.BaseBindingNavigationFragment
 import com.lee.playandroid.base.extensions.collectState
@@ -14,6 +15,7 @@ import com.lee.playandroid.base.tools.SystemBarTools.hideSoftInput
 import com.lee.playandroid.base.tools.SystemBarTools.parentTouchHideSoftInput
 import com.lee.playandroid.common.entity.SearchHistory
 import com.lee.playandroid.common.extensions.actionFailed
+import com.lee.playandroid.common.ui.widget.MainLoadResource
 import com.lee.playandroid.search.R
 import com.lee.playandroid.search.databinding.FragmentSearchBinding
 import com.lee.playandroid.search.model.entity.SearchHotUI
@@ -56,36 +58,36 @@ class SearchFragment : BaseBindingNavigationFragment<FragmentSearchBinding>() {
 
         // 搜索热词列表适配器设置
         if (mBinding.rvHotContainer.adapter == null) {
-            mBinding.rvHotContainer.adapter =
-                SearchHotAdapter(requireContext()).apply {
-                    mHotAdapter = this
-                    setOnItemClickListener(object :
-                        BaseViewAdapter.OnItemClickListener<SearchHotUI> {
-                        override fun onItemClick(view: View, entity: SearchHotUI, position: Int) {
-                            viewModel.dispatch(SearchViewIntent.NavigationSearchResult(entity.key))
-                        }
-                    })
-                }.getProxy()
+            SearchHotAdapter(requireContext()).apply {
+                mHotAdapter = this
+                bindRecyclerView(mBinding.rvHotContainer, loadStateEnable = false)
+                setOnItemClickListener(object :
+                    BaseViewAdapter.OnItemClickListener<SearchHotUI> {
+                    override fun onItemClick(view: View, entity: SearchHotUI, position: Int) {
+                        viewModel.dispatch(SearchViewIntent.NavigationSearchResult(entity.key))
+                    }
+                })
+            }
         }
 
         // 搜索历史列表适配器设置
         if (mBinding.rvHistoryContainer.adapter == null) {
-            mBinding.rvHistoryContainer.adapter =
-                SearchHistoryAdapter(requireContext()).apply {
-                    mHistoryAdapter = this
-                    setOnItemClickListener(object :
-                        BaseViewAdapter.OnItemClickListener<SearchHistory> {
-                        override fun onItemClick(view: View, entity: SearchHistory, position: Int) {
-                            viewModel.dispatch(SearchViewIntent.NavigationSearchResult(entity.key))
-                        }
-                    })
-                    setOnItemChildClickListener(object :
-                        BaseViewAdapter.OnItemChildView<SearchHistory> {
-                        override fun onItemChild(view: View, entity: SearchHistory, position: Int) {
-                            viewModel.dispatch(SearchViewIntent.DeleteHistory(entity.key))
-                        }
-                    }, R.id.iv_delete)
-                }.getProxy()
+            SearchHistoryAdapter(requireContext()).apply {
+                mHistoryAdapter = this
+                bindRecyclerView(mBinding.rvHistoryContainer, loadStateEnable = false)
+                setOnItemClickListener(object :
+                    BaseViewAdapter.OnItemClickListener<SearchHistory> {
+                    override fun onItemClick(view: View, entity: SearchHistory, position: Int) {
+                        viewModel.dispatch(SearchViewIntent.NavigationSearchResult(entity.key))
+                    }
+                })
+                setOnItemChildClickListener(object :
+                    BaseViewAdapter.OnItemChildView<SearchHistory> {
+                    override fun onItemChildClick(view: View, entity: SearchHistory, position: Int) {
+                        viewModel.dispatch(SearchViewIntent.DeleteHistory(entity.key))
+                    }
+                }, R.id.iv_delete)
+            }
         }
     }
 
@@ -133,11 +135,11 @@ class SearchFragment : BaseBindingNavigationFragment<FragmentSearchBinding>() {
     }
 
     override fun onDestroyView() {
-        super.onDestroyView()
         mBinding.rvHotContainer.adapter = null
         mBinding.rvHistoryContainer.adapter = null
         mHistoryAdapter = null
         mHistoryAdapter = null
+        super.onDestroyView()
     }
 
     /**

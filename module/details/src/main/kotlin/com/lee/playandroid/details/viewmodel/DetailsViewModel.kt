@@ -34,8 +34,11 @@ class DetailsViewModel(savedStateHandle: SavedStateHandle) :
 
     private val meService = ModuleService.find<MeService>()
 
-    override fun initViewState() =
-        DetailsViewState(title = params.title, actionEnable = params.id != 0L)
+    init {
+        _viewStates.update { it.copy(title = params.title, actionEnable = params.id != 0L) }
+    }
+
+    override fun initViewState() = DetailsViewState()
 
     override fun dispatch(intent: DetailsViewIntent) {
         when (intent) {

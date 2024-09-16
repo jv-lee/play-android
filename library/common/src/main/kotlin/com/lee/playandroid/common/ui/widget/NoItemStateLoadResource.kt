@@ -1,16 +1,16 @@
-package com.lee.playandroid.me.ui.widget
+package com.lee.playandroid.common.ui.widget
 
 import com.lee.playandroid.base.adapter.listener.LoadResource
-import com.lee.playandroid.me.R
+import com.lee.playandroid.common.R
 
 /**
- * 积分列表加载item状态resource
+ * app主页列表加载状态layout资源
  * @author jv.lee
  * @date 2021/11/30
  */
-class CoinLoadResource : LoadResource {
+class NoItemStateLoadResource : LoadResource {
     override fun pageLayoutId(): Int {
-        return R.layout.layout_coin_page_load
+        return R.layout.layout_app_page_load
     }
 
     override fun pageLoadingId(): Int {
@@ -34,7 +34,7 @@ class CoinLoadResource : LoadResource {
     }
 
     override fun itemLayoutId(): Int {
-        return R.layout.layout_item_load
+        return R.layout.layout_no_item_load
     }
 
     override fun itemLoadMoreId(): Int {
