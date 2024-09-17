@@ -1,8 +1,11 @@
 package com.lee.playandroid.system.ui.adapter
 
 import android.content.Context
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import androidx.navigation.Navigation
+import androidx.viewbinding.ViewBinding
 import com.lee.playandroid.base.adapter.binding.ViewBindingAdapter
 import com.lee.playandroid.base.adapter.binding.ViewBindingHolder
 import com.lee.playandroid.base.adapter.item.ViewBindingItem
@@ -25,31 +28,40 @@ class NavigationContentAdapter(context: Context) :
     }
 
     inner class NavigationContentItem :
-        ViewBindingItem<ItemNavigationContentBinding, NavigationItem>() {
+        ViewBindingItem<NavigationItem>() {
 
-        override fun ItemNavigationContentBinding.convert(
+        override fun convert(
             holder: ViewBindingHolder,
             entity: NavigationItem,
             position: Int
         ) {
             val context = holder.itemView.context
-            tvTitle.text = entity.name
 
-            // 构建适配器
-            rvContainer.adapter = NavigationContentTagAdapter(context).apply {
-                addData(entity.articles)
-                setOnItemChildClickListener(object : OnItemChildView<Content> {
-                    override fun onItemChildClick(view: View, entity: Content, position: Int) {
-                        Navigation.findNavController(view)
-                            .navigateDetails(
-                                entity.title,
-                                entity.link,
-                                entity.id,
-                                entity.collect
-                            )
-                    }
-                }, R.id.tv_tag)
+            holder.getViewBinding<ItemNavigationContentBinding>().apply {
+                tvTitle.text = entity.name
+
+                // 构建适配器
+                rvContainer.adapter = NavigationContentTagAdapter(context).apply {
+                    addData(entity.articles)
+                    setOnItemChildClickListener(object : OnItemChildView<Content> {
+                        override fun onItemChildClick(view: View, entity: Content, position: Int) {
+                            Navigation.findNavController(view)
+                                .navigateDetails(
+                                    entity.title,
+                                    entity.link,
+                                    entity.id,
+                                    entity.collect
+                                )
+                        }
+                    }, R.id.tv_tag)
+                }
             }
+        }
+
+        override fun getItemViewBinding(context: Context, parent: ViewGroup): ViewBinding {
+            return ItemNavigationContentBinding.inflate(
+                LayoutInflater.from(context), parent, false
+            )
         }
     }
 }

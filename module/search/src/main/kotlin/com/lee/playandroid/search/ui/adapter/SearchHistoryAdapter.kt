@@ -1,6 +1,9 @@
 package com.lee.playandroid.search.ui.adapter
 
 import android.content.Context
+import android.view.LayoutInflater
+import android.view.ViewGroup
+import androidx.viewbinding.ViewBinding
 import com.lee.playandroid.base.adapter.binding.ViewBindingAdapter
 import com.lee.playandroid.base.adapter.binding.ViewBindingHolder
 import com.lee.playandroid.base.adapter.item.ViewBindingItem
@@ -19,14 +22,18 @@ class SearchHistoryAdapter(context: Context) :
         addItemStyles(SearchHistoryItem())
     }
 
-    inner class SearchHistoryItem : ViewBindingItem<ItemSearchHistoryBinding, SearchHistory>() {
+    inner class SearchHistoryItem : ViewBindingItem<SearchHistory>() {
 
-        override fun ItemSearchHistoryBinding.convert(
-            holder: ViewBindingHolder,
-            entity: SearchHistory,
-            position: Int
-        ) {
-            tvText.text = entity.key
+        override fun convert(holder: ViewBindingHolder, entity: SearchHistory, position: Int) {
+            holder.getViewBinding<ItemSearchHistoryBinding>().apply {
+                tvText.text = entity.key
+            }
+        }
+
+        override fun getItemViewBinding(context: Context, parent: ViewGroup): ViewBinding {
+            return ItemSearchHistoryBinding.inflate(
+                LayoutInflater.from(context), parent, false
+            )
         }
     }
 }

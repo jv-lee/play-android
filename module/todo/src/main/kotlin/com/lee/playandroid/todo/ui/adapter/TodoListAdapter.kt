@@ -1,7 +1,10 @@
 package com.lee.playandroid.todo.ui.adapter
 
 import android.content.Context
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
+import androidx.viewbinding.ViewBinding
 import com.lee.playandroid.base.adapter.binding.ViewBindingAdapter
 import com.lee.playandroid.base.adapter.binding.ViewBindingHolder
 import com.lee.playandroid.base.adapter.item.ViewBindingItem
@@ -23,22 +26,30 @@ class TodoListAdapter(context: Context, private val status: Int) :
         addItemStyles(TodoItem())
     }
 
-    inner class TodoItem : ViewBindingItem<ItemTodoBinding, TodoData>() {
+    inner class TodoItem : ViewBindingItem<TodoData>() {
 
-        override fun ItemTodoBinding.convert(
+        override fun convert(
             holder: ViewBindingHolder,
             entity: TodoData,
             position: Int
         ) {
-            tvTitle.text = entity.title
-            tvContent.text = entity.content
-            btnDone.text = if (status == ARG_STATUS_UPCOMING) {
-                root.context.getString(R.string.todo_item_complete)
-            } else {
-                root.context.getString(R.string.todo_item_upcoming)
+            holder.getViewBinding<ItemTodoBinding>().apply {
+                tvTitle.text = entity.title
+                tvContent.text = entity.content
+                btnDone.text = if (status == ARG_STATUS_UPCOMING) {
+                    root.context.getString(R.string.todo_item_complete)
+                } else {
+                    root.context.getString(R.string.todo_item_upcoming)
+                }
+                tvLevel.visibility =
+                    if (entity.priority == TodoData.PRIORITY_HEIGHT) View.VISIBLE else View.GONE
             }
-            tvLevel.visibility =
-                if (entity.priority == TodoData.PRIORITY_HEIGHT) View.VISIBLE else View.GONE
+        }
+
+        override fun getItemViewBinding(context: Context, parent: ViewGroup): ViewBinding {
+            return ItemTodoBinding.inflate(
+                LayoutInflater.from(context), parent, false
+            )
         }
     }
 }

@@ -1,6 +1,9 @@
 package com.lee.playandroid.search.ui.adapter
 
 import android.content.Context
+import android.view.LayoutInflater
+import android.view.ViewGroup
+import androidx.viewbinding.ViewBinding
 import com.google.android.material.shape.ShapeAppearanceModel
 import com.lee.playandroid.base.adapter.binding.ViewBindingAdapter
 import com.lee.playandroid.base.adapter.binding.ViewBindingHolder
@@ -28,52 +31,68 @@ class SearchResultAdapter(context: Context) :
         addItemStyles(SearchResultPictureItem())
     }
 
-    inner class SearchResultTextItem : ViewBindingItem<ItemSearchResultTextBinding, Content>() {
+    inner class SearchResultTextItem : ViewBindingItem<Content>() {
         override fun isItemView(entity: Content, position: Int): Boolean {
             return entity.envelopePic.isEmpty()
         }
 
-        override fun ItemSearchResultTextBinding.convert(
+        override fun convert(
             holder: ViewBindingHolder,
             entity: Content,
             position: Int
         ) {
-            entity.apply {
-                tvTitle.text = getTitle()
-                tvAuthor.text = getAuthor()
-                tvTime.text = getDateFormat()
-                tvCategory.text = getCategory()
+            holder.getViewBinding<ItemSearchResultTextBinding>().apply {
+                entity.apply {
+                    tvTitle.text = getTitle()
+                    tvAuthor.text = getAuthor()
+                    tvTime.text = getDateFormat()
+                    tvCategory.text = getCategory()
+                }
             }
+        }
+
+        override fun getItemViewBinding(context: Context, parent: ViewGroup): ViewBinding {
+            return ItemSearchResultTextBinding.inflate(
+                LayoutInflater.from(context), parent, false
+            )
         }
     }
 
     inner class SearchResultPictureItem :
-        ViewBindingItem<ItemSearchResultPictureBinding, Content>() {
+        ViewBindingItem<Content>() {
 
         override fun isItemView(entity: Content, position: Int): Boolean {
             return entity.envelopePic.isNotEmpty()
         }
 
-        override fun ItemSearchResultPictureBinding.convert(
+        override fun convert(
             holder: ViewBindingHolder,
             entity: Content,
             position: Int
         ) {
-            entity.apply {
-                root.context.resources.apply {
-                    ivImage.shapeAppearanceModel = ShapeAppearanceModel.Builder()
-                        .setTopLeftCornerSize(getDimension(R.dimen.offset_radius_medium))
-                        .setBottomLeftCornerSize(getDimension(R.dimen.offset_radius_medium))
-                        .build()
+            holder.getViewBinding<ItemSearchResultPictureBinding>().apply {
+                entity.apply {
+                    root.context.resources.apply {
+                        ivImage.shapeAppearanceModel = ShapeAppearanceModel.Builder()
+                            .setTopLeftCornerSize(getDimension(R.dimen.offset_radius_medium))
+                            .setBottomLeftCornerSize(getDimension(R.dimen.offset_radius_medium))
+                            .build()
+                    }
+
+                    GlideTools.get().loadImage(envelopePic, ivImage)
+
+                    tvTitle.text = entity.getTitle()
+                    tvDescription.text = desc
+                    tvAuthor.text = entity.getAuthor()
+                    tvTime.text = entity.getDateFormat()
                 }
-
-                GlideTools.get().loadImage(envelopePic, ivImage)
-
-                tvTitle.text = entity.getTitle()
-                tvDescription.text = desc
-                tvAuthor.text = entity.getAuthor()
-                tvTime.text = entity.getDateFormat()
             }
+        }
+
+        override fun getItemViewBinding(context: Context, parent: ViewGroup): ViewBinding {
+            return ItemSearchResultPictureBinding.inflate(
+                LayoutInflater.from(context), parent, false
+            )
         }
     }
 }

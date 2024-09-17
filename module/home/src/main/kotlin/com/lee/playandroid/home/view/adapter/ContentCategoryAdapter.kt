@@ -1,6 +1,9 @@
 package com.lee.playandroid.home.view.adapter
 
 import android.content.Context
+import android.view.LayoutInflater
+import android.view.ViewGroup
+import androidx.viewbinding.ViewBinding
 import com.lee.playandroid.base.adapter.binding.ViewBindingAdapter
 import com.lee.playandroid.base.adapter.binding.ViewBindingHolder
 import com.lee.playandroid.base.adapter.item.ViewBindingItem
@@ -26,24 +29,32 @@ class ContentCategoryAdapter(context: Context) :
      * 每条分类item样式
      */
     inner class ContentCategoryChildItem :
-        ViewBindingItem<ItemContentCategoryChildBinding, HomeCategory>() {
+        ViewBindingItem<HomeCategory>() {
 
-        override fun ItemContentCategoryChildBinding.convert(
+        override fun convert(
             holder: ViewBindingHolder,
             entity: HomeCategory,
             position: Int
         ) {
-            // 重新设置item宽度,宽度占屏幕一半并且减去margin值
-            val resource = root.context.resources
-            val layoutParams = root.layoutParams
-            val marginOffset = resource.getDimension(R.dimen.offset_small)
-            layoutParams.width =
-                ((resource.displayMetrics.widthPixels / 2) - (marginOffset * 2)).toInt()
-            root.layoutParams = layoutParams
+            holder.getViewBinding<ItemContentCategoryChildBinding>().apply {
+                // 重新设置item宽度,宽度占屏幕一半并且减去margin值
+                val resource = root.context.resources
+                val layoutParams = root.layoutParams
+                val marginOffset = resource.getDimension(R.dimen.offset_small)
+                layoutParams.width =
+                    ((resource.displayMetrics.widthPixels / 2) - (marginOffset * 2)).toInt()
+                root.layoutParams = layoutParams
 
-            // 设置内容信息
-            ivCategoryIcon.setImageTintCompat(entity.iconResId)
-            tvCategoryName.text = entity.name
+                // 设置内容信息
+                ivCategoryIcon.setImageTintCompat(entity.iconResId)
+                tvCategoryName.text = entity.name
+            }
+        }
+
+        override fun getItemViewBinding(context: Context, parent: ViewGroup): ViewBinding {
+            return ItemContentCategoryChildBinding.inflate(
+                LayoutInflater.from(context), parent, false
+            )
         }
     }
 }

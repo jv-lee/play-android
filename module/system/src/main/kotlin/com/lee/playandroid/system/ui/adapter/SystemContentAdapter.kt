@@ -1,7 +1,10 @@
 package com.lee.playandroid.system.ui.adapter
 
 import android.content.Context
+import android.view.LayoutInflater
+import android.view.ViewGroup
 import androidx.core.text.HtmlCompat
+import androidx.viewbinding.ViewBinding
 import com.lee.playandroid.base.adapter.binding.ViewBindingAdapter
 import com.lee.playandroid.base.adapter.binding.ViewBindingHolder
 import com.lee.playandroid.base.adapter.item.ViewBindingItem
@@ -21,18 +24,25 @@ class SystemContentAdapter(context: Context) :
         addItemStyles(SystemContentItem())
     }
 
-    inner class SystemContentItem : ViewBindingItem<ItemSystemContentBinding, ParentTab>() {
+    inner class SystemContentItem : ViewBindingItem<ParentTab>() {
 
-        override fun ItemSystemContentBinding.convert(
+        override fun convert(
             holder: ViewBindingHolder,
             entity: ParentTab,
             position: Int
         ) {
-            tvTitle.text = entity.name
+            holder.getViewBinding<ItemSystemContentBinding>().apply {
+                tvTitle.text = entity.name
+                tvChildLabel.text = HtmlCompat.fromHtml(
+                    buildChildrenLabel(entity.children),
+                    HtmlCompat.FROM_HTML_MODE_LEGACY
+                )
+            }
+        }
 
-            tvChildLabel.text = HtmlCompat.fromHtml(
-                buildChildrenLabel(entity.children),
-                HtmlCompat.FROM_HTML_MODE_LEGACY
+        override fun getItemViewBinding(context: Context, parent: ViewGroup): ViewBinding {
+            return ItemSystemContentBinding.inflate(
+                LayoutInflater.from(context), parent, false
             )
         }
 
@@ -41,5 +51,6 @@ class SystemContentAdapter(context: Context) :
             tabs.forEach { builder.append(it.name + "\t\t") }
             return builder.toString()
         }
+
     }
 }

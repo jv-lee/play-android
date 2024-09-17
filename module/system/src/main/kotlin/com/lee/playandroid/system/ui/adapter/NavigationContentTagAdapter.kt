@@ -1,6 +1,9 @@
 package com.lee.playandroid.system.ui.adapter
 
 import android.content.Context
+import android.view.LayoutInflater
+import android.view.ViewGroup
+import androidx.viewbinding.ViewBinding
 import com.lee.playandroid.base.adapter.binding.ViewBindingAdapter
 import com.lee.playandroid.base.adapter.binding.ViewBindingHolder
 import com.lee.playandroid.base.adapter.item.ViewBindingItem
@@ -21,14 +24,18 @@ class NavigationContentTagAdapter(context: Context) :
     }
 
     inner class NavigationContentTagItem :
-        ViewBindingItem<ItemNavigationContentTagBinding, Content>() {
+        ViewBindingItem<Content>() {
 
-        override fun ItemNavigationContentTagBinding.convert(
-            holder: ViewBindingHolder,
-            entity: Content,
-            position: Int
-        ) {
-            tvTag.text = entity.getTitle()
+        override fun convert(holder: ViewBindingHolder, entity: Content, position: Int) {
+            holder.getViewBinding<ItemNavigationContentTagBinding>().apply {
+                tvTag.text = entity.getTitle()
+            }
+        }
+
+        override fun getItemViewBinding(context: Context, parent: ViewGroup): ViewBinding {
+            return ItemNavigationContentTagBinding.inflate(
+                LayoutInflater.from(context), parent, false
+            )
         }
     }
 }
