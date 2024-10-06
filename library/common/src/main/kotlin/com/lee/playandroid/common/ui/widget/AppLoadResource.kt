@@ -21,6 +21,10 @@ class AppLoadResource : LoadResource {
         return R.id.const_page_empty
     }
 
+    override fun pageEmptyTextId(): Int {
+        return R.id.tv_empty_text
+    }
+
     override fun pageErrorId(): Int {
         return R.id.const_page_error
     }
