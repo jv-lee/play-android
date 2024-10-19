@@ -26,6 +26,7 @@ import com.lee.playandroid.common.extensions.createApi
 import com.lee.playandroid.service.AccountService
 import com.lee.playandroid.service.hepler.ModuleService
 import com.lee.playandroid.square.R
+import com.lee.playandroid.common.R as CR
 import com.lee.playandroid.square.constants.Constants.CACHE_KEY_MY_SHARE_CONTENT
 import com.lee.playandroid.square.model.api.ApiService
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -91,7 +92,7 @@ class MyShareViewModel : BaseMVIViewModel<MyShareViewState, MyShareViewEvent, My
             viewModelScope.launch {
                 flow {
                     check(NetworkUtil.isNetworkConnected(app)) {
-                        app.getString(R.string.network_not_access)
+                        app.getString(CR.string.network_not_access)
                     }
 
                     val data = _myShareFlow.getValueData<PageData<Content>>()!!

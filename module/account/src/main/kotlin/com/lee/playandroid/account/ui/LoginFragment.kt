@@ -71,7 +71,7 @@ class LoginFragment : BaseBindingNavigationFragment<FragmentLoginBinding>(), Vie
             findNavController().popBackStack()
         }
 
-        launchWhenResumed {
+        launchOnLifecycle {
             viewModel.viewEvents.collect { event ->
                 when (event) {
                     is LoginViewEvent.LoginFailed -> {
@@ -94,28 +94,28 @@ class LoginFragment : BaseBindingNavigationFragment<FragmentLoginBinding>(), Vie
         }
 
         viewModel.viewStates.run {
-            launchWhenResumed {
+            launchOnLifecycle {
                 collectState(LoginViewState::hideKeyboard) {
                     if (it) requireActivity().window.hideSoftInput()
                 }
             }
-            launchWhenResumed {
+            launchOnLifecycle {
                 collectState(LoginViewState::isLoading) {
                     if (it) show(loadingDialog) else dismiss(loadingDialog)
                 }
             }
-            launchWhenResumed {
+            launchOnLifecycle {
                 collectState(LoginViewState::isLoginEnable) {
                     mBinding.tvLogin.setButtonDisable(!it)
                 }
             }
-            launchWhenResumed {
+            launchOnLifecycle {
                 collectState(LoginViewState::username) {
                     mBinding.editUsername.setText(it)
                     mBinding.editUsername.setSelection(it.length)
                 }
             }
-            launchWhenResumed {
+            launchOnLifecycle {
                 collectState(LoginViewState::password) {
                     mBinding.editPassword.setText(it)
                     mBinding.editPassword.setSelection(it.length)

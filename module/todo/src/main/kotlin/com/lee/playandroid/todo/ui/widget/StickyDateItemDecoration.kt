@@ -11,6 +11,7 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.lee.playandroid.base.extensions.dp2px
 import com.lee.playandroid.todo.R
+import com.lee.playandroid.common.R as CR
 import com.lee.playandroid.todo.ui.adapter.TodoListAdapter
 
 /**
@@ -31,12 +32,12 @@ class StickyDateItemDecoration constructor(
     private val textPaint = Paint(Paint.ANTI_ALIAS_FLAG)
 
     init {
-        mPaint.color = ContextCompat.getColor(context, R.color.colorThemeFocusLight)
+        mPaint.color = ContextCompat.getColor(context, CR.color.colorThemeFocusLight)
         mPaint.style = Paint.Style.FILL
 
         textPaint.typeface = Typeface.DEFAULT_BOLD
-        textPaint.textSize = context.resources.getDimension(R.dimen.font_size_small)
-        textPaint.color = ContextCompat.getColor(context, R.color.colorThemeFocus)
+        textPaint.textSize = context.resources.getDimension(CR.dimen.font_size_small)
+        textPaint.color = ContextCompat.getColor(context, CR.color.colorThemeFocus)
         textPaint.textAlign = Paint.Align.LEFT
     }
 

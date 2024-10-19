@@ -17,6 +17,8 @@ import com.lee.playandroid.common.extensions.actionFailed
 import com.lee.playandroid.common.ui.extensions.bindTabLinkage
 import com.lee.playandroid.common.ui.widget.MainLoadResource
 import com.lee.playandroid.system.R
+import com.lee.playandroid.common.R as CR
+import com.lee.playandroid.base.R as BR
 import com.lee.playandroid.system.databinding.FragmentNavigationContentBinding
 import com.lee.playandroid.system.ui.adapter.NavigationContentAdapter
 import com.lee.playandroid.system.ui.adapter.NavigationContentTabAdapter
@@ -45,7 +47,7 @@ class NavigationContentFragment :
 
         findParentFragment<SystemFragment>()?.parentBindingAction {
             val topOffset = (toolbar.getToolbarLayoutHeight() * 0.9).toInt()
-            val bottomOffset = resources.getDimension(R.dimen.navigation_bar_height).toInt()
+            val bottomOffset = resources.getDimension(BR.dimen.navigation_bar_height).toInt()
 
             mBinding.rvTab.setMargin(top = topOffset, bottom = bottomOffset)
             mBinding.rvContainer.setMargin(top = topOffset, bottom = bottomOffset)
@@ -73,7 +75,7 @@ class NavigationContentFragment :
     override fun LifecycleCoroutineScope.bindData() {
         LiveDataBus.instance.injectBus(this@NavigationContentFragment)
 
-        launchWhenResumed {
+        launchOnLifecycle {
             viewModel.viewEvents.collect { event ->
                 when (event) {
                     is NavigationContentViewEvent.RequestFailed -> {
@@ -117,7 +119,7 @@ class NavigationContentFragment :
 
     @InjectBus
     fun navigationEvent(event: NavigationSelectEvent) {
-        if (event.title == getString(R.string.nav_system) && isResumed) {
+        if (event.title == getString(CR.string.nav_system) && isResumed) {
             viewModel.dispatch(NavigationContentViewIntent.SelectTabIndex(0))
             mBinding.rvTab.smoothScrollToTop()
             mBinding.rvContainer.smoothScrollToTop()

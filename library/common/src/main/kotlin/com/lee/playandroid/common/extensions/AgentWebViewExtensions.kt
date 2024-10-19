@@ -5,13 +5,31 @@
  */
 package com.lee.playandroid.common.extensions
 
+import android.app.Activity
 import android.content.res.Configuration
+import android.widget.FrameLayout
+import android.widget.LinearLayout
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.LifecycleOwner
 import androidx.webkit.WebSettingsCompat
 import androidx.webkit.WebViewFeature
 import com.just.agentweb.AgentWeb
+import com.lee.playandroid.common.BuildConfig
+
+/**
+ * agentWebView 预加载方法
+ */
+fun Activity.agentWebPreload() {
+    AgentWeb.with(this)
+        .setAgentWebParent(
+            FrameLayout(this),
+            LinearLayout.LayoutParams(1, 1)
+        )
+        .useDefaultIndicator()
+        .createAgentWeb()
+        .go(BuildConfig.BASE_URI)
+}
 
 /**
  * AgentWebView 绑定生命周期控制生命状态

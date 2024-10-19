@@ -33,7 +33,7 @@ class SelectTodoTypeDialog :
     }
 
     override fun bindData() {
-        viewLifecycleOwner.lifecycleScope.launchWhenResumed {
+        launchOnLifecycle {
             // 监听todoType列表数据实时构建当前滑动选择类标
             viewModel.viewStates.collectState(SelectTodoTypeViewState::todoTypeWheelData) {
                 mBinding.wheelView.bindData(

@@ -2,7 +2,7 @@ import configures.libraryConfigure
 import configures.plugins.paramsConfigure
 import build.BuildModules
 
-libraryConfigure(projectConfigure = {
+libraryConfigure("common", projectConfigure = {
     paramsConfigure()
 
     dependencies {

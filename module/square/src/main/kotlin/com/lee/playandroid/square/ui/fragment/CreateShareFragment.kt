@@ -44,7 +44,7 @@ class CreateShareFragment : BaseBindingNavigationFragment<FragmentCreateShareBin
     }
 
     override fun LifecycleCoroutineScope.bindData() {
-        launchWhenResumed {
+        launchOnLifecycle {
             viewModel.viewEvents.collect { event ->
                 when (event) {
                     is CreateShareViewEvent.SendSuccess -> {
@@ -59,7 +59,7 @@ class CreateShareFragment : BaseBindingNavigationFragment<FragmentCreateShareBin
             }
         }
 
-        launchWhenResumed {
+        launchOnLifecycle {
             viewModel.viewStates.collectState(CreateShareViewState::loading) {
                 if (it) show(loadingDialog) else dismiss(loadingDialog)
             }

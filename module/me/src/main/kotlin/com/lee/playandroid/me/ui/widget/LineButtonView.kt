@@ -17,6 +17,8 @@ import com.lee.playandroid.base.extensions.dimensToSp
 import com.lee.playandroid.base.extensions.dp2px
 import com.lee.playandroid.base.extensions.setDrawableCompat
 import com.lee.playandroid.me.R
+import com.lee.playandroid.common.R as CR
+
 
 /**
  * 设置item通用item按钮
@@ -76,16 +78,16 @@ class LineButtonView : ConstraintLayout {
             leftTextSize = context.dimensToSp(
                 getDimension(
                     R.styleable.LineButtonView_leftTextSize,
-                    resources.getDimension(R.dimen.view_line_text_size)
+                    resources.getDimension(CR.dimen.view_line_text_size)
                 )
             )
             leftTextMargin = getDimensionPixelSize(
                 R.styleable.LineButtonView_leftTextMargin,
-                resources.getDimension(R.dimen.view_line_text_margin).toInt()
+                resources.getDimension(CR.dimen.view_line_text_margin).toInt()
             )
             leftTextColor = getColor(
                 R.styleable.LineButtonView_leftTextColor,
-                ContextCompat.getColor(context, R.color.colorThemeAccent)
+                ContextCompat.getColor(context, CR.color.colorThemeAccent)
             )
             leftText = getString(R.styleable.LineButtonView_leftText) ?: ""
 
@@ -93,16 +95,16 @@ class LineButtonView : ConstraintLayout {
             leftSubTextSize = context.dimensToSp(
                 getDimension(
                     R.styleable.LineButtonView_leftSubTextSize,
-                    resources.getDimension(R.dimen.view_line_sub_text_size)
+                    resources.getDimension(CR.dimen.view_line_sub_text_size)
                 )
             )
             leftSubTextMargin = getDimensionPixelSize(
                 R.styleable.LineButtonView_leftSubTextMargin,
-                resources.getDimension(R.dimen.view_line_text_margin).toInt()
+                resources.getDimension(CR.dimen.view_line_text_margin).toInt()
             )
             leftSubTextColor = getColor(
                 R.styleable.LineButtonView_leftSubTextColor,
-                ContextCompat.getColor(context, R.color.colorPrimary)
+                ContextCompat.getColor(context, CR.color.colorThemePrimary)
             )
             leftSubText = getString(R.styleable.LineButtonView_leftSubText) ?: ""
 
@@ -110,16 +112,16 @@ class LineButtonView : ConstraintLayout {
             rightTextSize = context.dimensToSp(
                 getDimension(
                     R.styleable.LineButtonView_rightTextSize,
-                    resources.getDimension(R.dimen.view_line_text_size)
+                    resources.getDimension(CR.dimen.view_line_text_size)
                 )
             )
             rightTextMargin = getDimensionPixelSize(
                 R.styleable.LineButtonView_rightTextMargin,
-                resources.getDimension(R.dimen.view_line_text_margin).toInt()
+                resources.getDimension(CR.dimen.view_line_text_margin).toInt()
             )
             rightTextColor = getColor(
                 R.styleable.LineButtonView_rightTextColor,
-                ContextCompat.getColor(context, R.color.colorThemeAccent)
+                ContextCompat.getColor(context, CR.color.colorThemeAccent)
             )
             rightText = getString(R.styleable.LineButtonView_rightText) ?: ""
 
@@ -127,7 +129,7 @@ class LineButtonView : ConstraintLayout {
             iconSize =
                 getDimensionPixelSize(
                     R.styleable.LineButtonView_iconSize,
-                    resources.getDimensionPixelSize(R.dimen.view_line_icon_size)
+                    resources.getDimensionPixelSize(CR.dimen.view_line_icon_size)
                 )
             leftDrawableId = getResourceId(R.styleable.LineButtonView_leftDrawable, 0)
             rightDrawableId = getResourceId(R.styleable.LineButtonView_rightDrawable, 0)
@@ -256,7 +258,7 @@ class LineButtonView : ConstraintLayout {
         return tvRightText
     }
 
-    fun getRightSwitch(): SwitchCompat? {
+    fun getRightSwitch(): SwitchCompat {
         return switchRight
     }
 }

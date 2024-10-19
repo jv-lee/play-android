@@ -30,7 +30,7 @@ class MainLoadResource : LoadResource {
     }
 
     override fun pageNetworkId(): Int {
-        return R.id.const_page_network
+        return R.id.const_page_error
     }
 
     override fun pageReloadId(): Int {

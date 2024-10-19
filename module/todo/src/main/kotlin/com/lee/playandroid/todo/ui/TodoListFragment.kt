@@ -87,7 +87,7 @@ class TodoListFragment :
     }
 
     override fun LifecycleCoroutineScope.bindData() {
-        launchWhenResumed {
+        launchOnLifecycle {
             viewModel.viewEvents.collect { event ->
                 when (event) {
                     // 重置sliding状态
@@ -128,7 +128,7 @@ class TodoListFragment :
             }
         }
 
-        launchWhenResumed {
+        launchOnLifecycle {
             // todo列表数据监听填充
             viewModel.todoDataFlow.collectCallback<PageData<TodoData>>(
                 success = {

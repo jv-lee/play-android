@@ -3,8 +3,13 @@ package com.lee.playandroid.base.base
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.lee.playandroid.base.tools.SystemBarTools.compatStatusBar
 import com.lee.playandroid.base.tools.SystemBarTools.statusBar
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
 
 /**
  * Activity通用基类
@@ -30,4 +35,14 @@ abstract class BaseActivity : AppCompatActivity() {
     protected abstract fun bindView()
 
     protected abstract fun bindData()
+
+    fun launchOnLifecycle(
+        state: Lifecycle.State = Lifecycle.State.CREATED,
+        block: suspend CoroutineScope.() -> Unit
+    ) {
+        lifecycleScope.launch {
+            repeatOnLifecycle(state, block)
+        }
+    }
+
 }

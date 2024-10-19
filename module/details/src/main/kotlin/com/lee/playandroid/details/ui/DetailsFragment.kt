@@ -24,6 +24,7 @@ import com.lee.playandroid.details.viewmodel.DetailsViewEvent
 import com.lee.playandroid.details.viewmodel.DetailsViewIntent
 import com.lee.playandroid.details.viewmodel.DetailsViewModel
 import com.lee.playandroid.details.viewmodel.DetailsViewState
+import com.lee.playandroid.common.R as CR
 
 /**
  * 文章详情页
@@ -64,7 +65,7 @@ class DetailsFragment : BaseBindingNavigationFragment<FragmentDetailsBinding>() 
 
         web = AgentWeb.with(this)
             .setAgentWebParent(mBinding.frameContainer, FrameLayout.LayoutParams(-1, -1))
-            .useDefaultIndicator(ContextCompat.getColor(requireContext(), R.color.colorThemeAccent))
+            .useDefaultIndicator(ContextCompat.getColor(requireContext(), CR.color.colorThemeAccent))
             .createAgentWeb()
             .ready()
             .go(url)
@@ -77,7 +78,7 @@ class DetailsFragment : BaseBindingNavigationFragment<FragmentDetailsBinding>() 
     }
 
     override fun LifecycleCoroutineScope.bindData() {
-        launchWhenResumed {
+        launchOnLifecycle {
             viewModel.viewEvents.collect { event ->
                 when (event) {
                     is DetailsViewEvent.CollectEvent -> {
@@ -90,7 +91,7 @@ class DetailsFragment : BaseBindingNavigationFragment<FragmentDetailsBinding>() 
             }
         }
 
-        launchWhenResumed {
+        launchOnLifecycle {
             viewModel.viewStates.collectState(
                 DetailsViewState::title,
                 DetailsViewState::actionEnable
@@ -100,7 +101,7 @@ class DetailsFragment : BaseBindingNavigationFragment<FragmentDetailsBinding>() 
             }
         }
 
-        launchWhenResumed {
+        launchOnLifecycle {
             viewModel.viewStates.collectState(DetailsViewState::isLoading) {
                 if (it) show(loadingDialog) else dismiss(loadingDialog)
             }

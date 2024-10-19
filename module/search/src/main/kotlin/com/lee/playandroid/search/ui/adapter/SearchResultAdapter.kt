@@ -14,7 +14,7 @@ import com.lee.playandroid.common.extensions.getCategory
 import com.lee.playandroid.common.extensions.getDateFormat
 import com.lee.playandroid.common.extensions.getTitle
 import com.lee.playandroid.common.tools.GlideTools
-import com.lee.playandroid.search.R
+import com.lee.playandroid.common.R as CR
 import com.lee.playandroid.search.databinding.ItemSearchResultPictureBinding
 import com.lee.playandroid.search.databinding.ItemSearchResultTextBinding
 
@@ -74,8 +74,8 @@ class SearchResultAdapter(context: Context) :
                 entity.apply {
                     root.context.resources.apply {
                         ivImage.shapeAppearanceModel = ShapeAppearanceModel.Builder()
-                            .setTopLeftCornerSize(getDimension(R.dimen.offset_radius_medium))
-                            .setBottomLeftCornerSize(getDimension(R.dimen.offset_radius_medium))
+                            .setTopLeftCornerSize(getDimension(CR.dimen.offset_radius_medium))
+                            .setBottomLeftCornerSize(getDimension(CR.dimen.offset_radius_medium))
                             .build()
                     }
 

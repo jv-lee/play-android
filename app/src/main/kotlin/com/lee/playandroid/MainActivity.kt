@@ -21,6 +21,7 @@ import com.lee.playandroid.base.extensions.startListener
 import com.lee.playandroid.base.tools.DarkModeTools
 import com.lee.playandroid.base.tools.ScreenDensityTools
 import com.lee.playandroid.base.extensions.collectState
+import com.lee.playandroid.common.extensions.agentWebPreload
 import com.lee.playandroid.common.extensions.appThemeSet
 import com.lee.playandroid.databinding.ActivityMainBinding
 import com.lee.playandroid.databinding.LayoutStubMainBinding
@@ -31,6 +32,8 @@ import com.lee.playandroid.viewmodel.SplashViewModel
 import com.lee.playandroid.viewmodel.SplashViewState
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
+import com.lee.playandroid.base.R as BR
+import com.lee.playandroid.common.R as CR
 
 /**
  * 程序主窗口 单Activity架构
@@ -51,6 +54,7 @@ class MainActivity : BaseActivity() {
     }
 
     override fun bindView() {
+        agentWebPreload()
         lifecycleScope.launch {
             // 进程初始化启动 请求配置
             viewModel.accountService.requestAccountInfo(this@MainActivity)
@@ -62,7 +66,7 @@ class MainActivity : BaseActivity() {
 
     override fun bindData() {
         lifecycleScope.apply {
-            launchWhenResumed {
+            launchOnLifecycle {
                 viewModel.viewEvents.collect { event ->
                     when (event) {
                         // 取消携程任务通过动画显示主页内容
@@ -78,7 +82,7 @@ class MainActivity : BaseActivity() {
                 }
             }
 
-            launchWhenResumed {
+            launchOnLifecycle {
                 // 监听闪屏广告倒计时数值更改
                 viewModel.viewStates.collectState(SplashViewState::timeText) {
                     splashBinding.tvTime.text = it
@@ -107,7 +111,7 @@ class MainActivity : BaseActivity() {
      */
     private fun animVisibleSplash(@DrawableRes splashAdRes: Int) {
         val splashAnimation =
-            AnimationUtils.loadAnimation(this@MainActivity, R.anim.alpha_in).apply {
+            AnimationUtils.loadAnimation(this@MainActivity, BR.anim.alpha_in).apply {
                 startListener {
                     splashBinding.tvTime.visibility = View.VISIBLE
                     splashBinding.ivPicture.setImageResource(splashAdRes)
@@ -124,31 +128,31 @@ class MainActivity : BaseActivity() {
      * @param duration 显示主页面ui时间 0则立即显示 其他时间为渐变显示
      */
     private fun animVisibleUi(duration: Long = 0) {
-        val main = binding.root.findViewById<ViewStub>(R.id.view_stub_main).inflate()
-        LayoutStubMainBinding.bind(main)
+            val main = binding.root.findViewById<ViewStub>(R.id.view_stub_main).inflate()
+            LayoutStubMainBinding.bind(main)
 
-        // 移除back事件禁用
-        backCallback.remove()
-        // 设置动画显示rootView
-        val anim = ObjectAnimator.ofFloat(0F, 1F)
-        anim.startDelay = duration
-        anim.duration = duration
-        anim.interpolator = LinearInterpolator()
-        anim.addUpdateListener {
-            binding.mainContainer.alpha = it.animatedValue as Float
-            splashBinding.root.alpha = 1F - (it.animatedValue as Float)
-        }
-        anim.addListener(object : AnimatorListenerAdapter() {
-            override fun onAnimationStart(animation: Animator) {
-                binding.mainContainer.visibility = View.VISIBLE
+            // 移除back事件禁用
+            backCallback.remove()
+            // 设置动画显示rootView
+            val anim = ObjectAnimator.ofFloat(0F, 1F)
+            anim.startDelay = duration
+            anim.duration = duration
+            anim.interpolator = LinearInterpolator()
+            anim.addUpdateListener {
+                binding.mainContainer.alpha = it.animatedValue as Float
+                splashBinding.root.alpha = 1F - (it.animatedValue as Float)
             }
+            anim.addListener(object : AnimatorListenerAdapter() {
+                override fun onAnimationStart(animation: Animator) {
+                    binding.mainContainer.visibility = View.VISIBLE
+                }
 
-            override fun onAnimationEnd(animation: Animator) {
-                binding.root.removeView(splashBinding.root)
-                window.decorView.background = null
-                window.decorView.setBackgroundColorCompat(R.color.colorThemeWindow)
-            }
-        })
-        anim.start()
+                override fun onAnimationEnd(animation: Animator) {
+                    binding.root.removeView(splashBinding.root)
+                    window.decorView.background = null
+                    window.decorView.setBackgroundColorCompat(CR.color.colorThemeWindow)
+                }
+            })
+            anim.start()
     }
 }

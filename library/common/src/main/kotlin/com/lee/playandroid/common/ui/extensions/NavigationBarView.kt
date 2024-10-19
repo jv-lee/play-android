@@ -22,6 +22,7 @@ import androidx.navigation.findNavController
 import com.lee.playandroid.base.extensions.endListener
 import com.lee.playandroid.base.widget.nav.ExpandBottomNavigationView
 import com.lee.playandroid.common.R
+import com.lee.playandroid.base.R as BR
 import java.lang.ref.WeakReference
 
 inline fun ExpandBottomNavigationView.bindNavigationAction(
@@ -30,7 +31,7 @@ inline fun ExpandBottomNavigationView.bindNavigationAction(
     crossinline itemPositionListener: (MenuItem, Int) -> Unit
 ) {
     val navigationInAnim =
-        AnimationUtils.loadAnimation(context, R.anim.slide_bottom_in).apply {
+        AnimationUtils.loadAnimation(context, BR.anim.slide_bottom_in).apply {
             endListener {
                 visibility = View.VISIBLE
                 clearAnimation()
@@ -38,7 +39,7 @@ inline fun ExpandBottomNavigationView.bindNavigationAction(
         }
 
     val navigationOutAnim =
-        AnimationUtils.loadAnimation(context, R.anim.slide_bottom_out).apply {
+        AnimationUtils.loadAnimation(context, BR.anim.slide_bottom_out).apply {
             endListener {
                 visibility = View.GONE
                 clearAnimation()

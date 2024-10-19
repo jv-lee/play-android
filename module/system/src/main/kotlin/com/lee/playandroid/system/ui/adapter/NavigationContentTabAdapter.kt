@@ -9,6 +9,7 @@ import com.lee.playandroid.base.extensions.setBackgroundDrawableCompat
 import com.lee.playandroid.base.extensions.setTextColorCompat
 import com.lee.playandroid.common.entity.NavigationItem
 import com.lee.playandroid.system.R
+import com.lee.playandroid.common.R as CR
 import com.lee.playandroid.system.databinding.ItemNavigationTabBinding
 
 /**
@@ -27,10 +28,10 @@ class NavigationContentTabAdapter(data: MutableList<NavigationItem>) :
         holder.getViewBinding<ItemNavigationTabBinding>().apply {
             tvText.text = entity.name
             if (selectIndex == position) {
-                tvText.setTextColorCompat(R.color.colorThemeFocusLight)
+                tvText.setTextColorCompat(CR.color.colorThemeFocusLight)
                 tvText.setBackgroundDrawableCompat(R.drawable.shape_selected_tab)
             } else {
-                tvText.setTextColorCompat(R.color.colorThemePrimary)
+                tvText.setTextColorCompat(CR.color.colorThemePrimary)
                 tvText.background = null
             }
         }

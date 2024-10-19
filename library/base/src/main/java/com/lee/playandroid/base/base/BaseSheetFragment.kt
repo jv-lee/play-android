@@ -5,11 +5,15 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import com.lee.playandroid.base.R
 import com.lee.playandroid.base.extensions.dp2px
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
 
 /**
  * SheetFragment通用基础类
@@ -37,7 +41,8 @@ abstract class BaseSheetFragment(
     override fun onStart() {
         super.onStart()
         if (isFullWindow) {
-            val bottomSheet = dialog?.findViewById<View>(R.id.design_bottom_sheet)
+            val bottomSheet =
+                dialog?.findViewById<View>(com.google.android.material.R.id.design_bottom_sheet)
             bottomSheet?.layoutParams?.height = ViewGroup.LayoutParams.MATCH_PARENT
         }
         getBehavior()?.peekHeight = requireContext().dp2px(peekHeight).toInt()
@@ -72,4 +77,14 @@ abstract class BaseSheetFragment(
      * 设置加载数据等业务操作
      */
     protected abstract fun bindData()
+
+    fun launchOnLifecycle(
+        state: Lifecycle.State = Lifecycle.State.CREATED,
+        block: suspend CoroutineScope.() -> Unit
+    ) {
+        viewLifecycleOwner.lifecycleScope.launch {
+            repeatOnLifecycle(state, block)
+        }
+    }
+
 }

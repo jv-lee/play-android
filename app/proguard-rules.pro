@@ -160,6 +160,9 @@ java.lang.Object readResolve();
 -dontwarn javax.tools.**
 -dontwarn javax.lang.**
 
+# viewBinding混淆配置
+-keep class * implements androidx.viewbinding.ViewBinding {*;}
+
 #关闭日志
 #-assumenosideeffects class android.util.Log {
 # public static *** d(...);

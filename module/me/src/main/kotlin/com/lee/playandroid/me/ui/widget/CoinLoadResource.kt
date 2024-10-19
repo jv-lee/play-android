@@ -2,6 +2,7 @@ package com.lee.playandroid.me.ui.widget
 
 import com.lee.playandroid.base.adapter.listener.LoadResource
 import com.lee.playandroid.me.R
+import com.lee.playandroid.base.R as BR
 
 /**
  * 积分列表加载item状态resource
@@ -30,7 +31,7 @@ class CoinLoadResource : LoadResource {
     }
 
     override fun pageNetworkId(): Int {
-        return R.id.const_page_network
+        return R.id.const_page_error
     }
 
     override fun pageReloadId(): Int {
@@ -38,22 +39,22 @@ class CoinLoadResource : LoadResource {
     }
 
     override fun itemLayoutId(): Int {
-        return R.layout.layout_item_load
+        return BR.layout.layout_item_load
     }
 
     override fun itemLoadMoreId(): Int {
-        return R.id.const_item_loadMore
+        return BR.id.const_item_loadMore
     }
 
     override fun itemLoadEndId(): Int {
-        return R.id.const_item_loadEnd
+        return BR.id.const_item_loadEnd
     }
 
     override fun itemLoadErrorId(): Int {
-        return R.id.const_item_loadError
+        return BR.id.const_item_loadError
     }
 
     override fun itemReloadId(): Int {
-        return R.id.tv_error_text
+        return BR.id.tv_error_text
     }
 }

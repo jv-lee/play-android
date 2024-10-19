@@ -51,7 +51,7 @@ abstract class BaseListFragment :
 
     override fun LifecycleCoroutineScope.bindData() {
         // 列表数据更新
-        launchWhenResumed {
+        launchOnLifecycle {
             dataFlow().collectCallback<PageData<Content>>(
                 success = {
                     mBinding.refreshLayout.isRefreshing = false

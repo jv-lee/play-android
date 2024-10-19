@@ -11,6 +11,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.children
 import androidx.recyclerview.widget.RecyclerView
 import com.lee.playandroid.home.R
+import com.lee.playandroid.common.R as CR
 import com.lee.playandroid.home.view.adapter.ContentAdapter
 
 /**
@@ -26,12 +27,12 @@ class LabelDecoration(context: Context) : RecyclerView.ItemDecoration() {
     private var textLabel: String
 
     init {
-        textPaint.color = ContextCompat.getColor(context, R.color.colorThemeAccent)
-        textPaint.textSize = context.resources.getDimension(R.dimen.font_size_large_xx)
+        textPaint.color = ContextCompat.getColor(context, CR.color.colorThemeAccent)
+        textPaint.textSize = context.resources.getDimension(CR.dimen.font_size_large_xx)
         textPaint.typeface = Typeface.DEFAULT_BOLD
 
         textHeight = textPaint.descent() - textPaint.ascent()
-        marginItem = context.resources.getDimension(R.dimen.offset_medium)
+        marginItem = context.resources.getDimension(CR.dimen.offset_medium)
 
         textLabel = context.getString(R.string.home_recommend_label)
     }

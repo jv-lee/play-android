@@ -45,7 +45,7 @@ abstract class BaseTabFragment :
     }
 
     override fun LifecycleCoroutineScope.bindData() {
-        launchWhenResumed {
+        launchOnLifecycle {
             viewEvents().collect { event ->
                 when (event) {
                     is BaseTabViewEvent.RequestFailed -> {
@@ -58,7 +58,7 @@ abstract class BaseTabFragment :
             }
         }
 
-        launchWhenResumed {
+        launchOnLifecycle {
             viewStates().collectState(
                 BaseTabViewState::loading,
                 BaseTabViewState::tabList

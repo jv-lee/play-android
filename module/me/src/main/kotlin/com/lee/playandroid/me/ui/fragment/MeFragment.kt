@@ -66,7 +66,7 @@ class MeFragment :
     }
 
     override fun LifecycleCoroutineScope.bindData() {
-        launchWhenResumed {
+        launchOnLifecycle {
             viewModel.accountService.getAccountViewStates(requireActivity()).collectState(
                 AccountViewState::isLogin,
                 AccountViewState::accountData
@@ -134,27 +134,27 @@ class MeFragment :
     }
 
     override fun updateDarkView() {
-        mBinding.constRoot.setBackgroundColorCompat(R.color.colorThemeBackground)
-        mBinding.toolbarLayout.setBackgroundColorCompat(R.color.colorThemeItem)
-        mBinding.tvAccountName.setTextColorCompat(R.color.colorThemeAccent)
-        mBinding.tvLevel.setTextColorCompat(R.color.colorThemeFocus)
+        mBinding.constRoot.setBackgroundColorCompat(CR.color.colorThemeBackground)
+        mBinding.toolbarLayout.setBackgroundColorCompat(CR.color.colorThemeItem)
+        mBinding.tvAccountName.setTextColorCompat(CR.color.colorThemeAccent)
+        mBinding.tvLevel.setTextColorCompat(CR.color.colorThemeFocus)
         mBinding.ivHeader.strokeColor =
-            requireContext().getColorStateListCompat(R.color.colorThemeFocus)
+            requireContext().getColorStateListCompat(CR.color.colorThemeFocus)
 
-        mBinding.lineIntegral.setBackgroundColorCompat(R.color.colorThemeItem)
-        mBinding.lineIntegral.getLeftTextView().setTextColorCompat(R.color.colorThemeAccent)
+        mBinding.lineIntegral.setBackgroundColorCompat(CR.color.colorThemeItem)
+        mBinding.lineIntegral.getLeftTextView().setTextColorCompat(CR.color.colorThemeAccent)
 
-        mBinding.lineCollect.setBackgroundColorCompat(R.color.colorThemeItem)
-        mBinding.lineCollect.getLeftTextView().setTextColorCompat(R.color.colorThemeAccent)
+        mBinding.lineCollect.setBackgroundColorCompat(CR.color.colorThemeItem)
+        mBinding.lineCollect.getLeftTextView().setTextColorCompat(CR.color.colorThemeAccent)
 
-        mBinding.lineShare.setBackgroundColorCompat(R.color.colorThemeItem)
-        mBinding.lineShare.getLeftTextView().setTextColorCompat(R.color.colorThemeAccent)
+        mBinding.lineShare.setBackgroundColorCompat(CR.color.colorThemeItem)
+        mBinding.lineShare.getLeftTextView().setTextColorCompat(CR.color.colorThemeAccent)
 
-        mBinding.lineTodo.setBackgroundColorCompat(R.color.colorThemeItem)
-        mBinding.lineTodo.getLeftTextView().setTextColorCompat(R.color.colorThemeAccent)
+        mBinding.lineTodo.setBackgroundColorCompat(CR.color.colorThemeItem)
+        mBinding.lineTodo.getLeftTextView().setTextColorCompat(CR.color.colorThemeAccent)
 
-        mBinding.lineSettings.setBackgroundColorCompat(R.color.colorThemeItem)
-        mBinding.lineSettings.getLeftTextView().setTextColorCompat(R.color.colorThemeAccent)
+        mBinding.lineSettings.setBackgroundColorCompat(CR.color.colorThemeItem)
+        mBinding.lineSettings.getLeftTextView().setTextColorCompat(CR.color.colorThemeAccent)
     }
 
     /**
@@ -162,7 +162,7 @@ class MeFragment :
      * @param account 账户信息
      */
     private fun setLoginAccountUi(account: AccountData) {
-        mBinding.ivHeader.setImageResource(R.mipmap.ic_launcher_round)
+        mBinding.ivHeader.setImageResource(CR.mipmap.ic_launcher_round)
         mBinding.tvAccountName.text = account.userInfo.username
         mBinding.tvLevel.text =
             getString(R.string.me_account_info_text, account.coinInfo.level, account.coinInfo.rank)

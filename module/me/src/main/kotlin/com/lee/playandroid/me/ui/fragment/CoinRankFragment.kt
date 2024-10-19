@@ -63,7 +63,7 @@ class CoinRankFragment :
     }
 
     override fun LifecycleCoroutineScope.bindData() {
-        launchWhenResumed {
+        launchOnLifecycle {
             viewModel.coinRankFlow.collectCallback<PageData<CoinRank>>(
                 success = {
                     mAdapter.submitData(it, diff = true)

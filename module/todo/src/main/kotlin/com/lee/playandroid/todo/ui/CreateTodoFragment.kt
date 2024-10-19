@@ -24,7 +24,7 @@ import com.lee.playandroid.common.entity.TodoData
 import com.lee.playandroid.common.entity.TodoData.Companion.PRIORITY_HEIGHT
 import com.lee.playandroid.common.entity.TodoData.Companion.PRIORITY_LOW
 import com.lee.playandroid.common.extensions.actionFailed
-import com.lee.playandroid.todo.R
+import com.lee.playandroid.common.R as CR
 import com.lee.playandroid.todo.databinding.FragmentCreateTodoBinding
 import com.lee.playandroid.todo.viewmodel.CreateTodoViewEvent
 import com.lee.playandroid.todo.viewmodel.CreateTodoViewIntent
@@ -96,7 +96,7 @@ class CreateTodoFragment :
     }
 
     override fun LifecycleCoroutineScope.bindData() {
-        launchWhenResumed {
+        launchOnLifecycle {
             viewModel.viewEvents.collect { event ->
                 when (event) {
                     is CreateTodoViewEvent.RequestSuccess -> {
@@ -112,44 +112,44 @@ class CreateTodoFragment :
         }
 
         viewModel.viewStates.run {
-            launchWhenResumed {
+            launchOnLifecycle {
                 collectState(CreateTodoViewState::isLoading) {
                     if (it) show(loadingDialog) else dismiss(loadingDialog)
                 }
             }
-            launchWhenResumed {
+            launchOnLifecycle {
                 collectState(CreateTodoViewState::appTitleRes) {
                     mBinding.toolbar.setTitleText(getString(it))
                 }
             }
-            launchWhenResumed {
+            launchOnLifecycle {
                 collectState(CreateTodoViewState::title) {
                     mBinding.editTitle.setText(it)
                     mBinding.editTitle.setSelection(it.length)
                 }
             }
-            launchWhenResumed {
+            launchOnLifecycle {
                 collectState(CreateTodoViewState::content) {
                     mBinding.editContent.setText(it)
                     mBinding.editContent.setSelection(it.length)
                 }
             }
-            launchWhenResumed {
+            launchOnLifecycle {
                 collectState(CreateTodoViewState::priority) {
                     mBinding.radioButtonLow.isChecked = it == PRIORITY_LOW
                     mBinding.radioButtonHeight.isChecked = it == PRIORITY_HEIGHT
                 }
             }
-            launchWhenResumed {
+            launchOnLifecycle {
                 collectState(CreateTodoViewState::date) {
                     mBinding.tvDateContent.text = it
                 }
             }
-            launchWhenResumed {
+            launchOnLifecycle {
                 collectState(CreateTodoViewState::calendar) { calendar ->
                     datePickerDialog = DatePickerDialog(
                         requireContext(),
-                        R.style.ThemeDatePickerDialog,
+                        CR.style.ThemeDatePickerDialog,
                         this@CreateTodoFragment,
                         calendar.get(Calendar.YEAR),
                         calendar.get(Calendar.MONTH),

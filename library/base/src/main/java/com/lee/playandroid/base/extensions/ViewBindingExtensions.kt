@@ -4,8 +4,6 @@
  * @date 2021/6/15
  */
 
-@file:Suppress("UNCHECKED_CAST")
-
 package com.lee.playandroid.base.extensions
 
 import android.os.Handler
@@ -20,7 +18,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.ViewTreeLifecycleOwner
+import androidx.lifecycle.findViewTreeLifecycleOwner
 import androidx.viewbinding.ViewBinding
 import kotlin.properties.ReadOnlyProperty
 import kotlin.reflect.KProperty
@@ -171,7 +169,7 @@ class ViewGroupViewBindingProperty<in G : ViewGroup, out V : ViewBinding>(
 ) : LifecycleViewBindingProperty<G, V>(viewBinder) {
 
     override fun getLifecycleOwner(thisRef: G): LifecycleOwner {
-        return checkNotNull(ViewTreeLifecycleOwner.get(thisRef)) {
+        return checkNotNull(thisRef.findViewTreeLifecycleOwner()) {
             "Fragment doesn't have view associated with it or the view has been destroyed"
         }
     }

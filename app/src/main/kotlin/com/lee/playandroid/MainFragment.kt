@@ -23,6 +23,7 @@ import com.lee.playandroid.router.navigateLogin
 import com.lee.playandroid.service.AccountService
 import com.lee.playandroid.service.hepler.ModuleService
 import kotlinx.coroutines.launch
+import com.lee.playandroid.common.R as CR
 
 /**
  * MainFragment 是所有Fragment的容器类
@@ -57,14 +58,14 @@ class MainFragment :
     @SuppressLint("ResourceType")
     override fun updateDarkView() {
         binding.navigationBar.itemTextColor = requireContext().getCheckedColorStateListCompat(
-            R.color.colorThemeFocus,
-            R.color.colorPrimary
+            CR.color.colorThemeFocus,
+            CR.color.colorThemePrimary
         )
         binding.navigationBar.itemIconTintList = requireContext().getCheckedColorStateListCompat(
-            R.color.colorThemeFocus,
-            R.color.colorPrimary
+            CR.color.colorThemeFocus,
+            CR.color.colorThemePrimary
         )
-        binding.navigationBar.setBackgroundColorCompat(R.color.colorThemeItem)
+        binding.navigationBar.setBackgroundColorCompat(CR.color.colorThemeItem)
     }
 
     private fun initNavigation() {
@@ -82,7 +83,7 @@ class MainFragment :
 
             floatingBinding.root.setEventCallback(object : FloatingLayout.EventCallback() {
                 override fun onClicked() {
-                    toast(getString(R.string.home_header_text))
+                    toast(getString(com.lee.playandroid.home.R.string.home_header_text))
                 }
             })
         }

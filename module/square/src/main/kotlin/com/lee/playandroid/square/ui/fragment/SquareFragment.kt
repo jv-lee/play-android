@@ -76,7 +76,7 @@ class SquareFragment :
     override fun LifecycleCoroutineScope.bindData() {
         LiveDataBus.instance.injectBus(this@SquareFragment)
 
-        launchWhenResumed {
+        launchOnLifecycle {
             viewModel.squareFlow.collectCallback<PageData<Content>>(
                 success = {
                     mBinding.refreshView.isRefreshing = false
@@ -143,7 +143,7 @@ class SquareFragment :
 
     @InjectBus
     fun navigationEvent(event: NavigationSelectEvent) {
-        if (event.title == getString(R.string.nav_square) && isResumed) {
+        if (event.title == getString(CR.string.nav_square) && isResumed) {
             mBinding.rvContainer.smoothScrollToTop()
         }
     }

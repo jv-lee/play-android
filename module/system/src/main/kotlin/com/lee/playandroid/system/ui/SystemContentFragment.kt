@@ -20,6 +20,7 @@ import com.lee.playandroid.common.extensions.actionFailed
 import com.lee.playandroid.common.ui.widget.MainLoadResource
 import com.lee.playandroid.common.ui.widget.OffsetItemDecoration
 import com.lee.playandroid.system.R
+import com.lee.playandroid.common.R as CR
 import com.lee.playandroid.system.databinding.FragmentSystemContentBinding
 import com.lee.playandroid.system.ui.adapter.SystemContentAdapter
 import com.lee.playandroid.system.viewmodel.SystemContentViewEvent
@@ -62,7 +63,7 @@ class SystemContentFragment :
     override fun LifecycleCoroutineScope.bindData() {
         LiveDataBus.instance.injectBus(this@SystemContentFragment)
 
-        launchWhenResumed {
+        launchOnLifecycle {
             viewModel.viewEvents.collect { event ->
                 when (event) {
                     is SystemContentViewEvent.RequestFailed -> {
@@ -107,7 +108,7 @@ class SystemContentFragment :
 
     @InjectBus
     fun navigationEvent(event: NavigationSelectEvent) {
-        if (event.title == getString(R.string.nav_system) && isResumed) {
+        if (event.title == getString(CR.string.nav_system) && isResumed) {
             mBinding.rvContainer.smoothScrollToTop()
         }
     }

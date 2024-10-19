@@ -20,6 +20,7 @@ import com.lee.playandroid.common.extensions.createApi
 import com.lee.playandroid.service.AccountService
 import com.lee.playandroid.service.hepler.ModuleService
 import com.lee.playandroid.todo.R
+import com.lee.playandroid.common.R as CR
 import com.lee.playandroid.todo.constants.Constants.CACHE_KEY_TODO_CONTENT
 import com.lee.playandroid.todo.constants.Constants.SP_KEY_TODO_TYPE
 import com.lee.playandroid.todo.model.api.ApiService
@@ -111,7 +112,7 @@ class TodoListViewModel(handle: SavedStateHandle) : ViewModel() {
             viewModelScope.launch {
                 flow {
                     check(NetworkUtil.isNetworkConnected(app)) {
-                        app.getString(R.string.network_not_access)
+                        app.getString(CR.string.network_not_access)
                     }
 
                     val data = _todoDataFlow.getValueData<PageData<TodoData>>()!!
@@ -147,7 +148,7 @@ class TodoListViewModel(handle: SavedStateHandle) : ViewModel() {
             viewModelScope.launch {
                 flow {
                     check(NetworkUtil.isNetworkConnected(app)) {
-                        app.getString(R.string.network_not_access)
+                        app.getString(CR.string.network_not_access)
                     }
 
                     val data = _todoDataFlow.getValueData<PageData<TodoData>>()!!

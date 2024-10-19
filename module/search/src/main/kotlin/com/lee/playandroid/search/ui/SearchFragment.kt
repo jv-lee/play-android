@@ -92,7 +92,7 @@ class SearchFragment : BaseBindingNavigationFragment<FragmentSearchBinding>() {
     }
 
     override fun LifecycleCoroutineScope.bindData() {
-        launchWhenResumed {
+        launchOnLifecycle {
             viewModel.viewEvents.collect { event ->
                 when (event) {
                     // 搜索结果提交页面导航处理
@@ -111,13 +111,13 @@ class SearchFragment : BaseBindingNavigationFragment<FragmentSearchBinding>() {
         }
 
         viewModel.viewStates.run {
-            launchWhenResumed {
+            launchOnLifecycle {
                 // 监听搜索热词数据绑定回调
                 collectState(SearchViewState::searchHotList) {
                     mHotAdapter?.submitSinglePage(it)
                 }
             }
-            launchWhenResumed {
+            launchOnLifecycle {
                 // 监听搜索历史数据绑定回调
                 collectState(SearchViewState::searchHistoryList) {
                     viewEmptyVisible(it.isEmpty())

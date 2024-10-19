@@ -6,8 +6,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.lee.playandroid.base.dialog.extensions.setBackDismiss
 import com.lee.playandroid.base.dialog.extensions.setFullWindow
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
 
 /**
  * 通用DialogFragment基类
@@ -73,4 +78,14 @@ abstract class BaseDialogFragment(
      * 使用page 多fragment时 懒加载
      */
     open fun lazyLoad() {}
+
+    fun launchOnLifecycle(
+        state: Lifecycle.State = Lifecycle.State.CREATED,
+        block: suspend CoroutineScope.() -> Unit
+    ) {
+        viewLifecycleOwner.lifecycleScope.launch {
+            repeatOnLifecycle(state, block)
+        }
+    }
+
 }

@@ -87,7 +87,7 @@ class MyShareFragment :
             viewModel.dispatch(MyShareViewIntent.RequestPage(LoadStatus.INIT))
         }
 
-        launchWhenResumed {
+        launchOnLifecycle {
             viewModel.viewEvents.collect { event ->
                 when (event) {
                     is MyShareViewEvent.DeleteShareSuccess -> {
@@ -105,7 +105,7 @@ class MyShareFragment :
             }
         }
 
-        launchWhenResumed {
+        launchOnLifecycle {
             viewModel.myShareFlow.collectCallback<PageData<Content>>(
                 success = {
                     mAdapter?.submitData(it, diff = true)
@@ -117,7 +117,7 @@ class MyShareFragment :
             )
         }
 
-        launchWhenResumed {
+        launchOnLifecycle {
             viewModel.viewStates.collectState(MyShareViewState::isLoading) {
                 if (it) show(loadingDialog) else dismiss(loadingDialog)
             }

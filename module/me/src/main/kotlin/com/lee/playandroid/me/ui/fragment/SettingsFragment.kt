@@ -20,6 +20,8 @@ import com.lee.playandroid.base.tools.DarkViewUpdateTools
 import com.lee.playandroid.common.entity.AccountViewEvent
 import com.lee.playandroid.common.entity.AccountViewState
 import com.lee.playandroid.me.R
+import com.lee.playandroid.common.R as CR
+import com.lee.playandroid.base.R as BR
 import com.lee.playandroid.me.databinding.FragmentSettingsBinding
 import com.lee.playandroid.me.viewmodel.SettingsViewEvent
 import com.lee.playandroid.me.viewmodel.SettingsViewIntent
@@ -63,7 +65,7 @@ class SettingsFragment :
     }
 
     override fun LifecycleCoroutineScope.bindData() {
-        launchWhenResumed {
+        launchOnLifecycle {
             viewModel.viewEvents.collect { event ->
                 when (event) {
                     is SettingsViewEvent.ClearCacheResult -> {
@@ -73,7 +75,7 @@ class SettingsFragment :
             }
         }
 
-        launchWhenResumed {
+        launchOnLifecycle {
             viewModel.accountService.getAccountViewEvents(requireActivity()).collect { event ->
                 when (event) {
                     is AccountViewEvent.LogoutSuccess -> {
@@ -87,12 +89,12 @@ class SettingsFragment :
         }
 
         viewModel.accountService.getAccountViewStates(requireActivity()).run {
-            launchWhenResumed {
+            launchOnLifecycle {
                 collectState(AccountViewState::isLoading) {
                     if (it) show(loadingDialog) else dismiss(loadingDialog)
                 }
             }
-            launchWhenResumed {
+            launchOnLifecycle {
                 collectState(AccountViewState::isLogin) {
                     mBinding.lineLogout.visibility = if (it) View.VISIBLE else View.GONE
                 }
@@ -100,22 +102,22 @@ class SettingsFragment :
         }
 
         viewModel.viewStates.run {
-            launchWhenResumed {
+            launchOnLifecycle {
                 collectState(SettingsViewState::isLoading) {
                     if (it) show(loadingDialog) else dismiss(loadingDialog)
                 }
             }
-            launchWhenResumed {
+            launchOnLifecycle {
                 collectState(SettingsViewState::isCacheConfirm) {
                     if (it) show(clearDialog) else dismiss(clearDialog)
                 }
             }
-            launchWhenResumed {
+            launchOnLifecycle {
                 collectState(SettingsViewState::isLogoutConfirm) {
                     if (it) show(logoutDialog) else dismiss(logoutDialog)
                 }
             }
-            launchWhenResumed {
+            launchOnLifecycle {
                 collectState(SettingsViewState::totalCacheSize) {
                     mBinding.lineClearCache.getRightTextView().text = it
                 }
@@ -123,7 +125,7 @@ class SettingsFragment :
         }
 
         themeViewModel.viewStates.run {
-            launchWhenResumed {
+            launchOnLifecycle {
                 collectState(ThemeViewState::isSystem, ThemeViewState::isDark) { isSystem, isDark ->
                     mBinding.lineSystem.getRightSwitch()?.isChecked = isSystem
                     mBinding.lineNight.getRightSwitch()?.isChecked = isDark
@@ -158,23 +160,23 @@ class SettingsFragment :
     }
 
     override fun updateDarkView() {
-        mBinding.constRoot.setBackgroundColorCompat(R.color.colorThemeBackground)
-        mBinding.toolbar.setBackgroundColorCompat(R.color.colorThemeItem)
-        mBinding.toolbar.setTitleColor(R.color.colorThemeAccent)
-        mBinding.toolbar.setBackDrawableRes(R.drawable.vector_back, R.color.colorThemeAccent)
+        mBinding.constRoot.setBackgroundColorCompat(CR.color.colorThemeBackground)
+        mBinding.toolbar.setBackgroundColorCompat(CR.color.colorThemeItem)
+        mBinding.toolbar.setTitleColor(CR.color.colorThemeAccent)
+        mBinding.toolbar.setBackDrawableRes(BR.drawable.vector_back, CR.color.colorThemeAccent)
 
-        mBinding.lineClearCache.setBackgroundColorCompat(R.color.colorThemeItem)
-        mBinding.lineClearCache.getLeftTextView().setTextColorCompat(R.color.colorThemeAccent)
-        mBinding.lineClearCache.getRightTextView().setTextColorCompat(R.color.colorThemeAccent)
+        mBinding.lineClearCache.setBackgroundColorCompat(CR.color.colorThemeItem)
+        mBinding.lineClearCache.getLeftTextView().setTextColorCompat(CR.color.colorThemeAccent)
+        mBinding.lineClearCache.getRightTextView().setTextColorCompat(CR.color.colorThemeAccent)
 
-        mBinding.lineLogout.setBackgroundColorCompat(R.color.colorThemeItem)
-        mBinding.lineLogout.getLeftTextView().setTextColorCompat(R.color.colorThemeAccent)
+        mBinding.lineLogout.setBackgroundColorCompat(CR.color.colorThemeItem)
+        mBinding.lineLogout.getLeftTextView().setTextColorCompat(CR.color.colorThemeAccent)
 
-        mBinding.lineSystem.setBackgroundColorCompat(R.color.colorThemeItem)
-        mBinding.lineSystem.getLeftTextView().setTextColorCompat(R.color.colorThemeAccent)
+        mBinding.lineSystem.setBackgroundColorCompat(CR.color.colorThemeItem)
+        mBinding.lineSystem.getLeftTextView().setTextColorCompat(CR.color.colorThemeAccent)
 
-        mBinding.lineNight.setBackgroundColorCompat(R.color.colorThemeItem)
-        mBinding.lineNight.getLeftTextView().setTextColorCompat(R.color.colorThemeAccent)
+        mBinding.lineNight.setBackgroundColorCompat(CR.color.colorThemeItem)
+        mBinding.lineNight.getLeftTextView().setTextColorCompat(CR.color.colorThemeAccent)
 
         createAlertDialog()
     }

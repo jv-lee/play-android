@@ -54,14 +54,14 @@ class SearchResultFragment :
     }
 
     override fun LifecycleCoroutineScope.bindData() {
-        launchWhenResumed {
+        launchOnLifecycle {
             // 监听搜索key绑定到toolbar.title
             viewModel.viewStates.collectState(SearchResultViewState::title) {
                 mBinding.toolbar.setTitleText(it)
             }
         }
 
-        launchWhenResumed {
+        launchOnLifecycle {
             // 监听搜索结果列表数据绑定
             viewModel.searchResultFlow.collectCallback<PageData<Content>>(
                 success = {

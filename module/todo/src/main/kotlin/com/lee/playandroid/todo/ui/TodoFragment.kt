@@ -78,7 +78,7 @@ class TodoFragment : BaseBindingNavigationFragment<FragmentTodoBinding>() {
         createTodoPages()
         bindFragmentResultListener()
 
-        launchWhenResumed {
+        launchOnLifecycle {
             // 监听当前标题状态实时更新标题显示
             viewModel.viewStates.collectState(TodoViewState::titleRes) {
                 mBinding.toolbar.setTitleText(getString(it))

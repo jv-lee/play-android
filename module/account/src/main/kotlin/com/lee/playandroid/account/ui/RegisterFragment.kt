@@ -66,7 +66,7 @@ class RegisterFragment : BaseBindingNavigationFragment<FragmentRegisterBinding>(
     }
 
     override fun LifecycleCoroutineScope.bindData() {
-        launchWhenResumed {
+        launchOnLifecycle {
             // 监听注册成功后获取的账户信息
             viewModel.viewEvents.collect { event ->
                 when (event) {
@@ -89,34 +89,34 @@ class RegisterFragment : BaseBindingNavigationFragment<FragmentRegisterBinding>(
         }
 
         viewModel.viewStates.run {
-            launchWhenResumed {
+            launchOnLifecycle {
                 collectState(RegisterViewState::hideKeyboard) {
                     if (it) requireActivity().window.hideSoftInput()
                 }
             }
-            launchWhenResumed {
+            launchOnLifecycle {
                 collectState(RegisterViewState::isLoading) {
                     if (it) show(loadingDialog) else dismiss(loadingDialog)
                 }
             }
-            launchWhenResumed {
+            launchOnLifecycle {
                 collectState(RegisterViewState::isRegisterEnable) {
                     mBinding.tvRegister.setButtonDisable(!it)
                 }
             }
-            launchWhenResumed {
+            launchOnLifecycle {
                 collectState(RegisterViewState::username) {
                     mBinding.editUsername.setText(it)
                     mBinding.editUsername.setSelection(it.length)
                 }
             }
-            launchWhenResumed {
+            launchOnLifecycle {
                 collectState(RegisterViewState::password) {
                     mBinding.editPassword.setText(it)
                     mBinding.editPassword.setSelection(it.length)
                 }
             }
-            launchWhenResumed {
+            launchOnLifecycle {
                 collectState(RegisterViewState::rePassword) {
                     mBinding.editRePassword.setText(it)
                     mBinding.editRePassword.setSelection(it.length)

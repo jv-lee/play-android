@@ -25,6 +25,7 @@ import com.lee.playandroid.common.entity.PageData
 import com.lee.playandroid.common.extensions.checkData
 import com.lee.playandroid.common.extensions.createApi
 import com.lee.playandroid.me.R
+import com.lee.playandroid.common.R as CR
 import com.lee.playandroid.me.constants.Constants.CACHE_KEY_COLLECT
 import com.lee.playandroid.me.model.api.ApiService
 import com.lee.playandroid.service.AccountService
@@ -98,7 +99,7 @@ class CollectViewModel : BaseMVIViewModel<CollectViewState, CollectViewEvent, Co
             viewModelScope.launch {
                 flow {
                     check(NetworkUtil.isNetworkConnected(app)) {
-                        app.getString(R.string.network_not_access)
+                        app.getString(CR.string.network_not_access)
                     }
 
                     val data = _collectFlow.getValueData<PageData<Content>>()!!

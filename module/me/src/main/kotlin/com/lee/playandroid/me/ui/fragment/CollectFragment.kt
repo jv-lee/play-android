@@ -23,6 +23,7 @@ import com.lee.playandroid.common.entity.PageData
 import com.lee.playandroid.common.extensions.actionFailed
 import com.lee.playandroid.common.ui.adapter.SimpleTextAdapter
 import com.lee.playandroid.me.R
+import com.lee.playandroid.common.R as CR
 import com.lee.playandroid.me.databinding.FragmentCollectBinding
 import com.lee.playandroid.me.viewmodel.CollectViewEvent
 import com.lee.playandroid.me.viewmodel.CollectViewIntent
@@ -63,7 +64,7 @@ class CollectFragment :
     }
 
     override fun LifecycleCoroutineScope.bindData() {
-        launchWhenResumed {
+        launchOnLifecycle {
             viewModel.viewEvents.collect { event ->
                 when (event) {
                     is CollectViewEvent.UnCollectSuccess -> {
@@ -80,7 +81,7 @@ class CollectFragment :
                 }
             }
         }
-        launchWhenResumed {
+        launchOnLifecycle {
             viewModel.collectFlow.collectCallback<PageData<Content>>(
                 success = {
                     mAdapter?.submitData(it, diff = true)
@@ -92,7 +93,7 @@ class CollectFragment :
             )
         }
 
-        launchWhenResumed {
+        launchOnLifecycle {
             viewModel.viewStates.collectState(CollectViewState::isLoading) {
                 if (it) show(loadingDialog) else dismiss(loadingDialog)
             }
@@ -113,7 +114,7 @@ class CollectFragment :
 
     override fun onItemChildClick(view: View, entity: Content, position: Int) {
         when (view.id) {
-            R.id.frame_container -> {
+            CR.id.frame_container -> {
                 findNavController().navigateDetails(
                     entity.title,
                     entity.link,
@@ -121,7 +122,7 @@ class CollectFragment :
                     entity.collect
                 )
             }
-            R.id.btn_delete -> {
+            CR.id.btn_delete -> {
                 viewModel.dispatch(CollectViewIntent.UnCollect(position))
             }
         }

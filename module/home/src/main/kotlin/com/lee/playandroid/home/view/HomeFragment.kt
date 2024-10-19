@@ -25,6 +25,7 @@ import com.lee.playandroid.common.extensions.actionFailed
 import com.lee.playandroid.common.ui.extensions.setThemeGradientBackground
 import com.lee.playandroid.common.ui.widget.MainLoadResource
 import com.lee.playandroid.common.ui.widget.OffsetItemDecoration
+import com.lee.playandroid.common.R as CR
 import com.lee.playandroid.home.R
 import com.lee.playandroid.home.bean.HomeContent
 import com.lee.playandroid.home.databinding.FragmentHomeBinding
@@ -77,7 +78,7 @@ class HomeFragment :
     override fun LifecycleCoroutineScope.bindData() {
         LiveDataBus.instance.injectBus(this@HomeFragment)
 
-        launchWhenResumed {
+        launchOnLifecycle {
             viewModel.contentListFlow.collectCallback<PageUiData<HomeContent>>(
                 success = {
                     mBinding.refreshView.isRefreshing = false
@@ -146,7 +147,7 @@ class HomeFragment :
 
     @InjectBus
     fun navigationEvent(event: NavigationSelectEvent) {
-        if (event.title == getString(R.string.nav_home) && isResumed) {
+        if (event.title == getString(CR.string.nav_home) && isResumed) {
             mBinding.rvContainer.smoothScrollToTop()
         }
     }

@@ -66,7 +66,7 @@ class CoinFragment :
     }
 
     override fun LifecycleCoroutineScope.bindData() {
-        launchWhenResumed {
+        launchOnLifecycle {
             viewModel.coinRecordFlow.collectCallback<PageData<CoinRecord>>(
                 success = {
                     mAdapter.submitData(it, diff = true)
@@ -78,7 +78,7 @@ class CoinFragment :
             )
         }
 
-        launchWhenResumed {
+        launchOnLifecycle {
             viewModel.accountService.getAccountViewStates(requireActivity())
                 .collectState(AccountViewState::accountData) {
                     mBinding.layoutCoinHeader.tvIntegralCount.text =
