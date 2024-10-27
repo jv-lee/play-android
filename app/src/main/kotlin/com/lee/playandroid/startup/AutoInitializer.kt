@@ -2,12 +2,12 @@ package com.lee.playandroid.startup
 
 import android.content.Context
 import androidx.startup.Initializer
-import com.lee.playandroid.BuildConfig
 import com.lee.playandroid.base.adapter.manager.ViewLoadManager
 import com.lee.playandroid.base.cache.CacheManager
 import com.lee.playandroid.base.net.HttpManager
 import com.lee.playandroid.base.tools.DarkModeTools
 import com.lee.playandroid.base.tools.ScreenDensityTools
+import com.lee.playandroid.common.BuildConfig
 import com.lee.playandroid.common.extensions.setCommonInterceptor
 import com.lee.playandroid.common.ui.widget.AppLoadResource
 import com.lee.playandroid.service.hepler.ApplicationModuleService

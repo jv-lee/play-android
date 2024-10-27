@@ -32,7 +32,7 @@ class FailedInterceptor : Interceptor {
                 val source = source()
                 source.request(Long.MAX_VALUE)
 
-                val buffer = source.buffer()
+                val buffer = source.buffer
                 val charset = Charset.forName("UTF-8")
 
                 if (contentLength != 0L) {

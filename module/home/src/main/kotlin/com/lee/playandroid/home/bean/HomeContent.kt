@@ -1,5 +1,6 @@
 package com.lee.playandroid.home.bean
 
+import androidx.annotation.Keep
 import com.lee.playandroid.common.entity.Banner
 import com.lee.playandroid.common.entity.Content
 import com.lee.playandroid.home.model.entity.HomeCategory
@@ -10,6 +11,7 @@ import com.lee.playandroid.home.model.entity.HomeCategory
  * @author jv.lee
  * @date 2021/11/4
  */
+@Keep
 data class HomeContent(
     val bannerList: List<Banner>? = null,
     val categoryList: List<HomeCategory>? = null,

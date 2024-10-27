@@ -55,8 +55,8 @@ class SettingsFragment :
     override fun bindView() {
         DarkViewUpdateTools.bindViewCallback(viewLifecycleOwner, this)
 
-        mBinding.lineSystem.getRightSwitch()?.setOnCheckedChangeListener(this)
-        mBinding.lineNight.getRightSwitch()?.setOnCheckedChangeListener(this)
+        mBinding.lineSystem.getRightSwitch().setOnCheckedChangeListener(this)
+        mBinding.lineNight.getRightSwitch().setOnCheckedChangeListener(this)
 
         mBinding.lineClearCache.setOnClickListener(this)
         mBinding.lineLogout.setOnClickListener(this)
@@ -127,9 +127,9 @@ class SettingsFragment :
         themeViewModel.viewStates.run {
             launchOnLifecycle {
                 collectState(ThemeViewState::isSystem, ThemeViewState::isDark) { isSystem, isDark ->
-                    mBinding.lineSystem.getRightSwitch()?.isChecked = isSystem
-                    mBinding.lineNight.getRightSwitch()?.isChecked = isDark
-                    mBinding.lineNight.getRightSwitch()?.isEnabled = !isSystem
+                    mBinding.lineSystem.getRightSwitch().isChecked = isSystem
+                    mBinding.lineNight.getRightSwitch().isChecked = isDark
+                    mBinding.lineNight.getRightSwitch().isEnabled = !isSystem
                 }
             }
         }

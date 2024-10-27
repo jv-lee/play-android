@@ -58,11 +58,11 @@ class LiveDataBus private constructor() {
 
     private class ObserverWrapper<T>(private val observer: Observer<T>) : Observer<T> {
 
-        override fun onChanged(t: T) {
+        override fun onChanged(value: T) {
             if (isCallOnObserve()) {
                 return
             }
-            observer.onChanged(t)
+            observer.onChanged(value)
         }
 
         private fun isCallOnObserve(): Boolean {

@@ -44,7 +44,7 @@ abstract class BaseListFragment :
         if (mBinding.rvContainer.adapter == null) {
             createAdapter().apply {
                 mAdapter = this
-                bindRecyclerView(mBinding.rvContainer, loadStateEnable = false)
+                bindRecyclerView(mBinding.rvContainer)
             }
         }
     }

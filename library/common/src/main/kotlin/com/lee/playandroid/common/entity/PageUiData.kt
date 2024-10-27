@@ -3,8 +3,10 @@
  */
 package com.lee.playandroid.common.entity
 
+import androidx.annotation.Keep
 import com.lee.playandroid.base.adapter.page.PagingData
 
+@Keep
 data class PageUiData<T>(val page: Int, val pageTotal: Int, val data: MutableList<T>) :
     PagingData<T> {
     override fun getPageNumber(): Int {

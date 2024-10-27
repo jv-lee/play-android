@@ -76,5 +76,5 @@ data class ThemeViewState(
 sealed class ThemeViewIntent : IViewIntent {
     data class UpdateDarkStatus(val enable: Boolean) : ThemeViewIntent()
     data class UpdateSystemStatus(val enable: Boolean) : ThemeViewIntent()
-    object ResetThemeStatus : ThemeViewIntent()
+    data object ResetThemeStatus : ThemeViewIntent()
 }

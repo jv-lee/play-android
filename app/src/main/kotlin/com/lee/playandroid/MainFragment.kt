@@ -14,8 +14,10 @@ import com.lee.playandroid.base.livedatabus.LiveDataBus
 import com.lee.playandroid.base.tools.DarkViewUpdateTools
 import com.lee.playandroid.base.utils.LogUtil
 import com.lee.playandroid.base.widget.FloatingLayout
+import com.lee.playandroid.common.BuildConfig
 import com.lee.playandroid.common.entity.LoginEvent
 import com.lee.playandroid.common.entity.NavigationSelectEvent
+import com.lee.playandroid.common.extensions.appThemeSet
 import com.lee.playandroid.common.ui.extensions.bindNavigationAction
 import com.lee.playandroid.databinding.FragmentMainBinding
 import com.lee.playandroid.databinding.LayoutStubFloatingBinding
@@ -57,6 +59,7 @@ class MainFragment :
 
     @SuppressLint("ResourceType")
     override fun updateDarkView() {
+        requireActivity().appThemeSet()
         binding.navigationBar.itemTextColor = requireContext().getCheckedColorStateListCompat(
             CR.color.colorThemeFocus,
             CR.color.colorThemePrimary

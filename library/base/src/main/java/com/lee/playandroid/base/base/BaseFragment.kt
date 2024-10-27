@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import com.lee.playandroid.base.tools.SystemBarTools.navigationPadding
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
@@ -30,6 +31,7 @@ abstract class BaseFragment(private val resourceId: Int? = 0) : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        view.navigationPadding()
         bindView()
         bindData()
     }

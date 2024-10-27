@@ -18,9 +18,9 @@ import com.lee.playandroid.base.extensions.toast
 import com.lee.playandroid.base.tools.DarkViewUpdateTools
 import com.lee.playandroid.base.tools.PermissionLauncher
 import com.lee.playandroid.base.tools.ShakeHelper
+import com.lee.playandroid.common.BuildConfig
 import com.lee.playandroid.common.entity.AccountData
 import com.lee.playandroid.common.entity.AccountViewState
-import com.lee.playandroid.me.BuildConfig
 import com.lee.playandroid.me.R
 import com.lee.playandroid.me.databinding.FragmentMeBinding
 import com.lee.playandroid.me.viewmodel.MeViewModel

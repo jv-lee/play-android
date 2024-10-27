@@ -1,5 +1,6 @@
 package com.lee.playandroid.todo.model.entity
 
+import androidx.annotation.Keep
 import com.lee.playandroid.base.base.ApplicationExtensions.app
 import com.lee.playandroid.todo.R
 
@@ -8,6 +9,7 @@ import com.lee.playandroid.todo.R
  * @author jv.lee
  * @date 2022/1/2
  */
+@Keep
 data class TodoTypeData(val type: Int, val name: String) {
     companion object {
         fun getTodoTypes(): MutableList<TodoTypeData> {
@@ -29,7 +31,7 @@ annotation class TodoType {
         const val PLAY = 3
     }
 }
-
+@Keep
 data class TodoTypeWheelData(
     val startIndex: Int = 0,
     val todoTypes: MutableList<TodoTypeData> = arrayListOf()

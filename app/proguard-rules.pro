@@ -155,6 +155,7 @@ java.lang.Object readResolve();
 -keep public class * extends com.lee.playandroid.service.core.IModuleService
 
 # 忽略R8混淆警告信息
+-dontwarn androidx.window.**
 -dontwarn com.squareup.javapoet.**
 -dontwarn java.lang.reflect.**
 -dontwarn javax.tools.**

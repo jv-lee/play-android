@@ -89,7 +89,7 @@ class NavigationContentFragment :
         }
 
         viewModel.viewStates.run {
-            launchWhenStarted {
+            launchOnLifecycle {
                 collectState(
                     NavigationContentViewState::navigationItemList,
                     NavigationContentViewState::isLoading
@@ -100,7 +100,7 @@ class NavigationContentFragment :
                     mNavigationContentAdapter?.submitSinglePage(data)
                 }
             }
-            launchWhenStarted {
+            launchOnLifecycle {
                 collectState(NavigationContentViewState::selectedTabIndex) {
                     mNavigationTabAdapter?.selectItem(it)
                 }

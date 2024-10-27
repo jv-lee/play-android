@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewConfiguration
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import androidx.slidingpanelayout.widget.SlidingPaneLayout
 import kotlin.math.abs
 
 /**

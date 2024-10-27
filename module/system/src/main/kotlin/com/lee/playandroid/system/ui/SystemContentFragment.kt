@@ -80,7 +80,7 @@ class SystemContentFragment :
             }
         }
 
-        launchWhenStarted {
+        launchOnLifecycle {
             viewModel.viewStates.collectState(
                 SystemContentViewState::isLoading,
                 SystemContentViewState::parentTabList

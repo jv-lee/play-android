@@ -6,21 +6,21 @@
 package com.lee.playandroid.common.extensions
 
 import android.app.Activity
-import android.graphics.Color
+import androidx.core.content.ContextCompat
 import com.lee.playandroid.base.tools.DarkModeTools
 import com.lee.playandroid.base.tools.SystemBarTools.setDarkStatusIcon
 import com.lee.playandroid.base.tools.SystemBarTools.setLightStatusIcon
+import com.lee.playandroid.common.R
 
 /**
  * activity主题根据深色模式适配
  */
 fun Activity.appThemeSet() {
+    window.navigationBarColor = ContextCompat.getColor(this, R.color.colorThemeWindow)
     // 主题icon适配
     if (DarkModeTools.get().isDarkTheme()) {
-        window.navigationBarColor = Color.BLACK
         window.setLightStatusIcon()
     } else {
-        window.navigationBarColor = Color.WHITE
         window.setDarkStatusIcon()
     }
 }

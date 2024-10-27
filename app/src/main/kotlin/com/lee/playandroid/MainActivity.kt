@@ -3,6 +3,7 @@ package com.lee.playandroid
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.animation.ObjectAnimator
+import android.content.ComponentCallbacks
 import android.content.res.Configuration
 import android.os.Bundle
 import android.view.View
@@ -16,24 +17,21 @@ import androidx.lifecycle.viewModelScope
 import com.lee.playandroid.base.base.BaseActivity
 import com.lee.playandroid.base.extensions.banBackEvent
 import com.lee.playandroid.base.extensions.binding
-import com.lee.playandroid.base.extensions.setBackgroundColorCompat
+import com.lee.playandroid.base.extensions.collectState
 import com.lee.playandroid.base.extensions.startListener
 import com.lee.playandroid.base.tools.DarkModeTools
 import com.lee.playandroid.base.tools.ScreenDensityTools
-import com.lee.playandroid.base.extensions.collectState
 import com.lee.playandroid.common.extensions.agentWebPreload
-import com.lee.playandroid.common.extensions.appThemeSet
 import com.lee.playandroid.databinding.ActivityMainBinding
 import com.lee.playandroid.databinding.LayoutStubMainBinding
 import com.lee.playandroid.databinding.LayoutStubSplashBinding
-import com.lee.playandroid.viewmodel.SplashViewIntent
 import com.lee.playandroid.viewmodel.SplashViewEvent
+import com.lee.playandroid.viewmodel.SplashViewIntent
 import com.lee.playandroid.viewmodel.SplashViewModel
 import com.lee.playandroid.viewmodel.SplashViewState
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
 import com.lee.playandroid.base.R as BR
-import com.lee.playandroid.common.R as CR
 
 /**
  * 程序主窗口 单Activity架构
@@ -101,7 +99,6 @@ class MainActivity : BaseActivity() {
         // 屏幕适配 / 深色主题适配
         ScreenDensityTools.init(this)
         DarkModeTools.init(applicationContext)
-        appThemeSet()
         super.onConfigurationChanged(newConfig)
     }
 
@@ -149,8 +146,6 @@ class MainActivity : BaseActivity() {
 
                 override fun onAnimationEnd(animation: Animator) {
                     binding.root.removeView(splashBinding.root)
-                    window.decorView.background = null
-                    window.decorView.setBackgroundColorCompat(CR.color.colorThemeWindow)
                 }
             })
             anim.start()
