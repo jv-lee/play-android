@@ -14,9 +14,5 @@ dependencies {
     api(project(BuildModules.Library.ROUTE))
 
     kapt(libs.bundles.compiler)
-
-    testImplementation(libs.bundles.test)
-    androidTestImplementation(libs.bundles.androidTest)
-    debugImplementation(libs.bundles.debug)
 }
 

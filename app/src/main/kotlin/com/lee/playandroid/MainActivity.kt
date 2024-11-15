@@ -63,28 +63,26 @@ class MainActivity : BaseActivity() {
     }
 
     override fun bindData() {
-        lifecycleScope.apply {
-            launchOnLifecycle {
-                viewModel.viewEvents.collect { event ->
-                    when (event) {
-                        // 取消携程任务通过动画显示主页内容
-                        is SplashViewEvent.NavigationMainEvent -> {
-                            viewModel.viewModelScope.cancel()
-                            animVisibleUi(event.duration)
-                        }
-                        // 通过动画显示闪屏广告内容
-                        is SplashViewEvent.VisibleSplashEvent -> {
-                            animVisibleSplash(event.splashAdRes)
-                        }
+        launchOnLifecycle {
+            viewModel.viewEvents.collect { event ->
+                when (event) {
+                    // 取消携程任务通过动画显示主页内容
+                    is SplashViewEvent.NavigationMainEvent -> {
+                        viewModel.viewModelScope.cancel()
+                        animVisibleUi(event.duration)
+                    }
+                    // 通过动画显示闪屏广告内容
+                    is SplashViewEvent.VisibleSplashEvent -> {
+                        animVisibleSplash(event.splashAdRes)
                     }
                 }
             }
+        }
 
-            launchOnLifecycle {
-                // 监听闪屏广告倒计时数值更改
-                viewModel.viewStates.collectState(SplashViewState::timeText) {
-                    splashBinding.tvTime.text = it
-                }
+        launchOnLifecycle {
+            // 监听闪屏广告倒计时数值更改
+            viewModel.viewStates.collectState(SplashViewState::timeText) {
+                splashBinding.tvTime.text = it
             }
         }
     }
@@ -125,6 +123,7 @@ class MainActivity : BaseActivity() {
      * @param duration 显示主页面ui时间 0则立即显示 其他时间为渐变显示
      */
     private fun animVisibleUi(duration: Long = 0) {
+        runCatching {
             val main = binding.root.findViewById<ViewStub>(R.id.view_stub_main).inflate()
             LayoutStubMainBinding.bind(main)
 
@@ -149,5 +148,6 @@ class MainActivity : BaseActivity() {
                 }
             })
             anim.start()
+        }
     }
 }
